@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>AGV — Console Professor</title>
+  <link rel="stylesheet" href="assets/professor.css">
+</head>
+<body>
+  <main class="shell">
+    <section id="login-view" class="login-card">
+      <p class="eyebrow">AGV Education Core</p>
+      <h1>Console Professor</h1>
+      <p class="muted">Entre com sua conta institucional. Gabaritos são carregados somente depois da autorização no servidor.</p>
+      <form id="login-form" class="form-stack">
+        <label><span>E-mail institucional</span><input id="email" type="email" autocomplete="username" required placeholder="professor@escola.pr.gov.br"></label>
+        <label><span>Senha</span><input id="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary" type="submit">Entrar</button>
+        <p id="login-message" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="app-view" class="app hidden">
+      <header class="topbar">
+        <div><p class="eyebrow">Modo Professor</p><h1>Atividade + gabarito explicado</h1></div>
+        <div class="account"><span id="staff-name"></span><span id="staff-role" class="chip"></span><button id="logout" class="ghost" type="button">Sair</button></div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar panel">
+          <div class="field"><label for="class-filter">Turma</label><select id="class-filter"><option value="all">Todas as turmas</option></select></div>
+          <div class="field"><label for="student-search">Aluno</label><input id="student-search" type="search" placeholder="Buscar nome ou e-mail"></div>
+          <div id="student-list" class="student-list"></div>
+        </aside>
+
+        <section class="activities panel">
+          <div class="panel-head"><div><p class="eyebrow">Aluno selecionado</p><h2 id="student-title">Selecione um aluno</h2></div><span id="activity-count" class="chip">0 atividades</span></div>
+          <div id="student-meta" class="student-meta muted"></div>
+          <div id="activity-list" class="activity-list empty"><p>As atividades recentes aparecerão aqui.</p></div>
+        </section>
+
+        <section class="reference panel">
+          <div class="panel-head"><div><p class="eyebrow">Referência privada</p><h2 id="reference-title">Gabarito explicado</h2></div><span id="reference-source" class="chip">Protegido</span></div>
+          <div id="reference-empty" class="empty-state">
+            <strong>Abra uma atividade</strong>
+            <span>O gabarito só é solicitado ao servidor depois da seleção.</span>
+          </div>
+          <div id="reference-content" class="hidden">
+            <div class="split-summary">
+              <article><span class="label">Estado do aluno</span><strong id="progress-status">—</strong><small id="progress-meta"></small></article>
+              <article><span class="label">Resposta esperada</span><div id="answer-text" class="answer-text"></div></article>
+            </div>
+            <section class="reference-section"><h3>Explicação</h3><div id="explanation" class="prose"></div></section>
+            <section id="files-section" class="reference-section hidden"><div class="section-head"><h3>Solução preenchida</h3><div id="file-tabs" class="file-tabs"></div></div><pre id="solution-code" class="code"></pre></section>
+            <section class="reference-grid">
+              <article><h3>Critérios / rubrica</h3><div id="rubric" class="list"></div></article>
+              <article><h3>Intervenção pedagógica</h3><div id="tips" class="list"></div></article>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="assets/config.js"></script>
+  <script src="assets/professor.js"></script>
+</body>
+</html>
