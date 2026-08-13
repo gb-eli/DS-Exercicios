@@ -124,3 +124,17 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Alunos agora usam uma estrutura fluida: identidade → progresso → ações.
 - Desktop, notebook, tablet e celular têm layouts próprios para o painel docente.
 - Os dialogs administrativos também receberam ajustes específicos.
+
+## v0.12.2 — Consolidação Professor/Admin
+- `admin.css` é carregado depois do design system principal e concentra a interface docente.
+- Removidos blocos administrativos antigos do `app.css`.
+- O painel identifica o papel atual e esconde **Equipe** para professor comum.
+- Melhorados estados de carregamento, falha e filtro vazio.
+- Previews internos de desenvolvimento foram retirados do pacote.
+
+## v0.13.0 — Escopo de Professor por Turma
+- Criada a relação server-side `teacher_classes`.
+- Professor comum recebe apenas as turmas atribuídas; sem atribuição, recebe zero alunos.
+- `staff-dashboard` v6 valida o escopo também em leitura de arquivos, acomodações, liberações e aprovação manual.
+- Administrador continua com visão global.
+- A tela **Equipe** permite atribuir/remover 1DS, 2DS, 3DS e Sub de cada professor.

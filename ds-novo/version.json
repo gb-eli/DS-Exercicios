@@ -1,13 +1,14 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "date": "2026-08-13",
   "features": [
-    "Painel Professor/Admin redesenhado e isolado do CSS do modo aluno",
-    "Filtros separados da barra de comandos",
-    "Métricas responsivas em 6/3/2/1 colunas",
-    "Lista de alunos com identidade, progresso e ações fluidas",
-    "Mobile com cards operacionais sem grids rígidos",
-    "Dialogs de equipe, matrícula, gestão e código ajustados"
+    "Escopo real de professor por turma no backend",
+    "teacher_classes com RLS e acesso somente server-side",
+    "staff-dashboard v6 bloqueia student_id e exercise_id fora das turmas atribuídas",
+    "staff-directory v2 gerencia atribuição de turmas",
+    "Tela Equipe mostra turmas de cada professor",
+    "Professor sem turma fica sem acesso a alunos",
+    "Administradores permanecem com escopo global"
   ]
 }

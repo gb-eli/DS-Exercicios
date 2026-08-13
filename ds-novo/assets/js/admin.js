@@ -1,7 +1,7 @@
 
 import { supabase } from './supabase.js';
 
-let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[];
+let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -17,6 +17,7 @@ function ensureAdminShell(){
             <p class="muted">Acompanhe acessos, progresso, revisões e apoios individuais.</p>
           </div>
           <div class="staff-page-status">
+            <span id="staff-role-chip" class="staff-role-chip">Professor</span>
             <span class="status-chip"><span class="status-dot"></span> sincronizado</span>
           </div>
         </header>
@@ -117,6 +118,25 @@ function ensureAdminShell(){
         </div>
       </dialog>
 
+
+      <dialog id="team-classes-dialog" class="history-dialog">
+        <form id="team-classes-form" class="history-card panel team-classes-card">
+          <div class="history-head">
+            <div>
+              <p class="eyebrow">Escopo do professor</p>
+              <h3 id="team-classes-title">Turmas atribuídas</h3>
+              <p class="muted">O professor verá e poderá gerenciar somente os alunos e exercícios das turmas marcadas.</p>
+            </div>
+            <button id="team-classes-close-btn" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <div id="team-classes-list" class="team-class-options"></div>
+          <p id="team-classes-message" class="form-message hidden"></p>
+          <div class="dialog-actions">
+            <button class="button button-primary" type="submit">Salvar turmas</button>
+          </div>
+        </form>
+      </dialog>
+
       <dialog id="live-dialog" class="history-dialog">
         <div class="history-card panel live-card">
           <div class="history-head"><div><p class="eyebrow">Acompanhamento</p><h3 id="live-title">Exercício do aluno</h3></div><button id="live-close-btn" class="button button-ghost button-small" type="button">Fechar</button></div>
@@ -139,6 +159,8 @@ function ensureAdminShell(){
     $('staff-team-btn')?.addEventListener('click',openTeamManager);
     $('team-close-btn')?.addEventListener('click',()=>$('team-dialog')?.close());
     $('team-form')?.addEventListener('submit',saveTeamMember);
+    $('team-classes-close-btn')?.addEventListener('click',()=>$('team-classes-dialog')?.close());
+    $('team-classes-form')?.addEventListener('submit',saveTeamClasses);
     $('staff-back-btn')?.addEventListener('click',async()=>{await supabase.auth.signOut();location.reload()});
     shellBound=true;
   }
@@ -168,12 +190,34 @@ export async function openStaffPanel(){
   ensureAdminShell();
   ['loading-view','login-view','password-view','dashboard-view','exercise-view'].forEach(id=>$(id)?.classList.add('hidden'));
   $('staff-view').classList.remove('hidden');
+  $('staff-btn')?.classList.add('hidden');
+
+  try{
+    const status=await callStaff({action:'staff_status'});
+    staffRole=status?.role||'teacher';
+  }catch(error){
+    console.error(error);
+    staffRole='teacher';
+  }
+
+  const isAdmin=['admin','super_admin'].includes(staffRole);
+  $('staff-team-btn')?.classList.toggle('hidden',!isAdmin);
+  const chip=$('staff-role-chip');
+  if(chip) chip.textContent=isAdmin?'Administrador':'Professor';
+
   await refreshStaff();
 }
 async function refreshStaff(){
-  $('staff-students').innerHTML='<div class="loading-card">Carregando painel...</div>';
-  payload=await callStaff({action:'overview'});
-  renderFilters(); renderSummary(); renderStudents();
+  const box=$('staff-students');
+  if(box) box.innerHTML='<div class="staff-state"><strong>Carregando painel...</strong><span>Sincronizando turmas, acessos e progresso.</span></div>';
+  try{
+    payload=await callStaff({action:'overview'});
+    renderFilters(); renderSummary(); renderStudents();
+  }catch(error){
+    console.error(error);
+    if(box) box.innerHTML='<div class="staff-state"><strong>Não foi possível carregar o painel.</strong><span>Confira sua conexão e tente novamente.</span><button id="staff-retry-btn" class="button button-primary button-small" type="button">Tentar novamente</button></div>';
+    $('staff-retry-btn')?.addEventListener('click',refreshStaff);
+  }
 }
 function renderFilters(){
   const sel=$('staff-class-filter'), prev=sel.value||currentClass;
@@ -264,7 +308,7 @@ function exerciseLabel(id){
 }
 function renderStudents(){
   const box=$('staff-students'), students=filteredStudents();
-  if(!students.length){box.innerHTML='<p class="muted">Nenhum aluno encontrado.</p>';return}
+  if(!students.length){box.innerHTML='<div class="staff-state"><strong>Nenhum aluno encontrado.</strong><span>Ajuste os filtros ou a busca para ampliar os resultados.</span></div>';return}
   box.innerHTML=students.map(s=>{
     const c=classForStudent(s), pr=progressForStudent(s.id);
     const recent=pr.rows.slice().sort((a,b)=>new Date(b.last_activity_at||0)-new Date(a.last_activity_at||0))[0];
@@ -311,6 +355,7 @@ function setTeamMessage(text='',ok=false){
   el.textContent=text; el.classList.toggle('hidden',!text); el.classList.toggle('ok',!!ok);
 }
 async function openTeamManager(){
+  if(!['admin','super_admin'].includes(staffRole)) return;
   $('team-dialog').showModal();
   setTeamMessage();
   $('team-list').innerHTML='<div class="loading-card">Carregando equipe...</div>';
@@ -320,20 +365,103 @@ async function refreshTeamList(){
   try{
     const data=await callStaffDirectory({action:'list'});
     teamData=data.staff||[];
-    $('team-list').innerHTML=teamData.map(m=>`<article class="team-row ${m.active?'':'inactive'}">
-      <div><strong>${esc(m.full_name)}</strong><span>${esc(m.email)}</span></div>
-      <span class="badge ${m.role==='admin'?'warning':'info'}">${m.role==='admin'?'Administrador':'Professor'}</span>
-      <button class="button button-ghost button-small team-toggle" data-email="${esc(m.email)}" data-active="${m.active?'1':'0'}">${m.active?'Desativar':'Ativar'}</button>
-    </article>`).join('') || '<p class="muted">Nenhum membro cadastrado.</p>';
+    teamClasses=data.classes||[];
+    teamAssignments=data.assignments||[];
+
+    $('team-list').innerHTML=teamData.map(m=>{
+      const assigned=teamAssignments.filter(a=>String(a.teacher_email).toLowerCase()===String(m.email).toLowerCase() && a.active!==false);
+      const assignedNames=assigned.map(a=>teamClasses.find(c=>c.id===a.class_id)?.name).filter(Boolean);
+      const scopeHtml=m.role==='teacher'
+        ? (assignedNames.length
+          ? `<div class="team-scope"><span>Turmas</span><div>${assignedNames.map(n=>`<em>${esc(n)}</em>`).join('')}</div></div>`
+          : `<div class="team-scope empty"><span>Turmas</span><strong>Sem turma — sem acesso aos alunos</strong></div>`)
+        : `<div class="team-scope global"><span>Escopo</span><strong>Acesso global</strong></div>`;
+
+      return `<article class="team-row ${m.active?'':'inactive'}">
+        <div class="team-person">
+          <strong>${esc(m.full_name)}</strong>
+          <span>${esc(m.email)}</span>
+          ${scopeHtml}
+        </div>
+        <span class="badge ${m.role==='admin'?'warning':'info'}">${m.role==='admin'?'Administrador':'Professor'}</span>
+        <div class="team-row-actions">
+          ${m.role==='teacher'?`<button class="button button-ghost button-small team-classes-btn" data-email="${esc(m.email)}">Turmas</button>`:''}
+          <button class="button button-ghost button-small team-toggle" data-email="${esc(m.email)}" data-active="${m.active?'1':'0'}">${m.active?'Desativar':'Ativar'}</button>
+        </div>
+      </article>`;
+    }).join('') || '<div class="staff-state"><strong>Nenhum membro cadastrado.</strong><span>Autorize um professor ou administrador usando o formulário acima.</span></div>';
+
     $('team-list').querySelectorAll('.team-toggle').forEach(b=>b.onclick=()=>toggleTeamMember(b.dataset.email,b.dataset.active!=='1'));
-  }catch(error){console.error(error);$('team-list').innerHTML='<p class="form-error">Não foi possível carregar a equipe.</p>';}
+    $('team-list').querySelectorAll('.team-classes-btn').forEach(b=>b.onclick=()=>openTeamClasses(b.dataset.email));
+  }catch(error){
+    console.error(error);
+    $('team-list').innerHTML='<p class="form-error">Não foi possível carregar a equipe.</p>';
+  }
 }
+
+function setTeamClassesMessage(text='',ok=false){
+  const el=$('team-classes-message'); if(!el)return;
+  el.textContent=text;
+  el.classList.toggle('hidden',!text);
+  el.classList.toggle('ok',!!ok);
+}
+function openTeamClasses(email){
+  const member=teamData.find(m=>String(m.email).toLowerCase()===String(email).toLowerCase());
+  if(!member||member.role!=='teacher') return;
+  teamClassCtx=member;
+  $('team-classes-title').textContent=`Turmas de ${member.full_name}`;
+  setTeamClassesMessage();
+
+  const selected=new Set(
+    teamAssignments
+      .filter(a=>String(a.teacher_email).toLowerCase()===String(email).toLowerCase() && a.active!==false)
+      .map(a=>String(a.class_id))
+  );
+
+  $('team-classes-list').innerHTML=teamClasses.map(c=>`
+    <label class="team-class-option">
+      <input type="checkbox" value="${c.id}" ${selected.has(String(c.id))?'checked':''}>
+      <span>
+        <strong>${esc(c.name)}</strong>
+        <small>${esc(c.code||'')} ${c.shift?`• ${esc(c.shift)}`:''}</small>
+      </span>
+    </label>
+  `).join('') || '<p class="muted">Nenhuma turma ativa encontrada.</p>';
+
+  $('team-classes-dialog').showModal();
+}
+async function saveTeamClasses(event){
+  event.preventDefault();
+  if(!teamClassCtx) return;
+  const submit=event.submitter;
+  submit.disabled=true;
+  submit.textContent='Salvando...';
+  setTeamClassesMessage();
+  try{
+    const classIds=[...$('team-classes-list').querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
+    await callStaffDirectory({action:'set_classes',email:teamClassCtx.email,class_ids:classIds});
+    setTeamClassesMessage(classIds.length?'Turmas atualizadas. O escopo já está valendo no servidor.':'Professor ficou sem turmas e não terá acesso a alunos.',true);
+    await refreshTeamList();
+  }catch(error){
+    console.error(error);
+    setTeamClassesMessage('Não foi possível atualizar as turmas deste professor.');
+  }finally{
+    submit.disabled=false;
+    submit.textContent='Salvar turmas';
+  }
+}
+
 async function saveTeamMember(event){
   event.preventDefault(); setTeamMessage();
   const submit=event.submitter; submit.disabled=true; submit.textContent='Salvando...';
   try{
     await callStaffDirectory({action:'upsert',full_name:$('team-name').value.trim(),email:$('team-email').value.trim().toLowerCase(),role:$('team-role').value});
-    setTeamMessage('Acesso autorizado. Use o mesmo formulário de login com a senha temporária institucional.',true);
+    setTeamMessage(
+      $('team-role').value==='teacher'
+        ? 'Professor autorizado. Agora use o botão Turmas para definir quais alunos ele poderá acessar.'
+        : 'Administrador autorizado com acesso global. Use o mesmo formulário de login com a senha temporária institucional.',
+      true
+    );
     $('team-name').value=''; $('team-email').value=''; $('team-role').value='teacher';
     await refreshTeamList();
   }catch(error){
