@@ -68,3 +68,12 @@ Após o commit, mostrar `receipt/reference id`, valor e novo saldo. Nunca mostra
 ```
 
 Esta é uma estrutura de publicação alvo; o pacote-fonte mantém os repositórios como foram recebidos.
+
+
+## Console Professor
+
+O alvo de deploy inclui também `/professor/`. A página não contém gabaritos; ela autentica o docente, reutiliza `staff-dashboard` para obter somente alunos/turmas autorizados e chama `agv-teacher-activity` para buscar a referência privada sob demanda.
+
+Layout recomendado: lista de alunos → atividades recentes/pendentes → painel lado a lado com estado do aluno e **Gabarito explicado** (resposta-modelo, arquivos, explicação, rubrica e intervenção).
+
+Se uma plataforma tiver Realtime, o painel poderá combinar esta referência privada com o acompanhamento ao vivo do aluno. O conteúdo protegido nunca é enviado ao canal do aluno.

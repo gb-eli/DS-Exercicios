@@ -1,45 +1,60 @@
-# Validação do pacote
+# Validação do pacote — v7
 
-Data de preparação: 13/08/2026.
+Data: 13/08/2026.
 
-## Fontes
+## Preservação das fontes
 
-- 10 arquivos ZIP recebidos foram extraídos.
-- 3.064 arquivos-fonte foram comparados por tamanho + CRC com os arquivos dos ZIPs originais.
-- Resultado: **100% preservados**.
-- Detalhes: `docs/VERIFICACAO-FONTES.json`.
-- SHA-256 dos ZIPs recebidos: `SOURCE_ARCHIVES.sha256`.
+O pacote continua baseado nas árvores canônicas declaradas em `manifesto-plataformas.json`. As integrações foram adicionadas como camadas do Core/adaptadores; conteúdo visual e mecânicas das plataformas não foram substituídos por outra aplicação.
 
-## Arquivos adicionados
+## Estado implementado nesta versão
 
-A preparação adicionou somente documentação/contratos/scaffolding de integração:
+- CTF P1 centralizado conforme documentação v5;
+- LAB Virtual: 50 ferramentas + 88 conclusões + 88 recompensas no Core;
+- economia das conclusões do LAB preserva 5.195 XP e 1.979 Créditos Tech;
+- bônus por nível e marcos de exploração server-side;
+- Console Professor adicionado sem gabaritos embutidos;
+- tabela privada `activity_teacher_content` + Edge `agv-teacher-activity`;
+- 88 referências do LAB Virtual carregadas no backend;
+- importador privado de DS1/DS2/DS3/Sub validado: 88 referências / 168 arquivos de solução preparados fora da árvore pública.
 
-- `00-LEIA-PRIMEIRO.md`;
-- `01-PROMPT-IMPLEMENTACAO-OUTRO-CHAT.md`;
-- `manifesto-plataformas.json`;
-- `core/`;
-- `docs/`;
-- `migracao/`;
-- `templates/`;
-- `_AGV_CORE/` dentro da pasta externa de cada sistema.
+## Testes executados
 
-Nenhum arquivo original foi substituído por este processo.
+Passaram 11 testes executáveis:
 
-## Validações executadas
+1. LAB AGV Core P1;
+2. Hardware case structure;
+3. Hardware family/inspection/cinema;
+4. Hardware layout — 19.200 configurações;
+5. Hardware materials;
+6. Hardware peripherals — 5.850 combinações;
+7. Hardware system benchmark/incident;
+8. Hardware thermal engine;
+9. Module registration — 42 módulos;
+10. AGVCoreSDK;
+11. Modo Professor.
 
-- todos os JSONs do pacote foram parseados sem erro;
-- SDK/template JavaScript adicionados passaram em `node --check`;
-- scan textual básico não encontrou padrões óbvios de `service_role`, chave privada ou segredo Stripe nos fontes analisados;
-- fontes originais foram comparadas com os ZIPs de entrada.
+Também passaram `node --check` nos arquivos JavaScript modificados e parsing dos JSONs centrais.
+
+Detalhes: `docs/TESTE-P1-LAB-VIRTUAL-v7-2026-08-13.txt`.
+
+## Baseline conhecido do validador geral
+
+`tools/validate-project.mjs` continua retornando 1 erro porque referencia `tools/test-hardware-assembly.mjs`, arquivo ausente na árvore recebida originalmente. Os testes reais disponíveis passaram; o pacote não fabrica um arquivo de teste inexistente apenas para mascarar esse baseline.
+
+## Segurança
+
+- scan de frontend: 0 `sb_secret`, 0 service-role hardcoded, 0 private key, 0 Stripe secret;
+- publishable key é pública e aparece onde necessária;
+- `activity_teacher_content`: RLS ativo;
+- grants diretos: somente `service_role`; `anon`/`authenticated` sem acesso;
+- `agv-teacher-activity`: JWT obrigatório e escopo professor→turma server-side;
+- conteúdo gerado pelos pacotes Professor não está neste ZIP público.
+
+Security Advisor mantém dois WARNs conhecidos, documentados em `docs/SUPABASE-CORE-STATUS-2026-08-13.md`:
+
+- RPC legado `claim_core_reward(...)` SECURITY DEFINER executável por authenticated;
+- Leaked Password Protection desabilitada.
 
 ## Limite desta entrega
 
-O SQL, SDK e contratos em `core/` são **baseline de implementação**, ainda não foram aplicados no projeto Supabase real. O chat de implementação deve adaptar as migrations ao banco existente, validar contra a documentação/changelog atual, executar advisors e realizar testes concorrentes antes de produção.
-
-## Loja Virtual DS adicionada em 13/08/2026
-
-- Versão: `0.9.6.0-RG`
-- Arquivos na origem: **865**
-- Arquivos extraídos: **865**
-- Divergências SHA-256 por arquivo: **0**
-- Papel: Loja Universal oficial do ecossistema; autoridade financeira será migrada para o AGV Education Core.
+A Loja Tech/inventário do LAB ainda não foi migrada integralmente para a Loja Universal. Desafio DS/Game Informática e demais plataformas seguem como próximos P1/P2. As 88 referências privadas de programação foram preparadas por importador, mas não são embarcadas no pacote público; devem ser ingeridas server-side ao integrar os LABs de exercícios.

@@ -2,18 +2,18 @@
 
 **Data:** 13/08/2026  
 **Projeto Supabase:** `iresvqwyaqotghjssncg`  
-**Marco:** Fase 1 parcial + fundação da Fase 2
+**Marco:** Fase 0 concluída + CTF P1 + LAB Virtual P1 + fundação do Modo Professor
 
 ## Compatibilidade adotada
 
-O SQL de referência do pacote não foi aplicado literalmente porque o projeto já possuía `profiles`, `platforms` e `security_events`. A implementação real preserva essas estruturas existentes:
+O schema de referência foi adaptado ao projeto existente, preservando:
 
-- identidade: `auth.users.id` + `public.profiles.id`;
-- registro de plataforma: `public.platforms.id` UUID e `public.platforms.code` como identificador textual consumido pelo SDK;
-- eventos de supervisão dos exercícios permanecem em `public.security_events`;
-- eventos gerais do Core usam `public.agv_core_security_events`.
+- `auth.users.id` + `public.profiles.id` como identidade central;
+- `public.platforms.id` UUID + `platforms.code` textual para SDKs;
+- `public.security_events` para supervisão dos exercícios;
+- `public.agv_core_security_events` para eventos gerais do Core.
 
-## Criado no Supabase
+## Estruturas do Core
 
 - `activity_catalog`;
 - `progress_events`;
@@ -23,36 +23,69 @@ O SQL de referência do pacote não foi aplicado literalmente porque o projeto j
 - `wallet_ledger`;
 - `reward_rules`;
 - `admin_audit_log`;
-- `agv_core_security_events`.
+- `agv_core_security_events`;
+- `activity_teacher_content` — conteúdo docente privado.
 
-As tabelas expostas possuem RLS. Escritas em progresso, métricas e carteira foram removidas do navegador; a mutação oficial ocorre por fluxo server-side/RPC. `wallet_ledger` possui bloqueio de UPDATE/DELETE para manter comportamento append-only.
+`wallet_ledger` permanece append-only. Conteúdo docente não é consultável diretamente por `anon`/`authenticated`.
 
-## Edge Functions ativas
+## Edge Functions ativas verificadas
 
-- `agv-progress-event` **v2** — JWT obrigatório; autentica usuário e chama RPC de progresso com `service_role` somente dentro da função.
-- `agv-reward-claim` **v1** — JWT obrigatório; rejeita payload contendo `amount`; recompensa é resolvida por `reward_rules`.
+- `staff-dashboard` v6 — JWT obrigatório, escopo de professor por turma;
+- `staff-directory` v2;
+- `supervision` v1;
+- `activity-progress` v1;
+- `student-files` v2;
+- `agv-progress-event` v3;
+- `agv-reward-claim` v4;
+- `ctf-complete-challenge` v1;
+- `ctf-core-actions` v1;
+- `lab-virtual-core` v2;
+- `agv-teacher-activity` v1.
 
-## Registro de plataformas
+## CTF
 
-Foram registrados os códigos: `loja-virtual-ds`, `lab-virtual`, `ctf-ds`, `planetario-ds`, `desafio-ds`, `fliperama-ds`, `game-informatica`, `lab-sub`, `lab-ds1`, `lab-ds2`, `lab-ds3`.
+- 86/86 atividades centrais;
+- 68/68 missões conhecidas pelo verificador;
+- aulas/hints/diário/ferramentas/store centralizados;
+- economia local não é autoridade.
 
-## Estado vazio intencional
+## LAB Virtual
 
-No fechamento desta etapa, `activity_catalog`, `reward_rules`, `wallets`, `wallet_ledger`, `progress_events`, `activity_progress` e `metric_ledger` estão vazios. Isso é proposital: ainda não foi liberada recompensa econômica nem migrado saldo legado antes da reconciliação dos catálogos/atividades.
+- 50/50 ferramentas no catálogo;
+- 88/88 conclusões no catálogo;
+- 88/88 regras de conclusão;
+- totais preservados: 5.195 XP / 1.979 Créditos Tech;
+- 3 regras de primeira atividade validada: 15/30/50 créditos;
+- 6 marcos de exploração: 100/150/250/300/400/750 créditos;
+- 88 referências privadas de professor em `activity_teacher_content`;
+- `activity_progress` ainda tinha 0 linhas de LAB Virtual no momento da auditoria, portanto nenhuma migração de aluno real precisou de backfill nesta etapa.
 
-## Advisor de segurança
+## Modo Professor
 
-Informações sem policy pública em `reward_rules`, `admin_audit_log` e `agv_core_security_events` são intencionais: são tabelas server-side.
+`activity_teacher_content` possui RLS ativo. A auditoria de grants mostrou somente `service_role`; `anon` e `authenticated` não possuem privilégio direto de tabela.
 
-Restam dois pontos para a próxima rodada:
+`agv-teacher-activity` v1:
 
-1. `claim_core_reward` ainda aparece no linter como `SECURITY DEFINER` executável por `authenticated`. A função valida `auth.uid()`, regra de recompensa, idempotência, saldo e repetição, e não aceita `amount`; mesmo assim, a meta é movê-la para fluxo service-only como já foi feito em progresso.
-2. Leaked Password Protection do Supabase Auth continua desabilitada.
+- exige JWT;
+- exige `teacher/admin/super_admin` ativo em `profiles`;
+- admin/super_admin: escopo global;
+- professor comum: valida `class_memberships` contra `teacher_classes`;
+- retorna atividade recente e referência privada somente depois da autorização.
 
-## Não ativar ainda
+## Security Advisor
 
-A Loja continua com `AGV_CORE_CONFIG.enabled=false` até que:
+INFOs `rls_enabled_no_policy` em tabelas server-side são intencionais quando o acesso direto do cliente é proibido, incluindo `activity_teacher_content`, `reward_rules`, `admin_audit_log`, `agv_core_security_events`, `staff_allowlist`, `student_preregistrations` e `teacher_classes`. Referência: https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy
 
-- `activity_catalog` e `reward_rules` sejam populados;
-- compra/inventário da Loja sejam migrados para intents/confirm;
-- o saldo legado seja reconciliado em migration auditável.
+Restam dois WARNs conhecidos:
+
+1. RPC legado `claim_core_reward(...)` ainda é `SECURITY DEFINER` executável por `authenticated`; o fluxo oficial novo não o utiliza. Referência: https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable
+2. Leaked Password Protection do Supabase Auth está desabilitada. Referência: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection
+
+## Próximos movimentos
+
+- migrar Loja Tech/inventário do LAB para Loja Universal;
+- migrar Desafio DS e Game Informática;
+- depois migrar Planetário/Fliperama;
+- integrar LAB Sub/DS1/DS2/DS3 com IDs canônicos e ingestão das referências privadas Professor;
+- restringir CORS ao domínio de produção;
+- encerrar RPC legado e habilitar leaked-password protection.

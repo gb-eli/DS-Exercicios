@@ -20,3 +20,16 @@ Uma plataforma só é considerada migrada quando:
 - [ ] não há secret/service key no frontend;
 - [ ] RLS/permissions foram revisadas;
 - [ ] documentação e versão de integração foram atualizadas.
+
+
+## Critério adicional — Modo Professor
+
+Quando a plataforma possui gabarito/solução docente:
+
+- [ ] o conteúdo Professor não existe no bundle do aluno;
+- [ ] `anon` e aluno autenticado não conseguem consultar a referência diretamente;
+- [ ] professor comum só vê alunos das turmas atribuídas;
+- [ ] admin/super_admin possuem escopo global auditável;
+- [ ] a atividade do aluno e o gabarito usam o mesmo `platform_id/activity_id`;
+- [ ] respostas abertas usam rubrica/resposta-modelo em vez de comparação literal;
+- [ ] a interface mostra solução, explicação, rubrica e dicas sem modificar automaticamente o trabalho do aluno.

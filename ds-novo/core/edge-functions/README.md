@@ -1,20 +1,16 @@
-# Edge Functions planejadas
+# Edge Functions — AGV Education Core
 
-- `agv-progress-event`: valida JWT, manifesto da plataforma, activity/event, idempotência, limites e grava evento/progresso/métricas.
-- `agv-reward-claim`: somente créditos econômicos permitidos pelo catálogo/regras; nunca aceita `amount` arbitrário do cliente como autoridade.
-- `agv-store-intent` / `agv-store-confirm`: compra oficial.
-- `agv-market-list`: cria/cancela listagem validando propriedade.
-- `agv-market-intent` / `agv-market-confirm`: compra P2P com lock e commit atômico.
-- `agv-admin-*`: consultas/mutações administrativas com checagem de papel confiável.
+Snapshot de produção em 13/08/2026, Supabase `iresvqwyaqotghjssncg`.
 
-Para chamadas autenticadas do cliente, valide o JWT e obtenha o usuário do contexto. Secrets ficam somente na função. O código real deve ser produzido/testado no projeto Supabase conectado.
+- `agv-progress-event` — **v3**, JWT obrigatório. Evento genérico; não aceita conclusão de atividade server-verified sem `metadata.client_progress_allowed=true`.
+- `agv-reward-claim` — **v4**, JWT obrigatório. Rejeita `amount` do cliente e só permite regra com `metadata.client_claimable=true`.
+- `ctf-complete-challenge` — **v1**, JWT obrigatório. Autoridade das 68 missões CTF, respostas seladas/regras estruturais, pré-requisitos e checkpoints.
+- `ctf-core-actions` — **v1**, JWT obrigatório. Aulas, ferramentas, diário, hints e Cyber Store.
+- `lab-virtual-core` — **v2**, JWT obrigatório. Autoridade das ferramentas/conclusões do LAB, recompensa central e marcos.
+- `agv-teacher-activity` — **v1**, JWT obrigatório. Entrega referência privada somente após validar papel e escopo professor→turma.
 
+Nunca copie `SUPABASE_SERVICE_ROLE_KEY` para frontend. Ela é lida apenas pelo runtime das Edge Functions.
 
-## Estado de implementação 13/08/2026
+## Pendência conhecida
 
-Implementadas no projeto central:
-
-- `agv-progress-event` v2;
-- `agv-reward-claim` v1.
-
-Os fontes implantados estão nas subpastas homônimas deste diretório. Compra, transferência, marketplace e admin continuam nas fases seguintes.
+O RPC legado `public.claim_core_reward(text,...)` ainda é apontado pelo Security Advisor como `SECURITY DEFINER` executável por `authenticated`. O código oficial acima **não utiliza** esse RPC; usa `claim_core_reward_service(...)`. A revogação do RPC legado foi bloqueada pela camada de segurança do conector e continua obrigatória antes de declarar o Core econômico final sem ressalvas.

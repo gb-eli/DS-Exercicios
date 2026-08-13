@@ -70,3 +70,10 @@ Toda alteração econômica oficial deve passar pelo Core e ser validada no serv
 | lab-ds3 | 0.11.9 | `sistemas/10-lab-exercicios-ds3/modo-aluno` |
 
 Pastas históricas existentes dentro de alguns repositórios foram mantidas para não perder versões anteriores, mas **não devem ser usadas como base principal** quando uma árvore canônica acima estiver indicada.
+
+## Implementação acumulada — 13/08/2026
+
+- **CTF DS:** P1 Core concluído para operação nova (86/86 catálogo; missões/aulas/blocos/diário/hints/store centralizados, com pendências de inventário/RPC legado documentadas).
+- **LAB Virtual DS:** P1 piloto v6 integrado ao Core: Auth/identidade central, 50/50 ferramentas catalogadas, 88 conclusões reconhecidas, 10 recompensas oficiais `rule_validated`, saldo/XP centrais e economia local desautorizada no modo oficial.
+
+Consulte `docs/P1-LAB-VIRTUAL-PILOTO.md` e `docs/TESTE-P1-LAB-VIRTUAL-v6-2026-08-13.txt`.

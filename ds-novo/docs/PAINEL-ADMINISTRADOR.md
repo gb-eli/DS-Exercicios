@@ -46,3 +46,10 @@ Ações como crédito/debito, congelar carteira, desativar item, corrigir propri
 - lançamento contábil correspondente, sem editar/apagar ledger antigo.
 
 Correções econômicas são feitas por **novo lançamento de ajuste/reversão**, nunca modificando o histórico existente.
+
+
+## Visão Professor — atividade + gabarito
+
+Para professores, o painel deve oferecer uma visão pedagógica por aluno: atividade atual/recente, progresso e, em painel separado, o gabarito protegido com resposta-modelo, arquivos preenchidos, explicação passo a passo, rubrica e dicas de intervenção.
+
+O conteúdo de professor vem exclusivamente de `activity_teacher_content` através da Edge Function `agv-teacher-activity`; nunca deve ser embarcado no frontend do aluno. Professor comum só pode consultar alunos das turmas presentes em `teacher_classes`; admin/super_admin mantêm escopo global.
