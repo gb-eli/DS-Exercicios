@@ -264,3 +264,10 @@ html{background:var(--bg)} body{
 .auth-divider{display:flex;align-items:center;gap:10px;margin:20px 0 14px;color:#718096;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
 .auth-divider::before,.auth-divider::after{content:"";height:1px;background:var(--border);flex:1}
 .form-stack.compact{gap:10px}.form-message{font-size:.82rem;line-height:1.4;color:var(--danger);margin:0}.form-message.ok{color:var(--success)}
+
+/* v0.8.0 — autenticação e fila docente */
+.auth-link-button{appearance:none;border:0;background:transparent;color:#8dbbd0;cursor:pointer;padding:4px 0 0;font-size:.82rem;text-align:center}
+.auth-link-button:hover{color:#ccefff;text-decoration:underline}
+.auth-dialog{width:min(500px,94vw)}
+.staff-toggle{display:flex!important;align-items:center!important;gap:8px!important;min-width:auto!important;flex:0 0 auto!important;background:#0d1016;border:1px solid var(--border);padding:10px 12px;border-radius:10px}
+.staff-toggle input{width:auto!important;accent-color:#7dd3fc}

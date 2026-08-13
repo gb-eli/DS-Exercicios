@@ -1,13 +1,12 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "date": "2026-08-13",
   "features": [
-    "Acesso professor/admin por e-mail institucional",
-    "Allowlist privada para Talita e Gabriel",
-    "Detecção administrativa no servidor",
-    "Criação de senha própria após primeiro acesso por e-mail",
-    "Redirecionamento automático para painel administrativo",
-    "Versão exibida apenas como número"
+    "Recuperação de senha por e-mail institucional",
+    "Redirect de recuperação preparado para URL publicada",
+    "Fila docente com filtro de pendências",
+    "Fluxos separados aluno e professor/admin",
+    "Versão exibida somente como número"
   ]
 }

@@ -45,6 +45,7 @@
             </label>
             <p id="login-error" class="form-error hidden" role="alert"></p>
             <button class="button button-primary" type="submit">Entrar</button>
+            <button id="forgot-password-btn" class="auth-link-button" type="button">Esqueci minha senha</button>
           </form>
           <div class="auth-divider"><span>Professor / Administração</span></div>
           <form id="staff-access-form" class="form-stack compact" novalidate>
@@ -228,5 +229,25 @@
   </div>
 
   <script type="module" src="assets/js/app.js"></script>
+
+    <dialog id="recovery-dialog" class="history-dialog auth-dialog">
+      <form id="recovery-form" class="history-card panel form-stack">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Recuperar acesso</p>
+            <h3>Redefinir senha</h3>
+            <p class="muted">Enviaremos um link para o seu e-mail institucional.</p>
+          </div>
+          <button id="recovery-close-btn" class="button button-ghost button-small" type="button">Fechar</button>
+        </div>
+        <label>
+          <span>E-mail institucional</span>
+          <input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required>
+        </label>
+        <p id="recovery-message" class="form-message hidden"></p>
+        <button class="button button-primary" type="submit">Enviar link</button>
+      </form>
+    </dialog>
+
 </body>
 </html>

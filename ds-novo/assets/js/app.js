@@ -420,3 +420,43 @@ supabase.auth.onAuthStateChange((event) => {
 routeAuthenticatedUser();
 
 document.getElementById('staff-btn')?.addEventListener('click', openStaffPanel);
+
+
+const recoveryDialog = $('recovery-dialog');
+$('forgot-password-btn')?.addEventListener('click', () => {
+  const email = normalizeEmail($('email')?.value || '');
+  $('recovery-email').value = email;
+  $('recovery-message').classList.add('hidden');
+  recoveryDialog?.showModal();
+});
+$('recovery-close-btn')?.addEventListener('click', () => recoveryDialog?.close());
+$('recovery-form')?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const email = normalizeEmail($('recovery-email').value);
+  const msg = $('recovery-message');
+  msg.classList.add('hidden');
+  if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
+    msg.textContent = `Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`;
+    msg.classList.remove('hidden');
+    return;
+  }
+  const submit = event.submitter;
+  submit.disabled = true;
+  submit.textContent = 'Enviando...';
+  try {
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw error;
+    msg.textContent = 'Link enviado. Confira seu e-mail institucional.';
+    msg.classList.remove('hidden');
+    msg.classList.add('ok');
+  } catch (error) {
+    console.error(error);
+    msg.textContent = 'Não foi possível enviar o link agora.';
+    msg.classList.remove('hidden');
+    msg.classList.remove('ok');
+  } finally {
+    submit.disabled = false;
+    submit.textContent = 'Enviar link';
+  }
+});

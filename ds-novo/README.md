@@ -66,3 +66,8 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - O servidor confirma a autorização antes de liberar o painel.
 - Após o link de primeiro acesso, o usuário cria a própria senha.
 - Alunos continuam usando e-mail + CGM temporário.
+
+## v0.8.0
+- Recuperação de senha por e-mail institucional.
+- Fluxo de redirect compatível com a URL publicada autorizada no Supabase Auth.
+- Painel docente ganhou filtro "Somente pendências" para revisão e ajustes solicitados.

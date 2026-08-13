@@ -45,7 +45,10 @@ function filteredStudents(){
   const q=$('staff-search').value.trim().toLowerCase();
   return payload.profiles.filter(p=>{
     const c=classForStudent(p.id);
-    return (currentClass==='all'||c?.id===currentClass) && (!q||`${p.full_name} ${p.email||''}`.toLowerCase().includes(q));
+    const reviewOnly=$('staff-review-only')?.checked;
+    const pr=progressForStudent(p.id);
+    const reviewOk=!reviewOnly || pr.pending>0 || pr.changes>0;
+    return (currentClass==='all'||c?.id===currentClass) && (!q||`${p.full_name} ${p.email||''}`.toLowerCase().includes(q)) && reviewOk;
   });
 }
 function renderSummary(){
@@ -214,3 +217,5 @@ $('staff-search')?.addEventListener('input',()=>{renderSummary();renderStudents(
 $('live-close-btn')?.addEventListener('click',closeLive);
 $('staff-back-btn')?.addEventListener('click',()=>location.reload());
 $('student-detail-close-btn')?.addEventListener('click',()=>$('student-detail-dialog').close());
+
+$('staff-review-only')?.addEventListener('change',()=>{renderSummary();renderStudents()});
