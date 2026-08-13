@@ -111,3 +111,9 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Equipe cadastrada na allowlist usa a senha temporária institucional no primeiro acesso e troca imediatamente.
 - O Admin ganhou a tela **Equipe** para autorizar/desativar professores e administradores sem depender de convite por e-mail.
 - Responsividade revisada para celular/iPhone, tablet, notebook e desktop.
+
+## v0.12.0 — Redesign UX/UI
+- O CSS acumulado das versões anteriores foi removido e substituído por um único design system.
+- Black/dark mais sóbrio, com contraste e hierarquia melhores.
+- Login, dashboard, editor, preview, terminal e painel Admin foram reorganizados.
+- Mobile/iPhone ganhou layout específico em vez de apenas empilhar componentes desktop.

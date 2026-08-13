@@ -10,11 +10,14 @@
 <body>
   <div id="app" class="app-shell">
     <header class="topbar">
-      <div>
-        <p class="eyebrow">Desenvolvimento de Sistemas</p>
-        <h1>Exercícios Práticos DS</h1>
+      <div class="brand-lockup">
+        <span class="brand-symbol" aria-hidden="true">DS</span>
+        <div class="brand-copy">
+          <p class="eyebrow">Desenvolvimento de Sistemas</p>
+          <h1>Exercícios Práticos DS</h1>
+        </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.11.0</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.12.0</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -35,7 +38,11 @@
         <article class="panel auth-card">
           <p class="eyebrow">Acesso ao sistema</p>
           <h2 id="login-title">Entre para continuar</h2>
-          <p class="muted">Use seu e-mail institucional. Alunos usam o CGM no primeiro acesso; professores e administradores usam a senha temporária fornecida pela administração.</p>
+          <p class="muted auth-lead">Um único acesso para alunos, professores e administradores. O sistema identifica seu perfil automaticamente.</p>
+          <div class="login-help">
+            <span><strong>Aluno</strong> primeiro acesso: e-mail + CGM</span>
+            <span><strong>Equipe</strong> primeiro acesso: e-mail + senha temporária</span>
+          </div>
           <form id="login-form" class="form-stack" novalidate>
             <label>
               <span>E-mail institucional</span>
