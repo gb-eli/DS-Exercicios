@@ -1,0 +1,76 @@
+create or replace function public.lab_virtual_apply_completion_service(
+  p_user_id uuid,
+  p_activity_id text,
+  p_tool_id text,
+  p_xp integer,
+  p_coins integer,
+  p_first_bonus integer,
+  p_reason text,
+  p_idempotency_key text,
+  p_metadata jsonb default '{}'::jsonb
+) returns jsonb
+language plpgsql
+security definer
+set search_path=''
+as $$
+declare
+  v_platform uuid;
+  v_wallet public.wallets;
+  v_first boolean;
+  v_total_coins bigint;
+  v_existing public.activity_progress;
+  v_balance bigint;
+begin
+  if p_user_id is null or not exists(select 1 from auth.users where id=p_user_id) then raise exception 'invalid_user'; end if;
+  if length(coalesce(p_idempotency_key,''))<8 then raise exception 'invalid_idempotency_key'; end if;
+  if p_activity_id is null or p_tool_id is null then raise exception 'activity_and_tool_required'; end if;
+  if coalesce(p_xp,0)<0 or coalesce(p_xp,0)>500 then raise exception 'invalid_xp'; end if;
+  if coalesce(p_coins,0)<0 or coalesce(p_coins,0)>500 then raise exception 'invalid_coins'; end if;
+  if coalesce(p_first_bonus,0)<0 or coalesce(p_first_bonus,0)>100 then raise exception 'invalid_first_bonus'; end if;
+  select id into v_platform from public.platforms where code='lab-virtual' and active=true limit 1;
+  if v_platform is null then raise exception 'platform_not_registered'; end if;
+  perform pg_advisory_xact_lock(hashtextextended(p_user_id::text, 4280));
+
+  select * into v_existing from public.activity_progress
+    where user_id=p_user_id and platform_id=v_platform and activity_id=p_activity_id;
+  if found and v_existing.status='completed' then
+    select * into v_wallet from public.wallets where user_id=p_user_id;
+    return jsonb_build_object('ok',true,'duplicate',true,'wallet',jsonb_build_object('balance',coalesce(v_wallet.balance,0)));
+  end if;
+
+  select not exists(
+    select 1 from public.activity_progress
+    where user_id=p_user_id and platform_id=v_platform and status='completed'
+      and activity_id like 'completion:%' and metadata->>'toolId'=p_tool_id
+  ) into v_first;
+
+  insert into public.progress_events(user_id,platform_id,activity_id,event_type,progress,payload,idempotency_key,occurred_at)
+  values(p_user_id,v_platform,p_activity_id,'activity.completed',100,coalesce(p_metadata,'{}'::jsonb)||jsonb_build_object('toolId',p_tool_id,'reason',p_reason),p_idempotency_key,now())
+  on conflict(user_id,platform_id,idempotency_key) do nothing;
+
+  insert into public.activity_progress(user_id,platform_id,activity_id,status,progress,attempts,completed_at,updated_at,metadata)
+  values(p_user_id,v_platform,p_activity_id,'completed',100,1,now(),now(),coalesce(p_metadata,'{}'::jsonb)||jsonb_build_object('toolId',p_tool_id,'reason',p_reason))
+  on conflict(user_id,platform_id,activity_id) do update set status='completed',progress=100,completed_at=coalesce(public.activity_progress.completed_at,excluded.completed_at),updated_at=now(),metadata=public.activity_progress.metadata||excluded.metadata;
+
+  if coalesce(p_xp,0)>0 then
+    insert into public.metric_ledger(user_id,platform_id,activity_id,metric,delta,reason,idempotency_key,metadata)
+    values(p_user_id,v_platform,p_activity_id,'xp',p_xp,coalesce(p_reason,'LAB Virtual concluído'),p_idempotency_key||':xp',coalesce(p_metadata,'{}'::jsonb))
+    on conflict do nothing;
+  end if;
+
+  v_total_coins := coalesce(p_coins,0) + case when v_first then coalesce(p_first_bonus,0) else 0 end;
+  insert into public.wallets(user_id) values(p_user_id) on conflict(user_id) do nothing;
+  select * into v_wallet from public.wallets where user_id=p_user_id for update;
+  if v_wallet.status<>'active' then raise exception 'wallet_unavailable'; end if;
+  v_balance := v_wallet.balance + v_total_coins;
+  if v_total_coins>0 then
+    update public.wallets set balance=v_balance,lifetime_earned=lifetime_earned+v_total_coins,updated_at=now() where user_id=p_user_id returning * into v_wallet;
+    insert into public.wallet_ledger(user_id,entry_type,direction,amount,balance_after,platform_id,activity_id,event_type,reference_type,idempotency_key,metadata)
+    values(p_user_id,'reward','credit',v_total_coins,v_balance,v_platform,p_activity_id,'activity.completed','lab_virtual_completion',p_idempotency_key||':coins',coalesce(p_metadata,'{}'::jsonb)||jsonb_build_object('baseCoins',p_coins,'firstToolBonus',case when v_first then p_first_bonus else 0 end,'toolId',p_tool_id));
+  end if;
+
+  return jsonb_build_object('ok',true,'duplicate',false,'first_tool_validation',v_first,'rewards',jsonb_build_object('xp',p_xp,'coins',p_coins,'firstToolBonus',case when v_first then p_first_bonus else 0 end),'wallet',jsonb_build_object('balance',v_wallet.balance,'lifetime_earned',v_wallet.lifetime_earned,'lifetime_spent',v_wallet.lifetime_spent));
+end;
+$$;
+revoke all on function public.lab_virtual_apply_completion_service(uuid,text,text,integer,integer,integer,text,text,jsonb) from public, anon, authenticated;
+grant execute on function public.lab_virtual_apply_completion_service(uuid,text,text,integer,integer,integer,text,text,jsonb) to service_role;

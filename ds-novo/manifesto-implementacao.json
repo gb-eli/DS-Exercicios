@@ -1,0 +1,58 @@
+{
+  "schema": "agv-core-implementation-status",
+  "version": "0.7.0",
+  "date": "2026-08-13",
+  "baseManifest": "manifesto-plataformas.json",
+  "coreSdk": "0.2.0",
+  "supabaseProjectRef": "iresvqwyaqotghjssncg",
+  "edgeFunctions": {
+    "agv-progress-event": 3,
+    "agv-reward-claim": 4,
+    "ctf-complete-challenge": 1,
+    "ctf-core-actions": 1,
+    "lab-virtual-core": 2,
+    "agv-teacher-activity": 1
+  },
+  "store": {
+    "canonicalVersion": "0.9.6.0-RG",
+    "coreConfigEnabled": false,
+    "dsStoreSdk": "0.10.0-AGVCORE"
+  },
+  "phase0": "complete",
+  "phase1": "ctf_complete_lab_virtual_core",
+  "phase2": "foundation",
+  "phase3": "not_started",
+  "ctf": {
+    "canonicalVersion": "3.2.0",
+    "centralAuth": true,
+    "serverChallengeVerifier": true,
+    "catalogActivities": 86,
+    "challengeVerifierCoverage": 68,
+    "lessonsHintsDailyStoreMigrated": true,
+    "localEconomicFallback": false
+  },
+  "labVirtual": {
+    "catalogVersion": "4.28.0",
+    "runtimeVersion": "4.21.0",
+    "centralAuth": true,
+    "toolCatalog": 50,
+    "completionCatalog": 88,
+    "completionRewardRules": 88,
+    "xpTotal": 5195,
+    "coinsTotal": 1979,
+    "firstToolBonusRules": 3,
+    "coverageMilestoneRules": 6,
+    "teacherReferences": 88,
+    "localStartingCreditsImported": false,
+    "localPaidStore": false
+  },
+  "teacherMode": {
+    "table": "activity_teacher_content",
+    "edgeFunction": "agv-teacher-activity",
+    "directStudentAccess": false,
+    "classScopedTeachers": true,
+    "labVirtualReferences": 88,
+    "exercisePrivateImportPrepared": 88,
+    "solutionFilesPrepared": 168
+  }
+}
