@@ -1,0 +1,12 @@
+{
+  "name": "Exercícios Práticos DS",
+  "version": "0.3.0",
+  "date": "2026-08-13",
+  "features": [
+    "Manifesto sanitizado dos 88 exercícios",
+    "Arquivos reais por exercício sem entregar solução",
+    "Orientações e conceitos reais",
+    "Validação automática inicial",
+    "Separação de conteúdo do aluno e referência do professor"
+  ]
+}

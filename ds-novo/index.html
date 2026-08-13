@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Exercícios Práticos DS</title>
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Desenvolvimento de Sistemas</p>
+        <h1>Exercícios Práticos DS</h1>
+      </div>
+      <div id="session-actions" class="session-actions hidden">
+        <div class="identity-mini">
+          <strong id="session-name"></strong>
+          <span id="session-class"></span>
+        </div>
+        <button id="logout-btn" class="button button-ghost" type="button">Sair</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section id="loading-view" class="panel centered">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Carregando sua área...</p>
+      </section>
+
+      <section id="login-view" class="auth-layout hidden" aria-labelledby="login-title">
+        <article class="panel auth-card">
+          <p class="eyebrow">Acesso do aluno</p>
+          <h2 id="login-title">Entre para continuar</h2>
+          <p class="muted">No primeiro acesso, use seu e-mail institucional e o CGM como senha temporária.</p>
+          <form id="login-form" class="form-stack" novalidate>
+            <label>
+              <span>E-mail institucional</span>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="nome@escola.pr.gov.br" required />
+            </label>
+            <label>
+              <span>Senha</span>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="CGM no primeiro acesso" required />
+            </label>
+            <p id="login-error" class="form-error hidden" role="alert"></p>
+            <button class="button button-primary" type="submit">Entrar</button>
+          </form>
+        </article>
+        <aside class="panel info-card">
+          <p class="eyebrow">Como funciona</p>
+          <h2>Seu progresso acompanha você</h2>
+          <p>Depois do login, sua turma define automaticamente quais disciplinas e exercícios aparecem. Seu código e progresso serão salvos na nuvem.</p>
+          <div class="steps">
+            <div><span>1</span><p><strong>Primeiro acesso</strong><br>E-mail @escola + CGM.</p></div>
+            <div><span>2</span><p><strong>Crie sua senha</strong><br>O CGM deixa de ser usado como senha.</p></div>
+            <div><span>3</span><p><strong>Continue de qualquer PC</strong><br>Seu trabalho permanece salvo.</p></div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="password-view" class="auth-layout hidden" aria-labelledby="password-title">
+        <article class="panel auth-card">
+          <p class="eyebrow">Primeiro acesso</p>
+          <h2 id="password-title">Crie sua senha pessoal</h2>
+          <p class="muted">Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.</p>
+          <form id="password-form" class="form-stack" novalidate>
+            <label>
+              <span>Nova senha</span>
+              <input id="new-password" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <label>
+              <span>Confirmar nova senha</span>
+              <input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <div id="password-rules" class="password-rules">
+              <span data-rule="length">• pelo menos 8 caracteres</span>
+              <span data-rule="letter">• pelo menos uma letra</span>
+              <span data-rule="number">• pelo menos um número</span>
+            </div>
+            <p id="password-error" class="form-error hidden" role="alert"></p>
+            <button class="button button-primary" type="submit">Salvar nova senha</button>
+          </form>
+        </article>
+        <aside class="panel info-card">
+          <p class="eyebrow">Importante</p>
+          <h2>Não reutilize seu CGM</h2>
+          <p>Sua senha deve ser pessoal. Não compartilhe com colegas e evite usar o mesmo código de outros serviços.</p>
+        </aside>
+      </section>
+
+      <section id="dashboard-view" class="dashboard hidden" aria-labelledby="dashboard-title">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">Sua área</p>
+            <h2 id="dashboard-title">Olá, <span id="student-first-name">aluno</span></h2>
+            <p id="student-context" class="muted"></p>
+          </div>
+          <div class="status-chip"><span class="status-dot"></span> progresso sincronizado</div>
+        </div>
+
+        <section class="dashboard-grid">
+          <article class="panel progress-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Visão geral</p>
+                <h3>Seu progresso</h3>
+              </div>
+              <strong id="overall-progress">0%</strong>
+            </div>
+            <div class="progress-track"><div id="overall-progress-bar" class="progress-fill"></div></div>
+            <div class="stats-row">
+              <div><strong id="completed-count">0</strong><span>Concluídos</span></div>
+              <div><strong id="in-progress-count">0</strong><span>Em andamento</span></div>
+              <div><strong id="available-count">0</strong><span>Disponíveis</span></div>
+            </div>
+          </article>
+
+          <article class="panel resume-panel">
+            <p class="eyebrow">Continuar</p>
+            <h3 id="resume-title">Nenhum exercício iniciado</h3>
+            <p id="resume-description" class="muted">Quando você começar um exercício, ele aparecerá aqui.</p>
+            <button id="resume-btn" class="button button-primary" type="button" disabled>Continuar exercício</button>
+          </article>
+        </section>
+
+        <section class="subjects-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Conteúdo</p>
+              <h3>Suas disciplinas</h3>
+            </div>
+            <span id="subject-count" class="muted"></span>
+          </div>
+          <div id="subjects-grid" class="subjects-grid"></div>
+        </section>
+      </section>
+
+      <section id="exercise-view" class="exercise-view hidden" aria-labelledby="exercise-title">
+        <div class="exercise-toolbar panel">
+          <button id="back-dashboard" class="button button-ghost" type="button">← Disciplinas</button>
+          <div>
+            <p id="exercise-subject" class="eyebrow"></p>
+            <h2 id="exercise-title">Exercício</h2>
+          </div>
+          <span id="exercise-state" class="status-chip">Disponível</span>
+        </div>
+        <div class="exercise-layout">
+          <aside class="panel exercise-sidebar">
+            <div id="exercise-meta" class="exercise-meta"></div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Orientação</p>
+              <div id="exercise-guidance" class="exercise-guidance"></div>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Validação</p>
+              <div id="validation-results" class="validation-results"></div>
+              <button id="validate-btn" class="button button-ghost button-small" type="button">Validar exercício</button>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Arquivos</p>
+              <div id="file-tabs" class="file-tabs"></div>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Salvamento</p>
+              <div id="save-state" class="save-state">Preparando editor...</div>
+              <button id="save-now-btn" class="button button-primary button-small" type="button">Salvar agora</button>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Versões</p>
+              <button id="history-btn" class="button button-ghost button-small" type="button">Ver histórico</button>
+            </div>
+          </aside>
+
+          <section class="panel workspace-panel">
+            <div class="workspace-toolbar">
+              <div>
+                <strong id="active-filename">arquivo</strong>
+                <span id="active-language" class="muted"></span>
+              </div>
+              <div class="workspace-actions">
+                <button id="run-preview-btn" class="button button-ghost button-small" type="button">Executar / visualizar</button>
+                <button id="mark-complete-btn" class="button button-primary button-small" type="button">Marcar como concluído</button>
+              </div>
+            </div>
+            <textarea id="code-editor" class="code-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editor de código"></textarea>
+          </section>
+
+          <section class="panel output-panel">
+            <div class="output-tabs">
+              <button class="output-tab active" data-output="preview" type="button">Preview</button>
+              <button class="output-tab" data-output="terminal" type="button">Terminal</button>
+            </div>
+            <iframe id="preview-frame" class="preview-frame" title="Pré-visualização do exercício" sandbox="allow-scripts"></iframe>
+            <pre id="terminal-output" class="terminal-output hidden">A saída do exercício aparecerá aqui.</pre>
+          </section>
+        </div>
+
+        <dialog id="history-dialog" class="history-dialog">
+          <form method="dialog" class="history-card panel">
+            <div class="history-head">
+              <div><p class="eyebrow">Histórico</p><h3>Versões salvas</h3></div>
+              <button class="button button-ghost button-small" value="cancel">Fechar</button>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </form>
+        </dialog>
+      </section>
+    </main>
+
+    <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
+  </div>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
