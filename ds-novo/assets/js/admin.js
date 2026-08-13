@@ -1,7 +1,7 @@
 
 import { supabase } from './supabase.js';
 
-let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher';
+let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -50,6 +50,10 @@ function ensureAdminShell(){
           </div>
 
           <div class="staff-commandbar">
+            <button id="staff-supervision-btn" class="button button-ghost" type="button">Supervisão</button>
+            <button id="staff-validations-btn" class="button button-ghost" type="button">Validações</button>
+            <button id="staff-ranking-btn" class="button button-ghost" type="button">Ranking</button>
+            <button id="staff-releases-btn" class="button button-ghost" type="button">Liberações</button>
             <button id="staff-team-btn" class="button button-ghost" type="button">Equipe</button>
             <button id="staff-refresh-btn" class="button button-primary" type="button">Atualizar</button>
             <button id="staff-back-btn" class="button button-ghost" type="button">Sair</button>
@@ -137,22 +141,88 @@ function ensureAdminShell(){
         </form>
       </dialog>
 
+
+      <dialog id="supervision-center-dialog" class="history-dialog">
+        <div class="history-card panel supervision-center-card">
+          <div class="history-head">
+            <div><p class="eyebrow">Tempo real</p><h3>Central de supervisão</h3><p class="muted">Sessões ativas, exercício atual, IP, foco e sinais de segurança.</p></div>
+            <button id="supervision-center-close" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <div id="supervision-live-list" class="supervision-live-list"></div>
+          <div class="supervision-feed-head"><h4>Eventos recentes</h4><span class="muted">Objetivo = evento observado • Heurística = sinal para conferência</span></div>
+          <div id="security-feed-list" class="security-feed-list"></div>
+        </div>
+      </dialog>
+
+      <dialog id="legacy-review-dialog" class="history-dialog">
+        <div class="history-card panel legacy-review-card">
+          <div class="history-head">
+            <div><p class="eyebrow">Portal antigo</p><h3>Validações pendentes</h3></div>
+            <button id="legacy-review-close" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <div id="legacy-review-list" class="legacy-review-list"></div>
+        </div>
+      </dialog>
+
+      <dialog id="ranking-dialog" class="history-dialog">
+        <div class="history-card panel ranking-card">
+          <div class="history-head">
+            <div><p class="eyebrow">Indicadores</p><h3>Ranking de atividades</h3><p class="muted">Prioriza atividades verificadas. Eventos de segurança não aparecem no ranking.</p></div>
+            <button id="ranking-close" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <div id="ranking-list" class="ranking-list"></div>
+        </div>
+      </dialog>
+
+      <dialog id="release-dialog" class="history-dialog">
+        <div class="history-card panel release-card">
+          <div class="history-head">
+            <div><p class="eyebrow">Controle da turma</p><h3>Liberações e segurança</h3><p class="muted">Defina quais exercícios a turma pode fazer e ajuste as regras do modo supervisionado.</p></div>
+            <button id="release-close" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <div class="release-toolbar">
+            <label><span>Turma</span><select id="release-class-select"></select></label>
+            <button id="release-all-btn" class="button button-ghost button-small" type="button">Liberar todos</button>
+            <button id="lock-all-btn" class="button button-ghost button-small" type="button">Bloquear todos</button>
+          </div>
+          <div id="release-list" class="release-list"></div>
+        </div>
+      </dialog>
+
       <dialog id="live-dialog" class="history-dialog">
         <div class="history-card panel live-card">
           <div class="history-head"><div><p class="eyebrow">Acompanhamento</p><h3 id="live-title">Exercício do aluno</h3></div><button id="live-close-btn" class="button button-ghost button-small" type="button">Fechar</button></div>
           <div id="live-file-tabs" class="file-tabs horizontal"></div>
-          <div class="live-meta"><span id="live-status" class="muted">Aguardando...</span></div>
-          <pre id="live-code" class="live-code">Nenhum conteúdo salvo ainda.</pre>
+          <div class="live-meta">
+            <span id="live-status" class="muted">Aguardando...</span>
+            <span id="live-cursor" class="live-cursor"></span>
+          </div>
+          <textarea id="live-code-editor" class="live-code-editor" spellcheck="false" aria-label="Código do aluno em acompanhamento"></textarea>
+          <p class="live-help">Quando o aluno estiver em sessão ativa, alterações aparecem por WebSocket. Ao focar este editor, o aluno é avisado de que o professor está editando.</p>
         </div>
       </dialog>`);
   }
   if(!shellBound){
     $('staff-refresh-btn')?.addEventListener('click',refreshStaff);
+    $('staff-supervision-btn')?.addEventListener('click',openSupervisionCenter);
+    $('staff-validations-btn')?.addEventListener('click',openLegacyReviews);
+    $('staff-ranking-btn')?.addEventListener('click',openRanking);
+    $('staff-releases-btn')?.addEventListener('click',openReleaseManager);
+    $('supervision-center-close')?.addEventListener('click',closeSupervisionCenter);
+    $('legacy-review-close')?.addEventListener('click',()=>$('legacy-review-dialog')?.close());
+    $('ranking-close')?.addEventListener('click',()=>$('ranking-dialog')?.close());
+    $('release-close')?.addEventListener('click',()=>$('release-dialog')?.close());
+    $('release-class-select')?.addEventListener('change',loadReleaseMatrix);
+    $('release-all-btn')?.addEventListener('click',()=>bulkClassRelease(true));
+    $('lock-all-btn')?.addEventListener('click',()=>bulkClassRelease(false));
     $('staff-class-filter')?.addEventListener('change',e=>{currentClass=e.target.value;renderSummary();renderStudents()});
     $('staff-search')?.addEventListener('input',()=>{renderSummary();renderStudents()});
     $('staff-review-only')?.addEventListener('change',()=>{renderSummary();renderStudents()});
     $('staff-access-filter')?.addEventListener('change',()=>{renderSummary();renderStudents()});
     $('live-close-btn')?.addEventListener('click',closeLive);
+    $('live-code-editor')?.addEventListener('focus',onTeacherLiveFocus);
+    $('live-code-editor')?.addEventListener('blur',onTeacherLiveBlur);
+    $('live-code-editor')?.addEventListener('input',onTeacherLiveInput);
     $('student-detail-close-btn')?.addEventListener('click',()=>$('student-detail-dialog')?.close());
     $('roster-close-btn')?.addEventListener('click',()=>$('roster-dialog')?.close());
     $('roster-form')?.addEventListener('submit',saveRosterRecord);
@@ -185,6 +255,17 @@ async function callStaffDirectory(body){
   if(data?.error) throw new Error(data.error);
   return data;
 }
+async function callSupervision(body){
+  const {data,error}=await supabase.functions.invoke('supervision',{body});
+  if(!error&&!data?.error)return data||{};
+  let details=data||null;
+  try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  const e=new Error(details?.reason||details?.error||error?.message||'Falha na supervisão.');
+  e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
+}
+function studentNameById(id){return studentRecords().find(s=>s.id===id)?.full_name||'Aluno';}
+function escapeAttr(s){return esc(s).replace(/'/g,'&#39;');}
+
 export function isStaff(profile){return ['teacher','admin','super_admin'].includes(profile?.role)}
 export async function openStaffPanel(){
   ensureAdminShell();
@@ -206,6 +287,18 @@ export async function openStaffPanel(){
   if(chip) chip.textContent=isAdmin?'Administrador':'Professor';
 
   await refreshStaff();
+  clearInterval(securityWatchTimer);
+  await refreshSupervisionBadge();
+  securityWatchTimer=setInterval(refreshSupervisionBadge,8000);
+}
+async function refreshSupervisionBadge(){
+  const btn=$('staff-supervision-btn');if(!btn)return;
+  try{
+    const data=await callSupervision({action:'security_feed'});
+    const recent=(data.events||[]).filter(e=>['high','critical'].includes(e.severity)&&Date.now()-new Date(e.created_at).getTime()<10*60*1000);
+    btn.textContent=recent.length?`Supervisão • ${recent.length}`:'Supervisão';
+    btn.classList.toggle('has-alerts',recent.length>0);
+  }catch(_){}
 }
 async function refreshStaff(){
   const box=$('staff-students');
@@ -349,6 +442,190 @@ function renderStudents(){
   box.querySelectorAll('.detail-btn').forEach(b=>b.addEventListener('click',()=>openStudentDetail(b.dataset.student,b.dataset.name)));
 }
 
+
+
+async function openSupervisionCenter(){
+  $('supervision-center-dialog').showModal();
+  await refreshSupervisionCenter();
+  clearInterval(supervisionTimer);
+  supervisionTimer=setInterval(refreshSupervisionCenter,4000);
+}
+function closeSupervisionCenter(){
+  clearInterval(supervisionTimer);supervisionTimer=null;
+  $('supervision-center-dialog')?.close();
+}
+async function refreshSupervisionCenter(){
+  try{
+    const [live,feed]=await Promise.all([
+      callSupervision({action:'live_overview'}),
+      callSupervision({action:'security_feed'})
+    ]);
+    const sessions=live.sessions||[];
+    $('supervision-live-list').innerHTML=sessions.length?sessions.map(s=>{
+      const fresh=Date.now()-new Date(s.last_seen_at).getTime()<8000;
+      return `<article class="supervision-session ${s.locked?'locked':''}">
+        <div class="supervision-session-main">
+          <div><strong>${esc(studentNameById(s.student_id))}</strong><span>${esc(exerciseLabel(s.exercise_id))}</span></div>
+          <div class="badges">
+            <span class="badge ${fresh?'success':'warning'}">${fresh?'Online':'Sem sinal recente'}</span>
+            ${s.locked?'<span class="badge danger">Bloqueado</span>':''}
+            <span class="badge info">${esc(s.current_file||'sem arquivo')}</span>
+          </div>
+        </div>
+        <div class="supervision-session-data">
+          <span>Cursor <strong>${Number(s.cursor_start||0)}–${Number(s.cursor_end||0)}</strong></span>
+          <span>Saídas <strong>${Number(s.focus_violation_count||0)}</strong></span>
+          <span>Sinais <strong>${Number(s.suspicious_score||0)}</strong></span>
+          <span>IP <strong>${esc(s.ip_address||'—')}</strong></span>
+        </div>
+        <div class="student-actions">
+          <button class="button button-primary button-small session-live-btn" data-student="${s.student_id}" data-exercise="${s.exercise_id}">Abrir ao vivo</button>
+          ${s.locked?`<button class="button button-ghost button-small session-unlock-btn" data-student="${s.student_id}" data-exercise="${s.exercise_id}">Liberar atividade</button>`:''}
+        </div>
+      </article>`;
+    }).join(''):'<div class="staff-state"><strong>Nenhum aluno em atividade agora.</strong><span>Quando uma sessão supervisionada começar, ela aparecerá aqui.</span></div>';
+    $('supervision-live-list').querySelectorAll('.session-live-btn').forEach(b=>b.onclick=()=>openLive(b.dataset.student,b.dataset.exercise,studentNameById(b.dataset.student)));
+    $('supervision-live-list').querySelectorAll('.session-unlock-btn').forEach(b=>b.onclick=async()=>{await callSupervision({action:'unlock_activity',student_id:b.dataset.student,exercise_id:b.dataset.exercise});await refreshSupervisionCenter();await refreshStaff();});
+
+    const events=(feed.events||[]).slice(0,80);
+    $('security-feed-list').innerHTML=events.length?events.map(ev=>`<article class="security-event severity-${ev.severity}">
+      <div><strong>${esc(studentNameById(ev.student_id))}</strong><span>${esc(exerciseLabel(ev.exercise_id))}</span></div>
+      <div><span class="badge ${ev.confidence==='objective'?'success':'info'}">${ev.confidence==='objective'?'Objetivo':'Heurística'}</span><span class="badge ${ev.severity==='critical'||ev.severity==='high'?'danger':'warning'}">${esc(ev.event_type)}</span></div>
+      <small>${new Date(ev.created_at).toLocaleString('pt-BR')} • IP ${esc(ev.ip_address||'—')}</small>
+    </article>`).join(''):'<p class="muted">Nenhum evento de segurança registrado.</p>';
+  }catch(error){
+    console.error(error);
+    $('supervision-live-list').innerHTML='<p class="form-error">Não foi possível carregar a supervisão.</p>';
+  }
+}
+
+async function openLegacyReviews(){
+  if(!$('legacy-review-dialog').open)$('legacy-review-dialog').showModal();
+  const box=$('legacy-review-list');box.innerHTML='<div class="loading-card">Carregando validações...</div>';
+  try{
+    const data=await callSupervision({action:'legacy_feed'});
+    const claims=(data.claims||[]).filter(c=>c.status==='pending');
+    box.innerHTML=claims.length?claims.map((c,i)=>`<article class="legacy-review-item">
+      <div class="legacy-review-head">
+        <div><strong>${esc(studentNameById(c.student_id))}</strong><span>${esc(exerciseLabel(c.exercise_id))}</span></div>
+        <span class="badge warning">Aguardando validação</span>
+      </div>
+      <a class="repository-link" href="${escapeAttr(c.repository_url)}" target="_blank" rel="noopener noreferrer">Abrir repositório ↗</a>
+      <textarea id="legacy-feedback-${i}" placeholder="Feedback opcional para o aluno"></textarea>
+      <div class="review-actions">
+        <button class="button button-ghost legacy-reject" data-id="${c.id}" data-feedback="legacy-feedback-${i}">Solicitar ajustes</button>
+        <button class="button button-primary legacy-approve" data-id="${c.id}" data-feedback="legacy-feedback-${i}">Aprovar</button>
+      </div>
+    </article>`).join(''):'<div class="staff-state"><strong>Nenhuma validação pendente.</strong><span>Entregas do portal antigo aparecerão aqui.</span></div>';
+    box.querySelectorAll('.legacy-approve').forEach(b=>b.onclick=()=>reviewLegacyClaim(b,'approved'));
+    box.querySelectorAll('.legacy-reject').forEach(b=>b.onclick=()=>reviewLegacyClaim(b,'rejected'));
+  }catch(error){box.innerHTML='<p class="form-error">Não foi possível carregar as validações.</p>';}
+}
+async function reviewLegacyClaim(btn,status){
+  btn.disabled=true;
+  const feedback=$(btn.dataset.feedback)?.value.trim()||'';
+  try{await callSupervision({action:'review_legacy',claim_id:btn.dataset.id,status,teacher_feedback:feedback});await openLegacyReviews();await refreshStaff();}
+  finally{btn.disabled=false;}
+}
+
+async function openRanking(){
+  $('ranking-dialog').showModal();
+  const box=$('ranking-list');box.innerHTML='<div class="loading-card">Calculando ranking...</div>';
+  try{
+    const data=await callSupervision({action:'rankings'});
+    box.innerHTML=(data.ranking||[]).map((r,i)=>`<article class="ranking-row">
+      <span class="ranking-position">${i+1}</span>
+      <div><strong>${esc(r.full_name)}</strong><span>${r.verified} verificadas • ${r.completed} concluídas${r.last_completion?` • primeira conclusão ${new Date(r.last_completion).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}`:''}</span></div>
+      <strong class="ranking-score">${r.verified}</strong>
+    </article>`).join('')||'<p class="muted">Ainda não há atividades concluídas.</p>';
+  }catch(error){box.innerHTML='<p class="form-error">Não foi possível carregar o ranking.</p>';}
+}
+
+async function openReleaseManager(){
+  $('release-dialog').showModal();
+  const sel=$('release-class-select');
+  sel.innerHTML=(payload.classes||[]).map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+  if(currentClass!=='all'&&[...sel.options].some(o=>o.value===currentClass))sel.value=currentClass;
+  await loadReleaseMatrix();
+}
+async function loadReleaseMatrix(){
+  const classId=$('release-class-select').value;if(!classId)return;
+  const box=$('release-list');box.innerHTML='<div class="loading-card">Carregando exercícios...</div>';
+  try{
+    const {data:links,error:le}=await supabase.from('class_subjects').select('subject_id').eq('class_id',classId).eq('active',true);if(le)throw le;
+    const subjectIds=(links||[]).map(x=>x.subject_id);
+    if(!subjectIds.length){box.innerHTML='<p class="muted">Nenhuma disciplina vinculada.</p>';return;}
+    const {data:exercises,error:ee}=await supabase.from('exercises').select('id,subject_id,exercise_number,title,default_locked').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number');if(ee)throw ee;
+    const ids=(exercises||[]).map(x=>x.id);
+    const [rr,pp]=await Promise.all([
+      ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,updated_at').eq('class_id',classId).is('student_id',null).in('exercise_id',ids):Promise.resolve({data:[]}),
+      ids.length?supabase.from('exercise_security_policies').select('exercise_id,require_fullscreen,max_focus_violations,block_paste,detect_devtools,detect_rapid_input,block_external_network,teacher_live_edit').in('exercise_id',ids):Promise.resolve({data:[]})
+    ]);
+    releaseCtx={classId,exercises:exercises||[],releases:rr.data||[],policies:pp.data||[]};
+    renderReleaseMatrix();
+  }catch(error){console.error(error);box.innerHTML='<p class="form-error">Não foi possível carregar as liberações.</p>';}
+}
+function classReleaseFor(id){return (releaseCtx?.releases||[]).filter(r=>r.exercise_id===id).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null}
+function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:3,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
+function renderReleaseMatrix(){
+  const box=$('release-list');
+  box.innerHTML=releaseCtx.exercises.map((ex,i)=>{
+    const rel=classReleaseFor(ex.id),p=securityPolicyFor(ex.id),enabled=rel?rel.enabled:!ex.default_locked;
+    return `<details class="release-item" data-exercise="${ex.id}">
+      <summary>
+        <span class="release-number">${String(ex.exercise_number).padStart(2,'0')}</span>
+        <strong>${esc(ex.title)}</strong>
+        <label class="release-switch" onclick="event.stopPropagation()"><input class="release-enabled" type="checkbox" ${enabled?'checked':''}><span>${enabled?'Liberado':'Bloqueado'}</span></label>
+      </summary>
+      <div class="release-security-grid">
+        <label><span>Tela cheia</span><input class="pol-fullscreen" type="checkbox" ${p.require_fullscreen?'checked':''}></label>
+        <label><span>Máx. saídas</span><input class="pol-focus" type="number" min="1" max="20" value="${Number(p.max_focus_violations||3)}"></label>
+        <label><span>Bloquear colagem</span><input class="pol-paste" type="checkbox" ${p.block_paste?'checked':''}></label>
+        <label><span>Heurística DevTools</span><input class="pol-devtools" type="checkbox" ${p.detect_devtools?'checked':''}></label>
+        <label><span>Entrada rápida</span><input class="pol-rapid" type="checkbox" ${p.detect_rapid_input?'checked':''}></label>
+        <label><span>Bloquear rede externa</span><input class="pol-network" type="checkbox" ${p.block_external_network?'checked':''}></label>
+        <label><span>Professor edita ao vivo</span><input class="pol-live" type="checkbox" ${p.teacher_live_edit?'checked':''}></label>
+        <button class="button button-primary button-small save-policy" type="button">Salvar segurança</button>
+      </div>
+    </details>`;
+  }).join('');
+  box.querySelectorAll('.release-enabled').forEach(input=>input.onchange=()=>saveClassRelease(input.closest('.release-item'),input.checked));
+  box.querySelectorAll('.save-policy').forEach(btn=>btn.onclick=()=>saveSecurityPolicy(btn.closest('.release-item')));
+}
+async function saveClassRelease(item,enabled){
+  const exerciseId=item.dataset.exercise,classId=releaseCtx.classId,existing=classReleaseFor(exerciseId);
+  let res;
+  if(existing)res=await supabase.from('exercise_releases').update({enabled,updated_at:new Date().toISOString()}).eq('id',existing.id).select().single();
+  else res=await supabase.from('exercise_releases').insert({class_id:classId,student_id:null,exercise_id:exerciseId,enabled}).select().single();
+  if(res.error){alert('Não foi possível alterar a liberação.');return;}
+  await loadReleaseMatrix();
+}
+async function saveSecurityPolicy(item){
+  const exerciseId=item.dataset.exercise;
+  const policy={
+    exercise_id:exerciseId,
+    require_fullscreen:item.querySelector('.pol-fullscreen').checked,
+    max_focus_violations:Number(item.querySelector('.pol-focus').value||3),
+    block_paste:item.querySelector('.pol-paste').checked,
+    detect_devtools:item.querySelector('.pol-devtools').checked,
+    detect_rapid_input:item.querySelector('.pol-rapid').checked,
+    block_external_network:item.querySelector('.pol-network').checked,
+    teacher_live_edit:item.querySelector('.pol-live').checked,
+    updated_at:new Date().toISOString()
+  };
+  const {error}=await supabase.from('exercise_security_policies').upsert(policy,{onConflict:'exercise_id'});
+  if(error){alert('Não foi possível salvar a política.');return;}
+  await loadReleaseMatrix();
+}
+async function bulkClassRelease(enabled){
+  if(!releaseCtx?.exercises?.length)return;
+  for(const ex of releaseCtx.exercises){
+    const old=classReleaseFor(ex.id);
+    if(old)await supabase.from('exercise_releases').update({enabled,updated_at:new Date().toISOString()}).eq('id',old.id);
+    else await supabase.from('exercise_releases').insert({class_id:releaseCtx.classId,student_id:null,exercise_id:ex.id,enabled});
+  }
+  await loadReleaseMatrix();
+}
 
 function setTeamMessage(text='',ok=false){
   const el=$('team-message'); if(!el)return;
@@ -543,19 +820,29 @@ async function openStudentDetail(studentId,name){
   $('student-detail-dialog').showModal();
   const data=await callStaff({action:'student_detail',student_id:studentId});
   detailCtx.data=data;
-  const rows=(data.progress||[]).slice().sort((a,b)=>{
-    const ea=payload.exercises.find(e=>e.id===a.exercise_id)?.exercise_number||999;
-    const eb=payload.exercises.find(e=>e.id===b.exercise_id)?.exercise_number||999;
-    return ea-eb;
-  });
+  const student=studentRecords().find(s=>s.id===studentId);
+  const cls=classForStudent(student||studentId);
+  let allowedExercises=payload.exercises||[];
+  if(cls?.id){
+    const {data:links}=await supabase.from('class_subjects').select('subject_id').eq('class_id',cls.id).eq('active',true);
+    const subjectIds=new Set((links||[]).map(x=>x.subject_id));
+    allowedExercises=allowedExercises.filter(e=>subjectIds.has(e.subject_id));
+  }
+  const progressMap=new Map((data.progress||[]).map(r=>[r.exercise_id,r]));
+  const rows=allowedExercises.slice().sort((a,b)=>Number(a.exercise_number||999)-Number(b.exercise_number||999)).map(ex=>({
+    exercise_id:ex.id,
+    ...(progressMap.get(ex.id)||{status:'not_started',progress_percent:0,approval_status:'not_required'})
+  }));
+  const pending=rows.filter(r=>r.status!=='completed').length;
   $('student-detail-body').innerHTML=`
+    <div class="student-detail-summary"><strong>${rows.filter(r=>r.status==='completed').length} concluídos</strong><span>${pending} pendentes / não iniciados</span></div>
     <div class="student-exercise-grid">
       ${rows.map(r=>`
-        <button class="exercise-manage-card" data-exercise="${r.exercise_id}">
+        <button class="exercise-manage-card ${r.status==='not_started'?'not-started':''}" data-exercise="${r.exercise_id}">
           <span>${esc(exerciseLabel(r.exercise_id))}</span>
           <strong>${Math.round(Number(r.progress_percent||0))}%</strong>
           <small>${esc(r.status)} • ${esc(r.approval_status||'not_required')}</small>
-        </button>`).join('') || '<p class="muted">O aluno ainda não iniciou exercícios.</p>'}
+        </button>`).join('') || '<p class="muted">Nenhum exercício disponível para esta turma.</p>'}
     </div>
     <div id="exercise-management" class="exercise-management hidden"></div>`;
   $('student-detail-body').querySelectorAll('.exercise-manage-card').forEach(b=>b.onclick=()=>renderExerciseManagement(b.dataset.exercise));
@@ -641,23 +928,97 @@ async function reopenDetail(){
   await refreshStaff();
 }
 async function openLive(studentId,exerciseId,name){
-  liveCtx={studentId,exerciseId,name,active:null};
+  closeLive();
+  liveCtx={studentId,exerciseId,name,active:null,files:[],session:null,channel:null,teacherDirty:false,saveTimer:null};
   $('live-title').textContent=`${name} • ${exerciseLabel(exerciseId)}`;
+  $('live-code-editor').value='';
+  $('live-code-editor').readOnly=false;
   $('live-dialog').showModal();
+  try{
+    const [live,policyRes]=await Promise.all([
+      callSupervision({action:'live_overview'}),
+      supabase.from('exercise_security_policies').select('teacher_live_edit').eq('exercise_id',exerciseId).maybeSingle()
+    ]);
+    liveCtx.session=(live.sessions||[]).find(s=>s.student_id===studentId&&s.exercise_id===exerciseId)||null;
+    liveCtx.canEdit=policyRes.data?.teacher_live_edit!==false;
+    $('live-code-editor').readOnly=!liveCtx.canEdit;
+    if(!liveCtx.canEdit)$('live-status').textContent='Acompanhamento somente leitura — edição ao vivo desativada para este exercício.';
+    if(liveCtx.session?.channel_key)connectTeacherLiveChannel();
+  }catch(_){}
   await updateLive();
-  pollTimer=setInterval(updateLive,1000);
+  pollTimer=setInterval(updateLive,2500);
+}
+function connectTeacherLiveChannel(){
+  if(!liveCtx?.session?.channel_key||liveCtx.channel)return;
+  liveCtx.channel=supabase
+    .channel(`epds-live:${liveCtx.session.channel_key}`,{config:{broadcast:{self:false}}})
+    .on('broadcast',{event:'code_snapshot'},({payload})=>{
+      if(!liveCtx||!payload?.filename)return;
+      let file=liveCtx.files.find(f=>f.filename===payload.filename);
+      if(!file){file={id:null,filename:payload.filename,content:''};liveCtx.files.push(file);}
+      file.content=String(payload.content||'');
+      if(file.filename===(liveCtx.files.find(f=>f.id===liveCtx.active)?.filename||liveCtx.activeFilename) && document.activeElement!==$('live-code-editor')){
+        $('live-code-editor').value=file.content;
+      }
+      $('live-cursor').textContent=`${payload.filename} • cursor ${Number(payload.cursor_start||0)}–${Number(payload.cursor_end||0)}`;
+      $('live-status').textContent='WebSocket ao vivo • aluno digitando';
+    })
+    .on('broadcast',{event:'cursor'},({payload})=>{
+      if(payload?.filename)$('live-cursor').textContent=`${payload.filename} • cursor ${Number(payload.cursor_start||0)}–${Number(payload.cursor_end||0)}`;
+    })
+    .subscribe();
 }
 async function updateLive(){
   if(!liveCtx)return;
   try{
     const data=await callStaff({action:'student_files',student_id:liveCtx.studentId,exercise_id:liveCtx.exerciseId});
-    const files=data.files||[];
+    const files=data.files||[];liveCtx.files=files;
     if(!liveCtx.active||!files.some(f=>f.id===liveCtx.active)) liveCtx.active=files[0]?.id||null;
     $('live-file-tabs').innerHTML=files.map(f=>`<button type="button" class="file-tab ${f.id===liveCtx.active?'active':''}" data-id="${f.id}">${esc(f.filename)}</button>`).join('');
-    $('live-file-tabs').querySelectorAll('.file-tab').forEach(b=>b.onclick=()=>{liveCtx.active=b.dataset.id;updateLive()});
+    $('live-file-tabs').querySelectorAll('.file-tab').forEach(b=>b.onclick=()=>{liveCtx.active=b.dataset.id;const f=liveCtx.files.find(x=>x.id===liveCtx.active);$('live-code-editor').value=f?.content||'';updateLiveMeta();});
     const file=files.find(f=>f.id===liveCtx.active);
-    $('live-code').textContent=file?.content||'Nenhum conteúdo salvo ainda.';
-    $('live-status').textContent=file?`Ao vivo • revisão ${file.revision} • ${new Date(file.saved_at).toLocaleTimeString('pt-BR')}`:'Aguardando primeiro salvamento';
+    if(document.activeElement!==$('live-code-editor')&&!liveCtx.teacherDirty)$('live-code-editor').value=file?.content||'';
+    updateLiveMeta(file);
   }catch(e){$('live-status').textContent='Falha ao atualizar acompanhamento.'}
 }
-function closeLive(){clearInterval(pollTimer);pollTimer=null;liveCtx=null;$('live-dialog').close()}
+function updateLiveMeta(file=null){
+  const s=liveCtx?.session;
+  if(s){
+    const fresh=Date.now()-new Date(s.last_seen_at).getTime()<8000;
+    $('live-status').textContent=`${fresh?'Ao vivo':'Sem sinal recente'} • ${s.fullscreen?'tela cheia':'fora da tela cheia'} • ${s.focus_violation_count||0} saídas • IP ${s.ip_address||'—'}`;
+    $('live-cursor').textContent=`${s.current_file||file?.filename||'arquivo'} • cursor ${s.cursor_start||0}–${s.cursor_end||0}`;
+  }else if(file)$('live-status').textContent=`Salvo • revisão ${file.revision} • ${new Date(file.saved_at).toLocaleTimeString('pt-BR')}`;
+  else $('live-status').textContent='Aguardando primeiro salvamento';
+}
+async function persistTeacherEdit(){
+  if(!liveCtx)return;
+  const file=liveCtx.files.find(f=>f.id===liveCtx.active);if(!file)return;
+  const content=$('live-code-editor').value;
+  try{
+    const data=await callSupervision({action:'teacher_edit',student_id:liveCtx.studentId,exercise_id:liveCtx.exerciseId,filename:file.filename,content});
+    if(data.file){file.content=data.file.content;file.revision=data.file.revision;file.saved_at=data.file.saved_at;}
+    liveCtx.teacherDirty=false;
+  }catch(e){$('live-status').textContent='Falha ao persistir edição do professor.'}
+}
+function onTeacherLiveFocus(){
+  if(!liveCtx?.channel||liveCtx?.canEdit===false)return;
+  liveCtx.channel.send({type:'broadcast',event:'teacher_editing',payload:{editing:true,teacher_name:'Professor'}});
+}
+function onTeacherLiveBlur(){
+  if(liveCtx?.channel)liveCtx.channel.send({type:'broadcast',event:'teacher_editing',payload:{editing:false}});
+  if(liveCtx?.teacherDirty)persistTeacherEdit();
+}
+function onTeacherLiveInput(){
+  if(!liveCtx||liveCtx.canEdit===false)return;
+  const file=liveCtx.files.find(f=>f.id===liveCtx.active);if(!file)return;
+  liveCtx.teacherDirty=true;file.content=$('live-code-editor').value;
+  liveCtx.channel?.send({type:'broadcast',event:'teacher_edit',payload:{filename:file.filename,content:file.content,at:new Date().toISOString()}});
+  clearTimeout(liveCtx.saveTimer);liveCtx.saveTimer=setTimeout(persistTeacherEdit,700);
+}
+function closeLive(){
+  clearInterval(pollTimer);pollTimer=null;
+  if(liveCtx?.saveTimer)clearTimeout(liveCtx.saveTimer);
+  if(liveCtx?.channel){try{liveCtx.channel.send({type:'broadcast',event:'teacher_editing',payload:{editing:false}})}catch(_){};supabase.removeChannel(liveCtx.channel).catch(()=>{});}
+  liveCtx=null;
+  if($('live-dialog')?.open)$('live-dialog').close();
+}

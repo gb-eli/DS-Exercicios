@@ -18,7 +18,7 @@
           <h1>Exercícios Práticos DS</h1>
         </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.13.0</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.14.0</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -101,6 +101,7 @@
       </section>
 
       <section id="dashboard-view" class="dashboard hidden" aria-labelledby="dashboard-title">
+        <div id="dashboard-alert" class="dashboard-alert hidden" role="status"></div>
         <div class="welcome-row">
           <div>
             <p class="eyebrow">Sua área</p>
@@ -141,7 +142,10 @@
               <p class="eyebrow">Conteúdo</p>
               <h3>Suas disciplinas</h3>
             </div>
-            <span id="subject-count" class="muted"></span>
+            <div class="section-actions">
+              <span id="subject-count" class="muted"></span>
+              <button id="legacy-import-btn" class="button button-ghost button-small" type="button">Já fiz no portal antigo</button>
+            </div>
           </div>
           <div id="subjects-grid" class="subjects-grid"></div>
         </section>
@@ -154,7 +158,14 @@
             <p id="exercise-subject" class="eyebrow"></p>
             <h2 id="exercise-title">Exercício</h2>
           </div>
-          <span id="exercise-state" class="status-chip">Disponível</span>
+          <div class="exercise-status-group">
+            <span id="supervision-chip" class="supervision-chip">Supervisão inativa</span>
+            <span id="exercise-state" class="status-chip">Disponível</span>
+          </div>
+        </div>
+        <div id="supervision-banner" class="supervision-banner hidden" role="alert">
+          <span id="supervision-warning-text"></span>
+          <button id="supervision-return-fullscreen" class="button button-primary button-small hidden" type="button">Entrar em tela cheia</button>
         </div>
         <div class="exercise-layout">
           <aside class="panel exercise-sidebar">
@@ -230,6 +241,49 @@
   </div>
 
   <script type="module" src="assets/js/app.js"></script>
+
+
+    <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
+      <div class="history-card panel">
+        <div class="supervision-start-icon" aria-hidden="true">●</div>
+        <p class="eyebrow">Atividade supervisionada</p>
+        <h3>Antes de começar</h3>
+        <p class="muted">Durante esta atividade, o sistema registra eventos necessários para acompanhamento pedagógico e segurança. Trocas de guia/tela cheia são objetivas; sinais de DevTools e entrada anormal são apenas heurísticas para conferência do professor.</p>
+        <div id="supervision-policy-summary" class="supervision-policy-summary"></div>
+        <div class="supervision-privacy-note">
+          <strong>O que fica registrado</strong>
+          <span>sessão, exercício atual, arquivo/cursor, IP visto pelo servidor e eventos de segurança. O professor pode acompanhar e editar o código ao vivo.</span>
+        </div>
+        <button id="supervision-start-btn" class="button button-primary supervision-start-btn" type="button">Iniciar em tela cheia</button>
+      </div>
+    </dialog>
+
+    <dialog id="security-lock-dialog" class="history-dialog security-lock-dialog">
+      <div class="history-card panel">
+        <p class="eyebrow">Atividade bloqueada</p>
+        <h3>Acesso temporariamente bloqueado</h3>
+        <p id="security-lock-reason" class="muted">O limite de saídas da atividade foi atingido.</p>
+        <div class="support-note changes"><strong>O que fazer</strong><span>O professor recebeu o evento e precisa liberar esta atividade novamente.</span></div>
+        <button id="security-lock-back" class="button button-primary" type="button">Voltar às disciplinas</button>
+      </div>
+    </dialog>
+
+    <dialog id="legacy-import-dialog" class="history-dialog legacy-dialog">
+      <form id="legacy-import-form" class="history-card panel form-stack">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Portal antigo</p>
+            <h3>Registrar exercício já realizado</h3>
+            <p class="muted">Informe o link do exercício no seu repositório GitHub. O próximo exercício é liberado, mas esta entrega fica aguardando validação do professor.</p>
+          </div>
+          <button id="legacy-import-close" class="button button-ghost button-small" type="button">Fechar</button>
+        </div>
+        <label><span>Exercício realizado</span><select id="legacy-exercise-select" required></select></label>
+        <label><span>Link do GitHub / GitHub Pages</span><input id="legacy-repository-url" type="url" placeholder="https://github.com/..." required></label>
+        <p id="legacy-import-message" class="form-message hidden"></p>
+        <button class="button button-primary" type="submit">Enviar para validação</button>
+      </form>
+    </dialog>
 
     <dialog id="recovery-dialog" class="history-dialog auth-dialog">
       <form id="recovery-form" class="history-card panel form-stack">

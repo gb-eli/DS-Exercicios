@@ -1,6 +1,11 @@
 import { runPython } from './python-runtime.js';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
 import { validateExercise, renderValidation } from './validation.js';
+import {
+  prepareSupervision, stopSupervision, handlePaste, handleDrop, handleEditorInput,
+  sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId,
+  callActivityProgress
+} from './supervision.js';
 
 import { supabase } from './supabase.js';
 
@@ -14,9 +19,21 @@ let state = {
   dirty:false,
   saveTimer:null,
   lastSavedContent:new Map(),
+  remoteEdit:false,
+  teacherEditing:false,
+  lastProgressTouchAt:0,
 };
 
 const $ = (id)=>document.getElementById(id);
+
+async function callStudentFiles(body){
+  const {data,error}=await supabase.functions.invoke('student-files',{body});
+  if(!error&&!data?.error)return data||{};
+  let details=data||null;
+  try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  const e=new Error(details?.reason||details?.error||error?.message||'Falha ao salvar arquivo.');
+  e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
+}
 
 const DEFAULTS = {
   'introducao-programacao': [{filename:'main.py',language:'python',content:'# Digite seu código Python aqui\n'}],
@@ -85,10 +102,8 @@ async function ensureFiles(){
       student_id:state.profile.id,exercise_id:state.exercise.id,
       filename:f.filename,language:f.language,content:localStorage.getItem(`epds:${state.profile.id}:${state.exercise.id}:${f.filename}`) ?? f.content
     }));
-    const {data,error}=await supabase.from('student_files').insert(seeds)
-      .select('id,filename,language,content,revision,saved_at');
-    if(error) throw error;
-    remote=data||[];
+    const data=await callStudentFiles({action:'ensure',exercise_id:state.exercise.id,files:seeds.map(({filename,language,content})=>({filename,language,content}))});
+    remote=data.files||[];
   }
   state.files=remote;
   remote.forEach(f=>state.lastSavedContent.set(f.id,f.content||''));
@@ -100,19 +115,21 @@ function renderFileTabs(){
     const b=document.createElement('button');
     b.type='button'; b.className='file-tab'+(state.active?.id===file.id?' active':'');
     b.textContent=file.filename;
-    b.onclick=()=>activateFile(file.id);
+    b.onclick=async()=>activateFile(file.id);
     box.appendChild(b);
   });
 }
 
-function activateFile(id){
+async function activateFile(id){
   const next=state.files.find(f=>f.id===id); if(!next)return;
+  if(state.active && state.active.id!==id) await saveActiveFile(false);
   state.active=next;
   $('active-filename').textContent=next.filename;
   $('active-language').textContent=next.language||'texto';
   $('code-editor').value=next.content||'';
   renderFileTabs();
   setSaveState(`Revisão ${next.revision||1} • ${formatDate(next.saved_at)}`,'ok');
+  sendEditorSnapshot(true);
 }
 
 function formatDate(v){
@@ -122,40 +139,72 @@ function formatDate(v){
 }
 
 function scheduleSave(){
-  state.dirty=true; setSaveState('Alterações locais — salvando...','saving');
+  if(!state.active)return;
+  state.dirty=true;
+  state.active.content=$('code-editor').value;
+  setSaveState('Alterações locais — salvando...','saving');
   clearTimeout(state.saveTimer);
-  state.saveTimer=setTimeout(()=>saveActiveFile(),1800);
+  const fileId=state.active.id;
+  const content=$('code-editor').value;
+  state.saveTimer=setTimeout(()=>saveFileSnapshot(fileId,content,false),1200);
+}
+
+async function saveFileSnapshot(fileId,content,force=false){
+  const file=state.files.find(f=>f.id===fileId); if(!file)return;
+  if(!force && state.lastSavedContent.get(fileId)===content){
+    if(state.active?.id===fileId){state.dirty=false;setSaveState(`Tudo salvo • revisão ${file.revision||1}`,'ok');}
+    return;
+  }
+  localStorage.setItem(cacheKey(file),content);
+  if(state.active?.id===fileId)setSaveState('Salvando na nuvem...','saving');
+  let data;
+  try{
+    const result=await callStudentFiles({action:'save',exercise_id:state.exercise.id,file_id:fileId,content});
+    data=result.file;
+  }catch(error){
+    if(error.status===423){
+      setWorkspacePaused(true,error.details?.reason||'Atividade bloqueada pelo professor.');
+    }
+    if(state.active?.id===fileId){
+      if(error.code==='malicious_code_rejected'){
+        setSaveState(`Código não salvo: padrão bloqueado (${(error.details?.patterns||[]).join(', ')||'segurança'}). O evento foi registrado para o professor.`,'error');
+      }else{
+        setSaveState('Sem conexão ou atividade bloqueada: cópia local preservada','error');
+      }
+    }
+    return;
+  }
+  file.revision=data.revision; file.saved_at=data.saved_at;
+  if(file.content===content || state.active?.id!==fileId) file.content=data.content;
+  state.lastSavedContent.set(fileId,data.content);
+  localStorage.removeItem(cacheKey(file));
+  if(state.active?.id===fileId){
+    state.dirty=($('code-editor').value!==data.content);
+    setSaveState(`Salvo • revisão ${data.revision} • ${formatDate(data.saved_at)}`,'ok');
+  }
+  if(Date.now()-state.lastProgressTouchAt>10000){
+    state.lastProgressTouchAt=Date.now();
+    callActivityProgress({action:'touch',exercise_id:state.exercise.id}).catch(()=>{});
+  }
 }
 
 async function saveActiveFile(force=false){
   if(!state.active)return;
+  clearTimeout(state.saveTimer);
   const content=$('code-editor').value;
-  if(!force && state.lastSavedContent.get(state.active.id)===content){
-    state.dirty=false; setSaveState(`Tudo salvo • revisão ${state.active.revision||1}`,'ok'); return;
-  }
-  localStorage.setItem(cacheKey(state.active),content);
-  setSaveState('Salvando na nuvem...','saving');
-  const {data,error}=await supabase.from('student_files')
-    .update({content})
-    .eq('id',state.active.id)
-    .eq('student_id',state.profile.id)
-    .select('id,content,revision,saved_at')
-    .single();
-  if(error){
-    setSaveState('Sem conexão: cópia local preservada','error');
-    return;
-  }
-  state.active.content=data.content; state.active.revision=data.revision; state.active.saved_at=data.saved_at;
-  state.lastSavedContent.set(state.active.id,data.content);
-  state.dirty=false;
-  localStorage.removeItem(cacheKey(state.active));
-  setSaveState(`Salvo • revisão ${data.revision} • ${formatDate(data.saved_at)}`,'ok');
-  await supabase.from('student_exercises').update({last_activity_at:new Date().toISOString()})
-    .eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id);
+  state.active.content=content;
+  await saveFileSnapshot(state.active.id,content,force);
 }
 
-function buildPreview(){
-  const map=Object.fromEntries(state.files.map(f=>[f.filename,f.id===state.active?.id?$('code-editor').value:f.content||'']));
+async function buildPreview(){
+  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
+  const security=await inspectCode(checkFiles);
+  if(!security.ok){
+    $('terminal-output').textContent=`Execução bloqueada pelo modo supervisionado.\n${security.findings.map(x=>`• ${x.filename}: ${x.label}`).join('\n')}`;
+    showOutput('terminal');
+    return;
+  }
+  const map=Object.fromEntries(checkFiles.map(f=>[f.filename,f.content]));
   if(map['index.html']!=null){
     let html=map['index.html'];
     html=html.replace(/<link[^>]+href=["']style\.css["'][^>]*>/i,`<style>${map['style.css']||''}</style>`);
@@ -207,13 +256,29 @@ async function loadHistory(){
 }
 
 async function completeExercise(){
+  const results=validateExercise(state.meta||{},state.files,state.active,$('code-editor').value);
+  runValidation();
+  if(results.length && results.some(r=>!r.ok)){
+    setSaveState('Ainda há critérios pendentes na validação automática.','error');
+    return;
+  }
+  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
+  const security=await inspectCode(checkFiles);
+  if(!security.ok)return;
   await saveActiveFile(true);
-  const {error}=await supabase.from('student_exercises').update({
-    status:'completed',progress_percent:100,completed_at:new Date().toISOString(),last_activity_at:new Date().toISOString()
-  }).eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id);
-  if(error){setSaveState('Código salvo, mas não foi possível concluir.','error');return;}
-  $('exercise-state').textContent='Concluído';
-  setSaveState('Exercício concluído e sincronizado','ok');
+  try{
+    await callActivityProgress({action:'complete',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
+    $('exercise-state').textContent='Concluído';
+    setSaveState('Exercício concluído e sincronizado','ok');
+  }catch(error){
+    const messages={
+      activity_too_fast:'A atividade foi iniciada há poucos segundos. Continue trabalhando antes de concluir.',
+      empty_activity:'Escreva sua solução antes de concluir.',
+      active_supervised_session_required:'A sessão supervisionada precisa estar ativa para concluir.',
+      exercise_locked_by_teacher:'Este exercício foi bloqueado pelo professor.'
+    };
+    setSaveState(messages[error.code]||error.message||'Não foi possível concluir.','error');
+  }
 }
 
 
@@ -241,10 +306,48 @@ async function loadStudentSupport(){
     if(chunks.length) guidance.insertAdjacentHTML('afterbegin',chunks.join(''));
   }
 }
+function setWorkspacePaused(paused,message=''){
+  const editor=$('code-editor');
+  if(editor) editor.readOnly=Boolean(paused||state.teacherEditing);
+  ['run-preview-btn','mark-complete-btn','save-now-btn','validate-btn'].forEach(id=>{const el=$(id);if(el)el.disabled=Boolean(paused);});
+  document.querySelector('.workspace-panel')?.classList.toggle('supervision-paused',Boolean(paused));
+  if(message)setSaveState(message,paused?'error':'ok');
+}
+function applyTeacherEdit(payload){
+  const file=state.files.find(f=>f.filename===payload.filename); if(!file)return;
+  file.content=String(payload.content||'');
+  state.lastSavedContent.set(file.id,file.content);
+  if(state.active?.id===file.id){
+    state.remoteEdit=true;
+    $('code-editor').value=file.content;
+    state.remoteEdit=false;
+    setSaveState('Professor atualizou o código ao vivo','ok');
+    runValidation();
+  }
+}
+function setTeacherEditing(editing,name='Professor'){
+  state.teacherEditing=editing;
+  $('code-editor').readOnly=editing;
+  document.querySelector('.workspace-panel')?.classList.toggle('teacher-editing',editing);
+  if(editing)setSaveState(`${name} está editando ao vivo — aguarde um instante`,'saving');
+  else setSaveState('Edição do professor finalizada','ok');
+}
+function editorSnapshot(){
+  const editor=$('code-editor');
+  return {
+    filename:state.active?.filename||'',
+    content:editor?.value||'',
+    cursor_start:editor?.selectionStart||0,
+    cursor_end:editor?.selectionEnd||0
+  };
+}
+
 export async function mountWorkspace({profile,exercise,subject}){
   state.profile=profile; state.exercise=exercise; state.subject=subject;
-  state.active=null; state.files=[]; state.lastSavedContent=new Map();
+  state.active=null; state.files=[]; state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false;
+  setWorkspacePaused(true,'Preparando atividade supervisionada...');
   setSaveState('Carregando seus arquivos...','saving');
+  $('preview-frame').srcdoc='<style>body{font:15px system-ui;padding:24px;color:#555}</style>Inicie a atividade supervisionada para executar o código.';
   await ensureFiles();
   const meta=state.meta||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||{};
   state.meta=meta;
@@ -255,10 +358,25 @@ export async function mountWorkspace({profile,exercise,subject}){
       (concepts.length?`<ul>${concepts.map(c=>`<li>${String(c).replace(/[&<>]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[x]))}</li>`).join('')}</ul>`:'');
   }
   renderFileTabs();
-  activateFile(state.files[0]?.id);
-  buildPreview();
+  await activateFile(state.files[0]?.id);
   runValidation();
   await loadStudentSupport();
+  await prepareSupervision({
+    profile,exercise,
+    getEditorState:editorSnapshot,
+    onArmed:()=>{setWorkspacePaused(false,'Modo supervisionado ativo');buildPreview();},
+    onPause:(paused)=>setWorkspacePaused(paused,paused?'Retorne à tela cheia para continuar.':'Modo supervisionado ativo'),
+    onLock:(reason)=>setWorkspacePaused(true,reason||'Atividade bloqueada'),
+    onTeacherEdit:applyTeacherEdit,
+    onTeacherEditing:setTeacherEditing
+  });
+}
+
+export async function unmountWorkspace(){
+  clearTimeout(state.saveTimer);
+  try{await saveActiveFile(false);}catch(_){}
+  await stopSupervision();
+  state.active=null;
 }
 
 
@@ -268,9 +386,17 @@ function runValidation(){
   box.innerHTML=renderValidation(results);
 }
 $('code-editor')?.addEventListener('keydown',e=>tabInsert(e.currentTarget,e));
-$('code-editor')?.addEventListener('input',()=>{ if(state.active){state.active.content=$('code-editor').value;scheduleSave();}});
+$('code-editor')?.addEventListener('paste',e=>handlePaste(e));
+$('code-editor')?.addEventListener('drop',e=>handleDrop(e));
+$('code-editor')?.addEventListener('input',(event)=>{
+  if(!state.active||state.remoteEdit)return;
+  state.active.content=$('code-editor').value;
+  scheduleSave();
+  handleEditorInput($('code-editor').value,event);
+});
+['keyup','click','select'].forEach(evt=>$('code-editor')?.addEventListener(evt,sendCursor));
 $('save-now-btn')?.addEventListener('click',()=>saveActiveFile(true));
-$('run-preview-btn')?.addEventListener('click',()=>{buildPreview();runValidation();});
+$('run-preview-btn')?.addEventListener('click',async()=>{await buildPreview();runValidation();});
 $('validate-btn')?.addEventListener('click',runValidation);
 $('mark-complete-btn')?.addEventListener('click',completeExercise);
 $('history-btn')?.addEventListener('click',async()=>{await loadHistory();$('history-dialog').showModal();});

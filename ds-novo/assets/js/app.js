@@ -1,5 +1,6 @@
 import { openStaffPanel, isStaff } from './admin.js';
-import { mountWorkspace } from './workspace.js';
+import { mountWorkspace, unmountWorkspace } from './workspace.js';
+import { callActivityProgress, submitLegacyExercise } from './supervision.js';
 import { supabase } from './supabase.js';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js';
 
@@ -10,6 +11,9 @@ let currentClass = null;
 let currentSubjects = [];
 let currentExercises = [];
 let currentProgress = [];
+let currentStudentReleases = [];
+let currentClassReleases = [];
+let currentLegacyClaims = [];
 let currentStaffAccess = false;
 let passwordRecoveryMode = false;
 
@@ -250,6 +254,9 @@ $('logout-btn').addEventListener('click', async () => {
   currentSubjects = [];
   currentExercises = [];
   currentProgress = [];
+  currentStudentReleases = [];
+  currentClassReleases = [];
+  currentLegacyClaims = [];
   currentStaffAccess = false;
   passwordRecoveryMode = false;
   setSessionHeader(false);
@@ -258,50 +265,74 @@ $('logout-btn').addEventListener('click', async () => {
 });
 
 async function loadDashboardData() {
-  if (!currentClass) return { subjects: [], exercises: [], progress: [] };
+  if (!currentClass) return { subjects: [], exercises: [], progress: [], studentReleases:[], classReleases:[], legacyClaims:[] };
 
   const { data: links, error: linksError } = await supabase
-    .from('class_subjects')
-    .select('subject_id')
-    .eq('class_id', currentClass.id)
-    .eq('active', true);
+    .from('class_subjects').select('subject_id').eq('class_id', currentClass.id).eq('active', true);
   if (linksError) throw linksError;
-
   const subjectIds = (links || []).map((row) => row.subject_id);
-  if (!subjectIds.length) return { subjects: [], exercises: [], progress: [] };
+  if (!subjectIds.length) return { subjects: [], exercises: [], progress: [], studentReleases:[], classReleases:[], legacyClaims:[] };
 
-  const { data: subjects, error: subjectsError } = await supabase
-    .from('subjects')
-    .select('id, name, slug')
-    .in('id', subjectIds)
-    .eq('active', true)
-    .order('name');
-  if (subjectsError) throw subjectsError;
+  const [{data:subjects,error:subjectsError},{data:exercises,error:exercisesError}] = await Promise.all([
+    supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
+    supabase.from('exercises').select('id,subject_id,exercise_number,slug,title,description,version,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
+  ]);
+  if(subjectsError)throw subjectsError;
+  if(exercisesError)throw exercisesError;
+  const ids=(exercises||[]).map(e=>e.id);
 
-  const { data: exercises, error: exercisesError } = await supabase
-    .from('exercises')
-    .select('id, subject_id, exercise_number, slug, title, description, version, default_locked, config')
-    .in('subject_id', subjectIds)
-    .eq('active', true)
-    .eq('visible', true)
-    .order('exercise_number');
-  if (exercisesError) throw exercisesError;
+  const progressQuery=supabase.from('student_exercises')
+    .select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source')
+    .eq('student_id',currentProfile.id);
+  const studentReleaseQuery=ids.length
+    ? supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids)
+    : Promise.resolve({data:[],error:null});
+  const classReleaseQuery=ids.length
+    ? supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids)
+    : Promise.resolve({data:[],error:null});
+  const claimsQuery=ids.length
+    ? supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids)
+    : Promise.resolve({data:[],error:null});
 
-  const { data: progress, error: progressError } = await supabase
-    .from('student_exercises')
-    .select('exercise_id, status, progress_percent, attempts, started_at, completed_at, last_activity_at')
-    .eq('student_id', currentProfile.id);
-  if (progressError) throw progressError;
+  const [pr,sr,cr,lc]=await Promise.all([progressQuery,studentReleaseQuery,classReleaseQuery,claimsQuery]);
+  if(pr.error)throw pr.error;
+  return {subjects:subjects||[],exercises:exercises||[],progress:pr.data||[],studentReleases:sr.data||[],classReleases:cr.data||[],legacyClaims:lc.data||[]};
+}
 
-  return { subjects: subjects || [], exercises: exercises || [], progress: progress || [] };
+
+function latestRelease(rows,exerciseId){
+  return (rows||[]).filter(r=>r.exercise_id===exerciseId).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null;
+}
+function releaseActive(row){
+  if(!row||row.enabled===false)return false;
+  const now=Date.now();
+  if(row.release_at&&new Date(row.release_at).getTime()>now)return false;
+  if(row.lock_at&&new Date(row.lock_at).getTime()<=now)return false;
+  return true;
+}
+function exerciseAvailability(exercise,progress=null){
+  if(progress?.security_locked||progress?.status==='blocked') return {available:false,reason:progress?.security_lock_reason||'Bloqueado pelo professor',security:true};
+  const sr=latestRelease(currentStudentReleases,exercise.id);
+  if(sr)return {available:releaseActive(sr),reason:releaseActive(sr)?'Liberado individualmente':'Bloqueado individualmente'};
+  const cr=latestRelease(currentClassReleases,exercise.id);
+  if(cr)return {available:releaseActive(cr),reason:releaseActive(cr)?'Liberado pelo professor':'Bloqueado pelo professor'};
+  return {available:!exercise.default_locked,reason:exercise.default_locked?'Aguardando liberação do professor':'Disponível'};
+}
+function dashboardNotice(message,level='warning'){
+  const box=$('dashboard-alert'); if(!box)return;
+  box.textContent=message;box.className=`dashboard-alert ${level}`;box.classList.remove('hidden');
+  clearTimeout(dashboardNotice.timer);dashboardNotice.timer=setTimeout(()=>box.classList.add('hidden'),6500);
 }
 
 async function renderDashboard() {
   showView('loading-view');
-  const { subjects, exercises, progress } = await loadDashboardData();
+  const { subjects, exercises, progress, studentReleases, classReleases, legacyClaims } = await loadDashboardData();
   currentSubjects = subjects;
   currentExercises = exercises;
   currentProgress = progress;
+  currentStudentReleases = studentReleases;
+  currentClassReleases = classReleases;
+  currentLegacyClaims = legacyClaims;
 
   $('student-first-name').textContent = (currentProfile.full_name || 'Aluno').split(' ')[0];
   $('student-context').textContent = currentClass
@@ -312,7 +343,7 @@ async function renderDashboard() {
   const progressMap = new Map(progress.map((p) => [p.exercise_id, p]));
   const completed = exercises.filter((ex) => progressMap.get(ex.id)?.status === 'completed').length;
   const inProgress = exercises.filter((ex) => progressMap.get(ex.id)?.status === 'in_progress').length;
-  const available = exercises.length;
+  const available = exercises.filter(ex=>exerciseAvailability(ex,progressMap.get(ex.id)).available).length;
   const overall = available ? Math.round((completed / available) * 100) : 0;
 
   $('completed-count').textContent = completed;
@@ -324,7 +355,7 @@ async function renderDashboard() {
   const latest = progress
     .filter((p) => p.status === 'in_progress')
     .sort((a, b) => new Date(b.last_activity_at || 0) - new Date(a.last_activity_at || 0))[0];
-  const latestExercise = latest && exercises.find((ex) => ex.id === latest.exercise_id);
+  const latestExercise = latest && exercises.find((ex) => ex.id === latest.exercise_id && exerciseAvailability(ex,latest).available);
   if (latestExercise) {
     $('resume-title').textContent = `Exercício ${String(latestExercise.exercise_number).padStart(2, '0')} — ${latestExercise.title}`;
     $('resume-description').textContent = `${Math.round(Number(latest.progress_percent || 0))}% concluído`;
@@ -360,11 +391,18 @@ async function renderDashboard() {
     subjectExercises.forEach((exercise) => {
       const p = progressMap.get(exercise.id);
       const status = p?.status || 'not_started';
+      const access=exerciseAvailability(exercise,p);
+      const claim=currentLegacyClaims.find(c=>c.exercise_id===exercise.id);
+      let label=humanStatus(status);
+      if(claim?.status==='pending') label='Aguardando validação';
+      if(claim?.status==='rejected') label='Ajustes solicitados';
+      if(!access.available) label=access.reason||'Bloqueado';
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = `exercise-row status-${status}`;
-      button.innerHTML = `<span>${String(exercise.exercise_number).padStart(2, '0')}</span><strong>${escapeHtml(exercise.title)}</strong><em>${humanStatus(status)}</em>`;
-      button.addEventListener('click', () => openExercise(exercise));
+      button.disabled=!access.available;
+      button.className = `exercise-row status-${status} ${!access.available?'is-locked':''} ${claim?.status==='pending'?'pending-review':''}`;
+      button.innerHTML = `<span>${String(exercise.exercise_number).padStart(2, '0')}</span><strong>${escapeHtml(exercise.title)}</strong><em>${escapeHtml(label)}</em>`;
+      if(access.available)button.addEventListener('click', () => openExercise(exercise));
       list.appendChild(button);
     });
     grid.appendChild(card);
@@ -384,17 +422,14 @@ async function openExercise(exercise) {
     <div><span>Tentativas</span><strong>${Number(p?.attempts || 0)}</strong></div>
   `;
 
-  if (!p) {
-    const { error } = await supabase.from('student_exercises').insert({
-      student_id: currentProfile.id,
-      exercise_id: exercise.id,
-      status: 'in_progress',
-      progress_percent: 0,
-      attempts: 0,
-      started_at: new Date().toISOString(),
-      last_activity_at: new Date().toISOString(),
-    });
-    if (!error) currentProgress.push({ exercise_id: exercise.id, status: 'in_progress', progress_percent: 0, attempts: 0, last_activity_at: new Date().toISOString() });
+  const access=exerciseAvailability(exercise,p);
+  if(!access.available){dashboardNotice(access.reason||'Este exercício está bloqueado.','danger');return;}
+  try{
+    await callActivityProgress({action:'start',exercise_id:exercise.id});
+    if(!p)currentProgress.push({exercise_id:exercise.id,status:'in_progress',progress_percent:0,attempts:0,last_activity_at:new Date().toISOString()});
+  }catch(error){
+    dashboardNotice(error.message||'O professor ainda não liberou esta atividade.','danger');
+    return;
   }
 
   showView('exercise-view');
@@ -408,11 +443,39 @@ async function openExercise(exercise) {
   }
 }
 
-$('back-dashboard').addEventListener('click', renderDashboard);
+$('back-dashboard').addEventListener('click', async()=>{await unmountWorkspace();await renderDashboard();});
+document.addEventListener('epds:security-back',async()=>{await unmountWorkspace();await renderDashboard();});
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 }
+
+
+$('legacy-import-btn')?.addEventListener('click',()=>{
+  const select=$('legacy-exercise-select');
+  select.innerHTML=currentExercises.map(ex=>`<option value="${ex.id}">Ex. ${String(ex.exercise_number).padStart(2,'0')} — ${escapeHtml(ex.title)}</option>`).join('');
+  $('legacy-repository-url').value='';
+  $('legacy-import-message').classList.add('hidden');
+  $('legacy-import-dialog').showModal();
+});
+$('legacy-import-close')?.addEventListener('click',()=>$('legacy-import-dialog').close());
+$('legacy-import-form')?.addEventListener('submit',async(event)=>{
+  event.preventDefault();
+  const btn=event.submitter,msg=$('legacy-import-message');
+  btn.disabled=true;btn.textContent='Enviando...';msg.classList.add('hidden');
+  try{
+    const data=await submitLegacyExercise({
+      exercise_id:$('legacy-exercise-select').value,
+      repository_url:$('legacy-repository-url').value.trim()
+    });
+    msg.textContent=data.next_exercise?'Link enviado. O próximo exercício foi liberado enquanto o professor valida este.':'Link enviado para validação do professor.';
+    msg.className='form-message ok';
+    await renderDashboard();
+  }catch(error){
+    msg.textContent='Use um link válido do GitHub/GitHub Pages referente ao exercício.';
+    msg.className='form-message';
+  }finally{btn.disabled=false;btn.textContent='Enviar para validação';}
+});
 
 supabase.auth.onAuthStateChange((event) => {
   if (event === 'SIGNED_OUT') {

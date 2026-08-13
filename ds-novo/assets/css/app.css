@@ -764,3 +764,36 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+
+/* v0.14.0 — modo supervisionado */
+.exercise-status-group{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.supervision-chip{display:inline-flex;align-items:center;min-height:30px;padding:0 9px;border:1px solid var(--border);border-radius:999px;background:#0c0f13;color:var(--muted);font-size:.68rem;font-weight:750}
+.supervision-chip.ok{color:#8ee8b1;border-color:rgba(88,214,141,.25);background:rgba(88,214,141,.055)}
+.supervision-chip.warning{color:#efd475;border-color:rgba(240,198,90,.28);background:rgba(240,198,90,.06)}
+.supervision-chip.danger{color:#ff9ba3;border-color:rgba(255,112,122,.3);background:rgba(255,112,122,.07)}
+.supervision-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;border:1px solid rgba(240,198,90,.3);border-radius:10px;background:#17150d;color:#efd98a;font-size:.77rem;line-height:1.45}
+.supervision-banner.high,.supervision-banner.danger{border-color:rgba(255,112,122,.32);background:#1b0e11;color:#ffabb2}
+.workspace-panel.supervision-paused .code-editor{opacity:.55;cursor:not-allowed}
+.workspace-panel.teacher-editing{box-shadow:inset 0 0 0 1px rgba(76,194,255,.42)}
+.supervision-dialog{width:min(620px,94vw)}
+.supervision-dialog .history-card,.security-lock-dialog .history-card{width:min(620px,94vw);padding:24px}
+.supervision-start-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(76,194,255,.25);border-radius:12px;background:rgba(76,194,255,.06);color:var(--accent);margin-bottom:16px}
+.supervision-policy-summary{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:17px 0}
+.supervision-policy-summary span{padding:9px 10px;border:1px solid var(--border-soft);border-radius:9px;background:#0b0e11;color:var(--text-2);font-size:.72rem}
+.supervision-privacy-note{display:grid;gap:4px;margin:15px 0 18px;padding:11px 12px;border-left:3px solid #34414c;background:#0b0e11;color:var(--muted);font-size:.72rem;line-height:1.5}
+.supervision-privacy-note strong{color:var(--text-2)}
+.supervision-start-btn{width:100%;min-height:48px}
+.dashboard-alert{padding:10px 13px;border:1px solid rgba(240,198,90,.28);border-radius:10px;background:rgba(240,198,90,.055);color:#ecd178;font-size:.78rem}
+.dashboard-alert.danger{border-color:rgba(255,112,122,.28);background:rgba(255,112,122,.055);color:#ff9ba3}
+.section-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.exercise-row:disabled{cursor:not-allowed;opacity:.5}
+.exercise-row.is-locked>span{color:#ff9ba3;border-color:rgba(255,112,122,.22)}
+.exercise-row.pending-review em{color:#efd475}
+.legacy-dialog{width:min(650px,94vw)}
+@media(max-width:680px){
+ .exercise-status-group{grid-column:1/-1;justify-content:flex-start}
+ .supervision-banner{align-items:stretch;flex-direction:column}.supervision-banner .button{width:100%}
+ .supervision-policy-summary{grid-template-columns:1fr}
+ .section-heading{align-items:flex-start;flex-direction:column}.section-actions{width:100%;justify-content:space-between}
+}

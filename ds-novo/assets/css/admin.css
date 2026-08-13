@@ -742,3 +742,39 @@
 @media(max-width:430px){
   #team-dialog .team-row-actions{grid-template-columns:1fr}
 }
+
+
+/* v0.14.0 — supervisão, live, ranking e liberações */
+.supervision-center-card{width:min(1180px,96vw)}
+.supervision-live-list{display:grid;gap:8px;margin-bottom:20px}
+.supervision-session{display:grid;grid-template-columns:minmax(240px,1.2fr) minmax(320px,1fr) auto;align-items:center;gap:14px;padding:12px;border:1px solid var(--staff-border);border-radius:11px;background:#0b0e12}
+.supervision-session.locked{border-color:rgba(255,112,122,.28);background:rgba(255,112,122,.035)}
+.supervision-session-main{display:grid;gap:5px}.supervision-session-main>div:first-child{display:grid;gap:2px}.supervision-session-main span{color:var(--staff-muted);font-size:.7rem}
+.supervision-session-data{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}.supervision-session-data span{color:var(--staff-muted);font-size:.68rem}.supervision-session-data strong{color:var(--text-2)}
+.supervision-feed-head{display:flex;align-items:end;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid var(--staff-border);margin-bottom:8px}
+.supervision-feed-head h4{margin:0}.supervision-feed-head span{font-size:.66rem}
+.security-feed-list{display:grid;gap:6px;max-height:360px;overflow:auto}
+.security-event{display:grid;grid-template-columns:minmax(200px,1fr) auto auto;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--staff-border);border-radius:9px;background:#0a0d10}
+.security-event>div:first-child{display:grid}.security-event>div:first-child span,.security-event small{color:var(--staff-muted);font-size:.66rem}.security-event>div:nth-child(2){display:flex;gap:4px;flex-wrap:wrap}
+.security-event.severity-critical,.security-event.severity-high{border-color:rgba(255,112,122,.22)}
+.legacy-review-card{width:min(900px,95vw)}.legacy-review-list{display:grid;gap:10px}
+.legacy-review-item{display:grid;gap:10px;padding:13px;border:1px solid var(--staff-border);border-radius:11px;background:#0b0e12}
+.legacy-review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.legacy-review-head>div{display:grid;gap:2px}.legacy-review-head span{color:var(--staff-muted);font-size:.7rem}
+.repository-link{display:inline-flex;width:max-content;max-width:100%;color:#9edfff;font-size:.74rem;text-decoration:none;overflow:hidden;text-overflow:ellipsis}
+.legacy-review-item textarea{min-height:78px;background:#080b0e;border:1px solid var(--staff-border);color:var(--text);border-radius:9px;padding:9px}
+.ranking-card{width:min(820px,94vw)}.ranking-list{display:grid}.ranking-row{min-height:62px;display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--staff-border)}
+.ranking-position{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--staff-border);border-radius:9px;background:#0b0e12;font-weight:800}.ranking-row>div{display:grid;gap:2px}.ranking-row>div span{color:var(--staff-muted);font-size:.7rem}.ranking-score{font-size:1.2rem}
+.release-card{width:min(1050px,96vw)}.release-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;align-items:end;gap:8px;margin-bottom:12px}.release-toolbar label{display:grid;gap:6px;color:var(--staff-muted);font-size:.7rem;font-weight:700}.release-toolbar select{min-height:40px}
+.release-list{display:grid;gap:7px}.release-item{border:1px solid var(--staff-border);border-radius:10px;background:#0b0e12;overflow:hidden}.release-item summary{min-height:52px;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:9px;padding:8px 11px;cursor:pointer;list-style:none}.release-item summary::-webkit-details-marker{display:none}.release-number{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--staff-border);border-radius:8px;color:var(--staff-muted);font:700 .66rem ui-monospace,monospace}
+.release-switch{display:flex;align-items:center;gap:7px;color:var(--staff-muted);font-size:.68rem}.release-switch input{accent-color:var(--staff-accent)}
+.release-security-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:11px;border-top:1px solid var(--staff-border);background:#090c0f}.release-security-grid label{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;border:1px solid var(--staff-border);border-radius:8px;color:var(--text-2);font-size:.68rem}.release-security-grid input[type=checkbox]{width:auto;min-height:0;accent-color:var(--staff-accent)}.release-security-grid input[type=number]{width:68px;min-height:32px;padding:0 7px}.save-policy{align-self:stretch}
+.live-code-editor{width:100%;min-height:480px;max-height:65dvh;resize:vertical;padding:14px;border:1px solid var(--staff-border);border-radius:10px;background:#060708;color:#dce5ef;font:12.5px/1.6 "Cascadia Code","SFMono-Regular",Consolas,monospace;tab-size:2}
+.live-code-editor:focus{outline:none;border-color:#3daada;box-shadow:0 0 0 3px rgba(76,194,255,.08)}.live-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.live-cursor{color:#9edfff;font-size:.7rem}.live-help{margin:8px 0 0;color:var(--staff-muted);font-size:.66rem;line-height:1.45}
+@media(max-width:1000px){.supervision-session{grid-template-columns:1fr 1fr}.supervision-session .student-actions{grid-column:1/-1}.release-security-grid{grid-template-columns:1fr 1fr}.staff-commandbar{flex-wrap:wrap!important}}
+@media(max-width:680px){.supervision-session,.security-event{grid-template-columns:1fr}.supervision-session-data{grid-template-columns:1fr 1fr}.release-toolbar{grid-template-columns:1fr}.release-toolbar .button{width:100%}.release-security-grid{grid-template-columns:1fr}.release-item summary{grid-template-columns:34px minmax(0,1fr)}.release-switch{grid-column:2}.live-code-editor{min-height:55dvh}.supervision-feed-head{align-items:flex-start;flex-direction:column}}
+
+#staff-view .staff-commandbar .has-alerts{border-color:rgba(255,112,122,.42);color:#ffabb2;background:rgba(255,112,122,.07)}
+.student-detail-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 12px;padding:10px 12px;border:1px solid var(--staff-border);border-radius:10px;background:#0b0e12;color:var(--staff-muted);font-size:.72rem}
+.student-detail-summary strong{color:var(--text-2)}
+.exercise-manage-card.not-started{opacity:.72}
+@media(max-width:680px){.student-detail-summary{align-items:flex-start;flex-direction:column}}

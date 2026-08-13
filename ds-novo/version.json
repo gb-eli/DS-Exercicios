@@ -1,14 +1,19 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "date": "2026-08-13",
   "features": [
-    "Escopo real de professor por turma no backend",
-    "teacher_classes com RLS e acesso somente server-side",
-    "staff-dashboard v6 bloqueia student_id e exercise_id fora das turmas atribuídas",
-    "staff-directory v2 gerencia atribuição de turmas",
-    "Tela Equipe mostra turmas de cada professor",
-    "Professor sem turma fica sem acesso a alunos",
-    "Administradores permanecem com escopo global"
+    "Modo supervisionado por atividade com sessão server-side e IP",
+    "Tela cheia quando suportada e bloqueio após 3 violações objetivas",
+    "Registro de troca de guia, saída de fullscreen, colagem, drop, atalhos DevTools e entrada rápida",
+    "Detecção de DevTools classificada como heurística, sem punição automática isolada",
+    "Bloqueio de padrões maliciosos antes de executar/visualizar código",
+    "WebSocket ao vivo por canal secreto de sessão para código e cursor",
+    "Professor pode editar código ao vivo com pausa temporária da digitação do aluno",
+    "Importação de exercício do portal antigo por GitHub com validação pendente",
+    "Central Professor: supervisão, alertas, validações, ranking e liberações",
+    "Liberação/bloqueio por turma e política de segurança por exercício",
+    "Conclusão passa pelo endpoint activity-progress server-side",
+    "Autosave reduzido para 1,2s e troca de arquivo salva antes de alternar"
   ]
 }

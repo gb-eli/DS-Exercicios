@@ -138,3 +138,23 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - `staff-dashboard` v6 valida o escopo também em leitura de arquivos, acomodações, liberações e aprovação manual.
 - Administrador continua com visão global.
 - A tela **Equipe** permite atribuir/remover 1DS, 2DS, 3DS e Sub de cada professor.
+
+## v0.14.0 — Supervisão e segurança operacional
+- Sessões supervisionadas registram IP no servidor, exercício, arquivo atual, cursor, fullscreen e eventos.
+- Após 3 violações objetivas de foco por padrão, a atividade é bloqueada e só professor/admin libera.
+- DevTools e digitação anormal são heurísticas: aparecem para conferência, sem autolock isolado.
+- Paste/drop são bloqueados conforme a política do exercício.
+- Código suspeito é bloqueado antes da execução no preview/Python e gera evento.
+- Professor acompanha por WebSocket o snapshot de código/cursor e pode editar ao vivo.
+- Alunos com trabalho do portal antigo podem enviar link GitHub; o próximo exercício é liberado enquanto a entrega aguarda validação.
+- Professor ganhou Central de Supervisão, Validações, Ranking e Liberações.
+- Rede externa fica liberada por padrão para não quebrar exercícios legítimos de API; pode ser bloqueada por exercício.
+
+### Ajustes finais v0.14.0
+- O botão **Supervisão** mostra quantidade de alertas altos/críticos dos últimos 10 minutos.
+- A ficha do aluno lista também exercícios não iniciados e pendentes.
+- Listeners de edição ao vivo são vinculados somente depois da criação dinâmica do painel.
+- `teacher_live_edit=false` coloca o acompanhamento em modo somente leitura.
+
+- O endpoint `student-files` v2 também rejeita padrões maliciosos no servidor e gera evento crítico.
+- O ranking mostra atividades verificadas/concluídas e o horário da primeira conclusão para desempate pedagógico.
