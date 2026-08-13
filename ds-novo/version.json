@@ -1,13 +1,16 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "date": "2026-08-13",
   "features": [
-    "Execução Python com Pyodide 0.27.7 em Web Worker",
-    "stdin interativo, stdout, stderr e tracebacks",
-    "Painel professor/admin protegido por Edge Function",
-    "Ranking/progresso por turma",
-    "Acompanhamento quase em tempo real do código salvo",
-    "Sem service_role no navegador"
+    "Tema black/dark profissional padronizado",
+    "Engine visual única para todas as disciplinas",
+    "Painel professor/admin ampliado",
+    "Acomodações individuais por exercício",
+    "Liberação de HTML/CSS/JS base, dicas extras e apoio guiado",
+    "Feedback docente e solicitação de ajustes",
+    "Aprovação manual de exercício",
+    "Acompanhamento ao vivo com atualização segura a cada 1 segundo",
+    "Aluno recebe feedback e acomodações no próprio workspace"
   ]
 }

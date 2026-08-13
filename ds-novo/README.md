@@ -46,3 +46,11 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Edge Function `staff-dashboard` exige JWT e confirma papel teacher/admin/super_admin no servidor.
 - Painel de turma com progresso médio, atividade recente e acompanhamento do conteúdo salvo.
 - O acompanhamento atualiza a cada 2 segundos sobre o autosave do aluno; colaboração simultânea de edição será ativada após a política privada do Supabase Realtime ser consolidada.
+
+## v0.5.0
+- Design system Black Engine profissional e unificado.
+- Painel professor/admin com gerenciamento por aluno e exercício.
+- Acomodações, apoios, dicas extras, bases HTML/CSS/JS e apoio guiado.
+- Aprovação manual, revisão pendente, solicitar ajustes e feedback docente.
+- Acompanhamento seguro do código atualizado a cada 1 segundo sobre o autosave.
+- O aluno visualiza feedback/acondicionamentos autorizados no próprio exercício.

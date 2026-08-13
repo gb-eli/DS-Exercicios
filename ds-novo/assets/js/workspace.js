@@ -216,6 +216,31 @@ async function completeExercise(){
   setSaveState('Exercício concluído e sincronizado','ok');
 }
 
+
+async function loadStudentSupport(){
+  const [{data:accommodations},{data:releases},{data:progressRows}] = await Promise.all([
+    supabase.from('student_accommodations').select('id,accommodation_type,config,reason,active').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id).eq('active',true),
+    supabase.from('exercise_releases').select('allow_html_base,allow_css_base,allow_js_base,allow_extra_hints,allow_guided_support,enabled').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id),
+    supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
+  ]);
+  const support=[...(accommodations||[])];
+  const release=(releases||[])[0]||{};
+  const progress=(progressRows||[])[0]||{};
+  const guidance=document.getElementById('exercise-guidance');
+  if(guidance){
+    const chunks=[];
+    if(release.allow_extra_hints) chunks.push('<div class="support-note"><strong>Dicas extras liberadas</strong><span>Seu professor habilitou apoio adicional para este exercício.</span></div>');
+    if(release.allow_guided_support) chunks.push('<div class="support-note"><strong>Apoio guiado liberado</strong><span>Você pode utilizar as orientações adicionais disponíveis neste exercício.</span></div>');
+    for(const a of support){
+      const message=a?.config?.message||a.reason;
+      if(message) chunks.push(`<div class="support-note"><strong>${String(a.accommodation_type||'Apoio').replace(/[&<>]/g,'')}</strong><span>${String(message).replace(/[&<>]/g,'')}</span></div>`);
+    }
+    if(progress.teacher_feedback) chunks.push(`<div class="support-note teacher"><strong>Feedback do professor</strong><span>${String(progress.teacher_feedback).replace(/[&<>]/g,'')}</span></div>`);
+    if(progress.approval_status==='approved') chunks.push('<div class="support-note approved"><strong>Aprovado pelo professor</strong><span>Este exercício recebeu aprovação manual.</span></div>');
+    if(progress.approval_status==='changes_requested') chunks.push('<div class="support-note changes"><strong>Ajustes solicitados</strong><span>Revise o feedback acima e faça as alterações indicadas.</span></div>');
+    if(chunks.length) guidance.insertAdjacentHTML('afterbegin',chunks.join(''));
+  }
+}
 export async function mountWorkspace({profile,exercise,subject}){
   state.profile=profile; state.exercise=exercise; state.subject=subject;
   state.active=null; state.files=[]; state.lastSavedContent=new Map();
@@ -233,6 +258,7 @@ export async function mountWorkspace({profile,exercise,subject}){
   activateFile(state.files[0]?.id);
   buildPreview();
   runValidation();
+  await loadStudentSupport();
 }
 
 
