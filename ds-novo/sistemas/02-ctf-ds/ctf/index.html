@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#05090d">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'self'; worker-src 'self'; form-action 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="CTF DS — plataforma educacional gamificada de cibersegurança, defesa, criptografia e forense digital.">
+  <title>CTF DS // Cyber Security Lab</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+  <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <div id="fx-root" class="fx-root" aria-hidden="true"></div>
+
+  <section id="boot-screen" class="boot-screen" aria-label="Inicialização do laboratório">
+    <div class="boot-logo" aria-hidden="true">CTF<span>DS</span></div>
+    <div class="boot-terminal">
+      <p id="boot-line">[SYS] Inicializando ambiente isolado...</p>
+      <div class="boot-progress"><span id="boot-progress"></span></div>
+      <small>AMBIENTE EDUCACIONAL // SIMULAÇÕES LOCAIS // ACESSO AUTORIZADO</small>
+    </div>
+    <button id="skip-boot" class="text-button">Pular inicialização</button>
+  </section>
+
+  <div id="auth-modal" class="modal-layer hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="auth-card panel">
+      <div class="auth-mark">⚿</div>
+      <p class="eyebrow">IDENTIDADE LOCAL</p>
+      <h1 id="auth-title">Acesse o Cyber Lab</h1>
+      <p class="muted">Seu perfil é criptografado neste dispositivo e expira após 5 dias sem salvamento. Use o mesmo nome, turma e senha para continuar. Não utilize a senha do Google, Classroom, e-mail ou GitHub.</p>
+      <div id="saved-profile-list" class="saved-profile-list" aria-live="polite"></div>
+      <div class="segmented" role="tablist" aria-label="Tipo de acesso">
+        <button class="segment active" data-auth-mode="login" role="tab">Entrar</button>
+        <button class="segment" data-auth-mode="register" role="tab">Criar perfil</button>
+      </div>
+      <form id="auth-form" novalidate>
+        <label>Nome completo do aluno
+          <input id="auth-student-name" name="studentName" autocomplete="name" minlength="5" maxlength="80" required placeholder="ex.: Gabriel Elienai Alves">
+        </label>
+        <label>Turma
+          <input id="auth-class-name" name="className" autocomplete="organization-title" minlength="2" maxlength="30" required placeholder="ex.: 2º DS A" list="class-options">
+          <datalist id="class-options"><option value="1º DS A"><option value="2º DS A"><option value="3º DS A"><option value="Técnico Subsequente Noturno"></datalist>
+        </label>
+        <label>Senha local
+          <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="mínimo 6 caracteres">
+        </label>
+        <p id="auth-error" class="form-error" role="alert"></p>
+        <button class="primary-button full" type="submit"><span id="auth-submit-label">AUTENTICAR</span><b>↗</b></button>
+      </form>
+      <div class="auth-secondary-actions"><button class="secondary-button" id="temporary-session">CONTINUAR SEM SALVAR</button><label class="secondary-button">IMPORTAR PERFIL<input id="auth-import-profile" type="file" accept=".edu-profile,application/json" hidden></label><button class="text-button" id="teacher-mode">MODO DO PROFESSOR</button></div>
+      <p class="safety-note"><strong>Regra do laboratório:</strong> pratique apenas aqui ou em ambientes onde você possui autorização explícita.</p>
+    </div>
+  </div>
+
+  <div id="app" class="app-shell hidden">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a href="#dashboard" class="brand" data-view="dashboard" aria-label="CTF DS início">
+        <span class="brand-symbol">⌬</span><span>CTF<strong>DS</strong></span>
+      </a>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span><b>Central</b></button>
+        <button class="nav-item" data-view="ctf"><span>⚑</span><b>Missões CTF</b></button>
+        <button class="nav-item" data-view="academy"><span>◫</span><b>Modo Guiado</b></button>
+        <button class="nav-item" data-view="tools"><span>⌘</span><b>Ferramentas</b></button>
+        <button class="nav-item" data-view="intel"><span>⌁</span><b>Intel & Casos</b></button>
+        <button class="nav-item" data-view="careers"><span>⚙</span><b>Carreiras</b></button>
+        <button class="nav-item" data-view="store"><span>◇</span><b>Cyber Store</b></button>
+        <button class="nav-item" data-view="delivery"><span>⇩</span><b>Conclusão e entrega</b></button>
+        <button class="nav-item" data-view="profile"><span>◉</span><b>Perfil</b></button>
+        <button class="nav-item" data-view="about"><span>ⓘ</span><b>Sobre e versões</b></button>
+      </nav>
+      <div class="sidebar-status">
+        <span class="status-dot"></span>
+        <div><small>AMBIENTE</small><strong>LOCAL / SEGURO</strong></div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <button id="mobile-menu" class="icon-button mobile-only" aria-label="Abrir menu">☰</button>
+        <div class="topbar-title">
+          <span class="eyebrow">CYBER SECURITY TRAINING GRID</span>
+          <strong id="view-title">CENTRAL DE OPERAÇÕES</strong>
+        </div>
+        <div class="topbar-actions"><span id="save-status" class="save-status" aria-live="polite">PROTEGIDO</span><button id="schedule-chip" class="schedule-chip hidden" type="button" aria-label="Ver horário escolar"></button><button id="tutorial-center-toggle" class="mode-toggle tutorial-center-toggle" type="button" aria-label="Abrir central de tutoriais">? GUIA</button><div class="system-signal"><span class="status-dot"></span><div><small>GRID ISOLADA</small><time id="system-clock">--:--:--</time></div></div><button id="explain-mode-toggle" class="mode-toggle" type="button" aria-label="Alternar nível de detalhe">MODO CURTO</button><div id="profile-chip" class="profile-chip"></div></div>
+      </header>
+
+      <main id="main-content" tabindex="-1"></main>
+      <footer class="credits-footer"><button type="button" data-view="about">Idealização e desenvolvimento pedagógico: Professor Gabriel · v2.5.0</button></footer>
+
+      <nav class="mobile-nav" aria-label="Navegação móvel">
+        <button class="active" data-view="dashboard"><span>⌂</span><small>Central</small></button>
+        <button data-view="ctf"><span>⚑</span><small>CTF</small></button>
+        <button data-view="academy"><span>◫</span><small>Aulas</small></button>
+        <button data-view="tools"><span>⌘</span><small>Tools</small></button>
+        <button data-view="delivery"><span>⇩</span><small>Entrega</small></button>
+      </nav>
+    </div>
+  </div>
+
+  <button id="tools-drawer-toggle" class="tools-drawer-toggle hidden" aria-label="Abrir gaveta de ferramentas"><span>⌘</span><b>FERRAMENTAS</b></button>
+  <div id="tools-drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+  <aside id="tools-drawer" class="tools-drawer" aria-label="Gaveta de ferramentas de cibersegurança" aria-hidden="true">
+    <header class="tools-drawer-head">
+      <div><span class="eyebrow">ARSENAL LOCAL</span><strong>Ferramentas da missão</strong></div>
+      <div class="tools-drawer-head-actions"><button id="active-tool-tutorial" class="secondary-button compact" type="button">▶ COMO USAR</button><button id="tools-drawer-close" class="icon-button" aria-label="Fechar ferramentas">×</button></div>
+    </header>
+    <p class="tools-drawer-help"><strong>Uso educacional:</strong> use a ferramenta sem sair do desafio. Todo processamento ocorre neste navegador e não autoriza testes em sistemas externos.</p>
+    <nav id="tools-drawer-tabs" class="tools-drawer-tabs" aria-label="Selecionar ferramenta"></nav>
+    <section id="tools-drawer-workspace" class="tools-drawer-workspace"></section>
+  </aside>
+
+  <button id="terminal-toggle" class="terminal-toggle hidden" aria-label="Abrir terminal simulado">&gt;_</button>
+  <aside id="terminal-drawer" class="terminal-drawer" aria-label="Terminal educacional simulado" aria-hidden="true">
+    <header><div><span class="status-dot"></span> KALI-LAB // SIMULADO</div><button id="terminal-close" class="icon-button">×</button></header>
+    <div id="terminal-output" class="terminal-output" aria-live="polite"></div>
+    <form id="terminal-form" class="terminal-input-row">
+      <span>student@ctfds:~$</span><input id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Comando do terminal">
+    </form>
+  </aside>
+
+
+  <div id="tutorial-hub" class="tutorial-hub hidden" role="dialog" aria-modal="true" aria-labelledby="tutorial-hub-title">
+    <div class="tutorial-hub-backdrop" data-close-tutorial-hub></div>
+    <section class="tutorial-hub-panel panel">
+      <header><div><p class="eyebrow">CENTRAL DE TREINAMENTO</p><h2 id="tutorial-hub-title">Escolha um tutorial animado</h2><p>Assista novamente ao guia da plataforma ou aprenda uma ferramenta específica com cursor simulado e exemplo automático.</p></div><button class="icon-button" data-close-tutorial-hub aria-label="Fechar central de tutoriais">×</button></header>
+      <div class="tutorial-hub-actions">
+        <button class="tutorial-hub-feature" data-start-platform-tour><span>◎</span><div><strong>Como usar a plataforma</strong><small>Menu, missões, gaveta, progresso e primeira operação.</small></div><b>INICIAR</b></button>
+        <button class="tutorial-hub-feature" data-start-mission-tour><span>⚑</span><div><strong>Como resolver um desafio</strong><small>Situação, objetivo, ferramentas, resposta e validação.</small></div><b>INICIAR</b></button>
+      </div>
+      <div class="section-title"><h3>TUTORIAIS DAS FERRAMENTAS</h3><small>ESCOLHA UMA DEMONSTRAÇÃO</small></div>
+      <div id="tutorial-tool-grid" class="tutorial-tool-grid"></div>
+      <footer><label class="tutorial-autoplay-setting"><input id="tutorial-autoplay-setting" type="checkbox"> <span>Iniciar automaticamente os tutoriais das primeiras missões</span></label><button class="text-button" data-close-tutorial-hub>FECHAR</button></footer>
+    </section>
+  </div>
+
+  <div id="guided-tour" class="guided-tour hidden" aria-live="polite">
+    <div id="tour-spotlight" class="tour-spotlight" aria-hidden="true"></div>
+    <div id="tour-cursor" class="tour-cursor hidden" aria-hidden="true"><span></span></div>
+    <section id="tour-card" class="tour-card panel" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+      <div class="tour-card-head"><span id="tour-kicker" class="eyebrow">TUTORIAL ANIMADO</span><button id="tour-skip" class="text-button" type="button">PULAR TUTORIAL</button></div>
+      <h2 id="tour-title">Tutorial</h2>
+      <p id="tour-text"></p>
+      <div class="tour-meter"><span id="tour-progress-bar"></span></div>
+      <div class="tour-controls"><button id="tour-previous" class="secondary-button compact" type="button">VOLTAR</button><button id="tour-pause" class="secondary-button compact" type="button">PAUSAR</button><span id="tour-progress">1/1</span><button id="tour-next" class="primary-button compact" type="button">PULAR ETAPA</button></div>
+      <small>Você pode avançar, voltar, pausar ou pular o tutorial completo a qualquer momento.</small>
+    </section>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

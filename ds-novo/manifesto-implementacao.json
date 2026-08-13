@@ -1,0 +1,21 @@
+{
+  "schema": "agv-core-implementation-status",
+  "version": "0.3.0",
+  "date": "2026-08-13",
+  "baseManifest": "manifesto-plataformas.json",
+  "coreSdk": "0.2.0",
+  "supabaseProjectRef": "iresvqwyaqotghjssncg",
+  "edgeFunctions": {
+    "agv-progress-event": 2,
+    "agv-reward-claim": 1
+  },
+  "store": {
+    "canonicalVersion": "0.9.6.0-RG",
+    "coreConfigEnabled": false,
+    "dsStoreSdk": "0.10.0-AGVCORE"
+  },
+  "phase0": "complete",
+  "phase1": "partial",
+  "phase2": "foundation",
+  "phase3": "not_started"
+}

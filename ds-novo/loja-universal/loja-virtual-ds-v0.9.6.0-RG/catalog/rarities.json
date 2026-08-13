@@ -1,0 +1,53 @@
+{
+  "version": "0.5.0",
+  "rarities": [
+    {
+      "id": "basic",
+      "name": "Básico",
+      "rank": 1,
+      "accent": "#9aa8ba",
+      "minPrice": 30,
+      "maxPrice": 699
+    },
+    {
+      "id": "rare",
+      "name": "Raro",
+      "rank": 2,
+      "accent": "#18b8ff",
+      "minPrice": 700,
+      "maxPrice": 2499
+    },
+    {
+      "id": "epic",
+      "name": "Épico",
+      "rank": 3,
+      "accent": "#955cff",
+      "minPrice": 2500,
+      "maxPrice": 7999
+    },
+    {
+      "id": "legendary",
+      "name": "Lendário",
+      "rank": 4,
+      "accent": "#ffb21a",
+      "minPrice": 8000,
+      "maxPrice": 24999
+    },
+    {
+      "id": "mythic",
+      "name": "Mítico",
+      "rank": 5,
+      "accent": "#ff4db5",
+      "minPrice": 25000,
+      "maxPrice": 79999
+    },
+    {
+      "id": "relic",
+      "name": "Relíquia",
+      "rank": 6,
+      "accent": "#f8e36b",
+      "minPrice": 80000,
+      "maxPrice": 500000
+    }
+  ]
+}

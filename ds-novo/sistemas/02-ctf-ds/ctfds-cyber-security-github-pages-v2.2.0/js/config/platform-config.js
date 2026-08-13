@@ -1,0 +1,127 @@
+export const platformConfig = {
+  id: 'ctfds',
+  title: 'CTF DS — Cyber Security Lab',
+  shortTitle: 'CTF DS',
+  version: '2.2.0',
+  status: 'estável · segurança, termos e carteira auditável',
+  createdAt: '2026-07-28',
+  updatedAt: '2026-07-30',
+  timezone: 'America/Sao_Paulo',
+  institution: 'Colégio Alberto',
+  program: 'Técnico em Desenvolvimento de Sistemas',
+  teacher: 'Professor Gabriel',
+  activity: {
+    discipline: 'Cibersegurança e Segurança da Informação',
+    theme: 'Capture The Flag — investigação, defesa e desenvolvimento seguro',
+    title: 'CTF DS — Campanha de Cibersegurança',
+    estimatedTime: 'progressivo',
+    expectedResult: 'Relatório de evidências com missões concluídas, habilidades, tentativas e aprendizados.',
+    deliveryFormat: 'Arquivo HTML de evidência e, quando configurado, envio pelo Google Classroom.',
+    deadline: '',
+  },
+  integrations: {
+    classroom: {
+      enabled: false,
+      courseUrl: '',
+      assignmentUrl: '',
+      expectedFileName: 'evidencia-ctfds.html',
+      privateComment: '',
+    },
+    github: {
+      enabled: false,
+      repositoryUrl: '',
+      templateUrl: '',
+    },
+    vscode: {
+      enabled: false,
+      webUrl: '',
+      githubDevUrl: '',
+    },
+  },
+  eduauth: {
+    enabled: true,
+    coreVersion: '1.0.0',
+    environment: 'development',
+    productionProvisioned: false,
+    requireChallengeStartAuthorization: false,
+    requireLessonStartAuthorization: false,
+    note: 'Integração estrutural concluída com chaves de teste. Substitua pelo provisionamento do EduAuth Professor antes do uso real.',
+  },
+  terms: { generalVersion: '1.3.0', activityVersion: '1.1.0', requireAcceptance: true },
+  permissions: { manifestVersion: '1.0.0', declared: [], cameraRequired: false, microphoneRequired: false, locationRequired: false },
+  assessment: { rubricId: 'ctfds-proficiency-v1', version: '1.0.0', teacherReviewRequired: true, gamificationAffectsGrade: false },
+  profile: {
+    retentionDays: 5,
+    idleLockMinutes: 10,
+    warningDays: [2, 1],
+  },
+  schoolSchedule: {
+    timezone: 'America/Sao_Paulo',
+    schoolDays: [1, 2, 3, 4, 5],
+    shifts: {
+      morning: {
+        label: 'Período da manhã',
+        periods: [
+          { type: 'class', number: 1, start: '07:30', end: '08:20' },
+          { type: 'class', number: 2, start: '08:20', end: '09:10' },
+          { type: 'class', number: 3, start: '09:10', end: '10:00' },
+          { type: 'break', label: 'Intervalo', start: '10:00', end: '10:20' },
+          { type: 'class', number: 4, start: '10:20', end: '11:10' },
+          { type: 'class', number: 5, start: '11:10', end: '12:00' },
+          { type: 'class', number: 6, start: '12:00', end: '12:50' },
+        ],
+      },
+      night: {
+        label: 'Período da noite',
+        periods: [
+          { type: 'class', number: 1, start: '18:50', end: '19:30' },
+          { type: 'class', number: 2, start: '19:30', end: '20:15' },
+          { type: 'class', number: 3, start: '20:15', end: '21:00' },
+          { type: 'break', label: 'Intervalo', start: '21:00', end: '21:15' },
+          { type: 'class', number: 4, start: '21:15', end: '22:00' },
+          { type: 'class', number: 5, start: '22:00', end: '22:40' },
+        ],
+      },
+    },
+    classes: [
+      { value: '1º DS A', label: '1º DS A', shift: 'morning' },
+      { value: '2º DS A', label: '2º DS A', shift: 'morning' },
+      { value: '3º DS A', label: '3º DS A', shift: 'morning' },
+      { value: 'Técnico Subsequente Noturno', label: 'Técnico Subsequente Noturno', shift: 'night' },
+    ],
+    milestones: [30, 20, 15, 10, 5, 2],
+  },
+  credits: {
+    lead: {
+      name: 'Professor Gabriel',
+      roles: ['Idealização', 'Desenvolvimento pedagógico', 'Coordenação', 'Validação'],
+    },
+    collaborators: {
+      studentGroups: ['1º DS', '2º DS', '3º DS', 'Técnico Subsequente noturno em Desenvolvimento de Sistemas'],
+      teachers: 'Professores colaboradores da comunidade escolar',
+    },
+    aiAssistance: {
+      tool: 'ChatGPT',
+      provider: 'OpenAI',
+      model: 'GPT-5.6 Thinking',
+      mode: 'Raciocínio e desenvolvimento assistido',
+      purpose: ['Análise', 'Programação', 'Revisão', 'Correção', 'Documentação'],
+      humanValidation: 'Professor Gabriel',
+    },
+  },
+  toolCatalog: [
+    { id: 'lab-virtual-ds', name: 'Lab Virtual DS', description: 'Laboratórios, simuladores e atividades de diferentes áreas de Desenvolvimento de Sistemas.', status: 'unconfigured', url: '', areas: ['Programação', 'Hardware', 'Redes'] },
+    { id: 'desafio-ds', name: 'Desafio DS', description: 'Desafios progressivos por áreas da tecnologia, com atividades práticas e acompanhamento.', status: 'unconfigured', url: '', areas: ['Programação', 'Tecnologia'] },
+    { id: 'diagnostico-edu', name: 'Diagnóstico Edu', description: 'Diagnóstico adaptativo de aprendizagem com indicadores e recomendações.', status: 'unconfigured', url: '', areas: ['Diagnóstico', 'Aprendizagem'] },
+    { id: 'modo-guiado', name: 'Modo Guiado', description: 'Aulas passo a passo com progresso, evidências e entrega orientada.', status: 'unconfigured', url: '', areas: ['Aulas', 'Classroom'] },
+  ],
+  crossPromotion: {
+    enabled: false,
+    maxPerSession: 1,
+    maxPerDay: 2,
+    sameItemCooldownHours: 72,
+    snoozeMinutes: 30,
+  },
+};
+
+export const classOptions = platformConfig.schoolSchedule.classes;

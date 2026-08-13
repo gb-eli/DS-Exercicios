@@ -1,0 +1,35 @@
+{
+  "desktop": {
+    "consoleErrors": [],
+    "warnings": [],
+    "pageErrors": [],
+    "title": "Loja Virtual DS v0.9.4.2 — Revisão Gráfica e Correções",
+    "navCount": 14,
+    "cssApplied": true,
+    "bodyWidth": 1440,
+    "viewportWidth": 1440,
+    "avatarStatus": "WebGL indisponível — usando fallback 2D",
+    "avatarLoadingHidden": true,
+    "avatarFallbackVisible": true,
+    "vfxEffect": "aura-energy-blue",
+    "speechButtons": 8,
+    "speechVisible": true,
+    "speechText": "Bom dia!",
+    "profileActions": 3,
+    "profileLoadout": "Conjunto equipado\nPersonagem padrão",
+    "inventoryEquipButtons": 1,
+    "inventoryText": "COLEÇÃO PESSOAL\nInventário\n\nTodos os itens conquistados ou comprados, organizados por categoria e slot.\n\nAbrir personagem\nAdicionar itens\nEQUIPAMENTO ATUAL\nConjunto Tech Inicial\n\nO personagem 3D aceita equipamentos GLB reais carregados sob demanda. Itens comprados podem ser aplicados aos slots do avatar sem reconstruir o modelo-base.\n\ncabelo\ntorso\nmão direita\ncostas\naura\nTodos\nAnimações\nAuras\nRoupas\nAcessórios\nFerramentas\nAparência\nVeículos\nCompanheiros\n👋\nAceno Inicial\nAnimações • emote-wave\nEqu"
+  },
+  "mobile": {
+    "consoleErrors": [],
+    "warnings": [],
+    "pageErrors": [],
+    "bodyWidth": 390,
+    "viewportWidth": 390,
+    "stagePosition": "sticky",
+    "stageVisibleAfterAction": true,
+    "stageYAfterAction": 356.765625,
+    "horizontalOverflow": false
+  },
+  "status": "PASS"
+}

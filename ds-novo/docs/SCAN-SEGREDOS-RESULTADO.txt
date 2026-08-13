@@ -1,0 +1,1 @@
+Nenhum padrão óbvio de service_role, chave privada ou secret Stripe foi encontrado no código-fonte analisado pelo scan textual básico.

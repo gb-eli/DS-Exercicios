@@ -1,0 +1,98 @@
+{
+  "schema": "eduauth-platform-manifest",
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "platform": {
+    "id": "ctfds",
+    "name": "CTF DS — Cyber Security Lab",
+    "version": "2.2.0",
+    "repository": "",
+    "origin": ""
+  },
+  "integration": {
+    "status": "complete-development",
+    "coreVersion": "1.0.0",
+    "offlineSupported": true,
+    "githubPagesSupported": true,
+    "productionProvisioned": false
+  },
+  "requestCode": {
+    "prefix": "EA1",
+    "encoding": "BASE32_CROCKFORD",
+    "checksum": "CRC32C",
+    "caseInsensitive": true,
+    "ignoreSeparators": true
+  },
+  "identifierRegistry": {
+    "platformCode": "01",
+    "classes": { "00": "turma-nao-identificada", "01": "1ds-a", "02": "2ds-a", "03": "3ds-a", "04": "subsequente-noturno" },
+    "subjects": { "01": "ciberseguranca-seguranca-informacao" },
+    "lessons": { "00": "geral", "01": "campanha-ctf", "02": "modo-guiado" },
+    "activities": { "01": "campanha-principal" },
+    "actions": { "01": "challenge-start", "02": "lesson-start", "03": "result-release", "04": "profile-recovery", "05": "progress-reset", "06": "profile-delete", "07": "recovery-setup" }
+  },
+  "keyConfiguration": {
+    "classKeyId": "ctfds-class-01",
+    "sessionKeyId": "ctfds-session-01",
+    "signingPublicKeyId": "teacher-signing-test-01",
+    "recoveryPublicKeyId": "teacher-recovery-runtime",
+    "environment": "development"
+  },
+  "timePolicy": {
+    "useUtc": true,
+    "classWindowSeconds": 900,
+    "sessionWindowSeconds": 300,
+    "highRiskWindowSeconds": 180,
+    "allowedClockDriftSlots": 1
+  },
+  "contextSources": {
+    "classId": { "source": "runtime", "path": "profile.className" },
+    "subjectId": { "source": "configuration", "path": "platformConfig.activity.discipline" },
+    "lessonId": { "source": "runtime", "path": "activeLessonId | activeChallengeUI.id" },
+    "activityId": { "source": "configuration", "path": "platformConfig.activity.title" },
+    "profileIdHash": { "source": "runtime-optional", "path": "profile.accountId (SHA-256 truncado)" },
+    "sessionId": { "source": "generated", "storage": "sessionStorage" }
+  },
+  "actions": ["challenge-start", "lesson-start", "result-release", "profile-recovery", "progress-reset", "profile-delete", "recovery-setup"],
+  "storage": {
+    "sessionStore": "sessionStorage",
+    "authorizationStore": "sessionStorage",
+    "auditStore": "IndexedDB:ctfds-eduauth-audit"
+  },
+  "security": {
+    "maximumAttempts": 5,
+    "progressiveDelay": true,
+    "staticPasswordPresent": false,
+    "staticMasterPasswordPresent": false,
+    "privateKeyPresent": false
+  },
+  "ui": {
+    "publicRequestCode": true,
+    "copyButton": true,
+    "manualEntry": true,
+    "qrOptional": true,
+    "cameraRequired": false,
+    "reducedMotion": true,
+    "keyboardAccessible": true,
+    "readAloud": true
+  },
+  "compatibility": {
+    "chromeAndroid": "tested-structurally",
+    "chromeChromebook": "tested-structurally",
+    "edgeWindows": "tested-structurally",
+    "offline": "tested"
+  },
+  "limitations": [
+    "A versão entregue utiliza somente chaves de teste claramente identificadas.",
+    "Material HMAC simétrico em frontend público pode ser extraído por usuário tecnicamente avançado.",
+    "Logs locais não substituem auditoria central.",
+    "Ações críticas devem usar autorização assinada após o provisionamento de produção.",
+    "O EduAuth Professor ainda precisa ser construído e provisionar esta plataforma."
+  ],
+  "pendingItems": [
+    "Preencher repository e origin após a criação do repositório GitHub.",
+    "Importar chaves de produção geradas pelo EduAuth Professor.",
+    "Reexecutar vetores de compatibilidade após o provisionamento.",
+    "Publicar nova versão removendo o bypass de desenvolvimento."
+  ]
+}

@@ -1,0 +1,3 @@
+# Prompt de integração — Loja Virtual DS v0.7.0
+
+Integre a Loja Virtual DS v0.7.0 preservando integralmente catálogo, carteira, inventário e histórico existentes. Use `DSStore` para recompensas e compras; `DSPerformance` para seleção gráfica; `DSProduct3D` para prévias GLB; `DSAvatarViewer` para personagem e equipamentos; e `DSVFX` para efeitos. Não carregue modelos, animações, VFX ou laboratórios antes de serem solicitados. Mantenha os modos Econômico, Equilibrado, Alta qualidade, Ultra, Ultra avançado e Automático. No modo Automático, permita redução gradual por FPS e recuperação somente após estabilidade.
