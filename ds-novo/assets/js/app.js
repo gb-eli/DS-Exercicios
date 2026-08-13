@@ -10,6 +10,7 @@ let currentClass = null;
 let currentSubjects = [];
 let currentExercises = [];
 let currentProgress = [];
+let currentStaffAccess = false;
 
 function showView(id) {
   views.forEach((viewId) => $(viewId).classList.toggle('hidden', viewId !== id));
@@ -41,7 +42,12 @@ async function loadIdentity() {
   if (profileError) throw profileError;
 
   currentProfile = profile;
-  document.getElementById('staff-btn')?.classList.toggle('hidden', !isStaff(profile));
+  currentStaffAccess = false;
+  try {
+    const { data: staffStatus, error: staffError } = await supabase.functions.invoke('staff-dashboard', { body: { action: 'staff_status' } });
+    if (!staffError && staffStatus?.staff === true) currentStaffAccess = true;
+  } catch (_) {}
+  document.getElementById('staff-btn')?.classList.toggle('hidden', !(isStaff(profile) || currentStaffAccess));
 
   const { data: memberships, error: membershipError } = await supabase
     .from('class_memberships')
@@ -87,10 +93,17 @@ async function routeAuthenticatedUser() {
     }
 
     if (identity.profile.must_change_password) {
+      $('password-description').textContent = currentStaffAccess
+        ? 'Seu acesso administrativo foi confirmado por e-mail. Crie sua senha pessoal para concluir o primeiro acesso.'
+        : 'Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.';
       showView('password-view');
       return;
     }
 
+    if (currentStaffAccess || isStaff(identity.profile)) {
+      await openStaffPanel();
+      return;
+    }
     await renderDashboard();
   } catch (error) {
     console.error(error);
@@ -188,6 +201,43 @@ $('password-form').addEventListener('submit', async (event) => {
   }
 });
 
+
+function setStaffAccessMessage(message = '', ok = false) {
+  const el = $('staff-access-message');
+  if (!el) return;
+  el.textContent = message;
+  el.classList.toggle('hidden', !message);
+  el.classList.toggle('ok', !!ok);
+}
+
+$('staff-access-form')?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  setStaffAccessMessage();
+  const email = normalizeEmail($('staff-email').value);
+  if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
+    setStaffAccessMessage(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`);
+    return;
+  }
+  const submit = event.submitter;
+  submit.disabled = true;
+  submit.textContent = 'Enviando...';
+  try {
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: redirectTo, shouldCreateUser: true }
+    });
+    if (error) throw error;
+    setStaffAccessMessage('Acesso solicitado. Confira seu e-mail institucional para continuar.', true);
+  } catch (error) {
+    console.error(error);
+    setStaffAccessMessage('Não foi possível enviar o acesso por e-mail. Confira o endereço e tente novamente.');
+  } finally {
+    submit.disabled = false;
+    submit.textContent = 'Enviar acesso por e-mail';
+  }
+});
+
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
   currentProfile = null;
@@ -195,6 +245,7 @@ $('logout-btn').addEventListener('click', async () => {
   currentSubjects = [];
   currentExercises = [];
   currentProgress = [];
+  currentStaffAccess = false;
   setSessionHeader(false);
   $('password').value = '';
   showView('login-view');

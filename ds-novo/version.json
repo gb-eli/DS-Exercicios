@@ -1,16 +1,13 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "date": "2026-08-13",
   "features": [
-    "Tema black/dark profissional padronizado",
-    "Engine visual única para todas as disciplinas",
-    "Painel professor/admin ampliado",
-    "Acomodações individuais por exercício",
-    "Liberação de HTML/CSS/JS base, dicas extras e apoio guiado",
-    "Feedback docente e solicitação de ajustes",
-    "Aprovação manual de exercício",
-    "Acompanhamento ao vivo com atualização segura a cada 1 segundo",
-    "Aluno recebe feedback e acomodações no próprio workspace"
+    "Acesso professor/admin por e-mail institucional",
+    "Allowlist privada para Talita e Gabriel",
+    "Detecção administrativa no servidor",
+    "Criação de senha própria após primeiro acesso por e-mail",
+    "Redirecionamento automático para painel administrativo",
+    "Versão exibida apenas como número"
   ]
 }

@@ -46,6 +46,15 @@
             <p id="login-error" class="form-error hidden" role="alert"></p>
             <button class="button button-primary" type="submit">Entrar</button>
           </form>
+          <div class="auth-divider"><span>Professor / Administração</span></div>
+          <form id="staff-access-form" class="form-stack compact" novalidate>
+            <label>
+              <span>E-mail institucional autorizado</span>
+              <input id="staff-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required />
+            </label>
+            <p id="staff-access-message" class="form-message hidden" role="status"></p>
+            <button class="button button-ghost" type="submit">Enviar acesso por e-mail</button>
+          </form>
         </article>
         <aside class="panel info-card">
           <p class="eyebrow">Como funciona</p>
@@ -63,7 +72,7 @@
         <article class="panel auth-card">
           <p class="eyebrow">Primeiro acesso</p>
           <h2 id="password-title">Crie sua senha pessoal</h2>
-          <p class="muted">Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.</p>
+          <p id="password-description" class="muted">Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.</p>
           <form id="password-form" class="form-stack" novalidate>
             <label>
               <span>Nova senha</span>

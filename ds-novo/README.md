@@ -54,3 +54,15 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Aprovação manual, revisão pendente, solicitar ajustes e feedback docente.
 - Acompanhamento seguro do código atualizado a cada 1 segundo sobre o autosave.
 - O aluno visualiza feedback/acondicionamentos autorizados no próprio exercício.
+
+## v0.6.0
+- Mostra apenas o número da versão no topo da plataforma.
+- Fluxo previsto para professor/admin: convite por e-mail e criação da própria senha.
+- Fluxo de aluno permanece e-mail institucional + CGM temporário no primeiro acesso.
+
+## v0.7.0
+- Acesso de professor/admin por link enviado ao e-mail institucional.
+- E-mails autorizados ficam em allowlist privada no Supabase.
+- O servidor confirma a autorização antes de liberar o painel.
+- Após o link de primeiro acesso, o usuário cria a própria senha.
+- Alunos continuam usando e-mail + CGM temporário.
