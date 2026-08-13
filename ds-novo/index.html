@@ -14,7 +14,7 @@
         <p class="eyebrow">Desenvolvimento de Sistemas</p>
         <h1>Exercícios Práticos DS</h1>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.10.0</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.11.0</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -33,9 +33,9 @@
 
       <section id="login-view" class="auth-layout hidden" aria-labelledby="login-title">
         <article class="panel auth-card">
-          <p class="eyebrow">Acesso do aluno</p>
+          <p class="eyebrow">Acesso ao sistema</p>
           <h2 id="login-title">Entre para continuar</h2>
-          <p class="muted">No primeiro acesso, use seu e-mail institucional e o CGM como senha temporária.</p>
+          <p class="muted">Use seu e-mail institucional. Alunos usam o CGM no primeiro acesso; professores e administradores usam a senha temporária fornecida pela administração.</p>
           <form id="login-form" class="form-stack" novalidate>
             <label>
               <span>E-mail institucional</span>
@@ -43,30 +43,21 @@
             </label>
             <label>
               <span>Senha</span>
-              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="CGM no primeiro acesso" required />
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Senha ou CGM no primeiro acesso" required />
             </label>
             <p id="login-error" class="form-error hidden" role="alert"></p>
             <button class="button button-primary" type="submit">Entrar</button>
             <button id="forgot-password-btn" class="auth-link-button" type="button">Esqueci minha senha</button>
           </form>
-          <div class="auth-divider"><span>Professor / Administração</span></div>
-          <form id="staff-access-form" class="form-stack compact" novalidate>
-            <label>
-              <span>E-mail institucional autorizado</span>
-              <input id="staff-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required />
-            </label>
-            <p id="staff-access-message" class="form-message hidden" role="status"></p>
-            <button class="button button-ghost" type="submit">Enviar acesso por e-mail</button>
-          </form>
         </article>
         <aside class="panel info-card">
           <p class="eyebrow">Como funciona</p>
-          <h2>Seu progresso acompanha você</h2>
-          <p>Depois do login, sua turma define automaticamente quais disciplinas e exercícios aparecem. Seu código e progresso serão salvos na nuvem.</p>
+          <h2>Um login para todos</h2>
+          <p>O sistema identifica automaticamente se você é aluno, professor ou administrador. Cada perfil abre somente a área autorizada.</p>
           <div class="steps">
-            <div><span>1</span><p><strong>Primeiro acesso</strong><br>E-mail @escola + CGM.</p></div>
-            <div><span>2</span><p><strong>Crie sua senha</strong><br>O CGM deixa de ser usado como senha.</p></div>
-            <div><span>3</span><p><strong>Continue de qualquer PC</strong><br>Seu trabalho permanece salvo.</p></div>
+            <div><span>1</span><p><strong>Aluno</strong><br>E-mail @escola + CGM no primeiro acesso.</p></div>
+            <div><span>2</span><p><strong>Professor/Admin</strong><br>E-mail autorizado + senha temporária.</p></div>
+            <div><span>3</span><p><strong>Senha pessoal</strong><br>Depois do primeiro acesso, cada usuário cria a própria senha.</p></div>
           </div>
         </aside>
       </section>

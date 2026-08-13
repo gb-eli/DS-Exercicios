@@ -4,16 +4,17 @@ import { supabase } from './supabase.js';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js';
 
 const $ = (id) => document.getElementById(id);
-const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view'];
+const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
 let currentProfile = null;
 let currentClass = null;
 let currentSubjects = [];
 let currentExercises = [];
 let currentProgress = [];
 let currentStaffAccess = false;
+let passwordRecoveryMode = false;
 
 function showView(id) {
-  views.forEach((viewId) => $(viewId).classList.toggle('hidden', viewId !== id));
+  views.forEach((viewId) => $(viewId)?.classList.toggle('hidden', viewId !== id));
 }
 
 function setSessionHeader(show) {
@@ -36,7 +37,7 @@ async function loadIdentity() {
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('id, full_name, email, cgm, role, active, must_change_password, first_login_at, last_login_at, password_changed_at')
+    .select('id, full_name, email, role, active, must_change_password, first_login_at, last_login_at, password_changed_at')
     .eq('id', user.id)
     .single();
   if (profileError) throw profileError;
@@ -85,6 +86,13 @@ async function routeAuthenticatedUser() {
     }
 
     setSessionHeader(true);
+
+    if (passwordRecoveryMode) {
+      $('password-description').textContent = 'Crie uma nova senha para recuperar seu acesso. Use pelo menos 8 caracteres, com letra e número.';
+      showView('password-view');
+      return;
+    }
+
     if (!identity.profile.active) {
       await supabase.auth.signOut();
       setLoginError('Seu acesso está inativo. Procure o professor responsável.');
@@ -94,7 +102,7 @@ async function routeAuthenticatedUser() {
 
     if (identity.profile.must_change_password) {
       $('password-description').textContent = currentStaffAccess
-        ? 'Seu acesso administrativo foi confirmado por e-mail. Crie sua senha pessoal para concluir o primeiro acesso.'
+        ? 'Seu acesso de professor/admin foi validado. Crie sua senha pessoal para concluir o primeiro acesso.'
         : 'Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.';
       showView('password-view');
       return;
@@ -133,7 +141,7 @@ $('login-form').addEventListener('submit', async (event) => {
     return;
   }
   if (!password) {
-    setLoginError('Informe sua senha. No primeiro acesso, use o CGM.');
+    setLoginError('Informe sua senha. No primeiro acesso do aluno, use o CGM.');
     return;
   }
 
@@ -141,12 +149,48 @@ $('login-form').addEventListener('submit', async (event) => {
   submit.disabled = true;
   submit.textContent = 'Entrando...';
   try {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    await routeAuthenticatedUser();
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (!signInError) {
+      await routeAuthenticatedUser();
+      return;
+    }
+
+    // Primeiro acesso unificado:
+    // - aluno: senha numérica = CGM; o banco valida e-mail + CGM + matrícula;
+    // - professor/admin: senha temporária institucional; o banco valida a allowlist.
+    const looksLikeCgm = /^\d{6,12}$/.test(password);
+    const looksLikeStaffFirstAccess = password === 'agv@2026';
+    if (!looksLikeCgm && !looksLikeStaffFirstAccess) throw signInError;
+
+    submit.textContent = 'Validando primeiro acesso...';
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: looksLikeCgm ? { cgm: password } : {},
+        emailRedirectTo: `${window.location.origin}${window.location.pathname}`,
+      },
+    });
+
+    if (signUpError) throw signUpError;
+
+    if (signUpData?.session) {
+      await routeAuthenticatedUser();
+      return;
+    }
+
+    // O trigger confirma automaticamente cadastros validados. Caso o SDK não
+    // devolva sessão na mesma resposta, tentamos autenticar novamente.
+    const { error: firstSignInError } = await supabase.auth.signInWithPassword({ email, password });
+    if (!firstSignInError) {
+      await routeAuthenticatedUser();
+      return;
+    }
+    throw firstSignInError;
   } catch (error) {
     console.error(error);
-    setLoginError('E-mail ou senha inválidos. No primeiro acesso, confira o e-mail institucional e o CGM.');
+    setLoginError('E-mail, senha ou credencial inicial inválidos. Aluno: confira e-mail + CGM. Professor/Admin: confira se o e-mail foi autorizado.');
   } finally {
     submit.disabled = false;
     submit.textContent = 'Entrar';
@@ -178,18 +222,14 @@ $('password-form').addEventListener('submit', async (event) => {
     setPasswordError('As senhas não coincidem.');
     return;
   }
-  if (currentProfile?.cgm && password === String(currentProfile.cgm)) {
-    setPasswordError('Crie uma senha diferente do seu CGM.');
-    return;
-  }
-
   const submit = event.submitter;
   submit.disabled = true;
   submit.textContent = 'Salvando...';
   try {
     const { error } = await supabase.auth.updateUser({ password });
     if (error) throw error;
-    // O trigger no banco atualiza must_change_password=false.
+    passwordRecoveryMode = false;
+    // O trigger no banco atualiza must_change_password=false e remove o CGM do perfil.
     await new Promise((resolve) => setTimeout(resolve, 300));
     await routeAuthenticatedUser();
   } catch (error) {
@@ -202,41 +242,6 @@ $('password-form').addEventListener('submit', async (event) => {
 });
 
 
-function setStaffAccessMessage(message = '', ok = false) {
-  const el = $('staff-access-message');
-  if (!el) return;
-  el.textContent = message;
-  el.classList.toggle('hidden', !message);
-  el.classList.toggle('ok', !!ok);
-}
-
-$('staff-access-form')?.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  setStaffAccessMessage();
-  const email = normalizeEmail($('staff-email').value);
-  if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
-    setStaffAccessMessage(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`);
-    return;
-  }
-  const submit = event.submitter;
-  submit.disabled = true;
-  submit.textContent = 'Enviando...';
-  try {
-    const redirectTo = `${window.location.origin}${window.location.pathname}`;
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: redirectTo, shouldCreateUser: true }
-    });
-    if (error) throw error;
-    setStaffAccessMessage('Acesso solicitado. Confira seu e-mail institucional para continuar.', true);
-  } catch (error) {
-    console.error(error);
-    setStaffAccessMessage('Não foi possível enviar o acesso por e-mail. Confira o endereço e tente novamente.');
-  } finally {
-    submit.disabled = false;
-    submit.textContent = 'Enviar acesso por e-mail';
-  }
-});
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
@@ -246,6 +251,7 @@ $('logout-btn').addEventListener('click', async () => {
   currentExercises = [];
   currentProgress = [];
   currentStaffAccess = false;
+  passwordRecoveryMode = false;
   setSessionHeader(false);
   $('password').value = '';
   showView('login-view');
@@ -412,8 +418,30 @@ supabase.auth.onAuthStateChange((event) => {
   if (event === 'SIGNED_OUT') {
     currentProfile = null;
     currentClass = null;
+    passwordRecoveryMode = false;
     setSessionHeader(false);
     showView('login-view');
+    return;
+  }
+
+  if (event === 'PASSWORD_RECOVERY') {
+    passwordRecoveryMode = true;
+    // Evita chamadas Supabase reentrantes dentro do callback de Auth.
+    setTimeout(async () => {
+      try {
+        await loadIdentity();
+        setSessionHeader(true);
+        $('password-description').textContent = 'Crie uma nova senha para recuperar seu acesso. Use pelo menos 8 caracteres, com letra e número.';
+        $('new-password').value = '';
+        $('confirm-password').value = '';
+        setPasswordError();
+        showView('password-view');
+      } catch (error) {
+        console.error(error);
+        setLoginError('O link de recuperação não pôde ser validado. Solicite um novo link.');
+        showView('login-view');
+      }
+    }, 0);
   }
 });
 

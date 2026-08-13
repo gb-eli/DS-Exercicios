@@ -104,3 +104,10 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Escritas diretas do navegador em `profiles` foram revogadas.
 - `staff-dashboard` v5 não envia CGM bruto na lista de perfis.
 - O painel mostra somente se o CGM está cadastrado ou pendente.
+
+## v0.11.0
+- Um único formulário autentica aluno, professor e administrador.
+- Alunos continuam usando CGM no primeiro acesso.
+- Equipe cadastrada na allowlist usa a senha temporária institucional no primeiro acesso e troca imediatamente.
+- O Admin ganhou a tela **Equipe** para autorizar/desativar professores e administradores sem depender de convite por e-mail.
+- Responsividade revisada para celular/iPhone, tablet, notebook e desktop.
