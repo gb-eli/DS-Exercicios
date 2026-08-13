@@ -39,3 +39,10 @@ Observação: execução Python real e os validadores específicos dos ZIPs ser�
 
 ## v0.3.0
 Integração do catálogo real dos quatro pacotes. O manifesto do aluno não contém código de referência, solução ou gabarito. Exercícios com `permitirBase=false` iniciam vazios. Primeira camada de validação automática migrada para Python/HTML e estruturas essenciais.
+
+## v0.4.0
+- Runtime Python reaproveitado da versão oficial do 1DS, com Pyodide 0.27.7 em Web Worker.
+- `input()`, stdout, stderr e tracebacks no terminal.
+- Edge Function `staff-dashboard` exige JWT e confirma papel teacher/admin/super_admin no servidor.
+- Painel de turma com progresso médio, atividade recente e acompanhamento do conteúdo salvo.
+- O acompanhamento atualiza a cada 2 segundos sobre o autosave do aluno; colaboração simultânea de edição será ativada após a política privada do Supabase Realtime ser consolidada.

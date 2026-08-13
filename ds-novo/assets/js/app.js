@@ -1,3 +1,4 @@
+import { openStaffPanel, isStaff } from './admin.js';
 import { mountWorkspace } from './workspace.js';
 import { supabase } from './supabase.js';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js';
@@ -40,6 +41,7 @@ async function loadIdentity() {
   if (profileError) throw profileError;
 
   currentProfile = profile;
+  document.getElementById('staff-btn')?.classList.toggle('hidden', !isStaff(profile));
 
   const { data: memberships, error: membershipError } = await supabase
     .from('class_memberships')
@@ -365,3 +367,5 @@ supabase.auth.onAuthStateChange((event) => {
 });
 
 routeAuthenticatedUser();
+
+document.getElementById('staff-btn')?.addEventListener('click', openStaffPanel);

@@ -149,3 +149,20 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(100,216,25
 .validation-summary{display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:var(--text)}
 .validation-row{display:flex;gap:7px;align-items:flex-start;padding:6px 8px;border-radius:8px;background:var(--surface-2);color:var(--muted)}
 .validation-row.ok{color:#8ee9b2}.validation-row.pending{color:#f4d06f}
+
+/* v0.4.0 — Python runtime + staff */
+.terminal-pane{flex:1;min-height:560px;background:#05080d;display:flex;flex-direction:column}
+.terminal-pane .terminal-output{min-height:0;flex:1}
+.terminal-input-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid #243041;background:#080d15;color:#8ee9b2}
+.terminal-input-row input{flex:1;background:#0d1520;border:1px solid #33435a;color:#e8f4ff;border-radius:8px;padding:9px;font:13px ui-monospace,monospace}
+.staff-toolbar{display:flex;gap:14px;align-items:end;flex-wrap:wrap;padding:16px;margin-bottom:14px}
+.staff-toolbar label{display:grid;gap:6px;min-width:220px;flex:1;color:var(--muted);font-size:.85rem}
+.staff-toolbar select,.staff-toolbar input{background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px}
+.staff-students{display:grid}
+.student-row{display:grid;grid-template-columns:minmax(220px,2fr) 110px minmax(120px,1fr) auto;align-items:center;gap:14px;padding:14px;border-bottom:1px solid var(--border)}
+.student-row:last-child{border-bottom:0}
+.student-main,.student-progress{display:grid;gap:3px}.student-main span,.student-progress span{font-size:.82rem;color:var(--muted)}
+.progress-bar.mini{height:7px}
+.file-tabs.horizontal{display:flex;flex-wrap:wrap;margin:12px 0}.file-tabs.horizontal .file-tab{width:auto}
+.live-card{width:min(1000px,94vw);max-height:88vh}.live-code{min-height:430px;max-height:65vh;overflow:auto;background:#07101a;color:#dcecff;border-radius:12px;padding:16px;font:13px/1.55 ui-monospace,monospace;white-space:pre-wrap}
+@media(max-width:800px){.student-row{grid-template-columns:1fr 90px}.student-row .progress-bar,.student-actions{grid-column:1/-1}.terminal-pane{min-height:50vh}}

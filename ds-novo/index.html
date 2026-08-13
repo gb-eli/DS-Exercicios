@@ -192,7 +192,14 @@
               <button class="output-tab" data-output="terminal" type="button">Terminal</button>
             </div>
             <iframe id="preview-frame" class="preview-frame" title="Pré-visualização do exercício" sandbox="allow-scripts"></iframe>
-            <pre id="terminal-output" class="terminal-output hidden">A saída do exercício aparecerá aqui.</pre>
+            <div id="terminal-pane" class="terminal-pane hidden">
+              <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
+              <form id="terminal-input-form" class="terminal-input-row hidden">
+                <span>&gt;</span>
+                <input id="terminal-input" type="text" autocomplete="off" aria-label="Entrada do programa Python">
+                <button class="button button-primary button-small" type="submit">Enviar</button>
+              </form>
+            </div>
           </section>
         </div>
 

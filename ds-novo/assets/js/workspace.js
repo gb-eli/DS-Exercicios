@@ -1,3 +1,4 @@
+import { runPython } from './python-runtime.js';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
 import { validateExercise, renderValidation } from './validation.js';
 
@@ -165,10 +166,11 @@ function buildPreview(){
     const escaped=$('code-editor').value.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
     $('preview-frame').srcdoc=`<style>body{font:16px/1.6 system-ui;padding:24px;white-space:pre-wrap}</style>${escaped}`;
     showOutput('preview');
+  }else if(state.active?.language==='python'){
+    showOutput('terminal');
+    runPython($('code-editor').value,state.active.filename||'main.py');
   }else{
-    $('terminal-output').textContent=state.active?.language==='python'
-      ? 'Execução Python será conectada ao runtime Pyodide na próxima etapa. Seu código já está salvo e versionado.'
-      : 'Use o preview para HTML/CSS/JS.';
+    $('terminal-output').textContent='Use o preview para HTML/CSS/JS.';
     showOutput('terminal');
   }
 }
@@ -176,7 +178,7 @@ function buildPreview(){
 function showOutput(which){
   document.querySelectorAll('.output-tab').forEach(b=>b.classList.toggle('active',b.dataset.output===which));
   $('preview-frame').classList.toggle('hidden',which!=='preview');
-  $('terminal-output').classList.toggle('hidden',which!=='terminal');
+  $('terminal-pane').classList.toggle('hidden',which!=='terminal');
 }
 
 async function loadHistory(){

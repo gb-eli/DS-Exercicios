@@ -1,12 +1,13 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "date": "2026-08-13",
   "features": [
-    "Manifesto sanitizado dos 88 exercícios",
-    "Arquivos reais por exercício sem entregar solução",
-    "Orientações e conceitos reais",
-    "Validação automática inicial",
-    "Separação de conteúdo do aluno e referência do professor"
+    "Execução Python com Pyodide 0.27.7 em Web Worker",
+    "stdin interativo, stdout, stderr e tracebacks",
+    "Painel professor/admin protegido por Edge Function",
+    "Ranking/progresso por turma",
+    "Acompanhamento quase em tempo real do código salvo",
+    "Sem service_role no navegador"
   ]
 }
