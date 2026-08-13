@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CTF DS Wallet Ledger",
+  "version": 1,
+  "type": "object",
+  "required": [
+    "walletId",
+    "status",
+    "requiresReview",
+    "ledger",
+    "balances",
+    "headHash"
+  ],
+  "properties": {
+    "walletId": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "VALID",
+        "UNDER_REVIEW",
+        "BLOCKED"
+      ]
+    },
+    "ledger": {
+      "type": "array"
+    },
+    "balances": {
+      "type": "object",
+      "required": [
+        "COINS",
+        "XP",
+        "STARS"
+      ]
+    },
+    "headHash": {
+      "type": "string"
+    },
+    "incidents": {
+      "type": "array"
+    },
+    "requiresReview": {
+      "type": "boolean"
+    }
+  }
+}
