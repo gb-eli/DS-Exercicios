@@ -1,16 +1,13 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "date": "2026-08-13",
   "features": [
-    "CSS reconstruído do zero em um único design system",
-    "Black dark profissional com menos efeitos e melhor contraste",
-    "Login unificado reorganizado e mais claro",
-    "Editor priorizado no fluxo do exercício",
-    "Preview e terminal redimensionados para notebook e mobile",
-    "Painel Professor/Admin reorganizado como workspace operacional",
-    "Cards, formulários, dialogs e botões padronizados",
-    "Responsividade revisada em 1280, 1020, 760 e 460px",
-    "Safe area e inputs 16px para iPhone"
+    "Painel Professor/Admin redesenhado e isolado do CSS do modo aluno",
+    "Filtros separados da barra de comandos",
+    "Métricas responsivas em 6/3/2/1 colunas",
+    "Lista de alunos com identidade, progresso e ações fluidas",
+    "Mobile com cards operacionais sem grids rígidos",
+    "Dialogs de equipe, matrícula, gestão e código ajustados"
   ]
 }

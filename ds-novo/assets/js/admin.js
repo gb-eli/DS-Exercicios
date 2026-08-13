@@ -9,29 +9,62 @@ let shellBound=false;
 function ensureAdminShell(){
   if(!$('staff-view')){
     document.querySelector('.main-content')?.insertAdjacentHTML('beforeend', `
-      <section id="staff-view" class="dashboard hidden" aria-labelledby="staff-title">
-        <div class="welcome-row">
-          <div><p class="eyebrow">Professor / Administração</p><h2 id="staff-title">Painel de acompanhamento</h2><p class="muted">Turmas, primeiro acesso, progresso, revisões e apoio individual.</p></div>
-          <div class="status-chip"><span class="status-dot"></span> dados sincronizados</div>
-        </div>
-        <section id="staff-summary" class="stats-grid"></section>
-        <section class="panel staff-toolbar">
-          <label><span>Turma</span><select id="staff-class-filter"><option value="all">Todas as turmas</option></select></label>
-          <label><span>Buscar aluno</span><input id="staff-search" type="search" placeholder="Nome ou e-mail"></label>
-          <label><span>Acesso</span>
-            <select id="staff-access-filter">
-              <option value="all">Todos</option>
-              <option value="never">Nunca acessou</option>
-              <option value="linked">Conta vinculada</option>
-              <option value="missing_cgm">CGM pendente</option>
-            </select>
-          </label>
-          <label class="staff-toggle"><input id="staff-review-only" type="checkbox"><span>Somente pendências</span></label>
-          <button id="staff-team-btn" class="button button-ghost" type="button">Equipe</button>
-          <button id="staff-refresh-btn" class="button button-primary" type="button">Atualizar</button>
-          <button id="staff-back-btn" class="button button-ghost" type="button">Sair</button>
+      <section id="staff-view" class="staff-dashboard hidden" aria-labelledby="staff-title">
+        <header class="staff-page-header">
+          <div class="staff-page-heading">
+            <p class="eyebrow">Professor / Administração</p>
+            <h2 id="staff-title">Painel de acompanhamento</h2>
+            <p class="muted">Acompanhe acessos, progresso, revisões e apoios individuais.</p>
+          </div>
+          <div class="staff-page-status">
+            <span class="status-chip"><span class="status-dot"></span> sincronizado</span>
+          </div>
+        </header>
+
+        <section id="staff-summary" class="staff-summary"></section>
+
+        <section class="panel staff-controls">
+          <div class="staff-filters">
+            <label class="staff-field">
+              <span>Turma</span>
+              <select id="staff-class-filter"><option value="all">Todas as turmas</option></select>
+            </label>
+            <label class="staff-field staff-search-field">
+              <span>Buscar aluno</span>
+              <input id="staff-search" type="search" placeholder="Nome ou e-mail">
+            </label>
+            <label class="staff-field">
+              <span>Acesso</span>
+              <select id="staff-access-filter">
+                <option value="all">Todos</option>
+                <option value="never">Nunca acessou</option>
+                <option value="linked">Conta vinculada</option>
+                <option value="missing_cgm">CGM pendente</option>
+              </select>
+            </label>
+            <label class="staff-review-filter">
+              <input id="staff-review-only" type="checkbox">
+              <span>Somente pendências</span>
+            </label>
+          </div>
+
+          <div class="staff-commandbar">
+            <button id="staff-team-btn" class="button button-ghost" type="button">Equipe</button>
+            <button id="staff-refresh-btn" class="button button-primary" type="button">Atualizar</button>
+            <button id="staff-back-btn" class="button button-ghost" type="button">Sair</button>
+          </div>
         </section>
-        <section class="panel"><div id="staff-students" class="staff-students"></div></section>
+
+        <section class="panel staff-list-panel">
+          <div class="staff-list-heading">
+            <div>
+              <p class="eyebrow">Alunos</p>
+              <h3>Acompanhamento da turma</h3>
+            </div>
+            <span id="staff-visible-count" class="staff-visible-count"></span>
+          </div>
+          <div id="staff-students" class="staff-students"></div>
+        </section>
       </section>`);
     document.body.insertAdjacentHTML('beforeend', `
       <dialog id="student-detail-dialog" class="history-dialog">
@@ -216,12 +249,14 @@ function renderSummary(){
   const pendingCgm=students.filter(s=>!s.has_cgm).length;
   const reviews=students.reduce((a,s)=>a+progressForStudent(s.id).pending,0);
   $('staff-summary').innerHTML=`
-    <div class="stat-card"><span>Alunos</span><strong>${students.length}</strong></div>
-    <div class="stat-card"><span>Progresso médio</span><strong>${avg}%</strong></div>
-    <div class="stat-card"><span>Já acessaram</span><strong>${logged}</strong></div>
-    <div class="stat-card"><span>Nunca acessaram</span><strong>${never}</strong></div>
-    <div class="stat-card"><span>CGM pendente</span><strong>${pendingCgm}</strong></div>
-    <div class="stat-card"><span>Revisões pendentes</span><strong>${reviews}</strong></div>`;
+    <article class="staff-metric"><span>Total de alunos</span><strong>${students.length}</strong><small>no filtro atual</small></article>
+    <article class="staff-metric"><span>Progresso médio</span><strong>${avg}%</strong><small>atividades iniciadas</small></article>
+    <article class="staff-metric"><span>Já acessaram</span><strong>${logged}</strong><small>contas vinculadas</small></article>
+    <article class="staff-metric"><span>Nunca acessaram</span><strong>${never}</strong><small>aguardando login</small></article>
+    <article class="staff-metric ${pendingCgm ? 'attention' : ''}"><span>CGM pendente</span><strong>${pendingCgm}</strong><small>cadastros incompletos</small></article>
+    <article class="staff-metric ${reviews ? 'attention' : ''}"><span>Revisões</span><strong>${reviews}</strong><small>aguardando professor</small></article>`;
+  const visibleCount=$('staff-visible-count');
+  if(visibleCount) visibleCount.textContent=`${students.length} aluno${students.length===1?'':'s'}`;
 }
 function exerciseLabel(id){
   const ex=payload.exercises?.find(e=>e.id===id);
@@ -240,11 +275,26 @@ function renderStudents(){
       pr.changes?`<span class="badge danger">${pr.changes} ajustes</span>`:''
     ].join('');
     return `<article class="student-row ${!s.id?'not-claimed':''}">
-      <div class="student-main"><strong>${esc(s.full_name)}</strong><span>${esc(c?.name||'Sem turma')} • ${esc(s.email||'')}</span><div class="badges">${badges}</div></div>
-      <div class="student-progress"><strong>${pr.avg}%</strong><span>${pr.completed} concluídos</span></div>
-      <div class="progress-bar mini"><span style="width:${pr.avg}%"></span></div>
+      <div class="student-main">
+        <div class="student-name-line">
+          <strong>${esc(s.full_name)}</strong>
+          <div class="badges">${badges}</div>
+        </div>
+        <span class="student-meta">${esc(c?.name||'Sem turma')}</span>
+        <span class="student-email">${esc(s.email||'E-mail não localizado')}</span>
+      </div>
+
+      <div class="student-progress-block">
+        <div class="student-progress-head">
+          <strong>${pr.avg}%</strong>
+          <span>${pr.completed} concluído${pr.completed===1?'':'s'}</span>
+        </div>
+        <div class="progress-bar mini"><span style="width:${pr.avg}%"></span></div>
+      </div>
+
       <div class="student-actions">
-        ${s.id?(recent?`<button class="button button-ghost button-small live-btn" data-student="${s.id}" data-exercise="${recent.exercise_id}" data-name="${esc(s.full_name)}">Ver exercício</button>`:''):'<span class="access-state">Aguardando primeiro acesso</span>'}
+        ${!s.id?'<span class="access-state">Aguardando primeiro acesso</span>':''}
+        ${s.id&&recent?`<button class="button button-ghost button-small live-btn" data-student="${s.id}" data-exercise="${recent.exercise_id}" data-name="${esc(s.full_name)}">Ver código</button>`:''}
         ${s.roster_id?`<button class="button button-ghost button-small roster-btn" data-roster="${s.roster_id}">Matrícula</button>`:''}
         ${s.id?`<button class="button button-primary button-small detail-btn" data-student="${s.id}" data-name="${esc(s.full_name)}">Gerenciar</button>`:''}
       </div>

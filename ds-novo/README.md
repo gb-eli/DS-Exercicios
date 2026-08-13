@@ -117,3 +117,10 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Black/dark mais sóbrio, com contraste e hierarquia melhores.
 - Login, dashboard, editor, preview, terminal e painel Admin foram reorganizados.
 - Mobile/iPhone ganhou layout específico em vez de apenas empilhar componentes desktop.
+
+## v0.12.1 — Correção do Painel Professor/Admin
+- O painel ganhou CSS próprio escopado em `#staff-view`.
+- Filtros e ações deixaram de compartilhar a mesma grade rígida.
+- Alunos agora usam uma estrutura fluida: identidade → progresso → ações.
+- Desktop, notebook, tablet e celular têm layouts próprios para o painel docente.
+- Os dialogs administrativos também receberam ajustes específicos.
