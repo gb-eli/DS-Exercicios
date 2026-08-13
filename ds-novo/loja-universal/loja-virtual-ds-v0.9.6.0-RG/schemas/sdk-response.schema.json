@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ds.local/schemas/sdk-response.schema.json",
+  "title": "Resposta padronizada do SDK DS",
+  "type": "object",
+  "required": [
+    "protocol",
+    "ok",
+    "code",
+    "status",
+    "eventId",
+    "message",
+    "receivedAt"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "DS_STORE_RESULT_V1"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "code": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "AUTHORIZED",
+        "UNDER_REVIEW",
+        "REJECTED",
+        "QUEUED"
+      ]
+    },
+    "eventId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transactionId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewLevel": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "validationTargetSeconds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "integer"
+      }
+    },
+    "balances": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "receivedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}
