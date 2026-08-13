@@ -71,3 +71,36 @@ Integração do catálogo real dos quatro pacotes. O manifesto do aluno não con
 - Recuperação de senha por e-mail institucional.
 - Fluxo de redirect compatível com a URL publicada autorizada no Supabase Auth.
 - Painel docente ganhou filtro "Somente pendências" para revisão e ajustes solicitados.
+
+## v0.9.0
+- Alunos são pré-matriculados no banco em lote.
+- No primeiro acesso, a plataforma tenta login normal; se a senha informada for um CGM, solicita criação de conta.
+- O trigger do Supabase Auth só permite a criação quando e-mail + CGM correspondem exatamente a uma pré-matrícula ativa.
+- Perfil e vínculo com a turma são criados automaticamente.
+- Após o acesso, o CGM deve ser substituído por uma senha pessoal.
+
+## v0.9.1
+- Corrige o reconhecimento numérico do CGM no primeiro acesso.
+- Restaura o shell completo do painel Professor/Admin.
+- O painel passa a mostrar também alunos pré-matriculados que nunca acessaram.
+- Mostra contadores de contas vinculadas, nunca acessou e CGM pendente sem expor o CGM no dashboard.
+- Mantém acompanhamento de arquivos, revisão manual e acomodações para contas já vinculadas.
+
+## v0.9.2
+- Admin pode completar e-mail/CGM pendente pela interface, sem abrir o banco.
+- Alteração de matrícula ativa/transferida sincroniza o acesso.
+- Depois que a conta é vinculada, e-mail e CGM não podem ser alterados pela tela de pré-matrícula.
+- O CGM permanece oculto; a UI mostra apenas se está cadastrado ou pendente.
+
+## v0.10.0
+- Recuperação de senha agora abre diretamente a criação da nova senha no evento `PASSWORD_RECOVERY`.
+- `APP_VERSION` corrigido e sincronizado com a versão exibida.
+- O frontend não lê mais `profiles.cgm`; no Supabase, a coluna CGM não possui SELECT para `authenticated`.
+- O painel Admin ganhou filtro: Todos / Nunca acessou / Conta vinculada / CGM pendente.
+- Adicionado índice para `student_exercises.approved_by`.
+
+### Hardening complementar
+- `profiles.cgm` não possui leitura pelo papel `authenticated`.
+- Escritas diretas do navegador em `profiles` foram revogadas.
+- `staff-dashboard` v5 não envia CGM bruto na lista de perfis.
+- O painel mostra somente se o CGM está cadastrado ou pendente.
