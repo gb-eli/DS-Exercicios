@@ -1,0 +1,65 @@
+import { getStoreItem } from '../data/store-items.js';
+import { challenges } from '../data/challenges.js';
+import { escapeHtml, xpForNextLevel } from '../core/utils.js';
+import { careers } from '../data/careers.js';
+import { platformConfig } from '../config/platform-config.js';
+import { getWalletSummary, walletRecentTransactions } from '../core/wallet.js';
+import { renderTermsHistory } from './terms.js';
+import { estimateProficiency } from '../data/rubrics.js';
+
+const formatDate = (value) => value ? new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: platformConfig.timezone }).format(new Date(value)) : 'não registrado';
+const daysUntil = (value) => Math.max(0, Math.ceil((Number(value || 0) - Date.now()) / 86400000));
+const txLabel = (tx) => ({ REWARD: 'Recompensa', PURCHASE: 'Compra', MIGRATION: 'Migração', PENALTY: 'Penalidade', REFUND: 'Estorno', REVERSAL: 'Reversão' }[tx.type] || tx.type);
+
+export const renderProfile = (profile) => {
+  const avatar = getStoreItem(profile.equipped.avatar)?.preview || '👻';
+  const nextXp = xpForNextLevel(profile.level);
+  const levelStart = Math.pow(profile.level - 1, 2) * 120;
+  const progress = Math.min(100, ((profile.xp - levelStart) / Math.max(1, nextXp - levelStart)) * 100);
+  const completed = Object.keys(profile.completed).length;
+  const careerGoal = careers.find((item) => item.id === profile.careerGoal)?.title || 'Ainda não definida';
+  const attempts = Object.values(profile.attempts || {}).reduce((total, value) => total + Number(value || 0), 0);
+  const accuracy = attempts ? Math.round((completed / attempts) * 100) : 100;
+  const expiryDays = daysUntil(profile.expiresAt);
+  const auditCount = profile.audit?.events?.length || 0;
+  const wallet = getWalletSummary(profile);
+  const transactions = walletRecentTransactions(profile, 8);
+  const proficiency = estimateProficiency(profile);
+  return `
+    <div class="page-head"><div><p class="eyebrow">IDENTIDADE // PERFIL LOCAL PROTEGIDO</p><h1>Perfil do aluno</h1><p>Gerencie acessibilidade, segurança, backup, carteira, termos e continuidade neste dispositivo.</p></div><span class="security-badge">AES-256-GCM · IndexedDB · LEDGER</span></div>
+    <div class="profile-layout">
+      <article class="identity-card card">
+        <div class="big-avatar">${escapeHtml(avatar)}</div>
+        <p class="eyebrow">ALUNO // ${escapeHtml(profile.className || 'TURMA NÃO INFORMADA')}</p><h2>${escapeHtml(profile.studentName || 'Aluno')}</h2><span class="title-tag">${escapeHtml(profile.title)}</span>
+        <div class="progress-track"><span class="progress-fill" style="width:${progress}%"></span></div><div class="level-row"><span>${profile.xp} XP</span><span>${nextXp} XP</span></div>
+        <div class="identity-stat-grid"><div><span>FLAGS</span><b>${completed}</b></div><div><span>PRECISÃO</span><b>${accuracy}%</b></div><div><span>COMBO</span><b>×${profile.combo || 0}</b></div><div><span>RECORDE</span><b>×${profile.maxCombo || 0}</b></div></div>
+        <p>${completed}/${challenges.length} bandeiras · ${profile.stars} estrelas · ${profile.coins} moedas</p><p><strong style="color:var(--accent)">Rota profissional:</strong> ${escapeHtml(careerGoal)}</p>
+        <div class="profile-expiry ${expiryDays <= 1 ? 'urgent' : ''}"><span>◷</span><div><strong>Expira em ${expiryDays} ${expiryDays === 1 ? 'dia' : 'dias'}</strong><small>Última gravação: ${formatDate(profile.updatedAt)}</small></div></div>
+      </article>
+      <div class="grid">
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>PROFICIÊNCIA PEDAGÓGICA</h2><small>REVISÃO DOCENTE NECESSÁRIA</small></div><div class="proficiency-score"><span>${proficiency.score}</span><div><strong>${escapeHtml(proficiency.level)}</strong><small>Estimativa formativa baseada em missões, tentativas, ferramentas e evidências. Não é nota automática.</small></div></div><p class="muted">Moedas, itens, temas, avatares e compras não entram nesse cálculo.</p><button class="secondary-button" data-view="delivery">VER CRITÉRIOS NA EVIDÊNCIA</button></article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>CARTEIRA E INTEGRIDADE</h2><small>${escapeHtml(wallet.status)}</small></div><div class="wallet-balances compact"><div><span>Disponível</span><b>${wallet.coins.available} ◇</b></div><div><span>Em análise</span><b>${wallet.coins.pending} ◇</b></div><div><span>Bloqueado</span><b>${wallet.coins.blocked} ◇</b></div></div><p>${wallet.valid ? 'Extrato reconciliado e inventário coerente.' : 'Inconsistência detectada; compras e recompensas ficam bloqueadas para revisão.'}</p><div class="ledger-list compact">${transactions.map((tx) => `<div><span>${escapeHtml(txLabel(tx))}</span><strong>${tx.currency === 'COINS' ? `${tx.amount > 0 ? '+' : ''}${tx.amount} ◇` : tx.currency === 'XP' ? `${tx.amount > 0 ? '+' : ''}${tx.amount} XP` : escapeHtml(tx.itemId || tx.currency)}</strong><small>${escapeHtml(tx.sourceId || tx.source)}</small></div>`).join('')}</div></article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>HABILIDADES</h2><small>0–100</small></div><div class="skill-list">${Object.entries(profile.skills).map(([skill, value]) => `<div class="skill-row"><span>${escapeHtml(skill)}</span><div class="progress-track"><span class="progress-fill" style="width:${Math.min(100,value)}%"></span></div><b>${Math.round(value)}</b></div>`).join('')}</div></article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>EMBLEMAS</h2><small>${profile.badges.length} CONQUISTAS</small></div><div class="badge-list">${profile.badges.map((badge) => `<span class="badge">◆ ${escapeHtml(badge)}</span>`).join('')}</div><p class="muted">Emblemas reconhecem participação e competências, mas não substituem avaliação do professor.</p></article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>EXPERIÊNCIA E ACESSIBILIDADE</h2><small>PREFERÊNCIAS PROTEGIDAS</small></div><div class="settings-grid">
+          <button class="setting-card ${profile.settings.sound ? 'active' : ''}" data-toggle-sound><span>♫</span><div><strong>Sons sintéticos</strong><small>${profile.settings.sound ? 'Ativados' : 'Desativados'} · feedback curto</small></div><b>${profile.settings.sound ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card ${profile.settings.reducedMotion ? 'active' : ''}" data-toggle-motion><span>≈</span><div><strong>Movimento reduzido</strong><small>Reduz transições e movimentos</small></div><b>${profile.settings.reducedMotion ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card ${profile.settings.reducedParticles ? 'active' : ''}" data-toggle-particles><span>✦</span><div><strong>Partículas reduzidas</strong><small>Melhora desempenho e leitura</small></div><b>${profile.settings.reducedParticles ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card ${profile.settings.highContrast ? 'active' : ''}" data-toggle-contrast><span>◐</span><div><strong>Alto contraste</strong><small>Reforça bordas, texto e foco</small></div><b>${profile.settings.highContrast ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card" data-cycle-quality><span>▦</span><div><strong>Qualidade gráfica</strong><small>Automático, baixo, médio ou alto</small></div><b>${escapeHtml((profile.settings.qualityPreset || 'auto').toUpperCase())}</b></button>
+          <button class="setting-card ${profile.settings.focusMode ? 'active' : ''}" data-toggle-focus-mode><span>◎</span><div><strong>Modo foco</strong><small>Reduz elementos decorativos secundários</small></div><b>${profile.settings.focusMode ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card active" data-toggle-explanation><span>≡</span><div><strong>Nível de explicação</strong><small>Resumo ou aprofundamento</small></div><b>${profile.settings.explanationMode === 'detailed' ? 'DETALHADO' : 'CURTO'}</b></button>
+          <button class="setting-card ${profile.settings.tutorialAutoPlay !== false ? 'active' : ''}" data-toggle-tutorial-autoplay><span>▶</span><div><strong>Tutorial automático</strong><small>Guia animado nas primeiras missões</small></div><b>${profile.settings.tutorialAutoPlay !== false ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card ${profile.settings.scheduleNotifications !== false ? 'active' : ''}" data-toggle-schedule-notifications><span>◷</span><div><strong>Lembretes do horário</strong><small>Aula atual e salvamento</small></div><b>${profile.settings.scheduleNotifications !== false ? 'ON' : 'OFF'}</b></button>
+          <button class="setting-card ${profile.settings.showRemainingTime !== false ? 'active' : ''}" data-toggle-remaining-time><span>⌛</span><div><strong>Tempo restante</strong><small>Indicador compacto no topo</small></div><b>${profile.settings.showRemainingTime !== false ? 'ON' : 'OFF'}</b></button>
+        </div><div class="tutorial-profile-actions"><button class="primary-button" data-open-tutorial-center>ABRIR CENTRAL DE TUTORIAIS</button><small>${Object.keys(profile.tutorialProgress?.tools || {}).length}/13 ferramentas com tutorial assistido</small></div></article>
+        ${renderTermsHistory(profile)}
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>PERMISSÕES E PRIVACIDADE</h2><small>SOMENTE QUANDO NECESSÁRIO</small></div><p>A plataforma não solicita câmera, microfone ou localização. Arquivos, downloads, cópia e armazenamento persistente são acionados apenas por uma ação do aluno.</p><div class="permission-summary"><div><strong>Arquivos selecionados</strong><small>Somente o backup escolhido para importação · alternativa: criar perfil novo.</small></div><div><strong>Downloads</strong><small>Evidência e backup gerados localmente · podem ser feitos depois.</small></div><div><strong>Área de transferência</strong><small>Somente para copiar um código EduAuth ao tocar em Copiar · alternativa: digitação manual.</small></div><div><strong>Armazenamento persistente</strong><small>Opcional e solicitado por botão · alternativa: exportar backups.</small></div></div></article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>PROTEÇÃO E CONTINUIDADE</h2><small>PERFIL CRIPTOGRAFADO</small></div>
+          <div class="security-summary"><div><span>▣</span><strong>Dados protegidos</strong><small>Identidade, respostas, progresso, carteira, termos e histórico ficam cifrados no IndexedDB.</small></div><div><span>⌁</span><strong>Integridade verificável</strong><small>${auditCount} eventos de auditoria e ${wallet.transactionCount} transações encadeadas.</small></div><div><span>◷</span><strong>Retenção temporária</strong><small>Expiração renovada por ${platformConfig.profile.retentionDays} dias.</small></div><div><span>EA</span><strong>EduAuth Offline</strong><small>Autorizações contextuais; provisionamento de produção ainda necessário.</small></div></div>
+          <div class="data-actions"><button class="primary-button" data-export-progress>EXPORTAR BACKUP CRIPTOGRAFADO</button><label class="secondary-button" style="display:inline-flex;margin:0;cursor:pointer">IMPORTAR BACKUP<input data-import-progress type="file" accept=".edu-profile,application/json" hidden></label><button class="secondary-button" data-request-persistent-storage>SOLICITAR ARMAZENAMENTO PERSISTENTE</button><button class="secondary-button" data-change-password>ALTERAR SENHA LOCAL</button><button class="secondary-button" data-change-identity>CORRIGIR NOME OU TURMA</button><button class="secondary-button" data-verify-integrity>RECONCILIAR E VERIFICAR</button><button class="secondary-button" data-open-eduauth-center>EDUAUTH E RECUPERAÇÃO</button></div>
+        </article>
+        <article class="card"><div class="section-title" style="margin-top:0"><h2>SESSÃO E EQUIPAMENTO COMPARTILHADO</h2><small>SAIR COM SEGURANÇA</small></div><p>Ao bloquear, a chave de descriptografia é removida da memória. O progresso permanece salvo e exige a senha novamente.</p><div class="data-actions"><button class="primary-button" data-lock-session>SAIR E BLOQUEAR</button><button class="secondary-button" data-view="delivery">CONCLUSÃO E ENTREGA</button><button class="danger-button" data-delete-profile>EXCLUIR DESTE COMPUTADOR</button><button class="danger-button" data-reset-progress>ZERAR SOMENTE O PROGRESSO</button></div></article>
+      </div>
+    </div>`;
+};
