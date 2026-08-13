@@ -1,0 +1,120 @@
+{
+  "version": "0.9.6.0-RG",
+  "generatedAt": "2026-08-03T21:50:35.335314+00:00",
+  "commands": [
+    {
+      "command": "python tests/validate_catalog.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "71 itens validados.\nCatálogo válido.",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_assets.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "OK: 71 items, 23 icons, 12 materials, 36 GLBs",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_avatar3d.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "avatar 3D valido",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_equipment.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "VALIDAÇÃO EQUIPAMENTOS OK — 36 GLBs, 16 slots, 71 itens no catálogo.",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_vfx.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "OK: 17 efeitos, 8 falas e clips avançados nos três LODs",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_v07.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"errors\": [],\n  \"model3d\": 36\n}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_v08.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "v0.8.0 válida: 71 itens, 13 telas, carteira, análises, hashes e layout móvel conferidos.",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_v09.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"version\": \"0.9.6\",\n  \"sdkVersion\": \"0.9.0\",\n  \"platforms\": 10,\n  \"eventTypes\": 16,\n  \"requiredFiles\": 6,\n  \"status\": \"PASS\"\n}",
+      "stderr": ""
+    },
+    {
+      "command": "node tests/test_sdk_node.js",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"authorized\": \"AUTHORIZED\",\n  \"duplicate\": \"DUPLICATE_EVENT\",\n  \"invalid\": \"INVALID_EVENT\",\n  \"critical\": \"UNDER_REVIEW\",\n  \"bridge\": \"AUTHORIZED\",\n  \"queued\": \"QUEUED\",\n  \"flushed\": {\n    \"processed\": 1,\n    \"remaining\": 0,\n    \"results\": [\n      {\n        \"protocol\": \"DS_STORE_RESULT_V1\",\n        \"ok\": true,\n        \"code\": \"REWARD_AUTHORIZED\",\n        \"status\": \"AUTHORIZED\",\n        \"eventId\": \"desafio:fase-offline:perfil-teste\",\n        \"transactionId\": \"tx_msdrjcun_b2vxt7h\",\n        \"reviewLevel\": \"expanded\",\n        \"validationTargetSeconds\": [\n          12,\n          20\n        ],\n        \"balances\": {\n          \"available\": 6350,\n          \"reserved\": 0,\n          \"pending\": 250,\n          \"underReview\": 50000,\n          \"blocked\": 0\n        },\n        \"message\": \"Recompensa autorizada e liberada na carteira.\",\n        \"receivedAt\": \"2026-08-03T21:50:28.560Z\"\n      }\n    ]\n  }\n}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_visual_animation_hotfix.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\"status\": \"PASS\", \"checks\": 17, \"passed\": 17}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_graphics_modes.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"version\": \"0.9.6\",\n  \"checks\": 18,\n  \"errors\": [],\n  \"passed\": true\n}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_rig_animation_v0944.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"version\": \"0.9.6\",\n  \"glbs\": 3,\n  \"expectedClips\": 28,\n  \"newBones\": 10,\n  \"errors\": [],\n  \"passed\": true\n}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_benchmark_v095.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"version\": \"0.9.6\",\n  \"checks\": 24,\n  \"errors\": [],\n  \"passed\": true\n}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_runtime_dev_split_v0951.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\"passed\": true, \"packs\": 7, \"runtimeFiles\": 325}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/validate_modular_runtime_v0952.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\"ok\": true, \"assetsIdentical\": 197, \"initialBudget\": {\"javascriptPercent\": 69.78, \"cssPercent\": 34.19}}",
+      "stderr": ""
+    },
+    {
+      "command": "python tests/audit_baseline.py",
+      "ok": true,
+      "returnCode": 0,
+      "stdout": "{\n  \"version\": \"0.9.1\",\n  \"sourceVersion\": \"0.9.0\",\n  \"auditType\": \"non-destructive-baseline\",\n  \"totalFiles\": 776,\n  \"totalBytes\": 65140926,\n  \"runtimeBytes\": 13628415,\n  \"catalog\": {\n    \"items\": 71,\n    \"animations\": 23,\n    \"vfx\": {\n      \"effects\": 17,\n      \"speechBubbles\": 8\n    },\n    \"rarities\": 6,\n    \"discounts\": 7\n  },\n  \"glb\": {\n    \"total\": 43,\n    \"valid\": 43,\n    \"animatedModels\": 4,\n    \"totalAnimations\": 102,\n    \"totalTriangles\": 2244\n  },\n  \"images\": {\n    \"total\": 280,\n    \"oversized500KB\": 48\n  },\n  \"references\": {\n    \"total\": 1676,\n    \"brokenRaw\": 76,\n    \"brokenRuntime\": 22,\n    \"sourcePathFindings\": 2,\n    \"documentationLogReferences\": 52\n  },\n  \"syntax\": {\n    \"javascriptFiles\": 59,\n    \"javascriptErrors\": 0,\n    \"jsonFiles\": 74,\n    \"jsonErrors\": 0\n  },\n  \"duplicates\": {\n    \"groups\": 17,\n    \"wastedBytes\": 2664639\n  },\n  \"sizesByPurpose\": {\n    \"release-metadata\": 10408706,\n    \"runtime-asset\": 12733356,\n    \"reference-concept\": 10424162,\n    \"documentation-preview\": 30486972,\n    \"runtime-code-data\": 895059,\n    \"documentation\": 104541,\n    \"integration-example\": 3203,\n    \"test-tooling\": 84927\n  },\n  \"sizesByTopDirectory\": {\n    \".nojekyll\": 0,\n    \"404.html\": 479,\n    \"CHANGELOG.md\": 816,\n    \"README.md\": 2011,\n    \"SHA256SUMS.txt\": 87711,\n    \"VERSION\": 8,\n    \"assets\": 53644490,\n    \"catalog\": 71205,\n    \"config\": 38640,\n    \"demo\": 551529,\n    \"dev\": 295827,\n    \"dist\": 119747,\n    \"docs\": 104541,\n    \"examples\": 3203,\n    \"index.html\": 1271,\n    \"lab\": 7273239,\n    \"manifest.json\": 7889,\n    \"packs\": 133116,\n    \"preview-desktop.png\": 918225,\n    \"preview-mobile.png\": 442572,\n    \"preview-store.png\": 370083,\n    \"preview-validation.png\": 872693,\n    \"schemas\": 8108,\n    \"src\": 105830,\n    \"sw.js\": 2766,\n    \"tests\": 84927\n  },\n  \"extensions\": {\n    \"[none]\": 2,\n    \".html\": 8,\n    \".md\": 82,\n    \".txt\": 1,\n    \".json\": 74,\n    \".glb\": 43,\n    \".png\": 144,\n    \".svg\": 132,\n    \".webp\": 134,\n    \".gz\": 43,\n    \".js\": 59,\n    \".css\": 13,\n    \".br\": 4,\n    \".bin\": 4,\n    \".gltf\": 4,\n    \".avif\": 2,\n    \".py\": 26,\n    \".sh\": 1\n  },\n  \"status\": \"PASS_WITH_FINDINGS\"\n}",
+      "stderr": ""
+    }
+  ],
+  "javascriptSyntaxErrors": [],
+  "status": "PASS"
+}

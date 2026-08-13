@@ -1,0 +1,2525 @@
+{
+  "count": 280,
+  "images": [
+    {
+      "path": "lab/formats/image-formats/style-guide-avatar-ui/reference.png",
+      "bytes": 2261972,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.4384
+    },
+    {
+      "path": "assets/concepts/vfx-animations.png",
+      "bytes": 2260667,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.4376
+    },
+    {
+      "path": "assets/concepts/accessories-items.png",
+      "bytes": 2139196,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.3604
+    },
+    {
+      "path": "assets/concepts/character-costumes.png",
+      "bytes": 2124507,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.351
+    },
+    {
+      "path": "assets/concepts/style-guide-avatar-ui.png",
+      "bytes": 2012848,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.28
+    },
+    {
+      "path": "assets/concepts/wallet-ui-flow.png",
+      "bytes": 1886944,
+      "width": 1448,
+      "height": 1086,
+      "format": "PNG",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.1999
+    },
+    {
+      "path": "assets/previews/v0.9.5-benchmark-result.png",
+      "bytes": 1616199,
+      "width": 1440,
+      "height": 3078,
+      "format": "PNG",
+      "pixels": 4432320,
+      "bytesPerPixel": 0.3646
+    },
+    {
+      "path": "lab/formats/image-formats/style-guide-avatar-ui/style-guide-avatar-ui-webp-lossless.webp",
+      "bytes": 1599986,
+      "width": 1448,
+      "height": 1086,
+      "format": "WEBP",
+      "pixels": 1572528,
+      "bytesPerPixel": 1.0175
+    },
+    {
+      "path": "assets/previews/v0.9.5-benchmark-mobile.png",
+      "bytes": 1269778,
+      "width": 390,
+      "height": 6668,
+      "format": "PNG",
+      "pixels": 2600520,
+      "bytesPerPixel": 0.4883
+    },
+    {
+      "path": "assets/previews/v0.9.4.3-realism-desktop.png",
+      "bytes": 1194331,
+      "width": 1440,
+      "height": 1718,
+      "format": "PNG",
+      "pixels": 2473920,
+      "bytesPerPixel": 0.4828
+    },
+    {
+      "path": "assets/previews/v0.9.5-benchmark-desktop.png",
+      "bytes": 1164309,
+      "width": 1440,
+      "height": 2125,
+      "format": "PNG",
+      "pixels": 3060000,
+      "bytesPerPixel": 0.3805
+    },
+    {
+      "path": "assets/previews/v0.3.0-assets.png",
+      "bytes": 1141296,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.7926
+    },
+    {
+      "path": "assets/previews/v0.9.0-integration-desktop.png",
+      "bytes": 1126893,
+      "width": 1440,
+      "height": 2575,
+      "format": "PNG",
+      "pixels": 3708000,
+      "bytesPerPixel": 0.3039
+    },
+    {
+      "path": "assets/previews/v0.9.0-integration-result.png",
+      "bytes": 1120716,
+      "width": 1440,
+      "height": 2525,
+      "format": "PNG",
+      "pixels": 3636000,
+      "bytesPerPixel": 0.3082
+    },
+    {
+      "path": "assets/runtime/v0.9.5.4-renderer-mobile.png",
+      "bytes": 1019971,
+      "width": 390,
+      "height": 5067,
+      "format": "PNG",
+      "pixels": 1976130,
+      "bytesPerPixel": 0.5161
+    },
+    {
+      "path": "assets/previews/v0.9.3-package-manager-mobile.png",
+      "bytes": 1001975,
+      "width": 390,
+      "height": 5376,
+      "format": "PNG",
+      "pixels": 2096640,
+      "bytesPerPixel": 0.4779
+    },
+    {
+      "path": "assets/previews/v0.9.3-package-manager.png",
+      "bytes": 981611,
+      "width": 1440,
+      "height": 2417,
+      "format": "PNG",
+      "pixels": 3480480,
+      "bytesPerPixel": 0.282
+    },
+    {
+      "path": "assets/runtime/v0.9.5.5-ultra-premium.png",
+      "bytes": 970814,
+      "width": 1440,
+      "height": 2820,
+      "format": "PNG",
+      "pixels": 4060800,
+      "bytesPerPixel": 0.2391
+    },
+    {
+      "path": "assets/runtime/v0.9.5.4-renderer-desktop.png",
+      "bytes": 958546,
+      "width": 1440,
+      "height": 2726,
+      "format": "PNG",
+      "pixels": 3925440,
+      "bytesPerPixel": 0.2442
+    },
+    {
+      "path": "assets/previews/v0.8.0-desktop.png",
+      "bytes": 918225,
+      "width": 1440,
+      "height": 1274,
+      "format": "PNG",
+      "pixels": 1834560,
+      "bytesPerPixel": 0.5005
+    },
+    {
+      "path": "preview-desktop.png",
+      "bytes": 918225,
+      "width": 1440,
+      "height": 1274,
+      "format": "PNG",
+      "pixels": 1834560,
+      "bytesPerPixel": 0.5005
+    },
+    {
+      "path": "assets/runtime/v0.9.5.3-compression-desktop.png",
+      "bytes": 887575,
+      "width": 1440,
+      "height": 2382,
+      "format": "PNG",
+      "pixels": 3430080,
+      "bytesPerPixel": 0.2588
+    },
+    {
+      "path": "assets/previews/v0.8.0-validation.png",
+      "bytes": 872693,
+      "width": 1440,
+      "height": 1216,
+      "format": "PNG",
+      "pixels": 1751040,
+      "bytesPerPixel": 0.4984
+    },
+    {
+      "path": "preview-validation.png",
+      "bytes": 872693,
+      "width": 1440,
+      "height": 1216,
+      "format": "PNG",
+      "pixels": 1751040,
+      "bytesPerPixel": 0.4984
+    },
+    {
+      "path": "assets/runtime/v0.9.5.5-realism-avatar.png",
+      "bytes": 863265,
+      "width": 1440,
+      "height": 2080,
+      "format": "PNG",
+      "pixels": 2995200,
+      "bytesPerPixel": 0.2882
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-effects.png",
+      "bytes": 851217,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.5911
+    },
+    {
+      "path": "assets/previews/v0.8.0-wallet.png",
+      "bytes": 842324,
+      "width": 1440,
+      "height": 1595,
+      "format": "PNG",
+      "pixels": 2296800,
+      "bytesPerPixel": 0.3667
+    },
+    {
+      "path": "assets/previews/v0.3.0-desktop.png",
+      "bytes": 828400,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.5753
+    },
+    {
+      "path": "assets/previews/v0.9.0-integration-mobile.png",
+      "bytes": 779241,
+      "width": 390,
+      "height": 5144,
+      "format": "PNG",
+      "pixels": 2006160,
+      "bytesPerPixel": 0.3884
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-inventory.png",
+      "bytes": 776513,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.5392
+    },
+    {
+      "path": "lab/formats/image-formats/v0.7.0-performance/reference.png",
+      "bytes": 757328,
+      "width": 1440,
+      "height": 861,
+      "format": "PNG",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.6108
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-home.png",
+      "bytes": 740857,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.5145
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-avatar.png",
+      "bytes": 738792,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.5131
+    },
+    {
+      "path": "assets/previews/v0.9.4.1-github-pages-fixed.png",
+      "bytes": 715289,
+      "width": 1440,
+      "height": 900,
+      "format": "PNG",
+      "pixels": 1296000,
+      "bytesPerPixel": 0.5519
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-profile.png",
+      "bytes": 705945,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.4902
+    },
+    {
+      "path": "assets/previews/v0.7.0-performance.png",
+      "bytes": 695440,
+      "width": 1440,
+      "height": 861,
+      "format": "PNG",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.5609
+    },
+    {
+      "path": "assets/previews/v0.7.0-desktop.png",
+      "bytes": 688806,
+      "width": 1440,
+      "height": 861,
+      "format": "PNG",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.5556
+    },
+    {
+      "path": "assets/previews/v0.9.2-format-lab.png",
+      "bytes": 688552,
+      "width": 1440,
+      "height": 1730,
+      "format": "PNG",
+      "pixels": 2491200,
+      "bytesPerPixel": 0.2764
+    },
+    {
+      "path": "assets/previews/v0.9.4.3-realism-profile.png",
+      "bytes": 657878,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.4569
+    },
+    {
+      "path": "assets/runtime/ultra/material-detail-ultra-1024.webp",
+      "bytes": 624800,
+      "width": 1024,
+      "height": 1024,
+      "format": "WEBP",
+      "pixels": 1048576,
+      "bytesPerPixel": 0.5959
+    },
+    {
+      "path": "assets/previews/v0.9.4.4-rig-desktop.png",
+      "bytes": 624076,
+      "width": 1440,
+      "height": 2310,
+      "format": "PNG",
+      "pixels": 3326400,
+      "bytesPerPixel": 0.1876
+    },
+    {
+      "path": "assets/runtime/v0.9.5.2-avatar-modular.png",
+      "bytes": 620325,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.4308
+    },
+    {
+      "path": "assets/runtime/realism/material-detail-realism-1024.webp",
+      "bytes": 613686,
+      "width": 1024,
+      "height": 1024,
+      "format": "WEBP",
+      "pixels": 1048576,
+      "bytesPerPixel": 0.5853
+    },
+    {
+      "path": "assets/previews/v0.9.4.3-realism-inventory.png",
+      "bytes": 595631,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.4136
+    },
+    {
+      "path": "assets/previews/v0.9.2-format-lab-mobile.png",
+      "bytes": 588994,
+      "width": 390,
+      "height": 3830,
+      "format": "PNG",
+      "pixels": 1493700,
+      "bytesPerPixel": 0.3943
+    },
+    {
+      "path": "assets/runtime/v0.9.5.5-realism-mobile.png",
+      "bytes": 576825,
+      "width": 390,
+      "height": 3264,
+      "format": "PNG",
+      "pixels": 1272960,
+      "bytesPerPixel": 0.4531
+    },
+    {
+      "path": "assets/previews/v0.6.0-vfx-catalog.png",
+      "bytes": 544490,
+      "width": 1200,
+      "height": 980,
+      "format": "PNG",
+      "pixels": 1176000,
+      "bytesPerPixel": 0.463
+    },
+    {
+      "path": "assets/previews/v0.9.4.3-modes-mobile.png",
+      "bytes": 536646,
+      "width": 390,
+      "height": 6587,
+      "format": "PNG",
+      "pixels": 2568930,
+      "bytesPerPixel": 0.2089
+    },
+    {
+      "path": "lab/formats/image-formats/v0.7.0-performance/v0.7.0-performance-webp-lossless.webp",
+      "bytes": 493518,
+      "width": 1440,
+      "height": 861,
+      "format": "WEBP",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.398
+    },
+    {
+      "path": "assets/previews/v0.9.4.3-modes-desktop.png",
+      "bytes": 492624,
+      "width": 1440,
+      "height": 1718,
+      "format": "PNG",
+      "pixels": 2473920,
+      "bytesPerPixel": 0.1991
+    },
+    {
+      "path": "assets/previews/v0.8.0-mobile.png",
+      "bytes": 442572,
+      "width": 390,
+      "height": 2501,
+      "format": "PNG",
+      "pixels": 975390,
+      "bytesPerPixel": 0.4537
+    },
+    {
+      "path": "preview-mobile.png",
+      "bytes": 442572,
+      "width": 390,
+      "height": 2501,
+      "format": "PNG",
+      "pixels": 975390,
+      "bytesPerPixel": 0.4537
+    },
+    {
+      "path": "assets/previews/v0.9.4-browser-cache-memory.png",
+      "bytes": 425965,
+      "width": 1440,
+      "height": 1036,
+      "format": "PNG",
+      "pixels": 1491840,
+      "bytesPerPixel": 0.2855
+    },
+    {
+      "path": "assets/previews/v0.9.4.4-rig-mobile.png",
+      "bytes": 425461,
+      "width": 390,
+      "height": 3508,
+      "format": "PNG",
+      "pixels": 1368120,
+      "bytesPerPixel": 0.311
+    },
+    {
+      "path": "assets/previews/v0.3.0-store-modal.png",
+      "bytes": 417165,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.2897
+    },
+    {
+      "path": "assets/previews/v0.9.6.0-RG-coherence-desktop.png",
+      "bytes": 407672,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.2831
+    },
+    {
+      "path": "assets/previews/v0.4.0-avatar-turnaround.png",
+      "bytes": 391879,
+      "width": 1600,
+      "height": 900,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.2721
+    },
+    {
+      "path": "assets/previews/v0.5.0-equipment-catalog.png",
+      "bytes": 387645,
+      "width": 1100,
+      "height": 2290,
+      "format": "PNG",
+      "pixels": 2519000,
+      "bytesPerPixel": 0.1539
+    },
+    {
+      "path": "assets/previews/v0.7.0-product-360.png",
+      "bytes": 370083,
+      "width": 1440,
+      "height": 861,
+      "format": "PNG",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.2985
+    },
+    {
+      "path": "preview-store.png",
+      "bytes": 370083,
+      "width": 1440,
+      "height": 861,
+      "format": "PNG",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.2985
+    },
+    {
+      "path": "assets/runtime/v0.9.5.2-home-modular.png",
+      "bytes": 362334,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.2516
+    },
+    {
+      "path": "assets/previews/v0.9.4-browser-mobile.png",
+      "bytes": 308273,
+      "width": 390,
+      "height": 1724,
+      "format": "PNG",
+      "pixels": 672360,
+      "bytesPerPixel": 0.4585
+    },
+    {
+      "path": "assets/runtime/v0.9.5.2-product-360-modular.png",
+      "bytes": 295043,
+      "width": 1440,
+      "height": 1000,
+      "format": "PNG",
+      "pixels": 1440000,
+      "bytesPerPixel": 0.2049
+    },
+    {
+      "path": "lab/formats/image-formats/style-guide-avatar-ui/style-guide-avatar-ui-avif-q80.avif",
+      "bytes": 270990,
+      "width": 1448,
+      "height": 1086,
+      "format": "AVIF",
+      "pixels": 1572528,
+      "bytesPerPixel": 0.1723
+    },
+    {
+      "path": "lab/formats/image-formats/style-guide-avatar-ui/style-guide-avatar-ui-webp-q90.webp",
+      "bytes": 256264,
+      "width": 1448,
+      "height": 1086,
+      "format": "WEBP",
+      "pixels": 1572528,
+      "bytesPerPixel": 0.163
+    },
+    {
+      "path": "assets/previews/v0.9.4.2-mobile-avatar.png",
+      "bytes": 220869,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.671
+    },
+    {
+      "path": "assets/previews/v0.3.0-mobile.png",
+      "bytes": 211405,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.6423
+    },
+    {
+      "path": "assets/previews/v0.7.0-product-webgl.png",
+      "bytes": 207546,
+      "width": 900,
+      "height": 661,
+      "format": "PNG",
+      "pixels": 594900,
+      "bytesPerPixel": 0.3489
+    },
+    {
+      "path": "assets/previews/v0.7.0-mobile.png",
+      "bytes": 207008,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.6289
+    },
+    {
+      "path": "lab/formats/image-formats/style-guide-avatar-ui/style-guide-avatar-ui-webp-q80.webp",
+      "bytes": 170548,
+      "width": 1448,
+      "height": 1086,
+      "format": "WEBP",
+      "pixels": 1572528,
+      "bytesPerPixel": 0.1085
+    },
+    {
+      "path": "assets/previews/v0.5.0-presets.png",
+      "bytes": 165682,
+      "width": 1600,
+      "height": 1060,
+      "format": "PNG",
+      "pixels": 1696000,
+      "bytesPerPixel": 0.0977
+    },
+    {
+      "path": "assets/previews/v0.9.6.0-RG-showcase-mobile.png",
+      "bytes": 155957,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.4738
+    },
+    {
+      "path": "lab/formats/image-formats/drone-iris/reference.png",
+      "bytes": 145203,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.5539
+    },
+    {
+      "path": "lab/formats/image-formats/v0.7.0-performance/v0.7.0-performance-avif-q80.avif",
+      "bytes": 123366,
+      "width": 1440,
+      "height": 861,
+      "format": "AVIF",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.0995
+    },
+    {
+      "path": "assets/runtime/previews/equipment-catalog.webp",
+      "bytes": 120902,
+      "width": 960,
+      "height": 1999,
+      "format": "WEBP",
+      "pixels": 1919040,
+      "bytesPerPixel": 0.063
+    },
+    {
+      "path": "assets/runtime/v0.9.5.2-mobile-modular.png",
+      "bytes": 109393,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.3323
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-fireworks-orbit/reference.png",
+      "bytes": 102609,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1979
+    },
+    {
+      "path": "assets/vfx/previews/vfx-portal-entry.png",
+      "bytes": 100591,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.194
+    },
+    {
+      "path": "lab/formats/image-formats/drone-iris/drone-iris-webp-lossless.webp",
+      "bytes": 99194,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.3784
+    },
+    {
+      "path": "assets/runtime/v0.9.5.3-compression-mobile.png",
+      "bytes": 97635,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.2966
+    },
+    {
+      "path": "assets/vfx/previews/vfx-fireworks-orbit.png",
+      "bytes": 95813,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1848
+    },
+    {
+      "path": "lab/formats/image-formats/mystic-arcane/reference.png",
+      "bytes": 94859,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.3619
+    },
+    {
+      "path": "assets/vfx/previews/aura-pink-mythic.png",
+      "bytes": 91747,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.177
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-explosion.png",
+      "bytes": 88861,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1714
+    },
+    {
+      "path": "assets/vfx/previews/aura-gold-legend.png",
+      "bytes": 87275,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1684
+    },
+    {
+      "path": "lab/formats/image-formats/v0.7.0-performance/v0.7.0-performance-webp-q90.webp",
+      "bytes": 86578,
+      "width": 1440,
+      "height": 861,
+      "format": "WEBP",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.0698
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-ice.png",
+      "bytes": 86060,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.166
+    },
+    {
+      "path": "assets/vfx/previews/aura-energy-blue.png",
+      "bytes": 86017,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1659
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-fire.png",
+      "bytes": 82531,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1592
+    },
+    {
+      "path": "assets/vfx/previews/vfx-level-up.png",
+      "bytes": 76227,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.147
+    },
+    {
+      "path": "lab/formats/image-formats/mystic-arcane/mystic-arcane-webp-lossless.webp",
+      "bytes": 70534,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.2691
+    },
+    {
+      "path": "assets/previews/v0.9.1-audit-summary.png",
+      "bytes": 68813,
+      "width": 1440,
+      "height": 900,
+      "format": "PNG",
+      "pixels": 1296000,
+      "bytesPerPixel": 0.0531
+    },
+    {
+      "path": "lab/formats/image-formats/fabric/reference.png",
+      "bytes": 67900,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 1.0361
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-fireworks-orbit/vfx-fireworks-orbit-webp-q90.webp",
+      "bytes": 67848,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1309
+    },
+    {
+      "path": "assets/materials/png/fabric.png",
+      "bytes": 64693,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.9871
+    },
+    {
+      "path": "lab/formats/image-formats/v0.7.0-performance/v0.7.0-performance-webp-q80.webp",
+      "bytes": 63108,
+      "width": 1440,
+      "height": 861,
+      "format": "WEBP",
+      "pixels": 1239840,
+      "bytesPerPixel": 0.0509
+    },
+    {
+      "path": "assets/materials/png/rubber.png",
+      "bytes": 63093,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.9627
+    },
+    {
+      "path": "assets/previews/v0.6.0-animations-speech.png",
+      "bytes": 62072,
+      "width": 1200,
+      "height": 850,
+      "format": "PNG",
+      "pixels": 1020000,
+      "bytesPerPixel": 0.0609
+    },
+    {
+      "path": "assets/vfx/previews/vfx-portal-entry.webp",
+      "bytes": 61998,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1196
+    },
+    {
+      "path": "assets/materials/png/hair.png",
+      "bytes": 60966,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.9303
+    },
+    {
+      "path": "assets/vfx/previews/vfx-rocket-celebration.png",
+      "bytes": 60445,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1166
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-fireworks-orbit/vfx-fireworks-orbit-webp-lossless.webp",
+      "bytes": 60436,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1166
+    },
+    {
+      "path": "assets/materials/png/painted-metal.png",
+      "bytes": 58431,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.8916
+    },
+    {
+      "path": "assets/runtime/previews/visual-direction.webp",
+      "bytes": 57882,
+      "width": 720,
+      "height": 540,
+      "format": "WEBP",
+      "pixels": 388800,
+      "bytesPerPixel": 0.1489
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-fireworks-orbit/vfx-fireworks-orbit-webp-q80.webp",
+      "bytes": 56684,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1093
+    },
+    {
+      "path": "assets/runtime/ultra/env-ultra-2048.webp",
+      "bytes": 55032,
+      "width": 2048,
+      "height": 1024,
+      "format": "WEBP",
+      "pixels": 2097152,
+      "bytesPerPixel": 0.0262
+    },
+    {
+      "path": "assets/vfx/previews/vfx-coin-burst.png",
+      "bytes": 52923,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.1021
+    },
+    {
+      "path": "assets/previews/v0.9.4-cache-memory.png",
+      "bytes": 52219,
+      "width": 1440,
+      "height": 900,
+      "format": "PNG",
+      "pixels": 1296000,
+      "bytesPerPixel": 0.0403
+    },
+    {
+      "path": "assets/runtime/realism/stage-realism-1920.webp",
+      "bytes": 51878,
+      "width": 1920,
+      "height": 1080,
+      "format": "WEBP",
+      "pixels": 2073600,
+      "bytesPerPixel": 0.025
+    },
+    {
+      "path": "assets/runtime/ultra/stage-ultra-1920.webp",
+      "bytes": 50184,
+      "width": 1920,
+      "height": 1080,
+      "format": "WEBP",
+      "pixels": 2073600,
+      "bytesPerPixel": 0.0242
+    },
+    {
+      "path": "assets/runtime/realism/env-realism-2048.webp",
+      "bytes": 49996,
+      "width": 2048,
+      "height": 1024,
+      "format": "WEBP",
+      "pixels": 2097152,
+      "bytesPerPixel": 0.0238
+    },
+    {
+      "path": "assets/vfx/previews/vfx-snow-screen.png",
+      "bytes": 47516,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0917
+    },
+    {
+      "path": "assets/vfx/previews/vfx-fireworks-orbit.webp",
+      "bytes": 46426,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0896
+    },
+    {
+      "path": "assets/materials/png/energy-gold.png",
+      "bytes": 46424,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.7084
+    },
+    {
+      "path": "assets/previews/v0.9.4-cache-memory-mobile.png",
+      "bytes": 45342,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.1378
+    },
+    {
+      "path": "assets/vfx/previews/vfx-confetti.png",
+      "bytes": 44203,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0853
+    },
+    {
+      "path": "assets/vfx/previews/vfx-lab-hologram.png",
+      "bytes": 43770,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0844
+    },
+    {
+      "path": "assets/vfx/previews/aura-gold-legend.webp",
+      "bytes": 42522,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.082
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-fire.webp",
+      "bytes": 42448,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0819
+    },
+    {
+      "path": "assets/vfx/previews/aura-energy-blue.webp",
+      "bytes": 42438,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0819
+    },
+    {
+      "path": "assets/vfx/previews/vfx-hologram-scan.png",
+      "bytes": 42268,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0815
+    },
+    {
+      "path": "assets/vfx/previews/aura-pink-mythic.webp",
+      "bytes": 40472,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0781
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-neon-glitch/reference.png",
+      "bytes": 40323,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0778
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-explosion.webp",
+      "bytes": 40284,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0777
+    },
+    {
+      "path": "assets/vfx/previews/vfx-radar-sweep.png",
+      "bytes": 40192,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0775
+    },
+    {
+      "path": "assets/materials/png/leather.png",
+      "bytes": 39658,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.6051
+    },
+    {
+      "path": "assets/vfx/previews/vfx-aura-ice.webp",
+      "bytes": 38510,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0743
+    },
+    {
+      "path": "assets/materials/png/skin.png",
+      "bytes": 37895,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.5782
+    },
+    {
+      "path": "assets/vfx/previews/vfx-neon-glitch.png",
+      "bytes": 37211,
+      "width": 720,
+      "height": 720,
+      "format": "PNG",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0718
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-neon-glitch/vfx-neon-glitch-webp-q90.webp",
+      "bytes": 34858,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0672
+    },
+    {
+      "path": "assets/vfx/previews/vfx-lab-hologram.webp",
+      "bytes": 32380,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0625
+    },
+    {
+      "path": "lab/formats/image-formats/fabric/fabric-webp-lossless.webp",
+      "bytes": 31512,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.4808
+    },
+    {
+      "path": "assets/vfx/previews/vfx-coin-burst.webp",
+      "bytes": 30812,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0594
+    },
+    {
+      "path": "assets/vfx/previews/vfx-hologram-scan.webp",
+      "bytes": 30380,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0586
+    },
+    {
+      "path": "assets/vfx/previews/vfx-radar-sweep.webp",
+      "bytes": 28974,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0559
+    },
+    {
+      "path": "assets/materials/png/wood.png",
+      "bytes": 28766,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.4389
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-neon-glitch/vfx-neon-glitch-webp-q80.webp",
+      "bytes": 28432,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0548
+    },
+    {
+      "path": "assets/vfx/previews/vfx-neon-glitch.webp",
+      "bytes": 27234,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0525
+    },
+    {
+      "path": "assets/vfx/previews/vfx-confetti.webp",
+      "bytes": 26484,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0511
+    },
+    {
+      "path": "assets/vfx/previews/vfx-snow-screen.webp",
+      "bytes": 26218,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0506
+    },
+    {
+      "path": "assets/materials/webp/hair.webp",
+      "bytes": 25198,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.3845
+    },
+    {
+      "path": "lab/formats/image-formats/fabric/fabric-webp-q90.webp",
+      "bytes": 24154,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.3686
+    },
+    {
+      "path": "assets/materials/webp/fabric.webp",
+      "bytes": 23910,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.3648
+    },
+    {
+      "path": "assets/items/thumbnails/drone-iris.webp",
+      "bytes": 23388,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0892
+    },
+    {
+      "path": "assets/vfx/previews/vfx-rocket-celebration.webp",
+      "bytes": 23386,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0451
+    },
+    {
+      "path": "assets/items/thumbnails/shield-sentinel.webp",
+      "bytes": 21486,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.082
+    },
+    {
+      "path": "assets/vfx/previews/vfx-level-up.webp",
+      "bytes": 21086,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0407
+    },
+    {
+      "path": "lab/formats/image-formats/drone-iris/drone-iris-webp-q90.webp",
+      "bytes": 20854,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0796
+    },
+    {
+      "path": "assets/materials/webp/rubber.webp",
+      "bytes": 20620,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.3146
+    },
+    {
+      "path": "lab/formats/image-formats/vfx-neon-glitch/vfx-neon-glitch-webp-lossless.webp",
+      "bytes": 19510,
+      "width": 720,
+      "height": 720,
+      "format": "WEBP",
+      "pixels": 518400,
+      "bytesPerPixel": 0.0376
+    },
+    {
+      "path": "lab/formats/image-formats/mystic-arcane/mystic-arcane-webp-q90.webp",
+      "bytes": 19328,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0737
+    },
+    {
+      "path": "assets/materials/png/glass-tech.png",
+      "bytes": 19022,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.2903
+    },
+    {
+      "path": "assets/equipment/previews/mystic-arcane.webp",
+      "bytes": 18914,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0722
+    },
+    {
+      "path": "assets/items/thumbnails/aura-gold-legend.webp",
+      "bytes": 18802,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0717
+    },
+    {
+      "path": "assets/materials/webp/painted-metal.webp",
+      "bytes": 18422,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.2811
+    },
+    {
+      "path": "assets/equipment/previews/jacket-neon.webp",
+      "bytes": 17944,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0685
+    },
+    {
+      "path": "assets/equipment/previews/armor-tech-red.webp",
+      "bytes": 17934,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0684
+    },
+    {
+      "path": "assets/equipment/previews/guardian-night.webp",
+      "bytes": 17882,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0682
+    },
+    {
+      "path": "assets/items/thumbnails/relic-lab-hologram.webp",
+      "bytes": 17454,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0666
+    },
+    {
+      "path": "assets/equipment/previews/acrobat-digital.webp",
+      "bytes": 17392,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0663
+    },
+    {
+      "path": "assets/equipment/previews/uniform-spain-tech.webp",
+      "bytes": 17196,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0656
+    },
+    {
+      "path": "assets/equipment/previews/uniform-uk-tech.webp",
+      "bytes": 17140,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0654
+    },
+    {
+      "path": "assets/equipment/previews/guardian-star.webp",
+      "bytes": 17046,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.065
+    },
+    {
+      "path": "assets/equipment/previews/thunder-warrior.webp",
+      "bytes": 16956,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0647
+    },
+    {
+      "path": "assets/items/thumbnails/aura-pink-mythic.webp",
+      "bytes": 16620,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0634
+    },
+    {
+      "path": "assets/items/thumbnails/celebration-fireworks.webp",
+      "bytes": 16550,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0631
+    },
+    {
+      "path": "lab/formats/image-formats/fabric/fabric-webp-q80.webp",
+      "bytes": 16490,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.2516
+    },
+    {
+      "path": "assets/items/thumbnails/aura-energy-blue.webp",
+      "bytes": 16314,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0622
+    },
+    {
+      "path": "assets/equipment/previews/uniform-usa-tech.webp",
+      "bytes": 16194,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0618
+    },
+    {
+      "path": "assets/equipment/previews/uniform-brazil-tech.webp",
+      "bytes": 16088,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0614
+    },
+    {
+      "path": "assets/characters/avatar-tech-base.webp",
+      "bytes": 15796,
+      "width": 569,
+      "height": 640,
+      "format": "WEBP",
+      "pixels": 364160,
+      "bytesPerPixel": 0.0434
+    },
+    {
+      "path": "assets/items/thumbnails/uniform-brazil-tech.webp",
+      "bytes": 15422,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0588
+    },
+    {
+      "path": "assets/items/thumbnails/jetpack-orbit.webp",
+      "bytes": 15272,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0583
+    },
+    {
+      "path": "assets/equipment/previews/shirt-code-grid.webp",
+      "bytes": 15248,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0582
+    },
+    {
+      "path": "lab/formats/image-formats/mystic-arcane/mystic-arcane-webp-q80.webp",
+      "bytes": 15234,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0581
+    },
+    {
+      "path": "assets/equipment/previews/jetpack-orbit.webp",
+      "bytes": 14824,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0565
+    },
+    {
+      "path": "assets/items/thumbnails/scanner-prisma.webp",
+      "bytes": 14654,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0559
+    },
+    {
+      "path": "assets/items/thumbnails/armor-tech-red.webp",
+      "bytes": 14646,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0559
+    },
+    {
+      "path": "lab/formats/image-formats/drone-iris/drone-iris-webp-q80.webp",
+      "bytes": 14012,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0535
+    },
+    {
+      "path": "assets/equipment/previews/hair-wave-dark.webp",
+      "bytes": 13818,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0527
+    },
+    {
+      "path": "assets/previews/test-ip.png",
+      "bytes": 13603,
+      "width": 390,
+      "height": 844,
+      "format": "PNG",
+      "pixels": 329160,
+      "bytesPerPixel": 0.0413
+    },
+    {
+      "path": "assets/equipment/previews/shoulder-orb.webp",
+      "bytes": 13510,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0515
+    },
+    {
+      "path": "assets/items/thumbnails/backpack-nexus.webp",
+      "bytes": 13508,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0515
+    },
+    {
+      "path": "assets/equipment/previews/backpack-scholar.webp",
+      "bytes": 13428,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0512
+    },
+    {
+      "path": "assets/items/thumbnails/emote-celebrate.webp",
+      "bytes": 13120,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.05
+    },
+    {
+      "path": "assets/equipment/previews/backpack-nexus.webp",
+      "bytes": 13090,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0499
+    },
+    {
+      "path": "assets/items/thumbnails/emote-think.webp",
+      "bytes": 13068,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0499
+    },
+    {
+      "path": "assets/equipment/previews/helmet-orbit.webp",
+      "bytes": 12750,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0486
+    },
+    {
+      "path": "assets/equipment/previews/shield-star.webp",
+      "bytes": 12746,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0486
+    },
+    {
+      "path": "assets/equipment/previews/rocket-pioneer.webp",
+      "bytes": 12674,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0483
+    },
+    {
+      "path": "assets/equipment/previews/scanner-prisma.webp",
+      "bytes": 12244,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0467
+    },
+    {
+      "path": "assets/items/thumbnails/notebook-holo.webp",
+      "bytes": 12084,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0461
+    },
+    {
+      "path": "assets/equipment/previews/compass-quantum.webp",
+      "bytes": 12008,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0458
+    },
+    {
+      "path": "assets/items/thumbnails/emote-jump.webp",
+      "bytes": 11752,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0448
+    },
+    {
+      "path": "assets/runtime/ultra/flare-ultra-512.webp",
+      "bytes": 11694,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0446
+    },
+    {
+      "path": "assets/items/thumbnails/emote-goodbye.webp",
+      "bytes": 11610,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0443
+    },
+    {
+      "path": "assets/equipment/previews/companion-cube.webp",
+      "bytes": 11600,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0443
+    },
+    {
+      "path": "assets/equipment/previews/hair-neon-braid.webp",
+      "bytes": 11570,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0441
+    },
+    {
+      "path": "assets/items/thumbnails/emote-point.webp",
+      "bytes": 11514,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0439
+    },
+    {
+      "path": "assets/equipment/previews/hammer-thunder.webp",
+      "bytes": 11506,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0439
+    },
+    {
+      "path": "assets/items/thumbnails/emote-wave.webp",
+      "bytes": 11466,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0437
+    },
+    {
+      "path": "assets/items/thumbnails/boots-pulse.webp",
+      "bytes": 11410,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0435
+    },
+    {
+      "path": "assets/items/thumbnails/emote-applause.webp",
+      "bytes": 11368,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0434
+    },
+    {
+      "path": "assets/runtime/realism/bokeh-realism-512.webp",
+      "bytes": 11302,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0431
+    },
+    {
+      "path": "assets/equipment/previews/shield-sentinel.webp",
+      "bytes": 11182,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0427
+    },
+    {
+      "path": "assets/items/thumbnails/hair-cyan-stripe.webp",
+      "bytes": 10976,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0419
+    },
+    {
+      "path": "assets/items/thumbnails/shirt-code-grid.webp",
+      "bytes": 10840,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0414
+    },
+    {
+      "path": "assets/materials/webp/glass-tech.webp",
+      "bytes": 10494,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1601
+    },
+    {
+      "path": "assets/equipment/previews/staff-arcane.webp",
+      "bytes": 10438,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0398
+    },
+    {
+      "path": "assets/equipment/previews/hair-cyan-stripe.webp",
+      "bytes": 10406,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0397
+    },
+    {
+      "path": "assets/avatars/avatar-tech-v1/avatar-tech-v1-poster.png",
+      "bytes": 10343,
+      "width": 1200,
+      "height": 675,
+      "format": "PNG",
+      "pixels": 810000,
+      "bytesPerPixel": 0.0128
+    },
+    {
+      "path": "assets/equipment/previews/drone-iris.webp",
+      "bytes": 10302,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0393
+    },
+    {
+      "path": "assets/items/thumbnails/emote-sit.webp",
+      "bytes": 10282,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0392
+    },
+    {
+      "path": "assets/equipment/previews/boots-pulse.webp",
+      "bytes": 10008,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0382
+    },
+    {
+      "path": "assets/materials/webp/leather.webp",
+      "bytes": 9676,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1476
+    },
+    {
+      "path": "assets/equipment/previews/skateboard-byte.webp",
+      "bytes": 9662,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0369
+    },
+    {
+      "path": "assets/equipment/previews/notebook-holo.webp",
+      "bytes": 9188,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.035
+    },
+    {
+      "path": "assets/equipment/previews/visor-holo.webp",
+      "bytes": 8542,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0326
+    },
+    {
+      "path": "assets/equipment/previews/glasses-spectrum.webp",
+      "bytes": 8432,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0322
+    },
+    {
+      "path": "assets/equipment/previews/thunder-warrior.png",
+      "bytes": 8422,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0321
+    },
+    {
+      "path": "assets/equipment/previews/jacket-neon.png",
+      "bytes": 8327,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0318
+    },
+    {
+      "path": "assets/equipment/previews/mystic-arcane.png",
+      "bytes": 8311,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0317
+    },
+    {
+      "path": "assets/materials/webp/wood.webp",
+      "bytes": 7992,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1219
+    },
+    {
+      "path": "assets/equipment/previews/cap-code.webp",
+      "bytes": 7982,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0304
+    },
+    {
+      "path": "assets/equipment/previews/uniform-uk-tech.png",
+      "bytes": 7982,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0304
+    },
+    {
+      "path": "assets/equipment/previews/armor-tech-red.png",
+      "bytes": 7978,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0304
+    },
+    {
+      "path": "assets/equipment/previews/guardian-night.png",
+      "bytes": 7975,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0304
+    },
+    {
+      "path": "assets/equipment/previews/acrobat-digital.png",
+      "bytes": 7894,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0301
+    },
+    {
+      "path": "assets/equipment/previews/shoulder-orb.png",
+      "bytes": 7688,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0293
+    },
+    {
+      "path": "assets/equipment/previews/uniform-spain-tech.png",
+      "bytes": 7520,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0287
+    },
+    {
+      "path": "assets/equipment/previews/hoverboard-neon.webp",
+      "bytes": 7512,
+      "width": 512,
+      "height": 512,
+      "format": "WEBP",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0287
+    },
+    {
+      "path": "assets/equipment/previews/guardian-star.png",
+      "bytes": 7491,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0286
+    },
+    {
+      "path": "assets/equipment/previews/uniform-brazil-tech.png",
+      "bytes": 7415,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0283
+    },
+    {
+      "path": "assets/equipment/previews/uniform-usa-tech.png",
+      "bytes": 7414,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0283
+    },
+    {
+      "path": "assets/equipment/previews/jetpack-orbit.png",
+      "bytes": 7364,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0281
+    },
+    {
+      "path": "assets/materials/png/metal.png",
+      "bytes": 7300,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1114
+    },
+    {
+      "path": "assets/ui/chests/chest-legendary.webp",
+      "bytes": 7296,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1113
+    },
+    {
+      "path": "assets/equipment/previews/rocket-pioneer.png",
+      "bytes": 7204,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0275
+    },
+    {
+      "path": "assets/equipment/previews/shirt-code-grid.png",
+      "bytes": 7179,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0274
+    },
+    {
+      "path": "assets/equipment/previews/helmet-orbit.png",
+      "bytes": 6924,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0264
+    },
+    {
+      "path": "assets/ui/chests/chest-rare.webp",
+      "bytes": 6918,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1056
+    },
+    {
+      "path": "assets/equipment/previews/hair-wave-dark.png",
+      "bytes": 6854,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0261
+    },
+    {
+      "path": "assets/ui/chests/chest-mythic.webp",
+      "bytes": 6826,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1042
+    },
+    {
+      "path": "assets/equipment/previews/shield-star.png",
+      "bytes": 6665,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0254
+    },
+    {
+      "path": "assets/equipment/previews/backpack-nexus.png",
+      "bytes": 6608,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0252
+    },
+    {
+      "path": "assets/ui/chests/chest-epic.webp",
+      "bytes": 6590,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1006
+    },
+    {
+      "path": "assets/ui/chests/chest-relic.webp",
+      "bytes": 6552,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.1
+    },
+    {
+      "path": "assets/equipment/previews/scanner-prisma.png",
+      "bytes": 6532,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0249
+    },
+    {
+      "path": "assets/equipment/previews/backpack-scholar.png",
+      "bytes": 6529,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0249
+    },
+    {
+      "path": "assets/equipment/previews/companion-cube.png",
+      "bytes": 6468,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0247
+    },
+    {
+      "path": "assets/equipment/previews/hair-neon-braid.png",
+      "bytes": 6388,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0244
+    },
+    {
+      "path": "assets/equipment/previews/staff-arcane.png",
+      "bytes": 6304,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.024
+    },
+    {
+      "path": "assets/equipment/previews/compass-quantum.png",
+      "bytes": 6214,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0237
+    },
+    {
+      "path": "assets/equipment/previews/shield-sentinel.png",
+      "bytes": 6202,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0237
+    },
+    {
+      "path": "assets/equipment/previews/drone-iris.png",
+      "bytes": 6185,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0236
+    },
+    {
+      "path": "assets/equipment/previews/hammer-thunder.png",
+      "bytes": 6183,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0236
+    },
+    {
+      "path": "assets/materials/webp/skin.webp",
+      "bytes": 5988,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0914
+    },
+    {
+      "path": "assets/ui/chests/chest-basic.webp",
+      "bytes": 5854,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0893
+    },
+    {
+      "path": "assets/equipment/previews/hair-cyan-stripe.png",
+      "bytes": 5660,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0216
+    },
+    {
+      "path": "assets/equipment/previews/boots-pulse.png",
+      "bytes": 5427,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0207
+    },
+    {
+      "path": "assets/equipment/previews/skateboard-byte.png",
+      "bytes": 5382,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0205
+    },
+    {
+      "path": "assets/equipment/previews/notebook-holo.png",
+      "bytes": 5341,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0204
+    },
+    {
+      "path": "assets/equipment/previews/glasses-spectrum.png",
+      "bytes": 5204,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0199
+    },
+    {
+      "path": "assets/equipment/previews/visor-holo.png",
+      "bytes": 5175,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0197
+    },
+    {
+      "path": "assets/equipment/previews/cap-code.png",
+      "bytes": 5044,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0192
+    },
+    {
+      "path": "assets/materials/webp/energy-gold.webp",
+      "bytes": 4912,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.075
+    },
+    {
+      "path": "assets/equipment/previews/hoverboard-neon.png",
+      "bytes": 4702,
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "pixels": 262144,
+      "bytesPerPixel": 0.0179
+    },
+    {
+      "path": "assets/ui/coins/coin-reserved.webp",
+      "bytes": 4628,
+      "width": 128,
+      "height": 128,
+      "format": "WEBP",
+      "pixels": 16384,
+      "bytesPerPixel": 0.2825
+    },
+    {
+      "path": "assets/ui/coins/coin-blocked.webp",
+      "bytes": 4544,
+      "width": 128,
+      "height": 128,
+      "format": "WEBP",
+      "pixels": 16384,
+      "bytesPerPixel": 0.2773
+    },
+    {
+      "path": "assets/ui/coins/coin-available.webp",
+      "bytes": 4532,
+      "width": 128,
+      "height": 128,
+      "format": "WEBP",
+      "pixels": 16384,
+      "bytesPerPixel": 0.2766
+    },
+    {
+      "path": "assets/ui/coins/coin-review.webp",
+      "bytes": 4128,
+      "width": 128,
+      "height": 128,
+      "format": "WEBP",
+      "pixels": 16384,
+      "bytesPerPixel": 0.252
+    },
+    {
+      "path": "assets/materials/webp/emissive-cyan.webp",
+      "bytes": 4036,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0616
+    },
+    {
+      "path": "assets/materials/webp/holographic.webp",
+      "bytes": 2876,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0439
+    },
+    {
+      "path": "lab/formats/image-formats/holographic/holographic-webp-q90.webp",
+      "bytes": 2738,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0418
+    },
+    {
+      "path": "lab/formats/image-formats/holographic/reference.png",
+      "bytes": 2619,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.04
+    },
+    {
+      "path": "assets/materials/webp/metal.webp",
+      "bytes": 2282,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0348
+    },
+    {
+      "path": "assets/materials/png/emissive-cyan.png",
+      "bytes": 2208,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0337
+    },
+    {
+      "path": "assets/materials/png/holographic.png",
+      "bytes": 2143,
+      "width": 256,
+      "height": 256,
+      "format": "PNG",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0327
+    },
+    {
+      "path": "lab/formats/image-formats/holographic/holographic-webp-q80.webp",
+      "bytes": 1942,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0296
+    },
+    {
+      "path": "lab/formats/image-formats/holographic/holographic-webp-lossless.webp",
+      "bytes": 730,
+      "width": 256,
+      "height": 256,
+      "format": "WEBP",
+      "pixels": 65536,
+      "bytesPerPixel": 0.0111
+    }
+  ]
+}

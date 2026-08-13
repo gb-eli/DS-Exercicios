@@ -1,0 +1,39 @@
+{
+  "version": "0.9.6.0-RG",
+  "method": "Chromium headless com rotas locais interceptadas em URL de subdiretório equivalente ao GitHub Pages",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "initialModulesAbsent": {
+    "avatar3d.js": true,
+    "product3d.js": true,
+    "vfx-engine.js": true,
+    "benchmark-engine.js": true,
+    "package-manager.js": true,
+    "ds-store-sdk.js": true,
+    "avatar-assets.js": true,
+    "equipment-assets.js": true
+  },
+  "lazyModules": {
+    "avatarViewModule": true,
+    "effectsViewModule": true,
+    "performanceViewModule": true,
+    "integrationViewModule": true
+  },
+  "viewsActive": {
+    "avatarViewActive": true,
+    "effectsViewActive": true,
+    "performanceViewActive": true,
+    "integrationViewActive": true
+  },
+  "productPreview": {
+    "productButtons": 145,
+    "productModalVisible": true,
+    "product3dModule": true,
+    "base64NotRequested": true,
+    "glbRequested": false,
+    "mobileNoOverflow": true
+  },
+  "mobileNoHorizontalOverflow": true,
+  "webglAvailableInTest": false,
+  "note": "O navegador de teste não disponibilizou WebGL; o preview 360° utilizou fallback vetorial. Os GLBs foram preservados e validados por hash/estrutura."
+}
