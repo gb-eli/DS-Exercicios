@@ -1,0 +1,12 @@
+{
+  "portalVersion": "2.2.0",
+  "build": "2026.07.30-security-wallet",
+  "releaseDate": "2026-07-30",
+  "schemaVersion": 4,
+  "walletSchemaVersion": 1,
+  "termsVersion": "1.3.0",
+  "permissionsManifestVersion": "1.0.0",
+  "rubricVersion": "1.0.0",
+  "status": "stable",
+  "technologies": ["HTML", "CSS", "JavaScript Modules", "Web Crypto API", "IndexedDB", "Service Worker"]
+}
