@@ -1,0 +1,12 @@
+AGV Ecossistema Unificado v7 — scan de segredos
+Data: 13/08/2026
+
+sb_secret real: 0
+service_role hardcoded no frontend: 0
+private key: 0
+Stripe secret: 0
+publishable key occurrences (esperadas): 4
+
+Escopo: professor/, loja-universal/, sistemas/ e core/sdk/.
+Observação: referências ao nome SUPABASE_SERVICE_ROLE_KEY dentro de Edge Functions server-side não são segredo hardcoded e ficam fora deste scan de frontend.
+Resultado: PASS

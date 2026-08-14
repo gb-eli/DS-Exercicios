@@ -1,0 +1,44 @@
+do $$ declare p uuid; begin
+select id into p from public.platforms where code='lab-virtual';
+if p is null then raise exception 'platform lab-virtual missing'; end if;
+insert into public.activity_catalog(platform_id,activity_id,name,reward_policy,max_xp,max_points,max_coins,repeatable,active,metadata) values
+(p,'tool:cmd','Prompt de Comando — CMD','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"cmd","level":"basic","module":"","type":"terminal","firstValidationBonus":15}'::jsonb),
+(p,'tool:powershell','Windows PowerShell','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"powershell","level":"intermediate","module":"","type":"terminal","firstValidationBonus":30}'::jsonb),
+(p,'tool:bash','Terminal Linux — Bash','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"bash","level":"basic","module":"","type":"terminal","firstValidationBonus":15}'::jsonb),
+(p,'tool:ubuntu','Terminal Ubuntu','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"ubuntu","level":"basic","module":"","type":"terminal","firstValidationBonus":15}'::jsonb),
+(p,'tool:debian','Terminal Debian','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"debian","level":"basic","module":"","type":"terminal","firstValidationBonus":15}'::jsonb),
+(p,'tool:kali','Terminal Kali Linux','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"kali","level":"advanced","module":"","type":"terminal","firstValidationBonus":50}'::jsonb),
+(p,'tool:fedora','Terminal Fedora','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"fedora","level":"intermediate","module":"","type":"terminal","firstValidationBonus":30}'::jsonb),
+(p,'tool:chromeos','Terminal ChromeOS — Crosh','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"chromeos","level":"basic","module":"","type":"terminal","firstValidationBonus":15}'::jsonb),
+(p,'tool:macos','Terminal macOS — Zsh','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"macos","level":"intermediate","module":"","type":"terminal","firstValidationBonus":30}'::jsonb),
+(p,'tool:python','Ambiente Python','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"python","level":"basic","module":"python-lab","type":"lab","firstValidationBonus":15}'::jsonb),
+(p,'tool:javascript','Ambiente JavaScript','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"javascript","level":"basic","module":"javascript-lab","type":"lab","firstValidationBonus":15}'::jsonb),
+(p,'tool:web','HTML, CSS e JavaScript Web','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"web","level":"intermediate","module":"web-lab","type":"lab","firstValidationBonus":30}'::jsonb),
+(p,'tool:sql','Laboratório SQL','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"sql","level":"intermediate","module":"sql-lab","type":"lab","firstValidationBonus":30}'::jsonb),
+(p,'tool:network','Laboratório de Redes','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"network","level":"intermediate","module":"network-lab","type":"lab","firstValidationBonus":30}'::jsonb),
+(p,'tool:virtual-machine','Sistemas Operacionais e Máquinas Virtuais','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"virtual-machine","level":"advanced","module":"vm-lab","type":"lab","firstValidationBonus":50}'::jsonb),
+(p,'tool:hardware','Hardware Studio 3D','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"hardware","level":"intermediate","module":"hardware-lab","type":"lab","firstValidationBonus":30}'::jsonb),
+(p,'tool:graphics','Cores, Pixels e Resolução','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"graphics","level":"basic","module":"graphics-lab","type":"lab","firstValidationBonus":15}'::jsonb),
+(p,'tool:block-programming','Programação em Blocos','no_economic_reward',0,0,0,false,true,'{"kind":"tool","toolId":"block-programming","level":"basic","module":"blocks-lab","type":"lab","firstValidationBonus":15}'::jsonb)
+on conflict(platform_id,activity_id) do update set name=excluded.name,reward_policy=excluded.reward_policy,max_xp=excluded.max_xp,max_points=excluded.max_points,max_coins=excluded.max_coins,repeatable=excluded.repeatable,active=true,metadata=excluded.metadata;
+delete from public.reward_rules where platform_id=p and activity_id in ('tool:cmd','tool:powershell','tool:bash','tool:ubuntu','tool:debian','tool:kali','tool:fedora','tool:chromeos','tool:macos','tool:python','tool:javascript','tool:web','tool:sql','tool:network','tool:virtual-machine','tool:hardware','tool:graphics','tool:block-programming');
+insert into public.reward_rules(platform_id,activity_id,event_type,trust_level,xp,points,coins,repeatable,active,metadata) values
+(p,'tool:cmd','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:powershell','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:bash','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:ubuntu','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:debian','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:kali','tool.first_validated','server_verified',0,0,50,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:fedora','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:chromeos','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:macos','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:python','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:javascript','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:web','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:sql','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:network','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:virtual-machine','tool.first_validated','server_verified',0,0,50,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:hardware','tool.first_validated','server_verified',0,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:graphics','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'tool:block-programming','tool.first_validated','server_verified',0,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb);
+end $$;
