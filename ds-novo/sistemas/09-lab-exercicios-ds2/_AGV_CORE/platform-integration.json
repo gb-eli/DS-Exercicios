@@ -1,0 +1,30 @@
+{
+  "platformId": "lab-ds2",
+  "name": "Plataforma 2DS — Duas Disciplinas",
+  "version": "0.7.1",
+  "integrationVersion": "0.0.0-not-implemented",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth",
+    "economy": "none",
+    "progress": "local per discipline"
+  },
+  "candidateHookFiles": [
+    "assets/js/auth.js",
+    "assets/js/aluno.js",
+    "frontend/assets/js/auth.js",
+    "frontend/assets/js/aluno.js",
+    "inovacao/assets/js/auth-shared.js",
+    "inovacao/assets/js/inovacao.js"
+  ]
+}
