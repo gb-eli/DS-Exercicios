@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Setor Poligonal 94 — arena low-poly">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07152d"/><stop offset="1" stop-color="#29111b"/></linearGradient><linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#172642"/><stop offset="1" stop-color="#050912"/></linearGradient></defs>
+<rect width="960" height="330" fill="url(#sky)"/><path d="M0 330 480 240 960 330v210H0Z" fill="url(#floor)"/>
+<g stroke="#3e6c90" stroke-opacity=".5"><path d="M480 240 40 540M480 240 180 540M480 240 320 540M480 240 640 540M480 240 780 540M480 240 920 540"/><path d="M350 300h260M260 365h440M150 450h660"/></g>
+<g stroke="#ff795f" stroke-width="3"><path d="M145 360 240 315l80 45-96 50Z" fill="#6e2430"/><path d="M650 342 745 292l72 44-98 56Z" fill="#8b332b"/><path d="M400 315 480 270l84 42-82 50Z" fill="#293e70"/></g>
+<g fill="#ffe06b"><path d="m235 270 16-27 16 27-16 27Z"/><path d="m608 282 16-27 16 27-16 27Z"/><path d="m480 214 18-31 18 31-18 31Z"/></g>
+<g transform="translate(455 360)"><path d="m0 24 26-24 28 18-6 42-34 9-22-22Z" fill="#e8f7ff" stroke="#49e7ff" stroke-width="3"/><path d="m26 0 3 35 25-17M29 35 14 69m15-34 19 25" fill="none" stroke="#49e7ff" stroke-width="3"/></g>
+<rect x="22" y="20" width="916" height="500" rx="20" fill="none" stroke="#ff795f" stroke-opacity=".45" stroke-width="2"/>
+<text x="48" y="64" fill="#f3f8ff" font-family="Arial,system-ui" font-size="30" font-weight="800">Setor Poligonal 94</text><text x="50" y="92" fill="#ff957f" font-family="monospace" font-size="15">ARENA LOW-POLY · CÂMERAS 3D · 1994</text>
+<g transform="translate(670 42)"><rect width="235" height="105" rx="14" fill="#050a14" stroke="#ff795f"/><text x="18" y="29" fill="#ff957f" font-family="monospace" font-size="14">MISSÃO</text><text x="18" y="55" fill="#eef6ff" font-family="Arial" font-size="16">Colete 3 núcleos</text><text x="18" y="79" fill="#eef6ff" font-family="Arial" font-size="16">e alcance o portal</text></g>
+<text x="790" y="505" fill="#c3cee2" font-family="monospace" font-size="14">PREVIEW 1/2</text></svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Prévia do labirinto e editor no Puzzle Forge DS">
+<rect width="960" height="540" fill="#050914"/><text x="56" y="62" fill="#a46fff" font-family="monospace" font-weight="700" font-size="22">PUZZLE FORGE DS · LABIRINTO E EDITOR 7×7</text>
+<g transform="translate(75 100)">
+<rect width="350" height="350" rx="18" fill="#07172a" stroke="#263f5c" stroke-width="3"/>
+<g fill="#2b3850"><rect x="50" y="50" width="150" height="50"/><rect x="250" y="50" width="50" height="150"/><rect x="0" y="150" width="100" height="50"/><rect x="150" y="150" width="50" height="100"/><rect x="50" y="250" width="50" height="50"/><rect x="200" y="250" width="150" height="50"/></g>
+<circle cx="25" cy="25" r="17" fill="#a46fff" stroke="#fff" stroke-width="4"/><rect x="310" y="310" width="28" height="28" rx="6" fill="#ffd166"/>
+<g stroke="#49e7ff" stroke-opacity=".18"><path d="M50 0v350M100 0v350M150 0v350M200 0v350M250 0v350M300 0v350M0 50h350M0 100h350M0 150h350M0 200h350M0 250h350M0 300h350"/></g>
+</g>
+<g transform="translate(505 115)"><text x="0" y="0" fill="#f6fbff" font-family="Arial" font-weight="900" font-size="31">Editor orientado a dados</text><text x="0" y="48" fill="#a9bdd8" font-family="Arial" font-size="20">Crie paredes, teste rotas</text><text x="0" y="80" fill="#a9bdd8" font-family="Arial" font-size="20">e compare número de movimentos.</text><rect x="0" y="130" width="345" height="130" rx="18" fill="#0d1728" stroke="#49e7ff"/><text x="22" y="170" fill="#49e7ff" font-family="monospace" font-weight="700" font-size="18">APRENDIZADO</text><text x="22" y="205" fill="#dce8f7" font-family="Arial" font-size="18">matrizes · grafos · caminhos</text><text x="22" y="234" fill="#dce8f7" font-family="Arial" font-size="18">eventos · persistência</text></g>
+</svg>
