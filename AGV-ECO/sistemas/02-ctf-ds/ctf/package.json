@@ -1,0 +1,12 @@
+{
+  "name": "ctfds-cyber-lab",
+  "version": "3.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Plataforma educacional CTF com 68 casos investigativos, oito ambientes 3D/360, atualização segura, diagnóstico local e perfis criptografados para GitHub Pages",
+  "scripts": {
+    "check": "node ./tests/validate.mjs && node ./tests/security-wallet.mjs && node ./tests/runtime-stability.mjs",
+    "test": "npm run check",
+    "test:stability": "node ./tests/runtime-stability.mjs"
+  }
+}
