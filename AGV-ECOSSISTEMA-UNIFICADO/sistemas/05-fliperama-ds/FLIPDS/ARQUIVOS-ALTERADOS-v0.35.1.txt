@@ -1,0 +1,33 @@
+Fliperama DS v0.35.1 — arquivos alterados/adicionados
+
+Alterados:
+- app.js
+- app.css
+- index.html
+- sw.js
+- version.json
+- README.md
+- COMO-PUBLICAR.txt
+- COMO-ABRIR.txt
+- PLANO-PROXIMAS-ETAPAS.md
+- media/games/vector-tennis/preview-01.svg
+- media/games/vector-tennis/preview-02.svg
+- media/games/orbital-sentinel/preview-01.svg
+- media/games/orbital-sentinel/preview-02.svg
+- media/games/room-quest/preview-01.svg
+- media/games/room-quest/preview-02.svg
+- media/games/board-arena/preview-01.svg
+- media/games/board-arena/preview-02.svg
+- media/games/puzzle-forge/preview-01.svg
+- media/games/puzzle-forge/preview-02.svg
+- media/games/motion-beat/preview-01.svg
+- media/games/motion-beat/preview-02.svg
+
+Adicionados:
+- RELATORIO-VALIDACAO-FASE-7-16B-v0.35.1.md
+- TESTES-UPGRADE-GRAFICO-BLOCO2-v0.35.1.md
+- CHECKLIST-TESTES-v0.35.1.md
+- CHANGELOG-v0.35.1.md
+- BUGS-CORRIGIDOS-v0.35.1.md
+- MATRIZ-TESTES-JOGOS-v0.35.1.md
+- ARQUIVOS-ALTERADOS-v0.35.1.txt

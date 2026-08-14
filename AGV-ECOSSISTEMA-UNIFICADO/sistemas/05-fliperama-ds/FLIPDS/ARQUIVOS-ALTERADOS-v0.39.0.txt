@@ -1,0 +1,57 @@
+Fliperama DS v0.39.0 — arquivos alterados em relação à v0.38.6
+
+Adicionados: 20
+Modificados: 26
+Removidos: 0
+
+[ADICIONADOS]
+ARQUIVOS-ALTERADOS-v0.39.0.txt
+BUGS-CORRIGIDOS-v0.39.0.md
+CHANGELOG-v0.39.0.md
+CHECKLIST-TESTES-v0.39.0.md
+MATRIZ-TESTES-JOGOS-v0.39.0.md
+RELATORIO-VALIDACAO-FASE-7-28-v0.39.0.md
+TESTES-CHESS-ARENA-360-v0.39.0.md
+TESTES-REGRESSAO-v0.39.0.md
+games/chess-arena-360/ai.js
+games/chess-arena-360/engine.js
+games/chess-arena-360/game.js
+games/chess-arena-360/index.html
+games/chess-arena-360/style.css
+media/games/chess-arena-360/logo.svg
+media/games/chess-arena-360/preview-01.svg
+media/games/chess-arena-360/preview-02.svg
+validation/chess-arena-360-results-v0.39.0.json
+validation/http-route-results-v0.39.0.json
+validation/release-regression-results-v0.39.0.json
+validation/test-chess-arena-360-v0.39.0.js
+
+[MODIFICADOS]
+PLANO-MASTER-FLIPERAMA-DS-40-JOGOS.md
+PLANO-PROXIMAS-ETAPAS.md
+README.md
+app.js
+diagnostico-jogos.html
+diagnostico.html
+education/game-learning.json
+game-profiles.json
+index.html
+sw.js
+validation/arcade-expansion-test-results.json
+validation/audit-games.js
+validation/cpu-multiplayer-quality-results.json
+validation/educational-content-test-results.json
+validation/game-audit-results.json
+validation/museum-timeline-test-results.json
+validation/platform-physics-test-results.json
+validation/test-arcade-expansion.js
+validation/test-educational-content.js
+validation/test-mundo-plataforma-360-v0.38.5.mjs
+validation/test-museum-timeline.js
+validation/test-plataforma-classica-v0.37.1.js
+validation/test-progression-expansion-v0.36.2.js
+validation/test-ux-responsive.js
+validation/ux-responsive-test-results.json
+version.json
+
+[REMOVIDOS]
