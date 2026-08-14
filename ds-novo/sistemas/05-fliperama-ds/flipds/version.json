@@ -1,0 +1,13 @@
+{
+  "name": "Fliperama DS",
+  "version": "0.20.0",
+  "phase": "Fase 7.1",
+  "channel": "Estável",
+  "publishedAt": "2026-08-03T12:05:00Z",
+  "notes": [
+    "Puzzle Forge DS adicionado como o 17º laboratório jogável.",
+    "Caminhos rotativos, circuitos lógicos, sequência de memória e labirinto 7×7.",
+    "Editor de labirintos orientado a dados, controles desktop/mobile e salvamento.",
+    "Conteúdo educacional de matrizes, vizinhança, estados, sequências e caminhos."
+  ]
+}

@@ -1,0 +1,36 @@
+Fliperama DS v0.34.1 — arquivos alterados/adicionados
+
+ALTERADOS
+- app.js
+- index.html
+- sw.js
+- version.json
+- game-profiles.json
+- education/game-learning.json
+- media/games/vector-tennis/preview-01.svg
+- media/games/vector-tennis/preview-02.svg
+- media/games/board-arena/preview-01.svg
+- media/games/board-arena/preview-02.svg
+- diagnostico.html
+- diagnostico-jogos.html
+- README.md
+- COMO-ABRIR.txt
+- COMO-PUBLICAR.txt
+- PLANO-PROXIMAS-ETAPAS.md
+- validation/audit-games.js
+- validation/test-arcade-expansion.js
+- validation/test-educational-content.js
+- validation/test-museum-timeline.js
+- validation/README.md
+
+ADICIONADOS
+- validation/test-cpu-multiplayer-quality.js
+- validation/cpu-multiplayer-quality-results.json
+- RELATORIO-AUDITORIA-CPU-MULTIPLAYER-QUALIDADE-v0.34.1.md
+- TESTES-CPU-MULTIPLAYER-QUALIDADE-v0.34.1.md
+- MATRIZ-AUDITORIA-FUNCIONAL-v0.34.1.md
+- MATRIZ-TESTES-JOGOS-v0.34.1.md
+- BUGS-CORRIGIDOS-v0.34.1.md
+- CHANGELOG-v0.34.1.md
+- CHECKLIST-TESTES-v0.34.1.md
+- ARQUIVOS-ALTERADOS-v0.34.1.txt
