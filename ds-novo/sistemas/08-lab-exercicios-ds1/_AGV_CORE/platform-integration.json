@@ -1,0 +1,29 @@
+{
+  "platformId": "lab-ds1",
+  "name": "Plataforma 1DS — Central de Disciplinas",
+  "version": "1.12.0",
+  "integrationVersion": "0.0.0-not-implemented",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth contract",
+    "economy": "none",
+    "progress": "local per discipline"
+  },
+  "candidateHookFiles": [
+    "core/auth-contract.js",
+    "core/storage.js",
+    "core/central.js",
+    "assets/js/auth.js",
+    "assets/js/app.js"
+  ]
+}
