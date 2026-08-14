@@ -1,0 +1,59 @@
+{
+  "version": "0.5.0",
+  "presets": [
+    {
+      "id": "preset-tech-student",
+      "name": "Estudante Tech",
+      "items": [
+        "hair-cyan-stripe",
+        "shirt-code-grid",
+        "boots-pulse",
+        "backpack-nexus",
+        "scanner-prisma",
+        "shield-sentinel"
+      ]
+    },
+    {
+      "id": "preset-brazil",
+      "name": "Brasil Tech",
+      "items": [
+        "hair-wave-dark",
+        "uniform-brazil-tech",
+        "boots-pulse",
+        "backpack-scholar",
+        "drone-iris"
+      ]
+    },
+    {
+      "id": "preset-night",
+      "name": "Guardião Noturno",
+      "items": [
+        "helmet-orbit",
+        "guardian-night",
+        "boots-pulse",
+        "shield-sentinel",
+        "shoulder-orb"
+      ]
+    },
+    {
+      "id": "preset-arcane",
+      "name": "Místico Arcano",
+      "items": [
+        "visor-holo",
+        "mystic-arcane",
+        "staff-arcane",
+        "companion-cube"
+      ]
+    },
+    {
+      "id": "preset-thunder",
+      "name": "Guerreiro do Trovão",
+      "items": [
+        "helmet-orbit",
+        "thunder-warrior",
+        "hammer-thunder",
+        "jetpack-orbit"
+      ]
+    }
+  ]
+}

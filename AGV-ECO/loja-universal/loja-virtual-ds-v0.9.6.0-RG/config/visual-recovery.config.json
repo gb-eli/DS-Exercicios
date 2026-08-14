@@ -1,0 +1,50 @@
+{
+  "version": "0.9.6.0-RG",
+  "id": "DS_VISUAL_RECOVERY_1",
+  "visualFloor": "intermediate",
+  "basicOnlyExplicit": true,
+  "fallback": {
+    "type": "high-fidelity-four-angle",
+    "primary3dRemains": "GLB",
+    "angles": [
+      "front",
+      "three-quarter",
+      "side",
+      "back"
+    ]
+  },
+  "visualSurfaces": [
+    "home",
+    "store",
+    "inventory",
+    "profile",
+    "avatar",
+    "effects",
+    "showcase",
+    "product360",
+    "transactions"
+  ],
+  "protected": [
+    "28 clips per LOD",
+    "36 equipment GLBs",
+    "17 VFX",
+    "Ultra assets",
+    "Realism assets",
+    "Rig node names and slots"
+  ],
+  "rules": [
+    "Do not replace 3D with low resolution thumbnails",
+    "Do not force Lite on visual surfaces",
+    "Do not disable premium assets after explicit selection"
+  ],
+  "geometry": {
+    "profile": "rounded-voxel-HD",
+    "avatarLodTriangles": {
+      "lod0": 39168,
+      "lod1": 8448,
+      "lod2": 1680
+    },
+    "equipmentSubdivisions": 4,
+    "rigAndAnimationsPreserved": true
+  }
+}

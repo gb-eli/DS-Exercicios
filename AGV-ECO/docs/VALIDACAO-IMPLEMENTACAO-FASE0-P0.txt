@@ -1,0 +1,46 @@
+=== Node syntax ===
+PASS syntax
+=== AGV Core SDK ===
+AGVCoreSDK v0.2.0: reward sem amount + progresso idempotente OK
+PASS core sdk
+=== Loja regression ===
+{"ok": true, "version": "0.9.6.0-RG", "visualFloor": "intermediate", "fallbackAngles": 4}
+{
+  "authorized": "AUTHORIZED",
+  "duplicate": "DUPLICATE_EVENT",
+  "invalid": "INVALID_EVENT",
+  "critical": "UNDER_REVIEW",
+  "bridge": "AUTHORIZED",
+  "queued": "QUEUED",
+  "flushed": {
+    "processed": 1,
+    "remaining": 0,
+    "results": [
+      {
+        "protocol": "DS_STORE_RESULT_V1",
+        "ok": true,
+        "code": "REWARD_AUTHORIZED",
+        "status": "AUTHORIZED",
+        "eventId": "desafio:fase-offline:perfil-teste",
+        "transactionId": "tx_msrtueyd_ye5aw97",
+        "reviewLevel": "expanded",
+        "validationTargetSeconds": [
+          12,
+          20
+        ],
+        "balances": {
+          "available": 6350,
+          "reserved": 0,
+          "pending": 250,
+          "underReview": 50000,
+          "blocked": 0
+        },
+        "message": "Recompensa autorizada e liberada na carteira.",
+        "receivedAt": "2026-08-13T18:03:50.197Z"
+      }
+    ]
+  }
+}
+DSStoreSDK -> AGVCore: amount legado não é enviado ao Core
+PASS loja
+SECRET_SCAN=PASS

@@ -1,0 +1,1900 @@
+{
+  "packs": [
+    {
+      "id": "graphics-balanced",
+      "name": "Intermediário",
+      "tier": "intermediate",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "Texturas intermediárias, LODs leves, miniaturas completas e VFX moderados.",
+      "requires": [
+        "graphics-essential"
+      ],
+      "qualityModes": [
+        "intermediate"
+      ],
+      "accent": "green",
+      "files": [
+        {
+          "path": "../assets/compression/glb/avatars/avatar-tech-v1/avatar-tech-v1-lod1.glb.gz",
+          "bytes": 15296,
+          "sha256": "e80644b2120773da8013d0fd1fe481d0ed5f216c81afde724c0b5667cb80494f"
+        },
+        {
+          "path": "../assets/compression/glb/avatars/avatar-tech-v1/avatar-tech-v1-lod2.glb.gz",
+          "bytes": 13976,
+          "sha256": "b91adf337bc16162a553674cd726e33b8c12f8e6ce6c45b14891c5f4d32a5e40"
+        },
+        {
+          "path": "../assets/equipment/previews/acrobat-digital.webp",
+          "bytes": 17392,
+          "sha256": "aecb06befdce8061b0adfa54969fb54c5b61c841960a8342af659877811ad079"
+        },
+        {
+          "path": "../assets/equipment/previews/armor-tech-red.webp",
+          "bytes": 17934,
+          "sha256": "5973784dad62438e38fbf5c9245d9c9e76712d6da80e233c464cdd2b56969174"
+        },
+        {
+          "path": "../assets/equipment/previews/backpack-nexus.webp",
+          "bytes": 13090,
+          "sha256": "d43b0fd4ffdede5fb50df71bcc280b3149bf1121358e633d89038c19d5213468"
+        },
+        {
+          "path": "../assets/equipment/previews/backpack-scholar.webp",
+          "bytes": 13428,
+          "sha256": "910a7de3d8592fefc9046b1268b13e07c128fe27b93a0e98946a8e5ebc9bd472"
+        },
+        {
+          "path": "../assets/equipment/previews/boots-pulse.webp",
+          "bytes": 10008,
+          "sha256": "741b1e9c652f5b716c1ea298f2ecdfa1894f0afe44decf00b065cb70062d8b60"
+        },
+        {
+          "path": "../assets/equipment/previews/cap-code.webp",
+          "bytes": 7982,
+          "sha256": "044f7c24f5c857bd6a515422a4290d1197e2886ce4751c4c87b6098985393e9a"
+        },
+        {
+          "path": "../assets/equipment/previews/companion-cube.webp",
+          "bytes": 11600,
+          "sha256": "821a31f8a28c5b288edae0136c4f84e0678e4dd6ae8cf90c8ee84047b431ff5c"
+        },
+        {
+          "path": "../assets/equipment/previews/compass-quantum.webp",
+          "bytes": 12008,
+          "sha256": "03a0e44060fe6893519bfaf835a199c34793ba9f335e06d42ca579964d569699"
+        },
+        {
+          "path": "../assets/equipment/previews/drone-iris.webp",
+          "bytes": 10302,
+          "sha256": "5b21fc3a089e9465b75ca925efe1dfb8c778efa7f344a0904a8ba26c822fe7be"
+        },
+        {
+          "path": "../assets/equipment/previews/glasses-spectrum.webp",
+          "bytes": 8432,
+          "sha256": "79af847c433be3623eca9b2528d995375fd0f3acb14d2b41dd6ba7cb07e51dcc"
+        },
+        {
+          "path": "../assets/equipment/previews/guardian-night.webp",
+          "bytes": 17882,
+          "sha256": "dae3ffc046cce8cfacef7653146d25244ca0e5b5e98271909096e43883d22080"
+        },
+        {
+          "path": "../assets/equipment/previews/guardian-star.webp",
+          "bytes": 17046,
+          "sha256": "e0f6c8e82ce01707c45e02c73b96d9ad3054da7fe5277d9df3daaa6ed8206eaf"
+        },
+        {
+          "path": "../assets/equipment/previews/hair-cyan-stripe.webp",
+          "bytes": 10406,
+          "sha256": "e7b0e2810734776b22f7be2bb41d13ad688b67e906beb1d60a2a518fa0adcf13"
+        },
+        {
+          "path": "../assets/equipment/previews/hair-neon-braid.webp",
+          "bytes": 11570,
+          "sha256": "1d5a80618c9926bda69518d559bbf4e2f47e7760babad7246da9922a47a72258"
+        },
+        {
+          "path": "../assets/equipment/previews/hair-wave-dark.webp",
+          "bytes": 13818,
+          "sha256": "af8966aec4c99daf9db69691b7a72e32ccf0d94fc601062ea390d0f2fa308679"
+        },
+        {
+          "path": "../assets/equipment/previews/hammer-thunder.webp",
+          "bytes": 11506,
+          "sha256": "be9c807dd505719032bbe11434b6e38ff985fa99fecaef1538e1f1908a1fa4cb"
+        },
+        {
+          "path": "../assets/equipment/previews/helmet-orbit.webp",
+          "bytes": 12750,
+          "sha256": "5dd9f844e4533b56b707f20c218b11eaf6d335a7333ee9faa2c2dfe12a8689d9"
+        },
+        {
+          "path": "../assets/equipment/previews/hoverboard-neon.webp",
+          "bytes": 7512,
+          "sha256": "46ff7af11b24c29e27099f3ecacf3efc556c45cd5f7e62510c179fdda671f6f4"
+        },
+        {
+          "path": "../assets/equipment/previews/jacket-neon.webp",
+          "bytes": 17944,
+          "sha256": "05acb198d401f9c7613ed34862b586216536b2cf79767c9dfbf429b5247cae04"
+        },
+        {
+          "path": "../assets/equipment/previews/jetpack-orbit.webp",
+          "bytes": 14824,
+          "sha256": "469042a6eb2bfd97432a20b7d7f6950485943506512674f6b56616acea6b949f"
+        },
+        {
+          "path": "../assets/equipment/previews/mystic-arcane.webp",
+          "bytes": 18914,
+          "sha256": "52ddba379250b879743f0a7a5c2ac7cdd318819ce4dc17b014d3f6cf8b183b11"
+        },
+        {
+          "path": "../assets/equipment/previews/notebook-holo.webp",
+          "bytes": 9188,
+          "sha256": "8895e0418d3e9a76c6196b014e4058c975f67877cd1c7c9189a4ab509eae07df"
+        },
+        {
+          "path": "../assets/equipment/previews/rocket-pioneer.webp",
+          "bytes": 12674,
+          "sha256": "0fd1f4d09809baa8449a9c2d456ac53d3d2d2fc8940605850fdd3fbbd8e043d2"
+        },
+        {
+          "path": "../assets/equipment/previews/scanner-prisma.webp",
+          "bytes": 12244,
+          "sha256": "e4407974ecff93d77176c91db963760296a0f47f38aed6e0b3fe4663530c839c"
+        },
+        {
+          "path": "../assets/equipment/previews/shield-sentinel.webp",
+          "bytes": 11182,
+          "sha256": "a2bb1e88ad65b21e6f270e72872bc4651f7b8f2b2e877e73233072ceaf3bb273"
+        },
+        {
+          "path": "../assets/equipment/previews/shield-star.webp",
+          "bytes": 12746,
+          "sha256": "ded123de1d32519e87f0c85d5a3496003ad7c91083607ae96859758704d50c01"
+        },
+        {
+          "path": "../assets/equipment/previews/shirt-code-grid.webp",
+          "bytes": 15248,
+          "sha256": "b4e94a4abc12ec2495f7ee0d9e7020367a498b6995c14aa5b99c9794ca3748c3"
+        },
+        {
+          "path": "../assets/equipment/previews/shoulder-orb.webp",
+          "bytes": 13510,
+          "sha256": "d78a107b4494ecdaa516a00af935732702e2c86b6eaac0718b6f55867232fe18"
+        },
+        {
+          "path": "../assets/equipment/previews/skateboard-byte.webp",
+          "bytes": 9662,
+          "sha256": "df379c365fbb57f091267dfdd729c5b5561afab571de054b5cececfcc64cff10"
+        },
+        {
+          "path": "../assets/equipment/previews/staff-arcane.webp",
+          "bytes": 10438,
+          "sha256": "f43457d499bccc616532f1f406d0dcc2895ceb5974f8d99c25f861d191d200dd"
+        },
+        {
+          "path": "../assets/equipment/previews/thunder-warrior.webp",
+          "bytes": 16956,
+          "sha256": "211fb9564ab26f14f75d1a2909b8478a076ed63ee8068b9b430c9afaae850559"
+        },
+        {
+          "path": "../assets/equipment/previews/uniform-brazil-tech.webp",
+          "bytes": 16088,
+          "sha256": "763c16fc1a3b243b711ac9791f72c7cd726db7d29d55f0ca8fa25fa0333c4650"
+        },
+        {
+          "path": "../assets/equipment/previews/uniform-spain-tech.webp",
+          "bytes": 17196,
+          "sha256": "67a6ffc27c88a467637e2544ac9824968dc622a8c291ad6faf93375aa83757bc"
+        },
+        {
+          "path": "../assets/equipment/previews/uniform-uk-tech.webp",
+          "bytes": 17140,
+          "sha256": "0c2dd4c523e5ff1ea8c687aaf02640100300a7efd8efc6f133bb9b7b0a6442e0"
+        },
+        {
+          "path": "../assets/equipment/previews/uniform-usa-tech.webp",
+          "bytes": 16194,
+          "sha256": "7178ee4e4989a0bb3df7568b12ae0e085d780ebc2bb6a6da39f50c8542c6b0c2"
+        },
+        {
+          "path": "../assets/equipment/previews/visor-holo.webp",
+          "bytes": 8542,
+          "sha256": "454a32f31e80bd1b40b8e892bad9c459be67a337d0a1abff66045c439dac6d89"
+        },
+        {
+          "path": "../assets/items/thumbnails/armor-tech-red.webp",
+          "bytes": 14646,
+          "sha256": "2d51921f6f484598a5c0dc39074787928fa4443b19b63a06e089ea3f7a0f08a6"
+        },
+        {
+          "path": "../assets/items/thumbnails/aura-energy-blue.webp",
+          "bytes": 16314,
+          "sha256": "2858e8d0e24eb48cbdcadc87cb5b09c39e7b1dcea959e4417e5d2cca492c87ab"
+        },
+        {
+          "path": "../assets/items/thumbnails/aura-gold-legend.webp",
+          "bytes": 18802,
+          "sha256": "b105b2aaf571892b99fadb54ad4b2aea71ea864d13a1ff43c3dd3818223e3008"
+        },
+        {
+          "path": "../assets/items/thumbnails/aura-pink-mythic.webp",
+          "bytes": 16620,
+          "sha256": "a3d5cd47192da8fadd93a043734c84f00521f5edd9697ec7f72339c3d1391655"
+        },
+        {
+          "path": "../assets/items/thumbnails/backpack-nexus.webp",
+          "bytes": 13508,
+          "sha256": "18e91ab75440699d721597a9147761b61d23585760ca93d0a99e2cd503561c68"
+        },
+        {
+          "path": "../assets/items/thumbnails/boots-pulse.webp",
+          "bytes": 11410,
+          "sha256": "32ec10fbd73e58623d7bd712eea4e77bf3caf46fb3cda1a13916765e189e737b"
+        },
+        {
+          "path": "../assets/items/thumbnails/celebration-fireworks.webp",
+          "bytes": 16550,
+          "sha256": "453ddc096ad96da49d95ecf51ecf866da2bdbf83e4c177fb861a522e6ce650fa"
+        },
+        {
+          "path": "../assets/items/thumbnails/drone-iris.webp",
+          "bytes": 23388,
+          "sha256": "c9a998b0278d412cf8996314fa87b944ae59fdb5a9dc2dab6f8dce5b726ce0d1"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-applause.webp",
+          "bytes": 11368,
+          "sha256": "44e6785cc195040a1f3191096a0ff9600272aee32c7edaa207c1328451160ef6"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-celebrate.webp",
+          "bytes": 13120,
+          "sha256": "74f5c3f1f75c77ee87d38e58654fb88566d3568404cbc737bec7193107fb9b7a"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-goodbye.webp",
+          "bytes": 11610,
+          "sha256": "db1995acebb71a29705dc09992dde864f8a1be6f127dee1475be1d4285de3ba3"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-jump.webp",
+          "bytes": 11752,
+          "sha256": "4de5de4ca0ed0eca61272795e8e834ae224cde7585071c9060c6389da8c76fd1"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-point.webp",
+          "bytes": 11514,
+          "sha256": "4e5b8dd2153fcdf65915faa213e8953d7c25f5205cf782ca3efadefa7200aa98"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-sit.webp",
+          "bytes": 10282,
+          "sha256": "7a724390cc8d24fea2fdcf334c715e9d6617580b8992afcf1d39513f71f3cb45"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-think.webp",
+          "bytes": 13068,
+          "sha256": "4cc7b543ae98c36f52d17e1002d8c91ef3b7d242912b83b9ddc187a68b4e1be8"
+        },
+        {
+          "path": "../assets/items/thumbnails/emote-wave.webp",
+          "bytes": 11466,
+          "sha256": "a187e5a54a14b87fdf7dfcd53c1e3bd49086a66170a8a2f8e61deeb07e498423"
+        },
+        {
+          "path": "../assets/items/thumbnails/hair-cyan-stripe.webp",
+          "bytes": 10976,
+          "sha256": "042e7e5cd2e4ff7bb11f826c1f78d1dc219ce3f8a25ac3566cce3b27dc766c76"
+        },
+        {
+          "path": "../assets/items/thumbnails/jetpack-orbit.webp",
+          "bytes": 15272,
+          "sha256": "0dec2e6441794134e6fa1e456b9bcccb9cfdc02ed886bc1fc49e44224521a157"
+        },
+        {
+          "path": "../assets/items/thumbnails/notebook-holo.webp",
+          "bytes": 12084,
+          "sha256": "87492f334e5646d22b448555e190228b129534e1b1b5feccdfa2bb985d0ceb51"
+        },
+        {
+          "path": "../assets/items/thumbnails/relic-lab-hologram.webp",
+          "bytes": 17454,
+          "sha256": "4bb4ec55084fa8995081f4cc728ed9c075d46ea2dadd175b77a21124093b5b67"
+        },
+        {
+          "path": "../assets/items/thumbnails/scanner-prisma.webp",
+          "bytes": 14654,
+          "sha256": "c3397e4fe709a198dca16fe3267c311773cc4b9dfd4d7cc54e6a8528bc123fb6"
+        },
+        {
+          "path": "../assets/items/thumbnails/shield-sentinel.webp",
+          "bytes": 21486,
+          "sha256": "634f3eefc2f0d791c9bf6821933bb470bc07b9e75cd034a9decf719309c693cb"
+        },
+        {
+          "path": "../assets/items/thumbnails/shirt-code-grid.webp",
+          "bytes": 10840,
+          "sha256": "dcefe9c3c0316d720c9a2cade6fed27274930799b6bf5c23631c851950c19b99"
+        },
+        {
+          "path": "../assets/items/thumbnails/uniform-brazil-tech.webp",
+          "bytes": 15422,
+          "sha256": "aadf4a37340c2b67c18c371658356dd651f0514239afc7cbba5dd34354541b8e"
+        },
+        {
+          "path": "../assets/materials/webp/emissive-cyan.webp",
+          "bytes": 4036,
+          "sha256": "5847b4d48194c143bbf81a54cd348045f72a728b8017b00851118c72e752fcae"
+        },
+        {
+          "path": "../assets/materials/webp/energy-gold.webp",
+          "bytes": 4912,
+          "sha256": "5ba26ce06c6e4100c21e08899bbc456aaf02a1fe5b2aab84cdea6738ab91f8c0"
+        },
+        {
+          "path": "../assets/materials/webp/fabric.webp",
+          "bytes": 23910,
+          "sha256": "58c59cf0b8adcf2202f4f2bc7591aaf074847e843ee4abe77508d379310b8655"
+        },
+        {
+          "path": "../assets/materials/webp/glass-tech.webp",
+          "bytes": 10494,
+          "sha256": "2cbb89e80f76946f80f1ee46023957ccda15c220d822d95df2acee46e22044fe"
+        },
+        {
+          "path": "../assets/materials/webp/hair.webp",
+          "bytes": 25198,
+          "sha256": "50966a438b823a6ab05e53fd0297ab9a62afc1307d9c1681313db700056a7883"
+        },
+        {
+          "path": "../assets/materials/webp/holographic.webp",
+          "bytes": 2876,
+          "sha256": "7a970a10082bf381a6a3b078fe94f9ec64cf6daeb3a096743d30532a5532063f"
+        },
+        {
+          "path": "../assets/materials/webp/leather.webp",
+          "bytes": 9676,
+          "sha256": "f7cfb47ae053980c0106fc1757111adec41c61441698ea0e7f32ca9a3a464cf3"
+        },
+        {
+          "path": "../assets/materials/webp/metal.webp",
+          "bytes": 2282,
+          "sha256": "af0dbc5bb15ff59988fa9ca36512c67c7b6343875f64e7ab4a060a814f97c46e"
+        },
+        {
+          "path": "../assets/materials/webp/painted-metal.webp",
+          "bytes": 18422,
+          "sha256": "a5b275cd9936541b09dfa28b957eeca9b903acdbd6e7b177d1dcfd655627e6a3"
+        },
+        {
+          "path": "../assets/materials/webp/rubber.webp",
+          "bytes": 20620,
+          "sha256": "63d79caecdc82a893af7e32f8023d0c9a94d2366c6bb37d0bef9dbe0b7ec504c"
+        },
+        {
+          "path": "../assets/materials/webp/skin.webp",
+          "bytes": 5988,
+          "sha256": "bd25a532bc94abb4fc0f1193f1820209647b285622548e3393f737a54bf565a1"
+        },
+        {
+          "path": "../assets/materials/webp/wood.webp",
+          "bytes": 7992,
+          "sha256": "9af63c6632a299de12fc897134e549a2a3c914de6f2e6bbd3a88ba650dfa7592"
+        },
+        {
+          "path": "../assets/ui/chests/chest-basic.webp",
+          "bytes": 5854,
+          "sha256": "b59c22a8730d1cbb47c3cb404beb2f6cd20b94b56aec57ba287547fa93074ee7"
+        },
+        {
+          "path": "../assets/ui/chests/chest-epic.webp",
+          "bytes": 6590,
+          "sha256": "34a0132a7972b0045d1075de04a43f850b380be20e8e9579c2595f3537df8bdb"
+        },
+        {
+          "path": "../assets/ui/chests/chest-legendary.webp",
+          "bytes": 7296,
+          "sha256": "c4607d2b95d1aec406a48d9992bede23018783d8d3985ddf20948b9854d81c21"
+        },
+        {
+          "path": "../assets/ui/chests/chest-mythic.webp",
+          "bytes": 6826,
+          "sha256": "4385b020e97de66d780651559271bedbf2956d1d6892eb3be56f92eaafbf68e3"
+        },
+        {
+          "path": "../assets/ui/chests/chest-rare.webp",
+          "bytes": 6918,
+          "sha256": "d090f42647ce028073cb60c942399ef132219319b33698eb6353735d2d076f4b"
+        },
+        {
+          "path": "../assets/ui/chests/chest-relic.webp",
+          "bytes": 6552,
+          "sha256": "3fed7acafb761186de6ca3bff3117cee154a345f243935d533ace6560318fde7"
+        },
+        {
+          "path": "../assets/vfx/icons/aura-energy-blue.svg",
+          "bytes": 481,
+          "sha256": "491094aa0d18c47784634bcc4570d53af4d1e887faec6b89ddc786dbbcf27079"
+        },
+        {
+          "path": "../assets/vfx/icons/aura-gold-legend.svg",
+          "bytes": 481,
+          "sha256": "803267950c2752c02a6ac33071c8a30e81079f55b0f2cc8909da58998214e19d"
+        },
+        {
+          "path": "../assets/vfx/icons/aura-pink-mythic.svg",
+          "bytes": 481,
+          "sha256": "cf15311ed7a6f84df9867ecabbeb29f9b440a24e7c93bad255ce4b38905fcd63"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-aura-explosion.svg",
+          "bytes": 481,
+          "sha256": "c8dc12b7d577cbd59d5665d5169df2615b0d671dd9d3cf029b43db0eed1857ca"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-aura-fire.svg",
+          "bytes": 481,
+          "sha256": "260ee9e9166ae57c60e557cf3e19b1d85e48ce8e72da1848a1bd8b48f33a33e3"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-aura-ice.svg",
+          "bytes": 481,
+          "sha256": "b69a886854659c8f1497b85a82a930c836f93d2c05444f050c168e0bd64593d2"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-coin-burst.svg",
+          "bytes": 481,
+          "sha256": "b9eaf564ee9ce1e9d5761461cbde92b9737d2e41636fe924ca62d2c7f043a446"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-confetti.svg",
+          "bytes": 481,
+          "sha256": "766285fdc8bf9294fed3d4304466808d6936f6e94b6f9c84ec3fed22cb3b0e47"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-fireworks-orbit.svg",
+          "bytes": 481,
+          "sha256": "766285fdc8bf9294fed3d4304466808d6936f6e94b6f9c84ec3fed22cb3b0e47"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-hologram-scan.svg",
+          "bytes": 481,
+          "sha256": "491094aa0d18c47784634bcc4570d53af4d1e887faec6b89ddc786dbbcf27079"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-lab-hologram.svg",
+          "bytes": 481,
+          "sha256": "db5acdfe10be492cdd2216475a2904887d350704bba784d06d42f314736e2053"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-level-up.svg",
+          "bytes": 481,
+          "sha256": "40f8c9cb3acc1e00f5d49f3d2b92f170bbe01344ba2e850abe808e06d2f48e4d"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-neon-glitch.svg",
+          "bytes": 481,
+          "sha256": "491094aa0d18c47784634bcc4570d53af4d1e887faec6b89ddc786dbbcf27079"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-portal-entry.svg",
+          "bytes": 481,
+          "sha256": "45f26f12b48333f09860375e178f9676fcaa5898dfdfff763fbe01aa3a9a2c40"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-radar-sweep.svg",
+          "bytes": 481,
+          "sha256": "9eb5d7f0bba916f5c59887e70be316df60028862184830a1564b98db56a630a4"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-rocket-celebration.svg",
+          "bytes": 481,
+          "sha256": "b9c96bedad57d3f00ec3de1811e405767e1337b5c8c11f4fd0b0855be9c8b899"
+        },
+        {
+          "path": "../assets/vfx/icons/vfx-snow-screen.svg",
+          "bytes": 481,
+          "sha256": "27492055c5cf140f73139d517b6c917fc2436df49f1c9819d988551a6c8e96ba"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-energy-blue.webp",
+          "bytes": 42438,
+          "sha256": "c4914feb28408b860695aa914de1390327473b75d31240bdbffbd1aa407f0c50"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-gold-legend.webp",
+          "bytes": 42522,
+          "sha256": "e9d0f99dc46cdb8dbb9087a465b7b20df334cd832808b66b65e8ac6f48cd6642"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-pink-mythic.webp",
+          "bytes": 40472,
+          "sha256": "747a2d3d8974f94b196174de97d0ee724b0d143ac899dcf21846488fc77ce6fb"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-explosion.webp",
+          "bytes": 40284,
+          "sha256": "c9e8c69b87762feaf9f959520493bbdb3640fe764107056ea7381a687736f3bb"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-fire.webp",
+          "bytes": 42448,
+          "sha256": "913fdfd5235529147a15c8e778eb6876b9afff711d97aae1390ecd7501fa7506"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-ice.webp",
+          "bytes": 38510,
+          "sha256": "df1a29da0d5cc7573a02a2b40b5858b41199b0c1508fa808e3e88ea889204c6e"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-coin-burst.webp",
+          "bytes": 30812,
+          "sha256": "14aad50c90c5e62fa67a3d60cc9937b794fa2353b4ac043ff8362196d7603d42"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-confetti.webp",
+          "bytes": 26484,
+          "sha256": "7c550fd233432ac9405bb5c6fc46831d89836880ec2b5bbc6454280a6fb09041"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-fireworks-orbit.webp",
+          "bytes": 46426,
+          "sha256": "262d33d419e3adb897b7320c131b4719666de35e375b81871aa33ed24d3ca8ae"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-hologram-scan.webp",
+          "bytes": 30380,
+          "sha256": "91a8deb67dbd8af78a118b52b34d6ddbdac2195415f07f842154028209f52dae"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-lab-hologram.webp",
+          "bytes": 32380,
+          "sha256": "12bf4a895b9a0fc818c7d370877edf5315d5db6433e6311461929da519947877"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-level-up.webp",
+          "bytes": 21086,
+          "sha256": "28d4a82046942eb138edb72986f2bf26177c6f949751889b303d7a4ac80e8314"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-neon-glitch.webp",
+          "bytes": 27234,
+          "sha256": "8da8453eb23544d4550559e7ef7d3efc0c0e15cb85e7cd56fc720797237e5bab"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-portal-entry.webp",
+          "bytes": 61998,
+          "sha256": "0c4db88639cbcc97f875f6bbc6d1ebb40afaf23bad9069989d9efd1cc053d6af"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-radar-sweep.webp",
+          "bytes": 28974,
+          "sha256": "6a76c3b6cdcc10641a720bcb557bff2a43b071762f49447c81afd6ae1f30e7d2"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-rocket-celebration.webp",
+          "bytes": 23386,
+          "sha256": "5c6322c0b7e815a63c70bc04f30d8294f8ebd145405368ca8c264f2dfa643ec9"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-snow-screen.webp",
+          "bytes": 26218,
+          "sha256": "6456c89253002397f7c3f0e269f17d7e0d01f198a5c868a27ebb4a13263ac93b"
+        },
+        {
+          "path": "../demo/backpack-ui.js",
+          "bytes": 8332,
+          "sha256": "e22a66f63a1739a040c89c7faeb4863da5fd7c7d5e9ccdcefd713f7b277d46ac"
+        },
+        {
+          "path": "../demo/styles-backpack.css",
+          "bytes": 5345,
+          "sha256": "c1fe4a39cd65dab67cb32c649abefa510a7a513018ed9f811d618064af01340b"
+        },
+        {
+          "path": "../demo/modules/inventory.module.js",
+          "bytes": 531,
+          "sha256": "9ae3b88aec5b24436f6e01077b16ad50eb066cda1b5c9961fa2bb2cc9e8f9ec0"
+        }
+      ],
+      "recommendedFor": "Celulares intermediários e PCs escolares",
+      "memoryEstimateMB": 420,
+      "targetFps": "45–60",
+      "bytes": 1649113,
+      "displaySize": "1.6 MB",
+      "fileCount": 117,
+      "managerCompatibility": ">=0.9.4.3"
+    },
+    {
+      "id": "graphics-cinematic",
+      "name": "Modo Realismo — Pacote Cinematográfico Real",
+      "tier": "realism",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "Pacote Realismo real com ambiente LDR 2K, mapa de microdetalhe 1K, palco cinematográfico Full HD e clearcoat simulado.",
+      "requires": [
+        "graphics-ultra-core"
+      ],
+      "qualityModes": [
+        "realism"
+      ],
+      "accent": "gold",
+      "files": [
+        {
+          "path": "../assets/runtime/realism/stage-cinematic.svg",
+          "bytes": 1365,
+          "sha256": "b763fffd7eeb90e675339a92e6fb4179ab831516a13202870c3be516919e3dac"
+        },
+        {
+          "path": "../assets/runtime/realism/light-rig.json",
+          "bytes": 902,
+          "sha256": "aefcd716fe1dab297ee0d74e4e5db504a03fd095ee238d08347d7b523fc3a154"
+        },
+        {
+          "path": "../assets/runtime/realism/runtime-manifest.json",
+          "bytes": 1905,
+          "sha256": "6d8f11cfcaf96845c5ab8e2b47cb274cf91cfa8cf8247505caad9b1d2ea64244"
+        },
+        {
+          "path": "../assets/runtime/realism/env-realism-2048.webp",
+          "bytes": 49996,
+          "sha256": "b2e2f1fcdd1cda1bb8d465722a1c2898dcdbfa0d0e22daa1b0939d69f7f1864b"
+        },
+        {
+          "path": "../assets/runtime/realism/material-detail-realism-1024.webp",
+          "bytes": 613686,
+          "sha256": "2a7b0e3246ff781abb24b52ffae55cfafde70205e3ab99d397322ccb7e715c76"
+        },
+        {
+          "path": "../assets/runtime/realism/stage-realism-1920.webp",
+          "bytes": 51878,
+          "sha256": "3f1467e29a7061d36a199c7c7d24eee34bc473423e72533180592a9e3d6edb9f"
+        },
+        {
+          "path": "../assets/runtime/realism/bokeh-realism-512.webp",
+          "bytes": 11302,
+          "sha256": "c44c5ad2d393a2bd4bd0f512b445236982fb908b14c3d37d371638c827b67528"
+        },
+        {
+          "path": "../assets/runtime/realism/lighting-realism.json",
+          "bytes": 1089,
+          "sha256": "8a0940bd4a521e7c61f2adb2ecf92525aa80e13b977a0e63d6a484ed8d5e7c2d"
+        }
+      ],
+      "recommendedFor": "Perfil, fotografia e Desfile DS em computadores potentes",
+      "memoryEstimateMB": 820,
+      "targetFps": "30–45",
+      "assetMaturity": "premium-runtime-v1",
+      "premium3DAssets": true,
+      "managerCompatibility": ">=0.9.6",
+      "bytes": 732123,
+      "displaySize": "715.0 KB",
+      "fileCount": 8
+    },
+    {
+      "id": "graphics-essential",
+      "name": "Básico / Essencial",
+      "tier": "essential",
+      "version": "0.9.6.0-RG",
+      "required": true,
+      "autoInstall": true,
+      "description": "Interface, carteira, avatar leve e recursos obrigatórios para o Modo Básico.",
+      "requires": [],
+      "qualityModes": [
+        "basic",
+        "auto"
+      ],
+      "accent": "cyan",
+      "files": [
+        {
+          "path": "../demo/index.html",
+          "bytes": 75487,
+          "sha256": "f59f86522dd627ee3d94d84ec7ee1fcb1c8a853e488f3418932fcbb58e0e7ab6"
+        },
+        {
+          "path": "../demo/app.js",
+          "bytes": 65964,
+          "sha256": "ba246b9075faeaa99dacf9e073344cbe78b6f2cd4afcf66d1fe0724efbf9b3bd"
+        },
+        {
+          "path": "../demo/performance-manager.js",
+          "bytes": 9376,
+          "sha256": "e641eae1d4ee91ef57cff5ed725b24e80a6c3a5ece5bf175572939f211549110"
+        },
+        {
+          "path": "../demo/config-data.js",
+          "bytes": 12750,
+          "sha256": "b7c7bff3a6cfee0774c22c16edf81732b2f3230cf8d10e9db3323a244b767b82"
+        },
+        {
+          "path": "../demo/catalog-data.js",
+          "bytes": 35308,
+          "sha256": "b063db3c7ffc02c7692bf0ad0f86a17052462807a96cd862dc3c110e421a4fe3"
+        },
+        {
+          "path": "../demo/equipment-data.js",
+          "bytes": 16825,
+          "sha256": "7b151a899ea6d0fb560fda0546e2fe000e2c7231eadfd4ee8469d1d4cb6193fb"
+        },
+        {
+          "path": "../demo/vfx-data.js",
+          "bytes": 5957,
+          "sha256": "20e385f2fda4a0ff80bdd14c8e207340c4b1c76d6e09c54510c92a1f3a22f219"
+        },
+        {
+          "path": "../dist/ds-store-foundation.js",
+          "bytes": 24060,
+          "sha256": "deb167f496520632a62a1a90b217c654e131a326a6b37cd2a76d4f34b48b5ff2"
+        },
+        {
+          "path": "../assets/characters/avatar-tech-base.webp",
+          "bytes": 15796,
+          "sha256": "0b3aece50dde277b1fa518ce853fb096d424460cd19f48f5dfebaabf06001441"
+        },
+        {
+          "path": "../catalog/items.json",
+          "bytes": 46937,
+          "sha256": "4dc7babf809a361dd5f4f1f1986814bb08ed873e2d9a6afd402ae7d807c34cac"
+        },
+        {
+          "path": "../catalog/rarities.json",
+          "bytes": 949,
+          "sha256": "3a7b79d8dc05c38670a698b9d5c24e74f9b0365476c3c743384be6dba231259b"
+        },
+        {
+          "path": "../catalog/discounts.json",
+          "bytes": 548,
+          "sha256": "10eb86fb7c81d8997d97bd9782a48188c257d9be1042222aa9fadf9ee213079a"
+        },
+        {
+          "path": "../catalog/animations.json",
+          "bytes": 14084,
+          "sha256": "e38ca92e76c518875413e611d86a18ecc56d44b81fcaf553aa84073bad88c5e6"
+        },
+        {
+          "path": "../assets/ui/coins/coin-available.svg",
+          "bytes": 1803,
+          "sha256": "4bd5ae07675dbd52068e66f434ec18b90ed5a68eac44e47423dcd4c879e96710"
+        },
+        {
+          "path": "../assets/ui/coins/coin-blocked.svg",
+          "bytes": 1801,
+          "sha256": "aece135f01cd03b24c3818f6eceb1f58fb23c5bce1c84627c93cd87623934743"
+        },
+        {
+          "path": "../assets/ui/coins/coin-reserved.svg",
+          "bytes": 1801,
+          "sha256": "a448c23ad7fe1729b9467bcdb4affb2585c79781887b644e7e9002f6f7134bd0"
+        },
+        {
+          "path": "../assets/ui/coins/coin-review.svg",
+          "bytes": 1803,
+          "sha256": "7a1647bf1741201bdc882dbf4f698b4150cc5f01d03d715986efeefb67be776a"
+        },
+        {
+          "path": "../assets/ui/icons/arrow.svg",
+          "bytes": 1704,
+          "sha256": "b4bc138ae825366b6b51a87ad16b71c136d4a8008d1ea6f5ff5d36afa8c6e554"
+        },
+        {
+          "path": "../assets/ui/icons/audit.svg",
+          "bytes": 1813,
+          "sha256": "52d0999fc29a59cc961257086e92b7cbd61bcf4ef8844b46b4ab1625cbbf4640"
+        },
+        {
+          "path": "../assets/ui/icons/avatar.svg",
+          "bytes": 1646,
+          "sha256": "1a4db15a22e591b4725fcd99c1e43768c9d6c40389ad9be85b150d19c5a9df5c"
+        },
+        {
+          "path": "../assets/ui/icons/brand-ds.svg",
+          "bytes": 1855,
+          "sha256": "fcce12ecad6684e40b77b9120b125621578e5026dd22543c9b49834dcdfd8a63"
+        },
+        {
+          "path": "../assets/ui/icons/check.svg",
+          "bytes": 1720,
+          "sha256": "9191ff75400b1853ece029face6ac7e6459ca26ebad465c2850ded2dd646843a"
+        },
+        {
+          "path": "../assets/ui/icons/close.svg",
+          "bytes": 1677,
+          "sha256": "71bd4423950fb4b52d7b031f13c4effd943c57a0e29723f6066f8202d4fb9aeb"
+        },
+        {
+          "path": "../assets/ui/icons/components.svg",
+          "bytes": 1767,
+          "sha256": "41629cef9516ca3461a44297f20a8324848aa56e9de0658cef8e92ccf76bd11e"
+        },
+        {
+          "path": "../assets/ui/icons/favorite.svg",
+          "bytes": 1651,
+          "sha256": "43a275959c962835853a7d2c04d9907f1957807758b8b7495077951faeea33c5"
+        },
+        {
+          "path": "../assets/ui/icons/filter.svg",
+          "bytes": 1606,
+          "sha256": "ba3e73f540e3506e51ccb6fc7cbbccfd8b15802d9484449f89343aaa85bc41b9"
+        },
+        {
+          "path": "../assets/ui/icons/home.svg",
+          "bytes": 1616,
+          "sha256": "39bc4a56000b0edf878be0bd204dec1d5440380a6304cf60e7f3c0027a952174"
+        },
+        {
+          "path": "../assets/ui/icons/integrity.svg",
+          "bytes": 1751,
+          "sha256": "b67443ceac0123946d2666c53c70b749df519d274c803a174436a3b921acbb27"
+        },
+        {
+          "path": "../assets/ui/icons/inventory.svg",
+          "bytes": 1666,
+          "sha256": "70978aa6335517c15bd624e2fc7b9a64d472a9cda0752994e3af2638b7f00836"
+        },
+        {
+          "path": "../assets/ui/icons/lock.svg",
+          "bytes": 1718,
+          "sha256": "7b15c02ec6a5ada16a5f9b3fb22033135ed1e99f6adae2f36b256c879b721c62"
+        },
+        {
+          "path": "../assets/ui/icons/modules.svg",
+          "bytes": 1726,
+          "sha256": "7bc51f01899834b9010a4aa71c6f6f9ff1186bd0334c5cf55b33f677f0878d4b"
+        },
+        {
+          "path": "../assets/ui/icons/quality.svg",
+          "bytes": 1631,
+          "sha256": "b7a9b52410f338195f219fd42559e01e98ee4f21cc06d7219ad17a61478d8289"
+        },
+        {
+          "path": "../assets/ui/icons/reward.svg",
+          "bytes": 1791,
+          "sha256": "83ef4e35e1a5cb2c03694b492db2e05a97b5ecdae9b23b66597e83f89bdf2d85"
+        },
+        {
+          "path": "../assets/ui/icons/search.svg",
+          "bytes": 1748,
+          "sha256": "0b56beb50b874243f370526e66aa51a6fd3f5c898bbae91319a58d9d4c70f42e"
+        },
+        {
+          "path": "../assets/ui/icons/settings.svg",
+          "bytes": 1724,
+          "sha256": "9aab478e9e819aa8afce8492e350021127b10a59110930300e9941691f03b2c8"
+        },
+        {
+          "path": "../assets/ui/icons/store.svg",
+          "bytes": 1693,
+          "sha256": "2117a6311ba08a8d160d49d8b7ba26bc7ae43b914c12573c31cdf223278174ea"
+        },
+        {
+          "path": "../assets/ui/icons/transaction.svg",
+          "bytes": 1704,
+          "sha256": "c4a64fe6e751152cabb98deb5859e30d071a9fb31e1f673f9b49c0326075399b"
+        },
+        {
+          "path": "../assets/ui/icons/visual.svg",
+          "bytes": 1675,
+          "sha256": "b3cbe7bbbce1ee2539036cf30191790332576e9f96283ab4585b95253d520ba7"
+        },
+        {
+          "path": "../assets/ui/icons/wallet.svg",
+          "bytes": 1707,
+          "sha256": "2644f521a6aab87668a2144f2315f5c667c020009ad52ef13d780e8e60f960e3"
+        },
+        {
+          "path": "../assets/ui/icons/warning.svg",
+          "bytes": 1691,
+          "sha256": "ba8fd996fb14e9ec8221628da349372a8d10dcde186d228c6021580df092cceb"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-basic.svg",
+          "bytes": 1987,
+          "sha256": "455ed3700475466e942a60641b79e379845662028d09bc29c364d56be39e5897"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-epic.svg",
+          "bytes": 1987,
+          "sha256": "1e645d3f5d748d28715b7dec2b38a15d0dfa612e9797c8eb820d7e15fc2b09fa"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-legendary.svg",
+          "bytes": 1987,
+          "sha256": "eb97080bde4be1b2873011c2f19924d19f262a075f165ddb8c27c4b6d625e29a"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-mythic.svg",
+          "bytes": 1987,
+          "sha256": "a6d4dfd8cc9bd70c164d0067eb1d3d2c95824442570444723c3830601ff3f2fa"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-rare.svg",
+          "bytes": 1987,
+          "sha256": "64fcebd5576ef823076b237e29a37ae6e02c38a07c3d4d67afbd1f5d7d01f487"
+        },
+        {
+          "path": "../assets/ui/rarity/frame-relic.svg",
+          "bytes": 1987,
+          "sha256": "b0687771133db05557bdceadd4ce2d1c55f3e2826f9cbbca99a1548e880bc471"
+        },
+        {
+          "path": "../assets/ui/status/authorized.svg",
+          "bytes": 1643,
+          "sha256": "91aacce34dcd91c3067da8aba858019d6a06ad52a2723e364f79f3a1d01958e8"
+        },
+        {
+          "path": "../assets/ui/status/denied.svg",
+          "bytes": 1649,
+          "sha256": "1795ab3478837b28643576d5965b3a13dd0c6ff59d4013efb53c1280b1c0a289"
+        },
+        {
+          "path": "../assets/ui/status/review.svg",
+          "bytes": 1722,
+          "sha256": "96cf63a29f492f42b5ed5ef15ccd632cfb7d23e976cc5a06f43aec5681841e8e"
+        },
+        {
+          "path": "../assets/ui/status/validating.svg",
+          "bytes": 1721,
+          "sha256": "42171e137266655379370531949a305439ebe4c8353a8e198cf324a9e6dc1bd9"
+        },
+        {
+          "path": "../demo/config-cache-memory.js",
+          "bytes": 1004,
+          "sha256": "2a1cabef3c3343334cee84cf0b1404fce890ddd05ebbe5979792f1359ac6bc8c"
+        },
+        {
+          "path": "../demo/cache-memory-manager.js",
+          "bytes": 10107,
+          "sha256": "7818a633bfd591636b57118cc490d2178bf745f4aa955408bcc3a9e496dabb4d"
+        },
+        {
+          "path": "../demo/graphics-mode-controller.js",
+          "bytes": 2335,
+          "sha256": "9dbe9f6f0591d6359365285c30cdc3a1c5c04d6705fe8746a41d019755a8f2ea"
+        },
+        {
+          "path": "../config/graphics-modes.config.json",
+          "bytes": 7566,
+          "sha256": "8e924fb55bc15a855a8a770adc217a0986b94fb4708034ae288df4ca87cfed98"
+        },
+        {
+          "path": "../assets/avatars/avatar-tech-v1/rig-v2.json",
+          "bytes": 1260,
+          "sha256": "da550709dec2342fa11bc87f1b6aa5941996d303821b7530a9c1855d1ec164cc"
+        },
+        {
+          "path": "../assets/avatars/avatar-tech-v1/animations.json",
+          "bytes": 5839,
+          "sha256": "a60e18f1e0e0011fc0abe62ee03296aa3f7dbb59c79fae659575cca94a796e18"
+        },
+        {
+          "path": "../assets/avatars/avatar-tech-v1/manifest.json",
+          "bytes": 877,
+          "sha256": "89e58019158cf8168c032c13046765d6b707e5ff3dd3e481b1603e0e1f63a17e"
+        },
+        {
+          "path": "../config/benchmark.config.json",
+          "bytes": 1973,
+          "sha256": "13c2c40dab9251b07ffd19206b2e20cb90e242d51d839c6c21877353f69a03d9"
+        },
+        {
+          "path": "../demo/styles-core.css",
+          "bytes": 73651,
+          "sha256": "5dacb628ab5d8a143d83b8bd88f19fd5bb5ddcf1fbc92628bb2589d9df668a9b"
+        },
+        {
+          "path": "../demo/runtime-loader.js",
+          "bytes": 1980,
+          "sha256": "61848bc31710777077cc723449ede2db84367c608942a5e68ed8aa30268641e3"
+        },
+        {
+          "path": "../demo/modules/shared.module.js",
+          "bytes": 2426,
+          "sha256": "df966cca189e9887b9b94ec84953d99c36c0bcc95cef063486124b6113d7426e"
+        },
+        {
+          "path": "../demo/modules/assets.module.js",
+          "bytes": 213,
+          "sha256": "71a7530ea028faf7f945531ec1d9ee8ee54de9a3055e4dedf254ddae8d59f212"
+        },
+        {
+          "path": "../demo/modules/inventory.module.js",
+          "bytes": 531,
+          "sha256": "9ae3b88aec5b24436f6e01077b16ad50eb066cda1b5c9961fa2bb2cc9e8f9ec0"
+        },
+        {
+          "path": "../demo/modules/avatar.module.js",
+          "bytes": 694,
+          "sha256": "65132273d72088f79318a2634f587ecd67c2cf97494042c8ca0ed5f0a7145e4b"
+        },
+        {
+          "path": "../demo/modules/vfx.module.js",
+          "bytes": 335,
+          "sha256": "73b153d4909bfa664bbf235a3726786c1e55b00d66432a27b9f788431b192116"
+        },
+        {
+          "path": "../demo/modules/product.module.js",
+          "bytes": 694,
+          "sha256": "bf63bc0f7f6ac9a38b9370e8a6f031f723e632382fc2c3bced953b671f39cd49"
+        },
+        {
+          "path": "../demo/modules/packages.module.js",
+          "bytes": 400,
+          "sha256": "e8915286b56df97052dcc9a6e1206e2873042eeb2c40a95a662237f49291956c"
+        },
+        {
+          "path": "../demo/modules/performance.module.js",
+          "bytes": 881,
+          "sha256": "91920d5bb1762ff55845d60123e7e3106908053c542a3b44c85975a1f7a82d82"
+        },
+        {
+          "path": "../demo/modules/integration.module.js",
+          "bytes": 501,
+          "sha256": "75785c2da859bc6aa1b6532fe896f011e37633391af93133897fa28877c4b149"
+        },
+        {
+          "path": "../demo/boot.module.js",
+          "bytes": 1478,
+          "sha256": "8e8dfc703e28ba3afb550cda6b9148bbfd3a9dae68783df426c8e685e3b08b54"
+        },
+        {
+          "path": "../demo/asset-transfer.js",
+          "bytes": 2748,
+          "sha256": "1281ff77fedcfcede373dcf2a861d5836f8ec9382cbf885bb84db6c281827609"
+        },
+        {
+          "path": "../assets/compression/mesh-transfer-manifest.json",
+          "bytes": 18745,
+          "sha256": "de0d445580df73aab9c1a0a27cab92cfd96bd75073d04ebb97d877475b3301e4"
+        },
+        {
+          "path": "../config/compression-pipeline.config.json",
+          "bytes": 301,
+          "sha256": "bf55a1e34930569d5d1d9c8fcc896d290e3af78346f618f461ad1839ef9fb6fa"
+        },
+        {
+          "path": "../config/renderers.config.json",
+          "bytes": 2750,
+          "sha256": "0548d8216eb9fceeaec144230a7d817dcd422e6d55950939c356fa39ba51f154"
+        },
+        {
+          "path": "../demo/modules/renderer.module.js",
+          "bytes": 550,
+          "sha256": "0004076059de19ec036d6bcded306838931d073c2255aba74e03260bb518263d"
+        },
+        {
+          "path": "../demo/renderer-profile.js",
+          "bytes": 11657,
+          "sha256": "22b6b3e2ea8e34ae999fa397fed9544547f645391ea666287534270c216a644d"
+        },
+        {
+          "path": "../demo/avatar-profile-state.js",
+          "bytes": 4786,
+          "sha256": "9a3403541b6d40f9f2c047aab3ac96c2a7f2ae15b8f752855869c6cc7bd7328e"
+        },
+        {
+          "path": "../demo/avatar-snapshot.js",
+          "bytes": 3570,
+          "sha256": "630a8ded47f2b3a0ffee96797e3b28729a57a87df1ee7f86abf7c0abb2f6c6d9"
+        },
+        {
+          "path": "../demo/transaction-visuals.js",
+          "bytes": 1465,
+          "sha256": "e39932a7759b1d79f9761b303b0352c4733df593d235f465d6863565d25f7540"
+        },
+        {
+          "path": "../demo/showcase-controller.js",
+          "bytes": 2256,
+          "sha256": "7e7ccc155e87aa9b6c81e1f6a7b614260464cb984075968d0335c3a6d8966b0f"
+        },
+        {
+          "path": "../demo/styles-coherence.css",
+          "bytes": 8116,
+          "sha256": "f1bbf488c0ce44278460aaf06be10b24d59c2c563ceaaa3bc8b9b928fbf3a1c0"
+        },
+        {
+          "path": "../config/backpack.config.json",
+          "bytes": 1696,
+          "sha256": "d51e45c5db9cbd34b89aa969c2e5bdfd6dd6a5c47427f3ec3a7715e8d951a879"
+        },
+        {
+          "path": "../demo/backpack-config.js",
+          "bytes": 1266,
+          "sha256": "1075b7fa1f0554b29d342fae482320a031347c70084faab210cfc12ad2e7798b"
+        },
+        {
+          "path": "../demo/backpack-manager.js",
+          "bytes": 8884,
+          "sha256": "fc094183bb97e136ee1f57936c574246887c4c2b2ecc2f4ff48bcc1f37f1ae38"
+        },
+        {
+          "path": "../demo/persistence-manager.js",
+          "bytes": 6191,
+          "sha256": "ccf9cf6d25355de3ef072178a8e6b91565f01cfaff9e9bf866d25cf68a476472"
+        },
+        {
+          "path": "../demo/backpack-bridge.js",
+          "bytes": 1381,
+          "sha256": "f8d0b2fa21ab3e8c403002b8a5c265d83aa100e77df4bd5bfd1ce6cd46c2f713"
+        },
+        {
+          "path": "../config/visual-recovery.config.json",
+          "bytes": 1026,
+          "sha256": "0fed79845925d5faad663c1fad6641c68d47fe416805b566dbf676fcb138bfbd"
+        },
+        {
+          "path": "../demo/visual-recovery.js",
+          "bytes": 4397,
+          "sha256": "9af98347f4833ba4f9b5b2254e3bca0fdbd423f27362c2b4662686acdb0e349b"
+        },
+        {
+          "path": "../demo/styles-recovery.css",
+          "bytes": 6557,
+          "sha256": "612fe6f3ab4ee506fb877d8e532b37c1276fc1293db393e3a7b0ab7ffb7b4aae"
+        },
+        {
+          "path": "../assets/runtime/recovery/avatar-front-hq.webp",
+          "bytes": 58992,
+          "sha256": "7c032859012a92cf3722603921ecd8409c4bd30b71e1f028746f43d7a862915f"
+        },
+        {
+          "path": "../assets/runtime/recovery/avatar-three-quarter-hq.webp",
+          "bytes": 58258,
+          "sha256": "17e0a9a92bbac44b66a15abff737b1039873844aab8d2d7dc99901fe1a001e8c"
+        },
+        {
+          "path": "../assets/runtime/recovery/avatar-side-hq.webp",
+          "bytes": 35718,
+          "sha256": "e95f24658ffb59f9fa5386406ff0607080dcf1facb1d05a94d883a2078fc012f"
+        },
+        {
+          "path": "../assets/runtime/recovery/avatar-back-hq.webp",
+          "bytes": 46564,
+          "sha256": "3363b43e774ddbec9d87daf950e0cd1eea7b77fc2a63e259a4f049bc6003727b"
+        },
+        {
+          "path": "../assets/runtime/recovery/avatar-hero-hq.webp",
+          "bytes": 62528,
+          "sha256": "d7dc274427b1e96131de84d15fe3fa6963ed88950b012a72cf0efc788f507c67"
+        },
+        {
+          "path": "../assets/runtime/recovery/recovery-assets.json",
+          "bytes": 419,
+          "sha256": "5bd5bc86a1b24093c9da12f6137379fd5b8200c2f5b71b9d6ce9df5398d658a4"
+        }
+      ],
+      "recommendedFor": "Todos os dispositivos",
+      "memoryEstimateMB": 180,
+      "targetFps": "60",
+      "bytes": 854752,
+      "displaySize": "834.7 KB",
+      "fileCount": 95,
+      "managerCompatibility": ">=0.9.4.2",
+      "notes": "Núcleo inicial modular. Renderizadores e sistemas pesados são carregados por import() sem alterar os assets visuais."
+    },
+    {
+      "id": "graphics-high-core",
+      "name": "Avançado",
+      "tier": "advanced",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "Avatar LOD0, materiais superiores, vetores transparentes e modelos 3D de equipamentos.",
+      "requires": [
+        "graphics-balanced"
+      ],
+      "qualityModes": [
+        "advanced"
+      ],
+      "accent": "blue",
+      "files": [
+        {
+          "path": "../assets/compression/glb/avatars/avatar-tech-v1/avatar-tech-v1-lod0.glb.gz",
+          "bytes": 19784,
+          "sha256": "4f20baf4815e9bedb12b8e4d7975ad9319050b4f9c624dbe97f45431af7a3890"
+        },
+        {
+          "path": "../assets/characters/avatar-tech-base.svg",
+          "bytes": 3274,
+          "sha256": "25716a25df5aa7323a32c86302d2beaa1b2a2d8e58b1f4eb4730a640397603db"
+        },
+        {
+          "path": "../assets/items/vectors/armor-tech-red.svg",
+          "bytes": 2050,
+          "sha256": "73e21c666ad25738841e3a528a1ca0088752ecc21db2ba5800cb51671ef3b203"
+        },
+        {
+          "path": "../assets/items/vectors/aura-energy-blue.svg",
+          "bytes": 5852,
+          "sha256": "f682b0da7e20c32a31fb72825b3879c2a801f8f5d32d549c4c10fbf21b72e25d"
+        },
+        {
+          "path": "../assets/items/vectors/aura-gold-legend.svg",
+          "bytes": 5848,
+          "sha256": "4a06067e059802f7feccb9d44da29fe558dbff07dfc33c63e9a47ff8947c0e1b"
+        },
+        {
+          "path": "../assets/items/vectors/aura-pink-mythic.svg",
+          "bytes": 5848,
+          "sha256": "0f8707420d0cdd2f36f58a0ca933c059797848fa8b2c82fa0cf3b187bbe52b23"
+        },
+        {
+          "path": "../assets/items/vectors/backpack-nexus.svg",
+          "bytes": 2103,
+          "sha256": "6f6dedade3ff39520d1fad931e9228fc687e16d5fe0ce1adeb7049a5c0cdd9e0"
+        },
+        {
+          "path": "../assets/items/vectors/boots-pulse.svg",
+          "bytes": 1913,
+          "sha256": "cbe6e34a989828f09417accc2256c3a41ef0c27cfcdac62e29c0aa8cc5d4b2d2"
+        },
+        {
+          "path": "../assets/items/vectors/celebration-fireworks.svg",
+          "bytes": 3211,
+          "sha256": "c3d466ed34e159f396f26b92b33cd0110b727cc68231cd45dd8327e74129582e"
+        },
+        {
+          "path": "../assets/items/vectors/drone-iris.svg",
+          "bytes": 2273,
+          "sha256": "f8905d08a1e96f5430c055eec4365d07d42e22fe171c531e0a0f418ac4c8bfb4"
+        },
+        {
+          "path": "../assets/items/vectors/emote-applause.svg",
+          "bytes": 2873,
+          "sha256": "92ddaf68cc0d0daf9e56ab2233e9a9a70076ef4134e71d2a8649328bb0e9ad63"
+        },
+        {
+          "path": "../assets/items/vectors/emote-celebrate.svg",
+          "bytes": 3417,
+          "sha256": "a02c47bda22d81b113230c989f12c04d443c9d65f64e11dbed4c59fde1696dee"
+        },
+        {
+          "path": "../assets/items/vectors/emote-goodbye.svg",
+          "bytes": 2926,
+          "sha256": "81d28a57c51b17261365fa25f4cc68bff630d2937c96a93ec8fc7379264d2262"
+        },
+        {
+          "path": "../assets/items/vectors/emote-jump.svg",
+          "bytes": 2982,
+          "sha256": "9f4e96ba0431a43e33139ee704322c707958fa565fc4f93b3f9a8f83512bfe96"
+        },
+        {
+          "path": "../assets/items/vectors/emote-point.svg",
+          "bytes": 2913,
+          "sha256": "36245cd34878acaff50e28d22fff29badf8997bc694a83fb9c859654c76ef262"
+        },
+        {
+          "path": "../assets/items/vectors/emote-sit.svg",
+          "bytes": 2630,
+          "sha256": "17733644fc0cc87472b7a3074cb5a330c73b75ed01fe9171aa13c51e6336fe26"
+        },
+        {
+          "path": "../assets/items/vectors/emote-think.svg",
+          "bytes": 3003,
+          "sha256": "6c4cafaec0bc83d07b4ad648c06fa8657b7358a0958f27b88e1bc3ccc40ac583"
+        },
+        {
+          "path": "../assets/items/vectors/emote-wave.svg",
+          "bytes": 2895,
+          "sha256": "1261ba7fa905af682d96ea1e10dc42ce0f3580ab7e502f48606399979d09d4e3"
+        },
+        {
+          "path": "../assets/items/vectors/hair-cyan-stripe.svg",
+          "bytes": 1926,
+          "sha256": "45f4080b46085babac8f40299c1cdd848349ca7263b305515f3e75bf0547fd4f"
+        },
+        {
+          "path": "../assets/items/vectors/jetpack-orbit.svg",
+          "bytes": 2086,
+          "sha256": "fd0f58894d764ddaecc9597c303660115b331f74d80b2a85400b78c1217d534b"
+        },
+        {
+          "path": "../assets/items/vectors/notebook-holo.svg",
+          "bytes": 2083,
+          "sha256": "8e85da1dad70dd95c98f168fe370f096837f3ed492f5e5ed5cb36b6bad2f6c3b"
+        },
+        {
+          "path": "../assets/items/vectors/relic-lab-hologram.svg",
+          "bytes": 3324,
+          "sha256": "df691cf4872ff29a1e585081ac2eda5cc494369bd34a61569c8c0bd4ec27f6bc"
+        },
+        {
+          "path": "../assets/items/vectors/scanner-prisma.svg",
+          "bytes": 2110,
+          "sha256": "ca54b70e9711b834c2c70b5712e43b63ab2b50d437dafb0961a03c62e99f3019"
+        },
+        {
+          "path": "../assets/items/vectors/shield-sentinel.svg",
+          "bytes": 1919,
+          "sha256": "d7a8152bd4f0d0df9f7bfbc26811e62c36a810bf9704bbe5a0abda78cfc01074"
+        },
+        {
+          "path": "../assets/items/vectors/shirt-code-grid.svg",
+          "bytes": 1908,
+          "sha256": "ab5164cc96f3d2dacdcd7fdbc9e6b5cfd323639d25a779e02b74ac656df36b18"
+        },
+        {
+          "path": "../assets/items/vectors/uniform-brazil-tech.svg",
+          "bytes": 1915,
+          "sha256": "631a5c5eeff9b385dcd2ad1b92b5266bb8b568f706c2303fb3153c167cbabb93"
+        },
+        {
+          "path": "../assets/materials/png/emissive-cyan.png",
+          "bytes": 2208,
+          "sha256": "4022c6ae522eb67d4ceaa5f6c6a149235e4a5a34cd65ae846ebbb31638731d23"
+        },
+        {
+          "path": "../assets/materials/png/energy-gold.png",
+          "bytes": 46424,
+          "sha256": "3d79f689e475385fa649c5575ececb8782b90cacbd990a6460c8f076b36daaac"
+        },
+        {
+          "path": "../assets/materials/png/fabric.png",
+          "bytes": 64693,
+          "sha256": "0d9b0e0f1aa69f10fd8264aa0b4ff6d8ab00cc34ad1597939556651a792d9b7c"
+        },
+        {
+          "path": "../assets/materials/png/glass-tech.png",
+          "bytes": 19022,
+          "sha256": "ffca81c9c17ae302bafcc718d801d677cd3097270513bd40cd9474a591735bba"
+        },
+        {
+          "path": "../assets/materials/png/hair.png",
+          "bytes": 60966,
+          "sha256": "990c34d58336c97fb643c14fc5e84c8eb61046d72b29d3747e438383da2ea33f"
+        },
+        {
+          "path": "../assets/materials/png/holographic.png",
+          "bytes": 2143,
+          "sha256": "977d67db3793e2e290abb2ed3656a84c72095ed13c98781c5aaf9e6760ba2a15"
+        },
+        {
+          "path": "../assets/materials/png/leather.png",
+          "bytes": 39658,
+          "sha256": "ab4372d02bbca38ac939e774ff41a94c64e236c166b45b50646db9d9dcd6c822"
+        },
+        {
+          "path": "../assets/materials/png/metal.png",
+          "bytes": 7300,
+          "sha256": "01c831e251998767d947f882202b4bfd895ad02bcf7bd76e9980494d9537c067"
+        },
+        {
+          "path": "../assets/materials/png/painted-metal.png",
+          "bytes": 58431,
+          "sha256": "49c4b65a8ab67847fb60b22510244d0bea691ade9852d9c4bf537b40c63803cb"
+        },
+        {
+          "path": "../assets/materials/png/rubber.png",
+          "bytes": 63093,
+          "sha256": "907225f34882512512e803e26bd6ff15c2ab1ad2b790e23d3e23c6d1e94c3edb"
+        },
+        {
+          "path": "../assets/materials/png/skin.png",
+          "bytes": 37895,
+          "sha256": "d376e6b70bb94a243fee0cce60a3a83748604ef7f0934806c51953a4b0008a65"
+        },
+        {
+          "path": "../assets/materials/png/wood.png",
+          "bytes": 28766,
+          "sha256": "1b13bd698fa46997644310942d0372a02e0a439e5933fd89ae1328cf593f095d"
+        },
+        {
+          "path": "../demo/styles-renderer.css",
+          "bytes": 3308,
+          "sha256": "37082500d1c60b3bceeefdffe1efe4d2c1949e3f21da12c49a218f8f906f1523"
+        }
+      ],
+      "recommendedFor": "Notebooks modernos e desktops",
+      "memoryEstimateMB": 780,
+      "targetFps": "50–60",
+      "bytes": 526973,
+      "displaySize": "514.6 KB",
+      "fileCount": 39,
+      "managerCompatibility": ">=0.9.4.3"
+    },
+    {
+      "id": "graphics-ultra-core",
+      "name": "Ultra — Materiais e Ambiente Premium",
+      "tier": "ultra",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "Pacote Ultra real com ambiente LDR 2K, detalhe 1K, palco Full HD e sprite de luz, carregado sob demanda.",
+      "requires": [
+        "graphics-high-core"
+      ],
+      "qualityModes": [
+        "ultra"
+      ],
+      "accent": "purple",
+      "files": [
+        {
+          "path": "../assets/ui/animated/coin-transfer.svg",
+          "bytes": 2018,
+          "sha256": "3df4bf332f6bd7a632eb363c4568fe2afa33dade5c0bb6106cc60c7b485f7975"
+        },
+        {
+          "path": "../assets/ui/animated/validation-orbit.svg",
+          "bytes": 2251,
+          "sha256": "bbe673fedcdee2b15dc9caa744b31489094f28cf53814cf75fd5f4d4b6518306"
+        },
+        {
+          "path": "../assets/ui/backgrounds/grid-neon.svg",
+          "bytes": 1629,
+          "sha256": "29d309c7525424974a2aca15c626234a22d8ab2b8e8f4bea87f4923182205286"
+        },
+        {
+          "path": "../assets/ui/backgrounds/holo-panel.svg",
+          "bytes": 1723,
+          "sha256": "b42d48eb1b1da396b3a9307b083263d231b5c7b30ab57820cdced7cfdf63a1ae"
+        },
+        {
+          "path": "../assets/runtime/ultra/env-ultra-2048.webp",
+          "bytes": 55032,
+          "sha256": "a7bcb1f6d49391407c404876570c90c0a74badf54ab074072f6b0b4149bf65ee"
+        },
+        {
+          "path": "../assets/runtime/ultra/material-detail-ultra-1024.webp",
+          "bytes": 624800,
+          "sha256": "4634975a451f65a5b289a7f250bfeae9491d796f7b29a95a3b848f13222d3dcd"
+        },
+        {
+          "path": "../assets/runtime/ultra/stage-ultra-1920.webp",
+          "bytes": 50184,
+          "sha256": "a588459ece2799c21e48c62c9ec52c1c116a696a2d40bf74ad91de3b62c23f14"
+        },
+        {
+          "path": "../assets/runtime/ultra/flare-ultra-512.webp",
+          "bytes": 11694,
+          "sha256": "bbcfe12bd29aeb7e40887244e8237da5c4e7a0b9fde7923802908f1643f7edeb"
+        },
+        {
+          "path": "../assets/runtime/ultra/lighting-ultra.json",
+          "bytes": 1079,
+          "sha256": "149ea83f0a6ec34651bf716f75697912f779eadafef7d6b0b1335c1c2cbd480b"
+        },
+        {
+          "path": "../assets/runtime/ultra/runtime-manifest.json",
+          "bytes": 1373,
+          "sha256": "bca77c5ea3cae8384539f9541a221ab39faece01454483eae00eb1fe3f519569"
+        }
+      ],
+      "recommendedFor": "GPU dedicada",
+      "memoryEstimateMB": 640,
+      "targetFps": "45–60",
+      "bytes": 751783,
+      "displaySize": "734.2 KB",
+      "fileCount": 10,
+      "managerCompatibility": ">=0.9.6",
+      "assetMaturity": "premium-runtime-v1",
+      "premium3DAssets": true
+    },
+    {
+      "id": "module-equipment-3d",
+      "name": "Módulo de equipamentos 3D",
+      "tier": "module",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "GLBs e prévias de roupas, escudos, ferramentas, mochilas, veículos e companheiros.",
+      "requires": [
+        "graphics-balanced"
+      ],
+      "qualityModes": [
+        "advanced",
+        "ultra",
+        "realism"
+      ],
+      "accent": "orange",
+      "files": [
+        {
+          "path": "../assets/equipment/equipment-manifest.json",
+          "bytes": 21677,
+          "sha256": "cbd02b6b72644911847d7294f73da8a7346d980ccf35dd70debe0e235cf79b1a"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/acrobat-digital.glb.gz",
+          "bytes": 2458,
+          "sha256": "60983396c73dce2c1a76c3765f00e4a8298786b5b66ba3afb7daffa46c1bec28"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/armor-tech-red.glb.gz",
+          "bytes": 2756,
+          "sha256": "852ed2dbe9f279fd02af2ce508866fea2ce49251be933d7a1925d70e5b2254c7"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/backpack-nexus.glb.gz",
+          "bytes": 3036,
+          "sha256": "384c36f7576abbea298330bad9d627a0046b4c09c78b6d28aa79941ab52b3d11"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/backpack-scholar.glb.gz",
+          "bytes": 2803,
+          "sha256": "b11b0139bc930d443339a32910f8a11186fb763a99875412954ed8ff825aa7c7"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/boots-pulse.glb.gz",
+          "bytes": 2700,
+          "sha256": "d24d09e963c24fdcebf5b02880f1948d329e8f0ccb0bff17eef78efca29439af"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/cap-code.glb.gz",
+          "bytes": 2373,
+          "sha256": "b88e833e7275b877b721595137dc9508eb52b307e2cb43865574f640c9a752e1"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/companion-cube.glb.gz",
+          "bytes": 2746,
+          "sha256": "d77cd0ebcbbe5fbf12ac259258efd94c562fb70ffeec877c5f21742475926349"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/compass-quantum.glb.gz",
+          "bytes": 2813,
+          "sha256": "a878bc729d227b69c3db6922e7003a036275b1efaff11b596031b2f092946127"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/drone-iris.glb.gz",
+          "bytes": 3064,
+          "sha256": "e4737be91cd5fc53d8437039b140d13d67d62208e07e21613e791362acd28c34"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/glasses-spectrum.glb.gz",
+          "bytes": 2716,
+          "sha256": "46a89158d32407edf6f7e9991a64113f1e96816c2ce622592c466d39a37d3d74"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/guardian-night.glb.gz",
+          "bytes": 2466,
+          "sha256": "a96a7cc80e577ca1e23e6c7b66064dcb483953fb9f40876060131d6d0f47bd66"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/guardian-star.glb.gz",
+          "bytes": 2442,
+          "sha256": "9d92b1a25af5be08b41f0a46049f7439e2b603981f201d59d22ba4d827d8fe71"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/hair-cyan-stripe.glb.gz",
+          "bytes": 2060,
+          "sha256": "4f04dcf68f72fda8faa03e161895c52d6e90928ecfb3f632471269e43e62a560"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/hair-neon-braid.glb.gz",
+          "bytes": 2507,
+          "sha256": "529cc050c3ee5fd77d27b13c7766e0b27c25c755e436d8ea3c93fa67983578b1"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/hair-wave-dark.glb.gz",
+          "bytes": 2488,
+          "sha256": "cce2b64fdec0087b8e8e183947623398940b6bf7c3fa1a642ac271fe2216b97a"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/hammer-thunder.glb.gz",
+          "bytes": 2441,
+          "sha256": "47ef0ca72f4d9adde3e45fe42edfd1c8d89f227ed4fa895d5b1d7294ab4d473f"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/helmet-orbit.glb.gz",
+          "bytes": 3064,
+          "sha256": "8bb4b93db54eaff32c288b814581d6139716878b370dd60b3f5caa26a5f33558"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/hoverboard-neon.glb.gz",
+          "bytes": 2703,
+          "sha256": "a824493c246d0d1af3f51da65fe848f3fda044d746dcad7119972134d283d756"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/jacket-neon.glb.gz",
+          "bytes": 2494,
+          "sha256": "b9a3ae60bbd2e64398497f5d449fa8fca3dcf9b636a66ecd34490b1ec051c25f"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/jetpack-orbit.glb.gz",
+          "bytes": 3065,
+          "sha256": "e35061d2bef2d39b65b94b95942d50d526c9d97db964ae30d722faa1aadd33fa"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/mystic-arcane.glb.gz",
+          "bytes": 2846,
+          "sha256": "4d051e16fb9c52185546cea20dc2c6b1b6d8f74a8fb0be501e3b2248bda2f4d2"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/notebook-holo.glb.gz",
+          "bytes": 2782,
+          "sha256": "f6eaa872a66b7740cd91fda15a5f92e42fe8513788d0560cf1e9971e38f9ecc8"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/rocket-pioneer.glb.gz",
+          "bytes": 2484,
+          "sha256": "8858fc39f252e07a3741f996faa0b7d9a17f7ff35761a3d4e46062471a0027ba"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/scanner-prisma.glb.gz",
+          "bytes": 3042,
+          "sha256": "1572b90293fafead04a4c2976f3b343a6cfcc595ae6fd7bacbacd6941ae65bb1"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/shield-sentinel.glb.gz",
+          "bytes": 2694,
+          "sha256": "2274792c78702dd3443193abb7754f3d3c867c1019f5163ddb5d115d7939f8e3"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/shield-star.glb.gz",
+          "bytes": 2432,
+          "sha256": "979241eaf8007b353089ad988d912d3e2dcc27db6da288132d92bb6d7992b726"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/shirt-code-grid.glb.gz",
+          "bytes": 2413,
+          "sha256": "7628a5f9695d6a44ae8ab8bdec4f6d8d1f4fea6e5e6ef3b56b8237249f3a7d62"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/shoulder-orb.glb.gz",
+          "bytes": 2431,
+          "sha256": "fd78983f981459643697b190ae226d3984746b93ebf2d838e6236fcdfb41d701"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/skateboard-byte.glb.gz",
+          "bytes": 2707,
+          "sha256": "f2aa61ea97bbee10bd6c7e450beac5d947400de15a54077a3be1342ce53b218b"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/staff-arcane.glb.gz",
+          "bytes": 2774,
+          "sha256": "1df613b7f7b2eee5b3b9ca9ed3534c8cd7a8e47d05b4ac2a0b213822ca6f8c9e"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/thunder-warrior.glb.gz",
+          "bytes": 2820,
+          "sha256": "36030c4aa593b6a9e4500f836de031dff654525418494d7f31fc4ab72f3c6a2b"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/uniform-brazil-tech.glb.gz",
+          "bytes": 2139,
+          "sha256": "f9a419f452ceb685166c4cbde2b502d74d559deff828ffb6240e8ff81e85600c"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/uniform-spain-tech.glb.gz",
+          "bytes": 2455,
+          "sha256": "3f04255374ce6d1ce6914ec1dd3867fa86c773edbcf7771b035eb9c8147dfb65"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/uniform-uk-tech.glb.gz",
+          "bytes": 2147,
+          "sha256": "6ebba83960f267f22c8f08d3f237ac7a44fe4b39cca2e9c1819aaadc37b3c94e"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/uniform-usa-tech.glb.gz",
+          "bytes": 2128,
+          "sha256": "e50f018f3f2c0e11a84f2317506d605d85bf159dd061cb60f6be6763370dee57"
+        },
+        {
+          "path": "../assets/compression/glb/equipment/models/visor-holo.glb.gz",
+          "bytes": 2411,
+          "sha256": "6f745b0963c262234e74ccd6c696b422d77e82ddcf7cc466cc813b9f8c2f08a3"
+        },
+        {
+          "path": "../assets/equipment/presets.json",
+          "bytes": 1156,
+          "sha256": "0b22c609928ce2de37a2d315f119aadc3575337d8eb45c7577d09cf18e59e3bc"
+        }
+      ],
+      "recommendedFor": "Personalização avançada do personagem",
+      "memoryEstimateMB": 320,
+      "targetFps": "—",
+      "bytes": 116733,
+      "displaySize": "114.0 KB",
+      "fileCount": 38,
+      "managerCompatibility": ">=0.9.4.3"
+    },
+    {
+      "id": "module-vfx-ultra",
+      "name": "Módulo VFX Ultra",
+      "tier": "module",
+      "version": "0.9.6.0-RG",
+      "required": false,
+      "autoInstall": false,
+      "description": "Auras, fogos, portais, glitch, foguetes, neve e explosões em resolução superior.",
+      "requires": [
+        "graphics-ultra-core"
+      ],
+      "qualityModes": [
+        "ultra",
+        "realism"
+      ],
+      "accent": "pink",
+      "files": [
+        {
+          "path": "../assets/vfx/effects/aura-energy-blue.json",
+          "bytes": 366,
+          "sha256": "f15c1e906f3cc75f8d2c2150706e2614fa3939b0bb046239965a945be22185d8"
+        },
+        {
+          "path": "../assets/vfx/effects/aura-gold-legend.json",
+          "bytes": 376,
+          "sha256": "bf83c4bf2dcf7fe06af0041524c8ad9c3219361d2eb5dc255ce73dbba8b5e138"
+        },
+        {
+          "path": "../assets/vfx/effects/aura-pink-mythic.json",
+          "bytes": 380,
+          "sha256": "32f8c59e27c580853174343e4a401eb25a1b2565fb2c22dd68bb2817e27ba297"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-aura-explosion.json",
+          "bytes": 380,
+          "sha256": "a69fb5e774dcf15c45857b3bedf0cedf68638a0615908a93bc4f591aad039cb9"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-aura-fire.json",
+          "bytes": 362,
+          "sha256": "54bc51bb3a9aa2894bdb13d94d3facedbaa9f022dbdfec50a189b704e3188b2d"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-aura-ice.json",
+          "bytes": 352,
+          "sha256": "7bb3380b7b21a9d2b983d49b268b618e6b50d4cd5bdd9fdb6a8712a844a0e5d5"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-coin-burst.json",
+          "bytes": 346,
+          "sha256": "bc0ac72957d9514607e23f64032a15e21eded670457a4f6d104fe6e91918bd30"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-confetti.json",
+          "bytes": 387,
+          "sha256": "9339cb1334fcde6d510b1f28108294d9e411c383b4f50ee1d7b996a97034cd09"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-fireworks-orbit.json",
+          "bytes": 405,
+          "sha256": "e56116a453db76420eb90a041c8242e2a21c95639bd6c35cedcf355bb41785ab"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-hologram-scan.json",
+          "bytes": 362,
+          "sha256": "e6ae072108c70e189b1edeefd9dad818b8ba977110733efb85662293a8016074"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-lab-hologram.json",
+          "bytes": 403,
+          "sha256": "d9081ecd4cf64641f7b399afc14a3285870082d6d8ed5a1ed76900a06f307fea"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-level-up.json",
+          "bytes": 355,
+          "sha256": "a4c8ec6a8e243cac058fca9047957ce3fe4eb942b40e9785a81c8989460afa1c"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-neon-glitch.json",
+          "bytes": 357,
+          "sha256": "42b02da6f16b7255e14c3f2874ac8f6b33fba10ddbbc4939fc9c3c5b332124ef"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-portal-entry.json",
+          "bytes": 362,
+          "sha256": "251c40ae5c1a028024dff061247e6e0b83276d32c3247e34ad138d35728187f2"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-radar-sweep.json",
+          "bytes": 331,
+          "sha256": "353d4fd6e307fb9602bb5e3ed6a8ca7994ee0b8e7f542f86e8602f7523afafea"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-rocket-celebration.json",
+          "bytes": 395,
+          "sha256": "ff10247db7a52049d4b224be0f6e8ba34c2de49cb30b901eb66b9ec796e3e470"
+        },
+        {
+          "path": "../assets/vfx/effects/vfx-snow-screen.json",
+          "bytes": 345,
+          "sha256": "772b6f306aba216b07042db87c26fd5f81bee8ba8a389e4899317d25d16f5687"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-energy-blue.png",
+          "bytes": 86017,
+          "sha256": "cb35fbcf6fc39294ea4c5ef583d1aca66dc2c8943607829eabcb4149a9761e49"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-gold-legend.png",
+          "bytes": 87275,
+          "sha256": "23d597deb9b6ffa895043892c626fd634b53259ef2b73ff8449ed3798e721063"
+        },
+        {
+          "path": "../assets/vfx/previews/aura-pink-mythic.png",
+          "bytes": 91747,
+          "sha256": "62fbad52746c9164fd3ec90c799eed81993c47688757526f7f3f076ebe1c516f"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-explosion.png",
+          "bytes": 88861,
+          "sha256": "75150a80786bd5437ad6d88ecd0256a82206b18533c402f36ad6ffaa4f2d103e"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-fire.png",
+          "bytes": 82531,
+          "sha256": "46054ea8af6e9cc703569bcf516022f9e37f52003b09a7aad4b02369dfa10d3a"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-aura-ice.png",
+          "bytes": 86060,
+          "sha256": "87b10fa1300d22ebbbccb2ebdcabc662cc3b9457934479099231e7c7f52dcc2d"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-coin-burst.png",
+          "bytes": 52923,
+          "sha256": "1ec43cdb7265ff2a5af9396e14727b5cd94cf43288777c84565e9b87d3cd93c3"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-confetti.png",
+          "bytes": 44203,
+          "sha256": "470cc7469ba5889d1bc3db08ba986651e56398bc623f21ebd9d841a365c446c9"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-fireworks-orbit.png",
+          "bytes": 95813,
+          "sha256": "208eb135ab47e68f738f3cc99bd2b7f204b929d69652924802f52519137de5e1"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-hologram-scan.png",
+          "bytes": 42268,
+          "sha256": "c5cac2cc12473db34de07bfe71594602329bf095cda04cb26d8f5f82892b5c2a"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-lab-hologram.png",
+          "bytes": 43770,
+          "sha256": "d2539fd8f8cc2bb26e93667ef2ea0d2a97028eba659a68686c63a007ad4383f0"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-level-up.png",
+          "bytes": 76227,
+          "sha256": "5e6a5c36b2781b3fdd9ad860ece0fa7fdeee8d78f56dbab98480d67b2bdd1fa8"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-neon-glitch.png",
+          "bytes": 37211,
+          "sha256": "92e017d046963d7ee6d64186392b16b72af7fbd5f8f7f6f15a6c7027badb1f9f"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-portal-entry.png",
+          "bytes": 100591,
+          "sha256": "6f9c9e375e91adfc841de018878db834608c79dd516ef5f7f29ebf3e910343ac"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-radar-sweep.png",
+          "bytes": 40192,
+          "sha256": "55ac7bfcbd6181f15b57fb9ae130acd9b10abbc2476b75572695f758a648c3a5"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-rocket-celebration.png",
+          "bytes": 60445,
+          "sha256": "fe3154bab10ecb58dd860dd19ff94f65963734aa69a148f0ed6b530c5c2a7544"
+        },
+        {
+          "path": "../assets/vfx/previews/vfx-snow-screen.png",
+          "bytes": 47516,
+          "sha256": "f4c0b70c7629d5b283c1441cb319b0b9e99b885cdb7c0460be478387cb4e7d82"
+        },
+        {
+          "path": "../assets/vfx/vfx-manifest.json",
+          "bytes": 8687,
+          "sha256": "ac7629f86186814bfdcf821479d8b75b17d7a4f76f0a284c908ec6f7cdd07b20"
+        }
+      ],
+      "recommendedFor": "Comemorações e Desfile DS",
+      "memoryEstimateMB": 460,
+      "targetFps": "—",
+      "bytes": 1178601,
+      "displaySize": "1.1 MB",
+      "fileCount": 35,
+      "managerCompatibility": ">=0.9.4.3"
+    }
+  ],
+  "modeRequirements": {},
+  "version": "0.9.6.0-RG",
+  "runtimePackCount": 7,
+  "developmentPackManifest": null
+}

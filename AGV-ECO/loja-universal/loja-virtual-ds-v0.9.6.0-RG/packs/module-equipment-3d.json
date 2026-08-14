@@ -1,0 +1,217 @@
+{
+  "id": "module-equipment-3d",
+  "name": "Módulo de equipamentos 3D",
+  "tier": "module",
+  "version": "0.9.6.0-RG",
+  "required": false,
+  "autoInstall": false,
+  "description": "GLBs e prévias de roupas, escudos, ferramentas, mochilas, veículos e companheiros.",
+  "requires": [
+    "graphics-balanced"
+  ],
+  "qualityModes": [
+    "advanced",
+    "ultra",
+    "realism"
+  ],
+  "accent": "orange",
+  "files": [
+    {
+      "path": "../assets/equipment/equipment-manifest.json",
+      "bytes": 21677,
+      "sha256": "cbd02b6b72644911847d7294f73da8a7346d980ccf35dd70debe0e235cf79b1a"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/acrobat-digital.glb.gz",
+      "bytes": 2458,
+      "sha256": "60983396c73dce2c1a76c3765f00e4a8298786b5b66ba3afb7daffa46c1bec28"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/armor-tech-red.glb.gz",
+      "bytes": 2756,
+      "sha256": "852ed2dbe9f279fd02af2ce508866fea2ce49251be933d7a1925d70e5b2254c7"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/backpack-nexus.glb.gz",
+      "bytes": 3036,
+      "sha256": "384c36f7576abbea298330bad9d627a0046b4c09c78b6d28aa79941ab52b3d11"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/backpack-scholar.glb.gz",
+      "bytes": 2803,
+      "sha256": "b11b0139bc930d443339a32910f8a11186fb763a99875412954ed8ff825aa7c7"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/boots-pulse.glb.gz",
+      "bytes": 2700,
+      "sha256": "d24d09e963c24fdcebf5b02880f1948d329e8f0ccb0bff17eef78efca29439af"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/cap-code.glb.gz",
+      "bytes": 2373,
+      "sha256": "b88e833e7275b877b721595137dc9508eb52b307e2cb43865574f640c9a752e1"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/companion-cube.glb.gz",
+      "bytes": 2746,
+      "sha256": "d77cd0ebcbbe5fbf12ac259258efd94c562fb70ffeec877c5f21742475926349"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/compass-quantum.glb.gz",
+      "bytes": 2813,
+      "sha256": "a878bc729d227b69c3db6922e7003a036275b1efaff11b596031b2f092946127"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/drone-iris.glb.gz",
+      "bytes": 3064,
+      "sha256": "e4737be91cd5fc53d8437039b140d13d67d62208e07e21613e791362acd28c34"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/glasses-spectrum.glb.gz",
+      "bytes": 2716,
+      "sha256": "46a89158d32407edf6f7e9991a64113f1e96816c2ce622592c466d39a37d3d74"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/guardian-night.glb.gz",
+      "bytes": 2466,
+      "sha256": "a96a7cc80e577ca1e23e6c7b66064dcb483953fb9f40876060131d6d0f47bd66"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/guardian-star.glb.gz",
+      "bytes": 2442,
+      "sha256": "9d92b1a25af5be08b41f0a46049f7439e2b603981f201d59d22ba4d827d8fe71"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/hair-cyan-stripe.glb.gz",
+      "bytes": 2060,
+      "sha256": "4f04dcf68f72fda8faa03e161895c52d6e90928ecfb3f632471269e43e62a560"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/hair-neon-braid.glb.gz",
+      "bytes": 2507,
+      "sha256": "529cc050c3ee5fd77d27b13c7766e0b27c25c755e436d8ea3c93fa67983578b1"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/hair-wave-dark.glb.gz",
+      "bytes": 2488,
+      "sha256": "cce2b64fdec0087b8e8e183947623398940b6bf7c3fa1a642ac271fe2216b97a"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/hammer-thunder.glb.gz",
+      "bytes": 2441,
+      "sha256": "47ef0ca72f4d9adde3e45fe42edfd1c8d89f227ed4fa895d5b1d7294ab4d473f"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/helmet-orbit.glb.gz",
+      "bytes": 3064,
+      "sha256": "8bb4b93db54eaff32c288b814581d6139716878b370dd60b3f5caa26a5f33558"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/hoverboard-neon.glb.gz",
+      "bytes": 2703,
+      "sha256": "a824493c246d0d1af3f51da65fe848f3fda044d746dcad7119972134d283d756"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/jacket-neon.glb.gz",
+      "bytes": 2494,
+      "sha256": "b9a3ae60bbd2e64398497f5d449fa8fca3dcf9b636a66ecd34490b1ec051c25f"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/jetpack-orbit.glb.gz",
+      "bytes": 3065,
+      "sha256": "e35061d2bef2d39b65b94b95942d50d526c9d97db964ae30d722faa1aadd33fa"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/mystic-arcane.glb.gz",
+      "bytes": 2846,
+      "sha256": "4d051e16fb9c52185546cea20dc2c6b1b6d8f74a8fb0be501e3b2248bda2f4d2"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/notebook-holo.glb.gz",
+      "bytes": 2782,
+      "sha256": "f6eaa872a66b7740cd91fda15a5f92e42fe8513788d0560cf1e9971e38f9ecc8"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/rocket-pioneer.glb.gz",
+      "bytes": 2484,
+      "sha256": "8858fc39f252e07a3741f996faa0b7d9a17f7ff35761a3d4e46062471a0027ba"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/scanner-prisma.glb.gz",
+      "bytes": 3042,
+      "sha256": "1572b90293fafead04a4c2976f3b343a6cfcc595ae6fd7bacbacd6941ae65bb1"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/shield-sentinel.glb.gz",
+      "bytes": 2694,
+      "sha256": "2274792c78702dd3443193abb7754f3d3c867c1019f5163ddb5d115d7939f8e3"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/shield-star.glb.gz",
+      "bytes": 2432,
+      "sha256": "979241eaf8007b353089ad988d912d3e2dcc27db6da288132d92bb6d7992b726"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/shirt-code-grid.glb.gz",
+      "bytes": 2413,
+      "sha256": "7628a5f9695d6a44ae8ab8bdec4f6d8d1f4fea6e5e6ef3b56b8237249f3a7d62"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/shoulder-orb.glb.gz",
+      "bytes": 2431,
+      "sha256": "fd78983f981459643697b190ae226d3984746b93ebf2d838e6236fcdfb41d701"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/skateboard-byte.glb.gz",
+      "bytes": 2707,
+      "sha256": "f2aa61ea97bbee10bd6c7e450beac5d947400de15a54077a3be1342ce53b218b"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/staff-arcane.glb.gz",
+      "bytes": 2774,
+      "sha256": "1df613b7f7b2eee5b3b9ca9ed3534c8cd7a8e47d05b4ac2a0b213822ca6f8c9e"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/thunder-warrior.glb.gz",
+      "bytes": 2820,
+      "sha256": "36030c4aa593b6a9e4500f836de031dff654525418494d7f31fc4ab72f3c6a2b"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/uniform-brazil-tech.glb.gz",
+      "bytes": 2139,
+      "sha256": "f9a419f452ceb685166c4cbde2b502d74d559deff828ffb6240e8ff81e85600c"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/uniform-spain-tech.glb.gz",
+      "bytes": 2455,
+      "sha256": "3f04255374ce6d1ce6914ec1dd3867fa86c773edbcf7771b035eb9c8147dfb65"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/uniform-uk-tech.glb.gz",
+      "bytes": 2147,
+      "sha256": "6ebba83960f267f22c8f08d3f237ac7a44fe4b39cca2e9c1819aaadc37b3c94e"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/uniform-usa-tech.glb.gz",
+      "bytes": 2128,
+      "sha256": "e50f018f3f2c0e11a84f2317506d605d85bf159dd061cb60f6be6763370dee57"
+    },
+    {
+      "path": "../assets/compression/glb/equipment/models/visor-holo.glb.gz",
+      "bytes": 2411,
+      "sha256": "6f745b0963c262234e74ccd6c696b422d77e82ddcf7cc466cc813b9f8c2f08a3"
+    },
+    {
+      "path": "../assets/equipment/presets.json",
+      "bytes": 1156,
+      "sha256": "0b22c609928ce2de37a2d315f119aadc3575337d8eb45c7577d09cf18e59e3bc"
+    }
+  ],
+  "recommendedFor": "Personalização avançada do personagem",
+  "memoryEstimateMB": 320,
+  "targetFps": "—",
+  "bytes": 116733,
+  "displaySize": "114.0 KB",
+  "fileCount": 38,
+  "managerCompatibility": ">=0.9.4.3"
+}

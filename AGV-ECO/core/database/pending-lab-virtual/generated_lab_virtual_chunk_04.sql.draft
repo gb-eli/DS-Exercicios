@@ -1,0 +1,44 @@
+do $$ declare p uuid; begin
+select id into p from public.platforms where code='lab-virtual';
+if p is null then raise exception 'platform lab-virtual missing'; end if;
+insert into public.activity_catalog(platform_id,activity_id,name,reward_policy,max_xp,max_points,max_coins,repeatable,active,metadata) values
+(p,'completion:device:first-photo','device:first-photo','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"device:first-photo","toolId":"device-sensors","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:device:location-permission','device:location-permission','rule_validated',20,0,5,false,true,'{"kind":"completion","completionId":"device:location-permission","toolId":"device-sensors","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:graphics:first-valid-export','graphics:first-valid-export','rule_validated',35,0,12,false,true,'{"kind":"completion","completionId":"graphics:first-valid-export","toolId":"graphics","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:sheet-formulas','productivity:sheet-formulas','rule_validated',80,0,35,false,true,'{"kind":"completion","completionId":"productivity:sheet-formulas","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:document','productivity:document','rule_validated',60,0,25,false,true,'{"kind":"completion","completionId":"productivity:document","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:slides','productivity:slides','rule_validated',60,0,25,false,true,'{"kind":"completion","completionId":"productivity:slides","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:presentation-view','productivity:presentation-view','rule_validated',30,0,10,false,true,'{"kind":"completion","completionId":"productivity:presentation-view","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:form','productivity:form','rule_validated',70,0,30,false,true,'{"kind":"completion","completionId":"productivity:form","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:phishing','productivity:phishing','rule_validated',70,0,25,false,true,'{"kind":"completion","completionId":"productivity:phishing","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:mail-cco','productivity:mail-cco','rule_validated',55,0,20,false,true,'{"kind":"completion","completionId":"productivity:mail-cco","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:productivity:mail-flow','productivity:mail-flow','rule_validated',45,0,15,false,true,'{"kind":"completion","completionId":"productivity:mail-flow","toolId":"productivity-suite","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:printing3d:successful-print-v40','printing3d:successful-print-v40','rule_validated',110,0,62,false,true,'{"kind":"completion","completionId":"printing3d:successful-print-v40","toolId":"printing-3d","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:traffic:radar-precision','traffic:radar-precision','rule_validated',45,0,15,false,true,'{"kind":"completion","completionId":"traffic:radar-precision","toolId":"traffic-radar","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:traffic:signal-safe','traffic:signal-safe','rule_validated',70,0,25,false,true,'{"kind":"completion","completionId":"traffic:signal-safe","toolId":"traffic-radar","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:thermal-panel:limits','thermal-panel:limits','rule_validated',70,0,30,false,true,'{"kind":"completion","completionId":"thermal-panel:limits","toolId":"thermal-panel","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:tech-explorer:research-started','tech-explorer:research-started','rule_validated',35,0,22,false,true,'{"kind":"completion","completionId":"tech-explorer:research-started","toolId":"tech-explorer","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:biomonitor:comparison','biomonitor:comparison','rule_validated',65,0,25,false,true,'{"kind":"completion","completionId":"biomonitor:comparison","toolId":"biomonitor","category":"explicit","minSeconds":4}'::jsonb),
+(p,'completion:audio:classification:80','audio:classification:80','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:80","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb)
+on conflict(platform_id,activity_id) do update set name=excluded.name,reward_policy=excluded.reward_policy,max_xp=excluded.max_xp,max_points=excluded.max_points,max_coins=excluded.max_coins,repeatable=excluded.repeatable,active=true,metadata=excluded.metadata;
+delete from public.reward_rules where platform_id=p and activity_id in ('completion:device:first-photo','completion:device:location-permission','completion:graphics:first-valid-export','completion:productivity:sheet-formulas','completion:productivity:document','completion:productivity:slides','completion:productivity:presentation-view','completion:productivity:form','completion:productivity:phishing','completion:productivity:mail-cco','completion:productivity:mail-flow','completion:printing3d:successful-print-v40','completion:traffic:radar-precision','completion:traffic:signal-safe','completion:thermal-panel:limits','completion:tech-explorer:research-started','completion:biomonitor:comparison','completion:audio:classification:80');
+insert into public.reward_rules(platform_id,activity_id,event_type,trust_level,xp,points,coins,repeatable,active,metadata) values
+(p,'completion:device:first-photo','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:device:location-permission','activity.completed','server_verified',20,0,5,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:graphics:first-valid-export','activity.completed','server_verified',35,0,12,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:sheet-formulas','activity.completed','server_verified',80,0,35,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:document','activity.completed','server_verified',60,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:slides','activity.completed','server_verified',60,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:presentation-view','activity.completed','server_verified',30,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:form','activity.completed','server_verified',70,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:phishing','activity.completed','server_verified',70,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:mail-cco','activity.completed','server_verified',55,0,20,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:productivity:mail-flow','activity.completed','server_verified',45,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:printing3d:successful-print-v40','activity.completed','server_verified',110,0,62,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:traffic:radar-precision','activity.completed','server_verified',45,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:traffic:signal-safe','activity.completed','server_verified',70,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:thermal-panel:limits','activity.completed','server_verified',70,0,30,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tech-explorer:research-started','activity.completed','server_verified',35,0,22,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:biomonitor:comparison','activity.completed','server_verified',65,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:80','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb);
+end $$;

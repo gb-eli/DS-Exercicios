@@ -1,0 +1,31 @@
+{
+  "version": "0.9.6.0-RG",
+  "policy": "lossless-first",
+  "assetsChecked": 39,
+  "originalBytes": 420084,
+  "gzipBytes": 72722,
+  "reductionPercent": 82.69,
+  "byteIdentical": true,
+  "meshopt": {
+    "status": "staged-not-applied",
+    "reason": "encoder toolchain unavailable in this controlled environment; no unvalidated conversion shipped"
+  },
+  "ktx2": {
+    "status": "not-applicable-current-glbs",
+    "reason": "current GLBs use PBR factors and no embedded bitmap textures"
+  },
+  "draco": {
+    "status": "not-selected",
+    "reason": "decode/runtime integration not validated and current procedural geometry is already very small"
+  },
+  "qualityGates": [
+    "GLB header",
+    "exact decompressed SHA-256",
+    "nodes",
+    "materials",
+    "animations",
+    "slot names",
+    "accessor bounds",
+    "browser fallback"
+  ]
+}
