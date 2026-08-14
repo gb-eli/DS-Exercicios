@@ -1,0 +1,78 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.38.0",
+  "phase": "Fase 7.21 — Plataforma Poligonal DS 3D · Campanha",
+  "summary": {
+    "total": 769,
+    "passed": 769,
+    "failed": 0
+  },
+  "suites": [
+    {
+      "name": "CPU e multiplayer",
+      "file": "validation/cpu-multiplayer-quality-results.json",
+      "passed": 136,
+      "failed": 0
+    },
+    {
+      "name": "Arcade",
+      "file": "validation/arcade-expansion-test-results.json",
+      "passed": 37,
+      "failed": 0
+    },
+    {
+      "name": "Conteúdo educacional",
+      "file": "validation/educational-content-test-results.json",
+      "passed": 144,
+      "failed": 0
+    },
+    {
+      "name": "Museu/Linha do Tempo",
+      "file": "validation/museum-timeline-test-results.json",
+      "passed": 62,
+      "failed": 0
+    },
+    {
+      "name": "UX/responsividade",
+      "file": "validation/ux-responsive-test-results.json",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "name": "Física",
+      "file": "validation/platform-physics-test-results.json",
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "name": "Campanhas 3D atuais",
+      "file": "validation/three-d-campaign-results-v0.36.2.json",
+      "passed": 28,
+      "failed": 0
+    },
+    {
+      "name": "VoxelCraft",
+      "file": "validation/voxelcraft-campaign-results-v0.36.2.json",
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "name": "Duo Elementos",
+      "file": "validation/duo-elementos-test-results-v0.37.0.json",
+      "passed": 88,
+      "failed": 0
+    },
+    {
+      "name": "Crystal Cascade",
+      "file": "validation/crystal-cascade-results-v0.37.2.json",
+      "passed": 118,
+      "failed": 0
+    },
+    {
+      "name": "Plataforma Poligonal DS 3D",
+      "file": "validation/plataforma-poligonal-results-v0.38.0.json",
+      "passed": 87,
+      "failed": 0
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.37.1",
+  "phase": "Fase 7.19 — Plataforma Clássica DS 2D · Mundo 1",
+  "generatedAt": "2026-08-07T21:19:00-03:00",
+  "summary": {
+    "total": 1046,
+    "passed": 1046,
+    "failed": 0
+  },
+  "suites": [
+    {
+      "name": "Auditoria geral",
+      "passed": 354,
+      "failed": 0
+    },
+    {
+      "name": "CPU e multiplayer",
+      "passed": 126,
+      "failed": 0
+    },
+    {
+      "name": "Arcade",
+      "passed": 37,
+      "failed": 0
+    },
+    {
+      "name": "Conteúdo educacional",
+      "passed": 132,
+      "failed": 0
+    },
+    {
+      "name": "Museu/Linha do Tempo",
+      "passed": 62,
+      "failed": 0
+    },
+    {
+      "name": "UX/responsividade",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "name": "Física",
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "name": "Campanhas 3D atuais",
+      "passed": 28,
+      "failed": 0
+    },
+    {
+      "name": "VoxelCraft atual",
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "name": "Duo Elementos",
+      "passed": 88,
+      "failed": 0
+    },
+    {
+      "name": "Plataforma Clássica DS",
+      "passed": 150,
+      "failed": 0
+    }
+  ]
+}

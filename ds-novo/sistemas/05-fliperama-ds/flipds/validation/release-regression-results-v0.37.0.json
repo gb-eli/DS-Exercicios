@@ -1,0 +1,67 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.37.0",
+  "phase": "Fase 7.18 — Multiplayer Local Core + Duo Elementos DS",
+  "generatedAt": "2026-08-07T20:51:00-03:00",
+  "note": "As contagens somam suítes complementares e podem cobrir aspectos sobrepostos do mesmo runtime.",
+  "summary": {
+    "suites": 10,
+    "checks": 735,
+    "passed": 735,
+    "failed": 0,
+    "games": 19,
+    "gamesPassed": 19
+  },
+  "suites": [
+    {
+      "name": "Auditoria geral dos jogos",
+      "passed": 204,
+      "failed": 0
+    },
+    {
+      "name": "Duo Elementos DS",
+      "passed": 88,
+      "failed": 0
+    },
+    {
+      "name": "CPU e multiplayer",
+      "passed": 121,
+      "failed": 0
+    },
+    {
+      "name": "Arcade preservado",
+      "passed": 37,
+      "failed": 0
+    },
+    {
+      "name": "Conteúdo educacional",
+      "passed": 126,
+      "failed": 0
+    },
+    {
+      "name": "Museu/Linha do Tempo",
+      "passed": 62,
+      "failed": 0
+    },
+    {
+      "name": "UX/responsividade",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "name": "Física de plataformas",
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "name": "Campanhas 3D atuais",
+      "passed": 28,
+      "failed": 0
+    },
+    {
+      "name": "VoxelCraft atual",
+      "passed": 26,
+      "failed": 0
+    }
+  ]
+}

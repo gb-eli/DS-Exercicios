@@ -1,0 +1,374 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.37.0",
+  "phase": "Fase 7.18 — regressão física preservada",
+  "generatedAt": "2026-08-08T19:12:46.988Z",
+  "summary": {
+    "passed": 18,
+    "failed": 0,
+    "total": 18
+  },
+  "checks": [
+    {
+      "name": "Trap Lab · percurso explorador",
+      "status": "pass",
+      "detail": "As 6 fases foram atravessadas pelo agente físico no modo explorador, incluindo portões e terminal final.",
+      "data": [
+        {
+          "completed": true,
+          "frames": 345,
+          "jumps": 0,
+          "interactions": 0,
+          "finalStatus": "playing",
+          "nextLevel": 2
+        },
+        {
+          "completed": true,
+          "frames": 352,
+          "jumps": 3,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 3
+        },
+        {
+          "completed": true,
+          "frames": 378,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 4
+        },
+        {
+          "completed": true,
+          "frames": 378,
+          "jumps": 6,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 5
+        },
+        {
+          "completed": true,
+          "frames": 354,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 6
+        },
+        {
+          "completed": true,
+          "frames": 378,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "victory",
+          "nextLevel": 6
+        }
+      ]
+    },
+    {
+      "name": "Trap Lab · percurso programador",
+      "status": "pass",
+      "detail": "As 6 fases foram atravessadas pelo agente físico no modo programador, incluindo portões e terminal final.",
+      "data": [
+        {
+          "completed": true,
+          "frames": 320,
+          "jumps": 0,
+          "interactions": 0,
+          "finalStatus": "playing",
+          "nextLevel": 2
+        },
+        {
+          "completed": true,
+          "frames": 330,
+          "jumps": 3,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 3
+        },
+        {
+          "completed": true,
+          "frames": 359,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 4
+        },
+        {
+          "completed": true,
+          "frames": 361,
+          "jumps": 6,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 5
+        },
+        {
+          "completed": true,
+          "frames": 335,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 6
+        },
+        {
+          "completed": true,
+          "frames": 360,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "victory",
+          "nextLevel": 6
+        }
+      ]
+    },
+    {
+      "name": "Trap Lab · percurso precisao",
+      "status": "pass",
+      "detail": "As 6 fases foram atravessadas pelo agente físico no modo precisao, incluindo portões e terminal final.",
+      "data": [
+        {
+          "completed": true,
+          "frames": 298,
+          "jumps": 0,
+          "interactions": 0,
+          "finalStatus": "playing",
+          "nextLevel": 2
+        },
+        {
+          "completed": true,
+          "frames": 308,
+          "jumps": 3,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 3
+        },
+        {
+          "completed": true,
+          "frames": 345,
+          "jumps": 7,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 4
+        },
+        {
+          "completed": true,
+          "frames": 324,
+          "jumps": 6,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 5
+        },
+        {
+          "completed": true,
+          "frames": 316,
+          "jumps": 8,
+          "interactions": 1,
+          "finalStatus": "playing",
+          "nextLevel": 6
+        },
+        {
+          "completed": true,
+          "frames": 345,
+          "jumps": 7,
+          "interactions": 1,
+          "finalStatus": "victory",
+          "nextLevel": 6
+        }
+      ]
+    },
+    {
+      "name": "Trap Lab · coyote time",
+      "status": "pass",
+      "detail": "O salto ainda é aceito logo após o personagem deixar uma borda."
+    },
+    {
+      "name": "Trap Lab · jump buffer",
+      "status": "pass",
+      "detail": "Um comando de salto realizado pouco antes da aterrissagem é executado ao tocar o chão."
+    },
+    {
+      "name": "Trap Lab · migração de save",
+      "status": "pass",
+      "detail": "Saves schema 1 são migrados para o novo estado físico schema 2."
+    },
+    {
+      "name": "Ponte · envelope vertical",
+      "status": "pass",
+      "detail": "Todas as plataformas exigem no máximo 130.0 px de subida para um salto capaz de 137.3 px.",
+      "data": {
+        "jumpHeight": 137.28571428571428,
+        "maxRise": 130
+      }
+    },
+    {
+      "name": "Ponte · aterrissagem nas plataformas",
+      "status": "pass",
+      "detail": "As 17 plataformas podem ser alcançadas diretamente por um salto de recuperação.",
+      "data": [
+        {
+          "platform": 1,
+          "landed": true
+        },
+        {
+          "platform": 2,
+          "landed": true
+        },
+        {
+          "platform": 3,
+          "landed": true
+        },
+        {
+          "platform": 4,
+          "landed": true
+        },
+        {
+          "platform": 5,
+          "landed": true
+        },
+        {
+          "platform": 6,
+          "landed": true
+        },
+        {
+          "platform": 7,
+          "landed": true
+        },
+        {
+          "platform": 8,
+          "landed": true
+        },
+        {
+          "platform": 9,
+          "landed": true
+        },
+        {
+          "platform": 10,
+          "landed": true
+        },
+        {
+          "platform": 11,
+          "landed": true
+        },
+        {
+          "platform": 12,
+          "landed": true
+        },
+        {
+          "platform": 13,
+          "landed": true
+        },
+        {
+          "platform": 14,
+          "landed": true
+        },
+        {
+          "platform": 15,
+          "landed": true
+        },
+        {
+          "platform": 16,
+          "landed": true
+        },
+        {
+          "platform": 17,
+          "landed": true
+        }
+      ]
+    },
+    {
+      "name": "Ponte · salto sobre perigos",
+      "status": "pass",
+      "detail": "Os 9 perigos foram atravessados sem perda de vida em simulação física.",
+      "data": [
+        {
+          "hazard": 1,
+          "crossed": true
+        },
+        {
+          "hazard": 2,
+          "crossed": true
+        },
+        {
+          "hazard": 3,
+          "crossed": true
+        },
+        {
+          "hazard": 4,
+          "crossed": true
+        },
+        {
+          "hazard": 5,
+          "crossed": true
+        },
+        {
+          "hazard": 6,
+          "crossed": true
+        },
+        {
+          "hazard": 7,
+          "crossed": true
+        },
+        {
+          "hazard": 8,
+          "crossed": true
+        },
+        {
+          "hazard": 9,
+          "crossed": true
+        }
+      ]
+    },
+    {
+      "name": "Ponte · fragmentos alcançáveis",
+      "status": "pass",
+      "detail": "Todos os 15 fragmentos estão associados a plataformas alcançáveis e dentro da área de coleta ampliada."
+    },
+    {
+      "name": "Ponte · checkpoints seguros",
+      "status": "pass",
+      "detail": "Nenhum respawn de checkpoint sobrepõe uma área de dano.",
+      "data": {
+        "checkpoints": [
+          1050,
+          2050,
+          3200,
+          4300,
+          5450
+        ]
+      }
+    },
+    {
+      "name": "Ponte · quarta zona",
+      "status": "pass",
+      "detail": "O setor intermediário registra corretamente a Zona 4."
+    },
+    {
+      "name": "Ponte · quinta zona",
+      "status": "pass",
+      "detail": "A expansão registra corretamente a Zona 5."
+    },
+    {
+      "name": "Ponte · sexta zona",
+      "status": "pass",
+      "detail": "A expansão registra corretamente a Zona 6."
+    },
+    {
+      "name": "Ponte · portal final",
+      "status": "pass",
+      "detail": "O portal conclui a experiência quando 12 fragmentos foram coletados."
+    },
+    {
+      "name": "Ponte · coyote time",
+      "status": "pass",
+      "detail": "O salto de borda é aceito dentro da janela de tolerância."
+    },
+    {
+      "name": "Ponte · jump buffer",
+      "status": "pass",
+      "detail": "O salto antecipado é executado após a aterrissagem."
+    },
+    {
+      "name": "Ponte · migração de save",
+      "status": "pass",
+      "detail": "Saves schema 1 são migrados para o novo estado físico schema 2."
+    }
+  ]
+}

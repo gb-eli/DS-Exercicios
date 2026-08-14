@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "collection": "consoles",
+  "items": [
+    "atari-2600",
+    "nes",
+    "mega-drive",
+    "playstation-family",
+    "xbox-family",
+    "game-boy-switch"
+  ]
+}
