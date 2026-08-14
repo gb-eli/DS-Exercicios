@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Prévia de caminhos e circuitos no Puzzle Forge DS">
-<rect width="960" height="540" fill="#050914"/><text x="56" y="62" fill="#49e7ff" font-family="monospace" font-weight="700" font-size="22">PUZZLE FORGE DS · CAMINHOS ROTATIVOS</text>
-<g transform="translate(85 100)">
-<rect width="360" height="360" rx="18" fill="#07172a" stroke="#1d4162" stroke-width="3"/>
-<g stroke="#49e7ff" stroke-width="13" stroke-linecap="round"><path d="M36 36h56"/><path d="M108 36v56"/><path d="M180 36h56"/><path d="M252 36v56"/><path d="M324 36v56"/><path d="M36 108v56"/><path d="M108 108h56"/><path d="M180 108v56"/><path d="M252 108h56"/><path d="M324 108v56"/><path d="M36 180h56"/><path d="M108 180v56"/><path d="M180 180h56"/><path d="M252 180v56"/><path d="M324 180h0"/><path d="M36 252v56"/><path d="M108 252h56"/><path d="M180 252v56"/><path d="M252 252h56"/><path d="M324 252v56"/><path d="M36 324h56"/><path d="M108 324v0"/><path d="M180 324h56"/><path d="M252 324h56"/><path d="M324 324h0"/></g>
-</g>
-<g transform="translate(525 114)"><text x="0" y="0" fill="#f6fbff" font-family="Arial" font-weight="900" font-size="32">Matriz 5 × 5</text><text x="0" y="48" fill="#a9bdd8" font-family="Arial" font-size="21">Gire cada peça em 90°</text><text x="0" y="84" fill="#a9bdd8" font-family="Arial" font-size="21">e conecte o núcleo à saída.</text><rect x="0" y="132" width="330" height="112" rx="18" fill="#101a2d" stroke="#a46fff"/><text x="24" y="176" fill="#a46fff" font-family="monospace" font-weight="700" font-size="19">LÓGICA</text><text x="24" y="210" fill="#dce8f7" font-family="Arial" font-size="18">orientação + estado + validação</text></g>
-</svg>
