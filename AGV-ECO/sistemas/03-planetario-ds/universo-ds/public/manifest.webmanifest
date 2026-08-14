@@ -1,0 +1,19 @@
+{
+  "name": "COSMOS DS — Universo, Tecnologia e Programação",
+  "short_name": "COSMOS DS",
+  "description": "Plataforma espacial imersiva com exploração 3D/360°, curiosidades verificadas, missões, tecnologia, sensores e programação.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
