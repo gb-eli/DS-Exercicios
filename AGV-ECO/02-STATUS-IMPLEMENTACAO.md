@@ -112,3 +112,11 @@ Nenhuma plataforma pode cair silenciosamente para saldo/XP local quando `authori
 - câmera em terceira pessoa com offset de ombro, entrada cinematográfica e FOV dinâmico ao correr;
 - HUD mais discreto com retículo, banner transitório de área e loading cinematográfico;
 - segurança permanece fora do renderer: `lobby3d.js` não acessa Supabase nem dados pedagógicos; presença segue por Edge Function.
+
+
+## v11.5.1 / P5.1.1 — Hotfix de entrada no Lobby
+- Corrigida CSP que bloqueava o import do SDK Supabase no Lobby 3D.
+- `script-src` continua restrito a `self` + `https://cdn.jsdelivr.net`.
+- SDK Supabase permanece fixado em `2.111.0`.
+- Adicionado `lobby/assets/boot.js` para exibir erro de inicialização em vez de deixar a interface sem resposta.
+- Sem alteração de banco, RLS ou Edge Functions.

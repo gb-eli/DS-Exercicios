@@ -102,3 +102,10 @@ O alerta anterior `authenticated_security_definer_function_executable` para `cla
 - `lobby.js` continua sem escrita direta em `lobby_presence`; presença/emotes passam por Edge Function.
 - Não há nova migration de banco nesta versão.
 - A validação visual automatizada por screenshot local ficou limitada pela política do Chromium do ambiente, que bloqueia endereços locais; a entrega foi validada por testes estruturais, sintaxe, JSON, integridade e comparação de pacote.
+
+
+### Hotfix v11.5.1
+- [x] CSP permite o domínio fixo do SDK Supabase usado por `lobby/assets/supabase.js`.
+- [x] `boot.js` captura falha de import e mostra mensagem visível.
+- [x] Lobby 0.3.2.
+- [x] Todas as suítes `core/tests/*.test.mjs` passam após atualização dos testes de versão.

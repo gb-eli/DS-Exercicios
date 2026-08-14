@@ -2,6 +2,8 @@
 01-PROMPT-IMPLEMENTACAO-OUTRO-CHAT.md
 02-STATUS-IMPLEMENTACAO.md
 P5.1-CAMPUS-3D-CINEMATIC-v11.5.md
+P5.1.1-HOTFIX-ENTRADA-LOBBY-v11.5.1.md
+PACKAGE_CONTENTS.txt
 SOURCE_ARCHIVES.sha256
 VALIDACAO-DO-PACOTE.md
 admin/README.md
@@ -121,6 +123,7 @@ core/tests/p4-lobby-staff-v11.1.test.mjs
 core/tests/p4-lobby-v11.test.mjs
 core/tests/p5-lobby-3d-v11.4.test.mjs
 core/tests/p5-lobby-3d-v11.5.test.mjs
+core/tests/p5-lobby-boot-hotfix-v11.5.1.test.mjs
 core/tests/security-hardening-p43.test.mjs
 core/tests/teacher-mode.test.mjs
 core/tools/build-lab-exercises-catalog.mjs
@@ -178,6 +181,7 @@ docs/VERIFICACAO-LOJA-VIRTUAL.json
 index.html
 integracoes/README.md
 integracoes/exercicios-praticos-ds-v0.14.1-P3.zip
+lobby/assets/boot.js
 lobby/assets/config.js
 lobby/assets/lobby.css
 lobby/assets/lobby.js
@@ -1069,6 +1073,7 @@ release-v11.1.json
 release-v11.2.json
 release-v11.3.json
 release-v11.4.json
+release-v11.5.1.json
 release-v11.5.json
 release-v11.json
 release-v6.json
