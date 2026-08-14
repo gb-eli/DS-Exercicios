@@ -1,0 +1,49 @@
+{
+  "version": "0.9.5",
+  "renderer": "DS_WEBGL_RENDERER_2",
+  "productPreview": "DS_PRODUCT_360_1",
+  "adaptiveManager": "DS_PERFORMANCE_MANAGER_2",
+  "modeContract": "config/graphics-modes.config.json",
+  "features": {
+    "realTimeProduct360": true,
+    "dynamicResolution": true,
+    "adaptiveParticles": true,
+    "advancedLighting": true,
+    "rimLighting": true,
+    "holographicBackdrop": true,
+    "fpsTelemetry": true,
+    "gpuDiagnostics": true,
+    "lazyModels": true,
+    "officialModeScenes": true,
+    "areaQualityPolicies": true
+  },
+  "officialModes": [
+    "basic",
+    "intermediate",
+    "advanced",
+    "ultra",
+    "realism"
+  ],
+  "realism": {
+    "label": "Modo Realismo",
+    "shortLabel": "Realismo",
+    "intent": "Apresentação cinematográfica",
+    "recommendedFor": "Perfil, fotografia e desfile em computadores potentes",
+    "targetFps": 45,
+    "minFps": 30,
+    "pixelRatioMax": 2.5,
+    "textureMax": 4096,
+    "particleBudget": 2200,
+    "shadowMap": 4096,
+    "postFx": true,
+    "reflection": true,
+    "lod": "lod0",
+    "modelCacheMb": 768,
+    "scene": "Estúdio Realismo Cinematográfico",
+    "materialLevel": "PBR cinematográfico",
+    "preview": "Assets máximos sob demanda",
+    "lighting": "Iluminação volumétrica simulada",
+    "downloadPolicy": "explicit",
+    "description": "Prioriza realismo, profundidade, materiais e apresentação. Pode reduzir FPS e é ativado somente por solicitação."
+  }
+}

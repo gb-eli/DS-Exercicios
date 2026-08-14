@@ -1,0 +1,50 @@
+{
+  "version": "0.9.5.1",
+  "profiles": {
+    "github-pages-runtime": {
+      "includeRoots": [
+        "index.html",
+        "404.html",
+        ".nojekyll",
+        "sw.js",
+        "manifest.json",
+        "VERSION",
+        "README.md",
+        "CHANGELOG.md",
+        "demo",
+        "dist",
+        "assets",
+        "catalog",
+        "config",
+        "packs"
+      ],
+      "exclude": [
+        "assets/concepts/**",
+        "assets/previews/**",
+        "dev/**",
+        "docs/**",
+        "reports/**",
+        "tests/**",
+        "src/**",
+        "examples/**",
+        "lab/**",
+        "schemas/**",
+        "preview-*.png",
+        "SHA256SUMS.txt"
+      ],
+      "purpose": "Aplicação executável, sem histórico, concept art, testes ou fontes de desenvolvimento."
+    },
+    "development-full": {
+      "includeRoots": [
+        "**"
+      ],
+      "exclude": [],
+      "purpose": "Projeto completo com fontes, testes, relatórios, documentação e arquivos mestres."
+    }
+  },
+  "runtimeRules": {
+    "noHistoricalPreviewReferences": true,
+    "noConceptArtReferences": true,
+    "noDevelopmentPackInManager": true
+  }
+}

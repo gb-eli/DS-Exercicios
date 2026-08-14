@@ -1,0 +1,17 @@
+{
+  "id": "vfx-neon-glitch",
+  "name": "Glitch Neon Controlado",
+  "type": "glitch",
+  "category": "screen",
+  "rarity": "epic",
+  "price": 3000,
+  "durationMs": 4200,
+  "loop": false,
+  "colors": [
+    "#2ad7ff",
+    "#ff4fb8",
+    "#9a67ff"
+  ],
+  "pack": "vfx-screen-tech",
+  "description": "Distorção digital controlada com scanlines e blocos neon."
+}
