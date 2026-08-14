@@ -1,0 +1,13 @@
+{
+  "name": "CTF DS — Cyber Security Lab",
+  "short_name": "CTF DS",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05090d",
+  "theme_color": "#05090d",
+  "description": "Laboratório educacional gamificado de cibersegurança.",
+  "icons": [
+    { "src": "./assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

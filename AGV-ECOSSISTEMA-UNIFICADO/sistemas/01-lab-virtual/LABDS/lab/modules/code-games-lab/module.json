@@ -1,0 +1,15 @@
+{
+  "id": "code-games-lab",
+  "name": "Simuladores Interativos DS",
+  "version": "4.15.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/code-games-lab/index.js"
+  ],
+  "styles": [
+    "modules/code-games-lab/styles.css"
+  ],
+  "bundles": []
+}

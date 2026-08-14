@@ -1,0 +1,6 @@
+{
+  "policy": "Nomes individuais somente após revisão e autorização do professor.",
+  "defaultDisplay": "group",
+  "groups": ["1º DS", "2º DS", "3º DS", "Técnico Subsequente noturno", "Professores colaboradores"],
+  "contributors": []
+}
