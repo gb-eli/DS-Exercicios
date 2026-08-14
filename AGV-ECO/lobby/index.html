@@ -2,37 +2,67 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="color-scheme" content="dark">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
-  <title>AGV — Lobby DS</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>AGV — Campus DS 3D</title>
   <link rel="stylesheet" href="assets/lobby.css">
 </head>
 <body>
   <section id="login" class="login-shell">
     <article class="login-card">
+      <div class="login-mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <p class="eyebrow">AGV Education Core</p>
-      <h1>Lobby DS</h1>
-      <p class="muted">Entre no campus virtual. Você pode circular pelas quatro áreas; as atividades só abrem quando o professor liberar.</p>
+      <h1>Campus DS <em>3D</em></h1>
+      <p class="muted">Entre no campus virtual, caminhe pela praça, visite as quatro áreas e encontre sua turma. Atividades continuam protegidas pela liberação do professor.</p>
+      <div class="login-features" aria-label="Recursos"><span>360°</span><span>Avatares</span><span>Multiplayer</span><span>Moderação</span></div>
       <form id="login-form" class="stack">
         <label>E-mail institucional<input id="email" type="email" autocomplete="username" required placeholder="aluno@escola.pr.gov.br"></label>
         <label>Senha <small>no primeiro acesso do aluno, use o CGM</small><input id="password" type="password" autocomplete="current-password" required></label>
-        <button class="primary" type="submit">Entrar no lobby</button>
+        <button class="primary" type="submit">Entrar no campus 3D</button>
       </form>
       <p id="login-message" class="message" aria-live="polite"></p>
     </article>
   </section>
 
   <main id="game-shell" class="game-shell hidden">
-    <header class="hud-top">
-      <div><p class="eyebrow">Lobby Geral</p><strong id="player-name">Aluno</strong><span id="player-class" class="chip">—</span><span id="staff-mode" class="chip staff-chip hidden">Modo equipe</span></div>
-      <div class="hud-status"><span id="area-label">Praça Central</span><span id="online-count" class="chip">1 online</span><button id="logout" class="ghost" type="button">Sair</button></div>
-    </header>
+    <section class="game-stage" aria-label="Campus virtual 3D">
+      <canvas id="game3d" aria-label="Campus virtual 3D com câmera em terceira pessoa"></canvas>
+      <div class="cinematic-frame" aria-hidden="true"></div>
+      <div id="loading3d" class="loading3d"><div class="loading-orbit" aria-hidden="true"><span></span><span></span><span></span></div><strong>Entrando no Campus DS</strong><small>Preparando cenário 3D, avatares e presença online…</small></div>
+      <div id="zone-banner" class="zone-banner hidden" aria-live="polite"><span>Você entrou em</span><strong id="zone-banner-title">Praça Central</strong></div>
+      <div id="reticle" class="reticle" aria-hidden="true"><span></span></div>
 
-    <section class="game-stage">
-      <canvas id="game" width="1600" height="1000" aria-label="Lobby virtual com quatro áreas de turma"></canvas>
-      <div id="interaction" class="interaction hidden"><strong id="interaction-title"></strong><span id="interaction-text"></span><button id="interaction-button" class="primary" type="button">Interagir</button></div>
-      <div id="toast" class="toast hidden" aria-live="polite"></div>
+      <header class="hud-top">
+        <div class="identity-card glass">
+          <div class="avatar-dot" aria-hidden="true"></div>
+          <div class="identity-copy"><p class="eyebrow">Lobby Geral • 3D</p><strong id="player-name">Usuário</strong><div class="identity-meta"><span id="player-class" class="chip">—</span><span id="staff-mode" class="chip staff-chip hidden">Modo equipe</span></div></div>
+        </div>
+        <div class="world-status glass">
+          <span id="area-label">Praça Central</span><span id="online-count" class="chip">1 online</span>
+          <button id="quality-button" class="hud-button" type="button" title="Alternar qualidade gráfica">Médio</button>
+          <button id="logout" class="hud-button" type="button">Sair</button>
+        </div>
+      </header>
+
+      <aside class="desktop-controls glass" aria-label="Controles de teclado"><strong>Explorar</strong><span>WASD</span><span>Mouse 360°</span><span>Shift correr</span><span>Espaço pular</span><span>E interagir</span></aside>
+
+      <div id="interaction" class="interaction hidden glass"><div><strong id="interaction-title"></strong><span id="interaction-text"></span></div><button id="interaction-button" class="primary" type="button">Interagir</button></div>
+      <div id="toast" class="toast hidden glass" aria-live="polite"></div>
+
+      <div class="mobile-controls" aria-label="Controles de toque">
+        <div id="move-joystick" class="joystick" aria-label="Movimento"><span class="joystick-ring"></span><span id="move-stick" class="joystick-stick"></span></div>
+        <div class="mobile-actions">
+          <button id="run-button" class="round-action run" type="button" aria-label="Correr">⚡</button>
+          <button id="jump-button" class="round-action jump" type="button" aria-label="Pular">↥</button>
+          <button id="touch-action" class="round-action interact-btn" type="button" aria-label="Interagir">E</button>
+        </div>
+      </div>
+
+      <div class="quick-actions glass" aria-label="Ações rápidas">
+        <button data-emote="wave" type="button" title="Acenar">👋</button><button data-emote="like" type="button" title="Positivo">👍</button><button data-emote="spark" type="button" title="Destacar">✨</button><button id="staff-moderation" class="staff-moderation-btn hidden" type="button" title="Moderação do Lobby" aria-label="Abrir moderação do Lobby">🛡️</button>
+      </div>
+
       <div id="staff-student-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="student-name">
         <div class="modal-card staff-action-card">
           <button id="staff-student-close" class="modal-close" type="button" aria-label="Fechar">×</button>
@@ -41,33 +71,25 @@
           <div class="moderation-box"><strong>Moderação do Lobby</strong><p class="muted">Professor só pode remover alunos das turmas sob sua responsabilidade. Administradores têm escopo global.</p><label>Motivo<input id="kick-reason" maxlength="300" placeholder="Ex.: comportamento inadequado no Lobby"></label><label>Tempo fora<select id="kick-duration"><option value="5">5 minutos</option><option value="15" selected>15 minutos</option><option value="30">30 minutos</option><option value="60">1 hora</option><option value="120">2 horas</option></select></label><button id="kick-student" class="danger" type="button">Expulsar do Lobby</button></div>
         </div>
       </div>
+
       <div id="staff-moderation-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="moderation-title">
         <div class="modal-card moderation-list-card">
           <button id="staff-moderation-close" class="modal-close" type="button" aria-label="Fechar">×</button>
           <p class="eyebrow">Equipe • Lobby</p><h2 id="moderation-title">Expulsões ativas</h2>
-          <p class="muted">Veja quem está temporariamente fora do Lobby. Professores visualizam apenas alunos de suas turmas; administradores têm visão global.</p>
+          <p class="muted">Professores visualizam apenas alunos de suas turmas; administradores têm visão global.</p>
           <div id="moderation-list" class="moderation-list"><p class="muted">Carregando…</p></div>
         </div>
       </div>
+
       <div id="activity-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="activity-title">
         <div class="modal-card">
           <button id="activity-close" class="modal-close" type="button" aria-label="Fechar">×</button>
-          <p class="eyebrow">Portal de Atividades</p>
-          <h2 id="activity-title">Atividades liberadas</h2>
-          <p id="activity-subtitle" class="muted"></p>
-          <div id="activity-list" class="activity-list"></div>
+          <p class="eyebrow">Portal de Atividades</p><h2 id="activity-title">Atividades liberadas</h2><p id="activity-subtitle" class="muted"></p><div id="activity-list" class="activity-list"></div>
         </div>
       </div>
     </section>
-
-    <footer class="hud-bottom">
-      <div class="help"><strong>Movimento</strong><span>WASD / setas</span><strong>Interagir</strong><span>E ou Enter</span><strong>Emote</strong><span>1 👋 · 2 👍 · 3 ✨</span></div>
-      <div class="emotes"><button data-emote="wave" type="button">👋</button><button data-emote="like" type="button">👍</button><button data-emote="spark" type="button">✨</button><button id="staff-moderation" class="staff-moderation-btn hidden" type="button" title="Moderação do Lobby" aria-label="Abrir moderação do Lobby">🛡️</button></div>
-      <div class="touch-controls" aria-label="Controles de toque">
-        <button data-key="ArrowUp" type="button">▲</button><div><button data-key="ArrowLeft" type="button">◀</button><button id="touch-action" type="button">E</button><button data-key="ArrowRight" type="button">▶</button></div><button data-key="ArrowDown" type="button">▼</button>
-      </div>
-    </footer>
   </main>
+
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
   <script type="module" src="assets/lobby.js"></script>
 </body>

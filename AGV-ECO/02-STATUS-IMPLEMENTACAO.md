@@ -1,8 +1,8 @@
 # STATUS DE IMPLEMENTAÇÃO — AGV EDUCATION CORE
 
 **Data:** 14/08/2026  
-**Pacote-base:** v2 → v3 Fase 0/P0 → v4/v5 CTF → v6/v7 LAB → v8–v10 Exercícios/Admin → **v11.2 P4.2 Lobby Geral + Equipe + Moderação**  
-**Estado:** Core central ativo + Lobby Geral P4.2 integrado + autoridade pedagógica server-side + moderação da presença social da equipe.
+**Pacote-base:** v2 → v3 Fase 0/P0 → v4/v5 CTF → v6/v7 LAB → v8–v10 Exercícios/Admin → **v11.3 P4.3 Security Hardening**  
+**Estado:** Core central ativo + Lobby Geral P4.3 integrado + autoridade pedagógica server-side + moderação + telemetria de segurança/IP + rate limiting server-side.
 
 ## Concluído
 
@@ -67,7 +67,7 @@
 - resolver versão LAB manifesto 4.28.0 × runtime 4.21.0;
 - habilitar Leaked Password Protection no Supabase Auth.
 
-### Lobby P4.2
+### Lobby P4.3
 
 - professor/admin circulam no Lobby junto com os alunos;
 - interações continuam limitadas a emotes, sem chat livre;
@@ -79,3 +79,36 @@
 ## Regra operacional
 
 Nenhuma plataforma pode cair silenciosamente para saldo/XP local quando `authority=agv-core`. Conteúdo Professor nunca pode ser enviado ao aluno apenas “escondido” no frontend; deve permanecer no backend protegido.
+
+
+### Security Hardening P4.3
+
+- 38/38 tabelas públicas com RLS após a migration 029.
+- `authenticated` sem TRUNCATE/TRIGGER/REFERENCES; Lobby e catálogo sem escrita direta indevida.
+- IP/UF/cidade/ASN registrados server-side em eventos de segurança; fora do Paraná = CRÍTICO para revisão.
+- Rate limiting por usuário+IP nas rotas sensíveis; proteção econômica CTF/Lab Virtual reforçada.
+- Retenção de telemetria: 180 dias; cache de geolocalização minimizado e sem JSON bruto.
+
+### Lobby P5.0 — 3D/360 (v11.4)
+
+- Lobby migrado de canvas 2D para Three.js/WebGL em terceira pessoa;
+- câmera 360°, caminhada, corrida, pulo e interação por proximidade;
+- joystick e ações mobile;
+- avatares humanoides procedurais com animação e emotes;
+- quatro ambientes/portais 3D e praça central animada;
+- interpolação visual dos participantes online;
+- Three.js r180 vendorizado localmente;
+- modos gráficos Eco/Médio/Alto;
+- segurança P4.3 preservada: browser sem escrita direta em `lobby_presence`, presença por Edge Function, IP/rate limit/telemetria e fora do Paraná = CRÍTICO quando a geolocalização é conclusiva.
+
+### Lobby P5.1 — Campus 3D Cinematic (v11.5)
+
+- direção artística revisada para campus futurista com maior profundidade e menos aparência de protótipo;
+- céu procedural em gradiente, névoa, iluminação fria/quente e vinheta cinematográfica;
+- praça pavimentada com fonte, beacon holográfico, árvores, bancos, postes, jardineiras e muros baixos;
+- quatro edifícios com fachadas de vidro, estrutura metálica, cobertura e identidade visual por turma;
+- portais energizados com partículas e animações próprias;
+- avatares com CapsuleGeometry, proporções revisadas, variação determinística de pele/cabelo e identificação de equipe;
+- câmera em terceira pessoa com offset de ombro, entrada cinematográfica e FOV dinâmico ao correr;
+- HUD mais discreto com retículo, banner transitório de área e loading cinematográfico;
+- segurança permanece fora do renderer: `lobby3d.js` não acessa Supabase nem dados pedagógicos; presença segue por Edge Function.
