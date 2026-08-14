@@ -1,0 +1,23 @@
+{
+  "name": "Plataforma 3DS — Programação no Desenvolvimento de Sistemas — Aluno",
+  "mode": "aluno",
+  "version": "0.11.0",
+  "channel": "desenvolvimento",
+  "releasedAt": "2026-08-07T12:03:00-03:00",
+  "exercisesFrom": 1,
+  "exercisesTo": 8,
+  "notes": [
+    "Modelo de experiência da Plataforma 2DS Front-End v0.5.29 aplicado à arquitetura do 3DS sem copiar exercícios.",
+    "Página inicial clean separada da página Atividades.",
+    "Cards com pesquisa, filtros, status, nível, tempo estimado e progresso.",
+    "Navegação por hash: home, activities e exercise-XX.",
+    "Modo VS Code reorganizado com Preview, Console, Terminal e Problemas em abas.",
+    "Checkpoints reais de código, execução, interação e validação.",
+    "Referência integral mantida ao lado do editor sem botão de copiar solução completa.",
+    "Evidência verificável e autocompletar progressivo do 3DS preservados.",
+    "Revisão cumulativa dos Exercícios 01 a 08, mantendo códigos, prints e Classroom anteriores."
+  ],
+  "lastExercise": 8,
+  "updatedAt": "2026-08-07",
+  "releaseType": "model-2ds-experience-port"
+}
