@@ -1,0 +1,883 @@
+{
+  "schema": "cosmos-ds-premium-assets-v2",
+  "version": "18.0.0",
+  "generatedAt": "2026-08-04T04:10:00-03:00",
+  "policy": {
+    "shipping": "GLB/glTF 2.0",
+    "lod": "0=performance, 1=balanced, 2=experience",
+    "textures": "WebP fallback with future KTX2 slot",
+    "environments": "Radiance HDR RGBE",
+    "animations": "glTF animation channels with named nodes",
+    "colliders": "node extras with simplified collider metadata",
+    "tiers": "basic, hd and ultra-ready",
+    "interactions": "named node interaction points"
+  },
+  "assets": [
+    {
+      "id": "rocket",
+      "title": "Foguete orbital",
+      "category": "Lançamento",
+      "description": "Modelo GLB modular de foguete orbital com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/metal-white.webp",
+      "roughnessTexture": "./public/assets/premium/textures/metal-white-roughness.webp",
+      "environment": "sky-orbit",
+      "metalness": 0.72,
+      "roughness": 0.65,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/rocket-lod0.glb",
+          "bytes": 27588,
+          "triangles": 192,
+          "vertices": 329,
+          "animations": [
+            "idle",
+            "stage-separation",
+            "gimbal-1",
+            "gimbal-2",
+            "gimbal-3",
+            "gimbal-4"
+          ],
+          "parts": 11
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/rocket-lod1.glb",
+          "bytes": 35828,
+          "triangles": 300,
+          "vertices": 497,
+          "animations": [
+            "idle",
+            "stage-separation",
+            "gimbal-1",
+            "gimbal-2",
+            "gimbal-3",
+            "gimbal-4"
+          ],
+          "parts": 11
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/rocket-lod2.glb",
+          "bytes": 46548,
+          "triangles": 444,
+          "vertices": 721,
+          "animations": [
+            "idle",
+            "stage-separation",
+            "gimbal-1",
+            "gimbal-2",
+            "gimbal-3",
+            "gimbal-4"
+          ],
+          "parts": 11
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 2,
+          "name": "UpperStage",
+          "action": "stage-separation"
+        },
+        {
+          "node": 4,
+          "name": "Engine1",
+          "action": "engine-gimbal"
+        },
+        {
+          "node": 5,
+          "name": "Engine2",
+          "action": "engine-gimbal"
+        },
+        {
+          "node": 6,
+          "name": "Engine3",
+          "action": "engine-gimbal"
+        },
+        {
+          "node": 7,
+          "name": "Engine4",
+          "action": "engine-gimbal"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "Core",
+          "type": "capsule",
+          "radius": 0.46,
+          "height": 3.6
+        }
+      ],
+      "animations": [
+        "idle",
+        "stage-separation",
+        "gimbal-1",
+        "gimbal-2",
+        "gimbal-3",
+        "gimbal-4"
+      ],
+      "parts": 11
+    },
+    {
+      "id": "shuttle",
+      "title": "Ônibus espacial",
+      "category": "Veículos tripulados",
+      "description": "Modelo GLB modular de ônibus espacial com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/thermal-white.webp",
+      "roughnessTexture": "./public/assets/premium/textures/thermal-white-roughness.webp",
+      "environment": "sky-orbit",
+      "metalness": 0.58,
+      "roughness": 0.74,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/shuttle-lod0.glb",
+          "bytes": 21960,
+          "triangles": 172,
+          "vertices": 255,
+          "animations": [
+            "cargo-bay",
+            "landing-gear"
+          ],
+          "parts": 9
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/shuttle-lod1.glb",
+          "bytes": 26932,
+          "triangles": 256,
+          "vertices": 351,
+          "animations": [
+            "cargo-bay",
+            "landing-gear"
+          ],
+          "parts": 9
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/shuttle-lod2.glb",
+          "bytes": 33416,
+          "triangles": 368,
+          "vertices": 479,
+          "animations": [
+            "cargo-bay",
+            "landing-gear"
+          ],
+          "parts": 9
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 5,
+          "name": "CargoDoorLeft",
+          "action": "cargo-bay"
+        },
+        {
+          "node": 6,
+          "name": "CargoDoorRight",
+          "action": "cargo-bay"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "Orbiter",
+          "type": "box",
+          "size": [
+            1.05,
+            0.65,
+            3.2
+          ]
+        }
+      ],
+      "animations": [
+        "cargo-bay",
+        "landing-gear"
+      ],
+      "parts": 9
+    },
+    {
+      "id": "capsule",
+      "title": "Cápsula tripulada",
+      "category": "Veículos tripulados",
+      "description": "Modelo GLB modular de cápsula tripulada com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/thermal-white.webp",
+      "roughnessTexture": "./public/assets/premium/textures/thermal-white-roughness.webp",
+      "environment": "studio-blue",
+      "metalness": 0.48,
+      "roughness": 0.62,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/capsule-lod0.glb",
+          "bytes": 12828,
+          "triangles": 104,
+          "vertices": 149,
+          "animations": [
+            "hatch",
+            "solar-deploy"
+          ],
+          "parts": 5
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/capsule-lod1.glb",
+          "bytes": 16532,
+          "triangles": 164,
+          "vertices": 221,
+          "animations": [
+            "hatch",
+            "solar-deploy"
+          ],
+          "parts": 5
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/capsule-lod2.glb",
+          "bytes": 21348,
+          "triangles": 244,
+          "vertices": 317,
+          "animations": [
+            "hatch",
+            "solar-deploy"
+          ],
+          "parts": 5
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 2,
+          "name": "DockingRing",
+          "action": "docking-ring"
+        },
+        {
+          "node": 3,
+          "name": "Hatch",
+          "action": "hatch"
+        },
+        {
+          "node": 4,
+          "name": "SolarPanel",
+          "action": "solar-deploy"
+        },
+        {
+          "node": 5,
+          "name": "SolarPanel",
+          "action": "solar-deploy"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "PressureVessel",
+          "type": "cone",
+          "radius": 0.9,
+          "height": 1.6
+        }
+      ],
+      "animations": [
+        "hatch",
+        "solar-deploy"
+      ],
+      "parts": 5
+    },
+    {
+      "id": "rover",
+      "title": "Rover científico",
+      "category": "Robótica",
+      "description": "Modelo GLB modular de rover científico com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/mars-dust.webp",
+      "roughnessTexture": "./public/assets/premium/textures/mars-dust-roughness.webp",
+      "environment": "mars-hangar",
+      "metalness": 0.32,
+      "roughness": 0.38,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/rover-lod0.glb",
+          "bytes": 35348,
+          "triangles": 392,
+          "vertices": 408,
+          "animations": [
+            "drive",
+            "arm-sample",
+            "mast-pan"
+          ],
+          "parts": 12
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/rover-lod1.glb",
+          "bytes": 51804,
+          "triangles": 752,
+          "vertices": 705,
+          "animations": [
+            "drive",
+            "arm-sample",
+            "mast-pan"
+          ],
+          "parts": 12
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/rover-lod2.glb",
+          "bytes": 77024,
+          "triangles": 1344,
+          "vertices": 1157,
+          "animations": [
+            "drive",
+            "arm-sample",
+            "mast-pan"
+          ],
+          "parts": 12
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 2,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 3,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 4,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 5,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 6,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 7,
+          "name": "Wheel",
+          "action": "wheel"
+        },
+        {
+          "node": 9,
+          "name": "CameraHead",
+          "action": "mast-camera"
+        },
+        {
+          "node": 10,
+          "name": "ArmShoulder",
+          "action": "robotic-arm"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "Chassis",
+          "type": "box",
+          "size": [
+            2,
+            0.45,
+            1.4
+          ]
+        },
+        {
+          "node": 2,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        },
+        {
+          "node": 3,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        },
+        {
+          "node": 4,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        },
+        {
+          "node": 5,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        },
+        {
+          "node": 6,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        },
+        {
+          "node": 7,
+          "name": "Wheel",
+          "type": "cylinder",
+          "radius": 0.27,
+          "height": 0.18
+        }
+      ],
+      "animations": [
+        "drive",
+        "arm-sample",
+        "mast-pan"
+      ],
+      "parts": 12
+    },
+    {
+      "id": "satellite",
+      "title": "Satélite de observação",
+      "category": "Satélites",
+      "description": "Modelo GLB modular de satélite de observação com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/solar-metal.webp",
+      "roughnessTexture": "./public/assets/premium/textures/solar-metal-roughness.webp",
+      "environment": "sky-orbit",
+      "metalness": 0.78,
+      "roughness": 0.42,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/satellite-lod0.glb",
+          "bytes": 9580,
+          "triangles": 52,
+          "vertices": 105,
+          "animations": [
+            "deploy",
+            "scan"
+          ],
+          "parts": 4
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/satellite-lod1.glb",
+          "bytes": 10712,
+          "triangles": 64,
+          "vertices": 129,
+          "animations": [
+            "deploy",
+            "scan"
+          ],
+          "parts": 4
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/satellite-lod2.glb",
+          "bytes": 12188,
+          "triangles": 80,
+          "vertices": 161,
+          "animations": [
+            "deploy",
+            "scan"
+          ],
+          "parts": 4
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 2,
+          "name": "PanelLeft",
+          "action": "solar-panel"
+        },
+        {
+          "node": 3,
+          "name": "PanelRight",
+          "action": "solar-panel"
+        },
+        {
+          "node": 4,
+          "name": "Dish",
+          "action": "antenna"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "Bus",
+          "type": "box",
+          "size": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "animations": [
+        "deploy",
+        "scan"
+      ],
+      "parts": 4
+    },
+    {
+      "id": "station",
+      "title": "Estação modular",
+      "category": "Infraestrutura orbital",
+      "description": "Modelo GLB modular de estação modular com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/solar-metal.webp",
+      "roughnessTexture": "./public/assets/premium/textures/solar-metal-roughness.webp",
+      "environment": "sky-orbit",
+      "metalness": 0.76,
+      "roughness": 0.46,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/station-lod0.glb",
+          "bytes": 24132,
+          "triangles": 236,
+          "vertices": 276,
+          "animations": [
+            "solar-track",
+            "arm-capture"
+          ],
+          "parts": 9
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/station-lod1.glb",
+          "bytes": 32916,
+          "triangles": 452,
+          "vertices": 429,
+          "animations": [
+            "solar-track",
+            "arm-capture"
+          ],
+          "parts": 9
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/station-lod2.glb",
+          "bytes": 48136,
+          "triangles": 852,
+          "vertices": 689,
+          "animations": [
+            "solar-track",
+            "arm-capture"
+          ],
+          "parts": 9
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 3,
+          "name": "SolarArray",
+          "action": "solar-track"
+        },
+        {
+          "node": 4,
+          "name": "SolarArray",
+          "action": "solar-track"
+        },
+        {
+          "node": 5,
+          "name": "SolarArray",
+          "action": "solar-track"
+        },
+        {
+          "node": 6,
+          "name": "SolarArray",
+          "action": "solar-track"
+        },
+        {
+          "node": 7,
+          "name": "ArmBase",
+          "action": "robotic-arm"
+        },
+        {
+          "node": 9,
+          "name": "Cupola",
+          "action": "cupola"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "CoreModule",
+          "type": "capsule",
+          "radius": 0.55,
+          "height": 3.2
+        }
+      ],
+      "animations": [
+        "solar-track",
+        "arm-capture"
+      ],
+      "parts": 9
+    },
+    {
+      "id": "lander",
+      "title": "Módulo lunar",
+      "category": "Exploração lunar",
+      "description": "Modelo GLB modular de módulo lunar com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/lunar-gold.webp",
+      "roughnessTexture": "./public/assets/premium/textures/lunar-gold-roughness.webp",
+      "environment": "lunar-hangar",
+      "metalness": 0.64,
+      "roughness": 0.52,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/lander-lod0.glb",
+          "bytes": 20308,
+          "triangles": 176,
+          "vertices": 232,
+          "animations": [
+            "gear-deploy",
+            "hatch"
+          ],
+          "parts": 8
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/lander-lod1.glb",
+          "bytes": 25432,
+          "triangles": 272,
+          "vertices": 328,
+          "animations": [
+            "gear-deploy",
+            "hatch"
+          ],
+          "parts": 8
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/lander-lod2.glb",
+          "bytes": 32100,
+          "triangles": 400,
+          "vertices": 456,
+          "animations": [
+            "gear-deploy",
+            "hatch"
+          ],
+          "parts": 8
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 3,
+          "name": "Hatch",
+          "action": "hatch"
+        },
+        {
+          "node": 4,
+          "name": "LandingLeg",
+          "action": "landing-leg"
+        },
+        {
+          "node": 5,
+          "name": "LandingLeg",
+          "action": "landing-leg"
+        },
+        {
+          "node": 6,
+          "name": "LandingLeg",
+          "action": "landing-leg"
+        },
+        {
+          "node": 7,
+          "name": "LandingLeg",
+          "action": "landing-leg"
+        },
+        {
+          "node": 8,
+          "name": "Ladder",
+          "action": "ladder"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "DescentStage",
+          "type": "box",
+          "size": [
+            1.5,
+            0.7,
+            1.5
+          ]
+        }
+      ],
+      "animations": [
+        "gear-deploy",
+        "hatch"
+      ],
+      "parts": 8
+    },
+    {
+      "id": "suit",
+      "title": "Traje EVA",
+      "category": "Sistemas humanos",
+      "description": "Modelo GLB modular de traje eva com três níveis de detalhe.",
+      "texture": "./public/assets/premium/textures/suit-fabric.webp",
+      "roughnessTexture": "./public/assets/premium/textures/suit-fabric-roughness.webp",
+      "environment": "studio-blue",
+      "metalness": 0.18,
+      "roughness": 0.82,
+      "scale": 1.0,
+      "lods": [
+        {
+          "level": 0,
+          "url": "./public/assets/premium/models/suit-lod0.glb",
+          "bytes": 19060,
+          "triangles": 232,
+          "vertices": 238,
+          "animations": [
+            "wave",
+            "point"
+          ],
+          "parts": 7
+        },
+        {
+          "level": 1,
+          "url": "./public/assets/premium/models/suit-lod1.glb",
+          "bytes": 29132,
+          "triangles": 472,
+          "vertices": 415,
+          "animations": [
+            "wave",
+            "point"
+          ],
+          "parts": 7
+        },
+        {
+          "level": 2,
+          "url": "./public/assets/premium/models/suit-lod2.glb",
+          "bytes": 46020,
+          "triangles": 904,
+          "vertices": 707,
+          "animations": [
+            "wave",
+            "point"
+          ],
+          "parts": 7
+        }
+      ],
+      "packageTier": "hd-animated",
+      "interactions": [
+        {
+          "node": 2,
+          "name": "Helmet",
+          "action": "visor"
+        },
+        {
+          "node": 7,
+          "name": "Backpack",
+          "action": "life-support"
+        }
+      ],
+      "colliders": [
+        {
+          "node": 0,
+          "name": "ROOT",
+          "type": "sphere",
+          "radius": 2.5
+        },
+        {
+          "node": 1,
+          "name": "Torso",
+          "type": "capsule",
+          "radius": 0.45,
+          "height": 1.8
+        }
+      ],
+      "animations": [
+        "wave",
+        "point"
+      ],
+      "parts": 7
+    }
+  ],
+  "environments": [
+    {
+      "id": "lunar-hangar",
+      "url": "./public/assets/premium/environments/lunar-hangar.hdr",
+      "bytes": 77
+    },
+    {
+      "id": "mars-hangar",
+      "url": "./public/assets/premium/environments/mars-hangar.hdr",
+      "bytes": 77
+    },
+    {
+      "id": "sky-orbit",
+      "url": "./public/assets/premium/environments/sky-orbit.hdr",
+      "bytes": 77
+    },
+    {
+      "id": "studio-blue",
+      "url": "./public/assets/premium/environments/studio-blue.hdr",
+      "bytes": 77
+    }
+  ],
+  "summary": {
+    "assets": 8,
+    "glbs": 24,
+    "animatedAssets": 8,
+    "totalBytes": 716872
+  }
+}
