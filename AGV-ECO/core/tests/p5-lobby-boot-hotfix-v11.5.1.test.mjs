@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const index=fs.readFileSync(new URL('../../lobby/index.html',import.meta.url),'utf8');
+const supa=fs.readFileSync(new URL('../../lobby/assets/supabase.js',import.meta.url),'utf8');
+const boot=fs.readFileSync(new URL('../../lobby/assets/boot.js',import.meta.url),'utf8');
+const cfg=fs.readFileSync(new URL('../../lobby/assets/config.js',import.meta.url),'utf8');
+assert.match(index,/script-src 'self' https:\/\/cdn\.jsdelivr\.net;/);
+assert.match(index,/assets\/boot\.js/);
+assert.match(supa,/@supabase\/supabase-js@2\.111\.0\/\+esm/);
+assert.match(boot,/import\('\.\/lobby\.js'\)\.catch\(showFatal\)/);
+assert.match(boot,/Não foi possível carregar o Lobby/);
+assert.match(cfg,/LOBBY_VERSION='0\.3\.2'/);
+console.log('PASS p5 lobby boot hotfix v11.5.1');
