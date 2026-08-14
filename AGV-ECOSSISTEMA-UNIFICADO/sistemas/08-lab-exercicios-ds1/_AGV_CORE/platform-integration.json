@@ -1,0 +1,55 @@
+{
+  "platformId": "lab-ds1",
+  "name": "Plataforma 1DS — Central de Disciplinas",
+  "version": "1.12.0",
+  "integrationVersion": "0.8.0-live",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth contract",
+    "economy": "none",
+    "progress": "local per discipline"
+  },
+  "candidateHookFiles": [
+    "core/auth-contract.js",
+    "core/storage.js",
+    "core/central.js",
+    "assets/js/auth.js",
+    "assets/js/app.js"
+  ],
+  "integrationStatus": "p1-central-auth-progress-teacher-review",
+  "capabilitiesLive": {
+    "auth": true,
+    "progress": true,
+    "teacherReview": true,
+    "teacherReference": true,
+    "xp": false,
+    "points": false,
+    "wallet": false,
+    "store": false,
+    "inventory": false,
+    "marketplace": false,
+    "crossPcFileSync": false
+  },
+  "canonicalActivities": 11,
+  "requiredClassCode": "1DS-A-MANHA",
+  "edgeFunctions": {
+    "student": "lab-exercises-core v1",
+    "teacher": "agv-teacher-activity v3"
+  },
+  "analysisValidation": "lab-analysis-validate v1 + database completion guard",
+  "security": {
+    "studentReferenceStripped": true,
+    "teacherAnswersInStudentBundle": false,
+    "economicReward": "no_economic_reward"
+  }
+}
