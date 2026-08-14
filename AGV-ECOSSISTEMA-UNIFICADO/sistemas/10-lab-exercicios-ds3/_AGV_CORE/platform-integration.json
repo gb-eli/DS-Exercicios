@@ -1,0 +1,53 @@
+{
+  "platformId": "lab-ds3",
+  "name": "Plataforma 3DS — Aluno",
+  "version": "0.11.9",
+  "integrationVersion": "0.8.0-live",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth",
+    "economy": "none",
+    "progress": "local exercise progress"
+  },
+  "candidateHookFiles": [
+    "assets/js/auth.js",
+    "assets/js/aluno.js",
+    "assets/js/utils.js",
+    "assets/js/shell.js"
+  ],
+  "integrationStatus": "p1-central-auth-progress-teacher-review",
+  "capabilitiesLive": {
+    "auth": true,
+    "progress": true,
+    "teacherReview": true,
+    "teacherReference": true,
+    "xp": false,
+    "points": false,
+    "wallet": false,
+    "store": false,
+    "inventory": false,
+    "marketplace": false,
+    "crossPcFileSync": false
+  },
+  "canonicalActivities": 8,
+  "requiredClassCode": "3DS-C-MANHA",
+  "edgeFunctions": {
+    "student": "lab-exercises-core v1",
+    "teacher": "agv-teacher-activity v3"
+  },
+  "security": {
+    "studentReferenceStripped": true,
+    "teacherAnswersInStudentBundle": false,
+    "economicReward": "no_economic_reward"
+  }
+}
