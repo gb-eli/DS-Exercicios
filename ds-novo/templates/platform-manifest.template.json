@@ -1,0 +1,17 @@
+{
+  "platformId": "minha-plataforma",
+  "name": "Minha Plataforma",
+  "version": "1.0.0",
+  "integrationVersion": "0.1.0",
+  "activityNamespace": "minha-plataforma",
+  "capabilities": {
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacyStoragePrefixes": []
+}
