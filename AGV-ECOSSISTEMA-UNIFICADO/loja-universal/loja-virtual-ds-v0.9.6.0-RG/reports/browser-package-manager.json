@@ -1,0 +1,19 @@
+{
+  "desktop": {
+    "cards": 8,
+    "overflow": false,
+    "essentialInstalledByDefault": true
+  },
+  "mobile": {
+    "viewport": "390x844",
+    "cards": 8,
+    "overflow": false,
+    "scrollWidth": 390
+  },
+  "functional": {
+    "minimalPackInstall": true,
+    "sha256Verified": true,
+    "cacheCreated": "ds-store-pack-test-pack-v0.9.3"
+  },
+  "limitations": "A política administrativa bloqueou localhost no Chromium; a interface foi validada por injeção integral de HTML/CSS/JS e APIs de cache controladas."
+}

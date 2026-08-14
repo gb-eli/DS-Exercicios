@@ -1,0 +1,500 @@
+{
+  "id": "graphics-essential",
+  "name": "Básico / Essencial",
+  "tier": "essential",
+  "version": "0.9.6.0-RG",
+  "required": true,
+  "autoInstall": true,
+  "description": "Interface, carteira, avatar leve e recursos obrigatórios para o Modo Básico.",
+  "requires": [],
+  "qualityModes": [
+    "basic",
+    "auto"
+  ],
+  "accent": "cyan",
+  "files": [
+    {
+      "path": "../demo/index.html",
+      "bytes": 75487,
+      "sha256": "f59f86522dd627ee3d94d84ec7ee1fcb1c8a853e488f3418932fcbb58e0e7ab6"
+    },
+    {
+      "path": "../demo/app.js",
+      "bytes": 65964,
+      "sha256": "ba246b9075faeaa99dacf9e073344cbe78b6f2cd4afcf66d1fe0724efbf9b3bd"
+    },
+    {
+      "path": "../demo/performance-manager.js",
+      "bytes": 9376,
+      "sha256": "e641eae1d4ee91ef57cff5ed725b24e80a6c3a5ece5bf175572939f211549110"
+    },
+    {
+      "path": "../demo/config-data.js",
+      "bytes": 12750,
+      "sha256": "b7c7bff3a6cfee0774c22c16edf81732b2f3230cf8d10e9db3323a244b767b82"
+    },
+    {
+      "path": "../demo/catalog-data.js",
+      "bytes": 35308,
+      "sha256": "b063db3c7ffc02c7692bf0ad0f86a17052462807a96cd862dc3c110e421a4fe3"
+    },
+    {
+      "path": "../demo/equipment-data.js",
+      "bytes": 16825,
+      "sha256": "7b151a899ea6d0fb560fda0546e2fe000e2c7231eadfd4ee8469d1d4cb6193fb"
+    },
+    {
+      "path": "../demo/vfx-data.js",
+      "bytes": 5957,
+      "sha256": "20e385f2fda4a0ff80bdd14c8e207340c4b1c76d6e09c54510c92a1f3a22f219"
+    },
+    {
+      "path": "../dist/ds-store-foundation.js",
+      "bytes": 24060,
+      "sha256": "deb167f496520632a62a1a90b217c654e131a326a6b37cd2a76d4f34b48b5ff2"
+    },
+    {
+      "path": "../assets/characters/avatar-tech-base.webp",
+      "bytes": 15796,
+      "sha256": "0b3aece50dde277b1fa518ce853fb096d424460cd19f48f5dfebaabf06001441"
+    },
+    {
+      "path": "../catalog/items.json",
+      "bytes": 46937,
+      "sha256": "4dc7babf809a361dd5f4f1f1986814bb08ed873e2d9a6afd402ae7d807c34cac"
+    },
+    {
+      "path": "../catalog/rarities.json",
+      "bytes": 949,
+      "sha256": "3a7b79d8dc05c38670a698b9d5c24e74f9b0365476c3c743384be6dba231259b"
+    },
+    {
+      "path": "../catalog/discounts.json",
+      "bytes": 548,
+      "sha256": "10eb86fb7c81d8997d97bd9782a48188c257d9be1042222aa9fadf9ee213079a"
+    },
+    {
+      "path": "../catalog/animations.json",
+      "bytes": 14084,
+      "sha256": "e38ca92e76c518875413e611d86a18ecc56d44b81fcaf553aa84073bad88c5e6"
+    },
+    {
+      "path": "../assets/ui/coins/coin-available.svg",
+      "bytes": 1803,
+      "sha256": "4bd5ae07675dbd52068e66f434ec18b90ed5a68eac44e47423dcd4c879e96710"
+    },
+    {
+      "path": "../assets/ui/coins/coin-blocked.svg",
+      "bytes": 1801,
+      "sha256": "aece135f01cd03b24c3818f6eceb1f58fb23c5bce1c84627c93cd87623934743"
+    },
+    {
+      "path": "../assets/ui/coins/coin-reserved.svg",
+      "bytes": 1801,
+      "sha256": "a448c23ad7fe1729b9467bcdb4affb2585c79781887b644e7e9002f6f7134bd0"
+    },
+    {
+      "path": "../assets/ui/coins/coin-review.svg",
+      "bytes": 1803,
+      "sha256": "7a1647bf1741201bdc882dbf4f698b4150cc5f01d03d715986efeefb67be776a"
+    },
+    {
+      "path": "../assets/ui/icons/arrow.svg",
+      "bytes": 1704,
+      "sha256": "b4bc138ae825366b6b51a87ad16b71c136d4a8008d1ea6f5ff5d36afa8c6e554"
+    },
+    {
+      "path": "../assets/ui/icons/audit.svg",
+      "bytes": 1813,
+      "sha256": "52d0999fc29a59cc961257086e92b7cbd61bcf4ef8844b46b4ab1625cbbf4640"
+    },
+    {
+      "path": "../assets/ui/icons/avatar.svg",
+      "bytes": 1646,
+      "sha256": "1a4db15a22e591b4725fcd99c1e43768c9d6c40389ad9be85b150d19c5a9df5c"
+    },
+    {
+      "path": "../assets/ui/icons/brand-ds.svg",
+      "bytes": 1855,
+      "sha256": "fcce12ecad6684e40b77b9120b125621578e5026dd22543c9b49834dcdfd8a63"
+    },
+    {
+      "path": "../assets/ui/icons/check.svg",
+      "bytes": 1720,
+      "sha256": "9191ff75400b1853ece029face6ac7e6459ca26ebad465c2850ded2dd646843a"
+    },
+    {
+      "path": "../assets/ui/icons/close.svg",
+      "bytes": 1677,
+      "sha256": "71bd4423950fb4b52d7b031f13c4effd943c57a0e29723f6066f8202d4fb9aeb"
+    },
+    {
+      "path": "../assets/ui/icons/components.svg",
+      "bytes": 1767,
+      "sha256": "41629cef9516ca3461a44297f20a8324848aa56e9de0658cef8e92ccf76bd11e"
+    },
+    {
+      "path": "../assets/ui/icons/favorite.svg",
+      "bytes": 1651,
+      "sha256": "43a275959c962835853a7d2c04d9907f1957807758b8b7495077951faeea33c5"
+    },
+    {
+      "path": "../assets/ui/icons/filter.svg",
+      "bytes": 1606,
+      "sha256": "ba3e73f540e3506e51ccb6fc7cbbccfd8b15802d9484449f89343aaa85bc41b9"
+    },
+    {
+      "path": "../assets/ui/icons/home.svg",
+      "bytes": 1616,
+      "sha256": "39bc4a56000b0edf878be0bd204dec1d5440380a6304cf60e7f3c0027a952174"
+    },
+    {
+      "path": "../assets/ui/icons/integrity.svg",
+      "bytes": 1751,
+      "sha256": "b67443ceac0123946d2666c53c70b749df519d274c803a174436a3b921acbb27"
+    },
+    {
+      "path": "../assets/ui/icons/inventory.svg",
+      "bytes": 1666,
+      "sha256": "70978aa6335517c15bd624e2fc7b9a64d472a9cda0752994e3af2638b7f00836"
+    },
+    {
+      "path": "../assets/ui/icons/lock.svg",
+      "bytes": 1718,
+      "sha256": "7b15c02ec6a5ada16a5f9b3fb22033135ed1e99f6adae2f36b256c879b721c62"
+    },
+    {
+      "path": "../assets/ui/icons/modules.svg",
+      "bytes": 1726,
+      "sha256": "7bc51f01899834b9010a4aa71c6f6f9ff1186bd0334c5cf55b33f677f0878d4b"
+    },
+    {
+      "path": "../assets/ui/icons/quality.svg",
+      "bytes": 1631,
+      "sha256": "b7a9b52410f338195f219fd42559e01e98ee4f21cc06d7219ad17a61478d8289"
+    },
+    {
+      "path": "../assets/ui/icons/reward.svg",
+      "bytes": 1791,
+      "sha256": "83ef4e35e1a5cb2c03694b492db2e05a97b5ecdae9b23b66597e83f89bdf2d85"
+    },
+    {
+      "path": "../assets/ui/icons/search.svg",
+      "bytes": 1748,
+      "sha256": "0b56beb50b874243f370526e66aa51a6fd3f5c898bbae91319a58d9d4c70f42e"
+    },
+    {
+      "path": "../assets/ui/icons/settings.svg",
+      "bytes": 1724,
+      "sha256": "9aab478e9e819aa8afce8492e350021127b10a59110930300e9941691f03b2c8"
+    },
+    {
+      "path": "../assets/ui/icons/store.svg",
+      "bytes": 1693,
+      "sha256": "2117a6311ba08a8d160d49d8b7ba26bc7ae43b914c12573c31cdf223278174ea"
+    },
+    {
+      "path": "../assets/ui/icons/transaction.svg",
+      "bytes": 1704,
+      "sha256": "c4a64fe6e751152cabb98deb5859e30d071a9fb31e1f673f9b49c0326075399b"
+    },
+    {
+      "path": "../assets/ui/icons/visual.svg",
+      "bytes": 1675,
+      "sha256": "b3cbe7bbbce1ee2539036cf30191790332576e9f96283ab4585b95253d520ba7"
+    },
+    {
+      "path": "../assets/ui/icons/wallet.svg",
+      "bytes": 1707,
+      "sha256": "2644f521a6aab87668a2144f2315f5c667c020009ad52ef13d780e8e60f960e3"
+    },
+    {
+      "path": "../assets/ui/icons/warning.svg",
+      "bytes": 1691,
+      "sha256": "ba8fd996fb14e9ec8221628da349372a8d10dcde186d228c6021580df092cceb"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-basic.svg",
+      "bytes": 1987,
+      "sha256": "455ed3700475466e942a60641b79e379845662028d09bc29c364d56be39e5897"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-epic.svg",
+      "bytes": 1987,
+      "sha256": "1e645d3f5d748d28715b7dec2b38a15d0dfa612e9797c8eb820d7e15fc2b09fa"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-legendary.svg",
+      "bytes": 1987,
+      "sha256": "eb97080bde4be1b2873011c2f19924d19f262a075f165ddb8c27c4b6d625e29a"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-mythic.svg",
+      "bytes": 1987,
+      "sha256": "a6d4dfd8cc9bd70c164d0067eb1d3d2c95824442570444723c3830601ff3f2fa"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-rare.svg",
+      "bytes": 1987,
+      "sha256": "64fcebd5576ef823076b237e29a37ae6e02c38a07c3d4d67afbd1f5d7d01f487"
+    },
+    {
+      "path": "../assets/ui/rarity/frame-relic.svg",
+      "bytes": 1987,
+      "sha256": "b0687771133db05557bdceadd4ce2d1c55f3e2826f9cbbca99a1548e880bc471"
+    },
+    {
+      "path": "../assets/ui/status/authorized.svg",
+      "bytes": 1643,
+      "sha256": "91aacce34dcd91c3067da8aba858019d6a06ad52a2723e364f79f3a1d01958e8"
+    },
+    {
+      "path": "../assets/ui/status/denied.svg",
+      "bytes": 1649,
+      "sha256": "1795ab3478837b28643576d5965b3a13dd0c6ff59d4013efb53c1280b1c0a289"
+    },
+    {
+      "path": "../assets/ui/status/review.svg",
+      "bytes": 1722,
+      "sha256": "96cf63a29f492f42b5ed5ef15ccd632cfb7d23e976cc5a06f43aec5681841e8e"
+    },
+    {
+      "path": "../assets/ui/status/validating.svg",
+      "bytes": 1721,
+      "sha256": "42171e137266655379370531949a305439ebe4c8353a8e198cf324a9e6dc1bd9"
+    },
+    {
+      "path": "../demo/config-cache-memory.js",
+      "bytes": 1004,
+      "sha256": "2a1cabef3c3343334cee84cf0b1404fce890ddd05ebbe5979792f1359ac6bc8c"
+    },
+    {
+      "path": "../demo/cache-memory-manager.js",
+      "bytes": 10107,
+      "sha256": "7818a633bfd591636b57118cc490d2178bf745f4aa955408bcc3a9e496dabb4d"
+    },
+    {
+      "path": "../demo/graphics-mode-controller.js",
+      "bytes": 2335,
+      "sha256": "9dbe9f6f0591d6359365285c30cdc3a1c5c04d6705fe8746a41d019755a8f2ea"
+    },
+    {
+      "path": "../config/graphics-modes.config.json",
+      "bytes": 7566,
+      "sha256": "8e924fb55bc15a855a8a770adc217a0986b94fb4708034ae288df4ca87cfed98"
+    },
+    {
+      "path": "../assets/avatars/avatar-tech-v1/rig-v2.json",
+      "bytes": 1260,
+      "sha256": "da550709dec2342fa11bc87f1b6aa5941996d303821b7530a9c1855d1ec164cc"
+    },
+    {
+      "path": "../assets/avatars/avatar-tech-v1/animations.json",
+      "bytes": 5839,
+      "sha256": "a60e18f1e0e0011fc0abe62ee03296aa3f7dbb59c79fae659575cca94a796e18"
+    },
+    {
+      "path": "../assets/avatars/avatar-tech-v1/manifest.json",
+      "bytes": 877,
+      "sha256": "89e58019158cf8168c032c13046765d6b707e5ff3dd3e481b1603e0e1f63a17e"
+    },
+    {
+      "path": "../config/benchmark.config.json",
+      "bytes": 1973,
+      "sha256": "13c2c40dab9251b07ffd19206b2e20cb90e242d51d839c6c21877353f69a03d9"
+    },
+    {
+      "path": "../demo/styles-core.css",
+      "bytes": 73651,
+      "sha256": "5dacb628ab5d8a143d83b8bd88f19fd5bb5ddcf1fbc92628bb2589d9df668a9b"
+    },
+    {
+      "path": "../demo/runtime-loader.js",
+      "bytes": 1980,
+      "sha256": "61848bc31710777077cc723449ede2db84367c608942a5e68ed8aa30268641e3"
+    },
+    {
+      "path": "../demo/modules/shared.module.js",
+      "bytes": 2426,
+      "sha256": "df966cca189e9887b9b94ec84953d99c36c0bcc95cef063486124b6113d7426e"
+    },
+    {
+      "path": "../demo/modules/assets.module.js",
+      "bytes": 213,
+      "sha256": "71a7530ea028faf7f945531ec1d9ee8ee54de9a3055e4dedf254ddae8d59f212"
+    },
+    {
+      "path": "../demo/modules/inventory.module.js",
+      "bytes": 531,
+      "sha256": "9ae3b88aec5b24436f6e01077b16ad50eb066cda1b5c9961fa2bb2cc9e8f9ec0"
+    },
+    {
+      "path": "../demo/modules/avatar.module.js",
+      "bytes": 694,
+      "sha256": "65132273d72088f79318a2634f587ecd67c2cf97494042c8ca0ed5f0a7145e4b"
+    },
+    {
+      "path": "../demo/modules/vfx.module.js",
+      "bytes": 335,
+      "sha256": "73b153d4909bfa664bbf235a3726786c1e55b00d66432a27b9f788431b192116"
+    },
+    {
+      "path": "../demo/modules/product.module.js",
+      "bytes": 694,
+      "sha256": "bf63bc0f7f6ac9a38b9370e8a6f031f723e632382fc2c3bced953b671f39cd49"
+    },
+    {
+      "path": "../demo/modules/packages.module.js",
+      "bytes": 400,
+      "sha256": "e8915286b56df97052dcc9a6e1206e2873042eeb2c40a95a662237f49291956c"
+    },
+    {
+      "path": "../demo/modules/performance.module.js",
+      "bytes": 881,
+      "sha256": "91920d5bb1762ff55845d60123e7e3106908053c542a3b44c85975a1f7a82d82"
+    },
+    {
+      "path": "../demo/modules/integration.module.js",
+      "bytes": 501,
+      "sha256": "75785c2da859bc6aa1b6532fe896f011e37633391af93133897fa28877c4b149"
+    },
+    {
+      "path": "../demo/boot.module.js",
+      "bytes": 1478,
+      "sha256": "8e8dfc703e28ba3afb550cda6b9148bbfd3a9dae68783df426c8e685e3b08b54"
+    },
+    {
+      "path": "../demo/asset-transfer.js",
+      "bytes": 2748,
+      "sha256": "1281ff77fedcfcede373dcf2a861d5836f8ec9382cbf885bb84db6c281827609"
+    },
+    {
+      "path": "../assets/compression/mesh-transfer-manifest.json",
+      "bytes": 18745,
+      "sha256": "de0d445580df73aab9c1a0a27cab92cfd96bd75073d04ebb97d877475b3301e4"
+    },
+    {
+      "path": "../config/compression-pipeline.config.json",
+      "bytes": 301,
+      "sha256": "bf55a1e34930569d5d1d9c8fcc896d290e3af78346f618f461ad1839ef9fb6fa"
+    },
+    {
+      "path": "../config/renderers.config.json",
+      "bytes": 2750,
+      "sha256": "0548d8216eb9fceeaec144230a7d817dcd422e6d55950939c356fa39ba51f154"
+    },
+    {
+      "path": "../demo/modules/renderer.module.js",
+      "bytes": 550,
+      "sha256": "0004076059de19ec036d6bcded306838931d073c2255aba74e03260bb518263d"
+    },
+    {
+      "path": "../demo/renderer-profile.js",
+      "bytes": 11657,
+      "sha256": "22b6b3e2ea8e34ae999fa397fed9544547f645391ea666287534270c216a644d"
+    },
+    {
+      "path": "../demo/avatar-profile-state.js",
+      "bytes": 4786,
+      "sha256": "9a3403541b6d40f9f2c047aab3ac96c2a7f2ae15b8f752855869c6cc7bd7328e"
+    },
+    {
+      "path": "../demo/avatar-snapshot.js",
+      "bytes": 3570,
+      "sha256": "630a8ded47f2b3a0ffee96797e3b28729a57a87df1ee7f86abf7c0abb2f6c6d9"
+    },
+    {
+      "path": "../demo/transaction-visuals.js",
+      "bytes": 1465,
+      "sha256": "e39932a7759b1d79f9761b303b0352c4733df593d235f465d6863565d25f7540"
+    },
+    {
+      "path": "../demo/showcase-controller.js",
+      "bytes": 2256,
+      "sha256": "7e7ccc155e87aa9b6c81e1f6a7b614260464cb984075968d0335c3a6d8966b0f"
+    },
+    {
+      "path": "../demo/styles-coherence.css",
+      "bytes": 8116,
+      "sha256": "f1bbf488c0ce44278460aaf06be10b24d59c2c563ceaaa3bc8b9b928fbf3a1c0"
+    },
+    {
+      "path": "../config/backpack.config.json",
+      "bytes": 1696,
+      "sha256": "d51e45c5db9cbd34b89aa969c2e5bdfd6dd6a5c47427f3ec3a7715e8d951a879"
+    },
+    {
+      "path": "../demo/backpack-config.js",
+      "bytes": 1266,
+      "sha256": "1075b7fa1f0554b29d342fae482320a031347c70084faab210cfc12ad2e7798b"
+    },
+    {
+      "path": "../demo/backpack-manager.js",
+      "bytes": 8884,
+      "sha256": "fc094183bb97e136ee1f57936c574246887c4c2b2ecc2f4ff48bcc1f37f1ae38"
+    },
+    {
+      "path": "../demo/persistence-manager.js",
+      "bytes": 6191,
+      "sha256": "ccf9cf6d25355de3ef072178a8e6b91565f01cfaff9e9bf866d25cf68a476472"
+    },
+    {
+      "path": "../demo/backpack-bridge.js",
+      "bytes": 1381,
+      "sha256": "f8d0b2fa21ab3e8c403002b8a5c265d83aa100e77df4bd5bfd1ce6cd46c2f713"
+    },
+    {
+      "path": "../config/visual-recovery.config.json",
+      "bytes": 1026,
+      "sha256": "0fed79845925d5faad663c1fad6641c68d47fe416805b566dbf676fcb138bfbd"
+    },
+    {
+      "path": "../demo/visual-recovery.js",
+      "bytes": 4397,
+      "sha256": "9af98347f4833ba4f9b5b2254e3bca0fdbd423f27362c2b4662686acdb0e349b"
+    },
+    {
+      "path": "../demo/styles-recovery.css",
+      "bytes": 6557,
+      "sha256": "612fe6f3ab4ee506fb877d8e532b37c1276fc1293db393e3a7b0ab7ffb7b4aae"
+    },
+    {
+      "path": "../assets/runtime/recovery/avatar-front-hq.webp",
+      "bytes": 58992,
+      "sha256": "7c032859012a92cf3722603921ecd8409c4bd30b71e1f028746f43d7a862915f"
+    },
+    {
+      "path": "../assets/runtime/recovery/avatar-three-quarter-hq.webp",
+      "bytes": 58258,
+      "sha256": "17e0a9a92bbac44b66a15abff737b1039873844aab8d2d7dc99901fe1a001e8c"
+    },
+    {
+      "path": "../assets/runtime/recovery/avatar-side-hq.webp",
+      "bytes": 35718,
+      "sha256": "e95f24658ffb59f9fa5386406ff0607080dcf1facb1d05a94d883a2078fc012f"
+    },
+    {
+      "path": "../assets/runtime/recovery/avatar-back-hq.webp",
+      "bytes": 46564,
+      "sha256": "3363b43e774ddbec9d87daf950e0cd1eea7b77fc2a63e259a4f049bc6003727b"
+    },
+    {
+      "path": "../assets/runtime/recovery/avatar-hero-hq.webp",
+      "bytes": 62528,
+      "sha256": "d7dc274427b1e96131de84d15fe3fa6963ed88950b012a72cf0efc788f507c67"
+    },
+    {
+      "path": "../assets/runtime/recovery/recovery-assets.json",
+      "bytes": 419,
+      "sha256": "5bd5bc86a1b24093c9da12f6137379fd5b8200c2f5b71b9d6ce9df5398d658a4"
+    }
+  ],
+  "recommendedFor": "Todos os dispositivos",
+  "memoryEstimateMB": 180,
+  "targetFps": "60",
+  "bytes": 854752,
+  "displaySize": "834.7 KB",
+  "fileCount": 95,
+  "managerCompatibility": ">=0.9.4.2",
+  "notes": "Núcleo inicial modular. Renderizadores e sistemas pesados são carregados por import() sem alterar os assets visuais."
+}

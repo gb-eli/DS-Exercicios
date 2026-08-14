@@ -1,0 +1,38 @@
+{
+  "version": "0.9.6.0-RG",
+  "initial": {
+    "quality": "intermediate",
+    "requested": "auto",
+    "basicExplicit": "false",
+    "hero": "../assets/runtime/recovery/avatar-three-quarter-hq.webp"
+  },
+  "profileSnapshot": "../assets/runtime/recovery/avatar-three-quarter-hq.webp",
+  "avatar": {
+    "renderer": "cinematic",
+    "quality": "realism",
+    "fallback": "hq",
+    "premium": "loading",
+    "status": "WebGL indisponível — fallback HQ preservado",
+    "report": {
+      "version": "0.9.6.0-RG",
+      "quality": "realism",
+      "renderer": "cinematic",
+      "premium": "idle",
+      "webgl": false,
+      "fallback": "hq",
+      "assets": [
+        "../assets/runtime/recovery/avatar-front-hq.webp",
+        "../assets/runtime/recovery/avatar-three-quarter-hq.webp",
+        "../assets/runtime/recovery/avatar-side-hq.webp",
+        "../assets/runtime/recovery/avatar-back-hq.webp"
+      ]
+    }
+  },
+  "fallbackVisible": true,
+  "fallbackSrc": "../assets/runtime/recovery/avatar-three-quarter-hq.webp",
+  "mobileScrollWidth": 390,
+  "mobileViewport": 390,
+  "recoveryRequests": 4,
+  "errors": [],
+  "passed": true
+}
