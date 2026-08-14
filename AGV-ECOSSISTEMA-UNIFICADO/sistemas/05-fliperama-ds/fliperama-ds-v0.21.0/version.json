@@ -1,0 +1,13 @@
+{
+  "name": "Fliperama DS",
+  "version": "0.23.0",
+  "phase": "Fase 7.4",
+  "channel": "Estável",
+  "publishedAt": "2026-08-03T15:10:00Z",
+  "notes": [
+    "Catálogo reorganizado com visualizações em grade, compacta e agrupada por eras.",
+    "Menu mobile e filtros móveis passaram a funcionar em gavetas independentes.",
+    "Cada era ganhou identidade visual, contagem de jogos e destaque próprio no catálogo.",
+    "Museu recebeu modo vitrine, navegação anterior/próximo e carrosséis por coleção."
+  ]
+}

@@ -1,0 +1,1333 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.36.0",
+  "phase": "Fase 7.17A — Expansão real das fases · Bloco 1/3",
+  "generatedAt": "2026-08-07T22:58:13Z",
+  "summary": {
+    "total": 264,
+    "passed": 264,
+    "failed": 0
+  },
+  "routes": [
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.26.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.27.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.28.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.29.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.30.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.31.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.32.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.33.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.34.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.34.1.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.34.2.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.35.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.35.1.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.35.2.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "ARQUIVOS-ALTERADOS-v0.36.0.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.27.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "BUGS-CORRIGIDOS-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.26.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.27.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHANGELOG-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.26.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.27.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "CHECKLIST-TESTES-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "COMO-ABRIR.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "COMO-PUBLICAR-ANTERIOR.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "COMO-PUBLICAR.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "HASHES-SHA256.txt",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-AUDITORIA-FUNCIONAL-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.27.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "MATRIZ-TESTES-JOGOS-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "PLANO-MASTER-FLIPERAMA-DS-40-JOGOS.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "PLANO-PROXIMAS-ETAPAS.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-AUDITORIA-CPU-MULTIPLAYER-QUALIDADE-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-10-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-11-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-12-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-13-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-14-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-15-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-16A-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-16B-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-16C-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-17A-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-7-v0.26.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-8-v0.27.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-FASE-7-9-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "RELATORIO-VALIDACAO-HOTFIX-UX-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-3D-CAMERAS-v0.30.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-BOARD-ARENA-v0.28.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-CONTEUDO-EDUCACIONAL-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-CPU-MULTIPLAYER-QUALIDADE-v0.34.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-EXPANSAO-ARCADE-v0.34.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-EXPANSAO-PROGRESSAO-v0.36.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-FISICA-PLATAFORMAS-v0.29.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-MUSEU-LINHA-DO-TEMPO-v0.32.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-MUSEU-LINHA-DO-TEMPO-v0.33.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-UPGRADE-GRAFICO-BLOCO2-v0.35.1.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-UPGRADE-GRAFICO-BLOCO3-v0.35.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-UPGRADE-GRAFICO-v0.35.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-UX-RESPONSIVIDADE-v0.34.2.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "TESTES-VOXELCRAFT-v0.31.0.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "app.css",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "app.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "diagnostico-jogos.html",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "diagnostico-ux.html",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "diagnostico.html",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "education/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "education/game-learning.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "game-profiles.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/css/style.css",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/docs/arquitetura.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/index.html",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/js/app.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/js/game.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/js/storage.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/manifest.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "games/voxelcraft-ds/vendor/three/three.module.min.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "graphics/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "graphics/visual-upgrade-v0.35.0.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "graphics/visual-upgrade-v0.35.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "icons/arcade-ds.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "icons/fliperama-ds.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "manifest.webmanifest",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/bit-bridge-16/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/bit-bridge-16/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/bit-bridge-16/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/block-reactor/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/block-reactor/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/block-reactor/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/board-arena/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/board-arena/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/board-arena/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/camera-evolution/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/camera-evolution/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/camera-evolution/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/cyber-arena-360/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/cyber-arena-360/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/cyber-arena-360/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/data-maze/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/data-maze/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/data-maze/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/frontline-protocol-360/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/frontline-protocol-360/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/frontline-protocol-360/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/motion-beat/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/motion-beat/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/motion-beat/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nexus-reality-2026/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nexus-reality-2026/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nexus-reality-2026/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nitro-horizon-360/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nitro-horizon-360/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/nitro-horizon-360/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/orbital-sentinel/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/orbital-sentinel/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/orbital-sentinel/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/polygon-sector-94/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/polygon-sector-94/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/polygon-sector-94/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/puzzle-forge/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/puzzle-forge/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/puzzle-forge/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raster-rally/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raster-rally/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raster-rally/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raycast-corridors/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raycast-corridors/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/raycast-corridors/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/room-quest/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/room-quest/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/room-quest/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/space-blocks/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/space-blocks/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/space-blocks/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/state-quest-rpg/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/state-quest-rpg/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/state-quest-rpg/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/trap-lab/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/trap-lab/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/trap-lab/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/urban-mission-360/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/urban-mission-360/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/urban-mission-360/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-fleet/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-fleet/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-fleet/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-tennis/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-tennis/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/vector-tennis/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/voxelcraft-ds/logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/voxelcraft-ds/preview-01.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "media/games/voxelcraft-ds/preview-02.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/collections/consoles.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/collections/controles.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/collections/sensores.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/data/catalog.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/arcade-stick.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/atari-2600.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/dualshock.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/flight-hotas.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/game-boy-switch.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/kinect.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/light-gun.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/mega-drive.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/nes-controller.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/nes.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/playstation-family.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/ps-camera-vr.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/wheel-pedals.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/xbox-controller.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/images/xbox-family.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/models/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/models/index.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/textures/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "museum/viewer/museum-viewer.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "phaser.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/README.md",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/arcade-expansion-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/audit-games.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/board-arena-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/cpu-multiplayer-quality-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/educational-content-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/game-audit-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/http-route-results-v0.34.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/http-route-results-v0.35.0.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/http-route-results-v0.35.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/http-route-results-v0.36.0.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/http-route-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/museum-timeline-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/platform-physics-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/progression-expansion-results-v0.36.0.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/regression-suite-v0.35.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-3d-experiences.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-arcade-expansion.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-cpu-multiplayer-quality.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-educational-content.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-museum-timeline.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-platform-physics.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-progression-expansion-v0.36.0.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-ux-responsive.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-visual-upgrade-block3.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-visual-upgrade.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/test-voxelcraft.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/three-d-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/ux-responsive-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/visual-upgrade-block1-regression-v0.35.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/visual-upgrade-block3-results-v0.35.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/visual-upgrade-simulation-baseline-v0.34.2.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/visual-upgrade-test-results-v0.35.0.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "validation/voxelcraft-test-results.json",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "version.json",
+      "status": 200,
+      "ok": true
+    }
+  ]
+}
