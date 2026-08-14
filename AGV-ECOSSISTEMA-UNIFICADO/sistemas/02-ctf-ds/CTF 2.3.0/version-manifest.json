@@ -1,0 +1,19 @@
+{
+  "portalVersion": "2.3.0",
+  "build": "2026.07.31-antileak-integrity",
+  "releaseDate": "2026-07-31",
+  "schemaVersion": 5,
+  "walletSchemaVersion": 1,
+  "termsVersion": "1.3.0",
+  "permissionsManifestVersion": "1.0.0",
+  "rubricVersion": "1.0.0",
+  "status": "stable",
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript Modules",
+    "Web Crypto API",
+    "IndexedDB",
+    "Service Worker"
+  ]
+}

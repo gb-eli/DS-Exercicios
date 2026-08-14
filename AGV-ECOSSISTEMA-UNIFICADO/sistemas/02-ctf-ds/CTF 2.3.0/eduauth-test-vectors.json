@@ -1,0 +1,40 @@
+{
+  "schema": "eduauth-test-vectors",
+  "schemaVersion": 1,
+  "environment": "development",
+  "warning": "DEVELOPMENT TEST KEYS — DO NOT USE IN PRODUCTION",
+  "classSharedPin": {
+    "timestampUtc": "2026-07-29T16:30:00Z",
+    "context": { "protocol": "EDUAUTH", "version": 1, "mode": "CLASS_SHARED_PIN", "keyVersion": 1, "platformCode": 1, "classCode": 2, "subjectCode": 1, "lessonCode": 1, "activityCode": 1, "actionCode": 1, "timeSlot": 1983714 },
+    "requestCode": "EA1C-1K01-040G-20G1-040G-200Y-8KH0-EXPT-GQR",
+    "hmacSha256Hex": "af753afaab263ac83b87eaf6daba63c1866563d240b037daf34533acc46ead3b",
+    "pin": "94046051"
+  },
+  "sessionScopedPin": {
+    "timestampUtc": "2026-07-29T16:30:00Z",
+    "context": { "protocol": "EDUAUTH", "version": 1, "mode": "SESSION_SCOPED_PIN", "keyVersion": 1, "platformCode": 1, "classCode": 2, "subjectCode": 1, "lessonCode": 1, "activityCode": 1, "actionCode": 3, "timeSlot": 5951142, "sessionIdTag": "7a11c0de", "requestIdTag": "b16b00b5", "sessionNonce": "a1b2c3d4e5f6", "profileIdHash": "0badc0de", "expiresAt": 1785342900 },
+    "requestCode": "EA1S-1K01-040G-20G1-040G-602T-STK7-M4E0-VTRP-P05N-M6SC-7N75-YR5T-VG6Y-D9N2-QD00-Z46G-9R",
+    "hmacSha256Hex": "7234a9c1a6db7b562adf936ff530cda8cc7ebf96ef45a1931ae65e447b3ecda8",
+    "pin": "19295343"
+  },
+  "profileRecovery": {
+    "timestampUtc": "2026-07-29T16:30:00Z",
+    "context": { "protocol": "EDUAUTH", "version": 1, "mode": "PROFILE_RECOVERY_ENVELOPE", "keyVersion": 1, "platformCode": 1, "classCode": 2, "subjectCode": 1, "lessonCode": 1, "activityCode": 1, "actionCode": 4, "timeSlot": 9918570, "sessionIdTag": "7a11c0de", "requestIdTag": "c001d00d", "sessionNonce": "a1b2c3d4e5f6", "profileIdHash": "0badc0de", "expiresAt": 1785342780 },
+    "requestCode": "EA1R-1K01-040G-20G1-040G-804Q-B1N7-M4E0-VV00-3M0D-M6SC-7N75-YR5T-VG6Y-D9N2-PF08-C3VP-M0",
+    "hmacSha256Hex": "dce98fc27faf72090f50a0c37a339c1553c2fabc38cff78f7fc839a9df514419",
+    "pin": "1352713082"
+  },
+  "signedGrant": {
+    "nowUnix": 1785342600,
+    "payload": { "protocol": "EDUAUTH", "version": 1, "grantId": "grant-test-0001", "platformId": "ctfds", "actionId": "profile-delete", "resourceId": "profile:test-profile", "risk": "CRITICAL", "issuedAt": 1785340800, "expiresAt": 1785344400, "singleUse": true, "reason": "Vetor de teste automatizado" },
+    "token": "EA1-G1.eyJwcm90b2NvbCI6IkVEVUFVVEgiLCJ2ZXJzaW9uIjoxLCJncmFudElkIjoiZ3JhbnQtdGVzdC0wMDAxIiwicGxhdGZvcm1JZCI6ImN0ZmRzIiwiYWN0aW9uSWQiOiJwcm9maWxlLWRlbGV0ZSIsInJlc291cmNlSWQiOiJwcm9maWxlOnRlc3QtcHJvZmlsZSIsInJpc2siOiJDUklUSUNBTCIsImlzc3VlZEF0IjoxNzg1MzQwODAwLCJleHBpcmVzQXQiOjE3ODUzNDQ0MDAsInNpbmdsZVVzZSI6dHJ1ZSwicmVhc29uIjoiVmV0b3IgZGUgdGVzdGUgYXV0b21hdGl6YWRvIn0.IIxDnntD5MWxXvrEhV2VYYHzCpmEtDB1T890XGZEr7v45PBBDFArgpqxfK2ICX7ACrLPQjQl_lPgN8Sx-tmNOQ"
+  },
+  "invalidExamples": [
+    { "id": "checksum-invalid", "requestCode": "EA1C-1K01-040G-20G1-040G-200Y-8KH0-EXPT-GQ0", "expected": "reject" },
+    { "id": "wrong-class", "mutation": "classCode=03", "expected": "pin-mismatch" },
+    { "id": "wrong-platform", "mutation": "platformCode=02", "expected": "pin-mismatch" },
+    { "id": "expired-session", "nowUnix": 1785343000, "expected": "reject" },
+    { "id": "signed-token-altered", "mutation": "resourceId changed without resigning", "expected": "reject" },
+    { "id": "session-reused", "expected": "reject-after-first-use" }
+  ]
+}
