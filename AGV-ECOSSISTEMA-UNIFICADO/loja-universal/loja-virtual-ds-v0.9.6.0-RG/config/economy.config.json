@@ -1,0 +1,224 @@
+{
+  "version": "0.9.0",
+  "balances": [
+    "available",
+    "reserved",
+    "pending",
+    "underReview",
+    "blocked"
+  ],
+  "walletCheckpoints": [
+    5000,
+    10000,
+    15000,
+    25000,
+    30000,
+    50000,
+    100000,
+    250000,
+    500000
+  ],
+  "transactionReview": [
+    {
+      "max": 99,
+      "level": "instant",
+      "label": "Instantânea",
+      "targetSeconds": [
+        5,
+        8
+      ]
+    },
+    {
+      "max": 499,
+      "level": "fast",
+      "label": "Rápida",
+      "targetSeconds": [
+        8,
+        12
+      ]
+    },
+    {
+      "max": 999,
+      "level": "expanded",
+      "label": "Ampliada",
+      "targetSeconds": [
+        12,
+        20
+      ]
+    },
+    {
+      "max": 4999,
+      "level": "advanced",
+      "label": "Avançada",
+      "targetSeconds": [
+        20,
+        45
+      ]
+    },
+    {
+      "max": 9999,
+      "level": "reinforced",
+      "label": "Reforçada",
+      "targetSeconds": [
+        45,
+        90
+      ]
+    },
+    {
+      "max": 49999,
+      "level": "deep",
+      "label": "Profunda",
+      "targetSeconds": [
+        90,
+        180
+      ]
+    },
+    {
+      "max": 500000,
+      "level": "critical",
+      "label": "Crítica",
+      "targetSeconds": [
+        180,
+        300
+      ],
+      "teacherReview": true
+    }
+  ],
+  "autoHold": {
+    "rewardFrom": 5000,
+    "purchaseFrom": 50000
+  },
+  "growthAnomaly": {
+    "absoluteCreditThreshold": 50000,
+    "ratioThreshold": 4,
+    "minAmountForRatio": 5000,
+    "rapidWindowMinutes": 10,
+    "rapidAccumulationThreshold": 25000
+  },
+  "rewardTypes": {
+    "TUTORIAL_COMPLETED": {
+      "min": 30,
+      "max": 150,
+      "label": "Tutorial concluído"
+    },
+    "TOOL_RESULT_CREATED": {
+      "min": 50,
+      "max": 800,
+      "label": "Resultado criado com ferramenta"
+    },
+    "LAB_COMPLETED": {
+      "min": 150,
+      "max": 4000,
+      "label": "Laboratório concluído"
+    },
+    "PHASE_COMPLETED": {
+      "min": 80,
+      "max": 5000,
+      "label": "Fase concluída"
+    },
+    "MISSION_COMPLETED": {
+      "min": 50,
+      "max": 20000,
+      "label": "Missão concluída"
+    },
+    "CHALLENGE_COMPLETED": {
+      "min": 50,
+      "max": 20000,
+      "label": "Desafio concluído"
+    },
+    "PROJECT_PUBLISHED": {
+      "min": 300,
+      "max": 20000,
+      "label": "Projeto publicado"
+    },
+    "EVIDENCE_EXPORTED": {
+      "min": 30,
+      "max": 200,
+      "label": "Evidência exportada"
+    },
+    "ACHIEVEMENT_UNLOCKED": {
+      "min": 50,
+      "max": 25000,
+      "label": "Conquista desbloqueada"
+    },
+    "TEACHER_REWARD": {
+      "min": 1,
+      "max": 500000,
+      "label": "Recompensa autorizada pelo professor"
+    },
+    "SESSION_COMPLETED": {
+      "min": 30,
+      "max": 200,
+      "label": "Sessão ativa concluída"
+    },
+    "COLLABORATION_VALIDATED": {
+      "min": 30,
+      "max": 500,
+      "label": "Colaboração validada"
+    },
+    "FEEDBACK_CONFIRMED": {
+      "min": 10,
+      "max": 250,
+      "label": "Feedback útil confirmado"
+    },
+    "BUG_REPORT_CONFIRMED": {
+      "min": 50,
+      "max": 2000,
+      "label": "Relato de erro confirmado"
+    },
+    "LEARNING_PROGRESS": {
+      "min": 30,
+      "max": 500,
+      "label": "Evolução de aprendizagem"
+    },
+    "RECOVERY_COMPLETED": {
+      "min": 80,
+      "max": 1500,
+      "label": "Recuperação concluída"
+    }
+  },
+  "antiFarm": {
+    "uniqueEventId": true,
+    "fullRewardFirstCompletionOnly": true,
+    "repeatPercent": 0,
+    "dailySimpleActionsCap": 300
+  },
+  "penalties": {
+    "automaticPenalty": false,
+    "requiresConfirmedEvidence": true,
+    "occurrences": [
+      {
+        "occurrence": 1,
+        "percent": 0,
+        "max": 0,
+        "scoreReduction": 100,
+        "lockMinutes": 0,
+        "label": "Advertência formal"
+      },
+      {
+        "occurrence": 2,
+        "percent": 10,
+        "max": 1000,
+        "scoreReduction": 120,
+        "lockMinutes": 30,
+        "label": "Multa leve"
+      },
+      {
+        "occurrence": 3,
+        "percent": 30,
+        "max": 5000,
+        "scoreReduction": 180,
+        "lockMinutes": 120,
+        "label": "Multa moderada"
+      },
+      {
+        "occurrence": 4,
+        "percent": 50,
+        "max": 15000,
+        "scoreReduction": 250,
+        "lockMinutes": 1440,
+        "label": "Multa grave"
+      }
+    ]
+  }
+}

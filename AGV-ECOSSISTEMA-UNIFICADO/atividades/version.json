@@ -1,0 +1,26 @@
+{
+  "name": "Exercícios Práticos DS",
+  "version": "0.14.2",
+  "date": "2026-08-14",
+  "features": [
+    "Modo supervisionado por atividade com sessão server-side e IP",
+    "Tela cheia quando suportada e bloqueio após 3 violações objetivas",
+    "Registro de troca de guia, saída de fullscreen, colagem, drop, atalhos DevTools e entrada rápida",
+    "Detecção de DevTools classificada como heurística, sem punição automática isolada",
+    "Bloqueio de padrões maliciosos antes de executar/visualizar código",
+    "WebSocket ao vivo por canal secreto de sessão para código e cursor",
+    "Professor pode editar código ao vivo com pausa temporária da digitação do aluno",
+    "Importação de exercício do portal antigo por GitHub com validação pendente",
+    "Central Professor: supervisão, alertas, validações, ranking e liberações",
+    "Liberação/bloqueio por turma e política de segurança por exercício",
+    "Conclusão passa pelo endpoint activity-progress server-side",
+    "Autosave reduzido para 1,2s e troca de arquivo salva antes de alternar",
+    "P4.1: importação legada respeita exercise_releases e só avança após aprovação docente",
+    "Primeiro acesso da equipe usa credencial temporária individual provisionada pelo administrador",
+    "Renderização da orientação sem innerHTML para reduzir superfície de stored XSS"
+  ],
+  "notes": [
+    "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
+    "Equipe não usa senha compartilhada: contas novas são provisionadas administrativamente com senha temporária individual."
+  ]
+}

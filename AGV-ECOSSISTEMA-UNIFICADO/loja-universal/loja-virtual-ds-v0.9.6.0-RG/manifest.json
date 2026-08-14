@@ -1,0 +1,290 @@
+{
+  "project": "Loja Virtual DS",
+  "name": "Loja Virtual DS",
+  "version": "0.9.6.0-RG",
+  "phase": "Restauração gráfica, shaders e geometria HD",
+  "stage": "graphics-recovery-hd",
+  "releaseDate": "2026-08-03",
+  "entry": "index.html",
+  "distribution": {
+    "core": "dist/ds-store-foundation.js",
+    "sdk": "dist/ds-store-sdk.js",
+    "sdkEsm": "dist/ds-store-sdk.esm.js",
+    "styles": "dist/ds-store-ui.css"
+  },
+  "features": [
+    "universal-sdk",
+    "platform-adapters",
+    "idempotent-events",
+    "direct-transport",
+    "postmessage-bridge",
+    "offline-queue",
+    "standard-results",
+    "integration-console",
+    "platform-domain-isolation",
+    "non-destructive-audit",
+    "asset-inventory",
+    "glb-inspection",
+    "duplicate-detection",
+    "reference-audit",
+    "baseline-lock",
+    "regression-suite",
+    "format-laboratory",
+    "glb-transfer-comparison",
+    "gzip-brotli-measurement",
+    "webp-avif-comparison",
+    "visual-fidelity-metrics",
+    "split-gltf-experiment",
+    "encoder-toolchain-probe",
+    "non-destructive-pipeline-gate",
+    "graphics-package-manager",
+    "cache-storage",
+    "indexeddb-package-state",
+    "service-worker",
+    "sha256-package-validation",
+    "persistent-storage-request",
+    "per-device-quality-preference",
+    "package-dependency-resolution",
+    "pause-resume-installation",
+    "selective-cache-removal",
+    "zero-package-overlap",
+    "visual-regression-review",
+    "avatar-loadout-local-persistence",
+    "animation-crossfade",
+    "procedural-secondary-motion",
+    "mobile-sticky-avatar-preview",
+    "vfx-view-lifecycle",
+    "scoped-event-handlers",
+    "official-basic-mode",
+    "official-intermediate-mode",
+    "official-advanced-mode",
+    "official-ultra-mode",
+    "official-realism-mode",
+    "mode-specific-scenes",
+    "render-priority-profiles",
+    "legacy-quality-migration",
+    "humanoid-rig-v2",
+    "10-intermediate-bones",
+    "28-avatar-clips",
+    "isolated-body-motion",
+    "smoothstep-crossfade",
+    "showcase-walk-animation",
+    "advanced-device-benchmark",
+    "cpu-suite",
+    "worker-suite",
+    "shader-benchmark",
+    "texture-upload-benchmark",
+    "particle-benchmark",
+    "frame-stability-analysis",
+    "per-device-benchmark-persistence",
+    "benchmark-json-export",
+    "mode-fps-predictions",
+    "hardware-guidance",
+    "runtime-dev-separation",
+    "truthful-graphics-contracts",
+    "runtime-cinematic-stage",
+    "development-reference-pack",
+    "publish-profiles",
+    "lod-geometry-metrics",
+    "graphics-recovery",
+    "anti-regression-visual-floor",
+    "high-fidelity-fallback",
+    "premium-assets-explicit-load",
+    "four-angle-fallback",
+    "rounded-voxel-hd",
+    "real-geometric-lods",
+    "shader-visual-floor",
+    "four-angle-hq-fallback",
+    "visual-regression-gate"
+  ],
+  "compatibility": {
+    "dataModel": [
+      "0.1.x",
+      "0.2.x",
+      "0.3.x",
+      "0.4.x",
+      "0.5.x",
+      "0.6.x",
+      "0.7.x",
+      "0.8.x",
+      "0.9.x"
+    ],
+    "browser": "modern evergreen with WebGL fallback",
+    "offlineDemo": true
+  },
+  "modules": {
+    "integration": {
+      "version": "0.9.0",
+      "config": "config/integration.config.json",
+      "adapters": 10,
+      "eventTypes": 16
+    },
+    "economy": {
+      "version": "0.9.0",
+      "config": "config/economy.config.json"
+    },
+    "ledger": {
+      "version": "0.8.0",
+      "hashChain": true
+    },
+    "avatar3d": {
+      "version": "0.9.4.4",
+      "format": "GLB",
+      "lazy": true,
+      "rig": "DS_HUMANOID_VOXEL_RIG_2",
+      "clips": 28,
+      "virtualBones": 10,
+      "geometryProfile": "ROUNDED_VOXEL_HD",
+      "lodTriangles": {
+        "lod0": 39168,
+        "lod1": 8448,
+        "lod2": 1680
+      }
+    },
+    "equipment": {
+      "version": "0.5.0",
+      "lazy": true
+    },
+    "vfx": {
+      "version": "0.6.0",
+      "lazy": true
+    },
+    "performance": {
+      "version": "0.9.5",
+      "engine": "demo/benchmark-engine.js",
+      "stages": 8,
+      "persistentPerDevice": true,
+      "exportable": true,
+      "automaticHeavyDownloads": false
+    },
+    "packageManager": {
+      "version": "0.9.3",
+      "manifest": "packs/packages.json",
+      "packs": 7,
+      "cacheStorage": true,
+      "indexedDB": true,
+      "serviceWorker": "sw.js",
+      "sha256": true
+    }
+  },
+  "nextVersion": "0.9.6.0-RG",
+  "validation": "docs/VALIDACAO_v0.9.6.0-RG.md",
+  "tests": [
+    "tests/run_regression.sh",
+    "tests/audit_baseline.py",
+    "reports/regression-result.json",
+    "docs/VALIDACAO_v0.9.1.md",
+    "tests/validate_formats.py",
+    "reports/format-validation.json",
+    "docs/VALIDACAO_v0.9.2.md",
+    "tests/validate_packages.py",
+    "reports/package-manager-validation.json",
+    "reports/browser-package-manager.json",
+    "docs/VALIDACAO_v0.9.3.md",
+    "tests/validate_visual_animation_hotfix.py",
+    "reports/visual-animation-validation.json",
+    "docs/VALIDACAO_v0.9.4.2.md",
+    "reports/browser-visual-animation-v0942.json",
+    "assets/previews/v0.9.4.2-avatar.png",
+    "assets/previews/v0.9.4.2-effects.png",
+    "assets/previews/v0.9.4.2-mobile-avatar.png",
+    "tests/validate_rig_animation_v0944.py",
+    "reports/rig-animation-validation-v0944.json",
+    "reports/rig-deep-validation-v0944.json",
+    "reports/browser-rig-v0944.json",
+    "docs/VALIDACAO_v0.9.4.4.md",
+    "config/benchmark.config.json",
+    "demo/benchmark-engine.js",
+    "tests/validate_benchmark_v095.py",
+    "reports/benchmark-validation-v095.json",
+    "reports/browser-benchmark-v095.json",
+    "docs/BENCHMARK_DS_AVANCADO_v0.9.5.md",
+    "docs/VALIDACAO_v0.9.5.md"
+  ],
+  "audit": {
+    "sourceVersion": "0.9.0",
+    "summary": "reports/baseline-summary.json",
+    "inventory": "reports/asset-inventory.json",
+    "glb": "reports/glb-audit.json",
+    "duplicates": "reports/duplicate-assets.json",
+    "baselineLock": "reports/baseline-lock-v0.9.0.json"
+  },
+  "formatLab": {
+    "dashboard": "demo/formats.html",
+    "glbReport": "reports/glb-format-comparison.json",
+    "imageReport": "reports/image-format-comparison.json",
+    "matrix": "reports/format-decision-matrix.json",
+    "meshopt": "not-encoded-toolchain-unavailable",
+    "draco": "not-encoded-toolchain-unavailable",
+    "basisuKtx2": "not-encoded-toolchain-unavailable",
+    "executed": [
+      "gzip",
+      "brotli",
+      "gltf-split",
+      "webp-lossless",
+      "webp-q90",
+      "webp-q80",
+      "avif-q80"
+    ],
+    "prompt": "docs/PROMPT_INTEGRACAO_v0.9.2.md"
+  },
+  "packageCount": 7,
+  "packageManifest": "packs/packages.json",
+  "serviceWorker": "sw.js",
+  "memoryManager": "demo/cache-memory-manager.js",
+  "cachePolicy": "config/cache-memory.config.json",
+  "incrementalCache": true,
+  "webglRecovery": true,
+  "runtimeEntry": "demo/index.html",
+  "hotfix": {
+    "sourceVersion": "0.9.4.1",
+    "issue": "visual, animation, fallback, responsive and event lifecycle defects",
+    "resolution": "consistent versioning and package hashes; fixed WebGL fallback, VFX lifecycle, speech target, duplicate handlers, equipment flow, LOD disposal, animation transitions and mobile sticky preview",
+    "githubPagesReady": true
+  },
+  "graphicsModes": {
+    "contract": "config/graphics-modes.config.json",
+    "modes": [
+      "basic",
+      "intermediate",
+      "advanced",
+      "ultra",
+      "realism"
+    ],
+    "legacyAliases": {
+      "economy": "basic",
+      "balanced": "intermediate",
+      "high": "advanced",
+      "ultraAdvanced": "realism"
+    }
+  },
+  "avatarRig": {
+    "id": "DS_HUMANOID_VOXEL_RIG_2",
+    "clips": 28,
+    "newBones": 10,
+    "compatibleSlots": 16
+  },
+  "buildProfiles": {
+    "runtime": "config/publish-profiles.json#github-pages-runtime",
+    "development": "config/publish-profiles.json#development-full"
+  },
+  "graphicsAssetStatus": {
+    "ultra": "current-runtime-enhanced",
+    "realism": "cinematic-presentation-v1",
+    "ktx2": false,
+    "meshopt": false,
+    "premium3DFamily": false
+  },
+  "compressionPipeline": {
+    "mode": "gzip-lossless",
+    "manifest": "assets/compression/mesh-transfer-manifest.json",
+    "fallback": "original-glb"
+  },
+  "rendererArchitecture": {
+    "lite": "basic/intermediate",
+    "advanced": "advanced/ultra",
+    "cinematic": "realism",
+    "implementation": "custom-webgl-shader-pipelines",
+    "assetsPreserved": true
+  }
+}

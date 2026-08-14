@@ -1,0 +1,212 @@
+{
+  "version": "0.9.2",
+  "status": "PASS",
+  "regression": "PASS",
+  "formatValidation": {
+    "status": "PASS",
+    "errors": [],
+    "glbModels": 39,
+    "imageSamples": 8,
+    "imageVariants": 26,
+    "gzipReductionPct": 78.18,
+    "brotliReductionPct": 82.52,
+    "nativeEncoders": {
+      "gltfpack": false,
+      "gltf-transform": false,
+      "toktx": false,
+      "ktx": false,
+      "basisu": false,
+      "draco_encoder": false,
+      "cwebp": false,
+      "avifenc": false,
+      "magick": true,
+      "ffmpeg": true
+    }
+  },
+  "browser": {
+    "method": "set_content",
+    "title": "Laboratório de Formatos v0.9.2",
+    "bodyChars": 2220,
+    "consoleErrors": [],
+    "mobileHorizontalOverflow": false,
+    "status": "PASS"
+  },
+  "glb": {
+    "modelCount": 39,
+    "originalBytes": 269376,
+    "gzipBytes": 58771,
+    "brotliBytes": 47082,
+    "gzipReductionPct": 78.18,
+    "brotliReductionPct": 82.52,
+    "averageJsonSharePct": 77.16,
+    "meshoptEncoded": 0,
+    "dracoEncoded": 0,
+    "selectedSamples": [
+      {
+        "path": "assets/avatars/avatar-tech-v1/avatar-tech-v1-lod0.glb",
+        "bytes": 55736,
+        "jsonBytes": 47176,
+        "binBytes": 8532,
+        "jsonSharePct": 84.64,
+        "gzipBytes": 8393,
+        "gzipReductionPct": 84.94,
+        "gzipEncodeMs": 3.529,
+        "gzipDecodeMs": 0.143,
+        "brotliBytes": 6611,
+        "brotliReductionPct": 88.14,
+        "brotliEncodeMs": 121.428,
+        "brotliDecodeMs": 0.13,
+        "nodes": 87,
+        "meshes": 14,
+        "accessors": 138,
+        "animations": 18,
+        "materials": 14,
+        "extensionsUsed": [],
+        "sha256": "0642758926418d9bf205b1bf206d863f7d5f965467355504287195bd1680e47e",
+        "split": {
+          "gltf": "lab/formats/gltf-split/avatar-tech-v1-lod0/avatar-tech-v1-lod0.gltf",
+          "bin": "lab/formats/gltf-split/avatar-tech-v1-lod0/avatar-tech-v1-lod0.bin",
+          "totalBytes": 55739
+        }
+      },
+      {
+        "path": "assets/equipment/models/backpack-scholar.glb",
+        "bytes": 3392,
+        "jsonBytes": 2716,
+        "binBytes": 648,
+        "jsonSharePct": 80.07,
+        "gzipBytes": 997,
+        "gzipReductionPct": 70.61,
+        "gzipEncodeMs": 0.123,
+        "gzipDecodeMs": 0.013,
+        "brotliBytes": 802,
+        "brotliReductionPct": 76.36,
+        "brotliEncodeMs": 6.777,
+        "brotliDecodeMs": 0.015,
+        "nodes": 7,
+        "meshes": 5,
+        "accessors": 3,
+        "animations": 0,
+        "materials": 5,
+        "extensionsUsed": [],
+        "sha256": "1c8e2d15f4c2ff7c62b81425417aeb4accb731733200b3643d2668139e0f094b",
+        "split": {
+          "gltf": "lab/formats/gltf-split/backpack-scholar/backpack-scholar.gltf",
+          "bin": "lab/formats/gltf-split/backpack-scholar/backpack-scholar.bin",
+          "totalBytes": 3391
+        }
+      },
+      {
+        "path": "assets/equipment/models/drone-iris.glb",
+        "bytes": 3192,
+        "jsonBytes": 2516,
+        "binBytes": 648,
+        "jsonSharePct": 78.82,
+        "gzipBytes": 968,
+        "gzipReductionPct": 69.67,
+        "gzipEncodeMs": 0.118,
+        "gzipDecodeMs": 0.013,
+        "brotliBytes": 795,
+        "brotliReductionPct": 75.09,
+        "brotliEncodeMs": 6.356,
+        "brotliDecodeMs": 0.015,
+        "nodes": 8,
+        "meshes": 4,
+        "accessors": 3,
+        "animations": 0,
+        "materials": 4,
+        "extensionsUsed": [],
+        "sha256": "d934f09b4154b49eed009066f35275348af4fcdd6456cd98826e2926ae0bfeff",
+        "split": {
+          "gltf": "lab/formats/gltf-split/drone-iris/drone-iris.gltf",
+          "bin": "lab/formats/gltf-split/drone-iris/drone-iris.bin",
+          "totalBytes": 3184
+        }
+      },
+      {
+        "path": "assets/equipment/models/mystic-arcane.glb",
+        "bytes": 3256,
+        "jsonBytes": 2580,
+        "binBytes": 648,
+        "jsonSharePct": 79.24,
+        "gzipBytes": 1035,
+        "gzipReductionPct": 68.21,
+        "gzipEncodeMs": 0.124,
+        "gzipDecodeMs": 0.013,
+        "brotliBytes": 834,
+        "brotliReductionPct": 74.39,
+        "brotliEncodeMs": 6.612,
+        "brotliDecodeMs": 0.015,
+        "nodes": 8,
+        "meshes": 4,
+        "accessors": 3,
+        "animations": 0,
+        "materials": 4,
+        "extensionsUsed": [],
+        "sha256": "835662a14120854188cde72a478450fe843881c407f6c8c7cf656f1fec1777ae",
+        "split": {
+          "gltf": "lab/formats/gltf-split/mystic-arcane/mystic-arcane.gltf",
+          "bin": "lab/formats/gltf-split/mystic-arcane/mystic-arcane.bin",
+          "totalBytes": 3253
+        }
+      }
+    ],
+    "finding": "Os GLBs atuais são pequenos e dominados por JSON/animações. Compressão HTTP produz ganho alto; Meshopt/Draco devem ser avaliados com encoders nativos antes de adoção."
+  },
+  "images": {
+    "sampleCount": 8,
+    "pillowWebp": true,
+    "pillowAvif": true,
+    "variants": {
+      "webp-lossless": {
+        "files": 8,
+        "totalBytes": 2375420,
+        "averageReductionPct": -43.22,
+        "averageDecodeMs": 15.13,
+        "averagePsnrDb": 91.558,
+        "averageSsim": 0.999461,
+        "averageAlphaMae": 0.0
+      },
+      "webp-q90": {
+        "files": 8,
+        "totalBytes": 512622,
+        "averageReductionPct": 31.73,
+        "averageDecodeMs": 12.792,
+        "averagePsnrDb": 39.406,
+        "averageSsim": 0.981005,
+        "averageAlphaMae": 0.0
+      },
+      "webp-q80": {
+        "files": 8,
+        "totalBytes": 366450,
+        "averageReductionPct": 48.79,
+        "averageDecodeMs": 8.94,
+        "averagePsnrDb": 37.53,
+        "averageSsim": 0.969907,
+        "averageAlphaMae": 0.0
+      },
+      "avif-q80": {
+        "files": 2,
+        "totalBytes": 394356,
+        "averageReductionPct": 84.4,
+        "averageDecodeMs": 18.646,
+        "averagePsnrDb": 42.853,
+        "averageSsim": 0.986524,
+        "averageAlphaMae": 0.0
+      }
+    },
+    "recommendations": {
+      "storeThumbnails": "WebP q80–90; manter miniaturas pequenas e cacheáveis.",
+      "transparentUI": "SVG quando vetorial; WebP lossless para raster com alfa; PNG como fonte mestre.",
+      "documentation": "AVIF q80 ou WebP q80, fora do runtime principal.",
+      "vfxPreviews": "WebP q80–90; carregar apenas quando o catálogo VFX for aberto.",
+      "materials3D": "Manter PNG/WebP como referência; produzir KTX2/BasisU em pipeline nativo futuro."
+    }
+  },
+  "limitations": [
+    "Meshopt não codificado: gltfpack ausente.",
+    "Draco não codificado: encoder nativo ausente.",
+    "KTX2/BasisU não codificado: toolchain nativa ausente.",
+    "Nenhum percentual desses formatos foi estimado ou inventado."
+  ]
+}

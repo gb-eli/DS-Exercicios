@@ -1,0 +1,44 @@
+do $$ declare p uuid; begin
+select id into p from public.platforms where code='lab-virtual';
+if p is null then raise exception 'platform lab-virtual missing'; end if;
+insert into public.activity_catalog(platform_id,activity_id,name,reward_policy,max_xp,max_points,max_coins,repeatable,active,metadata) values
+(p,'completion:vm:installed:chromeos-flex','vm:installed:chromeos-flex','rule_validated',120,0,45,false,true,'{"kind":"completion","completionId":"vm:installed:chromeos-flex","toolId":"virtual-machine","category":"vm","minSeconds":20}'::jsonb),
+(p,'completion:vm:installed:mac-intel','vm:installed:mac-intel','rule_validated',120,0,45,false,true,'{"kind":"completion","completionId":"vm:installed:mac-intel","toolId":"virtual-machine","category":"vm","minSeconds":20}'::jsonb),
+(p,'completion:vm:installed:mac-apple','vm:installed:mac-apple','rule_validated',120,0,45,false,true,'{"kind":"completion","completionId":"vm:installed:mac-apple","toolId":"virtual-machine","category":"vm","minSeconds":20}'::jsonb),
+(p,'completion:voxelcraft:learning:mission','voxelcraft:learning:mission','rule_validated',50,0,10,false,true,'{"kind":"completion","completionId":"voxelcraft:learning:mission","toolId":"voxelcraft-3d","category":"voxel","minSeconds":15}'::jsonb),
+(p,'completion:voxelcraft:challenge:mission','voxelcraft:challenge:mission','rule_validated',80,0,18,false,true,'{"kind":"completion","completionId":"voxelcraft:challenge:mission","toolId":"voxelcraft-3d","category":"voxel","minSeconds":15}'::jsonb),
+(p,'completion:arcade:snake:five-phases','arcade:snake:five-phases','rule_validated',55,0,12,false,true,'{"kind":"completion","completionId":"arcade:snake:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:hangman:five-phases','arcade:hangman:five-phases','rule_validated',45,0,9,false,true,'{"kind":"completion","completionId":"arcade:hangman:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:trend:five-phases','arcade:trend:five-phases','rule_validated',35,0,5,false,true,'{"kind":"completion","completionId":"arcade:trend:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:pac:five-phases','arcade:pac:five-phases','rule_validated',65,0,14,false,true,'{"kind":"completion","completionId":"arcade:pac:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:memory:five-phases','arcade:memory:five-phases','rule_validated',50,0,10,false,true,'{"kind":"completion","completionId":"arcade:memory:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:platform:five-phases','arcade:platform:five-phases','rule_validated',65,0,14,false,true,'{"kind":"completion","completionId":"arcade:platform:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'completion:arcade:drone:five-phases','arcade:drone:five-phases','rule_validated',75,0,16,false,true,'{"kind":"completion","completionId":"arcade:drone:five-phases","toolId":"code-games","category":"arcade","minSeconds":20}'::jsonb),
+(p,'coverage:30','Cobertura 30%','server_verified',0,0,100,false,true,'{"kind":"coverage","percent":30}'::jsonb),
+(p,'coverage:50','Cobertura 50%','server_verified',0,0,150,false,true,'{"kind":"coverage","percent":50}'::jsonb),
+(p,'coverage:70','Cobertura 70%','server_verified',0,0,250,false,true,'{"kind":"coverage","percent":70}'::jsonb),
+(p,'coverage:80','Cobertura 80%','server_verified',0,0,300,false,true,'{"kind":"coverage","percent":80}'::jsonb),
+(p,'coverage:90','Cobertura 90%','server_verified',0,0,400,false,true,'{"kind":"coverage","percent":90}'::jsonb),
+(p,'coverage:100','Cobertura 100%','server_verified',0,0,750,false,true,'{"kind":"coverage","percent":100}'::jsonb)
+on conflict(platform_id,activity_id) do update set name=excluded.name,reward_policy=excluded.reward_policy,max_xp=excluded.max_xp,max_points=excluded.max_points,max_coins=excluded.max_coins,repeatable=excluded.repeatable,active=true,metadata=excluded.metadata;
+delete from public.reward_rules where platform_id=p and activity_id in ('completion:vm:installed:chromeos-flex','completion:vm:installed:mac-intel','completion:vm:installed:mac-apple','completion:voxelcraft:learning:mission','completion:voxelcraft:challenge:mission','completion:arcade:snake:five-phases','completion:arcade:hangman:five-phases','completion:arcade:trend:five-phases','completion:arcade:pac:five-phases','completion:arcade:memory:five-phases','completion:arcade:platform:five-phases','completion:arcade:drone:five-phases','coverage:30','coverage:50','coverage:70','coverage:80','coverage:90','coverage:100');
+insert into public.reward_rules(platform_id,activity_id,event_type,trust_level,xp,points,coins,repeatable,active,metadata) values
+(p,'completion:vm:installed:chromeos-flex','activity.completed','server_verified',120,0,45,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:vm:installed:mac-intel','activity.completed','server_verified',120,0,45,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:vm:installed:mac-apple','activity.completed','server_verified',120,0,45,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:voxelcraft:learning:mission','activity.completed','server_verified',50,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:voxelcraft:challenge:mission','activity.completed','server_verified',80,0,18,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:snake:five-phases','activity.completed','server_verified',55,0,12,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:hangman:five-phases','activity.completed','server_verified',45,0,9,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:trend:five-phases','activity.completed','server_verified',35,0,5,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:pac:five-phases','activity.completed','server_verified',65,0,14,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:memory:five-phases','activity.completed','server_verified',50,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:platform:five-phases','activity.completed','server_verified',65,0,14,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:arcade:drone:five-phases','activity.completed','server_verified',75,0,16,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:30','coverage.reached','server_verified',0,0,100,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:50','coverage.reached','server_verified',0,0,150,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:70','coverage.reached','server_verified',0,0,250,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:80','coverage.reached','server_verified',0,0,300,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:90','coverage.reached','server_verified',0,0,400,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'coverage:100','coverage.reached','server_verified',0,0,750,false,true,'{"source":"lab-virtual-core"}'::jsonb);
+end $$;

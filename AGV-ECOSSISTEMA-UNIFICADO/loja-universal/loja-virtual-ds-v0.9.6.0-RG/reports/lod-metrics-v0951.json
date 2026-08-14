@@ -1,0 +1,45 @@
+{
+  "version": "0.9.5.1",
+  "method": "glTF accessor and primitive inspection",
+  "lods": [
+    {
+      "file": "assets/avatars/avatar-tech-v1/avatar-tech-v1-lod0.glb",
+      "bytes": 105972,
+      "nodes": 97,
+      "meshes": 14,
+      "primitives": 14,
+      "estimatedDrawCalls": 14,
+      "verticesReferenced": 336,
+      "triangles": 168,
+      "materialsUsed": 14,
+      "animations": 28,
+      "skins": 0
+    },
+    {
+      "file": "assets/avatars/avatar-tech-v1/avatar-tech-v1-lod1.glb",
+      "bytes": 105324,
+      "nodes": 90,
+      "meshes": 14,
+      "primitives": 14,
+      "estimatedDrawCalls": 14,
+      "verticesReferenced": 336,
+      "triangles": 168,
+      "materialsUsed": 14,
+      "animations": 28,
+      "skins": 0
+    },
+    {
+      "file": "assets/avatars/avatar-tech-v1/avatar-tech-v1-lod2.glb",
+      "bytes": 104520,
+      "nodes": 81,
+      "meshes": 14,
+      "primitives": 14,
+      "estimatedDrawCalls": 14,
+      "verticesReferenced": 336,
+      "triangles": 168,
+      "materialsUsed": 14,
+      "animations": 28,
+      "skins": 0
+    }
+  ]
+}

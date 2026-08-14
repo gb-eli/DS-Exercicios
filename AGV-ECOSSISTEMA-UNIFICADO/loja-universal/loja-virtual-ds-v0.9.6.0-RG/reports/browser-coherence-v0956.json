@@ -1,0 +1,16 @@
+{
+  "version": "0.9.6.0-RG",
+  "equippedItems": [
+    "hair-cyan-stripe"
+  ],
+  "hairEquipped": true,
+  "profileSnapshotItems": 1,
+  "inventoryEquippedCards": 1,
+  "showcaseVisible": true,
+  "showcaseMessage": "Olá!",
+  "transactionItem": "Cabelo Faixa Ciano",
+  "mobileScrollWidth": 390,
+  "mobileViewport": 390,
+  "errors": [],
+  "passed": true
+}

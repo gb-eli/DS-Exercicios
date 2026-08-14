@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agvmais.com.br/contracts/teacher-content.schema.json",
+  "title": "AGV Teacher Activity Content",
+  "type": "object",
+  "required": ["platformId", "activityId", "title"],
+  "properties": {
+    "platformId": {"type": "string", "minLength": 1},
+    "activityId": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "answerText": {"type": ["string", "null"]},
+    "explanation": {"type": ["string", "null"]},
+    "solution": {
+      "type": "object",
+      "properties": {
+        "files": {"type": "object", "additionalProperties": {"type": "string"}},
+        "fields": {"type": "object"},
+        "expectedOutput": {},
+        "steps": {"type": "array"}
+      },
+      "additionalProperties": true
+    },
+    "rubric": {"type": "array"},
+    "interventionTips": {"type": "array"},
+    "sourceKind": {"enum": ["manual", "professor_bundle", "guided_data", "generated_reference"]},
+    "sourceRef": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

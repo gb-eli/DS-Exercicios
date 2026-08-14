@@ -1,0 +1,40 @@
+{
+  "version": "0.5.0",
+  "discounts": [
+    {
+      "id": "d10",
+      "percent": 10,
+      "weight": 35
+    },
+    {
+      "id": "d25",
+      "percent": 25,
+      "weight": 28
+    },
+    {
+      "id": "d38",
+      "percent": 38,
+      "weight": 18
+    },
+    {
+      "id": "d60",
+      "percent": 60,
+      "weight": 10
+    },
+    {
+      "id": "d80",
+      "percent": 80,
+      "weight": 5
+    },
+    {
+      "id": "d99",
+      "percent": 99,
+      "weight": 3
+    },
+    {
+      "id": "free",
+      "percent": 100,
+      "weight": 1
+    }
+  ]
+}

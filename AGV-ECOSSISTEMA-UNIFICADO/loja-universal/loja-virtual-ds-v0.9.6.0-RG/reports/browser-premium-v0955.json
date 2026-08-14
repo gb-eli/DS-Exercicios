@@ -1,0 +1,13 @@
+{
+  "errors": [],
+  "ultra": {
+    "renderer": "advanced",
+    "tier": "ultra",
+    "status": "Carregado e ativo",
+    "panel": 1
+  },
+  "shader": {
+    "available": false
+  },
+  "mobileOverflow": false
+}
