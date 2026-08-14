@@ -1,0 +1,28 @@
+{
+  "platformId": "game-informatica",
+  "name": "Desafio Informática",
+  "version": "2.5.7 build 20260811r38",
+  "integrationVersion": "0.0.0-not-implemented",
+  "canonicalRoot": "desafio-informatica-v2.2.0",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "EduAuth/local profile",
+    "economy": "manifest says wallet not applicable",
+    "progress": "local progress/XP"
+  },
+  "candidateHookFiles": [
+    "assets/js/eduauth/index.js",
+    "assets/js/storage.js",
+    "assets/js/app.js",
+    "assets/js/data.js"
+  ]
+}
