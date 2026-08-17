@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08131f">
+  <title>Plataforma Clássica DS</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main id="game-shell" class="game-shell" data-style="moderno">
+    <canvas id="game" width="960" height="540" aria-label="Plataforma Clássica DS — Mundo 1 Campo dos Pixels"></canvas>
+    <section class="hud" aria-live="polite">
+      <div class="objective">
+        <span id="world-label">MUNDO 1 · CAMPO DOS PIXELS</span>
+        <strong id="level-title">1-1 · Sinal de Partida</strong>
+        <small id="objective-text">Colete os chips e atravesse o portal.</small>
+      </div>
+      <div class="status">
+        <span id="style-label">MODERNO</span>
+        <span id="score-label">PONTOS 000000</span>
+        <span id="chip-label">CHIPS 0/0</span>
+        <span id="secret-label">SEGREDO 0/1</span>
+      </div>
+    </section>
+    <div id="toast" class="toast" hidden></div>
+    <div id="pause" class="pause" hidden><strong>PAUSADO</strong><span>P, Esc ou botão de pausa para continuar.</span></div>
+    <div id="touch-controls" class="touch-controls" hidden>
+      <div class="touch-move">
+        <button data-action="move-left" aria-label="Mover para esquerda">◀</button>
+        <button data-action="move-right" aria-label="Mover para direita">▶</button>
+      </div>
+      <div class="touch-actions">
+        <button data-action="reset-level" class="small" aria-label="Reiniciar fase">↻</button>
+        <button data-action="jump" class="jump" aria-label="Pular">▲</button>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>

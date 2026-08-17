@@ -1,0 +1,40 @@
+{
+  "name": "AGV Ecossistema Unificado",
+  "version": "v11.4-P5.0-LOBBY-3D-360",
+  "date": "2026-08-14",
+  "base": "v11.3-P4.3-SECURITY-HARDENING",
+  "lobby": {
+    "version": "0.3.0",
+    "rendering": "Three.js r180 local/WebGL",
+    "camera": "third-person 360",
+    "movement": ["walk", "run", "jump"],
+    "desktopControls": ["WASD/arrows", "mouse 360", "Shift run", "Space jump", "E/Enter interact"],
+    "mobileControls": ["virtual joystick", "run", "jump", "interact"],
+    "proceduralHumanoidAvatars": true,
+    "animatedEmotes": ["wave", "like", "spark"],
+    "remoteAvatarInterpolation": true,
+    "areas3D": ["1DS", "2DS", "3DS", "DS Sub"],
+    "qualityModes": ["low", "medium", "high"],
+    "presenceHeartbeatMs": 5000,
+    "presencePollMs": 4000,
+    "staffModeration": true
+  },
+  "securityInheritedFromP43": {
+    "lobbyPresenceDirectWrite": false,
+    "lobbyPresenceEdgeFunction": true,
+    "rateLimitByUserAndIp": true,
+    "centralSecurityTelemetry": true,
+    "ipCollectionServerSide": true,
+    "outsideParanaSeverity": "critical",
+    "outsideParanaAutomaticAccountBlock": false,
+    "securityFeedRoles": ["admin", "super_admin"],
+    "authenticatedLobbyPresencePrivileges": ["SELECT"],
+    "serviceRoleInFrontend": false,
+    "classSpecificScopeFixed": true
+  },
+  "studentPortal": {
+    "version": "0.14.3",
+    "backendRevalidation": true
+  },
+  "databaseMigration": "core/database/029_security_hardening_ip_rate_limits.sql"
+}

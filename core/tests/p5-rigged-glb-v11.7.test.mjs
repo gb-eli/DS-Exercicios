@@ -1,0 +1,11 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
+const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'../..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const rel=JSON.parse(read('release-v11.7.json'));assert.equal(rel.version,'v11.7-P5.3-RIGGED-GLB');
+const rig=read('lobby/assets/rigged-avatar.js'),lobby=read('lobby/assets/lobby3d.js'),cfg=read('lobby/assets/config.js');
+assert.ok(rig.includes('AnimationMixer')&&rig.includes('QuaternionKeyframeTrack')&&rig.includes('SkinnedMesh'),'runtime GLB rigado ausente');
+assert.ok(lobby.includes('loadRiggedAvatarAsset')&&lobby.includes("getAvatarMode:()=>rigAsset?'rigged-glb':'procedural'"),'fallback GLB/procedural ausente');
+assert.ok(cfg.includes("LOBBY_VERSION='0.5.0'")||cfg.includes("LOBBY_VERSION='0.6.0'")||cfg.includes("LOBBY_VERSION='0.7.0'")||cfg.includes("LOBBY_VERSION='0.8.0'")||cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.0'"),'versão do Lobby incorreta');
+const b=fs.readFileSync(path.join(root,'lobby/assets/models/agv-avatar-rig-v1.glb'));assert.equal(b.toString('ascii',0,4),'glTF');assert.equal(b.readUInt32LE(4),2);assert.equal(b.readUInt32LE(8),b.length);
+let off=12,json=null;while(off<b.length){const len=b.readUInt32LE(off),type=b.readUInt32LE(off+4);if(type===0x4e4f534a)json=JSON.parse(b.subarray(off+8,off+8+len).toString('utf8').trim());off+=8+len;}assert.ok(json);assert.ok(json.skins?.length===1&&json.meshes?.length===1);assert.deepEqual(json.animations.map(a=>a.name),['Idle','Walk','Run','Jump','Wave']);assert.ok(json.skins[0].joints.length>=8);assert.ok(b.length<100_000,'GLB inicial deve permanecer leve');
+console.log('PASS p5-rigged-glb-v11.7');

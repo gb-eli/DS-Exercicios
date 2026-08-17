@@ -1,0 +1,448 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.35.2",
+  "phase": "Fase 7.16C — Upgrade gráfico dos jogos atuais · Bloco 3/3",
+  "generatedAt": "2026-08-07T21:51:53.715Z",
+  "summary": {
+    "total": 87,
+    "passed": 87,
+    "failed": 0
+  },
+  "results": [
+    {
+      "name": "Versão pública v0.35.2 sincronizada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Fase 7.16C identificada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Manifesto gráfico v0.35.2 válido",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Camadas de palco não capturam ponteiro",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Redução de movimento permanece suportada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · preview 01 SVG",
+      "status": "pass",
+      "detail": "4350 bytes"
+    },
+    {
+      "name": "state-quest-rpg · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · preview 02 SVG",
+      "status": "pass",
+      "detail": "2386 bytes"
+    },
+    {
+      "name": "state-quest-rpg · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · preview 01 SVG",
+      "status": "pass",
+      "detail": "2696 bytes"
+    },
+    {
+      "name": "bit-bridge-16 · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · preview 02 SVG",
+      "status": "pass",
+      "detail": "2263 bytes"
+    },
+    {
+      "name": "bit-bridge-16 · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · preview 01 SVG",
+      "status": "pass",
+      "detail": "1984 bytes"
+    },
+    {
+      "name": "raycast-corridors · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · preview 02 SVG",
+      "status": "pass",
+      "detail": "3614 bytes"
+    },
+    {
+      "name": "raycast-corridors · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · preview 01 SVG",
+      "status": "pass",
+      "detail": "2124 bytes"
+    },
+    {
+      "name": "polygon-sector-94 · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · preview 02 SVG",
+      "status": "pass",
+      "detail": "2581 bytes"
+    },
+    {
+      "name": "polygon-sector-94 · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · preview 01 SVG",
+      "status": "pass",
+      "detail": "2135 bytes"
+    },
+    {
+      "name": "camera-evolution · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · preview 02 SVG",
+      "status": "pass",
+      "detail": "3642 bytes"
+    },
+    {
+      "name": "camera-evolution · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "voxelcraft-ds · manifesto presente",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "voxelcraft-ds · perfis gráficos declarados",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "voxelcraft-ds · tema CSS dedicado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "voxelcraft-ds · preview 01 SVG",
+      "status": "pass",
+      "detail": "2398 bytes"
+    },
+    {
+      "name": "voxelcraft-ds · preview 01 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "voxelcraft-ds · preview 02 SVG",
+      "status": "pass",
+      "detail": "6788 bytes"
+    },
+    {
+      "name": "voxelcraft-ds · preview 02 foi redesenhado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · efeito fillGradientStyle(0x02040b",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · efeito fillEllipse(playerX + tile /",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "state-quest-rpg · efeito graphics.fillCircle(width * ",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · efeito platformWidth, platform.heig",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · efeito graphics.fillCircle(portalX",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "bit-bridge-16 · efeito fillEllipse(worldX(state.pla",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · efeito fillGradientStyle(0x071122",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · efeito graphics.strokeCircle(x + wi",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "raycast-corridors · efeito graphics.fillCircle(screenX",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · efeito #drawAtmosphere(materialMode",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · efeito cornerColor",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "polygon-sector-94 · efeito accentColor",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · efeito #drawCameraLabAtmosphere(mat",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · efeito fovScale",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "camera-evolution · efeito lensColor",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "VoxelCraft · céu dinâmico",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "VoxelCraft · fog dinâmico",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "VoxelCraft · sol visual",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "VoxelCraft · exposição dinâmica",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "VoxelCraft · HUD visual modernizado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/bit-bridge-16/simulation/bit-bridge-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/block-reactor/simulation/block-reactor-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/board-arena/simulation/board-arena-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/camera-evolution/simulation/camera-evolution-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/data-maze/simulation/data-maze-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/motion-beat/simulation/motion-beat-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/orbital-sentinel/simulation/orbital-sentinel-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/polygon-sector-94/simulation/polygon-sector-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/puzzle-forge/simulation/puzzle-forge-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/raster-rally/simulation/raster-rally-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/raycast-corridors/simulation/raycast-corridors-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/room-quest/simulation/room-quest-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/space-blocks/simulation/space-blocks-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/state-quest-rpg/simulation/state-quest-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/trap-lab/simulation/trap-lab-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/vector-fleet/simulation/vector-fleet-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Simulação preservada · games/vector-tennis/simulation/vector-tennis-simulation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Todas as simulações integradas preservadas",
+      "status": "pass",
+      "detail": "17/17"
+    },
+    {
+      "name": "18 runtimes preservados",
+      "status": "pass",
+      "detail": "18"
+    },
+    {
+      "name": "106 módulos preservados",
+      "status": "pass",
+      "detail": "106"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+FLIPERAMA DS v0.34.1 — FASE 7.15R
+
+1. Extraia o ZIP.
+2. Envie TODO o conteúdo extraído para a raiz publicada.
+3. Não envie a pasta externa; index.html deve ficar diretamente na raiz.
+4. Aguarde a publicação do GitHub Pages.
+5. Atualize a página ignorando o cache.
+6. Abra diagnostico.html e confirme a versão 0.34.1.
+7. Abra diagnostico-jogos.html e confira 18 experiências aprovadas.
+8. Teste Board Arena e Vector Tennis nos modos CPU e dois jogadores locais.
+
+Caches esperados:
+- fliperama-ds-shell-v0.34.1
+- fliperama-ds-runtime-v0.34.1

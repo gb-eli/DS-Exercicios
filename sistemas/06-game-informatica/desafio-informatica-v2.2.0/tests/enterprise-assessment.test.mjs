@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {LESSONS,APP_VERSION,DATA_SCHEMA_VERSION,DIAGNOSTIC_MINIMUM_MINUTES} from '../assets/js/data.js';
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+assert.equal(APP_VERSION,'2.5.7');
+assert.equal(DATA_SCHEMA_VERSION,24);
+assert.equal(DIAGNOSTIC_MINIMUM_MINUTES,15);
+const targets=['1ADM-07','1ADM-08','2ADM-04','2ADM-05'];
+for(const id of targets){
+  const lesson=LESSONS.find(item=>item.id===id);assert.ok(lesson,`Aula ausente: ${id}`);
+  assert.ok(['assessment','recovery'].includes(lesson.kind));
+  for(const type of ['office-lab','formula','document-lab','presentation-lab','email-lab'])assert.ok(lesson.stages.some(stage=>stage.type===type),`${id} não usa ${type}.`);
+  assert.equal(lesson.stages.some(stage=>['hardware-lab','minigame','twofactor-lab'].includes(stage.type)),false,`${id} deve avaliar ferramentas administrativas, não hardware/jogos.`);
+}
+assert.notDeepEqual(LESSONS.find(x=>x.id==='1ADM-07').stages.map(s=>s.title),LESSONS.find(x=>x.id==='1ADM-08').stages.map(s=>s.title),'Recuperação do 1º ADM deve ter percurso diferente.');
+assert.notDeepEqual(LESSONS.find(x=>x.id==='2ADM-04').stages.map(s=>s.title),LESSONS.find(x=>x.id==='2ADM-05').stages.map(s=>s.title),'Recuperação do 2º ADM deve ter percurso diferente.');
+const appJs=fs.readFileSync(path.join(root,'assets/js/app.js'),'utf8');
+const css=fs.readFileSync(path.join(root,'assets/css/app.css'),'utf8');
+const pdf=fs.readFileSync(path.join(root,'assets/js/completion-pdf.js'),'utf8');
+assert.match(appJs,/renderOfficeLabStage/);
+assert.match(appJs,/renderFormulaStage/);
+assert.match(appJs,/renderDocumentLabStage/);
+assert.match(appJs,/renderPresentationLabStage/);
+assert.match(appJs,/renderEmailLabStage/);
+assert.match(appJs,/presentation_action_completed/);
+assert.match(appJs,/formula_completed/);
+assert.match(appJs,/pdfReleaseAt/);
+assert.match(appJs,/releaseCompletionPdf/);
+assert.match(css,/slides-workspace/);
+assert.match(css,/pdf-wait-card/);
+assert.match(pdf,/function assessmentPage/);
+const rubric=JSON.parse(fs.readFileSync(path.join(root,'assessment-rubric.json'),'utf8'));
+assert.equal(rubric.teacherReviewRequired,true);
+assert.equal(rubric.automaticGradeConversion,false);
+assert.equal(rubric.criteria.reduce((sum,item)=>sum+item.weight,0),100);
+assert.ok(rubric.criteria.some(item=>item.id==='comunicacao'));
+console.log('Integrated office assessment tests passed: spreadsheet, formulas, documents, presentations and Gmail with human-reviewed rubric.');

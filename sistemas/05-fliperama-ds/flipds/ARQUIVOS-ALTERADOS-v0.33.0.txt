@@ -1,0 +1,34 @@
+ARQUIVOS ALTERADOS OU ADICIONADOS — v0.33.0
+
+ALTERADOS
+- app.js
+- app.css
+- index.html
+- version.json
+- sw.js
+- diagnostico.html
+- diagnostico-jogos.html
+- README.md
+- COMO-ABRIR.txt
+- COMO-PUBLICAR.txt
+- PLANO-PROXIMAS-ETAPAS.md
+- validation/audit-games.js
+- validation/test-museum-timeline.js
+- validation/README.md
+- validation/game-audit-results.json
+- validation/museum-timeline-test-results.json
+
+ADICIONADOS
+- education/game-learning.json
+- education/README.md
+- validation/test-educational-content.js
+- validation/educational-content-test-results.json
+- MATRIZ-TESTES-JOGOS-v0.33.0.md
+- TESTES-CONTEUDO-EDUCACIONAL-v0.33.0.md
+- TESTES-MUSEU-LINHA-DO-TEMPO-v0.33.0.md
+- RELATORIO-VALIDACAO-FASE-7-14-v0.33.0.md
+- CHANGELOG-v0.33.0.md
+- BUGS-CORRIGIDOS-v0.33.0.md
+- CHECKLIST-TESTES-v0.33.0.md
+- ARQUIVOS-ALTERADOS-v0.33.0.txt
+- HASHES-SHA256.txt

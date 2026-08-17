@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const read=file=>fs.readFileSync(new URL(`../${file}`,import.meta.url),'utf8');
+const app=read('assets/js/app.js');
+const teacher=read('assets/js/teacher.js');
+const modal=read('assets/js/modal-manager.js');
+const sheet=read('assets/js/spreadsheet-engine.js');
+const mail=read('assets/js/email-engine.js');
+const css=read('assets/css/app.css');
+const sw=read('sw.js');
+
+assert.match(app,/installModalManager\(\)/,'app instala gerenciador de modais');
+assert.match(teacher,/installModalManager\(\)/,'painel instala gerenciador de modais');
+assert.match(modal,/aria-modal/,'modais recebem semântica');
+assert.match(modal,/event\.key==='Escape'/,'modais fecham com Escape');
+assert.match(modal,/event\.key!=='Tab'/,'modais prendem o foco');
+assert.match(modal,/returnFocus/,'foco retorna ao acionador');
+assert.match(sheet,/aria-labelledby/,'diálogo da planilha tem título acessível');
+assert.match(sheet,/event\.key==='Escape'/,'diálogo da planilha fecha com Escape');
+assert.match(sheet,/setAttribute\('role','menu'\)/,'menu da planilha expõe papel semântico');
+assert.match(mail,/mail-pro-compose-window" role="dialog"/,'composição do correio é diálogo');
+assert.match(mail,/mail-pro-picker" role="dialog"/,'seletor de arquivos é diálogo');
+assert.match(mail,/closeActiveLayer/,'correio fecha camada ativa pelo teclado');
+assert.match(mail,/event\.key==='Escape'/,'correio trata Escape');
+assert.match(css,/100dvh/,'CSS usa viewport dinâmica');
+assert.match(css,/html\.modal-open,body\.modal-open/,'fundo é bloqueado com modal aberto');
+assert.match(css,/\.lesson-sidebar \.stage-list\{grid-column:1\/-1;display:flex/,'etapas viram faixa horizontal no celular');
+assert.match(css,/\.rs-person-entry\{grid-template-columns:1fr\}/,'compartilhamento da planilha empilha no celular');
+assert.match(css,/\.rs-chart-panel\{position:fixed/,'gráfico usa painel seguro no celular');
+assert.match(css,/\.mail-pro-compose-window\{max-height:100dvh/,'composição respeita altura dinâmica');
+assert.match(css,/safe-area-inset-bottom/,'CSS respeita safe area');
+assert.match(css,/prefers-reduced-motion:reduce/,'movimento reduzido preservado');
+assert.match(sw,/modal-manager\.js/,'novo módulo entra no cache offline');
+console.log('Responsive/accessibility checks passed.');

@@ -1,0 +1,126 @@
+# Testes — Crystal Cascade 3D v0.37.2
+
+- Verificações: **118**
+- Aprovadas: **118**
+- Falhas: **0**
+
+## Itens
+
+- ✅ **12 fases definidas** — encontradas 12
+- ✅ **Tabuleiro 8×8** — estrutura principal
+- ✅ **Seis famílias de cristais** — cyan, amber, emerald, violet, rose, azure
+- ✅ **Fase 1 possui nome** — Pulso Inicial
+- ✅ **Fase 1 possui movimentos** — 24
+- ✅ **Fase 1 possui meta crescente** — 1800
+- ✅ **Fase 1 bloqueadores válidos** — 0 células
+- ✅ **Fase 1 coletas válidas** — {"cyan":8}
+- ✅ **Fase 1 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 1 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 1 conclusão automatizada** — status victory; score 4280; movimentos 21; gelo 0
+- ✅ **Fase 2 possui nome** — Prisma Duplo
+- ✅ **Fase 2 possui movimentos** — 23
+- ✅ **Fase 2 possui meta crescente** — 2400
+- ✅ **Fase 2 bloqueadores válidos** — 0 células
+- ✅ **Fase 2 coletas válidas** — {"amber":10,"violet":8}
+- ✅ **Fase 2 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 2 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 2 conclusão automatizada** — status victory; score 23060; movimentos 17; gelo 0
+- ✅ **Fase 3 possui nome** — Câmara de Eco
+- ✅ **Fase 3 possui movimentos** — 22
+- ✅ **Fase 3 possui meta crescente** — 3000
+- ✅ **Fase 3 bloqueadores válidos** — 4 células
+- ✅ **Fase 3 coletas válidas** — {"emerald":12}
+- ✅ **Fase 3 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 3 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 3 conclusão automatizada** — status victory; score 14930; movimentos 16; gelo 0
+- ✅ **Fase 4 possui nome** — Anel Congelado
+- ✅ **Fase 4 possui movimentos** — 24
+- ✅ **Fase 4 possui meta crescente** — 3600
+- ✅ **Fase 4 bloqueadores válidos** — 12 células
+- ✅ **Fase 4 coletas válidas** — {}
+- ✅ **Fase 4 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 4 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 4 conclusão automatizada** — status victory; score 15170; movimentos 15; gelo 0
+- ✅ **Fase 5 possui nome** — Ressonância
+- ✅ **Fase 5 possui movimentos** — 22
+- ✅ **Fase 5 possui meta crescente** — 4300
+- ✅ **Fase 5 bloqueadores válidos** — 4 células
+- ✅ **Fase 5 coletas válidas** — {"rose":12,"cyan":10}
+- ✅ **Fase 5 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 5 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 5 conclusão automatizada** — status victory; score 16280; movimentos 8; gelo 0
+- ✅ **Fase 6 possui nome** — Grade de Pressão
+- ✅ **Fase 6 possui movimentos** — 25
+- ✅ **Fase 6 possui meta crescente** — 5000
+- ✅ **Fase 6 bloqueadores válidos** — 10 células
+- ✅ **Fase 6 coletas válidas** — {}
+- ✅ **Fase 6 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 6 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 6 conclusão automatizada** — status victory; score 31810; movimentos 8; gelo 0
+- ✅ **Fase 7 possui nome** — Prisma Quebrado
+- ✅ **Fase 7 possui movimentos** — 24
+- ✅ **Fase 7 possui meta crescente** — 5600
+- ✅ **Fase 7 bloqueadores válidos** — 8 células
+- ✅ **Fase 7 coletas válidas** — {"amber":14,"emerald":12}
+- ✅ **Fase 7 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 7 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 7 conclusão automatizada** — status victory; score 27520; movimentos 3; gelo 0
+- ✅ **Fase 8 possui nome** — Órbita Violeta
+- ✅ **Fase 8 possui movimentos** — 20
+- ✅ **Fase 8 possui meta crescente** — 6200
+- ✅ **Fase 8 bloqueadores válidos** — 12 células
+- ✅ **Fase 8 coletas válidas** — {"violet":18}
+- ✅ **Fase 8 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 8 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 8 conclusão automatizada** — status victory; score 27340; movimentos 13; gelo 0
+- ✅ **Fase 9 possui nome** — Cascata Quântica
+- ✅ **Fase 9 possui movimentos** — 24
+- ✅ **Fase 9 possui meta crescente** — 7000
+- ✅ **Fase 9 bloqueadores válidos** — 6 células
+- ✅ **Fase 9 coletas válidas** — {"cyan":12,"rose":12}
+- ✅ **Fase 9 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 9 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 9 conclusão automatizada** — status victory; score 15600; movimentos 16; gelo 0
+- ✅ **Fase 10 possui nome** — Núcleo Hexa
+- ✅ **Fase 10 possui movimentos** — 25
+- ✅ **Fase 10 possui meta crescente** — 7800
+- ✅ **Fase 10 bloqueadores válidos** — 10 células
+- ✅ **Fase 10 coletas válidas** — {"emerald":14,"amber":14}
+- ✅ **Fase 10 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 10 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 10 conclusão automatizada** — status victory; score 33040; movimentos 13; gelo 0
+- ✅ **Fase 11 possui nome** — Tempestade Prismática
+- ✅ **Fase 11 possui movimentos** — 23
+- ✅ **Fase 11 possui meta crescente** — 8600
+- ✅ **Fase 11 bloqueadores válidos** — 11 células
+- ✅ **Fase 11 coletas válidas** — {"violet":14,"rose":14}
+- ✅ **Fase 11 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 11 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 11 conclusão automatizada** — status victory; score 23960; movimentos 15; gelo 0
+- ✅ **Fase 12 possui nome** — Coração da Cascata
+- ✅ **Fase 12 possui movimentos** — 20
+- ✅ **Fase 12 possui meta crescente** — 10000
+- ✅ **Fase 12 bloqueadores válidos** — 16 células
+- ✅ **Fase 12 coletas válidas** — {"cyan":10,"amber":10,"emerald":10,"violet":10,"rose":10}
+- ✅ **Fase 12 inicia sem match automático** — tabuleiro limpo
+- ✅ **Fase 12 inicia com jogada possível** — ao menos uma troca válida
+- ✅ **Fase 12 conclusão automatizada** — status victory; score 30770; movimentos 7; gelo 0
+- ✅ **Troca sem combinação é rejeitada** — 0↔8
+- ✅ **Combinação de 4 cria especial** — [{"index":2,"type":"row"}]
+- ✅ **Combinação de 5 cria explosão** — [{"index":2,"type":"bomb"}]
+- ✅ **Snapshot restaura tabuleiro** — schema 1
+- ✅ **Integração app: crystal-cascade-3d** — app.js
+- ✅ **Integração app: games/crystal-cascade-3d/runtime** — app.js
+- ✅ **Integração app: fliperama-ds-crystal-cascade** — app.js
+- ✅ **Arquivo do jogo: index.html** — index.html
+- ✅ **Arquivo do jogo: style.css** — style.css
+- ✅ **Arquivo do jogo: engine.js** — engine.js
+- ✅ **Arquivo do jogo: game.js** — game.js
+- ✅ **Arquivo do jogo: levels.json** — levels.json
+- ✅ **Mídia: logo.svg** — logo.svg
+- ✅ **Mídia: preview-01.svg** — preview-01.svg
+- ✅ **Mídia: preview-02.svg** — preview-02.svg
+- ✅ **Perfil externo registrado** — game-profiles.json
+- ✅ **Ficha educacional registrada** — game-learning.json
+- ✅ **Three.js local reutilizado** — sem CDN
+- ✅ **Sem identidade comercial copiada** — identidade autoral

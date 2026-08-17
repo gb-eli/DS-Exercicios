@@ -1,0 +1,61 @@
+{
+  "schema": "agv-legacy-route-compatibility",
+  "version": "14.0.0",
+  "phase": "P7.1-production-cleanup",
+  "generatedAt": "2026-08-15",
+  "policy": "legacy directory roots preserved as redirects; canonical platforms remain authoritative",
+  "aliases": [
+    {
+      "legacy": "sistemas/02-ctf-ds/CTF 2.3.0/index.html",
+      "canonical": "../ctf/index.html"
+    },
+    {
+      "legacy": "sistemas/02-ctf-ds/ctfds-cyber-security-github-pages-v2.1.0/index.html",
+      "canonical": "../ctf/index.html"
+    },
+    {
+      "legacy": "sistemas/02-ctf-ds/ctfds-cyber-security-github-pages-v2.2.0/index.html",
+      "canonical": "../ctf/index.html"
+    },
+    {
+      "legacy": "sistemas/03-planetario-ds/universo-ds/index.html",
+      "canonical": "../universods/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-github-pages-v18.1-final/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-v19.0-publicar-github/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-v25.0-publicar-github/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-v26.0/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-v31.0 up/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/04-desafio-ds/desafio-ds-v32.0/index.html",
+      "canonical": "../desafio%2033/index.html"
+    },
+    {
+      "legacy": "sistemas/05-fliperama-ds/FLIPDS/index.html",
+      "canonical": "../flipds/index.html"
+    },
+    {
+      "legacy": "sistemas/05-fliperama-ds/fliperama-ds-v0.21.0/index.html",
+      "canonical": "../flipds/index.html"
+    }
+  ]
+}

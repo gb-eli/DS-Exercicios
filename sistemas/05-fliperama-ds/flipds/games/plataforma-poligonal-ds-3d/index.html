@@ -1,0 +1,8 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Plataforma Poligonal DS 3D</title><link rel="stylesheet" href="style.css"></head><body>
+<canvas id="scene" aria-label="Mundo tridimensional do Plataforma Poligonal DS 3D"></canvas>
+<div class="hud"><div class="brand"><b>PLATAFORMA POLIGONAL DS 3D</b><span id="areaLabel">Área 1/4</span></div><div class="stats"><span>Fragmentos <b id="shards">0/12</b></span><span>Vidas <b id="lives">3</b></span><span>Pontos <b id="score">0</b></span></div></div>
+<div class="objective" id="objective">Colete 3 fragmentos e alcance o portal.</div>
+<div class="hint" id="hint">WASD mover · Espaço pular · arraste para girar câmera · R reiniciar</div>
+<div class="touch" id="touch"><div class="pad"><button data-action="left" aria-label="Mover à esquerda">◀</button><button data-action="forward" aria-label="Avançar">▲</button><button data-action="right" aria-label="Mover à direita">▶</button><button data-action="back" aria-label="Recuar">▼</button></div><button class="jump" data-action="jump">PULAR</button></div>
+<div class="result" id="result" hidden><div class="card"><h2>Campanha concluída!</h2><p id="resultText"></p><button id="replay">Jogar novamente</button></div></div>
+<script type="module" src="game.js"></script></body></html>

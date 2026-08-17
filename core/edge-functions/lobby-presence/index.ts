@@ -1,0 +1,20 @@
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { requireLiveAuthSession } from "./session-guard.ts";
+import {createClient} from "jsr:@supabase/supabase-js@2.111.0";
+import {consumeRate,ensureAccess,logRisk,requestIp} from "./security.ts";
+const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, x-client-info, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS"};
+const J=(x:unknown,s=200,extra:Record<string,string>={})=>new Response(JSON.stringify(x),{status:s,headers:{...H,...extra,"content-type":"application/json","cache-control":"no-store"}});
+const AREAS=new Set(['central','1ds','2ds','3ds','sub']),EMOTES=new Set(['wave','like','spark']);
+const uuidRx=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{headers:H});if(req.method!=='POST')return J({error:'method_not_allowed'},405);if(Number(req.headers.get('content-length')||0)>32768)return J({error:'payload_too_large'},413);try{
+ const url=Deno.env.get('SUPABASE_URL')!,anon=Deno.env.get('SUPABASE_ANON_KEY')!,service=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,auth=req.headers.get('Authorization')||'';
+ const uc=createClient(url,anon,{global:{headers:{Authorization:auth}}}),db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}}),{data:{user}}=await uc.auth.getUser();if(!user)return J({error:'unauthorized'},401);const live=await requireLiveAuthSession(db,auth,user.id);if(!live.ok)return J({error:live.error,detail:live.detail||null},live.status);
+ const {data:p}=await db.from('profiles').select('role,active,must_change_password').eq('id',user.id).maybeSingle();if(!p?.active||p.must_change_password||!['student','teacher','admin','super_admin'].includes(String(p.role)))return J({error:'profile_not_ready'},403);
+ await ensureAccess(db,user,req,'lobby-presence');const body=await req.json().catch(()=>({})),action=String(body?.action||'heartbeat');const rl=await consumeRate(db,`lobby-presence:${user.id}:${requestIp(req)||'noip'}`,40,60,120);if(rl.allowed===false){await logRisk(db,user,req,'rate_limit','high',{source:'lobby-presence',action,count:rl.count});return J({error:'rate_limited',retry_after:rl.retry_after||120},429,{'Retry-After':String(rl.retry_after||120)})}
+ if(action==='leave'){await db.from('lobby_presence').delete().eq('student_id',user.id);return J({ok:true})}
+ if(action!=='heartbeat')return J({error:'unknown_action'},400);
+ if(p.role==='student'){const {data:b}=await db.from('lobby_blocks').select('blocked_until,reason').eq('student_id',user.id).gt('blocked_until',new Date().toISOString()).maybeSingle();if(b)return J({error:'lobby_access_blocked',blocked_until:b.blocked_until,reason:b.reason||null},423)}
+ let x=Number(body?.x),y=Number(body?.y);const invalid=!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>1600||y<0||y>1000;if(invalid){await logRisk(db,user,req,'lobby_coordinate_tampering','warning',{source:'lobby-presence',x:body?.x,y:body?.y});x=Math.max(0,Math.min(1600,Number.isFinite(x)?x:800));y=Math.max(0,Math.min(1000,Number.isFinite(y)?y:500))}
+ const area=AREAS.has(String(body?.area))?String(body.area):'central';const emote=EMOTES.has(String(body?.emote))?String(body.emote):null;let target=uuidRx.test(String(body?.interaction_target_id||''))?String(body.interaction_target_id):null;if(p.role==='student')target=null;
+ const row:any={student_id:user.id,x:Math.round(x),y:Math.round(y),area,emote,emote_until:emote?new Date(Date.now()+4500).toISOString():null,interaction_target_id:target};const {error}=await db.from('lobby_presence').upsert(row,{onConflict:'student_id'});if(error){if(String(error.message||'').includes('lobby_access_blocked'))return J({error:'lobby_access_blocked'},423);throw error}return J({ok:true});
+}catch(e){console.error(e);return J({error:'internal_error'},500)}});
