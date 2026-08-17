@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-label="Logo Duo Elementos DS">
-<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#ff7a35"/><stop offset=".48" stop-color="#ffd36b"/><stop offset=".52" stop-color="#88dcff"/><stop offset="1" stop-color="#287dff"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".45"/></filter></defs>
-<rect width="640" height="220" rx="34" fill="#07131f"/><path d="M60 166C112 70 180 54 260 108 329 155 400 69 580 70" fill="none" stroke="#ffffff10" stroke-width="26"/>
-<g filter="url(#s)"><circle cx="158" cy="108" r="62" fill="#ff7a35"/><circle cx="482" cy="108" r="62" fill="#53c5ff"/><path d="M140 99h14v14h-14zm28 0h14v14h-14z" fill="#101723"/><path d="M464 99h14v14h-14zm28 0h14v14h-14z" fill="#101723"/></g>
-<text x="320" y="93" text-anchor="middle" font-family="system-ui,sans-serif" font-size="38" font-weight="900" fill="url(#g)">DUO ELEMENTOS</text><text x="320" y="136" text-anchor="middle" font-family="system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="8" fill="#d7e8f5">DS</text><text x="320" y="180" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#91aabd">COOPERAÇÃO · LÓGICA · PLATAFORMA</text>
-</svg>
