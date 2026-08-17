@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Setor Poligonal 94 — WEBGL · LOW-POLY · BEACONS">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#040915"/><stop offset=".58" stop-color="#0b1830"/><stop offset="1" stop-color="#12091e"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#49e7ff" stop-opacity=".32"/><stop offset="1" stop-color="#49e7ff" stop-opacity="0"/></radialGradient>
+<filter id="soft"><feGaussianBlur stdDeviation="10"/></filter>
+</defs>
+<rect width="960" height="540" fill="url(#bg)"/>
+<circle cx="165" cy="110" r="190" fill="url(#glow)"/><circle cx="820" cy="440" r="230" fill="url(#glow)" opacity=".55"/>
+<path d="M0 460H960" stroke="#49e7ff" stroke-opacity=".1"/><path d="M0 80H960" stroke="#d95cff" stroke-opacity=".08"/>
+<path d="M0 540 480 235 960 540Z" fill="#0d1728"/><g stroke="#27729c" stroke-opacity=".5"><path d="M480 235 80 540M480 235 240 540M480 235 400 540M480 235 560 540M480 235 720 540M480 235 880 540"/><path d="M350 335h260M260 405h440M170 480h620"/></g><g fill="#253e6b" stroke="#49e7ff" stroke-opacity=".5"><path d="M170 405 260 350 340 392 245 445Z"/><path d="M650 390 735 330 815 375 720 435Z"/></g><g fill="#d95cff"><rect x="92" y="250" width="12" height="150"/><rect x="856" y="250" width="12" height="150"/></g><g fill="#62f5c5"><path d="M480 310 505 335 480 360 455 335Z"/><path d="M620 285 642 307 620 329 598 307Z"/></g><ellipse cx="480" cy="455" rx="34" ry="10" fill="#000" opacity=".4"/><rect x="460" y="405" width="40" height="55" fill="#4c8cff"/><rect x="468" y="382" width="24" height="26" fill="#d9edff"/>
+<rect x="20" y="18" width="920" height="504" rx="24" fill="none" stroke="#49e7ff" stroke-opacity=".34" stroke-width="2"/>
+<text x="48" y="64" fill="#f3f8ff" font-family="Arial,system-ui" font-size="30" font-weight="800">Setor Poligonal 94</text>
+<text x="50" y="92" fill="#49e7ff" font-family="monospace" font-size="15">WEBGL · LOW-POLY · BEACONS</text>
+<text x="782" y="505" fill="#c8d4e8" font-family="monospace" font-size="14">PREVIEW 1/2</text>
+</svg>

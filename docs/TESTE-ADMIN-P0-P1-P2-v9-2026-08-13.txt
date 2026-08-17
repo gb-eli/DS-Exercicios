@@ -1,0 +1,85 @@
+DS EXERCÍCIOS — QA v9 — ADM P0 + P1 + P2
+Data: 13/08/2026
+
+STATUS GERAL: PASS COM LIMITAÇÕES DE AUTH ADMIN EXPLÍCITAS
+
+1. NOVO ADM
+PASS — /admin/index.html
+PASS — CSP presente
+PASS — 12 áreas de navegação
+PASS — responsivo desktop/mobile
+PASS — login restrito a admin/super_admin via staff-dashboard
+
+2. P0 — VISÃO GERAL
+PASS — cards operacionais
+PASS — alunos que precisam de atenção
+PASS — sessões ao vivo
+PASS — GitHub recente
+PASS — segurança recente
+PASS — risco exibido como sinal, não acusação
+
+3. P1 — USUÁRIOS
+ACTIVE — admin-profile-user v3 / JWT obrigatório
+PASS — editar nome
+PASS — alterar turma
+PASS — corrigir CGM cadastral sem reusar como senha
+PASS — ativar/desativar
+PASS — encerrar activity_sessions
+PASS — forçar troca de senha
+PASS — auditoria das ações
+PASS — pré-cadastro via admin-roster
+PENDENTE — alterar e-mail de Auth já ativado
+PENDENTE — gerar senha temporária Auth
+PENDENTE — revogar Auth sessions de terceiro por API
+NOTA — tentativas de deploy com auth.admin.* foram bloqueadas pela camada de segurança do conector; funções não foram simuladas no frontend.
+
+4. P2 — PERFIL 360º
+PASS — Resumo
+PASS — Atividades
+PASS — Código
+PASS — Histórico
+PASS — GitHub
+PASS — Sessões
+PASS — Segurança
+PASS — Auditoria/estado documentado
+PASS — tempo hoje e total via activity_sessions com RLS staff
+PASS — CGM privado somente no detalhe
+PASS — deeplink ADM -> Console Professor
+
+5. HISTÓRICO DE CÓDIGO
+APPLIED — student_file_history_select_staff
+PASS — authenticated + private.staff_can_access_student(student_id)
+PASS — aluno continua podendo ler apenas o próprio histórico
+PASS — staff não recebe leitura global irrestrita
+
+6. FRONTEND / SEGREDOS
+PASS — admin.js node --check
+PASS — config.js node --check
+PASS — professor.js node --check
+PASS — nenhum sb_secret real
+PASS — nenhuma service_role no frontend
+PASS — nenhum gabarito privado incluído no ADM
+
+7. REGRESSÃO CUMULATIVA
+PASS — core/tests/admin-p0-p1-p2-v9.test.mjs
+PASS — core/tests/teacher-mode.test.mjs
+PASS — core/tests/lab-exercises-v8.test.mjs
+PASS — core/tests/agv-core-sdk.test.mjs
+PASS — LAB Virtual: 9 testes executáveis
+PASS — CTF DS 3.2.0 npm test
+PASS — Loja Virtual DS v0.9.6.0-RG validate_v0960rg.py
+
+8. SECURITY ADVISOR
+SEM WARN NOVO DA v9.
+WARN conhecido — public.claim_core_reward(...) SECURITY DEFINER executável por authenticated.
+WARN conhecido — Leaked Password Protection desabilitado.
+INFO server-only/RLS sem policy permanecem intencionais em tabelas privadas de aplicação.
+
+9. LIMITAÇÕES DECLARADAS
+- Auth admin completo ainda não implementado por bloqueio do conector.
+- Auditoria global avançada/relatórios exportáveis ficam para P5.
+- Comandos remotos de sessão ficam para P4.
+- Central completa de liberações/ajuda fica para P3.
+
+RESULTADO:
+P0 + P1 operacional + P2 aprovados para continuidade cumulativa.

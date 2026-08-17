@@ -1,0 +1,4 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Plataforma em iframe</title><script src="../../demo/integration-data.js"></script><script src="../../dist/ds-store-sdk.js"></script><button id="send">Enviar recompensa ao host</button><pre id="out"></pre><script>
+const sdk=DSStoreSDK.createAdapter('lab-virtual-ds',{profileId:'aluno-iframe',transport:'postMessage',targetWindow:parent,targetOrigin:location.origin});
+document.querySelector('#send').onclick=async()=>document.querySelector('#out').textContent=JSON.stringify(await sdk.labCompleted({eventId:'lab-iframe-'+Date.now(),amount:700,evidenceId:'evidencia-lab',activityId:'lab-redes'}),null,2);
+</script></html>

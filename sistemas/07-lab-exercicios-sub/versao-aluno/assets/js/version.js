@@ -1,0 +1,209 @@
+window.VersionManager = (() => {
+  const config = () => window.APP_CONFIG || {};
+  let detailsReturnFocus = null;
+
+  function parse(version = '0.0.0') {
+    return String(version).replace(/^v/i, '').split('.').map(part => Number.parseInt(part, 10) || 0);
+  }
+
+  function compare(a, b) {
+    const left = parse(a);
+    const right = parse(b);
+    const length = Math.max(left.length, right.length);
+    for (let i = 0; i < length; i += 1) {
+      const difference = (left[i] || 0) - (right[i] || 0);
+      if (difference !== 0) return difference;
+    }
+    return 0;
+  }
+
+  function formatDate(value) {
+    if (!value) return 'não informada';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat('pt-BR', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+      timeZone: 'America/Sao_Paulo'
+    }).format(date);
+  }
+
+  function setAll(selector, value) {
+    document.querySelectorAll(selector).forEach(element => {
+      element.textContent = value;
+    });
+  }
+
+  function setStatus(text, state = 'checking') {
+    document.querySelectorAll('[data-version-status]').forEach(element => {
+      element.textContent = text;
+      element.dataset.state = state;
+    });
+  }
+
+  function setUpdateButtons(visible, latest = '') {
+    document.querySelectorAll('[data-update-app]').forEach(button => {
+      button.hidden = !visible;
+      button.dataset.latest = latest;
+      button.textContent = latest ? `Atualizar para v${latest}` : 'Atualizar ferramenta';
+    });
+  }
+
+  async function check() {
+    const current = config().version || '0.0.0';
+    const manifestUrl = config().versionManifest || 'version.json';
+    setStatus('Verificando versão pública...', 'checking');
+    setUpdateButtons(false);
+
+    try {
+      const separator = manifestUrl.includes('?') ? '&' : '?';
+      const response = await fetch(`${manifestUrl}${separator}verificar=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const manifest = await response.json();
+      const latest = manifest.version || current;
+      try {
+        localStorage.setItem('dsLatestVersionManifest', JSON.stringify(manifest));
+        localStorage.setItem('dsLastVersionCheck', new Date().toISOString());
+      } catch (storageError) {
+        console.warn('A conferência funcionou, mas o histórico local de versão não pôde ser salvo.', storageError);
+      }
+      setAll('[data-public-version]', `v${latest}`);
+
+      if (compare(latest, current) > 0) {
+        setStatus(`Atualização disponível: v${latest}`, 'outdated');
+        setUpdateButtons(true, latest);
+      } else if (compare(latest, current) < 0) {
+        setStatus(`Versão de desenvolvimento v${current}`, 'development');
+      } else {
+        setStatus('Você está usando a versão pública mais recente.', 'current');
+      }
+      return manifest;
+    } catch (error) {
+      const localMode = location.protocol === 'file:';
+      setStatus(
+        localMode
+          ? 'Modo local: publique ou use um servidor local para conferir atualizações.'
+          : 'Não foi possível conferir a versão pública agora.',
+        'offline'
+      );
+      return null;
+    }
+  }
+
+  async function update() {
+    setStatus('Preparando atualização...', 'checking');
+    try {
+      const app = config();
+      const hints = [app.storagePrefix, app.shortName, location.pathname.split('/').filter(Boolean).slice(-2, -1)[0]]
+        .filter(Boolean)
+        .map(value => String(value).toLowerCase().replace(/[^a-z0-9]+/g, ''))
+        .filter(value => value.length >= 4);
+      if ('caches' in window && hints.length) {
+        const names = await caches.keys();
+        const owned = names.filter(name => {
+          const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+          return hints.some(hint => normalized.includes(hint));
+        });
+        await Promise.all(owned.map(name => caches.delete(name)));
+      }
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        const currentDirectory = new URL('.', location.href).href;
+        await Promise.all(registrations
+          .filter(registration => registration.scope.startsWith(currentDirectory))
+          .map(registration => registration.update()));
+      }
+    } catch (error) {
+      console.warn('Não foi possível limpar todo o cache:', error);
+    }
+    const url = new URL(location.href);
+    url.searchParams.set('atualizacao', Date.now().toString());
+    location.replace(url.toString());
+  }
+
+  function drawerFocusable(drawer) {
+    if (!drawer || drawer.hidden) return [];
+    return [...drawer.querySelectorAll('button, input, select, textarea, summary, [href], [tabindex]:not([tabindex="-1"])')]
+      .filter(element => !element.disabled && !element.hidden && element.getClientRects().length > 0);
+  }
+
+  function openDetails() {
+    const drawer = document.querySelector('#versionDrawer');
+    if (drawer) {
+      detailsReturnFocus = document.activeElement;
+      drawer.hidden = false;
+      drawer.setAttribute('aria-hidden', 'false');
+      window.setTimeout(() => drawerFocusable(drawer)[0]?.focus({ preventScroll: true }), 30);
+    }
+  }
+
+  function closeDetails() {
+    const drawer = document.querySelector('#versionDrawer');
+    if (drawer) {
+      const wasOpen = !drawer.hidden;
+      drawer.hidden = true;
+      drawer.setAttribute('aria-hidden', 'true');
+      if (wasOpen && detailsReturnFocus?.focus && document.contains(detailsReturnFocus)) detailsReturnFocus.focus({ preventScroll: true });
+      detailsReturnFocus = null;
+    }
+  }
+
+  function handleDrawerKeydown(event) {
+    const drawer = document.querySelector('#versionDrawer');
+    if (!drawer || drawer.hidden) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeDetails();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = drawerFocusable(drawer);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !focusable.includes(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !focusable.includes(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function init() {
+    const app = config();
+    setAll('[data-app-version]', `v${app.version || '0.0.0'}`);
+    setAll('[data-app-updated]', formatDate(app.releasedAt));
+    setAll('[data-app-name]', app.name || 'Plataforma 2DS Front-End');
+    setUpdateButtons(false);
+
+    document.querySelectorAll('[data-check-version]').forEach(button => {
+      button.addEventListener('click', check);
+    });
+    document.querySelectorAll('[data-update-app]').forEach(button => {
+      button.addEventListener('click', update);
+    });
+    document.querySelectorAll('[data-version-details]').forEach(button => {
+      button.addEventListener('click', openDetails);
+    });
+    document.querySelectorAll('[data-close-version]').forEach(button => {
+      button.addEventListener('click', closeDetails);
+    });
+
+    const versionDrawer = document.querySelector('#versionDrawer');
+    if (versionDrawer) {
+      versionDrawer.addEventListener('click', event => {
+        if (event.target === versionDrawer) closeDetails();
+      });
+    }
+    document.addEventListener('keydown', handleDrawerKeydown);
+    check();
+  }
+
+  return { init, check, update, compare, formatDate };
+})();
+
+document.addEventListener('DOMContentLoaded', () => VersionManager.init());

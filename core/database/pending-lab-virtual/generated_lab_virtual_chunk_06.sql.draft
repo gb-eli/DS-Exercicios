@@ -1,0 +1,44 @@
+do $$ declare p uuid; begin
+select id into p from public.platforms where code='lab-virtual';
+if p is null then raise exception 'platform lab-virtual missing'; end if;
+insert into public.activity_catalog(platform_id,activity_id,name,reward_policy,max_xp,max_points,max_coins,repeatable,active,metadata) values
+(p,'completion:tutorial:gmail-enviar','tutorial:gmail-enviar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:gmail-enviar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:gmail-cc-cco','tutorial:gmail-cc-cco','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:gmail-cc-cco","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:drive-compartilhar','tutorial:drive-compartilhar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:drive-compartilhar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:arquivos-downloads','tutorial:arquivos-downloads','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:arquivos-downloads","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:pastas-organizacao','tutorial:pastas-organizacao','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:pastas-organizacao","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:vscode-primeiro-projeto','tutorial:vscode-primeiro-projeto','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:vscode-primeiro-projeto","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:git-basico','tutorial:git-basico','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:git-basico","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:github-criar-repo','tutorial:github-criar-repo','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:github-criar-repo","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:github-clone','tutorial:github-clone','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:github-clone","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:github-push-pages','tutorial:github-push-pages','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:github-push-pages","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:docs-formatar','tutorial:docs-formatar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:docs-formatar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:sheets-basico','tutorial:sheets-basico','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:sheets-basico","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:slides-apresentar','tutorial:slides-apresentar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:slides-apresentar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:forms-criar','tutorial:forms-criar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:forms-criar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:figma-basico','tutorial:figma-basico','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:figma-basico","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:canva-educacao','tutorial:canva-educacao','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:canva-educacao","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:dominio-hospedagem','tutorial:dominio-hospedagem','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:dominio-hospedagem","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:vercel-deploy','tutorial:vercel-deploy','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:vercel-deploy","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb)
+on conflict(platform_id,activity_id) do update set name=excluded.name,reward_policy=excluded.reward_policy,max_xp=excluded.max_xp,max_points=excluded.max_points,max_coins=excluded.max_coins,repeatable=excluded.repeatable,active=true,metadata=excluded.metadata;
+delete from public.reward_rules where platform_id=p and activity_id in ('completion:tutorial:gmail-enviar','completion:tutorial:gmail-cc-cco','completion:tutorial:drive-compartilhar','completion:tutorial:arquivos-downloads','completion:tutorial:pastas-organizacao','completion:tutorial:vscode-primeiro-projeto','completion:tutorial:git-basico','completion:tutorial:github-criar-repo','completion:tutorial:github-clone','completion:tutorial:github-push-pages','completion:tutorial:docs-formatar','completion:tutorial:sheets-basico','completion:tutorial:slides-apresentar','completion:tutorial:forms-criar','completion:tutorial:figma-basico','completion:tutorial:canva-educacao','completion:tutorial:dominio-hospedagem','completion:tutorial:vercel-deploy');
+insert into public.reward_rules(platform_id,activity_id,event_type,trust_level,xp,points,coins,repeatable,active,metadata) values
+(p,'completion:tutorial:gmail-enviar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:gmail-cc-cco','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:drive-compartilhar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:arquivos-downloads','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:pastas-organizacao','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:vscode-primeiro-projeto','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:git-basico','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:github-criar-repo','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:github-clone','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:github-push-pages','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:docs-formatar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:sheets-basico','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:slides-apresentar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:forms-criar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:figma-basico','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:canva-educacao','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:dominio-hospedagem','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:vercel-deploy','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb);
+end $$;

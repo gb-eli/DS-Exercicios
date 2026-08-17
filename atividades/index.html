@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; worker-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co https://cdn.jsdelivr.net https://viacep.com.br; style-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self'; media-src 'none'; object-src 'none'; manifest-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+
+  <meta name="color-scheme" content="dark" />
+  <title>Exercícios Práticos DS • Engine</title>
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-symbol" aria-hidden="true">DS</span>
+        <div class="brand-copy">
+          <p class="eyebrow">Desenvolvimento de Sistemas</p>
+          <h1>Exercícios Práticos DS</h1>
+        </div>
+      </div>
+      <span class="platform-version" aria-label="Versão da plataforma">0.20.1</span>
+      <div id="session-actions" class="session-actions hidden">
+        <div class="identity-mini">
+          <strong id="session-name"></strong>
+          <span id="session-class"></span>
+        </div>
+        <button id="hub-btn" class="button button-ghost" type="button">Hub</button>
+        <button id="lobby-btn" class="button button-ghost" type="button">Lobby</button>
+        <button id="staff-btn" class="button button-ghost hidden" type="button">Painel professor</button>
+        <button id="logout-btn" class="button button-ghost" type="button">Sair</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section id="loading-view" class="panel centered">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Carregando sua área...</p>
+      </section>
+
+      <section id="login-view" class="auth-layout hidden" aria-labelledby="login-title">
+        <article class="panel auth-card">
+          <p class="eyebrow">Acesso ao sistema</p>
+          <h2 id="login-title">Entre para continuar</h2>
+          <p class="muted auth-lead">Um único acesso para alunos, professores e administradores. O sistema identifica seu perfil automaticamente.</p>
+          <div class="login-help">
+            <span><strong>Aluno</strong> primeiro acesso: e-mail + CGM</span>
+            <span><strong>Equipe</strong> primeiro acesso: e-mail + senha temporária</span>
+          </div>
+          <form id="login-form" class="form-stack" novalidate>
+            <label>
+              <span>E-mail institucional</span>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="nome@escola.pr.gov.br" required />
+            </label>
+            <label>
+              <span>Senha</span>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Senha ou CGM no primeiro acesso" required />
+            </label>
+            <p id="login-error" class="form-error hidden" role="alert"></p>
+            <button class="button button-primary" type="submit">Entrar</button>
+            <button id="forgot-password-btn" class="auth-link-button" type="button">Esqueci minha senha</button>
+          </form>
+        </article>
+        <aside class="panel info-card">
+          <p class="eyebrow">Como funciona</p>
+          <h2>Um login para todos</h2>
+          <p>O sistema identifica automaticamente se você é aluno, professor ou administrador. Cada perfil abre somente a área autorizada.</p>
+          <div class="steps">
+            <div><span>1</span><p><strong>Aluno</strong><br>E-mail @escola + CGM no primeiro acesso.</p></div>
+            <div><span>2</span><p><strong>Professor/Admin</strong><br>E-mail autorizado + senha temporária.</p></div>
+            <div><span>3</span><p><strong>Senha pessoal</strong><br>Depois do primeiro acesso, cada usuário cria a própria senha.</p></div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="password-view" class="auth-layout hidden" aria-labelledby="password-title">
+        <article class="panel auth-card">
+          <p class="eyebrow">Primeiro acesso</p>
+          <h2 id="password-title">Crie sua senha pessoal</h2>
+          <p id="password-description" class="muted">Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.</p>
+          <form id="password-form" class="form-stack" novalidate>
+            <label>
+              <span>Nova senha</span>
+              <input id="new-password" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <label>
+              <span>Confirmar nova senha</span>
+              <input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <div id="password-rules" class="password-rules">
+              <span data-rule="length">• pelo menos 8 caracteres</span>
+              <span data-rule="letter">• pelo menos uma letra</span>
+              <span data-rule="number">• pelo menos um número</span>
+            </div>
+            <p id="password-error" class="form-error hidden" role="alert"></p>
+            <button class="button button-primary" type="submit">Salvar nova senha</button>
+          </form>
+        </article>
+        <aside class="panel info-card">
+          <p class="eyebrow">Importante</p>
+          <h2>Não reutilize seu CGM</h2>
+          <p>Sua senha deve ser pessoal. Não compartilhe com colegas e evite usar o mesmo código de outros serviços.</p>
+        </aside>
+      </section>
+
+      <section id="dashboard-view" class="dashboard hidden" aria-labelledby="dashboard-title">
+        <div id="dashboard-alert" class="dashboard-alert hidden" role="status"></div>
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">Sua área</p>
+            <h2 id="dashboard-title">Olá, <span id="student-first-name">aluno</span></h2>
+            <p id="student-context" class="muted"></p>
+          </div>
+          <div class="status-chip"><span class="status-dot"></span> progresso sincronizado</div>
+        </div>
+
+        <section class="student-focus-grid">
+          <article class="panel next-action-panel">
+            <div class="next-action-copy">
+              <div class="next-action-kicker"><span class="pulse-dot" aria-hidden="true"></span><span id="next-action-label">Faça agora</span></div>
+              <p id="next-action-subject" class="eyebrow">Sua próxima atividade</p>
+              <h3 id="resume-title">Preparando sua próxima atividade…</h3>
+              <p id="resume-description" class="muted">Aguarde enquanto organizamos o que está liberado para você.</p>
+              <div id="next-action-progress-wrap" class="next-action-progress hidden">
+                <div class="next-action-progress-meta"><span>Seu progresso</span><strong id="next-action-progress">0%</strong></div>
+                <div class="progress-track"><progress id="next-action-progress-bar" class="progress-native" max="100" value="0" aria-label="Progresso da atividade"></progress></div>
+              </div>
+              <div class="next-action-buttons">
+                <button id="resume-btn" class="button button-primary" type="button" disabled>Continuar atividade</button>
+                <button id="view-all-activities-btn" class="button button-ghost" type="button">Ver todas</button>
+              </div>
+            </div>
+            <div class="next-action-orb" aria-hidden="true"><span>DS</span></div>
+          </article>
+
+          <article class="panel progress-panel compact-progress-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">Visão geral</p><h3>Seu progresso</h3></div>
+              <strong id="overall-progress">0%</strong>
+            </div>
+            <div class="progress-track"><progress id="overall-progress-bar" class="progress-native" max="100" value="0" aria-label="Progresso geral"></progress></div>
+            <div class="stats-row student-stats">
+              <div><strong id="completed-count">0</strong><span>Concluídas</span></div>
+              <div><strong id="in-progress-count">0</strong><span>Em andamento</span></div>
+              <div><strong id="available-count">0</strong><span>Para fazer</span></div>
+              <div><strong id="locked-count">0</strong><span>Bloqueadas</span></div>
+            </div>
+          </article>
+        </section>
+
+        <section id="activity-overview" class="activity-overview">
+          <div class="section-heading activity-overview-heading">
+            <div><p class="eyebrow">Atividades</p><h3>O que está acontecendo agora</h3></div>
+            <span id="activity-overview-note" class="muted">Organizado pelas liberações do professor</span>
+          </div>
+          <div class="activity-status-grid">
+            <article class="panel activity-bucket bucket-available">
+              <div class="bucket-title"><span class="bucket-icon">▶</span><div><strong>Disponíveis agora</strong><small>Prontas para começar ou continuar</small></div><b id="bucket-available-count">0</b></div>
+              <div id="available-activity-list" class="student-activity-list"></div>
+            </article>
+            <article class="panel activity-bucket bucket-completed">
+              <div class="bucket-title"><span class="bucket-icon">✓</span><div><strong>Concluídas</strong><small>Seu histórico recente</small></div><b id="bucket-completed-count">0</b></div>
+              <div id="completed-activity-list" class="student-activity-list"></div>
+            </article>
+            <article class="panel activity-bucket bucket-locked">
+              <div class="bucket-title"><span class="bucket-icon">⌁</span><div><strong>Ainda não liberadas</strong><small>Você não precisa fazer agora</small></div><b id="bucket-locked-count">0</b></div>
+              <div id="locked-activity-list" class="student-activity-list"></div>
+            </article>
+          </div>
+        </section>
+
+
+        <section id="platform-hub" class="platform-hub" aria-labelledby="platform-hub-title">
+          <div class="section-heading platform-hub-heading">
+            <div>
+              <p class="eyebrow">Ecossistema AGV</p>
+              <h3 id="platform-hub-title">Suas plataformas</h3>
+              <p class="muted">Abra laboratórios, desafios e experiências sem sair da sua sessão.</p>
+            </div>
+            <div class="platform-hub-actions">
+              <label class="platform-search">
+                <span class="sr-only">Buscar plataforma</span>
+                <input id="platform-search" type="search" placeholder="Buscar plataforma" autocomplete="off" />
+              </label>
+              <select id="platform-filter" aria-label="Filtrar plataformas">
+                <option value="recommended">Para minha turma</option>
+                <option value="all">Todas</option>
+                <option value="favorites">Favoritas</option>
+                <option value="recent">Recentes</option>
+              </select>
+            </div>
+          </div>
+          <div id="platform-hub-summary" class="platform-hub-summary" aria-live="polite"></div>
+          <div id="platform-grid" class="platform-grid"></div>
+        </section>
+
+        <section id="subjects-section" class="subjects-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Conteúdo</p>
+              <h3>Suas disciplinas</h3>
+            </div>
+            <div class="section-actions">
+              <span id="subject-count" class="muted"></span>
+              <button id="legacy-import-btn" class="button button-ghost button-small" type="button">Já fiz no portal antigo</button>
+            </div>
+          </div>
+          <div id="subjects-grid" class="subjects-grid"></div>
+        </section>
+      </section>
+
+      <section id="exercise-view" class="exercise-view hidden" aria-labelledby="exercise-title">
+        <div class="exercise-toolbar panel">
+          <button id="back-dashboard" class="button button-ghost" type="button">← Disciplinas</button>
+          <div>
+            <p id="exercise-subject" class="eyebrow"></p>
+            <h2 id="exercise-title">Exercício</h2>
+          </div>
+          <div class="exercise-status-group">
+            <span id="supervision-chip" class="supervision-chip">Supervisão inativa</span>
+            <span id="exercise-state" class="status-chip">Disponível</span>
+          </div>
+        </div>
+        <div id="supervision-banner" class="supervision-banner hidden" role="alert">
+          <span id="supervision-warning-text"></span>
+          <button id="supervision-return-fullscreen" class="button button-primary button-small hidden" type="button">Entrar em tela cheia</button>
+        </div>
+        <div class="exercise-layout">
+          <aside class="panel exercise-sidebar">
+            <div id="exercise-meta" class="exercise-meta"></div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Orientação</p>
+              <div id="exercise-guidance" class="exercise-guidance"></div>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Validação</p>
+              <div id="validation-results" class="validation-results"></div>
+              <button id="validate-btn" class="button button-ghost button-small" type="button">Validar exercício</button>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Arquivos</p>
+              <div id="file-tabs" class="file-tabs"></div>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Salvamento</p>
+              <div id="save-state" class="save-state">Preparando editor...</div>
+              <button id="save-now-btn" class="button button-primary button-small" type="button">Salvar agora</button>
+            </div>
+            <div class="sidebar-section">
+              <p class="eyebrow">Versões</p>
+              <button id="history-btn" class="button button-ghost button-small" type="button">Ver histórico</button>
+            </div>
+          </aside>
+
+          <section class="panel workspace-panel">
+            <div class="workspace-toolbar">
+              <div class="workspace-file-meta">
+                <strong id="active-filename">arquivo</strong>
+                <span id="active-language" class="muted"></span>
+              </div>
+              <div class="workspace-actions workspace-primary-actions">
+                <button id="toggle-tools-btn" class="button button-ghost button-small" type="button" aria-expanded="false">Orientações</button>
+                <button id="toggle-output-btn" class="button button-ghost button-small" type="button" aria-expanded="false">Preview</button>
+                <button id="run-preview-btn" class="button button-ghost button-small" type="button">Executar</button>
+                <button id="mark-complete-btn" class="button button-primary button-small" type="button">Concluir</button>
+              </div>
+            </div>
+            <div class="workspace-subbar">
+              <div id="quick-file-tabs" class="file-tabs horizontal quick-file-tabs" aria-label="Arquivos do exercício"></div>
+              <span id="workspace-save-pill" class="workspace-save-pill" data-state="saving">Preparando…</span>
+            </div>
+            <div id="draft-recovery" class="draft-recovery hidden" role="status">
+              <strong>Rascunho recuperado</strong>
+              <span id="draft-recovery-text">Recuperamos alterações mais recentes que ainda não tinham chegado à nuvem.</span>
+            </div>
+            <div class="editor-shell">
+              <pre id="code-highlight" class="code-highlight" aria-hidden="true"></pre>
+              <textarea id="code-editor" class="code-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editor de código"></textarea>
+            </div>
+          </section>
+
+          <section class="panel output-panel">
+            <div class="output-tabs">
+              <button class="output-tab active" data-output="preview" type="button">Preview</button>
+              <button class="output-tab" data-output="terminal" type="button">Terminal</button>
+            </div>
+            <iframe id="preview-frame" class="preview-frame" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html"></iframe>
+            <div id="terminal-pane" class="terminal-pane hidden">
+              <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
+              <form id="terminal-input-form" class="terminal-input-row hidden">
+                <span>&gt;</span>
+                <input id="terminal-input" type="text" autocomplete="off" aria-label="Entrada do programa Python">
+                <button class="button button-primary button-small" type="submit">Enviar</button>
+              </form>
+            </div>
+          </section>
+        </div>
+
+        <dialog id="history-dialog" class="history-dialog">
+          <form method="dialog" class="history-card panel">
+            <div class="history-head">
+              <div><p class="eyebrow">Histórico</p><h3>Versões salvas</h3></div>
+              <button class="button button-ghost button-small" value="cancel">Fechar</button>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </form>
+        </dialog>
+      </section>
+    </main>
+
+    <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
+  </div>
+
+  <script type="module" src="assets/js/app.js"></script>
+
+
+    <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
+      <div class="history-card panel">
+        <div class="supervision-start-icon" aria-hidden="true">●</div>
+        <p class="eyebrow">Atividade supervisionada</p>
+        <h3>Antes de começar</h3>
+        <p class="muted">Durante esta atividade, o sistema registra eventos necessários para acompanhamento pedagógico e segurança. Trocas de guia/tela cheia são objetivas; sinais de DevTools e entrada anormal são apenas heurísticas para conferência do professor.</p>
+        <div id="supervision-policy-summary" class="supervision-policy-summary"></div>
+        <div class="supervision-privacy-note">
+          <strong>O que fica registrado</strong>
+          <span>sessão, exercício atual, arquivo/cursor, IP visto pelo servidor e eventos de segurança. O professor pode acompanhar e editar o código ao vivo.</span>
+        </div>
+        <button id="supervision-start-btn" class="button button-primary supervision-start-btn" type="button">Iniciar em tela cheia</button>
+      </div>
+    </dialog>
+
+    <dialog id="security-lock-dialog" class="history-dialog security-lock-dialog">
+      <div class="history-card panel">
+        <p class="eyebrow">Atividade bloqueada</p>
+        <h3>Acesso temporariamente bloqueado</h3>
+        <p id="security-lock-reason" class="muted">O limite de saídas da atividade foi atingido.</p>
+        <div class="support-note changes"><strong>O que fazer</strong><span>O professor recebeu o evento e precisa liberar esta atividade novamente.</span></div>
+        <button id="security-lock-back" class="button button-primary" type="button">Voltar às disciplinas</button>
+      </div>
+    </dialog>
+
+    <dialog id="exercise-submit-dialog" class="history-dialog legacy-dialog">
+      <form id="exercise-submit-form" class="history-card panel form-stack">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Entrega da atividade</p>
+            <h3>Registrar entrega</h3>
+            <p class="muted">A correção oficial é feita no servidor. Para entregar, informe o link do repositório GitHub onde esta atividade está salva.</p>
+          </div>
+          <button id="exercise-submit-close" class="button button-ghost button-small" type="button">Fechar</button>
+        </div>
+        <div id="exercise-submit-score" class="submission-score" role="status"></div>
+        <div class="submission-checklist" aria-label="Checklist antes da entrega">
+          <strong>Antes de entregar</strong>
+          <span>1. Salve os três arquivos no portal.</span>
+          <span>2. Faça <code>commit</code> e <code>push</code> do exercício no GitHub.</span>
+          <span>3. Cole abaixo o link do repositório, não o link de um arquivo isolado.</span>
+        </div>
+        <label><span>Link do repositório GitHub</span><input id="exercise-repository-url" type="url" inputmode="url" autocomplete="url" placeholder="https://github.com/usuario/repositorio" required></label>
+        <p class="muted">Entre 80% e 99% a entrega fica registrada com pendências e você pode continuar melhorando. Somente 100% marca a atividade como concluída.</p>
+        <p id="exercise-submit-message" class="form-message hidden"></p>
+        <button id="exercise-submit-button" class="button button-primary" type="submit">Entregar atividade</button>
+      </form>
+    </dialog>
+
+    <dialog id="legacy-import-dialog" class="history-dialog legacy-dialog">
+      <form id="legacy-import-form" class="history-card panel form-stack">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Portal antigo</p>
+            <h3>Registrar exercício já realizado</h3>
+            <p class="muted">Informe o link do exercício no seu repositório GitHub. Somente exercícios já liberados podem ser registrados. O próximo exercício só será liberado após a aprovação do professor.</p>
+          </div>
+          <button id="legacy-import-close" class="button button-ghost button-small" type="button">Fechar</button>
+        </div>
+        <label><span>Exercício realizado</span><select id="legacy-exercise-select" required></select></label>
+        <label><span>Link do GitHub / GitHub Pages</span><input id="legacy-repository-url" type="url" placeholder="https://github.com/..." required></label>
+        <p id="legacy-import-message" class="form-message hidden"></p>
+        <button class="button button-primary" type="submit">Enviar para validação</button>
+      </form>
+    </dialog>
+
+    <dialog id="recovery-dialog" class="history-dialog auth-dialog">
+      <form id="recovery-form" class="history-card panel form-stack">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Recuperar acesso</p>
+            <h3>Redefinir senha</h3>
+            <p class="muted">Enviaremos um link para o seu e-mail institucional.</p>
+          </div>
+          <button id="recovery-close-btn" class="button button-ghost button-small" type="button">Fechar</button>
+        </div>
+        <label>
+          <span>E-mail institucional</span>
+          <input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required>
+        </label>
+        <p id="recovery-message" class="form-message hidden"></p>
+        <button class="button button-primary" type="submit">Enviar link</button>
+      </form>
+    </dialog>
+
+</body>
+</html>

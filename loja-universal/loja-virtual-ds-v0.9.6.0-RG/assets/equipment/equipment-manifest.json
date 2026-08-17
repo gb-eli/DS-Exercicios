@@ -1,0 +1,702 @@
+{
+  "version": "0.5.0",
+  "rig": "DS_VOXEL_RIG_1",
+  "items": [
+    {
+      "id": "hair-cyan-stripe",
+      "name": "Cabelo Faixa Ciano",
+      "category": "appearance",
+      "rarity": "basic",
+      "basePrice": 180,
+      "pack": "avatar-hair",
+      "attachments": [
+        {
+          "slot": "hair"
+        }
+      ],
+      "description": "Cabelo voxel escuro com faixa emissiva ciano.",
+      "model3d": "assets/equipment/models/hair-cyan-stripe.glb",
+      "preview": "assets/equipment/previews/hair-cyan-stripe.webp",
+      "nodes": 5,
+      "bytes": 2424,
+      "sha256": "3904fd04f47abefd6e68ae5ae90d5cfc6d612c6dc26bbff4d1885131b5972abd"
+    },
+    {
+      "id": "hair-wave-dark",
+      "name": "Cabelo Onda Noturna",
+      "category": "appearance",
+      "rarity": "rare",
+      "basePrice": 950,
+      "pack": "avatar-hair",
+      "attachments": [
+        {
+          "slot": "hair"
+        }
+      ],
+      "description": "Penteado volumétrico com reflexos violetas.",
+      "model3d": "assets/equipment/models/hair-wave-dark.glb",
+      "preview": "assets/equipment/previews/hair-wave-dark.webp",
+      "nodes": 7,
+      "bytes": 2708,
+      "sha256": "cd28a1e438acc86c257d3490bc92f4a7e53fa2331b18b97d57aa1186d23fe12e"
+    },
+    {
+      "id": "hair-neon-braid",
+      "name": "Trança Neon Prisma",
+      "category": "appearance",
+      "rarity": "epic",
+      "basePrice": 3200,
+      "pack": "avatar-hair",
+      "attachments": [
+        {
+          "slot": "hair"
+        }
+      ],
+      "description": "Trança voxel com segmentos emissivos rosa e violeta.",
+      "model3d": "assets/equipment/models/hair-neon-braid.glb",
+      "preview": "assets/equipment/previews/hair-neon-braid.webp",
+      "nodes": 7,
+      "bytes": 2932,
+      "sha256": "b295f9fd9517c882d536670f727bc69667193fd4fa6d529403b2e7ecb773f429"
+    },
+    {
+      "id": "cap-code",
+      "name": "Boné Code Runner",
+      "category": "headwear",
+      "rarity": "basic",
+      "basePrice": 260,
+      "pack": "headwear",
+      "attachments": [
+        {
+          "slot": "head"
+        }
+      ],
+      "description": "Boné tecnológico com aba ciano.",
+      "model3d": "assets/equipment/models/cap-code.glb",
+      "preview": "assets/equipment/previews/cap-code.webp",
+      "nodes": 4,
+      "bytes": 2572,
+      "sha256": "34943b51ae6a3aa6c776a15ee14c940df55bff2dc2786839d520f48da418f1a8"
+    },
+    {
+      "id": "helmet-orbit",
+      "name": "Capacete Orbit",
+      "category": "headwear",
+      "rarity": "epic",
+      "basePrice": 4800,
+      "pack": "headwear",
+      "attachments": [
+        {
+          "slot": "head"
+        }
+      ],
+      "description": "Capacete espacial modular com viseira holográfica.",
+      "model3d": "assets/equipment/models/helmet-orbit.glb",
+      "preview": "assets/equipment/previews/helmet-orbit.webp",
+      "nodes": 6,
+      "bytes": 3040,
+      "sha256": "af0e6616b9f16cc8f7181f8116376d2e877ce138e4374e449adc5a691c9bd192"
+    },
+    {
+      "id": "glasses-spectrum",
+      "name": "Óculos Spectrum",
+      "category": "appearance",
+      "rarity": "rare",
+      "basePrice": 1200,
+      "pack": "face-accessories",
+      "attachments": [
+        {
+          "slot": "face"
+        }
+      ],
+      "description": "Óculos com lentes holográficas e armação metálica.",
+      "model3d": "assets/equipment/models/glasses-spectrum.glb",
+      "preview": "assets/equipment/previews/glasses-spectrum.webp",
+      "nodes": 6,
+      "bytes": 2776,
+      "sha256": "ec20add3f523aa13baeeb72566bb3fd30fa925f9b666ae706755c6ba8aa19392"
+    },
+    {
+      "id": "visor-holo",
+      "name": "Viseira HoloScan",
+      "category": "appearance",
+      "rarity": "legendary",
+      "basePrice": 9000,
+      "pack": "face-accessories",
+      "attachments": [
+        {
+          "slot": "face"
+        }
+      ],
+      "description": "Viseira avançada de escaneamento e dados.",
+      "model3d": "assets/equipment/models/visor-holo.glb",
+      "preview": "assets/equipment/previews/visor-holo.webp",
+      "nodes": 5,
+      "bytes": 2696,
+      "sha256": "11827d899d8c4395faebeb9656b256f0491d4aec4da01a94789dc7116d452c39"
+    },
+    {
+      "id": "shirt-code-grid",
+      "name": "Camiseta Code Grid",
+      "category": "clothing",
+      "rarity": "basic",
+      "basePrice": 240,
+      "pack": "clothing-basic",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Camiseta voxel com painel de código luminoso.",
+      "model3d": "assets/equipment/models/shirt-code-grid.glb",
+      "preview": "assets/equipment/previews/shirt-code-grid.webp",
+      "nodes": 6,
+      "bytes": 2768,
+      "sha256": "60994d9f9fb1be8ffb2a1534eda8f64345580a7c4a74c84da4dc8366e3e3cc54"
+    },
+    {
+      "id": "jacket-neon",
+      "name": "Jaqueta Neon Flux",
+      "category": "clothing",
+      "rarity": "rare",
+      "basePrice": 1800,
+      "pack": "clothing-jackets",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Jaqueta escura com acabamento violeta e gola elevada.",
+      "model3d": "assets/equipment/models/jacket-neon.glb",
+      "preview": "assets/equipment/previews/jacket-neon.webp",
+      "nodes": 8,
+      "bytes": 3056,
+      "sha256": "bbc4e3409c4384a89aa2d35a6e89ca733b744b2903dd095c4b05bf66028eabab"
+    },
+    {
+      "id": "uniform-brazil-tech",
+      "name": "Uniforme Brasil Tech",
+      "category": "clothing",
+      "rarity": "legendary",
+      "basePrice": 15000,
+      "pack": "uniforms-countries",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Uniforme original inspirado nas cores do Brasil.",
+      "model3d": "assets/equipment/models/uniform-brazil-tech.glb",
+      "preview": "assets/equipment/previews/uniform-brazil-tech.webp",
+      "nodes": 7,
+      "bytes": 2872,
+      "sha256": "0ad9b80ec7eb7aa7973ccf18937a1607c28a86febd68fb3ce5a35e3bd7072dec"
+    },
+    {
+      "id": "uniform-usa-tech",
+      "name": "Uniforme Estelar Tech",
+      "category": "clothing",
+      "rarity": "legendary",
+      "basePrice": 15000,
+      "pack": "uniforms-countries",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Uniforme original em azul, branco e vermelho.",
+      "model3d": "assets/equipment/models/uniform-usa-tech.glb",
+      "preview": "assets/equipment/previews/uniform-usa-tech.webp",
+      "nodes": 7,
+      "bytes": 2848,
+      "sha256": "9d57f8939a0f124a83ab300c6e686a5b7b62dc34e15b6b1b5108190eee5d12eb"
+    },
+    {
+      "id": "uniform-uk-tech",
+      "name": "Uniforme Reino Tech",
+      "category": "clothing",
+      "rarity": "legendary",
+      "basePrice": 15000,
+      "pack": "uniforms-countries",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Uniforme original inspirado nas cores britânicas.",
+      "model3d": "assets/equipment/models/uniform-uk-tech.glb",
+      "preview": "assets/equipment/previews/uniform-uk-tech.webp",
+      "nodes": 8,
+      "bytes": 2932,
+      "sha256": "19a090d15c74b6a7946ce2e58acfd339af6588bc25c26baa6f05d022d31b095c"
+    },
+    {
+      "id": "uniform-spain-tech",
+      "name": "Uniforme Sol Tech",
+      "category": "clothing",
+      "rarity": "legendary",
+      "basePrice": 15000,
+      "pack": "uniforms-countries",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Uniforme original em vermelho e amarelo.",
+      "model3d": "assets/equipment/models/uniform-spain-tech.glb",
+      "preview": "assets/equipment/previews/uniform-spain-tech.webp",
+      "nodes": 7,
+      "bytes": 2864,
+      "sha256": "ad2d0b8cf4062f0a948b10391ab620ee0f1eb88a65974fb7a9bf95d7819e8911"
+    },
+    {
+      "id": "armor-tech-red",
+      "name": "Armadura Tech Vermelha",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 30000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Armadura original vermelha e dourada de alta tecnologia.",
+      "model3d": "assets/equipment/models/armor-tech-red.glb",
+      "preview": "assets/equipment/previews/armor-tech-red.webp",
+      "nodes": 8,
+      "bytes": 2940,
+      "sha256": "f51c2f6da219f1331a04ee1cb8de9d66641eb6fdd1355b59f5f63e58bb9d1ca1"
+    },
+    {
+      "id": "guardian-night",
+      "name": "Traje Guardião Noturno",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 28000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        },
+        {
+          "slot": "back",
+          "variant": "cape"
+        }
+      ],
+      "description": "Traje original escuro com capa e detalhes violetas.",
+      "model3d": "assets/equipment/models/guardian-night.glb",
+      "preview": "assets/equipment/previews/guardian-night.webp",
+      "nodes": 7,
+      "bytes": 2892,
+      "sha256": "6c7bce181350b79d587ac22fef6722420fca58f78907f72d9909ae0439251758"
+    },
+    {
+      "id": "acrobat-digital",
+      "name": "Traje Acróbata Digital",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 26000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Traje leve original para movimentos e acrobacias.",
+      "model3d": "assets/equipment/models/acrobat-digital.glb",
+      "preview": "assets/equipment/previews/acrobat-digital.webp",
+      "nodes": 8,
+      "bytes": 2932,
+      "sha256": "73dd6f4ab265a817d4f959ec6675d0aeb43ab621863471a966e97eec6ebc51d8"
+    },
+    {
+      "id": "guardian-star",
+      "name": "Armadura Guardião Estelar",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 32000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Armadura original azul, branca e dourada.",
+      "model3d": "assets/equipment/models/guardian-star.glb",
+      "preview": "assets/equipment/previews/guardian-star.webp",
+      "nodes": 7,
+      "bytes": 2844,
+      "sha256": "bca4ed0c0f34442de900e8e752c7bc292e5cc595ed1968437e86741a50182018"
+    },
+    {
+      "id": "mystic-arcane",
+      "name": "Manto Místico Arcano",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 34000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        },
+        {
+          "slot": "back",
+          "variant": "cape"
+        }
+      ],
+      "description": "Manto original com gema holográfica e detalhes dourados.",
+      "model3d": "assets/equipment/models/mystic-arcane.glb",
+      "preview": "assets/equipment/previews/mystic-arcane.webp",
+      "nodes": 8,
+      "bytes": 3256,
+      "sha256": "835662a14120854188cde72a478450fe843881c407f6c8c7cf656f1fec1777ae"
+    },
+    {
+      "id": "thunder-warrior",
+      "name": "Armadura Guerreiro do Trovão",
+      "category": "clothing",
+      "rarity": "mythic",
+      "basePrice": 36000,
+      "pack": "uniforms-archetypes",
+      "attachments": [
+        {
+          "slot": "torso"
+        }
+      ],
+      "description": "Armadura original com núcleo de energia elétrica.",
+      "model3d": "assets/equipment/models/thunder-warrior.glb",
+      "preview": "assets/equipment/previews/thunder-warrior.webp",
+      "nodes": 9,
+      "bytes": 3076,
+      "sha256": "9f6c43fe718c2f645172fe217e945116e3f50821264c58552cbc77b40d6c952c"
+    },
+    {
+      "id": "boots-pulse",
+      "name": "Botas Pulse",
+      "category": "clothing",
+      "rarity": "rare",
+      "basePrice": 850,
+      "pack": "items-footwear",
+      "attachments": [
+        {
+          "slot": "foot-left"
+        },
+        {
+          "slot": "foot-right",
+          "mirrorX": true
+        }
+      ],
+      "description": "Botas voxel com sola emissiva.",
+      "model3d": "assets/equipment/models/boots-pulse.glb",
+      "preview": "assets/equipment/previews/boots-pulse.webp",
+      "nodes": 4,
+      "bytes": 2628,
+      "sha256": "581bb874c48638b4d0d9b7275303ec2c30ded3951db87fd93057236e6d085b39"
+    },
+    {
+      "id": "backpack-nexus",
+      "name": "Mochila Nexus",
+      "category": "accessory",
+      "rarity": "rare",
+      "basePrice": 1250,
+      "pack": "items-back",
+      "attachments": [
+        {
+          "slot": "back"
+        }
+      ],
+      "description": "Mochila modular com painel luminoso.",
+      "model3d": "assets/equipment/models/backpack-nexus.glb",
+      "preview": "assets/equipment/previews/backpack-nexus.webp",
+      "nodes": 6,
+      "bytes": 3028,
+      "sha256": "615f8d1391204d51a7568083c277ffb512c1f9f7f336459e44134e5190332652"
+    },
+    {
+      "id": "backpack-scholar",
+      "name": "Mochila Scholar Pro",
+      "category": "accessory",
+      "rarity": "epic",
+      "basePrice": 4200,
+      "pack": "items-back",
+      "attachments": [
+        {
+          "slot": "back"
+        }
+      ],
+      "description": "Mochila escolar premium com bolso para livros e notebook.",
+      "model3d": "assets/equipment/models/backpack-scholar.glb",
+      "preview": "assets/equipment/previews/backpack-scholar.webp",
+      "nodes": 7,
+      "bytes": 3392,
+      "sha256": "1c8e2d15f4c2ff7c62b81425417aeb4accb731733200b3643d2668139e0f094b"
+    },
+    {
+      "id": "jetpack-orbit",
+      "name": "Jetpack Orbit",
+      "category": "vehicle",
+      "rarity": "legendary",
+      "basePrice": 8500,
+      "pack": "vehicles-flight",
+      "attachments": [
+        {
+          "slot": "back"
+        }
+      ],
+      "description": "Jetpack com propulsores e painel de controle.",
+      "model3d": "assets/equipment/models/jetpack-orbit.glb",
+      "preview": "assets/equipment/previews/jetpack-orbit.webp",
+      "nodes": 7,
+      "bytes": 3132,
+      "sha256": "0384d02bedbc13d28026de82be3982ea3a0429ed403652d5ff9a3258447896ef"
+    },
+    {
+      "id": "shield-sentinel",
+      "name": "Escudo Sentinel",
+      "category": "accessory",
+      "rarity": "epic",
+      "basePrice": 3500,
+      "pack": "items-shields",
+      "attachments": [
+        {
+          "slot": "shield"
+        }
+      ],
+      "description": "Escudo tecnológico com núcleo energético.",
+      "model3d": "assets/equipment/models/shield-sentinel.glb",
+      "preview": "assets/equipment/previews/shield-sentinel.webp",
+      "nodes": 5,
+      "bytes": 2684,
+      "sha256": "7753c1c8923cd1248e4295387ed9197bcf037dc5ed189cb3f75ae298947c1e6f"
+    },
+    {
+      "id": "shield-star",
+      "name": "Escudo Estelar",
+      "category": "accessory",
+      "rarity": "legendary",
+      "basePrice": 12000,
+      "pack": "items-shields",
+      "attachments": [
+        {
+          "slot": "shield"
+        }
+      ],
+      "description": "Escudo original azul e dourado com símbolo estelar geométrico.",
+      "model3d": "assets/equipment/models/shield-star.glb",
+      "preview": "assets/equipment/previews/shield-star.webp",
+      "nodes": 7,
+      "bytes": 2832,
+      "sha256": "3e424b756133252ae2db4c32eccbe167b4492cd217e8a66c165f152fa80da7b9"
+    },
+    {
+      "id": "scanner-prisma",
+      "name": "Scanner Prisma",
+      "category": "tool",
+      "rarity": "rare",
+      "basePrice": 1800,
+      "pack": "tools-scanners",
+      "attachments": [
+        {
+          "slot": "held-item-right"
+        }
+      ],
+      "description": "Scanner portátil com tela holográfica.",
+      "model3d": "assets/equipment/models/scanner-prisma.glb",
+      "preview": "assets/equipment/previews/scanner-prisma.webp",
+      "nodes": 5,
+      "bytes": 2960,
+      "sha256": "d7d4f75920e2e52b3565f6256bdc4eb225c28679f5919a6a23c4a15c39ea965e"
+    },
+    {
+      "id": "notebook-holo",
+      "name": "Notebook HoloCode",
+      "category": "tool",
+      "rarity": "epic",
+      "basePrice": 5000,
+      "pack": "tools-computing",
+      "attachments": [
+        {
+          "slot": "held-item-left"
+        }
+      ],
+      "description": "Notebook aberto com tela holográfica.",
+      "model3d": "assets/equipment/models/notebook-holo.glb",
+      "preview": "assets/equipment/previews/notebook-holo.webp",
+      "nodes": 5,
+      "bytes": 2864,
+      "sha256": "b5a5127d60236bccb0333178e3c2f07cdd5d3fc1d33e44109e404d53e06f2809"
+    },
+    {
+      "id": "compass-quantum",
+      "name": "Bússola Quantum",
+      "category": "tool",
+      "rarity": "epic",
+      "basePrice": 4200,
+      "pack": "tools-navigation",
+      "attachments": [
+        {
+          "slot": "held-item-right"
+        }
+      ],
+      "description": "Bússola tecnológica com ponteiro luminoso.",
+      "model3d": "assets/equipment/models/compass-quantum.glb",
+      "preview": "assets/equipment/previews/compass-quantum.webp",
+      "nodes": 5,
+      "bytes": 3036,
+      "sha256": "dc73ce415813d63c740a42e3420aabfa670e358ac9fee1c4fca3f2a7e450bf4a"
+    },
+    {
+      "id": "hammer-thunder",
+      "name": "Martelo de Energia Trovejante",
+      "category": "tool",
+      "rarity": "legendary",
+      "basePrice": 18000,
+      "pack": "tools-heroic",
+      "attachments": [
+        {
+          "slot": "held-item-right"
+        }
+      ],
+      "description": "Ferramenta original de energia inspirada em arquétipos de trovão.",
+      "model3d": "assets/equipment/models/hammer-thunder.glb",
+      "preview": "assets/equipment/previews/hammer-thunder.webp",
+      "nodes": 5,
+      "bytes": 2960,
+      "sha256": "26c9c61700c1f14f4e554b87676b0de20398ec7c344270ec8bcc74f86e060a09"
+    },
+    {
+      "id": "staff-arcane",
+      "name": "Cajado Prisma Arcano",
+      "category": "tool",
+      "rarity": "legendary",
+      "basePrice": 16500,
+      "pack": "tools-heroic",
+      "attachments": [
+        {
+          "slot": "held-item-right"
+        }
+      ],
+      "description": "Cajado original com cristal holográfico.",
+      "model3d": "assets/equipment/models/staff-arcane.glb",
+      "preview": "assets/equipment/previews/staff-arcane.webp",
+      "nodes": 4,
+      "bytes": 2716,
+      "sha256": "3995cae849977344a7846d55d1c0498ca93ab1f099c72f6c2a970b3398d0c7ef"
+    },
+    {
+      "id": "drone-iris",
+      "name": "Drone Íris",
+      "category": "companion",
+      "rarity": "legendary",
+      "basePrice": 12500,
+      "pack": "companions-drones",
+      "attachments": [
+        {
+          "slot": "companion"
+        }
+      ],
+      "description": "Companheiro flutuante reativo.",
+      "model3d": "assets/equipment/models/drone-iris.glb",
+      "preview": "assets/equipment/previews/drone-iris.webp",
+      "nodes": 8,
+      "bytes": 3192,
+      "sha256": "d934f09b4154b49eed009066f35275348af4fcdd6456cd98826e2926ae0bfeff"
+    },
+    {
+      "id": "companion-cube",
+      "name": "Cubo Assistente Nexo",
+      "category": "companion",
+      "rarity": "epic",
+      "basePrice": 6500,
+      "pack": "companions-drones",
+      "attachments": [
+        {
+          "slot": "companion"
+        }
+      ],
+      "description": "Cubo flutuante com interface expressiva.",
+      "model3d": "assets/equipment/models/companion-cube.glb",
+      "preview": "assets/equipment/previews/companion-cube.webp",
+      "nodes": 6,
+      "bytes": 3044,
+      "sha256": "8e9f07f57e1ee9f9c28487d912e0377aeb9d9c5c0d7d432d994226d2eb3afe45"
+    },
+    {
+      "id": "skateboard-byte",
+      "name": "Skate Byte",
+      "category": "vehicle",
+      "rarity": "rare",
+      "basePrice": 2600,
+      "pack": "vehicles-ground",
+      "attachments": [
+        {
+          "slot": "vehicle"
+        }
+      ],
+      "description": "Skate voxel com rodas neon.",
+      "model3d": "assets/equipment/models/skateboard-byte.glb",
+      "preview": "assets/equipment/previews/skateboard-byte.webp",
+      "nodes": 7,
+      "bytes": 2868,
+      "sha256": "88da2d51237974fdb421bc038c4c4bdf1c0a44e7302c6688de5f2704dd1f1b87"
+    },
+    {
+      "id": "hoverboard-neon",
+      "name": "Hoverboard Neon Arc",
+      "category": "vehicle",
+      "rarity": "legendary",
+      "basePrice": 14000,
+      "pack": "vehicles-ground",
+      "attachments": [
+        {
+          "slot": "vehicle"
+        }
+      ],
+      "description": "Prancha flutuante com propulsores violetas.",
+      "model3d": "assets/equipment/models/hoverboard-neon.glb",
+      "preview": "assets/equipment/previews/hoverboard-neon.webp",
+      "nodes": 5,
+      "bytes": 2692,
+      "sha256": "2a9dd7632cc062ca53963b0c14f2d7200400e26302778c7ef12f90824d69d5eb"
+    },
+    {
+      "id": "rocket-pioneer",
+      "name": "Foguete Pioneiro DS",
+      "category": "vehicle",
+      "rarity": "mythic",
+      "basePrice": 45000,
+      "pack": "vehicles-flight",
+      "attachments": [
+        {
+          "slot": "vehicle"
+        }
+      ],
+      "description": "Foguete voxel para prévias e celebrações.",
+      "model3d": "assets/equipment/models/rocket-pioneer.glb",
+      "preview": "assets/equipment/previews/rocket-pioneer.webp",
+      "nodes": 7,
+      "bytes": 3136,
+      "sha256": "a795814274c42d5b6ca10cb1204ebc2954fc6d0dd8af4d062aeddc4078ce457a"
+    },
+    {
+      "id": "shoulder-orb",
+      "name": "Orbe de Ombro Lumina",
+      "category": "accessory",
+      "rarity": "epic",
+      "basePrice": 7200,
+      "pack": "items-shoulder",
+      "attachments": [
+        {
+          "slot": "shoulder-right"
+        }
+      ],
+      "description": "Orbe holográfico acoplado ao ombro.",
+      "model3d": "assets/equipment/models/shoulder-orb.glb",
+      "preview": "assets/equipment/previews/shoulder-orb.webp",
+      "nodes": 4,
+      "bytes": 2676,
+      "sha256": "da84018d354b2a0ef5d053f427a40975bd1df7a0e8a8b3f21c0b480dd06b6d45"
+    }
+  ]
+}

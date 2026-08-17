@@ -1,0 +1,19 @@
+{
+  "version": "v11.7-P5.3-RIGGED-GLB",
+  "phase": "P5.3",
+  "title": "Lobby 3D Rigged GLB",
+  "date": "2026-08-14",
+  "base": "v11.6",
+  "changes": [
+    "Personagem GLB próprio do projeto com esqueleto e skinning",
+    "Clips embutidos Idle, Walk, Run, Jump e Wave",
+    "AnimationMixer para animação esquelética no modo 3D avançado",
+    "Fallback procedural preservado em Eco/mobile fraco ou falha do GLB",
+    "GLB local de aproximadamente 24 KB, sem CDN de modelos",
+    "Variação de cor de uniforme e tom de pele por usuário no runtime",
+    "Indicador de desempenho informa GLB ou PROC",
+    "P5.2 Ultra, qualidade adaptativa, câmeras e modo leve preservados",
+    "Nenhuma mudança obrigatória no Supabase",
+    "Lobby version 0.5.0"
+  ]
+}

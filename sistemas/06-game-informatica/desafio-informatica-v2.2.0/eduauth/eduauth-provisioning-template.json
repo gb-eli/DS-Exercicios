@@ -1,0 +1,37 @@
+{
+  "schema": "eduauth-provisioning-template",
+  "schemaVersion": 1,
+  "platformId": "desafio-informatica-agv",
+  "requiredKeys": [
+    {
+      "type": "CLASS_HMAC_KEY",
+      "keyId": "desafio-informatica-agv-class-01",
+      "required": true
+    },
+    {
+      "type": "SESSION_HMAC_KEY",
+      "keyId": "desafio-informatica-agv-session-01",
+      "required": true
+    },
+    {
+      "type": "SIGNING_PUBLIC_KEY",
+      "keyId": "teacher-signing-01",
+      "required": true
+    },
+    {
+      "type": "RECOVERY_PUBLIC_KEY",
+      "keyId": "teacher-recovery-01",
+      "required": true
+    }
+  ],
+  "targetFile": "assets/js/eduauth/config.js",
+  "environment": "development",
+  "productionProvisioned": false,
+  "instructions": [
+    "Gerar chaves no EduAuth Professor.",
+    "Substituir apenas as chaves e IDs de desenvolvimento.",
+    "Manter nenhuma chave privada no projeto.",
+    "Reexecutar eduauth-test-vectors.json e testes.",
+    "Atualizar productionProvisioned para true e publicar nova versão."
+  ]
+}

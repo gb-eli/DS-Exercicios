@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Raster Rally"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1630"/><stop offset=".52" stop-color="#291b36"/><stop offset="1" stop-color="#02050d"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#ffb45e" stop-opacity=".7"/><stop offset="1" stop-color="#ffb45e" stop-opacity="0"/></radialGradient>
+<filter id="soft"><feGaussianBlur stdDeviation="16"/></filter><filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity=".55"/></filter>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#8eefff" stroke-opacity=".07"/></pattern>
+</defs>
+<rect width="960" height="540" fill="url(#bg)"/><rect width="960" height="540" fill="url(#grid)"/>
+<circle cx="165" cy="100" r="180" fill="url(#glow)" opacity=".34"/><circle cx="825" cy="430" r="250" fill="url(#glow)" opacity=".18"/>
+<g transform="translate(0 0)"><circle cx="750" cy="112" r="58" fill="#ffd47a" opacity=".85"/><path d="M0 220L170 115 300 195 430 95 600 205 760 125 960 225V310H0Z" fill="#34495a" opacity=".68"/><path d="M0 540L340 245H620L960 540Z" fill="#28303a"/><path d="M140 540L390 245H435L300 540Z" fill="#e8e6d2" opacity=".12"/><path d="M820 540L570 245H525L660 540Z" fill="#e8e6d2" opacity=".12"/><path d="M462 540L474 245H486L498 540Z" fill="#f7f5d4" opacity=".8"/><g transform="translate(392 300)" filter="url(#shadow)"><ellipse cx="88" cy="142" rx="100" ry="18" fill="#000" opacity=".45"/><path d="M20 70L42 20h92l30 50 15 75H0z" fill="#ff6b54"/><path d="M60 28h62l20 40H42z" fill="#10263b"/><path d="M15 102h28v36H15zM136 102h28v36h-28z" fill="#080b0f"/><rect x="25" y="90" width="30" height="13" rx="4" fill="#ffdf75"/><rect x="125" y="90" width="30" height="13" rx="4" fill="#ffdf75"/></g></g><g opacity=".48"><path d="M60 350H900" stroke="#ffb45e" stroke-width="2" stroke-dasharray="8 16"/><circle cx="820" cy="80" r="34" fill="none" stroke="#ffb45e" stroke-width="3"/><circle cx="820" cy="80" r="12" fill="#ffb45e" opacity=".35"/></g>
+<rect x="28" y="28" width="904" height="484" rx="28" fill="none" stroke="#ffb45e" stroke-opacity=".22"/>
+<g filter="url(#shadow)"><rect x="42" y="400" width="600" height="94" rx="22" fill="#030712" fill-opacity=".78" stroke="#ffb45e" stroke-opacity=".28"/></g>
+<text x="70" y="442" fill="#f5fbff" font-family="Arial,sans-serif" font-size="32" font-weight="800">Raster Rally</text>
+<text x="70" y="472" fill="#a9b9ce" font-family="Arial,sans-serif" font-size="17">corrida pseudo-3D · clima · ultrapassagens · visual moderno</text>
+<text x="884" y="477" text-anchor="end" fill="#ffb45e" font-family="monospace" font-size="13" font-weight="700">FLIPERAMA DS · MODERNO</text>
+</svg>

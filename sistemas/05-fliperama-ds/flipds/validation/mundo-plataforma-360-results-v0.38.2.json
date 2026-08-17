@@ -1,0 +1,688 @@
+{
+  "suite": "Mundo Plataforma DS 360 v0.38.2 · Vila Tecnológica",
+  "checks": 136,
+  "passed": 136,
+  "failed": 0,
+  "items": [
+    {
+      "name": "schema da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "nome Vila Tecnológica",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "região marcada como village",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mundo da Vila 80×72",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 setores na Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Oficina presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Estação de Dados presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Centro de Rede presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 NPCs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Lia presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ivo presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Dara presente",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "8 interações",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 módulos de oficina",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 relés",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "terminal de upload",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "núcleo da vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 missões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 pacotes de dados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 checkpoints",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "2 plataformas móveis",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "IDs da Vila únicos",
+      "passed": true,
+      "detail": "53 IDs"
+    },
+    {
+      "name": "lia dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lia não nasce em parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ivo dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ivo não nasce em parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "dara dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "dara não nasce em parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-a dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-a acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-b dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-b acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-c dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "repair-c acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-terminal dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-terminal acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-west dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-west acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-east dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-east acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-north dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relay-north acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "network-core dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "network-core acessível fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-praca dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-praca fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-praca fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-oficina dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-oficina fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-oficina fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-dados dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-dados fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-dados fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-central dentro da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-central fora de parede",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vcp-central fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-a apoiado em plataforma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-b apoiado em plataforma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-c apoiado em plataforma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "data-d apoiado em plataforma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-workshop tem porta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-workshop cabe na região",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-data tem porta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-data cabe na região",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-core tem porta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "building-core cabe na região",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mundo começa na Região 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save do mundo usa schema 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mundo declara duas regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Portal Nexus leva à Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "transição marca Vale concluído",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "transição gera region-change",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vila inicia na missão 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "portal final começa fechado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "módulo não ativa antes de falar com Lia",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Lia inicia missão 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 módulos podem ser ativados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "oficina pede retorno à Lia",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "missão 1 conclui e libera Ivo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ivo libera coleta de dados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 pacotes podem ser coletados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "coleta total libera upload",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "upload conclui missão 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Dara libera relés",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 relés podem ser ativados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "relés liberam Núcleo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Núcleo libera portal final",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Portal de Continuidade conclui campanha",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vitória final gera evento",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore schema 2 aceita campanha concluída",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva Região 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva 4 dados",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva 3 reparos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva 3 relés",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva estágio 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restore preserva conclusão final",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migra save v0.38.1 incompleto",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save incompleto continua no Vale",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save migrado passa a schema 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migra save v0.38.1 concluído",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save concluído entra direto na Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migração não marca campanha nova como concluída",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migração começa missão da Vila em 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migração gera evento informativo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "modo legado ainda usa schema 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "modo legado ainda conclui no Portal Nexus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "render troca de região sem recarregar runtime",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "render cria interiores leves da Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "render possui NPC meshes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "render possui terminais interativos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "perfil baixo reduz luz/decor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "portal consulta simulação",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game carrega village.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "tecla E interage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "touch possui interact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "gamepad possui interact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ready declara 2 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD alterna Dados/Missão",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ponte envia region-change",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ponte envia mission",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime wrapper reconhece 2 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime wrapper recebe region-change",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "catálogo marca Fase 7.23",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "perfil externo inclui interação",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "perfil externo cita Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ficha educacional cita 3 missões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "progressão educacional inclui Oficina",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "versão pública v0.38.2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Service Worker v0.38.2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vila no cache offline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mídia logo.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade logo.svg",
+      "passed": true,
+      "detail": "1497 bytes"
+    },
+    {
+      "name": "mídia preview-01.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade preview-01.svg",
+      "passed": true,
+      "detail": "1576 bytes"
+    },
+    {
+      "name": "mídia preview-02.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade preview-02.svg",
+      "passed": true,
+      "detail": "3640 bytes"
+    }
+  ]
+}

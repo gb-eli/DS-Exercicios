@@ -1,0 +1,35 @@
+{
+  "platformId": "planetario-ds",
+  "name": "COSMOS / Planetário DS",
+  "version": "34.0.0",
+  "integrationVersion": "0.4.0-wave4",
+  "canonicalRoot": "universods",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local profile (cache/offline only after Wave 4)",
+    "economy": "none central",
+    "progress": "rich local XP/progress/evidence; official events mirrored to AGV Core"
+  },
+  "candidateHookFiles": [
+    "src/agv-core-session.js",
+    "src/core/profiles/ProfileStore.js",
+    "src/main.js"
+  ],
+  "authority": {
+    "identity": "agv-core",
+    "session": "shared-supabase",
+    "localState": "cache/offline",
+    "progress": "agv-progress-event",
+    "economy": "server-only"
+  },
+  "wave": "P6.7-wave4"
+}

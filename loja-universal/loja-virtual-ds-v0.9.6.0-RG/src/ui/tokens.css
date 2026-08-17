@@ -1,0 +1,23 @@
+/* Loja Virtual DS v0.3.0 — tokens oficiais */
+:root {
+  --ds-bg: #050914;
+  --ds-bg-soft: #08101e;
+  --ds-panel: #0b1424;
+  --ds-panel-raised: #101d31;
+  --ds-line: #203a59;
+  --ds-text: #eef8ff;
+  --ds-muted: #8ea7c0;
+  --ds-cyan: #2ad7ff;
+  --ds-violet: #9a67ff;
+  --ds-pink: #ff4fb8;
+  --ds-gold: #ffbd32;
+  --ds-green: #48e4a6;
+  --ds-orange: #ff9642;
+  --ds-red: #ff5e78;
+  --ds-radius-xl: 28px;
+  --ds-radius-lg: 22px;
+  --ds-radius-md: 16px;
+  --ds-radius-sm: 12px;
+  --ds-shadow: 0 24px 70px rgba(0,0,0,.34);
+  --ds-motion-standard: cubic-bezier(.2,.8,.2,1);
+}

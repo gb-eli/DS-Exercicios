@@ -1,0 +1,62 @@
+# TESTE P4.2 — Lobby Moderação Completa — 2026-08-14
+
+## core/tests/admin-p0-p1-p2-v9.test.mjs
+{
+  "status": "ok",
+  "views": 12,
+  "p0": true,
+  "p1Operational": true,
+  "p2": true,
+  "authAdminPending": true,
+  "studentHistoryScoped": true
+}
+
+## core/tests/admin-p3-activity-center-v10.test.mjs
+admin-p3-activity-center-v10: PASS
+
+## core/tests/agv-core-sdk.test.mjs
+AGVCoreSDK v0.2.0: reward sem amount + progresso idempotente OK
+
+## core/tests/lab-exercises-v8.test.mjs
+PASS lab-exercises-v8: 88 catálogo; bundles aluno sem professor/full refs; bridge + import privado OK
+
+## core/tests/p4-lobby-staff-v11.1.test.mjs
+PASS — sem senha compartilhada no runtime
+PASS — equipe entra no lobby
+PASS — interação alvo
+PASS — expulsão server-side
+PASS — confirmação antes de expulsar
+PASS — lista expulsões ativas
+PASS — readmissão antecipada
+PASS — professor escopado
+PASS — expulsão não desativa perfil
+PASS — heartbeat reduzido
+PASS — start supervisionado revalida release
+PASS — legacy exige release
+PASS — legacy não libera próximo no submit
+PASS — aprovação libera próximo
+PASS — RPC econômico legado revogado
+PASS — staff provisionado individualmente
+PASS — workspace sem guidance innerHTML
+PASS — class_id explícito é exclusivo
+
+## core/tests/p4-lobby-v11.test.mjs
+PASS — quatro zonas
+PASS — movimento WASD
+PASS — toque mobile
+PASS — portal depende de release
+PASS — sem acesso outra turma
+PASS — deep link atividade
+PASS — revalidação backend
+PASS — presença RLS
+PASS — sem chat livre
+PASS — emotes
+
+## core/tests/teacher-mode.test.mjs
+{
+  "status": "ok",
+  "teacherContentDirectStudentAccess": false,
+  "teacherScope": "server-side",
+  "frontendContainsAnswers": false
+}
+

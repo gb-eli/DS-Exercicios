@@ -1,0 +1,20 @@
+{
+  "initial": {
+    "tracked": "2.7 MB",
+    "resources": "4",
+    "pressure": "Estável"
+  },
+  "afterPressure": {
+    "tracked": "37.6 MB",
+    "resources": "3",
+    "pressure": "Estável",
+    "events": 8
+  },
+  "mobile": {
+    "sw": 390,
+    "cw": 390,
+    "buttons": 3
+  },
+  "mobileErrors": [],
+  "errors": []
+}

@@ -1,0 +1,36 @@
+{
+  "platformId": "desafio-ds",
+  "name": "Desafio DS",
+  "version": "33.0.0-pilot",
+  "integrationVersion": "0.3.0-wave3",
+  "canonicalRoot": "desafio 33",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "EduAuth",
+    "economy": "XP ledger; coin references only",
+    "progress": "guided lessons + XP ledger"
+  },
+  "candidateHookFiles": [
+    "js/eduauth/core.js",
+    "js/xp-ledger.js",
+    "js/app.js",
+    "js/guided.js",
+    "js/platform-shell.js"
+  ],
+  "authority": {
+    "identity": "agv-core",
+    "session": "shared-supabase",
+    "localState": "cache/offline",
+    "progress": "agv-progress-event"
+  },
+  "wave": "P6.7-wave3"
+}

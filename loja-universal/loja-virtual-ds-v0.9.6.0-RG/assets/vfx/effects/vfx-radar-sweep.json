@@ -1,0 +1,16 @@
+{
+  "id": "vfx-radar-sweep",
+  "name": "Radar Quantum",
+  "type": "radar",
+  "category": "screen",
+  "rarity": "epic",
+  "price": 3200,
+  "durationMs": 7000,
+  "loop": true,
+  "colors": [
+    "#48e4a6",
+    "#2ad7ff"
+  ],
+  "pack": "vfx-screen-tech",
+  "description": "Radar circular com varredura, alvos e pulsos holográficos."
+}

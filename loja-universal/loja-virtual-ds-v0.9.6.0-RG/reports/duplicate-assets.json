@@ -1,0 +1,160 @@
+{
+  "groups": [
+    {
+      "sha256": "d0cf9ca432d97c106f9a709d9053527a9d0d74951273dafd65d7dddfd6ffb3dd",
+      "bytes": 918225,
+      "paths": [
+        "assets/previews/v0.8.0-desktop.png",
+        "preview-desktop.png"
+      ],
+      "wastedBytes": 918225
+    },
+    {
+      "sha256": "750ae02fa83491d647b7c8a6eebb0c30d0b6582497e46ecb69b019ff0796cf22",
+      "bytes": 872693,
+      "paths": [
+        "assets/previews/v0.8.0-validation.png",
+        "preview-validation.png"
+      ],
+      "wastedBytes": 872693
+    },
+    {
+      "sha256": "3a34dba5029aba2413b35d62a310cdc39d694313acec04b4239503164ceb58dc",
+      "bytes": 442572,
+      "paths": [
+        "assets/previews/v0.8.0-mobile.png",
+        "preview-mobile.png"
+      ],
+      "wastedBytes": 442572
+    },
+    {
+      "sha256": "9a21150599f97613429460d8bb010bbe96512d7c2c58c9f9b6fccf163422e268",
+      "bytes": 370083,
+      "paths": [
+        "assets/previews/v0.7.0-product-360.png",
+        "preview-store.png"
+      ],
+      "wastedBytes": 370083
+    },
+    {
+      "sha256": "deb167f496520632a62a1a90b217c654e131a326a6b37cd2a76d4f34b48b5ff2",
+      "bytes": 24060,
+      "paths": [
+        "dist/ds-store-foundation.js",
+        "src/core/foundation.js"
+      ],
+      "wastedBytes": 24060
+    },
+    {
+      "sha256": "2bead3c5aa309d2b4cdefbe378617a6b63e7ebc057980b59729d2ddf5019546f",
+      "bytes": 12467,
+      "paths": [
+        "dist/ds-store-sdk.js",
+        "src/sdk/ds-store-sdk.js"
+      ],
+      "wastedBytes": 12467
+    },
+    {
+      "sha256": "ac7629f86186814bfdcf821479d8b75b17d7a4f76f0a284c908ec6f7cdd07b20",
+      "bytes": 8687,
+      "paths": [
+        "assets/vfx/vfx-manifest.json",
+        "catalog/vfx.json"
+      ],
+      "wastedBytes": 8687
+    },
+    {
+      "sha256": "1c8e2d15f4c2ff7c62b81425417aeb4accb731733200b3643d2668139e0f094b",
+      "bytes": 3392,
+      "paths": [
+        "assets/equipment/models/backpack-scholar.glb",
+        "lab/formats/glb-transfer/backpack-scholar/backpack-scholar.glb"
+      ],
+      "wastedBytes": 3392
+    },
+    {
+      "sha256": "835662a14120854188cde72a478450fe843881c407f6c8c7cf656f1fec1777ae",
+      "bytes": 3256,
+      "paths": [
+        "assets/equipment/models/mystic-arcane.glb",
+        "lab/formats/glb-transfer/mystic-arcane/mystic-arcane.glb"
+      ],
+      "wastedBytes": 3256
+    },
+    {
+      "sha256": "d934f09b4154b49eed009066f35275348af4fcdd6456cd98826e2926ae0bfeff",
+      "bytes": 3192,
+      "paths": [
+        "assets/equipment/models/drone-iris.glb",
+        "lab/formats/glb-transfer/drone-iris/drone-iris.glb"
+      ],
+      "wastedBytes": 3192
+    },
+    {
+      "sha256": "a9619b786bf69a27da8a6d33a39501d1e9d85a94a5e320c0ba33e2df4bf057cc",
+      "bytes": 648,
+      "paths": [
+        "lab/formats/gltf-split/backpack-scholar/backpack-scholar.bin",
+        "lab/formats/gltf-split/drone-iris/drone-iris.bin",
+        "lab/formats/gltf-split/mystic-arcane/mystic-arcane.bin"
+      ],
+      "wastedBytes": 1296
+    },
+    {
+      "sha256": "975be77cb6e0a6244e4d1a4568774cffeb21e26b316a0e22d5a48443ac6ea6e9",
+      "bytes": 1035,
+      "paths": [
+        "assets/compression/glb/equipment/models/mystic-arcane.glb.gz",
+        "lab/formats/glb-transfer/mystic-arcane/mystic-arcane.glb.gz"
+      ],
+      "wastedBytes": 1035
+    },
+    {
+      "sha256": "8727ff0e57bc72b4642933440259f1f001c9f078df8cdf6683507f807b35a11d",
+      "bytes": 997,
+      "paths": [
+        "assets/compression/glb/equipment/models/backpack-scholar.glb.gz",
+        "lab/formats/glb-transfer/backpack-scholar/backpack-scholar.glb.gz"
+      ],
+      "wastedBytes": 997
+    },
+    {
+      "sha256": "be72e2beb275c66243700a1f5a6772fca0b3bf9bc7c949a66b17cb454e6f0c12",
+      "bytes": 968,
+      "paths": [
+        "assets/compression/glb/equipment/models/drone-iris.glb.gz",
+        "lab/formats/glb-transfer/drone-iris/drone-iris.glb.gz"
+      ],
+      "wastedBytes": 968
+    },
+    {
+      "sha256": "491094aa0d18c47784634bcc4570d53af4d1e887faec6b89ddc786dbbcf27079",
+      "bytes": 481,
+      "paths": [
+        "assets/vfx/icons/aura-energy-blue.svg",
+        "assets/vfx/icons/vfx-hologram-scan.svg",
+        "assets/vfx/icons/vfx-neon-glitch.svg"
+      ],
+      "wastedBytes": 962
+    },
+    {
+      "sha256": "766285fdc8bf9294fed3d4304466808d6936f6e94b6f9c84ec3fed22cb3b0e47",
+      "bytes": 481,
+      "paths": [
+        "assets/vfx/icons/vfx-confetti.svg",
+        "assets/vfx/icons/vfx-fireworks-orbit.svg"
+      ],
+      "wastedBytes": 481
+    },
+    {
+      "sha256": "f9820d4d02d74910ffeb80e04b3bd1ec7a0375ef696703aa3d2c015d8a04a968",
+      "bytes": 273,
+      "paths": [
+        "dist/ds-store-sdk.esm.js",
+        "src/sdk/ds-store-sdk.esm.js"
+      ],
+      "wastedBytes": 273
+    }
+  ],
+  "totalWastedBytes": 2664639
+}

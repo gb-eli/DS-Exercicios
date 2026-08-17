@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "region": {
+    "id": "vila-tecnologica",
+    "name": "Região 2 · Vila Tecnológica",
+    "kind": "village",
+    "size": [80, 1, 72],
+    "spawn": [0, 0.02, 28],
+    "portal": {"id":"portal-vila","position":[0,1.25,-29]},
+    "visual": {"background":"0x091827","fog":"0x11283a","ground":"0x243c43","accent":"0x62e7cf"},
+    "sectors": [
+      {"id":"praca","name":"Praça de Conexão","center":[0,16],"radius":15},
+      {"id":"oficina","name":"Oficina de Manutenção","center":[-22,-4],"radius":15},
+      {"id":"dados","name":"Estação de Dados","center":[22,-4],"radius":15},
+      {"id":"central","name":"Centro de Rede","center":[0,-22],"radius":15}
+    ],
+    "platforms": [
+      {"id":"vp-01","position":[-7,0.75,17],"size":[5,1.5,5],"theme":"village"},
+      {"id":"vp-02","position":[8,1.35,12],"size":[4.5,2.7,4.5],"theme":"village"},
+      {"id":"vp-03","position":[-30,1.0,-1],"size":[5,2,5],"theme":"workshop"},
+      {"id":"vp-04","position":[-20,1.75,-13],"size":[5,3.5,5],"theme":"workshop"},
+      {"id":"vp-05","position":[29,1.05,1],"size":[5,2.1,5],"theme":"data"},
+      {"id":"vp-06","position":[21,1.85,-13],"size":[5,3.7,5],"theme":"data"},
+      {"id":"vp-07","position":[-9,1.2,-22],"size":[4.5,2.4,4.5],"theme":"civic"},
+      {"id":"vp-08","position":[10,1.65,-20],"size":[4.5,3.3,4.5],"theme":"civic"}
+    ],
+    "movingPlatforms": [
+      {"id":"vm-west","position":[-14,1.15,2],"size":[3.6,0.55,3.6],"axis":"z","range":4,"speed":1.0,"phase":0.7,"theme":"workshop"},
+      {"id":"vm-east","position":[14,1.15,2],"size":[3.6,0.55,3.6],"axis":"z","range":4,"speed":1.08,"phase":2.1,"theme":"data"}
+    ],
+    "buildings": [
+      {"id":"building-workshop","name":"Oficina de Manutenção","position":[-22,2.8,-4],"size":[18,5.6,16],"theme":"workshop","door":{"position":[-13,0,-1],"side":"east"}},
+      {"id":"building-data","name":"Estação de Dados","position":[22,2.8,-4],"size":[18,5.6,16],"theme":"data","door":{"position":[13,0,-1],"side":"west"}},
+      {"id":"building-core","name":"Centro de Rede","position":[0,3,-23],"size":[15,6,11],"theme":"civic","door":{"position":[0,0,-17],"side":"south"}}
+    ],
+    "obstacles": [
+      {"id":"workshop-n","position":[-22,2.4,-12],"size":[18,4.8,1]},
+      {"id":"workshop-s1","position":[-27.5,2.4,4],"size":[7,4.8,1]},
+      {"id":"workshop-s2","position":[-17.5,2.4,4],"size":[5,4.8,1]},
+      {"id":"workshop-w","position":[-31,2.4,-4],"size":[1,4.8,16]},
+      {"id":"workshop-e1","position":[-13,2.4,-8],"size":[1,4.8,8]},
+      {"id":"workshop-e2","position":[-13,2.4,2.5],"size":[1,4.8,3]},
+      {"id":"data-n","position":[22,2.4,-12],"size":[18,4.8,1]},
+      {"id":"data-s1","position":[17.5,2.4,4],"size":[5,4.8,1]},
+      {"id":"data-s2","position":[27.5,2.4,4],"size":[7,4.8,1]},
+      {"id":"data-e","position":[31,2.4,-4],"size":[1,4.8,16]},
+      {"id":"data-w1","position":[13,2.4,-8],"size":[1,4.8,8]},
+      {"id":"data-w2","position":[13,2.4,2.5],"size":[1,4.8,3]},
+      {"id":"core-n","position":[0,2.6,-28.5],"size":[15,5.2,1]},
+      {"id":"core-w","position":[-7.5,2.6,-23],"size":[1,5.2,11]},
+      {"id":"core-e","position":[7.5,2.6,-23],"size":[1,5.2,11]},
+      {"id":"core-s1","position":[-5,2.6,-17.5],"size":[5,5.2,1]},
+      {"id":"core-s2","position":[5,2.6,-17.5],"size":[5,5.2,1]}
+    ],
+    "hazards": [
+      {"id":"vh-01","position":[-9,0.08,8],"size":[5,0.16,1.6]},
+      {"id":"vh-02","position":[9,0.08,7],"size":[5,0.16,1.6]},
+      {"id":"vh-03","position":[-5,0.08,-8],"size":[4,0.16,1.6]},
+      {"id":"vh-04","position":[6,0.08,-8],"size":[4,0.16,1.6]}
+    ],
+    "collectibles": [
+      {"id":"data-a","name":"Pacote de Dados A","position":[-7,2.35,17],"mission":"data"},
+      {"id":"data-b","name":"Pacote de Dados B","position":[8,3.15,12],"mission":"data"},
+      {"id":"data-c","name":"Pacote de Dados C","position":[29,2.55,1],"mission":"data"},
+      {"id":"data-d","name":"Pacote de Dados D","position":[21,4.2,-13],"mission":"data"}
+    ],
+    "beacons": [],
+    "checkpoints": [
+      {"id":"vcp-praca","position":[0,0.05,19]},
+      {"id":"vcp-oficina","position":[-11,0.05,1]},
+      {"id":"vcp-dados","position":[11,0.05,1]},
+      {"id":"vcp-central","position":[0,0.05,-14]}
+    ],
+    "enemies": [
+      {"id":"courier-01","type":"sentinel","position":[-7,0.7,12],"axis":"x","range":5,"speed":1.05,"phase":0.3},
+      {"id":"courier-02","type":"drone","position":[10,0.7,10],"axis":"z","range":5,"speed":1.12,"phase":1.2},
+      {"id":"courier-03","type":"glitch","position":[0,0.7,-9],"axis":"x","range":7,"speed":1.18,"phase":2.2}
+    ],
+    "npcs": [
+      {"id":"lia","name":"Lia","role":"Engenheira da Oficina","position":[-10.5,0.0,0.5],"color":"0xffb56b"},
+      {"id":"ivo","name":"Ivo","role":"Curador de Dados","position":[10.5,0.0,0.5],"color":"0x72d7ff"},
+      {"id":"dara","name":"Dara","role":"Administradora de Rede","position":[0,0.0,13],"color":"0xa28cff"}
+    ],
+    "interactables": [
+      {"id":"repair-a","name":"Banco de Energia","type":"repair","position":[-27,0.7,-7]},
+      {"id":"repair-b","name":"Calibrador de Malha","type":"repair","position":[-21,0.7,-7]},
+      {"id":"repair-c","name":"Controlador Térmico","type":"repair","position":[-16,0.7,0]},
+      {"id":"data-terminal","name":"Terminal de Upload","type":"data-terminal","position":[26,0.7,-7]},
+      {"id":"relay-west","name":"Relé Oeste","type":"relay","position":[-30,0.7,12]},
+      {"id":"relay-east","name":"Relé Leste","type":"relay","position":[30,0.7,12]},
+      {"id":"relay-north","name":"Relé Norte","type":"relay","position":[0,0.7,-12]},
+      {"id":"network-core","name":"Núcleo da Vila","type":"core","position":[0,0.7,-23]}
+    ],
+    "missions": [
+      {"id":"m1-oficina","name":"Oficina em Sincronia","steps":["Fale com Lia","Ative 3 módulos da oficina","Retorne à Lia"]},
+      {"id":"m2-dados","name":"Pacotes Perdidos","steps":["Fale com Ivo","Recupere 4 pacotes de dados","Envie os pacotes no terminal"]},
+      {"id":"m3-rede","name":"Rede da Vila","steps":["Fale com Dara","Ative 3 relés","Sincronize o Núcleo da Vila","Atravesse o Portal de Continuidade"]}
+    ]
+  }
+}

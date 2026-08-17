@@ -1,0 +1,48 @@
+{
+  "id": "DS_REALISM_LIGHTING_V1",
+  "version": "0.9.5.1",
+  "maturity": "presentation-runtime-v1",
+  "renderer": "lite-compatible",
+  "lights": [
+    {
+      "type": "key",
+      "color": "#d7f7ff",
+      "intensity": 1.0,
+      "position": [
+        2.5,
+        4.2,
+        4.0
+      ]
+    },
+    {
+      "type": "fill",
+      "color": "#6a8dff",
+      "intensity": 0.42,
+      "position": [
+        -3.0,
+        2.4,
+        2.0
+      ]
+    },
+    {
+      "type": "rim",
+      "color": "#ffb86b",
+      "intensity": 0.55,
+      "position": [
+        0.0,
+        3.0,
+        -3.2
+      ]
+    }
+  ],
+  "environment": {
+    "background": "stage-cinematic.svg",
+    "reflection": "simulated",
+    "volumetric": "css-canvas-simulated"
+  },
+  "limitations": [
+    "Sem texturas 4K reais nesta versão",
+    "Sem HDR/IBL físico nesta versão",
+    "Renderer Advanced previsto para v0.9.6.0-RG"
+  ]
+}
