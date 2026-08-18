@@ -1,0 +1,192 @@
+/* AGV • Hub Educacional — Front-End Sub workspace patch v0.1.41 */
+:root {
+  --agv-vscode-bg: #1e1e1e;
+  --agv-vscode-panel: #181818;
+  --agv-vscode-border: #30363d;
+  --agv-vscode-text: #d4d4d4;
+  --agv-vscode-muted: #9da5b4;
+  --agv-vscode-blue: #569cd6;
+  --agv-vscode-cyan: #4ec9b0;
+  --agv-vscode-yellow: #dcdcaa;
+  --agv-vscode-orange: #ce9178;
+  --agv-vscode-green: #6a9955;
+  --agv-vscode-number: #b5cea8;
+  --agv-vscode-purple: #c586c0;
+}
+
+.agv-dual-workspace {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+}
+
+.agv-reference-pane,
+.agv-student-editor-pane {
+  min-width: 0;
+  min-height: 420px;
+}
+
+.agv-reference-pane {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--agv-vscode-bg);
+  color: var(--agv-vscode-text);
+  border: 1px solid var(--agv-vscode-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.agv-reference-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--agv-vscode-panel);
+  border-bottom: 1px solid var(--agv-vscode-border);
+}
+
+.agv-reference-header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.agv-reference-header strong { font-size: .92rem; }
+.agv-reference-header span { color: var(--agv-vscode-muted); font-size: .76rem; }
+.agv-reference-lock {
+  white-space: nowrap;
+  padding: 4px 7px;
+  border: 1px solid var(--agv-vscode-border);
+  border-radius: 999px;
+}
+
+.agv-reference-tabs {
+  display: flex;
+  overflow-x: auto;
+  background: #252526;
+  border-bottom: 1px solid var(--agv-vscode-border);
+  scrollbar-width: thin;
+}
+
+.agv-reference-tab {
+  appearance: none;
+  border: 0;
+  border-right: 1px solid var(--agv-vscode-border);
+  border-bottom: 2px solid transparent;
+  background: #2d2d2d;
+  color: #bcbcbc;
+  min-height: 38px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font: 500 .79rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.agv-reference-tab:hover,
+.agv-reference-tab:focus-visible { background: #333; color: #fff; outline: none; }
+.agv-reference-tab.is-active { background: var(--agv-vscode-bg); color: #fff; border-bottom-color: #007acc; }
+
+.agv-reference-code-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  background: var(--agv-vscode-bg);
+}
+
+.agv-reference-code-host .CodeMirror,
+.agv-reference-codemirror {
+  height: auto !important;
+  min-height: 100%;
+  background: var(--agv-vscode-bg) !important;
+  color: var(--agv-vscode-text) !important;
+  font: 13px/1.55 "Cascadia Code", "Cascadia Mono", Consolas, "Liberation Mono", monospace !important;
+}
+
+.agv-reference-code-host .CodeMirror-gutters {
+  background: var(--agv-vscode-bg) !important;
+  border-right: 1px solid #2b2b2b !important;
+}
+.agv-reference-code-host .CodeMirror-linenumber { color: #858585 !important; padding: 0 8px 0 5px !important; }
+.agv-reference-code-host .cm-tag { color: var(--agv-vscode-blue) !important; }
+.agv-reference-code-host .cm-attribute { color: #9cdcfe !important; }
+.agv-reference-code-host .cm-string { color: var(--agv-vscode-orange) !important; }
+.agv-reference-code-host .cm-comment { color: var(--agv-vscode-green) !important; }
+.agv-reference-code-host .cm-keyword { color: var(--agv-vscode-purple) !important; }
+.agv-reference-code-host .cm-number { color: var(--agv-vscode-number) !important; }
+.agv-reference-code-host .cm-def,
+.agv-reference-code-host .cm-variable-2 { color: var(--agv-vscode-cyan) !important; }
+.agv-reference-code-host .cm-property { color: #9cdcfe !important; }
+.agv-reference-code-host .cm-operator { color: var(--agv-vscode-text) !important; }
+
+.agv-reference-code-fallback {
+  min-width: max-content;
+  padding: 8px 0 16px;
+  font: 13px/1.55 "Cascadia Code", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+  counter-reset: line;
+}
+.agv-reference-line { display: grid; grid-template-columns: 54px minmax(max-content, 1fr); min-height: 21px; }
+.agv-reference-line:hover { background: rgb(255 255 255 / 3%); }
+.agv-reference-line-number {
+  color: #858585;
+  text-align: right;
+  padding: 0 12px 0 4px;
+  border-right: 1px solid #2b2b2b;
+}
+.agv-reference-line-code { white-space: pre; padding: 0 14px; color: var(--agv-vscode-text); }
+.agv-token-tag { color: var(--agv-vscode-blue); }
+.agv-token-attr { color: #9cdcfe; }
+.agv-token-string { color: var(--agv-vscode-orange); }
+.agv-token-comment { color: var(--agv-vscode-green); }
+.agv-token-keyword { color: var(--agv-vscode-purple); }
+.agv-token-number { color: var(--agv-vscode-number); }
+
+.agv-reference-empty { padding: 24px; color: var(--agv-vscode-muted); text-align: center; }
+
+.agv-workspace-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 8px;
+  border: 1px solid var(--agv-vscode-border);
+  border-radius: 10px;
+  background: #181818;
+}
+.agv-workspace-actions button {
+  min-height: 38px;
+  border: 1px solid #3b4654;
+  border-radius: 7px;
+  background: #252b33;
+  color: #f5f7fa;
+  padding: 7px 11px;
+  cursor: pointer;
+  font: 600 .8rem/1.2 system-ui, sans-serif;
+}
+.agv-workspace-actions button:hover,
+.agv-workspace-actions button:focus-visible { border-color: #5b9bd5; background: #2b3540; outline: none; }
+.agv-workspace-actions button:disabled { opacity: .55; cursor: wait; }
+.agv-workspace-status { margin-left: auto; color: #bfc7d5; font-size: .78rem; }
+.agv-workspace-status[data-kind="ok"] { color: #89d185; }
+.agv-workspace-status[data-kind="warn"] { color: #dcdcaa; }
+.agv-workspace-status[data-kind="error"] { color: #f48771; }
+
+@media (max-width: 900px) {
+  .agv-dual-workspace { grid-template-columns: minmax(0, 1fr) !important; }
+  .agv-reference-pane { min-height: 300px; max-height: 46vh; }
+  .agv-student-editor-pane { min-height: 420px; }
+  .agv-workspace-status { width: 100%; margin-left: 0; }
+}
+
+@media (max-width: 520px) {
+  .agv-reference-header { align-items: flex-start; }
+  .agv-reference-header > div span { max-width: 220px; }
+  .agv-reference-lock { display: none; }
+  .agv-reference-code-host .CodeMirror,
+  .agv-reference-code-fallback { font-size: 12px !important; }
+  .agv-workspace-actions button { flex: 1 1 calc(50% - 8px); }
+}
