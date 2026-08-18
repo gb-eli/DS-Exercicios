@@ -1,7 +1,7 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.20.3",
-  "date": "2026-08-17",
+  "version": "0.20.4",
+  "date": "2026-08-18",
   "features": [
     "Modo supervisionado por atividade com sessão server-side e IP",
     "Tela cheia quando suportada e bloqueio após 3 violações objetivas",
@@ -58,7 +58,11 @@
     "v14.8.1: checklist de commit/push aparece antes da entrega",
     "v14.8.2: Lobby e Atividades deixam de depender do empacotamento jsDelivr +esm do Supabase JS",
     "v14.8.2: Supabase JS é carregado pelo build UMD pinado 2.111.0, preservando CSP existente",
-    "v14.8.2: entrypoints recebem cache-busting para evitar módulos antigos após o deploy no GitHub Pages"
+    "v14.8.2: entrypoints recebem cache-busting para evitar módulos antigos após o deploy no GitHub Pages",
+    "v14.8.5: código de referência pedagógica volta a aparecer ao aluno para transcrição manual",
+    "v14.8.5: referência acompanha automaticamente o arquivo ativo e permanece separada do gabarito privado",
+    "v14.8.5: painel de referência bloqueia seleção, copiar, arrastar e menu de contexto na interface",
+    "v14.8.5: referências futuras ainda não solicitadas permanecem fora do bundle público"
   ],
   "notes": [
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
@@ -71,11 +75,11 @@
     "As regras privadas do corretor v14.8 não fazem parte do ZIP público e devem existir apenas como segredo da Edge Function activity-progress.",
     "Enquanto o backend privado não estiver implantado, o Exercício 04 falha fechado e não permite entrega automática."
   ],
-  "phase": "P8.0-private-validator-3ds",
-  "release": "v14.8.3",
+  "phase": "P8.5-student-reference",
+  "release": "v14.8.5",
   "changes": [
-    "v14.8.3: Hub preserva a sessão no primeiro acesso ao redirecionar para troca obrigatória de senha",
-    "v14.8.3: Lobby e Atividades usam explicitamente a mesma storageKey Supabase canônica do ecossistema",
-    "v14.8.3: Lobby permanece geral para aluno/professor/admin e atividades continuam filtradas por turma/liberação com revalidação server-side"
+    "v14.8.5: restaura referência pública de 1DS 01-05, 2DS 01-15, 3DS 01-04, SUB Front-End 01-05 e Mobile 01-04",
+    "v14.8.5: Referência é a aba padrão ao abrir exercício compatível; Preview e Terminal continuam sob demanda",
+    "v14.8.5: em celular a referência fica em painel rolável acima do editor para facilitar transcrição"
   ]
 }

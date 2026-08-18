@@ -988,3 +988,15 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 .submission-checklist{display:grid;gap:5px;padding:12px 14px;border:1px solid rgba(76,194,255,.18);border-radius:12px;background:rgba(76,194,255,.045);color:var(--text-2);font-size:.76rem;line-height:1.45}
 .submission-checklist strong{color:#bfefff;margin-bottom:2px}.submission-checklist code{font:700 .72rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#9ce8b9}
 @media(max-width:520px){.submission-checklist{font-size:.72rem;padding:10px 11px}.submission-score strong{font-size:1.2rem}}
+
+/* v14.8.5 — referência pedagógica pública para transcrição manual */
+.reference-pane{flex:1;min-height:620px;display:flex;flex-direction:column;background:#07090c;overflow:hidden}
+.reference-head{min-height:58px;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border-soft);background:#0a0d10}
+.reference-head>div{display:grid;gap:2px;min-width:0}.reference-head strong{font:750 .78rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#e7f4fa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reference-lock{flex:0 0 auto;padding:5px 8px;border:1px solid rgba(103,211,255,.18);border-radius:999px;background:rgba(103,211,255,.045);color:#9edff7;font-size:.62rem;font-weight:800}
+.reference-note{margin:0;padding:9px 13px;border-bottom:1px solid var(--border-soft);background:#0c1115;color:#9eb1bd;font-size:.7rem;line-height:1.45}
+.reference-code{flex:1;min-height:0;margin:0;padding:16px 18px 30px;overflow:auto;background:#07090c;color:#dce4ee;font:13.5px/1.65 "Cascadia Code","JetBrains Mono","SFMono-Regular",Consolas,monospace;white-space:pre;tab-size:2;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:default}
+.reference-code[data-empty="true"]{white-space:pre-wrap;color:#7f929e;font-family:inherit}
+.reference-code:focus{outline:1px solid #244454;outline-offset:-1px}
+@media(min-width:1101px){.exercise-view.tools-collapsed:not(.output-collapsed) .reference-pane{min-height:620px}}
+@media(max-width:760px){.exercise-view.reference-active .output-panel{order:1;min-height:0}.exercise-view.reference-active .workspace-panel{order:2}.exercise-view.reference-active .exercise-sidebar{order:3}.reference-pane{min-height:0;max-height:44dvh}.reference-code{min-height:34dvh;padding:13px;font-size:12.5px;line-height:1.58}.reference-head{min-height:50px;padding:8px 10px}.reference-note{padding:8px 10px}}

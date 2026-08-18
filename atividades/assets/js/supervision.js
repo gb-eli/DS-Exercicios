@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js?v=14.8.3';
+import { supabase } from './supabase.js?v=14.8.5';
 
 const $ = (id) => document.getElementById(id);
 const state = {

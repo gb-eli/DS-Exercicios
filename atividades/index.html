@@ -20,7 +20,7 @@
           <h1>Exercícios Práticos DS</h1>
         </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.20.3</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.20.4</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -282,10 +282,19 @@
 
           <section class="panel output-panel">
             <div class="output-tabs">
-              <button class="output-tab active" data-output="preview" type="button">Preview</button>
+              <button class="output-tab active" data-output="reference" type="button">Referência</button>
+              <button class="output-tab" data-output="preview" type="button">Preview</button>
               <button class="output-tab" data-output="terminal" type="button">Terminal</button>
             </div>
-            <iframe id="preview-frame" class="preview-frame" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html"></iframe>
+            <section id="reference-pane" class="reference-pane" aria-label="Código de referência para transcrição">
+              <div class="reference-head">
+                <div><span class="eyebrow">Referência para transcrever</span><strong id="reference-filename">arquivo</strong></div>
+                <span class="reference-lock">Somente leitura</span>
+              </div>
+              <p id="reference-note" class="reference-note">Observe o código e digite manualmente no editor. Copiar e colar a referência estão desativados.</p>
+              <pre id="reference-code" class="reference-code no-select" tabindex="0" aria-label="Código de referência. Digite manualmente no editor ao lado."></pre>
+            </section>
+            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html"></iframe>
             <div id="terminal-pane" class="terminal-pane hidden">
               <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
               <form id="terminal-input-form" class="terminal-input-row hidden">
@@ -312,7 +321,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.8.3"></script>
+  <script type="module" src="assets/js/app.js?v=14.8.5"></script>
 
 
     <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">

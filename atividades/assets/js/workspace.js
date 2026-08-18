@@ -1,5 +1,6 @@
 import { runPython } from './python-runtime.js';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.8.5';
 import { validateExercise, renderValidation } from './validation.js';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
@@ -7,7 +8,7 @@ import {
   callActivityProgress
 } from './supervision.js';
 
-import { supabase } from './supabase.js?v=14.8.3';
+import { supabase } from './supabase.js?v=14.8.5';
 
 let state = {
   profile:null,
@@ -27,6 +28,7 @@ let state = {
   toolsOpen:false,
   outputOpen:false,
   pendingServerEvaluation:null,
+  referenceAvailable:false,
 };
 
 const $ = (id)=>document.getElementById(id);
@@ -122,7 +124,43 @@ function setOutputOpen(open){
   state.outputOpen=!!open;
   document.getElementById('exercise-view')?.classList.toggle('output-collapsed',!state.outputOpen);
   const btn=$('toggle-output-btn');
-  if(btn){btn.setAttribute('aria-expanded',String(state.outputOpen));btn.textContent=state.outputOpen?'Ocultar saída':'Preview';}
+  if(btn){
+    btn.setAttribute('aria-expanded',String(state.outputOpen));
+    btn.textContent=state.outputOpen?'Ocultar painel':(state.referenceAvailable?'Referência':'Preview');
+  }
+}
+
+function referenceEntry(){
+  const key=`${state.subject?.slug||''}:${state.exercise?.exercise_number||''}`;
+  return EXERCISE_REFERENCES[key]||null;
+}
+
+function referenceForFile(filename){
+  const entry=referenceEntry();
+  if(!entry?.files)return null;
+  const wanted=String(filename||'').toLowerCase();
+  const found=Object.entries(entry.files).find(([name])=>String(name).toLowerCase()===wanted);
+  return found?String(found[1]??''):null;
+}
+
+function renderReference(){
+  const code=$('reference-code'),name=$('reference-filename'),note=$('reference-note');
+  if(!code||!name||!note)return;
+  const content=referenceForFile(state.active?.filename);
+  const has=typeof content==='string'&&content.length>0;
+  state.referenceAvailable=Boolean(referenceEntry());
+  name.textContent=state.active?.filename||'arquivo';
+  if(has){
+    note.textContent='Observe a referência e digite manualmente no editor. Copiar, arrastar e colar a referência estão desativados.';
+    code.innerHTML=highlightCode(content,state.active?.language||'text')+'\n';
+    code.dataset.empty='false';
+  }else{
+    note.textContent=state.referenceAvailable?'Este arquivo não possui referência publicada. Trabalhe apenas no editor.':'Esta atividade não utiliza código de referência público.';
+    code.textContent='Referência não disponível para este arquivo.';
+    code.dataset.empty='true';
+  }
+  const btn=$('toggle-output-btn');
+  if(btn&&!state.outputOpen)btn.textContent=state.referenceAvailable?'Referência':'Preview';
 }
 
 function escapeCode(value){
@@ -311,6 +349,7 @@ async function activateFile(id){
   $('code-editor').value=next.content||'';
   renderFileTabs();
   renderHighlight();
+  renderReference();
   setSaveState(`Revisão ${next.revision||1} • ${formatDate(next.saved_at)}`,'ok');
   sendEditorSnapshot(true);
 }
@@ -451,8 +490,10 @@ async function buildPreview(){
 function showOutput(which){
   setOutputOpen(true);
   document.querySelectorAll('.output-tab').forEach(b=>b.classList.toggle('active',b.dataset.output===which));
+  $('reference-pane')?.classList.toggle('hidden',which!=='reference');
   $('preview-frame').classList.toggle('hidden',which!=='preview');
   $('terminal-pane').classList.toggle('hidden',which!=='terminal');
+  document.getElementById('exercise-view')?.classList.toggle('reference-active',which==='reference');
 }
 
 async function loadHistory(){
@@ -769,6 +810,9 @@ export async function mountWorkspace({profile,exercise,subject}){
   }
   renderFileTabs();
   await activateFile(state.files[0]?.id);
+  state.referenceAvailable=Boolean(referenceEntry());
+  if(state.referenceAvailable)showOutput('reference');
+  else setOutputOpen(false);
   runValidation();
   await loadStudentSupport();
   await prepareSupervision({
@@ -816,7 +860,10 @@ $('code-editor')?.addEventListener('input',(event)=>{
 ['keyup','click','select'].forEach(evt=>$('code-editor')?.addEventListener(evt,sendCursor));
 $('code-editor')?.addEventListener('scroll',()=>{const e=$('code-editor'),p=$('code-highlight');if(p&&e){p.scrollTop=e.scrollTop;p.scrollLeft=e.scrollLeft;}});
 $('toggle-tools-btn')?.addEventListener('click',()=>setToolsOpen(!state.toolsOpen));
-$('toggle-output-btn')?.addEventListener('click',()=>setOutputOpen(!state.outputOpen));
+$('toggle-output-btn')?.addEventListener('click',()=>{
+  if(state.outputOpen)setOutputOpen(false);
+  else showOutput(state.referenceAvailable?'reference':'preview');
+});
 $('save-now-btn')?.addEventListener('click',()=>saveActiveFile(true));
 $('run-preview-btn')?.addEventListener('click',async()=>{await buildPreview();runValidation();});
 $('validate-btn')?.addEventListener('click',()=>{if(isPrivateServerValidation())runServerEvaluation();else runValidation();});
@@ -870,4 +917,6 @@ $('exercise-submit-form')?.addEventListener('submit',async event=>{
 });
 $('history-btn')?.addEventListener('click',async()=>{await loadHistory();$('history-dialog').showModal();});
 document.querySelectorAll('.output-tab').forEach(b=>b.addEventListener('click',()=>showOutput(b.dataset.output)));
+['copy','cut','dragstart','contextmenu'].forEach(type=>$('reference-code')?.addEventListener(type,event=>{event.preventDefault();}));
+$('reference-code')?.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&['c','x','a'].includes(String(event.key||'').toLowerCase()))event.preventDefault();});
 window.addEventListener('beforeunload',()=>{if(state.active&&state.dirty)persistLocalDraft(state.active,$('code-editor').value);});
