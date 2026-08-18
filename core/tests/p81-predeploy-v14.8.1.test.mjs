@@ -10,8 +10,8 @@ const read=(p)=>fs.readFileSync(path.join(root,p),'utf8');
 test('v14.8.1 mantém versão visual e manifesto de Atividades alinhados',()=>{
   const html=read('atividades/index.html');
   const version=JSON.parse(read('atividades/version.json'));
-  assert.equal(version.version,'0.20.1');
-  assert.match(html,/>0\.20\.1<\/span>/);
+  assert.match(version.version,/^0\.20\.[2-9]$/);
+  assert.match(html,new RegExp(`>${version.version.replace(/\./g,'\\.')}<\/span>`));
 });
 
 test('entrega parcial 80-99 não é gravada como concluída',()=>{

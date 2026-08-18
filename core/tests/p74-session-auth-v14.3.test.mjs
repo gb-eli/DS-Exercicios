@@ -76,7 +76,7 @@ test('P7.4: rejeição Auth definitiva remove sessão inválida',async()=>{
 
 test('P7.4: senha temporária direciona ao fluxo obrigatório e Admin não promete revogação Auth',()=>{
   assert.match(hub,/must_change_password/);
-  assert.match(hub,/location\.href='atividades\/'/);
+  assert.match(hub,/location\.(?:href=|replace\()'atividades\/'/);
   assert.match(adminHtml,/Encerrar sessões de atividade/);
   assert.match(adminJs,/NÃO revoga a sessão de login do Supabase/);
 });
