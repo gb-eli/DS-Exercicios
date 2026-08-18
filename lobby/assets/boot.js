@@ -9,8 +9,8 @@ const showFatal=(error)=>{
   kicked?.classList.add('hidden');
   if(message){
     message.classList.add('error');
-    message.textContent='Não foi possível carregar o Lobby. Atualize a página. Se continuar, limpe o cache do site e tente novamente.';
+    message.textContent='Não foi possível carregar o Lobby. Recarregue a página. As Atividades continuam disponíveis pelo Hub.';
   }
 };
 
-import('./lobby.js').catch(showFatal);
+import('./lobby.js?v=14.8.3').catch(showFatal);

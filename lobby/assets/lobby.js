@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js';
+import { supabase } from './supabase.js?v=14.8.3';
 import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js';
 import { createLobby3D } from './lobby3d.js';
 import { createLobbyLite } from './lobby-lite.js';
