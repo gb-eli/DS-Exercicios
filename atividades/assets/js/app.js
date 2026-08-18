@@ -1,7 +1,7 @@
-import { openStaffPanel, isStaff } from './admin.js';
-import { mountWorkspace, unmountWorkspace } from './workspace.js';
-import { callActivityProgress, submitLegacyExercise } from './supervision.js';
-import { supabase } from './supabase.js';
+import { openStaffPanel, isStaff } from './admin.js?v=14.8.3';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.8.3';
+import { callActivityProgress, submitLegacyExercise } from './supervision.js?v=14.8.3';
+import { supabase } from './supabase.js?v=14.8.3';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
 

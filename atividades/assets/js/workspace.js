@@ -7,7 +7,7 @@ import {
   callActivityProgress
 } from './supervision.js';
 
-import { supabase } from './supabase.js';
+import { supabase } from './supabase.js?v=14.8.3';
 
 let state = {
   profile:null,

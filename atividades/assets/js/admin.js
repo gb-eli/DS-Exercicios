@@ -1,5 +1,5 @@
 
-import { supabase } from './supabase.js';
+import { supabase } from './supabase.js?v=14.8.3';
 
 let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null;
 const $=id=>document.getElementById(id);
