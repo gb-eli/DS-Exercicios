@@ -392,3 +392,15 @@ Lobby 3D Heavy Adaptive: Ultra, qualidade adaptativa, câmera dupla, câmera ant
 - Bundle legado interno do 3DS foi reduzido a redirecionamento para `/atividades/`.
 - Regras privadas NÃO fazem parte do repositório/ZIP público.
 - Supabase ao vivo indisponível nesta execução: SQL 032, segredo privado e redeploy de `activity-progress` continuam pendentes antes da liberação do Ex04 aos alunos.
+
+## v14.8.2 — Hotfix GitHub Pages
+- Corrigido carregamento Supabase no Lobby/Atividades sem `+esm`.
+- Cache-busting dos entrypoints para deploy imediato.
+- Sem mudança de banco/Edge Function.
+
+
+## v14.8.3 — Sessão única + Lobby geral
+- sessão canônica única entre Hub/Lobby/Atividades/Professor/Admin;
+- primeiro acesso não perde sessão ao encaminhar para troca de senha;
+- Lobby disponível a student/teacher/admin/super_admin ativos;
+- atividade do aluno continua restrita à turma + liberações, com guard server-side em activity-progress/student-files.

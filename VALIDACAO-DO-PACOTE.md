@@ -1,18 +1,18 @@
-# Validação do pacote — v14.8.1
+# Validação do pacote — v14.8.3
 
 - Data: 17/08/2026
-- Base operacional para atualização: v14.7.3
-- Testes Node: 86/86 PASS
-- JavaScript público: `node --check` PASS
-- Referências HTML locais principais: PASS
-- IDs HTML duplicados principais: PASS
+- Base operacional para atualização: v14.8.2
+- Fase: P8.3 — Sessão única, Lobby geral e atividades por turma
+- Testes Node: 92/92 PASS
+- JavaScript alterado: `node --check` PASS
+- Sessão canônica: `sb-iresvqwyaqotghjssncg-auth-token`
+- Hub: primeiro acesso preserva a sessão ao redirecionar para troca de senha
+- Lobby: `student`, `teacher`, `admin` e `super_admin` ativos são aceitos
+- Atividades: catálogo do aluno é carregado a partir da turma principal + `class_subjects`
+- Liberações: prioridade individual, depois turma, depois `default_locked`
+- Proteção URL direta: `activity-progress` e `student-files` revalidam matrícula/turma/subject server-side
+- SQL necessário nesta versão: NÃO
+- Edge Function nova/deploy necessário nesta versão: NÃO
 - Regras privadas no bundle público: NÃO
-- 3DS público disponível no manifesto: exercícios 01, 02, 03 e novo 04
-- 3DS 05+: não publicado no manifesto
-- Entrega parcial: 80–99% = entregue com pendências / em andamento
-- Conclusão: somente 100%
-- Arquivos no pacote completo: 2.872
-- Hashes SHA-256: 2.871 (exclui o próprio manifesto)
-- Supabase live: PENDENTE
 
-O pacote público pode ser publicado no GitHub antes do backend privado, pois o Ex04 permanece bloqueado por padrão e o fluxo de correção falha fechado se o corretor não estiver disponível. Não liberar o Ex04 até concluir o deploy live e o teste com conta de aluno.
+A v14.8.3 pode ser publicada diretamente sobre a v14.8.2. As pendências de backend privado do Ex04 3DS permanecem separadas e não são alteradas por esta versão.

@@ -5,6 +5,7 @@ AUDITORIA-LIBERACAO-AULA-2026-08-17.md
 HOTFIX-AULA-2026-08-17.md
 HOTFIX-AULA-v14.7.2.md
 HOTFIX-AULA-v14.7.3-AUDITORIA.md
+HOTFIX-LOBBY-v14.8.2.md
 IMPLEMENTATION.sha256
 P5.1-CAMPUS-3D-CINEMATIC-v11.5.md
 P5.1.1-HOTFIX-ENTRADA-LOBBY-v11.5.1.md
@@ -33,6 +34,7 @@ P7.7-VALIDACAO-SESSAO-REVOGADA-v14.6.md
 P7.8-ATIVACAO-CONTROLADA-REVOGACAO-v14.7.md
 P8.0-VALIDACAO-PRIVADA-EX04-3DS-v14.8.md
 P8.1-PREDEPLOY-AULA-v14.8.1.md
+P8.3-SESSAO-UNICA-LOBBY-GERAL-v14.8.3.md
 PACKAGE_CONTENTS.txt
 SOURCE_ARCHIVES.sha256
 VALIDACAO-DO-PACOTE.md
@@ -222,6 +224,8 @@ core/tests/p77-live-session-guard-v14.6.test.mjs
 core/tests/p78-controlled-auth-activation-v14.7.test.mjs
 core/tests/p80-private-validation-3ds-v14.8.test.mjs
 core/tests/p81-predeploy-v14.8.1.test.mjs
+core/tests/p82-supabase-loader-hotfix-v14.8.2.test.mjs
+core/tests/p83-unified-session-lobby-class-scope-v14.8.3.test.mjs
 core/tests/security-hardening-p43.test.mjs
 core/tests/teacher-mode.test.mjs
 core/tools/audit-supabase-security.mjs
@@ -1230,6 +1234,8 @@ release-v14.7.1.json
 release-v14.7.3.json
 release-v14.7.json
 release-v14.8.1.json
+release-v14.8.2.json
+release-v14.8.3.json
 release-v14.8.json
 release-v6.json
 release-v7.json
