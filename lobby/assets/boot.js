@@ -13,4 +13,4 @@ const showFatal=(error)=>{
   }
 };
 
-import('./lobby.js?v=14.8.4').catch(showFatal);
+import('./lobby.js?v=14.9.1').catch(showFatal);

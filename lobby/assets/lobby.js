@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js?v=14.8.4';
+import { supabase } from './supabase.js?v=14.9.1';
 import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js';
 import { createLobby3D } from './lobby3d.js';
 import { createLobbyLite } from './lobby-lite.js';
@@ -60,7 +60,7 @@ async function loadIdentity(){
   if(!p.active)throw new Error('Seu acesso está inativo.');
   if(p.must_change_password){location.href='../atividades/';return false}
   if(!['student','teacher','admin','super_admin'].includes(p.role))throw new Error('Perfil sem acesso ao Lobby.');
-  state.user=user;state.profile=p;
+  state.user=user;state.profile=p;window.AGVFullscreen?.require(p.role==='student');
   const {data:all}=await supabase.from('classes').select('id,code,name,shift,school_year').in('code',zones.map(z=>z.code)).eq('active',true);state.classes=all||[];
   if(p.role==='student'){
     const {data:m,error:me}=await supabase.from('class_memberships').select('class_id').eq('user_id',user.id).eq('active',true).order('is_primary',{ascending:false}).limit(1);if(me)throw me;if(!m?.length)throw new Error('Sua turma ainda não foi vinculada.');
@@ -226,8 +226,8 @@ $('retry-3d').onclick=()=>{try{sessionStorage.removeItem('agv:lobby:lite')}catch
 campusLoad();renderCampus();
 $('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('campus-button').onclick=()=>campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('activity-close').onclick=()=>$('activity-modal').classList.add('hidden');$('staff-student-close').onclick=()=>$('staff-student-modal').classList.add('hidden');$('staff-moderation-close').onclick=()=>$('staff-moderation-modal').classList.add('hidden');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
 document.querySelectorAll('[data-target-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.targetEmote,$('staff-student-modal').dataset.student).then(()=>toast('Interação enviada.')));document.querySelectorAll('[data-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.emote));
-$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();location.reload()};$('kicked-check').onclick=()=>location.reload();
+$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadActivities().catch(()=>{})});setInterval(()=>{if(!document.hidden)loadActivities().catch(()=>{})},30000);
-$('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);btn.disabled=true;msg('Entrando no campus 3D…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:'lobby-3d'});await boot();msg()}catch(err){console.error(err);msg('E-mail ou senha inválidos. Aluno no primeiro acesso: use o CGM. Equipe: use a senha individual fornecida pelo administrador.',true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
+$('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;msg('Entrando no campus 3D…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:'lobby-3d'});await boot();msg()}catch(err){console.error(err);msg('E-mail ou senha inválidos. Aluno no primeiro acesso: use o CGM. Equipe: use a senha individual fornecida pelo administrador.',true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
 (async()=>{try{const {data:{session}}=await supabase.auth.getSession();if(session){await boot();return}}catch(e){console.warn(e)}showLogin(true)})();
 console.info(`AGV Lobby DS ${LOBBY_VERSION} • P5.8 Laboratórios Interativos • presença protegida por Edge Function`);
