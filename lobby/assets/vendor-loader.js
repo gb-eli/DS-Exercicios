@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
 
-  const VERSION='14.9.0';
+  const VERSION='14.10.0';
   const SOURCES=[
     'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.111.0/dist/umd/supabase.js',
     'https://unpkg.com/@supabase/supabase-js@2.111.0/dist/umd/supabase.js'
