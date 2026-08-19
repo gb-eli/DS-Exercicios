@@ -1,38 +1,36 @@
 {
-  "version": "14.9.1",
+  "version": "14.9.3",
   "date": "2026-08-19",
-  "phase": "P9",
-  "title": "Fullscreen global nas plataformas integradas + preparação de publicação",
-  "baseVersion": "14.9.0",
-  "requiresDatabaseChange": false,
-  "requiresEdgeFunctionDeploy": false,
+  "phase": "P9.3",
+  "title": "DS2 Front-End — HTML, CSS e JS canônicos separados e alinhados ao objetivo",
+  "baseVersion": "14.9.2",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": true,
   "requiresPrivateSecret": false,
-  "liveDeployApplied": true,
+  "liveDeployApplied": false,
   "publicBundleContainsPrivateRules": false,
   "fixes": [
-    "Autocorreção 0–100% server-side usando referências oficiais e tolerância a espaços, comentários e quebras de linha",
-    "Entrega permitida abaixo de 100% com submitted_score registrado como nota parcial",
-    "Download individual e ZIP somente dos arquivos digitados pelo aluno",
-    "Tela cheia contínua no portal do aluno, sem reinicialização por exercício",
-    "Página validacao-antiga sem tela cheia com seleção de múltiplas atividades e link GitHub",
-    "Paleta global Símbolos integrada ao editor compartilhado e configurada pelo banco",
-    "Separação por disciplina no catálogo do aluno/admin e escopo das ações em massa",
-    "staff-dashboard inclui auto_score/submitted_score no acompanhamento",
-    "Fullscreen global aplicado também às 10 plataformas integradas do catálogo do Hub",
-    "Bridge compartilhado identifica perfil e exige tela cheia somente para aluno autenticado",
-    "Página validacao-antiga permanece a única rota explicitamente isenta de fullscreen",
-    "Bundle público de deploy separado do código operacional de banco/Edge Functions"
+    "Front-End 2DS 01–20 sincronizado com as referências pedagógicas canônicas do bundle",
+    "Cada atividade possui exatamente index.html, estilo.css e script.js como referências separadas e conectadas",
+    "Removido CSS estático embutido em <style> e style= do HTML de referência",
+    "Autocorreção v3 penaliza arquivo ausente/vazio e compara HTML, CSS e JavaScript",
+    "Entrega parcial continua permitida, mas no 2DS exige que os três arquivos existam e tenham conteúdo",
+    "student-files v7 reconcilia arquivo esperado ausente sem sobrescrever trabalho existente",
+    "Trigger de integridade impede regressão para CSS embutido ou HTML desconectado",
+    "Cache-busting v14.9.3 no frontend alterado",
+    "Referências 01–20 revisadas pedagogicamente para corresponder ao título e objetivo cadastrado de cada exercício",
+    "HTML do 2DS não contém mais onclick/oninput/onchange: todo comportamento fica em script.js",
+    "Fallback local corrigido do DS2 passa a ter prioridade quando a referência do Supabase estiver temporariamente indisponível",
+    "Guard de banco restringe referências ativas do 2DS aos três nomes canônicos e impede exclusão/regressão enquanto a atividade estiver ativa"
   ],
   "status": "RELEASE_CANDIDATE",
   "databaseMigrationAppliedToProduction": true,
   "databaseMigrations": [
-    "student_exercise_autograde_scores"
+    "guard_ds2_frontend_three_file_reference_structure"
   ],
-  "edgeFunctionAppliedToProduction": "sem alteração nesta fase; mantém exercise-autograde v2, legacy-batch-submit v3 e staff-dashboard v10",
+  "edgeFunctionAppliedToProduction": "exercise-autograde v3 e student-files v7 ativos com JWT obrigatório; student-files mantém live session guard, save, save_all, checkpoint e reconciliação sem sobrescrita",
   "knownPending": [
-    "O frontend v14.9.1 precisa ser publicado no destino real.",
-    "GitHub conectado não possui repositórios instalados e a conta Vercel conectada não possui projetos; destino de produção ainda não foi identificado.",
-    "Após navegação entre documentos, alguns navegadores exigem um clique para reentrar em fullscreen por restrição da própria Fullscreen API.",
-    "2DS-A-MANHA continua sem conta de aluno reivindicada para teste autenticado real."
+    "O frontend v14.9.3 ainda precisa substituir a versão hospedada para receber reconciliação de arquivos, mensagens novas e fallback canônico atualizado.",
+    "As referências e proteções de backend desta correção já estão aplicadas no Supabase de produção."
   ]
 }

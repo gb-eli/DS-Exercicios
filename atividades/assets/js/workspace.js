@@ -1,18 +1,19 @@
-import { runPython } from './python-runtime.js?v=14.9.1';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.1';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.1';
-import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.1';
-import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.1';
-import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.1';
-import { validateExercise, renderValidation } from './validation.js?v=14.9.1';
+import { runPython } from './python-runtime.js?v=14.9.3';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.3';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.3';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.3';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.3';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.3';
+import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.9.3';
+import { validateExercise, renderValidation } from './validation.js?v=14.9.3';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.9.1';
+} from './supervision.js?v=14.9.3';
 
-import { supabase } from './supabase.js?v=14.9.1';
-import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.1';
+import { supabase } from './supabase.js?v=14.9.3';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.3';
 
 let state = {
   profile:null,
@@ -167,8 +168,8 @@ function insertSymbolAtCursor(value){
 const DEFAULTS = {
   'introducao-programacao': [{filename:'main.py',language:'python',content:'# Digite seu código Python aqui\n'}],
   'programacao-front-end': [
-    {filename:'index.html',language:'html',content:'<!doctype html>\n<html lang="pt-BR">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <link rel="stylesheet" href="style.css">\n  <title>Exercício</title>\n</head>\n<body>\n\n  <script src="script.js"><\\/script>\n</body>\n</html>\n'},
-    {filename:'style.css',language:'css',content:'/* Escreva seu CSS aqui */\n'},
+    {filename:'index.html',language:'html',content:'<!doctype html>\n<html lang="pt-BR">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <link rel="stylesheet" href="estilo.css">\n  <title>Exercício</title>\n</head>\n<body>\n\n  <script src="script.js"><\\/script>\n</body>\n</html>\n'},
+    {filename:'estilo.css',language:'css',content:'/* Escreva seu CSS aqui */\n'},
     {filename:'script.js',language:'javascript',content:'// Escreva seu JavaScript aqui\n'}
   ],
   'programacao-desenvolvimento-sistemas': [
@@ -258,7 +259,7 @@ function setOutputOpen(open){
 
 function referenceEntry(){
   const key=`${state.subject?.slug||''}:${state.exercise?.exercise_number||''}`;
-  return EXERCISE_REFERENCES[key]||EXERCISE_REFERENCE_EXTRAS[key]||EXERCISE_REFERENCE_SYNCED[key]||EXERCISE_REFERENCE_3DS_RESTORED[key]||null;
+  return EXERCISE_REFERENCE_DS2_CORRECTED[key]||EXERCISE_REFERENCES[key]||EXERCISE_REFERENCE_EXTRAS[key]||EXERCISE_REFERENCE_SYNCED[key]||EXERCISE_REFERENCE_3DS_RESTORED[key]||null;
 }
 
 function normalizeFilename(value){return String(value||'').trim().toLowerCase();}
@@ -333,13 +334,28 @@ function referenceFileFor(filename){
   }
   return null;
 }
-function referenceForFile(filename){return referenceFileFor(filename)?.content??null;}
+function normalizeReferenceContent(value){
+  let source=String(value??'').replace(/\r\n?/g,'\n');
+  const realNewlines=(source.match(/\n/g)||[]).length;
+  const escapedNewlines=(source.match(/\\n/g)||[]).length;
+  // Contingência para imports antigos que gravaram o arquivo inteiro com \n literal.
+  // Só converte quando não existe nenhuma quebra real e há evidência de arquivo multilinha,
+  // evitando alterar sequências \n legítimas dentro de strings de um código normal.
+  if(realNewlines===0&&escapedNewlines>=2){
+    source=source.replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n').replace(/\\r/g,'\n');
+  }
+  return source;
+}
+function referenceForFile(filename){
+  const file=referenceFileFor(filename);
+  return file?normalizeReferenceContent(file.content):null;
+}
 function referenceLanguageForFile(filename){return referenceFileFor(filename)?.language||state.active?.language||'text';}
 
 function renderReference(){
   const code=$('reference-code'),name=$('reference-filename'),note=$('reference-note');
   if(!code||!name||!note)return;
-  const file=referenceFileFor(state.active?.filename),content=file?.content;
+  const file=referenceFileFor(state.active?.filename),content=normalizeReferenceContent(file?.content);
   const has=typeof content==='string'&&content.length>0;
   state.referenceAvailable=state.referenceFiles.size>0;
   name.textContent=state.active?.filename||'arquivo';
@@ -425,11 +441,11 @@ function highlightCode(code,language='text'){
 function renderNumberedCode(content,language){
   // Realça cada linha isoladamente. Isso impede que comentários ou strings
   // multilinha deixem tags <span> abertas entre duas linhas numeradas.
-  const lines=String(content??'').replace(/\r\n/g,'\n').split('\n');
+  const lines=normalizeReferenceContent(content).split('\n');
   return lines.map((raw,index)=>{
     const line=highlightCode(raw,language);
     return `<span class="reference-line"><span class="reference-line-number" aria-hidden="true">${index+1}</span><span class="reference-line-code">${line||'&nbsp;'}</span></span>`;
-  }).join('');
+  }).join('\n');
 }
 
 function renderEditorLineNumbers(){
@@ -521,9 +537,11 @@ async function loadRemoteFiles(){
 
 async function ensureFiles(){
   let remote=await loadRemoteFiles();
-  if(!remote.length){
-    const seeds=defaultFiles(state.subject.slug).map(f=>{
-      const temp={filename:f.filename,revision:0};
+  const desired=defaultFiles(state.subject.slug);
+  const remoteNames=new Set(remote.flatMap(file=>referenceAliases(file.filename)));
+  const missingExpected=desired.filter(file=>!referenceAliases(file.filename).some(name=>remoteNames.has(name)));
+  if(!remote.length||missingExpected.length){
+    const seeds=desired.map(f=>{
       const raw=localStorage.getItem(`epds:${state.profile.id}:${state.exercise.id}:${f.filename}`);
       let draftContent=null;
       if(raw!==null){
@@ -536,7 +554,7 @@ async function ensureFiles(){
       };
     });
     const data=await callStudentFiles({action:'ensure',exercise_id:state.exercise.id,files:seeds.map(({filename,language,content})=>({filename,language,content}))});
-    remote=data.files||[];
+    remote=data.files||remote;
   }
   state.files=remote;
   state.recoveredFiles=new Set();
@@ -932,7 +950,7 @@ function renderAutoGrade(data=state.autoGrade){
   for(const file of files){
     const row=document.createElement('div');row.className=`validation-row ${Number(file.score||0)>=100?'ok':'pending'}`;
     const mark=document.createElement('span');mark.textContent=Number(file.score||0)>=100?'✓':'○';
-    const name=document.createElement('span');name.textContent=String(file.filename||file.reference_filename||'Arquivo');
+    const name=document.createElement('span');name.textContent=`${String(file.filename||file.reference_filename||'Arquivo')}${file.missing?' • ausente':file.empty?' • vazio':''}`;
     const pct=document.createElement('span');pct.className='validation-points';pct.textContent=`${Math.round(Number(file.score||0))}%`;
     row.append(mark,name,pct);box.append(row);
   }
@@ -965,6 +983,11 @@ async function completeExercise(){
   const evaluation=await runAutoGrade({quiet:true});
   if(!evaluation)return;
   const score=Math.round(Number(evaluation.score||0)),scoreBox=$('exercise-submit-score');
+  const incomplete=Array.isArray(evaluation.incomplete_files)?evaluation.incomplete_files:[];
+  if(incomplete.length){
+    setSaveState(`Complete os três arquivos antes de entregar: ${incomplete.join(', ')}.`,'error');
+    return;
+  }
   if(scoreBox){
     scoreBox.replaceChildren();
     const strong=document.createElement('strong');strong.textContent=`${score}%`;
@@ -1196,8 +1219,9 @@ $('exercise-submit-form')?.addEventListener('submit',async event=>{
     setSaveState(`Entrega registrada • ${score}%`,'ok');
     setTimeout(()=>$('exercise-submit-dialog')?.close(),1200);
   }catch(error){
-    const messages={empty_activity:'Digite sua solução antes de entregar.',active_supervised_session_required:'A sessão supervisionada precisa estar ativa para entregar.',exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',reference_unavailable:'A referência oficial está temporariamente indisponível.',session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'};
-    if(msg){msg.textContent=messages[error.code]||error.message||'Não foi possível registrar a entrega.';msg.className='form-message';}
+    const messages={empty_activity:'Digite sua solução antes de entregar.',required_files_incomplete:'Preencha index.html, estilo.css e script.js antes de entregar. A nota pode ser parcial, mas os três arquivos precisam existir e ter conteúdo.',active_supervised_session_required:'A sessão supervisionada precisa estar ativa para entregar.',exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',reference_unavailable:'A referência oficial está temporariamente indisponível.',session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'};
+    const missing=Array.isArray(error?.details?.incomplete_files)?error.details.incomplete_files:[];
+    if(msg){msg.textContent=(messages[error.code]||error.message||'Não foi possível registrar a entrega.')+(missing.length?` Arquivos pendentes: ${missing.join(', ')}.`:'');msg.className='form-message';}
   }finally{if(button){button.disabled=false;button.textContent='Entregar com esta nota';}}
 });
 
