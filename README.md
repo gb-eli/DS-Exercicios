@@ -1,18 +1,17 @@
-# Hotfix v14.9.4-spacing1 — Referência compacta
+# Hotfix DS2 Front-End — linha extra na referência
 
-Correção exclusivamente visual.
+Corrige o renderer da referência do DS2 Front-End sem alterar Supabase ou código dos alunos.
 
-- line-height da referência: 1.35
-- min-height: 1.35em
-- margin: 0
-- padding vertical: 0
-- row-gap/column-gap: 0
-- mantém linhas realmente vazias existentes no código
-- preserva integralmente a paleta de contraste v14.9.4
-- CSS recebe cache-bust `14.9.4-spacing1`; JavaScript permanece em `14.9.4`
+## Causa
+`renderNumberedCode()` criava cada linha como um elemento `.reference-line`, mas depois unia esses elementos com `\n`. Como o container usa `white-space: pre`, esse caractere era renderizado como uma linha visual adicional entre elementos.
 
-Arquivos para substituir na hospedagem:
-- `atividades/index.html`
-- `atividades/assets/css/app.css`
+Além disso, arquivos terminados por newline geravam uma última entrada vazia após `split('\n')`.
 
-Regressão: 158/158 testes aprovados.
+## Correção
+- linhas DOM unidas com `.join('')`;
+- remove somente a entrada vazia artificial do final do arquivo;
+- mantém linhas vazias reais no meio do código;
+- cache-bust de `app.js` e `workspace.js`: `14.9.4-linefix1`.
+
+## Validação
+161/161 testes aprovados.

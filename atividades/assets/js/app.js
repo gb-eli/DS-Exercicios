@@ -1,5 +1,5 @@
 import { openStaffPanel, isStaff } from './admin.js?v=14.9.4';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.9.4';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.9.4-linefix1';
 import { callActivityProgress } from './supervision.js?v=14.9.4';
 import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.9.4';
 import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.9.4';

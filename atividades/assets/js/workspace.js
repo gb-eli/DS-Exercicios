@@ -439,13 +439,16 @@ function highlightCode(code,language='text'){
 }
 
 function renderNumberedCode(content,language){
-  // Realça cada linha isoladamente. Isso impede que comentários ou strings
-  // multilinha deixem tags <span> abertas entre duas linhas numeradas.
+  // Cada linha já é um elemento de bloco/grid. Não inserir `\n` entre os
+  // elementos: com white-space:pre esse caractere vira uma linha visual extra.
+  // Remove somente a linha vazia artificial criada pelo newline final do arquivo;
+  // linhas vazias reais no meio do código continuam preservadas.
   const lines=normalizeReferenceContent(content).split('\n');
+  if(lines.length>1&&lines[lines.length-1]==='')lines.pop();
   return lines.map((raw,index)=>{
     const line=highlightCode(raw,language);
     return `<span class="reference-line"><span class="reference-line-number" aria-hidden="true">${index+1}</span><span class="reference-line-code">${line||'&nbsp;'}</span></span>`;
-  }).join('\n');
+  }).join('');
 }
 
 function renderEditorLineNumbers(){
