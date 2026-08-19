@@ -1177,3 +1177,28 @@ html.portal-fullscreen-required{overflow:hidden}
 .reference-head,.reference-note{background:#181818!important}
 .reference-head strong{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
 .reference-note{color:#c8d0d6!important;-webkit-text-fill-color:#c8d0d6!important}
+
+
+/* hotfix v14.9.4-spacing1 — referência compacta, sem espaço artificial entre linhas */
+.reference-code .reference-line{
+  min-height:1.35em!important;
+  line-height:1.35!important;
+  margin:0!important;
+  padding:0!important;
+  row-gap:0!important;
+  column-gap:0!important;
+  align-items:start!important;
+}
+.reference-code .reference-line-number,
+.reference-code .reference-line-code{
+  margin:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  line-height:inherit!important;
+}
+@media(max-width:760px){
+  .reference-code .reference-line{
+    min-height:1.35em!important;
+    line-height:1.35!important;
+  }
+}
