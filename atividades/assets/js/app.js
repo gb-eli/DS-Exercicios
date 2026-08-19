@@ -1,10 +1,10 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.9.3';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.9.3';
-import { callActivityProgress } from './supervision.js?v=14.9.3';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.9.3';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.9.3';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.9.3';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.3';
+import { openStaffPanel, isStaff } from './admin.js?v=14.9.4';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.9.4';
+import { callActivityProgress } from './supervision.js?v=14.9.4';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.9.4';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.9.4';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.9.4';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.4';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];

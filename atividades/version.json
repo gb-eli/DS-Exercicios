@@ -1,6 +1,6 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.21.3",
+  "version": "0.21.4",
   "date": "2026-08-19",
   "features": [
     "Modo supervisionado por atividade com sessão server-side e IP",
@@ -115,14 +115,14 @@
     "v14.9.2: referências normalizam imports antigos com marcadores de quebra de linha escapados sem alterar códigos normais já formatados",
     "v14.9.2: cada linha da referência recebe separador de newline no HTML além do layout grid, impedindo colapso em uma única linha mesmo se o CSS atrasar",
     "v14.9.2: painel de referência isola cor, text-fill e opacidade para manter contraste VS Code em navegadores que herdavam transparência do editor",
-    "v14.9.3: Front-End 2DS 01–20 usa referência canônica em três arquivos separados: index.html, estilo.css e script.js",
-    "v14.9.3: HTML de referência do 2DS não aceita mais bloco <style> nem atributo style; CSS fica exclusivamente em estilo.css",
-    "v14.9.3: autocorreção v3 contabiliza arquivo ausente/vazio como zero e exige os três arquivos para registrar a entrega do 2DS",
-    "v14.9.3: student-files v7 reconcilia arquivo esperado ausente sem sobrescrever código já salvo do aluno",
-    "v14.9.3: referências 01–20 do Front-End 2DS foram revisadas contra o objetivo pedagógico de cada atividade",
-    "v14.9.3: eventos JavaScript saem do HTML; index.html não usa onclick/oninput e script.js concentra o comportamento",
-    "v14.9.3: fallback canônico corrigido do 2DS tem prioridade no workspace quando o Supabase não fornece referência válida",
-    "v14.9.3: banco aceita somente index.html, estilo.css e script.js como referências do 2DS ativo e bloqueia regressões estruturais"
+    "v14.9.4: Front-End 2DS 01–20 usa referência canônica em três arquivos separados: index.html, estilo.css e script.js",
+    "v14.9.4: HTML de referência do 2DS não aceita mais bloco <style> nem atributo style; CSS fica exclusivamente em estilo.css",
+    "v14.9.4: autocorreção v3 contabiliza arquivo ausente/vazio como zero e exige os três arquivos para registrar a entrega do 2DS",
+    "v14.9.4: student-files v7 reconcilia arquivo esperado ausente sem sobrescrever código já salvo do aluno",
+    "v14.9.4: referências 01–20 do Front-End 2DS foram revisadas contra o objetivo pedagógico de cada atividade",
+    "v14.9.4: eventos JavaScript saem do HTML; index.html não usa onclick/oninput e script.js concentra o comportamento",
+    "v14.9.4: fallback canônico corrigido do 2DS tem prioridade no workspace quando o Supabase não fornece referência válida",
+    "v14.9.4: banco aceita somente index.html, estilo.css e script.js como referências do 2DS ativo e bloqueia regressões estruturais"
   ],
   "notes": [
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
@@ -137,8 +137,8 @@
     "Referências exibidas ao aluno são públicas e pedagógicas; critérios privados de correção e gabaritos do professor continuam fora do bundle público.",
     "A API Fullscreen exige gesto do usuário ao trocar de documento; por isso uma navegação entre páginas pode exigir um único clique para retornar à tela cheia. Dentro do SPA de Atividades não há prompt por exercício."
   ],
-  "phase": "P9.3-ds2-three-file-reference",
-  "release": "v14.9.3",
+  "phase": "P9.4-code-contrast-hardening",
+  "release": "v14.9.4",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",
@@ -189,6 +189,9 @@
     "v14.9.2: cache-busting do workspace e CSS evita reaproveitar renderer/paleta antiga",
     "v14.9.3: referências públicas corretas do Front-End 2DS 01–20 sincronizadas com HTML/CSS/JS separados",
     "v14.9.3: proteção de banco impede reintrodução de CSS embutido nas referências do 2DS",
-    "v14.9.3: notas provisórias antigas do 2DS são recalculadas com os três arquivos após nova autocorreção"
+    "v14.9.3: notas provisórias antigas do 2DS são recalculadas com os três arquivos após nova autocorreção",
+    "v14.9.4: reforça contraste do código no editor e na referência para Python, HTML, CSS, JavaScript e Kotlin",
+    "v14.9.4: textarea do editor permanece visível até a camada de syntax highlight confirmar que está pronta",
+    "v14.9.4: tema do 1DS legado recebe a mesma paleta de alto contraste para evitar texto invisível"
   ]
 }

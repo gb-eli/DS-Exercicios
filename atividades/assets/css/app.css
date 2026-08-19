@@ -1091,7 +1091,7 @@ html.portal-fullscreen-required{overflow:hidden}
 @media(max-width:720px){.symbol-palette{position:fixed;left:0;right:0;bottom:0;margin:0;border-radius:20px 20px 0 0;max-height:min(55vh,460px);padding:16px;z-index:9000}.symbol-palette-groups{max-height:calc(55vh - 90px)}}
 
 
-/* v14.9.3 — hotfix referência DS2: linhas reais e contraste isolado */
+/* v14.9.4 — hotfix referência DS2: linhas reais e contraste isolado */
 .reference-code{
   display:block!important;
   background:#1e1e1e!important;
@@ -1133,3 +1133,47 @@ html.portal-fullscreen-required{overflow:hidden}
 @media(max-width:760px){
   .reference-code .reference-line{grid-template-columns:44px minmax(max-content,1fr)!important;line-height:1.58!important}
 }
+
+
+/* v14.9.4 — contraste forte e fallback visível do editor/referência */
+.editor-shell{background:#1e1e1e!important}
+.editor-shell .code-highlight{
+  z-index:1!important;
+  background:#1e1e1e!important;
+  color:#f4f4f4!important;
+  -webkit-text-fill-color:#f4f4f4!important;
+  opacity:1!important;
+}
+.editor-shell .code-editor{
+  z-index:2!important;
+  background:transparent!important;
+  color:#f4f4f4!important;
+  -webkit-text-fill-color:#f4f4f4!important;
+  caret-color:#ffffff!important;
+  opacity:1!important;
+}
+/* Só ocultar as letras do textarea quando a camada de syntax highlight está pronta. */
+.editor-shell.highlight-ready .code-editor{
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+}
+.editor-line-numbers{background:#1e1e1e!important;color:#b8b8b8!important;-webkit-text-fill-color:#b8b8b8!important}
+.code-highlight .tok-comment,.reference-code .tok-comment{color:#84c56f!important;-webkit-text-fill-color:#84c56f!important}
+.code-highlight .tok-string,.reference-code .tok-string{color:#e8aa91!important;-webkit-text-fill-color:#e8aa91!important}
+.code-highlight .tok-number,.reference-code .tok-number{color:#cce5bd!important;-webkit-text-fill-color:#cce5bd!important}
+.code-highlight .tok-keyword,.reference-code .tok-keyword{color:#79cfff!important;-webkit-text-fill-color:#79cfff!important;font-weight:700!important}
+.code-highlight .tok-tag,.reference-code .tok-tag{color:#62d5bd!important;-webkit-text-fill-color:#62d5bd!important}
+.code-highlight .tok-attr,.reference-code .tok-attr{color:#b8e4ff!important;-webkit-text-fill-color:#b8e4ff!important}
+.reference-code,.reference-code .reference-line,.reference-code .reference-line-code{
+  background:#1e1e1e!important;
+  color:#f4f4f4!important;
+  -webkit-text-fill-color:#f4f4f4!important;
+}
+.reference-code .reference-line-number{
+  background:#1e1e1e!important;
+  color:#b8b8b8!important;
+  -webkit-text-fill-color:#b8b8b8!important;
+}
+.reference-head,.reference-note{background:#181818!important}
+.reference-head strong{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
+.reference-note{color:#c8d0d6!important;-webkit-text-fill-color:#c8d0d6!important}

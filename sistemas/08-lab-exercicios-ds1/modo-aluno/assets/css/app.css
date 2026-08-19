@@ -65,3 +65,18 @@
 
 /* v1.8.6 — política de digitação manual: referência somente leitura e editor sem colagem */
 .manual-typing-note{border-color:#d6a84b;background:linear-gradient(135deg,rgba(214,168,75,.10),rgba(94,120,255,.06))}.manual-typing-chip{border-color:#d6a84b;color:#ffd983;background:rgba(214,168,75,.10)}.reference-readonly{white-space:nowrap;color:#ffd983;border-color:#8d6a29;background:#2a2112}.reference-window #referenceCode,#tutorialCode,#helpReferenceCode{-webkit-user-select:none;user-select:none}.reference-window #referenceCode,.reference-window .code-line,#tutorialCode .code-line,#helpReferenceCode{cursor:default!important}.student-editor-window .CodeMirror{box-shadow:inset 0 0 0 1px rgba(86,156,214,.08)}
+
+
+/* v14.9.4 — contraste reforçado para editor/referência do 1DS legado */
+.student-editor-window,.editor-host,.editor-host>textarea,.CodeMirror,.CodeMirror-gutters{background:#1e1e1e!important}
+.editor-host>textarea,.CodeMirror{color:#f4f4f4!important;-webkit-text-fill-color:#f4f4f4!important}
+.CodeMirror-linenumber,.line-numbers{color:#b8b8b8!important;-webkit-text-fill-color:#b8b8b8!important}
+.cm-s-ds-vscode .cm-keyword,.cm-s-ds-vscode .cm-atom{color:#79cfff!important}
+.cm-s-ds-vscode .cm-number{color:#cce5bd!important}
+.cm-s-ds-vscode .cm-def{color:#f0dc9e!important}
+.cm-s-ds-vscode .cm-variable,.cm-s-ds-vscode .cm-property,.cm-s-ds-vscode .cm-attribute{color:#b8e4ff!important}
+.cm-s-ds-vscode .cm-variable-2,.cm-s-ds-vscode .cm-variable-3,.cm-s-ds-vscode .cm-type,.cm-s-ds-vscode .cm-builtin{color:#62d5bd!important}
+.cm-s-ds-vscode .cm-operator{color:#f4f4f4!important}
+.cm-s-ds-vscode .cm-comment{color:#84c56f!important}
+.cm-s-ds-vscode .cm-string,.cm-s-ds-vscode .cm-string-2{color:#e8aa91!important}
+.reference-window pre,.reference-window code,#referenceCode,#tutorialCode,#helpReferenceCode{background:#1e1e1e!important;color:#f4f4f4!important;-webkit-text-fill-color:#f4f4f4!important}

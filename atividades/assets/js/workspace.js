@@ -1,19 +1,19 @@
-import { runPython } from './python-runtime.js?v=14.9.3';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.3';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.3';
-import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.3';
-import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.3';
-import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.3';
-import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.9.3';
-import { validateExercise, renderValidation } from './validation.js?v=14.9.3';
+import { runPython } from './python-runtime.js?v=14.9.4';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.4';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.4';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.4';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.4';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.4';
+import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.9.4';
+import { validateExercise, renderValidation } from './validation.js?v=14.9.4';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.9.3';
+} from './supervision.js?v=14.9.4';
 
-import { supabase } from './supabase.js?v=14.9.3';
-import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.3';
+import { supabase } from './supabase.js?v=14.9.4';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.4';
 
 let state = {
   profile:null,
@@ -461,7 +461,15 @@ function renderHighlight(){
   highlightFrame=requestAnimationFrame(()=>{
     const editor=$('code-editor'),pre=$('code-highlight');
     if(!editor||!pre)return;
-    pre.innerHTML=highlightCode(editor.value,state.active?.language||'text')+'\n';
+    try{
+      pre.innerHTML=highlightCode(editor.value,state.active?.language||'text')+'\n';
+      const shell=editor.closest('.editor-shell');
+      const highlightReady=Boolean(pre.textContent===editor.value+'\n'||pre.textContent===editor.value);
+      shell?.classList.toggle('highlight-ready',highlightReady);
+    }catch(_){
+      editor.closest('.editor-shell')?.classList.remove('highlight-ready');
+      pre.textContent='';
+    }
     pre.scrollTop=editor.scrollTop;pre.scrollLeft=editor.scrollLeft;
     renderEditorLineNumbers();
   });
