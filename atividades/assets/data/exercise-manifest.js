@@ -2417,7 +2417,7 @@ export const EXERCISE_MANIFEST = {
         "language": "html"
       },
       {
-        "filename": "style.css",
+        "filename": "estilo.css",
         "language": "css"
       },
       {

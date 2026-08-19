@@ -7,8 +7,8 @@
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.9.4-spacing1" />
-  <link rel="stylesheet" href="assets/css/admin.css?v=14.9.4" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.1" />
+  <link rel="stylesheet" href="assets/css/admin.css?v=14.10.1" />
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -20,7 +20,7 @@
           <h1>Exercícios Práticos DS</h1>
         </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.21.4</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.22.1</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -235,7 +235,15 @@
             </div>
             <div class="sidebar-section">
               <p class="eyebrow">Autocorreção</p>
-              <div id="autograde-meter" class="autograde-meter" data-score="0"><div class="autograde-meter-head"><strong id="autograde-score">0%</strong><span id="autograde-label">Ainda não corrigido</span></div><div class="autograde-track"><span id="autograde-bar"></span></div></div>
+              <div id="autograde-meter" class="autograde-meter" data-score="0">
+                <div class="code-live-metrics" aria-label="Progresso e autocorreção do código">
+                  <div class="code-live-metric"><span>Conclusão</span><strong id="completion-score">0%</strong></div>
+                  <div class="code-live-metric"><span>Acerto</span><strong id="autograde-score">—</strong></div>
+                  <div class="code-live-metric error"><span>Erro</span><strong id="error-score">—</strong></div>
+                </div>
+                <progress id="autograde-bar" class="autograde-track" max="100" value="0" aria-label="Percentual de acerto"></progress>
+                <span id="autograde-label" class="autograde-label">A correção será atualizada automaticamente durante a digitação.</span>
+              </div>
               <div id="validation-results" class="validation-results"></div>
               <button id="validate-btn" class="button button-ghost button-small" type="button">Auto corrigir</button>
             </div>
@@ -278,6 +286,11 @@
               <button id="download-zip-btn" class="button button-ghost button-small" type="button">Baixar meus códigos</button>
               <button id="github-btn" class="button button-ghost button-small" type="button">GitHub</button>
               <button id="classroom-btn" class="button button-ghost button-small" type="button">Classroom</button>
+              <div class="code-font-controls" role="group" aria-label="Tamanho da fonte do código">
+                <button id="font-decrease-btn" class="button button-ghost button-small code-font-button" type="button" aria-label="Diminuir fonte do código">−</button>
+                <span id="font-size-label" class="code-font-size-label" aria-live="polite">14 px</span>
+                <button id="font-increase-btn" class="button button-ghost button-small code-font-button" type="button" aria-label="Aumentar fonte do código">+</button>
+              </div>
               <span id="workspace-action-status" class="workspace-action-status" role="status" aria-live="polite"></span>
             </div>
             <section id="symbol-palette" class="symbol-palette hidden" aria-label="Símbolos do teclado"><div class="symbol-palette-head"><div><strong id="symbol-palette-title">Símbolos</strong><span id="symbol-palette-context" class="muted"></span></div><button id="symbol-palette-close" class="button button-ghost button-small" type="button" aria-label="Fechar paleta de símbolos">Fechar</button></div><div id="symbol-palette-groups" class="symbol-palette-groups"></div></section>
@@ -306,7 +319,7 @@
               <p id="reference-note" class="reference-note">Observe o código e digite manualmente no editor. Copiar e colar a referência estão desativados.</p>
               <pre id="reference-code" class="reference-code no-select" tabindex="0" aria-label="Código de referência. Digite manualmente no editor ao lado."></pre>
             </section>
-            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.9.4"></iframe>
+            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.10.1"></iframe>
             <div id="terminal-pane" class="terminal-pane hidden">
               <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
               <form id="terminal-input-form" class="terminal-input-row hidden">
@@ -333,7 +346,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.9.4-linefix1"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.1"></script>
 
 
     <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
@@ -355,8 +368,8 @@
       <div class="history-card panel">
         <p class="eyebrow">Atividade bloqueada</p>
         <h3>Acesso temporariamente bloqueado</h3>
-        <p id="security-lock-reason" class="muted">O limite de saídas da atividade foi atingido.</p>
-        <div class="support-note changes"><strong>O que fazer</strong><span>O professor recebeu o evento e precisa liberar esta atividade novamente.</span></div>
+        <p id="security-lock-reason" class="muted">A atividade foi bloqueada por uma regra de segurança.</p>
+        <div class="support-note changes"><strong>O que fazer</strong><span>Bloqueios automáticos por quantidade de saídas foram desativados. Se aparecer outro bloqueio de segurança, o professor poderá revisar e liberar.</span></div>
         <button id="security-lock-back" class="button button-primary" type="button">Voltar às disciplinas</button>
       </div>
     </dialog>

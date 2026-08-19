@@ -1,5 +1,5 @@
 
-import { supabase } from './supabase.js?v=14.9.1';
+import { supabase } from './supabase.js?v=14.10.1';
 
 let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='';
 const $=id=>document.getElementById(id);
@@ -579,7 +579,7 @@ async function loadReleaseMatrix(){
 function releaseExercises(){return (releaseCtx?.exercises||[]).filter(ex=>!releaseSubjectId||String(ex.subject_id)===String(releaseSubjectId));}
 
 function classReleaseFor(id){return (releaseCtx?.releases||[]).filter(r=>r.exercise_id===id).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null}
-function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:3,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
+function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:1000000,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
 function renderReleaseMatrix(){
   const box=$('release-list');
   box.innerHTML=releaseExercises().map((ex,i)=>{
@@ -592,7 +592,7 @@ function renderReleaseMatrix(){
       </summary>
       <div class="release-security-grid">
         <label><span>Tela cheia</span><input class="pol-fullscreen" type="checkbox" ${p.require_fullscreen?'checked':''}></label>
-        <label><span>Máx. saídas</span><input class="pol-focus" type="number" min="1" max="20" value="${Number(p.max_focus_violations||3)}"></label>
+        <label><span>Saídas de atividade</span><input class="pol-focus" type="text" value="Somente registro • não bloqueia" disabled></label>
         <label><span>Bloquear colagem</span><input class="pol-paste" type="checkbox" ${p.block_paste?'checked':''}></label>
         <label><span>Heurística DevTools</span><input class="pol-devtools" type="checkbox" ${p.detect_devtools?'checked':''}></label>
         <label><span>Entrada rápida</span><input class="pol-rapid" type="checkbox" ${p.detect_rapid_input?'checked':''}></label>
@@ -618,7 +618,7 @@ async function saveSecurityPolicy(item){
   const policy={
     exercise_id:exerciseId,
     require_fullscreen:item.querySelector('.pol-fullscreen').checked,
-    max_focus_violations:Number(item.querySelector('.pol-focus').value||3),
+    max_focus_violations:1000000,
     block_paste:item.querySelector('.pol-paste').checked,
     detect_devtools:item.querySelector('.pol-devtools').checked,
     detect_rapid_input:item.querySelector('.pol-rapid').checked,

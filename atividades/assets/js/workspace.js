@@ -1,19 +1,20 @@
-import { runPython } from './python-runtime.js?v=14.9.4';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.4';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.4';
-import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.4';
-import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.4';
-import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.4';
-import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.9.4';
-import { validateExercise, renderValidation } from './validation.js?v=14.9.4';
+import { runPython } from './python-runtime.js?v=14.10.1';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.1';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.10.1';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.10.1';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.10.1';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.10.1';
+import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.10.1';
+import { validateExercise, renderValidation } from './validation.js?v=14.10.1';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.9.4';
+} from './supervision.js?v=14.10.1';
 
-import { supabase } from './supabase.js?v=14.9.4';
-import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.4';
+import { supabase } from './supabase.js?v=14.10.1';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.1';
+import { buildHtmlPreview } from './preview-builder.js?v=14.10.1';
 
 let state = {
   profile:null,
@@ -34,7 +35,7 @@ let state = {
   toolsOpen:false,
   outputOpen:false,
   pendingServerEvaluation:null,
-  autoGrade:{score:0,graded_at:null,submitted_score:null,dirty:false,files:[]},
+  autoGrade:{score:0,graded_at:null,submitted_score:null,dirty:false,pending:false,files:[]},
   symbolPaletteOpen:false,
   referenceAvailable:false,
   referenceFiles:new Map(),
@@ -44,9 +45,34 @@ let state = {
   repositoryUrl:null,
   legacyRepositoryUrl:null,
   linksLoaded:false,
+  codeFontSize:14,
 };
 
 const $ = (id)=>document.getElementById(id);
+
+const CODE_FONT_STORAGE='epds:code-font-size';
+const CODE_FONT_MIN=11;
+const CODE_FONT_MAX=22;
+const CODE_FONT_STEP=1;
+function clampCodeFontSize(value){
+  const n=Number(value);
+  return Math.max(CODE_FONT_MIN,Math.min(CODE_FONT_MAX,Number.isFinite(n)?Math.round(n):14));
+}
+function loadCodeFontSize(){
+  try{return clampCodeFontSize(localStorage.getItem(CODE_FONT_STORAGE)||14);}catch(_){return 14;}
+}
+function applyCodeFontSize(value,{persist=true}={}){
+  const size=clampCodeFontSize(value);
+  state.codeFontSize=size;
+  document.documentElement.style.setProperty('--code-font-size',`${size}px`);
+  const label=$('font-size-label');if(label)label.textContent=`${size} px`;
+  const dec=$('font-decrease-btn'),inc=$('font-increase-btn');
+  if(dec)dec.disabled=size<=CODE_FONT_MIN;
+  if(inc)inc.disabled=size>=CODE_FONT_MAX;
+  if(persist){try{localStorage.setItem(CODE_FONT_STORAGE,String(size));}catch(_){}}
+  renderEditorLineNumbers();
+}
+function adjustCodeFontSize(delta){applyCodeFontSize(state.codeFontSize+delta);}
 
 const CLASSROOM_FALLBACKS = Object.freeze({
   'ee8271e6-390d-455c-badd-c9319a2bf2ec:ad1c2081-9bea-459b-b6f6-272f452bc573':'https://classroom.google.com/c/NzkzNTA2MzQ0MjU1',
@@ -269,6 +295,10 @@ function referenceAliases(filename){
   if(name==='estilo.css')aliases.add('style.css');
   if(name==='app.js')aliases.add('script.js');
   if(name==='script.js')aliases.add('app.js');
+  if(name==='atividade.md')aliases.add('referencia.md');
+  if(name==='referencia.md')aliases.add('atividade.md');
+  if(name==='mainactivity.kt')aliases.add('main.kt');
+  if(name==='main.kt')aliases.add('mainactivity.kt');
   return [...aliases];
 }
 
@@ -465,9 +495,9 @@ function renderHighlight(){
     const editor=$('code-editor'),pre=$('code-highlight');
     if(!editor||!pre)return;
     try{
-      pre.innerHTML=highlightCode(editor.value,state.active?.language||'text')+'\n';
+      pre.innerHTML=highlightCode(editor.value,state.active?.language||'text');
       const shell=editor.closest('.editor-shell');
-      const highlightReady=Boolean(pre.textContent===editor.value+'\n'||pre.textContent===editor.value);
+      const highlightReady=Boolean(pre.textContent===editor.value);
       shell?.classList.toggle('highlight-ready',highlightReady);
     }catch(_){
       editor.closest('.editor-shell')?.classList.remove('highlight-ready');
@@ -611,6 +641,7 @@ async function activateFile(id){
   renderHighlight();
   renderReference();
   renderSymbolPalette();
+  renderLiveMetrics();
   setSaveState(`Revisão ${next.revision||1} • ${formatDate(next.saved_at)}`,'ok');
   sendEditorSnapshot(true);
 }
@@ -849,28 +880,16 @@ window.addEventListener('message',event=>{
 
 async function buildPreview(){
   setOutputOpen(true);
-  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
+  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||''),language:f.language||''}));
   const security=await inspectCode(checkFiles);
   if(!security.ok){
     $('terminal-output').textContent=`Execução bloqueada pelo modo supervisionado.\n${security.findings.map(x=>`• ${x.filename}: ${x.label}`).join('\n')}`;
     showOutput('terminal');
     return;
   }
-  const map=Object.fromEntries(checkFiles.map(f=>[f.filename,f.content]));
-  if(map['index.html']!=null){
-    let html=map['index.html'];
-    const escapeRx=value=>String(value).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-    for(const [filename,content] of Object.entries(map)){
-      if(/\.css$/i.test(filename)){
-        const name=escapeRx(filename);
-        html=html.replace(new RegExp(`<link[^>]+href=[\"'](?:\./)?${name}[\"'][^>]*>`,'ig'),`<style>${content||''}</style>`);
-      }
-      if(/\.(?:js|mjs)$/i.test(filename)){
-        const name=escapeRx(filename),safe=String(content||'').replace(/<\/script/gi,'<\\/script');
-        html=html.replace(new RegExp(`<script[^>]+src=[\"'](?:\./)?${name}[\"'][^>]*><\/script>`,'ig'),`<script>${safe}<\/script>`);
-      }
-    }
-    renderInIsolatedPreview(html);
+  const previewHtml=buildHtmlPreview(checkFiles);
+  if(previewHtml!==null){
+    renderInIsolatedPreview(previewHtml);
     showOutput('preview');
   }else if(state.active?.language==='markdown'){
     const escaped=$('code-editor').value.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -913,7 +932,7 @@ async function loadHistory(){
     const info=document.createElement('div');
     info.innerHTML=`<strong>Revisão ${row.revision}</strong><small>${formatDate(row.created_at)}</small>`;
     const btn=document.createElement('button'); btn.type='button'; btn.className='button button-ghost button-small'; btn.textContent='Restaurar';
-    btn.onclick=()=>{ $('code-editor').value=row.content||''; state.active.content=$('code-editor').value; invalidateServerEvaluation(); renderHighlight(); scheduleSave(); $('history-dialog').close(); };
+    btn.onclick=()=>{ $('code-editor').value=row.content||''; state.active.content=$('code-editor').value; invalidateServerEvaluation({schedule:true}); renderHighlight(); scheduleSave(); $('history-dialog').close(); };
     item.append(info,btn); list.appendChild(item);
   });
   if(!(data||[]).length){const p=document.createElement('p');p.className='muted';p.textContent='Ainda não há versões anteriores.';list.appendChild(p);}
@@ -942,20 +961,84 @@ function meaningfulFileContent(filename,content){
   return value.length>=2;
 }
 
+let liveGradeTimer=0;
+let liveGradeSequence=0;
+let lastLiveGradeAt=0;
+
+function progressComparable(filename,value){
+  const name=String(filename||'').toLowerCase();
+  let source=String(value??'').replace(/\r\n?/g,'\n');
+  if(name.endsWith('.html')||name.endsWith('.htm'))source=source.replace(/<!--[\s\S]*?-->/g,' ');
+  if(name.endsWith('.css')||/\.(?:js|mjs|kt)$/i.test(name))source=source.replace(/\/\*[\s\S]*?\*\//g,' ').replace(/^\s*\/\/.*$/gm,' ');
+  if(name.endsWith('.py'))source=source.replace(/^\s*#.*$/gm,' ');
+  if(name.endsWith('.md'))source=source.replace(/^\s*<!--.*?-->\s*$/gm,' ');
+  return source.replace(/\s+/g,'').trim();
+}
+function currentFileContent(file){
+  return state.active?.id===file?.id&&$('code-editor')?String($('code-editor').value??''):String(file?.content??'');
+}
+function estimateCodeCompletion(){
+  if(!state.files.length)return 0;
+  const codeFiles=state.files.filter(file=>!/(?:^|\/)readme\.md$/i.test(String(file.filename||''))&&!/\.md$/i.test(String(file.filename||'')));
+  const files=codeFiles.length?codeFiles:state.files;
+  let total=0;
+  for(const file of files){
+    const student=progressComparable(file.filename,currentFileContent(file));
+    const reference=progressComparable(file.filename,referenceForFile(file.filename)??'');
+    let ratio=0;
+    if(reference.length)ratio=Math.min(1,student.length/reference.length);
+    else ratio=student.length?1:0;
+    total+=ratio;
+  }
+  return Math.max(0,Math.min(100,Math.round((total/files.length)*100)));
+}
+function renderLiveMetrics(){
+  const completion=estimateCodeCompletion(),completionEl=$('completion-score'),scoreEl=$('autograde-score'),errorEl=$('error-score');
+  if(completionEl)completionEl.textContent=`${completion}%`;
+  const hasGrade=Boolean(state.autoGrade?.graded_at);
+  const score=Math.max(0,Math.min(100,Math.round(Number(state.autoGrade?.score||0))));
+  if(scoreEl)scoreEl.textContent=hasGrade?`${score}%`:'—';
+  if(errorEl)errorEl.textContent=hasGrade?`${100-score}%`:'—';
+  $('autograde-meter')?.setAttribute('data-completion',String(completion));
+}
+function invalidateServerEvaluation({schedule=false}={}){
+  state.pendingServerEvaluation=null;
+  state.autoGrade={...state.autoGrade,dirty:true,pending:Boolean(schedule&&getSupervisionSessionId())};
+  renderAutoGrade();
+  if(schedule)scheduleLiveAutograde();
+}
+function scheduleLiveAutograde(force=false){
+  clearTimeout(liveGradeTimer);
+  const sessionId=getSupervisionSessionId();
+  if(!sessionId||!state.exercise||!state.active)return;
+  const seq=++liveGradeSequence;
+  state.autoGrade.pending=true;
+  renderAutoGrade();
+  const wait=force?250:1800;
+  liveGradeTimer=setTimeout(async()=>{
+    if(seq!==liveGradeSequence||!getSupervisionSessionId())return;
+    const elapsed=Date.now()-lastLiveGradeAt;
+    if(elapsed<3500){liveGradeTimer=setTimeout(()=>scheduleLiveAutograde(true),3500-elapsed);return;}
+    lastLiveGradeAt=Date.now();
+    await runAutoGrade({quiet:true,automatic:true});
+  },wait);
+}
+
 function renderAutoGrade(data=state.autoGrade){
   const score=Math.max(0,Math.min(100,Math.round(Number(data?.score??state.autoGrade?.score??0))));
   const scoreEl=$('autograde-score'),label=$('autograde-label'),bar=$('autograde-bar'),box=$('validation-results');
-  if(scoreEl)scoreEl.textContent=`${score}%`;
-  if(bar)bar.style.width=`${score}%`;
+  renderLiveMetrics();
+  if(bar)bar.value=score;
   if(label){
-    if(state.autoGrade?.dirty)label.textContent='Código alterado após a última correção';
-    else if(!data?.graded_at&&!state.autoGrade?.graded_at)label.textContent='Ainda não corrigido';
+    if(state.autoGrade?.pending)label.textContent='Recalculando acerto e erro automaticamente…';
+    else if(state.autoGrade?.dirty)label.textContent='Código alterado • nova correção será feita após uma pausa na digitação';
+    else if(!data?.graded_at&&!state.autoGrade?.graded_at)label.textContent='Digite seu código: conclusão atualiza na hora; acerto/erro após uma breve pausa';
     else label.textContent=score===100?'Solução correta':score>=70?'Boa aproximação; há ajustes':score>0?'Nota parcial':'Revise sua solução';
   }
   if(!box)return;
   box.classList.add('server-validation');box.replaceChildren();
   const intro=document.createElement('p');intro.className='muted';
-  intro.textContent=state.autoGrade?.dirty?'Salve e clique em “Auto corrigir” para atualizar a porcentagem.':'A porcentagem compara sua solução com a referência oficial no servidor, tolerando diferenças de espaços, comentários e quebras de linha.';
+  intro.textContent=state.autoGrade?.dirty?'A conclusão é estimada localmente; acerto e erro estão sendo recalculados automaticamente no servidor.':'Acerto e erro usam a referência oficial no servidor; conclusão indica quanto da atividade já foi preenchido.';
   box.append(intro);
   const files=data?.files||state.autoGrade?.files||[];
   for(const file of files){
@@ -967,14 +1050,14 @@ function renderAutoGrade(data=state.autoGrade){
   }
 }
 
-async function runAutoGrade({quiet=false}={}){
+async function runAutoGrade({quiet=false,automatic=false}={}){
   try{
     await saveActiveFile(true);
     await waitForPendingSaves();
     const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
-    const security=await inspectCode(checkFiles);if(!security.ok)return null;
+    const security=await inspectCode(checkFiles);if(!security.ok){state.autoGrade.pending=false;renderAutoGrade();return null;}
     const data=await callAutograde({action:'grade',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
-    state.autoGrade={score:Number(data.score||0),graded_at:data.graded_at||new Date().toISOString(),submitted_score:state.autoGrade?.submitted_score??null,dirty:false,files:data.files||[]};
+    state.autoGrade={score:Number(data.score||0),graded_at:data.graded_at||new Date().toISOString(),submitted_score:state.autoGrade?.submitted_score??null,dirty:false,pending:false,files:data.files||[]};
     renderAutoGrade(data);
     if(!quiet)setSaveState(`Autocorreção: ${Math.round(Number(data.score||0))}%`,'ok');
     return data;
@@ -985,7 +1068,8 @@ async function runAutoGrade({quiet=false}={}){
       exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',
       session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'
     };
-    setSaveState(messages[error.code]||error.message||'Não foi possível executar a autocorreção.','error');
+    state.autoGrade.pending=false;renderAutoGrade();
+    if(!automatic)setSaveState(messages[error.code]||error.message||'Não foi possível executar a autocorreção.','error');
     return null;
   }
 }
@@ -1034,7 +1118,7 @@ async function loadStudentSupport(){
   const support=[...(accommodations||[])];
   const release=state.supportRelease||{};
   const progress=(progressRows||[])[0]||{};
-  state.autoGrade={score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,dirty:false,files:state.autoGrade?.files||[]};
+  state.autoGrade={score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,dirty:false,pending:false,files:state.autoGrade?.files||[]};
   renderAutoGrade();
   const guidance=document.getElementById('exercise-guidance');
   if(guidance){
@@ -1079,7 +1163,7 @@ function applyTeacherEdit(payload){
     $('code-editor').value=file.content;
     renderHighlight();
     state.remoteEdit=false;
-    invalidateServerEvaluation();
+    invalidateServerEvaluation({schedule:true});
     setSaveState('Professor atualizou o código ao vivo','ok');
     runValidation();
   }
@@ -1102,7 +1186,8 @@ function editorSnapshot(){
 }
 
 export async function mountWorkspace({profile,exercise,subject}){
-  state.profile=profile; state.exercise=exercise; state.subject=subject;
+  state.profile=profile;
+  applyCodeFontSize(loadCodeFontSize(),{persist:false}); state.exercise=exercise; state.subject=subject;
   state.active=null; state.files=[]; state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false; state.supportRelease=null; state.recoveredFiles=new Set();
   setToolsOpen(false);
   setOutputOpen(false);
@@ -1115,7 +1200,7 @@ export async function mountWorkspace({profile,exercise,subject}){
   const meta=state.meta||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||{};
   state.meta=meta;
   state.pendingServerEvaluation=null;
-  state.autoGrade={score:0,graded_at:null,submitted_score:null,dirty:false,files:[]};
+  state.autoGrade={score:0,graded_at:null,submitted_score:null,dirty:false,pending:false,files:[]};
   state.symbolPaletteOpen=false;
   if($('mark-complete-btn'))$('mark-complete-btn').textContent='Entregar';
   if($('validate-btn'))$('validate-btn').textContent='Auto corrigir';
@@ -1159,7 +1244,7 @@ export async function mountWorkspace({profile,exercise,subject}){
   await prepareSupervision({
     profile,exercise,
     getEditorState:editorSnapshot,
-    onArmed:()=>{setWorkspacePaused(false,'Modo supervisionado ativo');flushRecoveredDrafts().catch(()=>{});},
+    onArmed:()=>{setWorkspacePaused(false,'Modo supervisionado ativo');flushRecoveredDrafts().catch(()=>{});renderLiveMetrics();scheduleLiveAutograde(true);},
     onPause:(paused)=>setWorkspacePaused(paused,paused?'Retorne à tela cheia para continuar.':'Modo supervisionado ativo'),
     onLock:(reason)=>setWorkspacePaused(true,reason||'Atividade bloqueada'),
     onTeacherEdit:applyTeacherEdit,
@@ -1168,7 +1253,7 @@ export async function mountWorkspace({profile,exercise,subject}){
 }
 
 export async function unmountWorkspace(){
-  clearTimeout(state.saveTimer);
+  clearTimeout(state.saveTimer);clearTimeout(liveGradeTimer);liveGradeSequence+=1;
   try{await saveActiveFile(false);}catch(_){}
   await stopSupervision();
   state.active=null;
@@ -1184,7 +1269,7 @@ $('code-editor')?.addEventListener('drop',e=>handleDrop(e));
 $('code-editor')?.addEventListener('input',(event)=>{
   if(!state.active||state.remoteEdit)return;
   state.active.content=$('code-editor').value;
-  state.autoGrade.dirty=true;
+  invalidateServerEvaluation({schedule:true});
   scheduleSave();
   renderHighlight();
   handleEditorInput($('code-editor').value,event);
@@ -1210,6 +1295,8 @@ $('download-current-btn')?.addEventListener('click',downloadCurrentStudentFile);
 $('download-zip-btn')?.addEventListener('click',downloadStudentProjectZip);
 $('github-btn')?.addEventListener('click',openStudentGithub);
 $('classroom-btn')?.addEventListener('click',openStudentClassroom);
+$('font-decrease-btn')?.addEventListener('click',()=>adjustCodeFontSize(-CODE_FONT_STEP));
+$('font-increase-btn')?.addEventListener('click',()=>adjustCodeFontSize(CODE_FONT_STEP));
 $('run-preview-btn')?.addEventListener('click',async()=>{await buildPreview();runValidation();});
 $('validate-btn')?.addEventListener('click',()=>runAutoGrade());
 $('mark-complete-btn')?.addEventListener('click',completeExercise);

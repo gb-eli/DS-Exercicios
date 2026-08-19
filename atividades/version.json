@@ -1,10 +1,10 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.21.4",
+  "version": "0.22.1",
   "date": "2026-08-19",
   "features": [
     "Modo supervisionado por atividade com sessão server-side e IP",
-    "Tela cheia quando suportada e bloqueio após 3 violações objetivas",
+    "Tela cheia quando suportada; saídas e trocas de foco são registradas para supervisão sem bloqueio automático por quantidade",
     "Registro de troca de guia, saída de fullscreen, colagem, drop, atalhos DevTools e entrada rápida",
     "Detecção de DevTools classificada como heurística, sem punição automática isolada",
     "Bloqueio de padrões maliciosos antes de executar/visualizar código",
@@ -122,7 +122,13 @@
     "v14.9.4: referências 01–20 do Front-End 2DS foram revisadas contra o objetivo pedagógico de cada atividade",
     "v14.9.4: eventos JavaScript saem do HTML; index.html não usa onclick/oninput e script.js concentra o comportamento",
     "v14.9.4: fallback canônico corrigido do 2DS tem prioridade no workspace quando o Supabase não fornece referência válida",
-    "v14.9.4: banco aceita somente index.html, estilo.css e script.js como referências do 2DS ativo e bloqueia regressões estruturais"
+    "v14.9.4: banco aceita somente index.html, estilo.css e script.js como referências do 2DS ativo e bloqueia regressões estruturais",
+    "v14.10.0: referência Markdown reconhece atividade.md/referencia.md e Kotlin reconhece main.kt/MainActivity.kt",
+    "v14.10.0: preview preserva semântica de script defer ao embutir HTML/CSS/JS e evita executar JavaScript antes do DOM",
+    "v14.10.0: editor remove newline artificial da camada de syntax highlight para evitar linha/scroll fantasma",
+    "v14.10.0: métricas durante a digitação mostram conclusão estimada, acerto e erro; acerto/erro são recalculados pelo servidor após pausa",
+    "v14.10.0: código-fonte de student-files foi reconciliado com save_all/checkpoint, session guard e criação apenas de arquivo esperado ausente",
+    "v14.10.0: suíte de regressão restaura auditorias 8.7–9.5 e adiciona auditoria integral de referências, preview, links e editor"
   ],
   "notes": [
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
@@ -137,8 +143,8 @@
     "Referências exibidas ao aluno são públicas e pedagógicas; critérios privados de correção e gabaritos do professor continuam fora do bundle público.",
     "A API Fullscreen exige gesto do usuário ao trocar de documento; por isso uma navegação entre páginas pode exigir um único clique para retornar à tela cheia. Dentro do SPA de Atividades não há prompt por exercício."
   ],
-  "phase": "P9.4-code-contrast-hardening",
-  "release": "v14.9.4",
+  "phase": "P10.1-supervisao-nao-bloqueante-font-sync",
+  "release": "v14.10.1",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",
@@ -192,6 +198,9 @@
     "v14.9.3: notas provisórias antigas do 2DS são recalculadas com os três arquivos após nova autocorreção",
     "v14.9.4: reforça contraste do código no editor e na referência para Python, HTML, CSS, JavaScript e Kotlin",
     "v14.9.4: textarea do editor permanece visível até a camada de syntax highlight confirmar que está pronta",
-    "v14.9.4: tema do 1DS legado recebe a mesma paleta de alto contraste para evitar texto invisível"
+    "v14.9.4: tema do 1DS legado recebe a mesma paleta de alto contraste para evitar texto invisível",
+    "v14.10.1: saídas de atividade ficam registradas para supervisão sem bloqueio automático por quantidade",
+    "v14.10.1: editor e referência compartilham fonte/tamanho/altura de linha e controles −/+ persistentes",
+    "v14.10.1: alinhamento entre gutter, editor e referência usa a mesma métrica tipográfica para evitar linhas apertadas/fantasmas"
   ]
 }

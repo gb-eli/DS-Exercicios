@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js?v=14.9.1';
+import { supabase } from './supabase.js?v=14.10.1';
 
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -27,7 +27,7 @@ const state = {
 
 const DEFAULT_POLICY = {
   require_fullscreen:true,
-  max_focus_violations:3,
+  max_focus_violations:1000000,
   block_paste:true,
   detect_devtools:true,
   detect_rapid_input:true,
@@ -78,8 +78,7 @@ function hideWarning() {
   $('supervision-banner')?.classList.add('hidden');
 }
 function updateViolationChip(count=0) {
-  const max = Number(state.policy?.max_focus_violations || 3);
-  chip(`Supervisionado • ${count}/${max} saídas`, count ? 'warning' : 'ok');
+  chip(`Supervisionado • ${count} saída${Number(count)===1?'':'s'} registrada${Number(count)===1?'':'s'}`, count ? 'warning' : 'ok');
 }
 function editorState() {
   try { return state.callbacks.getEditorState?.() || {}; }
@@ -148,8 +147,7 @@ async function focusViolation(type) {
   const result = await safeEvent(type,'high','objective',{label});
   if (result?.locked) return;
   const count = Number(result?.focus_violation_count || 0);
-  const max = Number(state.policy?.max_focus_violations || 3);
-  warning(`Atenção: ${label} registrada (${count}/${max}). Ao atingir ${max}, a atividade será bloqueada.`, 'high', state.policy?.require_fullscreen && isFullscreenSupported() && !document.fullscreenElement);
+  warning(`Atenção: ${label} registrada (${count}). As saídas são registradas para supervisão, mas não bloqueiam automaticamente a atividade.`, 'high', state.policy?.require_fullscreen && isFullscreenSupported() && !document.fullscreenElement);
   if (state.policy?.require_fullscreen && isFullscreenSupported() && !document.fullscreenElement) state.callbacks.onPause?.(true);
 }
 
@@ -292,7 +290,7 @@ export async function prepareSupervision({ profile, exercise, getEditorState, on
   catch(error){if(error.status===423||error.code==='activity_locked'){lockStudent(error.details?.reason||error.message);return {locked:true};}throw error;}
   state.sessionId=data.session?.id||null;state.channelKey=data.channel_key||null;state.policy={...DEFAULT_POLICY,...(data.policy||{})};updateViolationChip(Number(data.session?.focus_violation_count||0));
   const summary=$('supervision-policy-summary');
-  if(summary){summary.replaceChildren();[state.policy.require_fullscreen?'Tela cheia obrigatória':'Tela cheia opcional',`${Number(state.policy.max_focus_violations)||0} saídas antes do bloqueio`,state.policy.block_paste?'Colar código bloqueado':'Colar código permitido','IP e eventos de segurança registrados'].forEach(text=>{const span=document.createElement('span');span.textContent=text;summary.appendChild(span);});}
+  if(summary){summary.replaceChildren();[state.policy.require_fullscreen?'Tela cheia obrigatória':'Tela cheia opcional','Saídas registradas sem bloqueio automático',state.policy.block_paste?'Colar código bloqueado':'Colar código permitido','IP e eventos de segurança registrados'].forEach(text=>{const span=document.createElement('span');span.textContent=text;summary.appendChild(span);});}
   const needsFullscreen=state.policy.require_fullscreen&&isFullscreenSupported();
   if(needsFullscreen&&!document.fullscreenElement){
     state.waitingForFullscreen=true;
