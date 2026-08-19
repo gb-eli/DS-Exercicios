@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js?v=14.8.5';
+import { supabase } from './supabase.js?v=14.9.1';
 
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -20,6 +20,8 @@ const state = {
   lastDevtoolsShortcutAt:0,
   lastSecurityFingerprints:new Map(),
   lastInput:{at:0,length:0},
+  trustedInsertUntil:0,
+  waitingForFullscreen:false,
   callbacks:{},
 };
 
@@ -165,11 +167,14 @@ function bindGlobalEvents() {
   });
 
   document.addEventListener('fullscreenchange', () => {
-    if (!state.armed || state.locked || !state.policy?.require_fullscreen || !isFullscreenSupported()) return;
-    if (!document.fullscreenElement) focusViolation('fullscreen_exit');
-    else {
+    if (state.locked || !state.policy?.require_fullscreen || !isFullscreenSupported()) return;
+    if (!document.fullscreenElement) {
+      if (state.armed) focusViolation('fullscreen_exit');
+      else if (state.sessionId) { state.waitingForFullscreen=true; state.callbacks.onPause?.(true); }
+    } else {
       hideWarning();
-      state.callbacks.onPause?.(false);
+      if (!state.armed && state.waitingForFullscreen && state.sessionId) armCurrentSession().catch(console.error);
+      else state.callbacks.onPause?.(false);
     }
   });
 
@@ -266,71 +271,34 @@ function startDevtoolsHeuristic() {
   }, 1800);
 }
 
+async function armCurrentSession(){
+  if(state.armed||state.locked||!state.sessionId)return;
+  state.waitingForFullscreen=false;
+  state.armed=true;
+  await connectLiveChannel();
+  startHeartbeat();
+  startDevtoolsHeuristic();
+  state.callbacks.onPause?.(false);
+  state.callbacks.onArmed?.();
+  sendEditorSnapshot(true);
+}
+
 export async function prepareSupervision({ profile, exercise, getEditorState, onArmed, onPause, onLock, onTeacherEdit, onTeacherEditing }) {
   await stopSupervision({exitFullscreen:false});
-  state.profile = profile;
-  state.exercise = exercise;
-  state.callbacks = { getEditorState, onArmed, onPause, onLock, onTeacherEdit, onTeacherEditing };
-  state.locked = false;
-  state.armed = false;
-  state.lastFocusAt = 0;
-  state.lastSecurityFingerprints.clear();
-  bindGlobalEvents();
-
+  state.profile=profile;state.exercise=exercise;state.callbacks={getEditorState,onArmed,onPause,onLock,onTeacherEdit,onTeacherEditing};
+  state.locked=false;state.armed=false;state.waitingForFullscreen=false;state.lastFocusAt=0;state.lastSecurityFingerprints.clear();bindGlobalEvents();
   let data;
-  try {
-    data = await invokeFunction('supervision', { action:'start_session', exercise_id:exercise.id });
-  } catch (error) {
-    if (error.status === 423 || error.code === 'activity_locked') {
-      lockStudent(error.details?.reason || error.message);
-      return {locked:true};
-    }
-    throw error;
-  }
-
-  state.sessionId = data.session?.id || null;
-  state.channelKey = data.channel_key || null;
-  state.policy = { ...DEFAULT_POLICY, ...(data.policy || {}) };
-  updateViolationChip(Number(data.session?.focus_violation_count || 0));
-
-  const dialog = $('supervision-start-dialog');
-  if ($('supervision-policy-summary')) {
-    const full = state.policy.require_fullscreen
-      ? (isFullscreenSupported() ? 'Tela cheia obrigatória' : 'Tela cheia não suportada neste dispositivo')
-      : 'Tela cheia opcional';
-    const summary=$('supervision-policy-summary');
-    summary.replaceChildren();
-    [
-      full,
-      `${Number(state.policy.max_focus_violations)||0} saídas antes do bloqueio`,
-      state.policy.block_paste ? 'Colar código bloqueado' : 'Colar código permitido',
-      'IP e eventos de segurança registrados'
-    ].forEach(text=>{
-      const span=document.createElement('span');
-      span.textContent=text;
-      summary.appendChild(span);
-    });
-  }
-  if (dialog && !dialog.open) dialog.showModal();
-
-  const startBtn = $('supervision-start-btn');
-  if (startBtn) startBtn.onclick = async () => {
-    startBtn.disabled = true;
-    startBtn.textContent = 'Iniciando...';
-    const ok = await requestFullscreen();
-    if (!ok) {
-      startBtn.disabled = false;
-      startBtn.textContent = 'Iniciar em tela cheia';
-      return;
-    }
-    state.armed = true;
-    dialog?.close();
-    await connectLiveChannel();
-    startHeartbeat();
-    startDevtoolsHeuristic();
-    state.callbacks.onArmed?.();
-    sendEditorSnapshot(true);
-  };
+  try{data=await invokeFunction('supervision',{action:'start_session',exercise_id:exercise.id});}
+  catch(error){if(error.status===423||error.code==='activity_locked'){lockStudent(error.details?.reason||error.message);return {locked:true};}throw error;}
+  state.sessionId=data.session?.id||null;state.channelKey=data.channel_key||null;state.policy={...DEFAULT_POLICY,...(data.policy||{})};updateViolationChip(Number(data.session?.focus_violation_count||0));
+  const summary=$('supervision-policy-summary');
+  if(summary){summary.replaceChildren();[state.policy.require_fullscreen?'Tela cheia obrigatória':'Tela cheia opcional',`${Number(state.policy.max_focus_violations)||0} saídas antes do bloqueio`,state.policy.block_paste?'Colar código bloqueado':'Colar código permitido','IP e eventos de segurança registrados'].forEach(text=>{const span=document.createElement('span');span.textContent=text;summary.appendChild(span);});}
+  const needsFullscreen=state.policy.require_fullscreen&&isFullscreenSupported();
+  if(needsFullscreen&&!document.fullscreenElement){
+    state.waitingForFullscreen=true;
+    state.callbacks.onPause?.(true);
+    warning('Para continuar, retorne ao modo tela cheia do portal.','high',true);
+  }else await armCurrentSession();
   return data;
 }
 
@@ -374,14 +342,18 @@ export async function handleDrop(event) {
   return true;
 }
 
+export function markTrustedEditorInsertion(){ state.trustedInsertUntil=performance.now()+800; }
+
 export function handleEditorInput(content, inputEvent=null) {
   if (!state.armed || state.locked) return;
   const now = performance.now();
   const length = String(content || '').length;
   const delta = length - Number(state.lastInput.length || 0);
   const elapsed = now - Number(state.lastInput.at || 0);
-  const pasteLike = inputEvent?.inputType === 'insertFromPaste' || (delta >= 24 && elapsed > 0 && elapsed < 140);
+  const trusted=now<=Number(state.trustedInsertUntil||0);
+  const pasteLike = !trusted && (inputEvent?.inputType === 'insertFromPaste' || (delta >= 24 && elapsed > 0 && elapsed < 140));
   state.lastInput = {at:now,length};
+  if(trusted)state.trustedInsertUntil=0;
 
   if (state.policy?.detect_rapid_input && pasteLike && Date.now() - state.lastRapidAt > 5000) {
     state.lastRapidAt = Date.now();
@@ -469,7 +441,7 @@ export async function inspectCode(files=[]) {
   return {ok:false,findings};
 }
 
-export async function stopSupervision({exitFullscreen=true}={}) {
+export async function stopSupervision({exitFullscreen=false}={}) {
   state.armed = false;
   clearInterval(state.heartbeatTimer);
   clearInterval(state.devtoolsTimer);

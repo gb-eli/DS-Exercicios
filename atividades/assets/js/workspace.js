@@ -1,14 +1,18 @@
-import { runPython } from './python-runtime.js';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.8.5';
-import { validateExercise, renderValidation } from './validation.js';
+import { runPython } from './python-runtime.js?v=14.9.1';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.1';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.9.1';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.9.1';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.9.1';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.9.1';
+import { validateExercise, renderValidation } from './validation.js?v=14.9.1';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
-  sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId,
+  sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js';
+} from './supervision.js?v=14.9.1';
 
-import { supabase } from './supabase.js?v=14.8.5';
+import { supabase } from './supabase.js?v=14.9.1';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.9.1';
 
 let state = {
   profile:null,
@@ -19,6 +23,7 @@ let state = {
   active:null,
   dirty:false,
   saveTimer:null,
+  saveQueues:new Map(),
   lastSavedContent:new Map(),
   remoteEdit:false,
   teacherEditing:false,
@@ -28,10 +33,36 @@ let state = {
   toolsOpen:false,
   outputOpen:false,
   pendingServerEvaluation:null,
+  autoGrade:{score:0,graded_at:null,submitted_score:null,dirty:false,files:[]},
+  symbolPaletteOpen:false,
   referenceAvailable:false,
+  referenceFiles:new Map(),
+  referenceSource:'none',
+  classId:null,
+  classroomUrl:null,
+  repositoryUrl:null,
+  legacyRepositoryUrl:null,
+  linksLoaded:false,
 };
 
 const $ = (id)=>document.getElementById(id);
+
+const CLASSROOM_FALLBACKS = Object.freeze({
+  'ee8271e6-390d-455c-badd-c9319a2bf2ec:ad1c2081-9bea-459b-b6f6-272f452bc573':'https://classroom.google.com/c/NzkzNTA2MzQ0MjU1',
+  'ee8271e6-390d-455c-badd-c9319a2bf2ec:51875c25-08bc-44a7-af0c-162413edd9df':'https://classroom.google.com/c/ODQyMTU5MjQ3MTA1',
+  'ee5f3643-1900-4d0f-91b8-d37bd55f8d27:718b598f-d2c8-40e2-b9f8-9a6980c1caca':'https://classroom.google.com/c/NzkzNTA2MTk2NDg4',
+  'ee5f3643-1900-4d0f-91b8-d37bd55f8d27:3815053a-f49d-446b-9b0c-006a601aa194':'https://classroom.google.com/c/ODQyMTU3NDI1MTAy',
+  '2cde8db5-9e9c-41cd-847f-d915091f32d2:74f4a657-a75d-4eb2-a1e1-e639ffa3179a':'https://classroom.google.com/c/ODQyMTU2NzEwNzc1',
+  '5192fbab-6ec9-4178-9f6d-e4b4b9619d4d:ad1f8cc9-d1ba-4e11-b61c-cf94219d5644':'https://classroom.google.com/c/ODcxMDE0NTQ3NzYw',
+  '5192fbab-6ec9-4178-9f6d-e4b4b9619d4d:4240a7d8-23b3-414d-a259-de3eb38dc000':'https://classroom.google.com/c/ODcxMDE0Mjg4NTU4'
+});
+
+function classroomFallback(){
+  const key=`${state.classId||''}:${state.subject?.id||''}`;
+  return CLASSROOM_FALLBACKS[key]||null;
+}
+
+function repositoryKey(){return String(state.subject?.slug||'default');}
 
 async function callStudentFiles(body){
   const {data,error}=await supabase.functions.invoke('student-files',{body});
@@ -40,6 +71,97 @@ async function callStudentFiles(body){
   try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
   const e=new Error(details?.reason||details?.error||error?.message||'Falha ao salvar arquivo.');
   e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
+}
+
+async function callAutograde(body){
+  const {data,error}=await supabase.functions.invoke('exercise-autograde',{body});
+  if(!error&&!data?.error)return data||{};
+  let details=data||null;
+  try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  const e=new Error(details?.reason||details?.error||error?.message||'Falha na autocorreção.');
+  e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
+}
+
+
+function activeLanguageKey(){
+  const raw=String(state.active?.language||state.active?.filename?.split('.').pop()||'text').toLowerCase();
+  return ({js:'javascript',mjs:'javascript',kt:'kotlin',md:'markdown',py:'python',htm:'html'})[raw]||raw;
+}
+function toSymbolItem(item){
+  if(item&&typeof item==='object')return {name:String(item.name||item.label||item.value||'símbolo'),value:String(item.value??item.symbol??'')};
+  return {name:String(item),value:String(item)};
+}
+function symbolPaletteModel(){
+  const cfg=state.exercise?.config||{},sw=cfg.student_workspace||{},lang=activeLanguageKey();
+  const palette=sw.symbol_palette||cfg.symbol_palette;
+  if(palette?.enabled){
+    const source=palette.groups||{},groups=[];
+    const values=(source[lang]||palette.fallback_symbols||[]).map(toSymbolItem).filter(x=>x.value);
+    if(values.length)groups.push({name:lang==='javascript'?'JavaScript':lang.toUpperCase(),items:values});
+    const pt=(source.portuguese||source.portugues||[]).map(toSymbolItem).filter(x=>x.value);
+    if(pt.length&&!['portuguese','portugues'].includes(lang))groups.push({name:'Português',items:pt});
+    return {enabled:true,label:String(palette.label||'Símbolos'),groups};
+  }
+  const typing=sw.typing_assist||cfg.typing_assist;
+  if(typing?.enabled){
+    const categories=Array.isArray(typing.categories)?typing.categories:[];
+    const langId=lang==='javascript'?'javascript':lang;
+    const selected=categories.filter(c=>String(c.id||'').toLowerCase()===langId||['portugues','portuguese'].includes(String(c.id||'').toLowerCase()));
+    const use=selected.length?selected:categories;
+    return {enabled:true,label:String(typing.label||'Símbolos'),groups:use.map(c=>({name:String(c.label||c.id||'Símbolos'),items:(c.symbols||c.items||[]).map(toSymbolItem).filter(x=>x.value)})).filter(g=>g.items.length)};
+  }
+  const keyboard=sw.keyboard_helper||cfg.keyboard_helper;
+  if(keyboard?.enabled){
+    return {enabled:true,label:String(keyboard.label||'Símbolos'),groups:(keyboard.groups||[]).map(g=>({name:String(g.name||g.label||'Símbolos'),items:(g.items||g.symbols||[]).map(toSymbolItem).filter(x=>x.value)})).filter(g=>g.items.length)};
+  }
+  const fallback={
+    html:['<','>','/','=','"',"'",'&',';'],
+    css:['{','}',':',';','#','.','%','@','(',')',',','-'],
+    javascript:['(',')','{','}','[',']','=','=>','===','!==','&&','||','>=','<=','+','-','*','/','!','?','`','$','${','}'],
+    python:['_','(',')','[',']','{','}','"',"'",':','=','.',',','#','+','-','*','/','//','%','**','==','!=','>','<','>=','<=','\\','$'],
+    kotlin:['(',')','{','}','[',']','=','.', '?',':',',','"','$','${','}','*'],
+    xml:['<','>','/','=','"'],
+    markdown:['`','#','-','*','[',']','(',')','>'],
+    text:['#','-',':','>','/','(',')','"',"'",'?']
+  };
+  const vals=fallback[lang]||fallback.text;
+  return {enabled:true,label:'Símbolos',groups:[{name:lang==='javascript'?'JavaScript':lang.toUpperCase(),items:vals.map(toSymbolItem)}]};
+}
+function renderSymbolPalette(){
+  const model=symbolPaletteModel(),btn=$('symbols-btn'),panel=$('symbol-palette'),box=$('symbol-palette-groups');
+  if(btn){btn.classList.toggle('hidden',!model.enabled||!state.active);btn.textContent=model.label;btn.setAttribute('aria-expanded',String(Boolean(state.symbolPaletteOpen&&model.enabled)));}
+  if(!panel||!box)return;
+  if(!model.enabled||!state.active){state.symbolPaletteOpen=false;panel.classList.add('hidden');box.replaceChildren();return;}
+  $('symbol-palette-title').textContent=model.label;
+  $('symbol-palette-context').textContent=state.active?.filename?`Arquivo: ${state.active.filename}`:'';
+  panel.classList.toggle('hidden',!state.symbolPaletteOpen);
+  box.replaceChildren();
+  const pairMap={
+    javascript:[{name:'parênteses',value:'()'},{name:'chaves',value:'{}'},{name:'colchetes',value:'[]'},{name:'aspas duplas',value:'""'},{name:'aspas simples',value:"''"},{name:'crases / template string',value:'``'},{name:'interpolação',value:'${}'}],
+    html:[{name:'aspas duplas',value:'""'},{name:'aspas simples',value:"''"}],css:[{name:'chaves',value:'{}'},{name:'parênteses',value:'()'}],
+    python:[{name:'parênteses',value:'()'},{name:'chaves',value:'{}'},{name:'colchetes',value:'[]'},{name:'aspas duplas',value:'""'},{name:'aspas simples',value:"''"}],
+    kotlin:[{name:'parênteses',value:'()'},{name:'chaves',value:'{}'},{name:'colchetes',value:'[]'},{name:'aspas duplas',value:'""'},{name:'interpolação',value:'${}'}]
+  };
+  const groups=[...model.groups],pairs=pairMap[activeLanguageKey()]||[];if(pairs.length)groups.push({name:'Pares rápidos',items:pairs});
+  for(const group of groups){
+    const section=document.createElement('div');section.className='symbol-group';
+    const label=document.createElement('span');label.className='symbol-group-label';label.textContent=group.name;section.append(label);
+    const buttons=document.createElement('div');buttons.className='symbol-buttons';
+    for(const item of group.items){
+      const button=document.createElement('button');button.type='button';button.className='symbol-key';button.textContent=item.value;button.title=item.name;button.setAttribute('aria-label',`${item.name}: ${item.value}`);button.addEventListener('click',()=>insertSymbolAtCursor(item.value));buttons.append(button);
+    }
+    section.append(buttons);box.append(section);
+  }
+}
+function insertSymbolAtCursor(value){
+  const editor=$('code-editor');if(!editor||!state.active)return;
+  const start=Number(editor.selectionStart||0),end=Number(editor.selectionEnd||start),text=String(value||'');if(!text)return;
+  markTrustedEditorInsertion();
+  editor.setRangeText(text,start,end,'end');
+  const pairs=new Map([['()',1],['{}',1],['[]',1],['""',1],["''",1],['``',1],['${}',2]]);
+  if(pairs.has(text)){const pos=start+pairs.get(text);editor.setSelectionRange(pos,pos);}
+  let ev;try{ev=new InputEvent('input',{bubbles:true,inputType:'insertText',data:text});}catch(_){ev=new Event('input',{bubbles:true});}
+  editor.dispatchEvent(ev);editor.focus();
 }
 
 const DEFAULTS = {
@@ -83,7 +205,7 @@ function readCachedDraft(file){
 }
 
 function persistLocalDraft(file,content){
-  if(!file)return;
+  if(!file)return false;
   try{
     localStorage.setItem(cacheKey(file),JSON.stringify({
       v:2,
@@ -91,7 +213,11 @@ function persistLocalDraft(file,content){
       savedAt:Date.now(),
       remoteRevision:Number(file.revision||0)
     }));
-  }catch(_){}
+    return true;
+  }catch(error){
+    console.warn('[AGV] Não foi possível gravar a cópia local do arquivo.',error);
+    return false;
+  }
 }
 
 function mirrorSaveState(text,cls=''){
@@ -132,31 +258,99 @@ function setOutputOpen(open){
 
 function referenceEntry(){
   const key=`${state.subject?.slug||''}:${state.exercise?.exercise_number||''}`;
-  return EXERCISE_REFERENCES[key]||null;
+  return EXERCISE_REFERENCES[key]||EXERCISE_REFERENCE_EXTRAS[key]||EXERCISE_REFERENCE_SYNCED[key]||EXERCISE_REFERENCE_3DS_RESTORED[key]||null;
 }
 
-function referenceForFile(filename){
-  const entry=referenceEntry();
-  if(!entry?.files)return null;
-  const wanted=String(filename||'').toLowerCase();
-  const found=Object.entries(entry.files).find(([name])=>String(name).toLowerCase()===wanted);
-  return found?String(found[1]??''):null;
+function normalizeFilename(value){return String(value||'').trim().toLowerCase();}
+function referenceAliases(filename){
+  const name=normalizeFilename(filename), aliases=new Set([name]);
+  if(name==='style.css')aliases.add('estilo.css');
+  if(name==='estilo.css')aliases.add('style.css');
+  if(name==='app.js')aliases.add('script.js');
+  if(name==='script.js')aliases.add('app.js');
+  return [...aliases];
 }
+
+async function loadWorkspaceResources(){
+  state.referenceFiles=new Map();state.referenceSource='none';state.classId=null;state.classroomUrl=null;state.repositoryUrl=null;state.legacyRepositoryUrl=null;state.linksLoaded=false;
+  const fallback=referenceEntry();
+  const fallbackFiles=Object.entries(fallback?.files||{}).map(([filename,content])=>({filename,language:(fallback.languages||{})[filename]||'',content:String(content??''),source:'bundle'}));
+  let dbRefs=[];
+  try{
+    const {data,error}=await supabase.from('exercise_reference_files')
+      .select('filename,language,content,updated_at')
+      .eq('exercise_id',state.exercise.id)
+      .order('filename',{ascending:true});
+    if(error)throw error;
+    dbRefs=Array.isArray(data)?data:[];
+  }catch(error){console.warn('[AGV] Referência no Supabase indisponível; usando contingência local.',error);}
+  for(const file of fallbackFiles)state.referenceFiles.set(normalizeFilename(file.filename),file);
+  let usefulDbRefs=0;
+  for(const file of dbRefs){
+    const content=String(file?.content??'');
+    // Uma linha vazia no banco nunca deve apagar uma referência local válida.
+    // O Supabase continua sendo a fonte principal quando possui conteúdo real.
+    if(!content.trim())continue;
+    state.referenceFiles.set(normalizeFilename(file.filename),{...file,content,source:'supabase'});
+    usefulDbRefs+=1;
+  }
+  state.referenceSource=usefulDbRefs?'supabase':fallbackFiles.length?'bundle':'none';
+  state.referenceAvailable=state.referenceFiles.size>0;
+
+  try{
+    const {data:membership,error}=await supabase.from('class_memberships').select('class_id')
+      .eq('user_id',state.profile.id).eq('active',true).order('is_primary',{ascending:false}).limit(1).maybeSingle();
+    if(error)throw error;
+    state.classId=membership?.class_id||state.exercise?.class_id||null;
+  }catch(error){console.warn('[AGV] Não foi possível resolver a turma para links externos.',error);state.classId=state.exercise?.class_id||null;}
+
+  const linkTasks=[];
+  if(state.classId&&state.subject?.id){
+    linkTasks.push((async()=>{
+      const {data,error}=await supabase.from('classroom_links').select('url')
+        .eq('class_id',state.classId).eq('subject_id',state.subject.id).eq('active',true).limit(1);
+      if(error)throw error;state.classroomUrl=data?.[0]?.url||classroomFallback();
+    })());
+  }
+  linkTasks.push((async()=>{
+    const {data,error}=await supabase.from('student_delivery_settings').select('repository_url,repository_urls').eq('user_id',state.profile.id).maybeSingle();
+    if(error&&error.code!=='PGRST116')throw error;
+    const perSubject=(data?.repository_urls&&typeof data.repository_urls==='object')?data.repository_urls[repositoryKey()]:null;
+    state.repositoryUrl=perSubject||null;
+    state.legacyRepositoryUrl=data?.repository_url||null;
+  })());
+  const results=await Promise.allSettled(linkTasks);
+  results.filter(x=>x.status==='rejected').forEach(x=>console.warn('[AGV] Link externo indisponível.',x.reason));
+  if(!state.classroomUrl)state.classroomUrl=classroomFallback();
+  state.linksLoaded=true;
+  updateWorkspaceActionAvailability();
+}
+
+function referenceFileFor(filename){
+  for(const alias of referenceAliases(filename)){
+    const file=state.referenceFiles.get(alias);
+    if(file)return file;
+  }
+  return null;
+}
+function referenceForFile(filename){return referenceFileFor(filename)?.content??null;}
+function referenceLanguageForFile(filename){return referenceFileFor(filename)?.language||state.active?.language||'text';}
 
 function renderReference(){
   const code=$('reference-code'),name=$('reference-filename'),note=$('reference-note');
   if(!code||!name||!note)return;
-  const content=referenceForFile(state.active?.filename);
+  const file=referenceFileFor(state.active?.filename),content=file?.content;
   const has=typeof content==='string'&&content.length>0;
-  state.referenceAvailable=Boolean(referenceEntry());
+  state.referenceAvailable=state.referenceFiles.size>0;
   name.textContent=state.active?.filename||'arquivo';
   if(has){
-    note.textContent='Observe a referência e digite manualmente no editor. Copiar, arrastar e colar a referência estão desativados.';
-    code.innerHTML=highlightCode(content,state.active?.language||'text')+'\n';
+    const source=file?.source==='supabase'?'referência oficial sincronizada':'referência local de contingência';
+    note.textContent=`${source}. Leia à esquerda e digite manualmente no editor à direita. Copiar, arrastar e colar estão desativados.`;
+    code.innerHTML=renderNumberedCode(content,referenceLanguageForFile(state.active?.filename));
     code.dataset.empty='false';
   }else{
-    note.textContent=state.referenceAvailable?'Este arquivo não possui referência publicada. Trabalhe apenas no editor.':'Esta atividade não utiliza código de referência público.';
-    code.textContent='Referência não disponível para este arquivo.';
+    note.textContent=state.referenceAvailable?'Não existe referência para este arquivo específico. Selecione outro arquivo da atividade.':'A referência ainda não foi publicada para esta atividade.';
+    code.innerHTML='<span class="reference-empty-message">Referência ainda não publicada.</span>';
     code.dataset.empty='true';
   }
   const btn=$('toggle-output-btn');
@@ -166,46 +360,83 @@ function renderReference(){
 function escapeCode(value){
   return String(value??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 }
-
+function span(cls,value){return `<span class="${cls}">${escapeCode(value)}</span>`;}
 function tokenClass(token,language){
-  const t=String(token);
-  if(/^\/\//.test(t)||/^\/\*/.test(t)||/^#/.test(t))return 'tok-comment';
+  const t=String(token),lang=String(language||'').toLowerCase();
+  if(/^\/\//.test(t)||/^\/\*/.test(t)||/^#/.test(t)||/^<!--/.test(t))return 'tok-comment';
   if(/^['"`]/.test(t))return 'tok-string';
-  if(/^\d/.test(t))return 'tok-number';
-  if(language==='html'&&/^</.test(t))return 'tok-tag';
+  if(/^\d/.test(t)||/^#[0-9a-f]{3,8}$/i.test(t))return 'tok-number';
+  if(lang==='html'&&/^<\/?/.test(t))return 'tok-tag';
   return 'tok-keyword';
 }
 
-function highlightCode(code,language='text'){
-  const lang=String(language||'').toLowerCase();
-  const source=String(code??'');
-  if(lang==='html'){
-    const rx=/<!--[\s\S]*?-->|<\/?[A-Za-z][^>]*>/g;
-    let out='',last=0,m;
-    while((m=rx.exec(source))){
-      out+=escapeCode(source.slice(last,m.index));
-      const cls=m[0].startsWith('<!--')?'tok-comment':'tok-tag';
-      out+=`<span class="${cls}">${escapeCode(m[0])}</span>`;
-      last=rx.lastIndex;
+function highlightHtmlLine(line){
+  const source=String(line??'');
+  if(/^\s*<!--/.test(source))return span('tok-comment',source);
+  let out='',last=0,m;
+  const tagRx=/<\/?[A-Za-z][^>]*>/g;
+  while((m=tagRx.exec(source))){
+    out+=escapeCode(source.slice(last,m.index));
+    const raw=m[0];
+    const parts=raw.match(/^(<\/?)([A-Za-z][\w:-]*)([\s\S]*?)(\/?>)$/);
+    if(!parts){out+=span('tok-tag',raw);last=tagRx.lastIndex;continue;}
+    let attrs='',aLast=0,a;
+    const attrRx=/([A-Za-z_:][\w:.-]*)(\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)/g;
+    while((a=attrRx.exec(parts[3]))){
+      attrs+=escapeCode(parts[3].slice(aLast,a.index));
+      attrs+=span('tok-attr',a[1])+escapeCode(a[2])+span('tok-string',a[3]);
+      aLast=attrRx.lastIndex;
     }
-    return out+escapeCode(source.slice(last));
+    attrs+=escapeCode(parts[3].slice(aLast));
+    out+=escapeCode(parts[1])+span('tok-tag',parts[2])+attrs+escapeCode(parts[4]);
+    last=tagRx.lastIndex;
   }
+  return out+escapeCode(source.slice(last));
+}
+
+function highlightCode(code,language='text'){
+  const lang=String(language||'').toLowerCase(),source=String(code??'');
+  if(lang==='html'||lang==='htmlmixed')return source.split('\n').map(highlightHtmlLine).join('\n');
   let rx=null;
   if(lang==='javascript'||lang==='js'){
-    rx=/\/\/[^\n]*|\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`|\b(?:const|let|var|function|if|else|for|while|return|class|new|async|await|true|false|null|undefined|document|window|addEventListener|querySelector)\b|\b\d+(?:\.\d+)?\b/g;
-  }else if(lang==='python'){
-    rx=/#[^\n]*|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\b(?:def|if|elif|else|for|while|return|import|from|as|class|True|False|None|and|or|not|in|print|input|range|len)\b|\b\d+(?:\.\d+)?\b/g;
+    rx=/\/\/[^\n]*|\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`|\b(?:const|let|var|function|if|else|for|while|return|class|new|async|await|true|false|null|undefined|document|window|addEventListener|querySelector|querySelectorAll|map|filter|reduce|forEach|push|length)\b|\b\d+(?:\.\d+)?\b/g;
+  }else if(lang==='python'||lang==='py'){
+    rx=/#[^\n]*|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\b(?:def|if|elif|else|for|while|return|import|from|as|class|True|False|None|and|or|not|in|print|input|range|len|int|float|str|bool)\b|\b\d+(?:\.\d+)?\b/g;
+  }else if(lang==='kotlin'||lang==='kt'){
+    rx=/\/\/[^\n]*|\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\b(?:package|import|class|object|interface|fun|val|var|override|private|public|protected|internal|if|else|when|for|while|return|in|is|as|this|super|null|true|false|try|catch|finally|throw|setContentView|onCreate|apply)\b|\b\d+(?:\.\d+)?[fFlL]?\b/g;
   }else if(lang==='css'){
-    rx=/\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\b(?:display|position|color|background|margin|padding|width|height|grid|flex|gap|border|font|transform|transition|align-items|justify-content)\b|\b\d+(?:\.\d+)?(?:px|rem|em|%|vh|vw|s|ms)?\b/g;
+    rx=/\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|#[0-9a-fA-F]{3,8}\b|\b(?:display|position|color|background|background-color|margin|padding|width|height|min-width|max-width|grid|grid-template-columns|flex|flex-wrap|gap|border|border-radius|font|font-size|font-weight|transform|transition|align-items|justify-content|box-shadow)\b|\b\d+(?:\.\d+)?(?:px|rem|em|%|vh|vw|s|ms)?\b/g;
+  }else if(lang==='json'){
+    rx=/"(?:\\.|[^"\\])*"(?=\s*:)|"(?:\\.|[^"\\])*"|\b(?:true|false|null)\b|-?\b\d+(?:\.\d+)?\b/g;
   }
   if(!rx)return escapeCode(source);
   let out='',last=0,m;
   while((m=rx.exec(source))){
     out+=escapeCode(source.slice(last,m.index));
-    out+=`<span class="${tokenClass(m[0],lang)}">${escapeCode(m[0])}</span>`;
-    last=rx.lastIndex;
+    const tok=m[0];
+    let cls=tokenClass(tok,lang);
+    if(lang==='json'&&/^"/.test(tok)&&/^\s*:/.test(source.slice(rx.lastIndex)))cls='tok-attr';
+    if(lang==='css'&&/^[a-z-]+$/i.test(tok))cls='tok-attr';
+    out+=span(cls,tok);last=rx.lastIndex;
   }
   return out+escapeCode(source.slice(last));
+}
+
+function renderNumberedCode(content,language){
+  // Realça cada linha isoladamente. Isso impede que comentários ou strings
+  // multilinha deixem tags <span> abertas entre duas linhas numeradas.
+  const lines=String(content??'').replace(/\r\n/g,'\n').split('\n');
+  return lines.map((raw,index)=>{
+    const line=highlightCode(raw,language);
+    return `<span class="reference-line"><span class="reference-line-number" aria-hidden="true">${index+1}</span><span class="reference-line-code">${line||'&nbsp;'}</span></span>`;
+  }).join('');
+}
+
+function renderEditorLineNumbers(){
+  const editor=$('code-editor'),gutter=$('editor-line-numbers');if(!editor||!gutter)return;
+  const count=Math.max(1,String(editor.value??'').split('\n').length);
+  gutter.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
+  gutter.scrollTop=editor.scrollTop;
 }
 
 let highlightFrame=0;
@@ -215,8 +446,8 @@ function renderHighlight(){
     const editor=$('code-editor'),pre=$('code-highlight');
     if(!editor||!pre)return;
     pre.innerHTML=highlightCode(editor.value,state.active?.language||'text')+'\n';
-    pre.scrollTop=editor.scrollTop;
-    pre.scrollLeft=editor.scrollLeft;
+    pre.scrollTop=editor.scrollTop;pre.scrollLeft=editor.scrollLeft;
+    renderEditorLineNumbers();
   });
 }
 
@@ -350,6 +581,7 @@ async function activateFile(id){
   renderFileTabs();
   renderHighlight();
   renderReference();
+  renderSymbolPalette();
   setSaveState(`Revisão ${next.revision||1} • ${formatDate(next.saved_at)}`,'ok');
   sendEditorSnapshot(true);
 }
@@ -364,26 +596,27 @@ function scheduleSave(){
   if(!state.active)return;
   state.dirty=true;
   state.active.content=$('code-editor').value;
-  persistLocalDraft(state.active,state.active.content);
-  setSaveState('Alterações locais protegidas — sincronizando','saving');
+  const localProtected=persistLocalDraft(state.active,state.active.content);
+  setSaveState(localProtected?'Alterações locais protegidas — sincronizando':'Sincronizando — cópia local indisponível neste navegador',localProtected?'saving':'error');
   clearTimeout(state.saveTimer);
   const fileId=state.active.id;
   const content=$('code-editor').value;
   state.saveTimer=setTimeout(()=>saveFileSnapshot(fileId,content,false),1200);
 }
 
-async function saveFileSnapshot(fileId,content,force=false){
-  const file=state.files.find(f=>f.id===fileId); if(!file)return;
+async function performFileSave(fileId,content,force=false){
+  const file=state.files.find(f=>f.id===fileId); if(!file)return {synced:false,skipped:true};
   if(!force && state.lastSavedContent.get(fileId)===content){
-    if(state.active?.id===fileId){state.dirty=false;setSaveState(`Tudo salvo • revisão ${file.revision||1}`,'ok');}
-    return;
+    if(state.active?.id===fileId){state.dirty=($('code-editor').value!==content);setSaveState(`Tudo salvo • revisão ${file.revision||1}`,'ok');}
+    return {synced:true,current:state.active?.id!==fileId||$('code-editor').value===content,skipped:true,file};
   }
-  persistLocalDraft(file,content);
-  if(state.active?.id===fileId)setSaveState('Salvando na nuvem...','saving');
+  const localProtected=persistLocalDraft(file,content);
+  if(state.active?.id===fileId)setSaveState(localProtected?'Salvando na nuvem...':'Salvando na nuvem — cópia local indisponível',localProtected?'saving':'error');
   let data;
   try{
     const result=await callStudentFiles({action:'save',exercise_id:state.exercise.id,file_id:fileId,content});
     data=result.file;
+    if(!data)throw new Error('Servidor não confirmou o arquivo salvo.');
   }catch(error){
     if(error.status===423){
       setWorkspacePaused(true,error.details?.reason||'Atividade bloqueada pelo professor.');
@@ -392,31 +625,167 @@ async function saveFileSnapshot(fileId,content,force=false){
       if(error.code==='malicious_code_rejected'){
         setSaveState(`Código não salvo: padrão bloqueado (${(error.details?.patterns||[]).join(', ')||'segurança'}). O evento foi registrado para o professor.`,'error');
       }else{
-        setSaveState('Sem conexão ou atividade bloqueada: cópia local preservada','error');
+        setSaveState(localProtected?'Sem conexão ou atividade bloqueada: cópia local preservada':'Falha ao salvar e não foi possível criar cópia local','error');
       }
     }
-    return;
+    return {synced:false,error,localProtected};
   }
   file.revision=data.revision; file.saved_at=data.saved_at;
-  if(file.content===content || state.active?.id!==fileId) file.content=data.content;
+  // Nunca substitua em memória uma edição mais nova por uma resposta de uma gravação anterior.
+  if(String(file.content??'')===String(content??''))file.content=data.content;
   state.lastSavedContent.set(fileId,data.content);
-  localStorage.removeItem(cacheKey(file));
+  const currentContent=state.active?.id===fileId?$('code-editor').value:String(file.content??'');
+  if(currentContent===data.content)localStorage.removeItem(cacheKey(file));
+  else persistLocalDraft(file,currentContent);
   if(state.active?.id===fileId){
     state.dirty=($('code-editor').value!==data.content);
-    setSaveState(`Salvo • revisão ${data.revision} • ${formatDate(data.saved_at)}`,'ok');
+    setSaveState(state.dirty?`Revisão ${data.revision} salva • há alterações mais novas aguardando`:`Salvo • revisão ${data.revision} • ${formatDate(data.saved_at)}`,state.dirty?'saving':'ok');
   }
   if(Date.now()-state.lastProgressTouchAt>10000){
     state.lastProgressTouchAt=Date.now();
     callActivityProgress({action:'touch',exercise_id:state.exercise.id}).catch(()=>{});
   }
+  return {synced:true,current:currentContent===data.content,file:data};
+}
+
+function saveFileSnapshot(fileId,content,force=false){
+  const previous=state.saveQueues.get(fileId)||Promise.resolve();
+  const task=previous.catch(()=>{}).then(()=>performFileSave(fileId,content,force));
+  state.saveQueues.set(fileId,task);
+  task.finally(()=>{if(state.saveQueues.get(fileId)===task)state.saveQueues.delete(fileId);});
+  return task;
+}
+
+async function waitForPendingSaves(){
+  // A fila pode ganhar um novo item enquanto aguardamos o anterior.
+  // Releia o mapa até ele realmente ficar vazio para não competir com save_all.
+  for(let pass=0;pass<8&&state.saveQueues.size;pass+=1){
+    await Promise.allSettled([...state.saveQueues.values()]);
+  }
 }
 
 async function saveActiveFile(force=false){
-  if(!state.active)return;
+  if(!state.active)return {synced:true,skipped:true};
   clearTimeout(state.saveTimer);
   const content=$('code-editor').value;
   state.active.content=content;
-  await saveFileSnapshot(state.active.id,content,force);
+  return saveFileSnapshot(state.active.id,content,force);
+}
+
+function setActionStatus(message='',kind=''){
+  const el=$('workspace-action-status');if(!el)return;
+  el.textContent=String(message||'');el.dataset.kind=kind||'';
+  clearTimeout(setActionStatus.timer);
+  if(message)setActionStatus.timer=setTimeout(()=>{if(el.textContent===String(message))el.textContent='';},6500);
+}
+function updateWorkspaceActionAvailability(){
+  const github=$('github-btn'),classroom=$('classroom-btn');
+  if(github)github.title=state.repositoryUrl?'Abrir repositório configurado':'Configurar e abrir seu repositório no GitHub';
+  if(classroom)classroom.title=state.classroomUrl?'Abrir Google Classroom desta disciplina':'Abrir Google Classroom';
+}
+function repoNameForSubject(){
+  const slug=state.subject?.slug||'';
+  return ({
+    'introducao-programacao':'atividades-praticas-1ds',
+    'programacao-front-end':'atividades-praticas',
+    'programacao-desenvolvimento-sistemas':'atividades-praticas-3ds',
+    'programacao-front-end-sub':'atividades-frontend-sub',
+    'programacao-mobile-sub':'atividades-mobile-sub'
+  })[slug]||'atividades-praticas';
+}
+
+async function saveAllBeforeExport(){
+  clearTimeout(state.saveTimer);
+  if(state.active){state.active.content=$('code-editor').value;persistLocalDraft(state.active,state.active.content);}
+  await waitForPendingSaves();
+  if(state.active){state.active.content=$('code-editor').value;persistLocalDraft(state.active,state.active.content);}
+  const payload=state.files.filter(f=>f?.id).map(f=>({file_id:f.id,content:String(f.content??'')}));
+  if(!payload.length)return {synced:false,files:state.files};
+  try{
+    const result=await callStudentFiles({action:'save_all',exercise_id:state.exercise.id,files:payload});
+    for(const saved of result.files||[]){
+      const file=state.files.find(f=>f.id===saved.id);if(!file)continue;
+      file.revision=saved.revision;file.saved_at=saved.saved_at;
+      const currentContent=state.active?.id===file.id?$('code-editor').value:String(file.content??'');
+      if(currentContent===saved.content){file.content=saved.content;localStorage.removeItem(cacheKey(file));}
+      else persistLocalDraft(file,currentContent);
+      state.lastSavedContent.set(file.id,saved.content);
+    }
+    state.dirty=Boolean(state.active&&$('code-editor').value!==state.lastSavedContent.get(state.active.id));
+    setSaveState(state.dirty?'Cópia sincronizada • há alterações mais novas aguardando':'Tudo salvo na nuvem',state.dirty?'saving':'ok');
+    return {synced:!state.dirty,files:state.files};
+  }catch(error){
+    console.warn('[AGV] Exportação seguirá com a cópia local porque a sincronização falhou.',error);
+    setSaveState('Cópia local preservada — download liberado','error');
+    return {synced:false,files:state.files,error};
+  }
+}
+
+async function downloadCurrentStudentFile(){
+  const btn=$('download-current-btn');if(btn)btn.disabled=true;
+  try{
+    setActionStatus('Salvando antes de baixar…','saving');
+    const result=await saveAllBeforeExport();
+    const file=state.active||result.files?.[0];if(!file)throw new Error('Nenhum arquivo disponível.');
+    const content=state.active?.id===file.id?$('code-editor').value:String(file.content??'');
+    downloadTextFile(file.filename,content);
+    setActionStatus(`${file.filename} baixado${result.synced?' e sincronizado':' com a cópia local'}.`,'ok');
+  }catch(error){console.error(error);setActionStatus(error.message||'Falha ao baixar arquivo.','error');}
+  finally{if(btn)btn.disabled=false;}
+}
+
+async function downloadStudentProjectZip(){
+  const btn=$('download-zip-btn');if(btn)btn.disabled=true;
+  try{
+    setActionStatus('Salvando e preparando o ZIP…','saving');
+    const result=await saveAllBeforeExport(),files=(result.files||[]).map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:String(f.content??'')}));
+    if(!files.length)throw new Error('Nenhum arquivo disponível para o ZIP.');
+    const zip=createStoreZip(files);
+    const n=String(state.exercise?.exercise_number||'').padStart(2,'0'),slug=String(state.subject?.slug||'atividade').replace(/[^a-z0-9-]+/gi,'-');
+    downloadBlob(zip,`${slug}-exercicio-${n}-meus-codigos.zip`);
+    setActionStatus(`ZIP criado com ${files.length} arquivo(s)${result.synced?' sincronizados':' da cópia local'}.`,'ok');
+  }catch(error){console.error(error);setActionStatus(error.message||'Falha ao gerar ZIP.','error');}
+  finally{if(btn)btn.disabled=false;}
+}
+
+function normalizeGithubRepo(input){
+  try{
+    const url=new URL(String(input||'').trim());if(url.protocol!=='https:'||url.hostname.toLowerCase()!=='github.com')return '';
+    const parts=url.pathname.split('/').filter(Boolean);if(parts.length<2)return '';
+    const owner=parts[0],repo=parts[1].replace(/\.git$/i,'');
+    if(!/^[A-Za-z0-9_.-]+$/.test(owner)||!/^[A-Za-z0-9_.-]+$/.test(repo))return '';
+    return `https://github.com/${owner}/${repo}`;
+  }catch{return '';}
+}
+async function openStudentGithub(){
+  const btn=$('github-btn');if(btn)btn.disabled=true;
+  try{
+    const saveResult=await saveAllBeforeExport();
+    if(!state.repositoryUrl){
+      const entered=window.prompt(`Cole o link do seu repositório ${repoNameForSubject()} no GitHub:`,state.legacyRepositoryUrl||`https://github.com/`);
+      if(!entered){setActionStatus('GitHub não configurado.','');return;}
+      const repository=normalizeGithubRepo(entered);if(!repository)throw new Error('Use um link no formato https://github.com/usuario/repositorio.');
+      const {data:current,error:readError}=await supabase.from('student_delivery_settings').select('repository_url,repository_urls').eq('user_id',state.profile.id).maybeSingle();
+      if(readError&&readError.code!=='PGRST116')throw readError;
+      const repositories={...(current?.repository_urls&&typeof current.repository_urls==='object'?current.repository_urls:{}),[repositoryKey()]:repository};
+      const {data,error}=await supabase.from('student_delivery_settings').upsert({user_id:state.profile.id,repository_url:current?.repository_url||repository,repository_urls:repositories,updated_at:new Date().toISOString()},{onConflict:'user_id'}).select('repository_url,repository_urls').single();
+      if(error)throw error;state.repositoryUrl=data?.repository_urls?.[repositoryKey()]||repository;state.legacyRepositoryUrl=data?.repository_url||state.legacyRepositoryUrl||repository;updateWorkspaceActionAvailability();
+    }
+    window.open(state.repositoryUrl,'_blank','noopener,noreferrer');
+    setActionStatus(saveResult.synced?'GitHub aberto em nova aba.':'GitHub aberto; atenção: a nuvem ainda não confirmou todas as alterações.',saveResult.synced?'ok':'error');
+  }catch(error){console.error(error);setActionStatus(error.message||'Não foi possível abrir o GitHub.','error');}
+  finally{if(btn)btn.disabled=false;}
+}
+async function openStudentClassroom(){
+  const btn=$('classroom-btn');if(btn)btn.disabled=true;
+  try{
+    const saveResult=await saveAllBeforeExport();
+    const url=state.classroomUrl||classroomFallback();
+    if(!url)throw new Error('Classroom desta turma e disciplina ainda não foi configurado.');
+    window.open(url,'_blank','noopener,noreferrer');
+    setActionStatus(saveResult.synced?'Classroom da disciplina aberto.':'Classroom aberto; atenção: a nuvem ainda não confirmou todas as alterações.',saveResult.synced?'ok':'error');
+  }catch(error){console.error(error);setActionStatus('Não foi possível abrir o Classroom.','error');}
+  finally{if(btn)btn.disabled=false;}
 }
 
 let previewToken='';
@@ -544,131 +913,66 @@ function meaningfulFileContent(filename,content){
   return value.length>=2;
 }
 
-function isPrivateServerValidation(meta=state.meta){
-  return meta?.avaliacao?.autoridade==='backend-privado';
-}
-
-function normalizeGithubRepositoryUrl(input){
-  try{
-    const url=new URL(String(input||'').trim());
-    if(url.protocol!=='https:'||url.hostname.toLowerCase()!=='github.com')return '';
-    const parts=url.pathname.split('/').filter(Boolean);
-    if(parts.length<2)return '';
-    const owner=parts[0],repo=parts[1].replace(/\.git$/i,'');
-    if(!/^[A-Za-z0-9_.-]+$/.test(owner)||!/^[A-Za-z0-9_.-]+$/.test(repo))return '';
-    return `https://github.com/${owner}/${repo}`;
-  }catch{return ''}
-}
-
-function invalidateServerEvaluation(){
-  if(!state.pendingServerEvaluation)return;
-  state.pendingServerEvaluation=null;
-  if(isPrivateServerValidation())runValidation();
-}
-
-function renderServerEvaluation(data){
-  const box=$('validation-results');if(!box)return;
-  box.classList.add('server-validation');
-  box.replaceChildren();
-  const summary=document.createElement('div');summary.className='validation-summary';
-  const strong=document.createElement('strong');strong.textContent=`${Math.round(Number(data?.score||0))}% na correção oficial`;
-  const span=document.createElement('span');span.textContent=`mínimo para entrega: ${Number(data?.minimum_score||state.meta?.avaliacao?.minimoEntrega||80)}%`;
-  summary.append(strong,span);box.append(summary);
-  for(const criterion of (data?.criteria||[])){
-    const row=document.createElement('div');row.className=`validation-row ${criterion.ok?'ok':'pending'}`;
-    const mark=document.createElement('span');mark.textContent=criterion.ok?'✓':'○';
-    const label=document.createElement('span');label.textContent=String(criterion.label||'Critério');
-    const points=document.createElement('span');points.className='validation-points';points.textContent=`${Number(criterion.points||0)}/${Number(criterion.max_points||0)} pts`;
-    row.append(mark,label,points);box.append(row);
+function renderAutoGrade(data=state.autoGrade){
+  const score=Math.max(0,Math.min(100,Math.round(Number(data?.score??state.autoGrade?.score??0))));
+  const scoreEl=$('autograde-score'),label=$('autograde-label'),bar=$('autograde-bar'),box=$('validation-results');
+  if(scoreEl)scoreEl.textContent=`${score}%`;
+  if(bar)bar.style.width=`${score}%`;
+  if(label){
+    if(state.autoGrade?.dirty)label.textContent='Código alterado após a última correção';
+    else if(!data?.graded_at&&!state.autoGrade?.graded_at)label.textContent='Ainda não corrigido';
+    else label.textContent=score===100?'Solução correta':score>=70?'Boa aproximação; há ajustes':score>0?'Nota parcial':'Revise sua solução';
+  }
+  if(!box)return;
+  box.classList.add('server-validation');box.replaceChildren();
+  const intro=document.createElement('p');intro.className='muted';
+  intro.textContent=state.autoGrade?.dirty?'Salve e clique em “Auto corrigir” para atualizar a porcentagem.':'A porcentagem compara sua solução com a referência oficial no servidor, tolerando diferenças de espaços, comentários e quebras de linha.';
+  box.append(intro);
+  const files=data?.files||state.autoGrade?.files||[];
+  for(const file of files){
+    const row=document.createElement('div');row.className=`validation-row ${Number(file.score||0)>=100?'ok':'pending'}`;
+    const mark=document.createElement('span');mark.textContent=Number(file.score||0)>=100?'✓':'○';
+    const name=document.createElement('span');name.textContent=String(file.filename||file.reference_filename||'Arquivo');
+    const pct=document.createElement('span');pct.className='validation-points';pct.textContent=`${Math.round(Number(file.score||0))}%`;
+    row.append(mark,name,pct);box.append(row);
   }
 }
 
-async function runServerEvaluation({quiet=false}={}){
-  await saveActiveFile(true);
-  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
-  const security=await inspectCode(checkFiles);if(!security.ok)return null;
+async function runAutoGrade({quiet=false}={}){
   try{
-    const data=await callActivityProgress({action:'evaluate',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
-    state.pendingServerEvaluation=data;renderServerEvaluation(data);
-    if(!quiet)setSaveState(`Correção oficial: ${Math.round(Number(data.score||0))}%`,'ok');
+    await saveActiveFile(true);
+    await waitForPendingSaves();
+    const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
+    const security=await inspectCode(checkFiles);if(!security.ok)return null;
+    const data=await callAutograde({action:'grade',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
+    state.autoGrade={score:Number(data.score||0),graded_at:data.graded_at||new Date().toISOString(),submitted_score:state.autoGrade?.submitted_score??null,dirty:false,files:data.files||[]};
+    renderAutoGrade(data);
+    if(!quiet)setSaveState(`Autocorreção: ${Math.round(Number(data.score||0))}%`,'ok');
     return data;
   }catch(error){
     const messages={
-      private_validation_unavailable:'A correção privada ainda não foi ativada no servidor.',
-      private_validation_not_configured:'Este exercício ainda não possui corretor privado configurado.',
-      active_supervised_session_required:'A sessão supervisionada precisa estar ativa para corrigir.',
+      active_supervised_session_required:'A sessão supervisionada precisa estar ativa para autocorrigir.',
+      reference_unavailable:'A referência oficial está temporariamente indisponível.',
+      exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',
       session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'
     };
-    setSaveState(messages[error.code]||error.message||'Não foi possível executar a correção oficial.','error');
+    setSaveState(messages[error.code]||error.message||'Não foi possível executar a autocorreção.','error');
     return null;
   }
 }
 
-function validationIsFullySupported(meta){
-  const validation=meta?.validacao||{};
-  const keys=Object.keys(validation);
-  if(!keys.length)return false;
-  const harmless=new Set(['tipo','flexibilidadeAluno','requisitosRecomendados','politica','aceitarEquivalencias']);
-  const supported=new Set(['minChars','regras','htmlSemantico','htmlEstrutura']);
-  const substantive=keys.filter(k=>!harmless.has(k));
-  return substantive.length>0&&substantive.every(k=>supported.has(k));
-}
-
 async function completeExercise(){
-  const currentValue=$('code-editor').value;
-  const expected=(state.meta?.files||[]).map(f=>f.filename);
-  const fileContent=name=>{const f=state.files.find(x=>x.filename===name);return f?(f.id===state.active?.id?currentValue:(f.content||'')):'';};
-  const missing=expected.filter(name=>!meaningfulFileContent(name,fileContent(name)));
-  if(missing.length){
-    setSaveState(`Complete os arquivos antes de entregar: ${missing.join(', ')}`,'error');
-    return;
+  const evaluation=await runAutoGrade({quiet:true});
+  if(!evaluation)return;
+  const score=Math.round(Number(evaluation.score||0)),scoreBox=$('exercise-submit-score');
+  if(scoreBox){
+    scoreBox.replaceChildren();
+    const strong=document.createElement('strong');strong.textContent=`${score}%`;
+    const span=document.createElement('span');span.textContent=score===100?'Sua solução atingiu 100% na autocorreção.':'A entrega será aceita com nota parcial. Você poderá continuar corrigindo e entregar novamente.';
+    scoreBox.append(strong,span);
   }
-  if(isPrivateServerValidation()){
-    const evaluation=await runServerEvaluation({quiet:true});
-    if(!evaluation)return;
-    const minimum=Number(evaluation.minimum_score||state.meta?.avaliacao?.minimoEntrega||80);
-    if(Number(evaluation.score||0)<minimum){
-      setSaveState(`Correção oficial: ${Math.round(Number(evaluation.score||0))}%. Você precisa de pelo menos ${minimum}% para entregar.`,'error');
-      return;
-    }
-    const scoreBox=$('exercise-submit-score');
-    if(scoreBox){scoreBox.replaceChildren();const strong=document.createElement('strong');strong.textContent=`${Math.round(Number(evaluation.score||0))}%`;const span=document.createElement('span');span.textContent=Number(evaluation.score||0)>=100?'Todos os critérios automáticos foram atendidos.':'Entrega permitida com pendências. Você pode melhorar e enviar novamente depois.';scoreBox.append(strong,span);}
-    $('exercise-submit-message')?.classList.add('hidden');
-    const repoInput=$('exercise-repository-url');
-    if(repoInput&&!repoInput.value){
-      try{repoInput.value=localStorage.getItem(`agv:exercise-repository:${state.exercise.id}`)||'';}catch(_){}
-    }
-    $('exercise-submit-dialog')?.showModal();
-    return;
-  }
-  const results=validateExercise(state.meta||{},state.files,state.active,currentValue);
-  runValidation();
-  if(!validationIsFullySupported(state.meta)){
-    await saveActiveFile(true);
-    setSaveState('Código salvo. A conclusão automática deste exercício ainda está em migração; o professor fará a validação.','error');
-    return;
-  }
-  if(!results.length){
-    await saveActiveFile(true);
-    setSaveState('Código salvo. Este exercício ainda não possui validação automática segura.','error');
-    return;
-  }
-  if(results.some(r=>!r.ok)){
-    setSaveState('Ainda há critérios pendentes na validação automática.','error');
-    return;
-  }
-  const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
-  const security=await inspectCode(checkFiles);
-  if(!security.ok)return;
-  await saveActiveFile(true);
-  try{
-    await callActivityProgress({action:'complete',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
-    $('exercise-state').textContent='Concluído';
-    setSaveState('Exercício concluído e sincronizado','ok');
-  }catch(error){
-    const messages={activity_too_fast:'A atividade foi iniciada há poucos segundos. Continue trabalhando antes de concluir.',empty_activity:'Escreva sua solução antes de concluir.',active_supervised_session_required:'A sessão supervisionada precisa estar ativa para concluir.',exercise_locked_by_teacher:'Este exercício foi bloqueado pelo professor.',server_validation_required:'Use a correção oficial e registre o link do GitHub para entregar.'};
-    setSaveState(messages[error.code]||error.message||'Não foi possível concluir.','error');
-  }
+  const msg=$('exercise-submit-message');if(msg)msg.classList.add('hidden');
+  $('exercise-submit-dialog')?.showModal();
 }
 
 
@@ -691,11 +995,13 @@ async function loadEffectiveReleaseSupport(){
 async function loadStudentSupport(){
   const [{data:accommodations},{data:progressRows}] = await Promise.all([
     supabase.from('student_accommodations').select('id,accommodation_type,config,reason,active').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id).eq('active',true),
-    supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
+    supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
   ]);
   const support=[...(accommodations||[])];
   const release=state.supportRelease||{};
   const progress=(progressRows||[])[0]||{};
+  state.autoGrade={score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,dirty:false,files:state.autoGrade?.files||[]};
+  renderAutoGrade();
   const guidance=document.getElementById('exercise-guidance');
   if(guidance){
     const fragment=document.createDocumentFragment();
@@ -726,7 +1032,7 @@ async function loadStudentSupport(){
 function setWorkspacePaused(paused,message=''){
   const editor=$('code-editor');
   if(editor) editor.readOnly=Boolean(paused||state.teacherEditing);
-  ['run-preview-btn','mark-complete-btn','save-now-btn','validate-btn'].forEach(id=>{const el=$(id);if(el)el.disabled=Boolean(paused);});
+  ['run-preview-btn','mark-complete-btn','save-now-btn','workspace-save-now-btn','validate-btn'].forEach(id=>{const el=$(id);if(el)el.disabled=Boolean(paused);});
   document.querySelector('.workspace-panel')?.classList.toggle('supervision-paused',Boolean(paused));
   if(message)setSaveState(message,paused?'error':'ok');
 }
@@ -770,13 +1076,15 @@ export async function mountWorkspace({profile,exercise,subject}){
   setWorkspacePaused(true,'Preparando atividade supervisionada...');
   setSaveState('Carregando seus arquivos...','saving');
   clearIsolatedPreview('Inicie a atividade supervisionada para executar o código.');
-  await loadEffectiveReleaseSupport();
+  await Promise.all([loadEffectiveReleaseSupport(),loadWorkspaceResources()]);
   await ensureFiles();
   const meta=state.meta||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||{};
   state.meta=meta;
   state.pendingServerEvaluation=null;
-  if($('mark-complete-btn'))$('mark-complete-btn').textContent=isPrivateServerValidation(meta)?'Entregar':'Concluir';
-  if($('validate-btn'))$('validate-btn').textContent=isPrivateServerValidation(meta)?'Corrigir agora':'Validar exercício';
+  state.autoGrade={score:0,graded_at:null,submitted_score:null,dirty:false,files:[]};
+  state.symbolPaletteOpen=false;
+  if($('mark-complete-btn'))$('mark-complete-btn').textContent='Entregar';
+  if($('validate-btn'))$('validate-btn').textContent='Auto corrigir';
   const guidance=document.getElementById('exercise-guidance');
   if(guidance){
     const concepts=[...(meta.conceitos||[]),...(meta.retomadas||[]),...(meta.novos||[])].slice(0,8);
@@ -810,9 +1118,8 @@ export async function mountWorkspace({profile,exercise,subject}){
   }
   renderFileTabs();
   await activateFile(state.files[0]?.id);
-  state.referenceAvailable=Boolean(referenceEntry());
-  if(state.referenceAvailable)showOutput('reference');
-  else setOutputOpen(false);
+  state.referenceAvailable=state.referenceFiles.size>0;
+  showOutput('reference');
   runValidation();
   await loadStudentSupport();
   await prepareSupervision({
@@ -834,17 +1141,8 @@ export async function unmountWorkspace(){
 }
 
 
-function runValidation(){
-  const box=document.getElementById('validation-results'); if(!box)return;
-  if(isPrivateServerValidation()){
-    if(state.pendingServerEvaluation){renderServerEvaluation(state.pendingServerEvaluation);return;}
-    box.classList.add('server-validation');box.replaceChildren();
-    const p=document.createElement('p');p.className='muted';p.textContent='Correção oficial no servidor. Clique em “Corrigir agora” para receber o percentual sem baixar o gabarito para o navegador.';box.append(p);return;
-  }
-  box.classList.remove('server-validation');
-  const results=validateExercise(state.meta||{},state.files,state.active,$('code-editor').value);
-  box.innerHTML=renderValidation(results);
-}
+function runValidation(){ renderAutoGrade(); }
+
 $('code-editor')?.addEventListener('keydown',e=>tabInsert(e.currentTarget,e));
 $('code-editor')?.addEventListener('beforeinput',e=>handleBeforeInput(e));
 $('code-editor')?.addEventListener('paste',e=>handlePaste(e));
@@ -852,71 +1150,69 @@ $('code-editor')?.addEventListener('drop',e=>handleDrop(e));
 $('code-editor')?.addEventListener('input',(event)=>{
   if(!state.active||state.remoteEdit)return;
   state.active.content=$('code-editor').value;
-  invalidateServerEvaluation();
+  state.autoGrade.dirty=true;
   scheduleSave();
   renderHighlight();
   handleEditorInput($('code-editor').value,event);
 });
 ['keyup','click','select'].forEach(evt=>$('code-editor')?.addEventListener(evt,sendCursor));
-$('code-editor')?.addEventListener('scroll',()=>{const e=$('code-editor'),p=$('code-highlight');if(p&&e){p.scrollTop=e.scrollTop;p.scrollLeft=e.scrollLeft;}});
+$('code-editor')?.addEventListener('scroll',()=>{const e=$('code-editor'),p=$('code-highlight'),g=$('editor-line-numbers');if(p&&e){p.scrollTop=e.scrollTop;p.scrollLeft=e.scrollLeft;}if(g&&e)g.scrollTop=e.scrollTop;});
+$('symbols-btn')?.addEventListener('click',()=>{state.symbolPaletteOpen=!state.symbolPaletteOpen;renderSymbolPalette();});
+$('symbol-palette-close')?.addEventListener('click',()=>{state.symbolPaletteOpen=false;renderSymbolPalette();$('code-editor')?.focus();});
 $('toggle-tools-btn')?.addEventListener('click',()=>setToolsOpen(!state.toolsOpen));
 $('toggle-output-btn')?.addEventListener('click',()=>{
   if(state.outputOpen)setOutputOpen(false);
   else showOutput(state.referenceAvailable?'reference':'preview');
 });
-$('save-now-btn')?.addEventListener('click',()=>saveActiveFile(true));
+async function manualSaveFeedback(){
+  const result=await saveActiveFile(true);
+  if(result?.synced&&result?.current!==false)setActionStatus('Código salvo na nuvem.','ok');
+  else if(result?.synced)setActionStatus('Revisão salva; alterações mais novas continuam sincronizando.','saving');
+  else setActionStatus('Código preservado localmente; a nuvem não confirmou o salvamento.','error');
+}
+$('save-now-btn')?.addEventListener('click',manualSaveFeedback);
+$('workspace-save-now-btn')?.addEventListener('click',manualSaveFeedback);
+$('download-current-btn')?.addEventListener('click',downloadCurrentStudentFile);
+$('download-zip-btn')?.addEventListener('click',downloadStudentProjectZip);
+$('github-btn')?.addEventListener('click',openStudentGithub);
+$('classroom-btn')?.addEventListener('click',openStudentClassroom);
 $('run-preview-btn')?.addEventListener('click',async()=>{await buildPreview();runValidation();});
-$('validate-btn')?.addEventListener('click',()=>{if(isPrivateServerValidation())runServerEvaluation();else runValidation();});
+$('validate-btn')?.addEventListener('click',()=>runAutoGrade());
 $('mark-complete-btn')?.addEventListener('click',completeExercise);
 $('exercise-submit-close')?.addEventListener('click',()=>$('exercise-submit-dialog')?.close());
 $('exercise-submit-form')?.addEventListener('submit',async event=>{
   event.preventDefault();
-  const button=$('exercise-submit-button'),msg=$('exercise-submit-message'),repoInput=$('exercise-repository-url');
-  const repo=normalizeGithubRepositoryUrl(repoInput?.value||'');
-  msg?.classList.add('hidden');
-  if(!repo){
-    if(msg){msg.textContent='Cole o link do repositório no formato https://github.com/usuario/repositorio.';msg.className='form-message';}
-    repoInput?.focus();
-    return;
-  }
-  if(repoInput)repoInput.value=repo;
-  if(button){button.disabled=true;button.textContent='Enviando...';}
+  const button=$('exercise-submit-button'),msg=$('exercise-submit-message');
+  if(button){button.disabled=true;button.textContent='Entregando...';}
+  if(msg)msg.classList.add('hidden');
   try{
-    await saveActiveFile(true);
-    const data=await callActivityProgress({action:'submit',exercise_id:state.exercise.id,session_id:getSupervisionSessionId(),repository_url:repo});
-    state.pendingServerEvaluation=data;renderServerEvaluation(data);
-    try{localStorage.setItem(`agv:exercise-repository:${state.exercise.id}`,repo);}catch(_){}
-    const score=Math.round(Number(data.score||0)),best=Math.round(Number(data.best_score??score));
-    const completed=data.completed===true||data.delivery_state==='completed'||best>=100;
-    $('exercise-state').textContent=completed?`Concluído • ${best}%`:`Entregue com pendências • ${score}%`;
-    if(msg){
-      msg.textContent=completed
-        ? `Entrega concluída com ${score}%. O link do GitHub e a evidência dos arquivos foram registrados.`
-        : `Entrega registrada com ${score}%. A atividade continua em andamento: você pode corrigir e enviar novamente para melhorar o resultado.`;
-      msg.className='form-message ok';
-    }
-    setSaveState(completed?`Atividade concluída • ${best}%`:`Entrega registrada com pendências • ${score}%`,'ok');
-    setTimeout(()=>$('exercise-submit-dialog')?.close(),completed?1000:1500);
+    await saveActiveFile(true);await waitForPendingSaves();
+    const data=await callAutograde({action:'submit',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
+    const score=Math.round(Number(data.score||0));
+    state.autoGrade={score,graded_at:data.graded_at||new Date().toISOString(),submitted_score:score,submitted_at:new Date().toISOString(),dirty:false,files:data.files||[]};
+    renderAutoGrade(data);
+    $('exercise-state').textContent=`Entregue • ${score}%`;
+    if(msg){msg.textContent=score===100?'Entrega registrada com 100%.':'Entrega registrada com nota parcial. Você pode continuar ajustando e entregar novamente para melhorar a nota.';msg.className='form-message ok';}
+    setSaveState(`Entrega registrada • ${score}%`,'ok');
+    setTimeout(()=>$('exercise-submit-dialog')?.close(),1200);
   }catch(error){
-    const details=error?.details||{};
-    const messages={
-      invalid_repository_url:'Informe o link do repositório no formato https://github.com/usuario/repositorio.',
-      incomplete_files:`Ainda há arquivos obrigatórios incompletos${Array.isArray(details.missing_files)&&details.missing_files.length?`: ${details.missing_files.join(', ')}`:'.'}`,
-      score_below_minimum:`A correção ficou abaixo de ${Number(details.minimum_score||80)}%. Continue ajustando antes de entregar.`,
-      server_validation_required:'Esta atividade exige correção privada no servidor.',
-      private_validation_unavailable:'O corretor privado ainda não está ativo no servidor.',
-      private_validation_not_configured:'O corretor privado deste exercício ainda não foi configurado.',
-      session_guard_unavailable:'A validação de sessão do servidor ainda não está disponível. Avise o professor.',
-      session_claim_missing:'Sua sessão precisa ser renovada. Saia e entre novamente no portal.',
-      session_revoked:'Seu acesso foi encerrado. Entre novamente no portal.',
-      exercise_locked_by_teacher:'O professor bloqueou ou encerrou o prazo desta atividade.',
-      activity_locked:'Esta atividade está temporariamente bloqueada.'
-    };
+    const messages={empty_activity:'Digite sua solução antes de entregar.',active_supervised_session_required:'A sessão supervisionada precisa estar ativa para entregar.',exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',reference_unavailable:'A referência oficial está temporariamente indisponível.',session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'};
     if(msg){msg.textContent=messages[error.code]||error.message||'Não foi possível registrar a entrega.';msg.className='form-message';}
-  }finally{if(button){button.disabled=false;button.textContent='Entregar atividade';}}
+  }finally{if(button){button.disabled=false;button.textContent='Entregar com esta nota';}}
 });
+
 $('history-btn')?.addEventListener('click',async()=>{await loadHistory();$('history-dialog').showModal();});
 document.querySelectorAll('.output-tab').forEach(b=>b.addEventListener('click',()=>showOutput(b.dataset.output)));
 ['copy','cut','dragstart','contextmenu'].forEach(type=>$('reference-code')?.addEventListener(type,event=>{event.preventDefault();}));
 $('reference-code')?.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&['c','x','a'].includes(String(event.key||'').toLowerCase()))event.preventDefault();});
-window.addEventListener('beforeunload',()=>{if(state.active&&state.dirty)persistLocalDraft(state.active,$('code-editor').value);});
+function protectActiveDraft(){
+  if(!state.active)return;
+  const content=$('code-editor')?.value??state.active.content??'';
+  state.active.content=content;
+  persistLocalDraft(state.active,content);
+}
+window.addEventListener('beforeunload',protectActiveDraft);
+window.addEventListener('pagehide',()=>{protectActiveDraft();saveActiveFile(false).catch(()=>{});});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'){protectActiveDraft();saveActiveFile(false).catch(()=>{});}
+});

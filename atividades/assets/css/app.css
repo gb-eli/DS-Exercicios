@@ -1000,3 +1000,92 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 .reference-code:focus{outline:1px solid #244454;outline-offset:-1px}
 @media(min-width:1101px){.exercise-view.tools-collapsed:not(.output-collapsed) .reference-pane{min-height:620px}}
 @media(max-width:760px){.exercise-view.reference-active .output-panel{order:1;min-height:0}.exercise-view.reference-active .workspace-panel{order:2}.exercise-view.reference-active .exercise-sidebar{order:3}.reference-pane{min-height:0;max-height:44dvh}.reference-code{min-height:34dvh;padding:13px;font-size:12.5px;line-height:1.58}.reference-head{min-height:50px;padding:8px 10px}.reference-note{padding:8px 10px}}
+
+/* v14.8.7 — workspace estável: referência à esquerda, linhas VS Code e ações de entrega */
+.workspace-utilitybar{
+  min-height:44px;
+  padding:7px 10px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--border-soft);
+  background:#111315;
+}
+.workspace-utilitybar .button{min-height:31px;padding:0 9px;font-size:.68rem;white-space:nowrap}
+.workspace-action-status{margin-left:auto;min-width:0;color:#9caab4;font-size:.67rem;line-height:1.3;text-align:right}
+.workspace-action-status[data-kind="ok"]{color:#89dca7}.workspace-action-status[data-kind="error"]{color:#ff9ba3}.workspace-action-status[data-kind="saving"]{color:#efd475}
+
+.editor-line-numbers{
+  position:absolute;z-index:3;inset:0 auto 0 0;width:54px;
+  overflow:hidden;padding:17px 8px 28px 4px;
+  border-right:1px solid #2b2b2b;background:#1e1e1e;color:#858585;
+  font:13.5px/1.65 "Cascadia Code","JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  text-align:right;user-select:none;pointer-events:none;box-sizing:border-box;
+}
+.editor-line-numbers span{display:block;height:1.65em;white-space:nowrap}
+.editor-shell .code-highlight,.editor-shell .code-editor{left:54px;width:calc(100% - 54px);padding-left:14px;background:#1e1e1e}
+.editor-shell .code-highlight{color:#d4d4d4}
+.editor-shell .code-editor{caret-color:#aeafad}
+
+/* Paleta aproximada do VS Code Dark+ */
+.tok-comment{color:#6a9955!important;font-weight:400!important}
+.tok-string{color:#ce9178!important;font-weight:400!important}
+.tok-number{color:#b5cea8!important;font-weight:400!important}
+.tok-keyword{color:#569cd6!important;font-weight:650!important}
+.tok-tag{color:#569cd6!important;font-weight:500!important}
+.tok-attr{color:#9cdcfe!important;font-weight:400!important}
+
+.reference-code{padding:12px 0 28px!important;background:#1e1e1e!important;color:#d4d4d4!important}
+.reference-line{display:grid;grid-template-columns:54px minmax(max-content,1fr);min-height:1.65em;line-height:1.65}
+.reference-line-number{padding:0 9px 0 4px;border-right:1px solid #2b2b2b;background:#1e1e1e;color:#858585;text-align:right;user-select:none}
+.reference-line-code{padding:0 14px;white-space:pre;min-width:max-content}
+.reference-empty-message{display:block;padding:14px 18px;color:#8c9aa5;white-space:pre-wrap}
+.reference-head,.reference-note{background:#181818!important}
+.reference-lock{border-color:#3c3c3c!important;background:#252526!important;color:#c8c8c8!important}
+
+/* Referência à esquerda + editor à direita também em notebooks de 900px+. */
+@media(min-width:900px){
+  .exercise-view.reference-active.tools-collapsed:not(.output-collapsed) .exercise-layout{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  }
+  .exercise-view.reference-active.tools-collapsed:not(.output-collapsed) .output-panel{grid-column:1!important;grid-row:1!important;min-height:0!important}
+  .exercise-view.reference-active.tools-collapsed:not(.output-collapsed) .workspace-panel{grid-column:2!important;grid-row:1!important;min-height:0!important}
+  .exercise-view.reference-active.tools-collapsed:not(.output-collapsed) .reference-pane,
+  .exercise-view.reference-active.tools-collapsed:not(.output-collapsed) .editor-shell{min-height:calc(100dvh - 292px)}
+}
+/* Com orientações abertas, preserva três colunas apenas quando houver largura útil. */
+@media(min-width:1180px){
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .exercise-layout{
+    grid-template-columns:250px minmax(0,1fr) minmax(0,1fr)!important;
+  }
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .exercise-sidebar{grid-column:1;grid-row:1}
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .output-panel{grid-column:2!important;grid-row:1!important}
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .workspace-panel{grid-column:3!important;grid-row:1!important}
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .reference-pane,
+  .exercise-view.reference-active:not(.tools-collapsed):not(.output-collapsed) .editor-shell{min-height:calc(100dvh - 292px)}
+}
+@media(max-width:760px){
+  .workspace-utilitybar{display:grid;grid-template-columns:1fr 1fr;padding:8px}
+  .workspace-utilitybar .button{width:100%;min-height:38px;white-space:normal}
+  .workspace-action-status{grid-column:1/-1;margin-left:0;text-align:left;min-height:0}
+  .editor-line-numbers{width:44px;padding:14px 6px 28px 2px;font-size:12.5px;line-height:1.62}
+  .editor-line-numbers span{height:1.62em}
+  .editor-shell .code-highlight,.editor-shell .code-editor{left:44px;width:calc(100% - 44px);padding-left:10px}
+  .reference-line{grid-template-columns:44px minmax(max-content,1fr);line-height:1.58}
+  .reference-line-number{padding-right:7px}
+  .reference-line-code{padding:0 10px}
+}
+@media(max-width:430px){.workspace-utilitybar{grid-template-columns:1fr}.workspace-action-status{grid-column:1}}
+
+/* v14.9.0 — tela cheia global do portal */
+.portal-fullscreen-guard{position:fixed;inset:0;z-index:100000;background:rgba(5,10,20,.94);display:grid;place-items:center;padding:24px;backdrop-filter:blur(12px)}
+.portal-fullscreen-guard.hidden{display:none!important}
+.portal-fullscreen-card{width:min(520px,100%);background:var(--panel,#101827);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.45);text-align:center}
+.portal-fullscreen-card h2{margin:.4rem 0 .7rem}.portal-fullscreen-icon{display:inline-grid;place-items:center;width:54px;height:54px;border-radius:16px;background:rgba(86,156,214,.16);font-size:30px}
+html.portal-fullscreen-required{overflow:hidden}
+
+/* v14.9.0 — autocorreção e paleta de símbolos */
+.autograde-meter{display:grid;gap:8px;padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:14px;background:rgba(15,23,42,.35);margin-bottom:10px}.autograde-meter-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.autograde-meter-head strong{font-size:1.45rem}.autograde-meter-head span{font-size:.82rem;color:var(--muted,#94a3b8);text-align:right}.autograde-track{height:8px;border-radius:999px;background:rgba(148,163,184,.18);overflow:hidden}.autograde-track span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#38bdf8,#22c55e);transition:width .25s ease}
+.symbol-palette{position:relative;margin:0 12px 10px;padding:12px;border:1px solid rgba(148,163,184,.24);border-radius:16px;background:rgba(11,18,32,.98);box-shadow:0 16px 44px rgba(0,0,0,.28);z-index:15}.symbol-palette.hidden{display:none!important}.symbol-palette-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}.symbol-palette-head>div{display:grid;gap:2px}.symbol-palette-groups{display:grid;gap:12px;max-height:300px;overflow:auto}.symbol-group{display:grid;gap:7px}.symbol-group-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted,#94a3b8)}.symbol-buttons{display:flex;flex-wrap:wrap;gap:7px}.symbol-key{min-width:44px;min-height:44px;padding:7px 10px;border:1px solid rgba(148,163,184,.25);border-radius:10px;background:#111827;color:#e5e7eb;font:600 1rem ui-monospace,SFMono-Regular,Menlo,monospace;cursor:pointer}.symbol-key:hover,.symbol-key:focus-visible{border-color:#38bdf8;outline:2px solid rgba(56,189,248,.3);outline-offset:1px}
+@media(max-width:720px){.symbol-palette{position:fixed;left:0;right:0;bottom:0;margin:0;border-radius:20px 20px 0 0;max-height:min(55vh,460px);padding:16px;z-index:9000}.symbol-palette-groups{max-height:calc(55vh - 90px)}}

@@ -1,9 +1,10 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.8.5';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.8.5';
-import { callActivityProgress, submitLegacyExercise } from './supervision.js?v=14.8.5';
-import { supabase } from './supabase.js?v=14.8.5';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js';
+import { openStaffPanel, isStaff } from './admin.js?v=14.9.1';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.9.1';
+import { callActivityProgress } from './supervision.js?v=14.9.1';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.9.1';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.9.1';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.9.1';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.9.1';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
@@ -18,6 +19,7 @@ let currentLegacyClaims = [];
 let currentStaffAccess = false;
 let passwordRecoveryMode = false;
 let lobbyDeepLinkHandled = false;
+let lastDashboardSnapshot = null;
 
 function showView(id) {
   views.forEach((viewId) => $(viewId)?.classList.toggle('hidden', viewId !== id));
@@ -33,8 +35,8 @@ function humanStatus(status) {
   return ({ not_started: 'Disponível', in_progress: 'Em andamento', completed: 'Concluído', blocked: 'Bloqueado' })[status] || 'Disponível';
 }
 function progressLabel(progress){
-  if(progress?.status==='in_progress'&&progress?.completion_source==='server_private_validation_partial')
-    return `Entregue com pendências • ${Math.round(Number(progress?.progress_percent||0))}%`;
+  if(progress?.submitted_score!==null&&progress?.submitted_score!==undefined)return `Entregue • ${Math.round(Number(progress.submitted_score||0))}%`;
+  if(progress?.auto_score_at)return `Autocorreção • ${Math.round(Number(progress.auto_score||0))}%`;
   return humanStatus(progress?.status||'not_started');
 }
 
@@ -90,9 +92,11 @@ async function loadIdentity() {
 
   const { data: memberships, error: membershipError } = await supabase
     .from('class_memberships')
-    .select('class_id')
+    .select('class_id,is_primary,joined_at')
     .eq('user_id', user.id)
     .eq('active', true)
+    .order('is_primary', { ascending: false })
+    .order('joined_at', { ascending: false })
     .limit(1);
   if (membershipError) throw membershipError;
 
@@ -124,6 +128,9 @@ async function routeAuthenticatedUser() {
     }
 
     setSessionHeader(true);
+    const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess;
+    setPortalFullscreenRequired(requireStudentFullscreen);
+    if(!requireStudentFullscreen&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});
 
     if (passwordRecoveryMode) {
       $('password-description').textContent = 'Crie uma nova senha para recuperar seu acesso. Use pelo menos 8 caracteres, com letra e número.';
@@ -184,6 +191,8 @@ $('login-form').addEventListener('submit', async (event) => {
     setLoginError('Informe sua senha. No primeiro acesso do aluno, use o CGM.');
     return;
   }
+
+  await requestPortalFullscreen({silent:true});
 
   const submit = event.submitter;
   submit.disabled = true;
@@ -299,6 +308,7 @@ $('logout-btn').addEventListener('click', async () => {
   currentClassReleases = [];
   currentLegacyClaims = [];
   currentStaffAccess = false;
+  lastDashboardSnapshot = null;
   passwordRecoveryMode = false;
   setSessionHeader(false);
   $('password').value = '';
@@ -306,40 +316,56 @@ $('logout-btn').addEventListener('click', async () => {
 });
 
 async function loadDashboardData() {
-  if (!currentClass) return { subjects: [], exercises: [], progress: [], studentReleases:[], classReleases:[], legacyClaims:[] };
+  const empty={subjects:[],exercises:[],progress:[],studentReleases:[],classReleases:[],legacyClaims:[]};
+  if(!currentClass)return empty;
+  const snapshotKey=`${currentProfile?.id||''}:${currentClass.id}`;
+  const fallback=()=>{
+    if(lastDashboardSnapshot?.key===snapshotKey)return {...lastDashboardSnapshot.data,stale:true};
+    if(currentExercises.length||currentSubjects.length)return {subjects:currentSubjects,exercises:currentExercises,progress:currentProgress,studentReleases:currentStudentReleases,classReleases:currentClassReleases,legacyClaims:currentLegacyClaims,stale:true};
+    return null;
+  };
+  try{
+    const {data:links,error:linksError}=await supabase.from('class_subjects').select('subject_id').eq('class_id',currentClass.id).eq('active',true);
+    if(linksError)throw linksError;
+    const subjectIds=[...new Set((links||[]).map(row=>row.subject_id).filter(Boolean))];
+    if(!subjectIds.length){const old=fallback();if(old){console.warn('[AGV] Vínculo de disciplinas veio vazio; mantendo última lista válida.');return old;}return empty;}
 
-  const { data: links, error: linksError } = await supabase
-    .from('class_subjects').select('subject_id').eq('class_id', currentClass.id).eq('active', true);
-  if (linksError) throw linksError;
-  const subjectIds = (links || []).map((row) => row.subject_id);
-  if (!subjectIds.length) return { subjects: [], exercises: [], progress: [], studentReleases:[], classReleases:[], legacyClaims:[] };
+    const [subjectsResult,exercisesResult]=await Promise.allSettled([
+      supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
+      supabase.from('exercises').select('id,subject_id,class_id,exercise_number,slug,title,description,version,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
+    ]);
+    const subjectsResponse=subjectsResult.status==='fulfilled'?subjectsResult.value:null;
+    const exercisesResponse=exercisesResult.status==='fulfilled'?exercisesResult.value:null;
+    if(subjectsResponse?.error)throw subjectsResponse.error;
+    if(exercisesResponse?.error)throw exercisesResponse.error;
+    let subjects=subjectsResponse?.data||[],exercises=exercisesResponse?.data||[];
+    // Se existirem exercícios com class_id explícito, só entram os da turma atual. Exercícios globais (class_id nulo) continuam válidos.
+    exercises=exercises.filter(ex=>!ex.class_id||String(ex.class_id)===String(currentClass.id));
+    if(!subjects.length||!exercises.length){const old=fallback();if(old){console.warn('[AGV] Catálogo retornou vazio; mantendo última lista válida para evitar atividades sumirem.');return old;}}
+    const ids=exercises.map(e=>e.id);
 
-  const [{data:subjects,error:subjectsError},{data:exercises,error:exercisesError}] = await Promise.all([
-    supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
-    supabase.from('exercises').select('id,subject_id,exercise_number,slug,title,description,version,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
-  ]);
-  if(subjectsError)throw subjectsError;
-  if(exercisesError)throw exercisesError;
-  const ids=(exercises||[]).map(e=>e.id);
-
-  const progressQuery=supabase.from('student_exercises')
-    .select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source')
-    .eq('student_id',currentProfile.id);
-  const studentReleaseQuery=ids.length
-    ? supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids)
-    : Promise.resolve({data:[],error:null});
-  const classReleaseQuery=ids.length
-    ? supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids)
-    : Promise.resolve({data:[],error:null});
-  const claimsQuery=ids.length
-    ? supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids)
-    : Promise.resolve({data:[],error:null});
-
-  const [pr,sr,cr,lc]=await Promise.all([progressQuery,studentReleaseQuery,classReleaseQuery,claimsQuery]);
-  if(pr.error)throw pr.error;
-  return {subjects:subjects||[],exercises:exercises||[],progress:pr.data||[],studentReleases:sr.data||[],classReleases:cr.data||[],legacyClaims:lc.data||[]};
+    const queries=[
+      supabase.from('student_exercises').select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',currentProfile.id),
+      ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids):Promise.resolve({data:[],error:null}),
+      ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids):Promise.resolve({data:[],error:null}),
+      ids.length?supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids):Promise.resolve({data:[],error:null})
+    ];
+    const results=await Promise.allSettled(queries);
+    const previous=fallback()||empty;
+    const pick=(index,key)=>{
+      const result=results[index];
+      if(result.status==='rejected'){console.warn(`[AGV] Consulta ${key} falhou; preservando dados anteriores.`,result.reason);return previous[key]||[];}
+      if(result.value?.error){console.warn(`[AGV] Consulta ${key} falhou; preservando dados anteriores.`,result.value.error);return previous[key]||[];}
+      return result.value?.data||[];
+    };
+    const data={subjects,exercises,progress:pick(0,'progress'),studentReleases:pick(1,'studentReleases'),classReleases:pick(2,'classReleases'),legacyClaims:pick(3,'legacyClaims')};
+    lastDashboardSnapshot={key:snapshotKey,data};
+    return data;
+  }catch(error){
+    const old=fallback();if(old){console.warn('[AGV] Falha temporária no dashboard; mantendo última lista válida.',error);return old;}
+    throw error;
+  }
 }
-
 
 function latestRelease(rows,exerciseId){
   return (rows||[]).filter(r=>r.exercise_id===exerciseId).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null;
@@ -377,14 +403,13 @@ function activityListRow(exercise,{progress=null,locked=false,reason='',complete
   const title=document.createElement('strong');title.textContent=exerciseDisplayTitle(exercise);
   const meta=document.createElement('small');
   const subject=subjectForExercise(exercise)?.name||'Disciplina';
+  const score=Math.round(Number(progress?.auto_score||0));
+  const submitted=progress?.submitted_score==null?null:Math.round(Number(progress.submitted_score||0));
   if(locked)meta.textContent=`${subject} • ${reason||'Aguardando liberação'}`;
-  else if(completed)meta.textContent=`${subject} • concluída`;
-  else {
-    const pct=Math.round(Number(progress?.progress_percent||0));
-    if(progress?.status==='in_progress'&&progress?.completion_source==='server_private_validation_partial')
-      meta.textContent=`${subject} • entrega registrada com ${pct}% • pode melhorar`;
-    else meta.textContent=progress?.status==='in_progress'?`${subject} • ${pct}% em andamento`:`${subject} • disponível`;
-  }
+  else if(completed)meta.textContent=`${subject} • entregue com ${submitted??score}%`;
+  else if(progress?.auto_score_at)meta.textContent=`${subject} • autocorreção ${score}%`;
+  else meta.textContent=`${subject} • disponível`;
+
   copy.append(title,meta);row.append(number,copy);
   if(!locked){const action=document.createElement('span');action.className='student-activity-action';action.textContent=completed?'Revisar':'Abrir';row.appendChild(action);}
   return row;
@@ -392,7 +417,7 @@ function activityListRow(exercise,{progress=null,locked=false,reason='',complete
 function fillActivityBucket(id,rows,emptyText){
   const host=$(id);if(!host)return;host.replaceChildren();
   if(!rows.length){const empty=document.createElement('p');empty.className='student-activity-empty';empty.textContent=emptyText;host.appendChild(empty);return;}
-  rows.slice(0,5).forEach((row)=>host.appendChild(row));
+  rows.forEach((row)=>host.appendChild(row));
 }
 
 
@@ -609,7 +634,8 @@ async function openExercise(exercise) {
   $('exercise-state').textContent = progressLabel(p);
   $('exercise-meta').innerHTML = `
     <div><span>Versão</span><strong>${escapeHtml(exercise.version || '—')}</strong></div>
-    <div><span>Progresso</span><strong>${Math.round(Number(p?.progress_percent || 0))}%</strong></div>
+    <div><span>Autocorreção</span><strong>${Math.round(Number(p?.auto_score || 0))}%</strong></div>
+    <div><span>Nota entregue</span><strong>${p?.submitted_score==null?'—':`${Math.round(Number(p.submitted_score))}%`}</strong></div>
     <div><span>Tentativas</span><strong>${Number(p?.attempts || 0)}</strong></div>
   `;
 
@@ -644,44 +670,16 @@ function escapeHtml(value) {
 
 
 $('legacy-import-btn')?.addEventListener('click',()=>{
-  const eligible=currentExercises.filter(ex=>{
-    const p=currentProgress.find(item=>item.exercise_id===ex.id);
-    return exerciseAvailability(ex,p).available;
-  });
-  if(!eligible.length){
-    dashboardNotice('Nenhum exercício liberado está disponível para registrar uma entrega do portal antigo. Aguarde a liberação do professor.');
-    return;
-  }
-  const select=$('legacy-exercise-select');
-  select.innerHTML=eligible.map(ex=>`<option value="${ex.id}">Ex. ${String(ex.exercise_number).padStart(2,'0')} — ${escapeHtml(exerciseDisplayTitle(ex))}</option>`).join('');
-  $('legacy-repository-url').value='';
-  $('legacy-import-message').classList.add('hidden');
-  $('legacy-import-dialog').showModal();
-});
-$('legacy-import-close')?.addEventListener('click',()=>$('legacy-import-dialog').close());
-$('legacy-import-form')?.addEventListener('submit',async(event)=>{
-  event.preventDefault();
-  const btn=event.submitter,msg=$('legacy-import-message');
-  btn.disabled=true;btn.textContent='Enviando...';msg.classList.add('hidden');
-  try{
-    const data=await submitLegacyExercise({
-      exercise_id:$('legacy-exercise-select').value,
-      repository_url:$('legacy-repository-url').value.trim()
-    });
-    msg.textContent='Link enviado para validação. O próximo exercício só será liberado após aprovação do professor.';
-    msg.className='form-message ok';
-    await renderDashboard();
-  }catch(error){
-    msg.textContent=error?.code==='exercise_locked_by_teacher'?'Este exercício não está liberado pelo professor.':'Use um link válido do GitHub/GitHub Pages referente a um exercício atualmente liberado.';
-    msg.className='form-message';
-  }finally{btn.disabled=false;btn.textContent='Enviar para validação';}
+  window.location.href='../validacao-antiga/';
 });
 
-supabase.auth.onAuthStateChange((event) => {
+if (SUPABASE_SDK_AVAILABLE) supabase.auth.onAuthStateChange((event) => {
   if (event === 'SIGNED_OUT') {
     currentProfile = null;
     currentClass = null;
     passwordRecoveryMode = false;
+    setPortalFullscreenRequired(false);
+    if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
     setSessionHeader(false);
     showView('login-view');
     return;
@@ -717,7 +715,13 @@ window.addEventListener('keydown', (event) => {
   securityTelemetry('client.devtools_heuristic', { source: 'atividades', shortcut: event.code || event.key });
 });
 
-routeAuthenticatedUser();
+if (SUPABASE_SDK_AVAILABLE) {
+  routeAuthenticatedUser();
+} else {
+  setSessionHeader(false);
+  setLoginError(SUPABASE_SDK_ERROR?.message || 'Não foi possível carregar o serviço de autenticação. Verifique a conexão e tente novamente.');
+  showView('login-view');
+}
 
 document.getElementById('staff-btn')?.addEventListener('click', openStaffPanel);
 

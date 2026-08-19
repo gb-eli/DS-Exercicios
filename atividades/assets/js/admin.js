@@ -1,7 +1,7 @@
 
-import { supabase } from './supabase.js?v=14.8.5';
+import { supabase } from './supabase.js?v=14.9.1';
 
-let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null;
+let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -183,6 +183,7 @@ function ensureAdminShell(){
           </div>
           <div class="release-toolbar">
             <label><span>Turma</span><select id="release-class-select"></select></label>
+            <label><span>Disciplina</span><select id="release-subject-select"></select></label>
             <button id="release-all-btn" class="button button-ghost button-small" type="button">Liberar todos</button>
             <button id="lock-all-btn" class="button button-ghost button-small" type="button">Bloquear todos</button>
           </div>
@@ -213,7 +214,8 @@ function ensureAdminShell(){
     $('legacy-review-close')?.addEventListener('click',()=>$('legacy-review-dialog')?.close());
     $('ranking-close')?.addEventListener('click',()=>$('ranking-dialog')?.close());
     $('release-close')?.addEventListener('click',()=>$('release-dialog')?.close());
-    $('release-class-select')?.addEventListener('change',loadReleaseMatrix);
+    $('release-class-select')?.addEventListener('change',()=>{releaseSubjectId='';loadReleaseMatrix();});
+    $('release-subject-select')?.addEventListener('change',event=>{releaseSubjectId=event.target.value;renderReleaseMatrix();});
     $('release-all-btn')?.addEventListener('click',()=>bulkClassRelease(true));
     $('lock-all-btn')?.addEventListener('click',()=>bulkClassRelease(false));
     $('staff-class-filter')?.addEventListener('change',e=>{currentClass=e.target.value;renderSummary();renderStudents()});
@@ -556,23 +558,31 @@ async function loadReleaseMatrix(){
   const box=$('release-list');box.innerHTML='<div class="loading-card">Carregando exercícios...</div>';
   try{
     const {data:links,error:le}=await supabase.from('class_subjects').select('subject_id').eq('class_id',classId).eq('active',true);if(le)throw le;
-    const subjectIds=(links||[]).map(x=>x.subject_id);
+    const subjectIds=[...new Set((links||[]).map(x=>x.subject_id).filter(Boolean))];
     if(!subjectIds.length){box.innerHTML='<p class="muted">Nenhuma disciplina vinculada.</p>';return;}
-    const {data:exercises,error:ee}=await supabase.from('exercises').select('id,subject_id,exercise_number,title,default_locked').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number');if(ee)throw ee;
-    const ids=(exercises||[]).map(x=>x.id);
+    const [sr,er]=await Promise.all([
+      supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
+      supabase.from('exercises').select('id,subject_id,class_id,exercise_number,title,default_locked').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
+    ]);if(sr.error)throw sr.error;if(er.error)throw er.error;
+    const exercises=(er.data||[]).filter(ex=>!ex.class_id||String(ex.class_id)===String(classId)),subjects=sr.data||[];
+    if(!releaseSubjectId||!subjects.some(x=>String(x.id)===String(releaseSubjectId)))releaseSubjectId=String(subjects[0]?.id||'');
+    const ids=exercises.map(x=>x.id);
     const [rr,pp]=await Promise.all([
       ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,updated_at').eq('class_id',classId).is('student_id',null).in('exercise_id',ids):Promise.resolve({data:[]}),
       ids.length?supabase.from('exercise_security_policies').select('exercise_id,require_fullscreen,max_focus_violations,block_paste,detect_devtools,detect_rapid_input,block_external_network,teacher_live_edit').in('exercise_id',ids):Promise.resolve({data:[]})
     ]);
-    releaseCtx={classId,exercises:exercises||[],releases:rr.data||[],policies:pp.data||[]};
+    releaseCtx={classId,exercises,subjects,releases:rr.data||[],policies:pp.data||[]};
+    const select=$('release-subject-select');if(select){select.innerHTML=subjects.map(x=>`<option value="${x.id}" ${String(x.id)===String(releaseSubjectId)?'selected':''}>${esc(x.name)}</option>`).join('');}
     renderReleaseMatrix();
   }catch(error){console.error(error);box.innerHTML='<p class="form-error">Não foi possível carregar as liberações.</p>';}
 }
+function releaseExercises(){return (releaseCtx?.exercises||[]).filter(ex=>!releaseSubjectId||String(ex.subject_id)===String(releaseSubjectId));}
+
 function classReleaseFor(id){return (releaseCtx?.releases||[]).filter(r=>r.exercise_id===id).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null}
 function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:3,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
 function renderReleaseMatrix(){
   const box=$('release-list');
-  box.innerHTML=releaseCtx.exercises.map((ex,i)=>{
+  box.innerHTML=releaseExercises().map((ex,i)=>{
     const rel=classReleaseFor(ex.id),p=securityPolicyFor(ex.id),enabled=rel?rel.enabled:!ex.default_locked;
     return `<details class="release-item" data-exercise="${ex.id}">
       <summary>
@@ -621,8 +631,8 @@ async function saveSecurityPolicy(item){
   await loadReleaseMatrix();
 }
 async function bulkClassRelease(enabled){
-  if(!releaseCtx?.exercises?.length)return;
-  for(const ex of releaseCtx.exercises){
+  const scoped=releaseExercises();if(!scoped.length)return;
+  for(const ex of scoped){
     const old=classReleaseFor(ex.id);
     if(old)await supabase.from('exercise_releases').update({enabled,updated_at:new Date().toISOString()}).eq('id',old.id);
     else await supabase.from('exercise_releases').insert({class_id:releaseCtx.classId,student_id:null,exercise_id:ex.id,enabled});
@@ -851,17 +861,23 @@ async function openStudentDetail(studentId,name){
       ${rows.map(r=>`
         <button class="exercise-manage-card ${r.status==='not_started'?'not-started':''}" data-exercise="${r.exercise_id}">
           <span>${esc(exerciseLabel(r.exercise_id))}</span>
-          <strong>${Math.round(Number(r.progress_percent||0))}%</strong>
+          <strong>${exerciseScore(r)}%</strong>
           <small>${esc(r.status)} • ${esc(r.approval_status||'not_required')}</small>
         </button>`).join('') || '<p class="muted">Nenhum exercício disponível para esta turma.</p>'}
     </div>
     <div id="exercise-management" class="exercise-management hidden"></div>`;
-  $('student-detail-body').querySelectorAll('.exercise-manage-card').forEach(b=>b.onclick=()=>renderExerciseManagement(b.dataset.exercise));
+  $('student-detail-body').querySelectorAll('.exercise-manage-card').forEach(b=>b.onclick=()=>renderExerciseManagement(b.dataset.exercise).catch(error=>{console.error(error);alert('Não foi possível carregar a configuração atual da atividade.');}));
 }
-function renderExerciseManagement(exerciseId){
+async function referenceBaseFlags(exerciseId){
+  try{const {data,error}=await supabase.from('exercise_reference_files').select('filename').eq('exercise_id',exerciseId);if(error)throw error;const names=new Set((data||[]).map(x=>String(x.filename||'').toLowerCase()));return{known:true,html:names.has('index.html')||names.has('index.htm'),css:names.has('estilo.css')||names.has('style.css')||names.has('styles.css'),js:names.has('script.js')||names.has('main.js')||names.has('app.js')}}catch(error){console.warn('Referências não confirmadas no painel administrativo.',error);return{known:false,html:false,css:false,js:false}}
+}
+async function renderExerciseManagement(exerciseId){
   detailCtx.exerciseId=exerciseId;
   const r=detailCtx.data.progress.find(x=>x.exercise_id===exerciseId)||{};
   const rel=detailCtx.data.releases.find(x=>x.exercise_id===exerciseId)||{};
+  const base=await referenceBaseFlags(exerciseId);
+  detailCtx.releaseVersion=String(rel.updated_at||'');
+  detailCtx.referenceBases=base;
   const acc=detailCtx.data.accommodations.filter(x=>x.exercise_id===exerciseId&&x.active);
   const box=$('exercise-management'); box.classList.remove('hidden');
   box.innerHTML=`
@@ -872,9 +888,10 @@ function renderExerciseManagement(exerciseId){
     <div class="management-grid">
       <section class="management-section">
         <h4>Acomodações e apoio</h4>
-        <label class="switch-row"><span>HTML-base</span><input id="acc-html" type="checkbox" ${rel.allow_html_base?'checked':''}></label>
-        <label class="switch-row"><span>CSS-base</span><input id="acc-css" type="checkbox" ${rel.allow_css_base?'checked':''}></label>
-        <label class="switch-row"><span>JavaScript-base</span><input id="acc-js" type="checkbox" ${rel.allow_js_base?'checked':''}></label>
+        <label class="switch-row"><span>HTML-base${base.html?' · referência protegida':''}</span><input id="acc-html" type="checkbox" ${(rel.allow_html_base||base.html)?'checked':''} ${base.html?'disabled':''}></label>
+        <label class="switch-row"><span>CSS-base${base.css?' · referência protegida':''}</span><input id="acc-css" type="checkbox" ${(rel.allow_css_base||base.css)?'checked':''} ${base.css?'disabled':''}></label>
+        <label class="switch-row"><span>JavaScript-base${base.js?' · referência protegida':''}</span><input id="acc-js" type="checkbox" ${(rel.allow_js_base||base.js)?'checked':''} ${base.js?'disabled':''}></label>
+        ${(base.html||base.css||base.js)?'<p class="muted">Bases com referência oficial não podem ser desligadas por este painel. Isso evita que o código de referência desapareça para o aluno.</p>':''}
         <label class="switch-row"><span>Dicas extras</span><input id="acc-hints" type="checkbox" ${rel.allow_extra_hints?'checked':''}></label>
         <label class="switch-row"><span>Apoio guiado</span><input id="acc-guided" type="checkbox" ${rel.allow_guided_support?'checked':''}></label>
         <textarea id="acc-reason" placeholder="Motivo/observação pedagógica"></textarea>
@@ -910,8 +927,11 @@ function renderExerciseManagement(exerciseId){
   box.querySelectorAll('.disable-acc').forEach(b=>b.onclick=()=>disableAccommodation(b.dataset.id));
 }
 async function saveRelease(){
+  const expected=String(detailCtx.releaseVersion||''),fresh=await callStaff({action:'student_detail',student_id:detailCtx.studentId}),current=(fresh.releases||[]).find(x=>x.exercise_id===detailCtx.exerciseId)||{};
+  if(String(current.updated_at||'')!==expected){detailCtx.data=fresh;await renderExerciseManagement(detailCtx.exerciseId);alert('Esta configuração foi alterada em outro painel. Os valores foram atualizados; revise antes de salvar novamente.');return;}
+  const base=detailCtx.referenceBases?.known?detailCtx.referenceBases:await referenceBaseFlags(detailCtx.exerciseId);
   await callStaff({action:'set_release',student_id:detailCtx.studentId,exercise_id:detailCtx.exerciseId,
-    allow_html_base:$('acc-html').checked,allow_css_base:$('acc-css').checked,allow_js_base:$('acc-js').checked,
+    allow_html_base:$('acc-html').checked||base.html,allow_css_base:$('acc-css').checked||base.css,allow_js_base:$('acc-js').checked||base.js,
     allow_extra_hints:$('acc-hints').checked,allow_guided_support:$('acc-guided').checked});
   const reason=$('acc-reason').value.trim();
   if(reason) await callStaff({action:'set_accommodation',student_id:detailCtx.studentId,exercise_id:detailCtx.exerciseId,accommodation_type:'teacher_support',reason,config:{message:reason}});
@@ -935,7 +955,7 @@ async function disableAccommodation(id){
 async function reopenDetail(){
   const ex=detailCtx.exerciseId;
   const data=await callStaff({action:'student_detail',student_id:detailCtx.studentId});
-  detailCtx.data=data; renderExerciseManagement(ex);
+  detailCtx.data=data; await renderExerciseManagement(ex);
   await refreshStaff();
 }
 async function openLive(studentId,exerciseId,name){

@@ -1,19 +1,38 @@
 {
-  "version": "14.8.3",
-  "date": "2026-08-17",
-  "phase": "P8.3",
-  "title": "Sessão única, Lobby geral e atividades por turma",
-  "baseVersion": "14.8.2",
+  "version": "14.9.1",
+  "date": "2026-08-19",
+  "phase": "P9",
+  "title": "Fullscreen global nas plataformas integradas + preparação de publicação",
+  "baseVersion": "14.9.0",
   "requiresDatabaseChange": false,
   "requiresEdgeFunctionDeploy": false,
   "requiresPrivateSecret": false,
-  "liveDeployApplied": false,
+  "liveDeployApplied": true,
   "publicBundleContainsPrivateRules": false,
   "fixes": [
-    "Preserva a sessão do primeiro acesso ao encaminhar para troca obrigatória de senha",
-    "Padroniza explicitamente a mesma storageKey Supabase em Lobby e Atividades",
-    "Mantém Lobby geral para student, teacher, admin e super_admin autenticados",
-    "Mantém atividades do aluno filtradas por turma e revalidadas server-side"
+    "Autocorreção 0–100% server-side usando referências oficiais e tolerância a espaços, comentários e quebras de linha",
+    "Entrega permitida abaixo de 100% com submitted_score registrado como nota parcial",
+    "Download individual e ZIP somente dos arquivos digitados pelo aluno",
+    "Tela cheia contínua no portal do aluno, sem reinicialização por exercício",
+    "Página validacao-antiga sem tela cheia com seleção de múltiplas atividades e link GitHub",
+    "Paleta global Símbolos integrada ao editor compartilhado e configurada pelo banco",
+    "Separação por disciplina no catálogo do aluno/admin e escopo das ações em massa",
+    "staff-dashboard inclui auto_score/submitted_score no acompanhamento",
+    "Fullscreen global aplicado também às 10 plataformas integradas do catálogo do Hub",
+    "Bridge compartilhado identifica perfil e exige tela cheia somente para aluno autenticado",
+    "Página validacao-antiga permanece a única rota explicitamente isenta de fullscreen",
+    "Bundle público de deploy separado do código operacional de banco/Edge Functions"
   ],
-  "status": "READY_FOR_GITHUB_DEPLOY"
+  "status": "RELEASE_CANDIDATE",
+  "databaseMigrationAppliedToProduction": true,
+  "databaseMigrations": [
+    "student_exercise_autograde_scores"
+  ],
+  "edgeFunctionAppliedToProduction": "sem alteração nesta fase; mantém exercise-autograde v2, legacy-batch-submit v3 e staff-dashboard v10",
+  "knownPending": [
+    "O frontend v14.9.1 precisa ser publicado no destino real.",
+    "GitHub conectado não possui repositórios instalados e a conta Vercel conectada não possui projetos; destino de produção ainda não foi identificado.",
+    "Após navegação entre documentos, alguns navegadores exigem um clique para reentrar em fullscreen por restrição da própria Fullscreen API.",
+    "2DS-A-MANHA continua sem conta de aluno reivindicada para teste autenticado real."
+  ]
 }

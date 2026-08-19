@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; worker-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co https://cdn.jsdelivr.net https://viacep.com.br; style-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self'; media-src 'none'; object-src 'none'; manifest-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co https://cdn.jsdelivr.net https://viacep.com.br; style-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self'; media-src 'none'; object-src 'none'; manifest-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css" />
-  <link rel="stylesheet" href="assets/css/admin.css" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.9.1" />
+  <link rel="stylesheet" href="assets/css/admin.css?v=14.9.1" />
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -20,7 +20,7 @@
           <h1>Exercícios Práticos DS</h1>
         </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.20.4</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.21.1</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -203,7 +203,7 @@
             </div>
             <div class="section-actions">
               <span id="subject-count" class="muted"></span>
-              <button id="legacy-import-btn" class="button button-ghost button-small" type="button">Já fiz no portal antigo</button>
+              <button id="legacy-import-btn" class="button button-ghost button-small" type="button">Validar atividades antigas</button>
             </div>
           </div>
           <div id="subjects-grid" class="subjects-grid"></div>
@@ -234,9 +234,10 @@
               <div id="exercise-guidance" class="exercise-guidance"></div>
             </div>
             <div class="sidebar-section">
-              <p class="eyebrow">Validação</p>
+              <p class="eyebrow">Autocorreção</p>
+              <div id="autograde-meter" class="autograde-meter" data-score="0"><div class="autograde-meter-head"><strong id="autograde-score">0%</strong><span id="autograde-label">Ainda não corrigido</span></div><div class="autograde-track"><span id="autograde-bar"></span></div></div>
               <div id="validation-results" class="validation-results"></div>
-              <button id="validate-btn" class="button button-ghost button-small" type="button">Validar exercício</button>
+              <button id="validate-btn" class="button button-ghost button-small" type="button">Auto corrigir</button>
             </div>
             <div class="sidebar-section">
               <p class="eyebrow">Arquivos</p>
@@ -263,18 +264,29 @@
                 <button id="toggle-tools-btn" class="button button-ghost button-small" type="button" aria-expanded="false">Orientações</button>
                 <button id="toggle-output-btn" class="button button-ghost button-small" type="button" aria-expanded="false">Preview</button>
                 <button id="run-preview-btn" class="button button-ghost button-small" type="button">Executar</button>
-                <button id="mark-complete-btn" class="button button-primary button-small" type="button">Concluir</button>
+                <button id="mark-complete-btn" class="button button-primary button-small" type="button">Entregar</button>
               </div>
             </div>
             <div class="workspace-subbar">
               <div id="quick-file-tabs" class="file-tabs horizontal quick-file-tabs" aria-label="Arquivos do exercício"></div>
               <span id="workspace-save-pill" class="workspace-save-pill" data-state="saving">Preparando…</span>
             </div>
+            <div class="workspace-utilitybar" aria-label="Ações do código">
+              <button id="workspace-save-now-btn" class="button button-ghost button-small" type="button">Salvar</button>
+              <button id="symbols-btn" class="button button-ghost button-small hidden" type="button" aria-expanded="false" aria-controls="symbol-palette">Símbolos</button>
+              <button id="download-current-btn" class="button button-ghost button-small" type="button">Baixar meu arquivo</button>
+              <button id="download-zip-btn" class="button button-ghost button-small" type="button">Baixar meus códigos</button>
+              <button id="github-btn" class="button button-ghost button-small" type="button">GitHub</button>
+              <button id="classroom-btn" class="button button-ghost button-small" type="button">Classroom</button>
+              <span id="workspace-action-status" class="workspace-action-status" role="status" aria-live="polite"></span>
+            </div>
+            <section id="symbol-palette" class="symbol-palette hidden" aria-label="Símbolos do teclado"><div class="symbol-palette-head"><div><strong id="symbol-palette-title">Símbolos</strong><span id="symbol-palette-context" class="muted"></span></div><button id="symbol-palette-close" class="button button-ghost button-small" type="button" aria-label="Fechar paleta de símbolos">Fechar</button></div><div id="symbol-palette-groups" class="symbol-palette-groups"></div></section>
             <div id="draft-recovery" class="draft-recovery hidden" role="status">
               <strong>Rascunho recuperado</strong>
               <span id="draft-recovery-text">Recuperamos alterações mais recentes que ainda não tinham chegado à nuvem.</span>
             </div>
             <div class="editor-shell">
+              <div id="editor-line-numbers" class="editor-line-numbers" aria-hidden="true"></div>
               <pre id="code-highlight" class="code-highlight" aria-hidden="true"></pre>
               <textarea id="code-editor" class="code-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editor de código"></textarea>
             </div>
@@ -294,7 +306,7 @@
               <p id="reference-note" class="reference-note">Observe o código e digite manualmente no editor. Copiar e colar a referência estão desativados.</p>
               <pre id="reference-code" class="reference-code no-select" tabindex="0" aria-label="Código de referência. Digite manualmente no editor ao lado."></pre>
             </section>
-            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html"></iframe>
+            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.9.1"></iframe>
             <div id="terminal-pane" class="terminal-pane hidden">
               <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
               <form id="terminal-input-form" class="terminal-input-row hidden">
@@ -321,7 +333,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.8.5"></script>
+  <script type="module" src="assets/js/app.js?v=14.9.1"></script>
 
 
     <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
@@ -352,41 +364,13 @@
     <dialog id="exercise-submit-dialog" class="history-dialog legacy-dialog">
       <form id="exercise-submit-form" class="history-card panel form-stack">
         <div class="history-head">
-          <div>
-            <p class="eyebrow">Entrega da atividade</p>
-            <h3>Registrar entrega</h3>
-            <p class="muted">A correção oficial é feita no servidor. Para entregar, informe o link do repositório GitHub onde esta atividade está salva.</p>
-          </div>
+          <div><p class="eyebrow">Entrega da atividade</p><h3>Confirmar entrega</h3><p class="muted">Você pode entregar mesmo sem 100%. A porcentagem atual será registrada como nota desta entrega.</p></div>
           <button id="exercise-submit-close" class="button button-ghost button-small" type="button">Fechar</button>
         </div>
         <div id="exercise-submit-score" class="submission-score" role="status"></div>
-        <div class="submission-checklist" aria-label="Checklist antes da entrega">
-          <strong>Antes de entregar</strong>
-          <span>1. Salve os três arquivos no portal.</span>
-          <span>2. Faça <code>commit</code> e <code>push</code> do exercício no GitHub.</span>
-          <span>3. Cole abaixo o link do repositório, não o link de um arquivo isolado.</span>
-        </div>
-        <label><span>Link do repositório GitHub</span><input id="exercise-repository-url" type="url" inputmode="url" autocomplete="url" placeholder="https://github.com/usuario/repositorio" required></label>
-        <p class="muted">Entre 80% e 99% a entrega fica registrada com pendências e você pode continuar melhorando. Somente 100% marca a atividade como concluída.</p>
+        <div class="submission-checklist"><strong>Como funciona</strong><span>100% indica que a autocorreção considerou a solução correta em relação à referência.</span><span>Abaixo de 100%, a entrega é aceita com nota parcial e pode ser refeita para melhorar.</span><span>O código digitado continua salvo e disponível para download.</span></div>
         <p id="exercise-submit-message" class="form-message hidden"></p>
-        <button id="exercise-submit-button" class="button button-primary" type="submit">Entregar atividade</button>
-      </form>
-    </dialog>
-
-    <dialog id="legacy-import-dialog" class="history-dialog legacy-dialog">
-      <form id="legacy-import-form" class="history-card panel form-stack">
-        <div class="history-head">
-          <div>
-            <p class="eyebrow">Portal antigo</p>
-            <h3>Registrar exercício já realizado</h3>
-            <p class="muted">Informe o link do exercício no seu repositório GitHub. Somente exercícios já liberados podem ser registrados. O próximo exercício só será liberado após a aprovação do professor.</p>
-          </div>
-          <button id="legacy-import-close" class="button button-ghost button-small" type="button">Fechar</button>
-        </div>
-        <label><span>Exercício realizado</span><select id="legacy-exercise-select" required></select></label>
-        <label><span>Link do GitHub / GitHub Pages</span><input id="legacy-repository-url" type="url" placeholder="https://github.com/..." required></label>
-        <p id="legacy-import-message" class="form-message hidden"></p>
-        <button class="button button-primary" type="submit">Enviar para validação</button>
+        <button id="exercise-submit-button" class="button button-primary" type="submit">Entregar com esta nota</button>
       </form>
     </dialog>
 

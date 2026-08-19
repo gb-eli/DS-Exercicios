@@ -1,0 +1,11 @@
+{
+  "name": "AGV Hub Educacional - Public Deploy",
+  "release": "v14.9.1",
+  "ui": "0.21.1",
+  "date": "2026-08-19",
+  "containsBackendMigrations": false,
+  "containsEdgeFunctions": false,
+  "fullscreenIntegratedRoutes": 10,
+  "fullscreenExemptRoute": "validacao-antiga/",
+  "note": "Pacote destinado somente à hospedagem estática. Código operacional de banco, Edge Functions e testes foram excluídos."
+}
