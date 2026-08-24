@@ -165,7 +165,7 @@
 }
 #staff-view .staff-metric.attention{
   border-color:rgba(240,198,90,.24);
-  background:linear-gradient(180deg,rgba(240,198,90,.055),var(--staff-card));
+  background:#13130f;
 }
 #staff-view .staff-metric.attention strong{color:#f1d274}
 
@@ -766,6 +766,7 @@
 .ranking-position{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--staff-border);border-radius:9px;background:#0b0e12;font-weight:800}.ranking-row>div{display:grid;gap:2px}.ranking-row>div span{color:var(--staff-muted);font-size:.7rem}.ranking-score{font-size:1.2rem}
 .release-card{width:min(1050px,96vw)}.release-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;align-items:end;gap:8px;margin-bottom:12px}.release-toolbar label{display:grid;gap:6px;color:var(--staff-muted);font-size:.7rem;font-weight:700}.release-toolbar select{min-height:40px}
 .release-list{display:grid;gap:7px}.release-item{border:1px solid var(--staff-border);border-radius:10px;background:#0b0e12;overflow:hidden}.release-item summary{min-height:52px;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:9px;padding:8px 11px;cursor:pointer;list-style:none}.release-item summary::-webkit-details-marker{display:none}.release-number{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--staff-border);border-radius:8px;color:var(--staff-muted);font:700 .66rem ui-monospace,monospace}
+.release-academic-value{color:var(--staff-muted);font-size:.64rem;font-weight:700;white-space:nowrap}
 .release-switch{display:flex;align-items:center;gap:7px;color:var(--staff-muted);font-size:.68rem}.release-switch input{accent-color:var(--staff-accent)}
 .release-security-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:11px;border-top:1px solid var(--staff-border);background:#090c0f}.release-security-grid label{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;border:1px solid var(--staff-border);border-radius:8px;color:var(--text-2);font-size:.68rem}.release-security-grid input[type=checkbox]{width:auto;min-height:0;accent-color:var(--staff-accent)}.release-security-grid input[type=number]{width:68px;min-height:32px;padding:0 7px}.save-policy{align-self:stretch}
 .live-code-editor{width:100%;min-height:480px;max-height:65dvh;resize:vertical;padding:14px;border:1px solid var(--staff-border);border-radius:10px;background:#060708;color:#dce5ef;font:12.5px/1.6 "Cascadia Code","SFMono-Regular",Consolas,monospace;tab-size:2}
@@ -778,3 +779,13 @@
 .student-detail-summary strong{color:var(--text-2)}
 .exercise-manage-card.not-started{opacity:.72}
 @media(max-width:680px){.student-detail-summary{align-items:flex-start;flex-direction:column}}
+
+/* v14.10.8.11 — Verificação do voucher de +1 ponto */
+.weekend-voucher-admin-card{max-width:760px}
+.weekend-voucher-admin-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin:14px 0}
+.weekend-voucher-admin-form label{display:grid;gap:6px}.weekend-voucher-admin-form input{text-transform:uppercase;font-family:"Cascadia Code",Consolas,monospace;letter-spacing:.05em}
+.weekend-voucher-result{display:grid;gap:14px;margin-top:14px}.weekend-voucher-admin-status{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid rgba(255,215,103,.25);border-radius:12px;background:rgba(255,195,65,.07)}
+.weekend-voucher-admin-status strong{color:#ffe199}.weekend-voucher-admin-status span{font:800 .9rem/1 "Cascadia Code",Consolas,monospace;color:#f6f8fb}.weekend-voucher-admin-status.redeemed{border-color:rgba(89,217,139,.24);background:rgba(89,217,139,.07)}.weekend-voucher-admin-status.revoked{border-color:rgba(255,104,104,.25);background:rgba(255,104,104,.07)}
+.weekend-voucher-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0}.weekend-voucher-admin-grid>div{padding:10px 12px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(255,255,255,.025)}.weekend-voucher-admin-grid dt{font-size:.65rem;color:#8896a5;text-transform:uppercase;letter-spacing:.06em}.weekend-voucher-admin-grid dd{margin:4px 0 0;color:#dce3eb;line-height:1.4}.weekend-voucher-admin-grid dd strong{color:#ffe09a}
+.weekend-voucher-note{display:grid;gap:6px}.weekend-voucher-note textarea{min-height:84px}
+@media(max-width:680px){.weekend-voucher-admin-form{grid-template-columns:1fr}.weekend-voucher-admin-grid{grid-template-columns:1fr}.weekend-voucher-admin-status{align-items:flex-start;flex-direction:column}}

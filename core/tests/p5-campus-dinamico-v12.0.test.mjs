@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const js=fs.readFileSync(new URL('../../lobby/assets/lobby3d.js',import.meta.url),'utf8');
 const cfg=fs.readFileSync(new URL('../../lobby/assets/config.js',import.meta.url),'utf8');
-assert.ok(cfg.includes("LOBBY_VERSION='0.8.0'")||cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.0'"),'Lobby dinâmico deve permanecer compatível');
+assert.ok(cfg.includes("LOBBY_VERSION='0.8.0'")||cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.1'"),'Lobby dinâmico deve permanecer compatível');
 for(const marker of ['patrolDefs','updatePatrols','updateCampusClock','socialGroups','liveSign','worldRef']) assert.ok(js.includes(marker),`faltando ${marker}`);
 assert.ok(js.includes("quality==='low'?2:4"),'Eco deve reduzir NPCs móveis');
 assert.ok(js.includes("Objetos funcionais existem em todas as qualidades"),'interações devem existir também no Eco');

@@ -21,7 +21,7 @@ const checks=[
  ['readmissão antecipada',moderation.includes("action==='unblock'")&&lobby.includes('unblockStudent')&&lobby.includes('Readmitir agora')],
  ['professor escopado',moderation.includes('if(!isAdmin)')&&moderation.includes("teacher_classes")&&moderation.includes('student_out_of_scope')],
  ['expulsão não desativa perfil',!moderation.includes("from('profiles').update({active:false")],
- ['heartbeat reduzido',lobby.includes('n-state.lastPresence<5000')&&lobby.includes('setTimeout(poll,4000)')],
+ ['heartbeat reduzido',lobby.includes('PRESENCE_INTERVAL_MS=COARSE_POINTER?8000:6000')&&lobby.includes('POLL_INTERVAL_MS=COARSE_POINTER?9000:7000')&&lobby.includes('document.hidden')],
  ['start supervisionado revalida release',supervision.includes("action==='start_session'")&&supervision.includes("await released(user.id,eid)")],
  ['legacy exige release',supervision.includes("action==='legacy_submit'")&&supervision.includes("await released(user.id,eid)")],
  ['legacy não libera próximo no submit',supervision.includes('approval_required:true')&&supervision.includes('next_exercise:null')],

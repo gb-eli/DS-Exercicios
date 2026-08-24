@@ -1,23 +1,11 @@
 {
-  "name": "DS Exercícios — Public Deploy",
-  "version": "14.10.1",
-  "date": "2026-08-19",
-  "activitiesUi": "0.22.1",
-  "phase": "P10.1-supervisao-nao-bloqueante-font-sync",
-  "source": "DS-Exercicios-v14.10.1-AUDITADO",
-  "backend": {
-    "databaseExitLimitFixLive": true,
-    "exitCountAutoBlocking": false,
-    "supervisionProduction": "v3 ACTIVE with non-blocking database policy",
-    "studentFiles": "v7 ACTIVE",
-    "exerciseAutograde": "v3 ACTIVE",
-    "staffDashboard": "v10 ACTIVE"
-  },
-  "publish": "Copiar o conteúdo deste diretório para a raiz do host estático atual.",
-  "excludes": [
-    "core/database",
-    "core/edge-functions",
-    "core/tests",
-    "regras privadas e segredos"
-  ]
+  "name": "AGV Hub Educacional - Public Deploy",
+  "release": "v14.10.8.18",
+  "ui": "0.22.8.14",
+  "date": "2026-08-24",
+  "containsBackendMigrations": true,
+  "containsEdgeFunctions": true,
+  "fullscreenIntegratedRoutes": 10,
+  "fullscreenExemptRoute": "validacao-antiga/",
+  "note": "Pontuação acadêmica confirmada por exercício. Migration 048 grava academic_max_points em exercises.config; staff-dashboard entrega config/subject_slug ao painel professor. Nenhuma nota existente é alterada automaticamente."
 }

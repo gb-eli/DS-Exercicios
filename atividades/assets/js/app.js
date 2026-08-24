@@ -1,10 +1,11 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.1';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.1';
-import { callActivityProgress } from './supervision.js?v=14.10.1';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.1';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.1';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.1';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.1';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.18';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.18';
+import { callActivityProgress } from './supervision.js?v=14.10.8.18';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.18';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.18';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.18';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.18';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.18';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
@@ -20,6 +21,7 @@ let currentStaffAccess = false;
 let passwordRecoveryMode = false;
 let lobbyDeepLinkHandled = false;
 let lastDashboardSnapshot = null;
+let exerciseOpening = false;
 
 function showView(id) {
   views.forEach((viewId) => $(viewId)?.classList.toggle('hidden', viewId !== id));
@@ -35,14 +37,41 @@ function humanStatus(status) {
   return ({ not_started: 'Disponível', in_progress: 'Em andamento', completed: 'Concluído', blocked: 'Bloqueado' })[status] || 'Disponível';
 }
 function progressLabel(progress){
-  if(progress?.submitted_score!==null&&progress?.submitted_score!==undefined)return `Entregue • ${Math.round(Number(progress.submitted_score||0))}%`;
+  if(progress?.submitted_score!==null&&progress?.submitted_score!==undefined){
+    const score=Math.round(Number(progress.submitted_score||0));
+    return progress?.status==='completed'?`Concluído • ${score}%`:`Entrega parcial • ${score}%`;
+  }
   if(progress?.auto_score_at)return `Autocorreção • ${Math.round(Number(progress.auto_score||0))}%`;
   return humanStatus(progress?.status||'not_started');
 }
 
+const CONFIRMED_ACADEMIC_POINTS={
+  'introducao-programacao':{from:1,to:6,value:0.75},
+  'programacao-front-end':{from:1,to:20,value:0.20},
+  'programacao-desenvolvimento-sistemas':{from:1,to:8,value:0.50}
+};
+function academicMaxPoints(exercise){
+  const configured=Number(exercise?.config?.academic_max_points);
+  if(Number.isFinite(configured)&&configured>0)return configured;
+  const subject=currentSubjects.find((item)=>String(item.id)===String(exercise?.subject_id));
+  const rule=CONFIRMED_ACADEMIC_POINTS[String(subject?.slug||'')];
+  const number=Number(exercise?.exercise_number);
+  return rule&&number>=rule.from&&number<=rule.to?rule.value:null;
+}
+function formatAcademicPoints(value){
+  const number=Number(value);
+  return Number.isFinite(number)?number.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
+}
+function academicEarnedPoints(exercise,progress){
+  const max=academicMaxPoints(exercise);
+  if(max===null||progress?.submitted_score===null||progress?.submitted_score===undefined)return null;
+  return Math.max(0,Math.min(max,max*(Number(progress.submitted_score)||0)/100));
+}
+function academicValueText(exercise){const max=academicMaxPoints(exercise);return max===null?'':`Vale ${formatAcademicPoints(max)}`;}
+
 function exerciseManifest(exercise) {
   const subject=currentSubjects.find((s)=>s.id===exercise?.subject_id);
-  return subject?.slug ? (EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||null) : null;
+  return subject?.slug ? (EXERCISE_MANIFEST_CURRENT[`${subject.slug}:${exercise.exercise_number}`]||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||null) : null;
 }
 function exerciseDisplayTitle(exercise) {
   const title=String(exerciseManifest(exercise)?.titulo||exercise?.title||'Exercício');
@@ -166,6 +195,20 @@ async function routeAuthenticatedUser() {
     showView('login-view');
   }
 }
+
+
+let forcedSessionExitRunning=false;
+async function forceSessionExit(message='Sua sessão foi encerrada. Entre novamente para continuar.'){
+  if(forcedSessionExitRunning)return;
+  forcedSessionExitRunning=true;
+  try{await unmountWorkspace().catch(()=>{});}catch(_){}
+  currentProfile=null;currentClass=null;currentSubjects=[];currentExercises=[];currentProgress=[];currentStudentReleases=[];currentClassReleases=[];currentLegacyClaims=[];currentStaffAccess=false;lastDashboardSnapshot=null;passwordRecoveryMode=false;
+  setPortalFullscreenRequired(false);
+  if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+  setSessionHeader(false);setLoginError(message||'');showView('login-view');
+  setTimeout(()=>{forcedSessionExitRunning=false;},600);
+}
+window.addEventListener('agv:session-invalid',event=>{const code=String(event?.detail?.code||'');forceSessionExit(code==='session_claim_missing'?'Sua sessão precisa ser renovada. Entre novamente para continuar.':'Sua sessão foi encerrada pelo sistema. Entre novamente para continuar.');});
 
 function setLoginError(message = '') {
   $('login-error').textContent = message;
@@ -295,7 +338,7 @@ $('password-form').addEventListener('submit', async (event) => {
 
 
 $('hub-btn')?.addEventListener('click', () => { window.location.href = '../'; });
-$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/'; });
+$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.18'; });
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
@@ -403,15 +446,17 @@ function activityListRow(exercise,{progress=null,locked=false,reason='',complete
   const title=document.createElement('strong');title.textContent=exerciseDisplayTitle(exercise);
   const meta=document.createElement('small');
   const subject=subjectForExercise(exercise)?.name||'Disciplina';
+  const value=academicValueText(exercise),prefix=value?`${subject} • ${value}`:subject;
   const score=Math.round(Number(progress?.auto_score||0));
   const submitted=progress?.submitted_score==null?null:Math.round(Number(progress.submitted_score||0));
-  if(locked)meta.textContent=`${subject} • ${reason||'Aguardando liberação'}`;
-  else if(completed)meta.textContent=`${subject} • entregue com ${submitted??score}%`;
-  else if(progress?.auto_score_at)meta.textContent=`${subject} • autocorreção ${score}%`;
-  else meta.textContent=`${subject} • disponível`;
+  if(locked)meta.textContent=`${prefix} • ${reason||'Aguardando liberação'}`;
+  else if(completed)meta.textContent=`${prefix} • concluída com ${submitted??score}%`;
+  else if(submitted!==null)meta.textContent=`${prefix} • entrega parcial ${submitted}% • continue ajustando`;
+  else if(progress?.auto_score_at)meta.textContent=`${prefix} • autocorreção ${score}%`;
+  else meta.textContent=`${prefix} • disponível`;
 
   copy.append(title,meta);row.append(number,copy);
-  if(!locked){const action=document.createElement('span');action.className='student-activity-action';action.textContent=completed?'Revisar':'Abrir';row.appendChild(action);}
+  if(!locked){const action=document.createElement('span');action.className='student-activity-action';action.textContent=completed?'Revisar':submitted!==null?'Continuar':'Abrir';row.appendChild(action);}
   return row;
 }
 function fillActivityBucket(id,rows,emptyText){
@@ -538,7 +583,7 @@ async function renderDashboard() {
     $('next-action-label').textContent=continuing?'Continue de onde parou':'Sua próxima atividade';
     $('next-action-subject').textContent=subject?.name||'Atividade liberada';
     $('resume-title').textContent = `Exercício ${String(nextExercise.exercise_number).padStart(2, '0')} — ${exerciseDisplayTitle(nextExercise)}`;
-    const partialDelivery=continuing&&nextProgress?.completion_source==='server_private_validation_partial';
+    const partialDelivery=continuing&&['server_private_validation_partial','autograde_submission_partial'].includes(String(nextProgress?.completion_source||''));
     $('resume-description').textContent = partialDelivery
       ? `Sua entrega de ${pct}% foi registrada. Continue ajustando para melhorar o resultado; 100% conclui a atividade.`
       : continuing?`Você já fez ${pct}%. Continue sem perder seu trabalho.`:'Esta atividade está liberada e pronta para começar.';
@@ -599,7 +644,8 @@ async function renderDashboard() {
       button.type = 'button';
       button.disabled=!access.available;
       button.className = `exercise-row status-${status} ${!access.available?'is-locked':''} ${claim?.status==='pending'?'pending-review':''}`;
-      button.innerHTML = `<span>${String(exercise.exercise_number).padStart(2, '0')}</span><strong>${escapeHtml(exerciseDisplayTitle(exercise))}</strong><em>${escapeHtml(label)}</em>`;
+      const value=academicValueText(exercise);
+      button.innerHTML = `<span>${String(exercise.exercise_number).padStart(2, '0')}</span><div class="exercise-row-copy"><strong>${escapeHtml(exerciseDisplayTitle(exercise))}</strong>${value?`<small>${escapeHtml(value)}</small>`:''}</div><em>${escapeHtml(label)}</em>`;
       if(access.available)button.addEventListener('click', () => openExercise(exercise));
       list.appendChild(button);
     });
@@ -628,15 +674,21 @@ async function renderDashboard() {
 }
 
 async function openExercise(exercise) {
+  if(exerciseOpening)return;
+  exerciseOpening=true;
+  try{
   $('exercise-subject').textContent = currentSubjects.find((s) => s.id === exercise.subject_id)?.name || 'Disciplina';
   $('exercise-title').textContent = `Exercício ${String(exercise.exercise_number).padStart(2, '0')} — ${exerciseDisplayTitle(exercise)}`;
   const p = currentProgress.find((item) => item.exercise_id === exercise.id);
+  const maxPoints=academicMaxPoints(exercise),earnedPoints=academicEarnedPoints(exercise,p),valueChip=$('exercise-value');
+  if(valueChip){valueChip.textContent=maxPoints===null?'':`Vale ${formatAcademicPoints(maxPoints)}`;valueChip.classList.toggle('hidden',maxPoints===null);}
   $('exercise-state').textContent = progressLabel(p);
   $('exercise-meta').innerHTML = `
     <div><span>Versão</span><strong>${escapeHtml(exercise.version || '—')}</strong></div>
-    <div><span>Autocorreção</span><strong>${Math.round(Number(p?.auto_score || 0))}%</strong></div>
-    <div><span>Nota entregue</span><strong>${p?.submitted_score==null?'—':`${Math.round(Number(p.submitted_score))}%`}</strong></div>
-    <div><span>Tentativas</span><strong>${Number(p?.attempts || 0)}</strong></div>
+    ${maxPoints===null?'':`<div><span>Valor máximo</span><strong>${formatAcademicPoints(maxPoints)}</strong></div>`}
+    <div><span>Autocorreção</span><strong id="exercise-auto-score">${Math.round(Number(p?.auto_score || 0))}%</strong></div>
+    <div><span>Melhor nota entregue</span><strong id="exercise-submitted-score">${p?.submitted_score==null?'—':`${Math.round(Number(p.submitted_score))}%${earnedPoints===null?'':` • ${formatAcademicPoints(earnedPoints)}/${formatAcademicPoints(maxPoints)}`}`}</strong></div>
+    <div><span>Tentativas</span><strong id="exercise-attempts">${Number(p?.attempts || 0)}</strong></div>
   `;
 
   const access=exerciseAvailability(exercise,p);
@@ -655,8 +707,12 @@ async function openExercise(exercise) {
     await mountWorkspace({ profile: currentProfile, exercise, subject });
   } catch (error) {
     console.error(error);
+    await unmountWorkspace().catch(()=>{});
     document.getElementById('save-state').textContent = 'Não foi possível carregar seus arquivos.';
     document.getElementById('save-state').className = 'save-state error';
+  }
+  }finally{
+    exerciseOpening=false;
   }
 }
 
@@ -675,13 +731,7 @@ $('legacy-import-btn')?.addEventListener('click',()=>{
 
 if (SUPABASE_SDK_AVAILABLE) supabase.auth.onAuthStateChange((event) => {
   if (event === 'SIGNED_OUT') {
-    currentProfile = null;
-    currentClass = null;
-    passwordRecoveryMode = false;
-    setPortalFullscreenRequired(false);
-    if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
-    setSessionHeader(false);
-    showView('login-view');
+    setTimeout(()=>forceSessionExit(''),0);
     return;
   }
 

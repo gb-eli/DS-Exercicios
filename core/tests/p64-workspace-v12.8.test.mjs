@@ -21,10 +21,11 @@ test('P6.4 opens exercise in practice-first layout',()=>{
   assert.match(css,/\.exercise-view\.output-collapsed/);
 });
 
-test('P6.4 protects drafts locally before cloud debounce and recovers only newer drafts',()=>{
+test('P6.4 protects drafts locally before cloud debounce and uses revision-aware recovery',()=>{
   assert.match(js,/persistLocalDraft\(state\.active,state\.active\.content\)/);
   assert.match(js,/savedAt:Date\.now\(\)/);
-  assert.match(js,/draft\.savedAt>remoteAt\+250/);
+  assert.match(js,/shouldRecoverCachedDraft\(file,draft,serverContent\)/);
+  assert.match(js,/draft-recovery\.js\?v=14\.10\.8/);
   assert.match(js,/state\.recoveredFiles\.add\(file\.id\)/);
   assert.match(js,/flushRecoveredDrafts/);
   assert.match(html,/id="draft-recovery"/);
@@ -42,7 +43,7 @@ test('P6.4 keeps autosave unobtrusive and syntax highlighting local',()=>{
 test('P6.4 preview stays on demand and server remains authority',()=>{
   assert.match(js,/async function buildPreview\(\)\{\n  setOutputOpen\(true\)/);
   assert.match(js,/callStudentFiles\(\{action:'save'/);
-  assert.match(js,/callActivityProgress\(\{action:'complete'/);
+  assert.match(js,/callAutograde\(\{action:'submit'/);
   assert.doesNotMatch(js,/service_role/i);
   assert.doesNotMatch(js,/claim_core_reward/i);
 });

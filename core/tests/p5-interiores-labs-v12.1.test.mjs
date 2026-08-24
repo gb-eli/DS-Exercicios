@@ -3,7 +3,7 @@ import fs from 'node:fs';
 const js=fs.readFileSync(new URL('../../lobby/assets/lobby3d.js',import.meta.url),'utf8');
 const lobby=fs.readFileSync(new URL('../../lobby/assets/lobby.js',import.meta.url),'utf8');
 const cfg=fs.readFileSync(new URL('../../lobby/assets/config.js',import.meta.url),'utf8');
-assert.ok(cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.0'"),'Lobby deve estar em 0.9.0');
+assert.ok(cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.1'"),'Lobby deve estar em 0.9.0');
 for(const marker of ['labInterior','automaticDoor','labComputer','interiorOrigins','exteriorEntrances','enterInterior','exitInterior','lab-terminal','smartboard','lab-portal']) assert.ok(js.includes(marker),`faltando ${marker}`);
 for(const marker of ['building-entrance','interior-exit','lab-terminal','smartboard','lab-portal','onInteriorChange']) assert.ok(lobby.includes(marker),`lobby.js sem ${marker}`);
 assert.ok(js.includes('publicPos=activeInterior?exteriorEntrances[activeInterior]:null'),'coordenada interna não pode ser enviada como presença pública');

@@ -3,6 +3,8 @@
   const cfg={supabaseUrl:'https://iresvqwyaqotghjssncg.supabase.co',publishableKey:'sb_publishable_9yUn07uD4XYySt1ynzZu-A_v8HSoSDO'};
   const auth=window.AGVSession.create(cfg),$=id=>document.getElementById(id);
   const school='@escola.pr.gov.br';
+  const LOBBY_URL='lobby/?v=14.10.8.18';
+  document.querySelectorAll('a[href^="lobby/"]').forEach(link=>link.setAttribute('href',LOBBY_URL));
   let profile=null;
   const setMsg=(t='',error=false)=>{const e=$('login-message');e.textContent=t;e.classList.toggle('error',error)};
   async function loadProfile(){const user=await auth.getUser();const rows=await auth.request(`/rest/v1/profiles?select=id,full_name,email,role,active,must_change_password&id=eq.${encodeURIComponent(user.id)}&limit=1`);const p=Array.isArray(rows)?rows[0]:null;if(!p?.active)throw new Error('Acesso inativo.');profile=p;if(p.must_change_password){location.replace('atividades/');return {redirected:true,profile:p};}return {redirected:false,profile:p};}

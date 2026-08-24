@@ -10,7 +10,7 @@ const profHtml=read('professor/index.html'), prof=read('professor/assets/profess
 const actHtml=read('atividades/index.html'), act=read('atividades/assets/js/app.js');
 assert.doesNotMatch(hub,/http-equiv="refresh"|location\.replace\(['"]lobby\//i,'raiz não pode redirecionar obrigatoriamente ao Lobby');
 assert.match(hub,/Hub Educacional/,'Hub raiz ausente');
-assert.ok(hub.includes('href="atividades/"')&&hub.includes('href="lobby/"'),'atalhos principais ausentes');
+assert.ok(hub.includes('href="atividades/"')&&/href="lobby\/\?v=14\.10\.8\.18"/.test(hub),'atalhos principais ausentes');
 assert.ok(hub.includes('data-role="teacher,admin,super_admin"')&&hub.includes('data-role="admin,super_admin"'),'cards por papel ausentes');
 assert.ok(exists('core/session/agv-session.js')&&session.includes('grant_type=refresh_token'),'camada de sessão/refresh ausente');
 assert.match(session,/sb-\$\{ref\}-auth-token/,'sessão deve usar chave padrão Supabase');

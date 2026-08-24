@@ -9,7 +9,7 @@ const game=read('lobby/assets/lobby3d.js');
 const cfg=read('lobby/assets/config.js');
 const release=JSON.parse(read('release-v11.6.json'));
 assert.equal(release.version,'v11.6-P5.2-HEAVY-ADAPTIVE');
-assert.ok(/LOBBY_VERSION='0\.(4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.0'"));
+assert.ok(/LOBBY_VERSION='0\.(4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.1'"));
 assert.ok(game.includes("ultra:{")&&game.includes("shadowSize:2048"),'perfil Ultra ausente');
 assert.ok(game.includes('updateAdaptive')&&game.includes("fps<27")&&game.includes("fps>54"),'qualidade adaptativa ausente');
 assert.ok(game.includes("cameraMode='shoulder'")&&game.includes("cameraMode==='wide'"),'modos de câmera ausentes');

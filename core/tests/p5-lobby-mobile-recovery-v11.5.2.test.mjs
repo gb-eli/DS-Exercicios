@@ -16,6 +16,6 @@ assert.match(lite,/createLobbyLite/);
 assert.match(lite,/onPlayerState/);
 assert.match(index,/id="retry-3d"/);
 assert.match(index,/id="enter-lite"/);
-assert.ok(/LOBBY_VERSION='0\.(3\.3|4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.0'"));
+assert.ok(/LOBBY_VERSION='0\.(3\.3|4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.1'"));
 assert.doesNotMatch(lite,/SUPABASE|service_role|exercise_releases/i);
 console.log('PASS p5 lobby mobile recovery v11.5.2');

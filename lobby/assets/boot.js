@@ -1,4 +1,5 @@
 const showFatal=(error)=>{
+  globalThis.__agvLobbyDiag?.exposeError?.('boot_failed',String(error?.message||error||'boot_failed'));
   console.error('Falha ao inicializar o AGV Lobby:',error);
   const login=document.getElementById('login');
   const game=document.getElementById('game-shell');
@@ -13,4 +14,5 @@ const showFatal=(error)=>{
   }
 };
 
-import('./lobby.js?v=14.10.1').catch(showFatal);
+globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
+import('./lobby.js?v=14.10.8.18').then(()=>globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'})).catch(showFatal);

@@ -8,6 +8,6 @@ assert.ok(app.includes("e.code==='KeyR'")&&app.includes('setLocalAction'), 'atal
 assert.ok(world.includes("const seats=[")&&world.includes('toggleSeat(seat)'), 'bancos interativos ausentes');
 assert.ok(world.includes("localAction==='sit'")&&rig.includes("localAction==='sit'"), 'pose sentada não cobre GLB e procedural');
 assert.ok(rig.includes("localAction==='dance'")&&rig.includes("localAction==='cheer'")&&rig.includes("localAction==='crouch'"),'poses rigadas extras ausentes');
-assert.ok(cfg.includes("LOBBY_VERSION='0.6.0'")||cfg.includes("LOBBY_VERSION='0.7.0'")||cfg.includes("LOBBY_VERSION='0.8.0'")||cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.0'"),'versão Lobby incorreta');
+assert.ok(cfg.includes("LOBBY_VERSION='0.6.0'")||cfg.includes("LOBBY_VERSION='0.7.0'")||cfg.includes("LOBBY_VERSION='0.8.0'")||cfg.includes("LOBBY_VERSION='0.9.0'")||cfg.includes("LOBBY_VERSION='1.0.1'"),'versão Lobby incorreta');
 assert.ok(!app.includes("emote('dance'")&&!app.includes("emote('cheer'")&&!app.includes("emote('crouch'"),'ações locais não podem ampliar protocolo do backend');
 console.log('PASS p5-social-actions-v11.8');

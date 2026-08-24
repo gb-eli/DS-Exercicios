@@ -35,7 +35,7 @@ test('Lobby aceita todos os papéis autenticados previstos e backend de presenç
 
 test('Atividades do aluno são filtradas por turma no frontend e revalidadas no backend',()=>{
   const app=read('atividades/assets/js/app.js');
-  assert.match(app,/class_subjects'\)\.select\('subject_id'\)\.eq\('class_id', currentClass\.id\)/);
+  assert.match(app,/class_subjects'\)\.select\('subject_id'\)\.eq\('class_id',\s*currentClass\.id\)/);
   assert.match(app,/exercise_releases'\).*\.eq\('class_id',currentClass\.id\)/s);
   for(const file of ['core/edge-functions/activity-progress/index.ts','core/edge-functions/student-files/index.ts']){
     const s=read(file);

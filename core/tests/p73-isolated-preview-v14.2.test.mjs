@@ -11,7 +11,7 @@ const hostJs=fs.readFileSync(path.join(root,'atividades/preview/host.js'),'utf8'
 
 assert.doesNotMatch(html,/script-src[^\"]*'unsafe-inline'/,'main app script CSP has no unsafe-inline');
 assert.doesNotMatch(html,/style-src[^\"]*'unsafe-inline'/,'main app style CSP has no unsafe-inline');
-assert.match(html,/id="preview-frame"[^>]*src="preview\/index\.html"/,'preview uses dedicated host');
+assert.match(html,/id="preview-frame"[^>]*src="preview\/index\.html(?:\?v=[^"]+)?"/,'preview uses dedicated host');
 assert.match(html,/sandbox="allow-scripts"/,'outer preview sandbox stays scripts-only');
 assert.doesNotMatch(html,/allow-same-origin/,'main preview never gets same-origin privilege');
 assert.doesNotMatch(workspace,/\.srcdoc\s*=/,'workspace no longer injects student document into app iframe');

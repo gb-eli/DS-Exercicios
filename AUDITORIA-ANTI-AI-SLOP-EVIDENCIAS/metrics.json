@@ -1,0 +1,457 @@
+[
+  {
+    "viewport": 360,
+    "bodyScrollWidth": 360,
+    "htmlScrollWidth": 360,
+    "exercise": {
+      "x": 7,
+      "y": 113,
+      "w": 346,
+      "h": 1931
+    },
+    "layout": {
+      "x": 7,
+      "y": 469,
+      "w": 346,
+      "h": 1574
+    },
+    "workspace": {
+      "x": 7,
+      "y": 908,
+      "w": 346,
+      "h": 910
+    },
+    "sidebar": {
+      "x": 7,
+      "y": 1828,
+      "w": 346,
+      "h": 215
+    },
+    "output": {
+      "x": 7,
+      "y": 469,
+      "w": 346,
+      "h": 429
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 360,
+      "h": 105
+    },
+    "utility": {
+      "x": 8,
+      "y": 1160,
+      "w": 344,
+      "h": 241
+    },
+    "editor": {
+      "x": 8,
+      "y": 1401,
+      "w": 344,
+      "h": 416
+    },
+    "reference": {
+      "x": 8,
+      "y": 529,
+      "w": 344,
+      "h": 368
+    },
+    "utilDisplay": "grid",
+    "utilColumns": "160.5px 160.5px",
+    "minTouchTarget": 44,
+    "horizontalOverflow": false,
+    "name": "phone360",
+    "height": 800
+  },
+  {
+    "viewport": 390,
+    "bodyScrollWidth": 390,
+    "htmlScrollWidth": 390,
+    "exercise": {
+      "x": 7,
+      "y": 113,
+      "w": 376,
+      "h": 1974
+    },
+    "layout": {
+      "x": 7,
+      "y": 469,
+      "w": 376,
+      "h": 1617
+    },
+    "workspace": {
+      "x": 7,
+      "y": 928,
+      "w": 376,
+      "h": 933
+    },
+    "sidebar": {
+      "x": 7,
+      "y": 1871,
+      "w": 376,
+      "h": 215
+    },
+    "output": {
+      "x": 7,
+      "y": 469,
+      "w": 376,
+      "h": 449
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 105
+    },
+    "utility": {
+      "x": 8,
+      "y": 1180,
+      "w": 374,
+      "h": 241
+    },
+    "editor": {
+      "x": 8,
+      "y": 1421,
+      "w": 374,
+      "h": 439
+    },
+    "reference": {
+      "x": 8,
+      "y": 529,
+      "w": 374,
+      "h": 388
+    },
+    "utilDisplay": "grid",
+    "utilColumns": "175.5px 175.5px",
+    "minTouchTarget": 44,
+    "horizontalOverflow": false,
+    "name": "phone390",
+    "height": 844
+  },
+  {
+    "viewport": 430,
+    "bodyScrollWidth": 430,
+    "htmlScrollWidth": 430,
+    "exercise": {
+      "x": 7,
+      "y": 113,
+      "w": 416,
+      "h": 2060
+    },
+    "layout": {
+      "x": 7,
+      "y": 469,
+      "w": 416,
+      "h": 1704
+    },
+    "workspace": {
+      "x": 7,
+      "y": 969,
+      "w": 416,
+      "h": 979
+    },
+    "sidebar": {
+      "x": 7,
+      "y": 1957,
+      "w": 416,
+      "h": 215
+    },
+    "output": {
+      "x": 7,
+      "y": 469,
+      "w": 416,
+      "h": 490
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 430,
+      "h": 105
+    },
+    "utility": {
+      "x": 8,
+      "y": 1221,
+      "w": 414,
+      "h": 241
+    },
+    "editor": {
+      "x": 8,
+      "y": 1462,
+      "w": 414,
+      "h": 485
+    },
+    "reference": {
+      "x": 8,
+      "y": 529,
+      "w": 414,
+      "h": 429
+    },
+    "utilDisplay": "grid",
+    "utilColumns": "195.5px 195.5px",
+    "minTouchTarget": 44,
+    "horizontalOverflow": false,
+    "name": "phone430",
+    "height": 932
+  },
+  {
+    "viewport": 768,
+    "bodyScrollWidth": 768,
+    "htmlScrollWidth": 768,
+    "exercise": {
+      "x": 20,
+      "y": 96,
+      "w": 728,
+      "h": 1678
+    },
+    "layout": {
+      "x": 20,
+      "y": 287,
+      "w": 728,
+      "h": 1488
+    },
+    "workspace": {
+      "x": 20,
+      "y": 820,
+      "w": 728,
+      "h": 728
+    },
+    "sidebar": {
+      "x": 20,
+      "y": 1559,
+      "w": 728,
+      "h": 215
+    },
+    "output": {
+      "x": 20,
+      "y": 287,
+      "w": 728,
+      "h": 524
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 768,
+      "h": 68
+    },
+    "utility": {
+      "x": 21,
+      "y": 942,
+      "w": 726,
+      "h": 73
+    },
+    "editor": {
+      "x": 21,
+      "y": 1015,
+      "w": 726,
+      "h": 532
+    },
+    "reference": {
+      "x": 21,
+      "y": 347,
+      "w": 726,
+      "h": 463
+    },
+    "utilDisplay": "flex",
+    "utilColumns": "none",
+    "minTouchTarget": 31,
+    "horizontalOverflow": false,
+    "name": "tablet768",
+    "height": 1024
+  },
+  {
+    "viewport": 820,
+    "bodyScrollWidth": 820,
+    "htmlScrollWidth": 820,
+    "exercise": {
+      "x": 20,
+      "y": 96,
+      "w": 780,
+      "h": 1803
+    },
+    "layout": {
+      "x": 20,
+      "y": 287,
+      "w": 780,
+      "h": 1612
+    },
+    "workspace": {
+      "x": 20,
+      "y": 864,
+      "w": 780,
+      "h": 810
+    },
+    "sidebar": {
+      "x": 20,
+      "y": 1684,
+      "w": 780,
+      "h": 215
+    },
+    "output": {
+      "x": 20,
+      "y": 287,
+      "w": 780,
+      "h": 567
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 820,
+      "h": 68
+    },
+    "utility": {
+      "x": 21,
+      "y": 986,
+      "w": 778,
+      "h": 73
+    },
+    "editor": {
+      "x": 21,
+      "y": 1059,
+      "w": 778,
+      "h": 614
+    },
+    "reference": {
+      "x": 21,
+      "y": 347,
+      "w": 778,
+      "h": 506
+    },
+    "utilDisplay": "flex",
+    "utilColumns": "none",
+    "minTouchTarget": 31,
+    "horizontalOverflow": false,
+    "name": "tablet820",
+    "height": 1180
+  },
+  {
+    "viewport": 1024,
+    "bodyScrollWidth": 1024,
+    "htmlScrollWidth": 1024,
+    "exercise": {
+      "x": 20,
+      "y": 96,
+      "w": 984,
+      "h": 1677
+    },
+    "layout": {
+      "x": 20,
+      "y": 287,
+      "w": 984,
+      "h": 1486
+    },
+    "workspace": {
+      "x": 260,
+      "y": 287,
+      "w": 744,
+      "h": 799
+    },
+    "sidebar": {
+      "x": 20,
+      "y": 287,
+      "w": 230,
+      "h": 799
+    },
+    "output": {
+      "x": 20,
+      "y": 1096,
+      "w": 984,
+      "h": 677
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 1024,
+      "h": 68
+    },
+    "utility": {
+      "x": 261,
+      "y": 392,
+      "w": 742,
+      "h": 73
+    },
+    "editor": {
+      "x": 261,
+      "y": 465,
+      "w": 742,
+      "h": 620
+    },
+    "reference": {
+      "x": 21,
+      "y": 1152,
+      "w": 982,
+      "h": 620
+    },
+    "utilDisplay": "flex",
+    "utilColumns": "none",
+    "minTouchTarget": 31,
+    "horizontalOverflow": false,
+    "name": "desktop1024",
+    "height": 768
+  },
+  {
+    "viewport": 1366,
+    "bodyScrollWidth": 1366,
+    "htmlScrollWidth": 1366,
+    "exercise": {
+      "x": 20,
+      "y": 96,
+      "w": 1326,
+      "h": 1034
+    },
+    "layout": {
+      "x": 20,
+      "y": 287,
+      "w": 1326,
+      "h": 843
+    },
+    "workspace": {
+      "x": 818,
+      "y": 287,
+      "w": 528,
+      "h": 843
+    },
+    "sidebar": {
+      "x": 20,
+      "y": 287,
+      "w": 250,
+      "h": 708
+    },
+    "output": {
+      "x": 280,
+      "y": 287,
+      "w": 528,
+      "h": 843
+    },
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 1366,
+      "h": 68
+    },
+    "utility": {
+      "x": 819,
+      "y": 431,
+      "w": 526,
+      "h": 90
+    },
+    "editor": {
+      "x": 819,
+      "y": 521,
+      "w": 526,
+      "h": 608
+    },
+    "reference": {
+      "x": 281,
+      "y": 343,
+      "w": 526,
+      "h": 786
+    },
+    "utilDisplay": "flex",
+    "utilColumns": "none",
+    "minTouchTarget": 31,
+    "horizontalOverflow": false,
+    "name": "desktop1366",
+    "height": 900
+  }
+]

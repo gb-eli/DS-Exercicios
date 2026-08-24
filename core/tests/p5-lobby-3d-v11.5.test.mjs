@@ -13,7 +13,7 @@ const securityMigration=read('core/database/029_security_hardening_ip_rate_limit
 const release=JSON.parse(read('release-v11.5.json'));
 assert.ok(html.includes('id="game3d"')&&game.includes('WebGLRenderer'),'canvas WebGL 3D ausente');
 assert.ok(exists('lobby/vendor/three/three.module.min.js')&&exists('lobby/vendor/three/three.core.min.js'),'Three local incompleto');
-assert.ok(/LOBBY_VERSION='0\.(3\.(1|2|3)|4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.0'"),'versão Lobby incorreta');
+assert.ok(/LOBBY_VERSION='0\.(3\.(1|2|3)|4\.0|5\.0|6\.0|7\.0|8\.0|9\.0)'/.test(cfg)||cfg.includes("LOBBY_VERSION='1.0.1'"),'versão Lobby incorreta');
 assert.equal(release.version,'v11.5-P5.1-CAMPUS-3D-CINEMATIC');
 assert.ok(game.includes('skyDome')&&game.includes('FogExp2')&&game.includes('fountain()')&&game.includes('tree(x,z'),'ambientação P5.1 incompleta');
 assert.ok(game.includes('PerspectiveCamera')&&game.includes('cameraYaw')&&game.includes('cameraPitch')&&game.includes('cameraDistance'),'câmera 360 incompleta');

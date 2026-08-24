@@ -7,8 +7,8 @@
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.10.1" />
-  <link rel="stylesheet" href="assets/css/admin.css?v=14.10.1" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.18" />
+  <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.18" />
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -20,7 +20,7 @@
           <h1>Exercícios Práticos DS</h1>
         </div>
       </div>
-      <span class="platform-version" aria-label="Versão da plataforma">0.22.1</span>
+      <span class="platform-version" aria-label="Versão da plataforma">0.22.8.14</span>
       <div id="session-actions" class="session-actions hidden">
         <div class="identity-mini">
           <strong id="session-name"></strong>
@@ -118,7 +118,7 @@
         <section class="student-focus-grid">
           <article class="panel next-action-panel">
             <div class="next-action-copy">
-              <div class="next-action-kicker"><span class="pulse-dot" aria-hidden="true"></span><span id="next-action-label">Faça agora</span></div>
+              <div class="next-action-kicker"><span id="next-action-label">Faça agora</span></div>
               <p id="next-action-subject" class="eyebrow">Sua próxima atividade</p>
               <h3 id="resume-title">Preparando sua próxima atividade…</h3>
               <p id="resume-description" class="muted">Aguarde enquanto organizamos o que está liberado para você.</p>
@@ -131,7 +131,6 @@
                 <button id="view-all-activities-btn" class="button button-ghost" type="button">Ver todas</button>
               </div>
             </div>
-            <div class="next-action-orb" aria-hidden="true"><span>DS</span></div>
           </article>
 
           <article class="panel progress-panel compact-progress-panel">
@@ -215,7 +214,7 @@
           <button id="back-dashboard" class="button button-ghost" type="button">← Disciplinas</button>
           <div>
             <p id="exercise-subject" class="eyebrow"></p>
-            <h2 id="exercise-title">Exercício</h2>
+            <div class="exercise-title-line"><h2 id="exercise-title">Exercício</h2><span id="exercise-value" class="exercise-value-inline hidden"></span></div>
           </div>
           <div class="exercise-status-group">
             <span id="supervision-chip" class="supervision-chip">Supervisão inativa</span>
@@ -226,6 +225,18 @@
           <span id="supervision-warning-text"></span>
           <button id="supervision-return-fullscreen" class="button button-primary button-small hidden" type="button">Entrar em tela cheia</button>
         </div>
+        <section id="weekend-mode-banner" class="weekend-mode-banner hidden" aria-live="polite">
+          <div class="weekend-mode-copy">
+            <span class="weekend-mode-kicker">Benefício de fim de semana</span>
+            <strong id="weekend-mode-title">Modo Final de Semana ativo</strong>
+            <span id="weekend-mode-status">Ajuda extra disponível até domingo às 18:00 (horário de Brasília).</span>
+          </div>
+          <div class="weekend-mode-actions">
+            <span id="weekend-mode-countdown" class="weekend-mode-countdown">00:00:00</span>
+            <button id="weekend-voucher-open" class="button button-small weekend-voucher-open" type="button">Ver código +1 ponto</button>
+            <button id="weekend-mode-toggle" class="button button-small weekend-mode-toggle" type="button">Desativar ajuda extra</button>
+          </div>
+        </section>
         <div class="exercise-layout">
           <aside class="panel exercise-sidebar">
             <div id="exercise-meta" class="exercise-meta"></div>
@@ -299,6 +310,7 @@
               <span id="draft-recovery-text">Recuperamos alterações mais recentes que ainda não tinham chegado à nuvem.</span>
             </div>
             <div class="editor-shell">
+              <div id="weekend-code-focus-line" class="weekend-code-focus-line hidden" aria-hidden="true"></div>
               <div id="editor-line-numbers" class="editor-line-numbers" aria-hidden="true"></div>
               <pre id="code-highlight" class="code-highlight" aria-hidden="true"></pre>
               <textarea id="code-editor" class="code-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editor de código"></textarea>
@@ -316,10 +328,17 @@
                 <div><span class="eyebrow">Referência para transcrever</span><strong id="reference-filename">arquivo</strong></div>
                 <span class="reference-lock">Somente leitura</span>
               </div>
+              <div id="reference-version-control" class="reference-version-control">
+                <label for="reference-version-select">Versão da referência</label>
+                <select id="reference-version-select" aria-label="Selecionar versão do código de referência">
+                  <option value="auto">Auto • mais próxima do seu código</option>
+                </select>
+                <small id="reference-version-status">Analisando compatibilidade…</small>
+              </div>
               <p id="reference-note" class="reference-note">Observe o código e digite manualmente no editor. Copiar e colar a referência estão desativados.</p>
               <pre id="reference-code" class="reference-code no-select" tabindex="0" aria-label="Código de referência. Digite manualmente no editor ao lado."></pre>
             </section>
-            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.10.1"></iframe>
+            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.10.8.18"></iframe>
             <div id="terminal-pane" class="terminal-pane hidden">
               <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
               <form id="terminal-input-form" class="terminal-input-row hidden">
@@ -346,7 +365,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.1"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.18"></script>
 
 
     <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
@@ -385,6 +404,35 @@
         <p id="exercise-submit-message" class="form-message hidden"></p>
         <button id="exercise-submit-button" class="button button-primary" type="submit">Entregar com esta nota</button>
       </form>
+    </dialog>
+
+    <dialog id="weekend-reward-dialog" class="history-dialog weekend-reward-dialog">
+      <div class="history-card panel weekend-reward-card">
+        <button id="weekend-reward-close" class="weekend-reward-close" type="button" aria-label="Fechar notificação">×</button>
+        <div class="weekend-reward-heading">
+          <div>
+            <p class="eyebrow">Benefício de fim de semana</p>
+            <h3>Parabéns por estudar no fim de semana.</h3>
+          </div>
+          <strong class="weekend-reward-value">+1 ponto</strong>
+        </div>
+        <p>Seu acesso durante o período especial registrou um voucher de ponto extra e liberou ajuda adicional nas atividades.</p>
+        <section class="weekend-voucher-box" aria-labelledby="weekend-voucher-title">
+          <span id="weekend-voucher-title">Seu código de resgate</span>
+          <code id="weekend-reward-code">Gerando…</code>
+          <button id="weekend-reward-copy" class="button button-ghost button-small" type="button" disabled>Copiar código</button>
+          <small id="weekend-reward-code-status" aria-live="polite">Gerando seu código seguro…</small>
+        </section>
+        <p class="weekend-voucher-instruction"><strong>Como resgatar:</strong> envie este código ao professor. Ao consultar o código, o sistema confirma seu nome, sua turma, a data e hora em que a recompensa foi emitida, o motivo e o valor de +1 ponto.</p>
+        <ul class="weekend-reward-benefits">
+          <li><strong>Voucher:</strong> +1 ponto extra para resgate com o professor.</li>
+          <li><strong>Ajuda adicional:</strong> dicas mais específicas durante as atividades.</li>
+          <li><strong>Localização:</strong> indicação do arquivo e da região que precisa de revisão.</li>
+          <li><strong>Próximo passo:</strong> orientação objetiva sobre o ajuste seguinte.</li>
+        </ul>
+        <p class="muted">O voucher só é emitido para quem acessa durante a janela especial, até domingo às 18:00 (horário de Brasília). Cada aluno recebe somente um código por fim de semana.</p>
+        <button id="weekend-reward-confirm" class="button button-primary" type="button">Entendi — continuar estudando</button>
+      </div>
     </dialog>
 
     <dialog id="recovery-dialog" class="history-dialog auth-dialog">

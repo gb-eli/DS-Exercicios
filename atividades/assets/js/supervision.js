@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js?v=14.10.1';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
 
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -27,7 +27,7 @@ const state = {
 
 const DEFAULT_POLICY = {
   require_fullscreen:true,
-  max_focus_violations:1000000,
+  max_focus_violations:3,
   block_paste:true,
   detect_devtools:true,
   detect_rapid_input:true,
@@ -44,6 +44,7 @@ async function invokeFunction(name, body) {
     if (!details && error?.context?.clone) details = await error.context.clone().json();
     else if (!details && error?.context?.json) details = await error.context.json();
   } catch (_) {}
+  await handleSessionInvalid(details);
   const err = new Error(details?.reason || details?.error || error?.message || 'Falha na operação.');
   err.code = details?.error || 'function_error';
   err.status = error?.context?.status || null;
@@ -379,7 +380,10 @@ export function sendEditorSnapshot(immediate=false) {
     });
   };
   if (immediate) send();
-  else state.snapshotTimer = setTimeout(send, 220);
+  else {
+    let constrained=false;try{constrained=Boolean(window.matchMedia?.('(pointer: coarse)').matches||window.innerWidth<=900);}catch(_){}
+    state.snapshotTimer = setTimeout(send, constrained?450:220);
+  }
 }
 
 export function sendCursor() {

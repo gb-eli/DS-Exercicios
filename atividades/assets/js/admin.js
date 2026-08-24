@@ -1,9 +1,22 @@
 
-import { supabase } from './supabase.js?v=14.10.1';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
+import { normalizeWeekendVoucherCode, formatWeekendVoucherDate } from './weekend-voucher.js?v=14.10.8.18';
 
-let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='';
+let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='', weekendVoucherCtx=null;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const progressScore=p=>Math.max(0,Math.min(100,Math.round(Number(p?.submitted_score ?? (p?.auto_score_at ? p?.auto_score : (p?.progress_percent||0)))||0)));
+const isPartial=p=>p?.submitted_score!==null&&p?.submitted_score!==undefined&&String(p?.status||'')!=='completed';
+const progressStateLabel=p=>p?.security_locked||p?.status==='blocked'?'Bloqueado':p?.approval_status==='changes_requested'?'Ajustes solicitados':p?.approval_status==='pending'?'Aguardando revisão':isPartial(p)?`Entrega parcial ${progressScore(p)}%`:p?.status==='completed'?'Concluído':p?.status==='not_started'?'Não iniciado':'Em andamento';
+
+const CONFIRMED_ACADEMIC_POINTS={
+  'introducao-programacao':{from:1,to:6,value:0.75},
+  'programacao-front-end':{from:1,to:20,value:0.20},
+  'programacao-desenvolvimento-sistemas':{from:1,to:8,value:0.50}
+};
+const academicMaxPoints=ex=>{const configured=Number(ex?.config?.academic_max_points);if(Number.isFinite(configured)&&configured>0)return configured;const rule=CONFIRMED_ACADEMIC_POINTS[String(ex?.subject_slug||'')],number=Number(ex?.exercise_number);return rule&&number>=rule.from&&number<=rule.to?rule.value:null};
+const formatAcademicPoints=value=>Number(value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const academicEarnedPoints=(ex,p)=>{const max=academicMaxPoints(ex);if(max===null||p?.submitted_score===null||p?.submitted_score===undefined)return null;return Math.max(0,Math.min(max,max*(Number(p.submitted_score)||0)/100))};
 
 let shellBound=false;
 function ensureAdminShell(){
@@ -53,6 +66,7 @@ function ensureAdminShell(){
             <button id="staff-supervision-btn" class="button button-ghost" type="button">Supervisão</button>
             <button id="staff-validations-btn" class="button button-ghost" type="button">Validações</button>
             <button id="staff-ranking-btn" class="button button-ghost" type="button">Ranking</button>
+            <button id="staff-weekend-voucher-btn" class="button button-ghost" type="button">Ponto extra</button>
             <button id="staff-releases-btn" class="button button-ghost" type="button">Liberações</button>
             <button id="staff-admin-central-btn" class="button button-ghost hidden" type="button">Admin Central</button>
             <button id="staff-team-btn" class="button button-ghost" type="button">Equipe</button>
@@ -165,6 +179,21 @@ function ensureAdminShell(){
         </div>
       </dialog>
 
+      <dialog id="weekend-voucher-dialog" class="history-dialog">
+        <div class="history-card panel weekend-voucher-admin-card">
+          <div class="history-head">
+            <div><p class="eyebrow">Fim de semana</p><h3>Validar ponto extra</h3><p class="muted">Digite o código enviado pelo aluno. O sistema consulta o registro seguro e confirma aluno, turma, horário, motivo e situação do resgate.</p></div>
+            <button id="weekend-voucher-close" class="button button-ghost button-small" type="button">Fechar</button>
+          </div>
+          <form id="weekend-voucher-form" class="weekend-voucher-admin-form">
+            <label><span>Código do aluno</span><input id="weekend-voucher-code-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" placeholder="FDS-ABCD-2345" maxlength="14" required></label>
+            <button class="button button-primary" type="submit">Verificar código</button>
+          </form>
+          <p id="weekend-voucher-message" class="form-message hidden"></p>
+          <div id="weekend-voucher-result" class="weekend-voucher-result hidden"></div>
+        </div>
+      </dialog>
+
       <dialog id="ranking-dialog" class="history-dialog">
         <div class="history-card panel ranking-card">
           <div class="history-head">
@@ -209,10 +238,13 @@ function ensureAdminShell(){
     $('staff-supervision-btn')?.addEventListener('click',openSupervisionCenter);
     $('staff-validations-btn')?.addEventListener('click',openLegacyReviews);
     $('staff-ranking-btn')?.addEventListener('click',openRanking);
+    $('staff-weekend-voucher-btn')?.addEventListener('click',openWeekendVoucherVerifier);
     $('staff-releases-btn')?.addEventListener('click',openReleaseManager);
     $('supervision-center-close')?.addEventListener('click',closeSupervisionCenter);
     $('legacy-review-close')?.addEventListener('click',()=>$('legacy-review-dialog')?.close());
     $('ranking-close')?.addEventListener('click',()=>$('ranking-dialog')?.close());
+    $('weekend-voucher-close')?.addEventListener('click',()=>$('weekend-voucher-dialog')?.close());
+    $('weekend-voucher-form')?.addEventListener('submit',verifyWeekendVoucherFromForm);
     $('release-close')?.addEventListener('click',()=>$('release-dialog')?.close());
     $('release-class-select')?.addEventListener('change',()=>{releaseSubjectId='';loadReleaseMatrix();});
     $('release-subject-select')?.addEventListener('change',event=>{releaseSubjectId=event.target.value;renderReleaseMatrix();});
@@ -240,32 +272,65 @@ function ensureAdminShell(){
   }
 }
 
-async function callStaff(body){
-  const {data,error}=await supabase.functions.invoke('staff-dashboard',{body});
-  if(error) throw error;
-  if(data?.error) throw new Error(data.error);
-  return data;
+async function staffFunctionResult(name,body,fallback='Falha no painel administrativo.'){
+  const {data,error}=await supabase.functions.invoke(name,{body});
+  if(!error&&!data?.error)return data||{};
+  let details=data||null;
+  try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  await handleSessionInvalid(details);
+  const e=new Error(details?.reason||details?.error||error?.message||fallback);
+  e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
 }
 
-async function callAdminRoster(body){
-  const {data,error}=await supabase.functions.invoke('admin-roster',{body});
-  if(error) throw error;
-  if(data?.error) throw new Error(data.error);
-  return data;
-}
-async function callStaffDirectory(body){
-  const {data,error}=await supabase.functions.invoke('staff-directory',{body});
-  if(error) throw error;
-  if(data?.error) throw new Error(data.error);
-  return data;
-}
+async function callStaff(body){return staffFunctionResult('staff-dashboard',body,'Falha ao carregar o painel.');}
+
+async function callAdminRoster(body){return staffFunctionResult('admin-roster',body,'Falha ao carregar a lista de alunos.');}
+async function callStaffDirectory(body){return staffFunctionResult('staff-directory',body,'Falha ao carregar a equipe.');}
 async function callSupervision(body){
   const {data,error}=await supabase.functions.invoke('supervision',{body});
   if(!error&&!data?.error)return data||{};
   let details=data||null;
   try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  await handleSessionInvalid(details);
   const e=new Error(details?.reason||details?.error||error?.message||'Falha na supervisão.');
   e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
+}
+function weekendVoucherStatusLabel(v){
+  if(v?.status==='revoked')return 'Revogado';
+  if(v?.status==='redeemed')return 'Já resgatado';
+  return 'Disponível para resgate';
+}
+function setWeekendVoucherMessage(text='',ok=false){const box=$('weekend-voucher-message');if(!box)return;box.textContent=text;box.classList.toggle('hidden',!text);box.classList.toggle('ok',Boolean(ok));}
+function openWeekendVoucherVerifier(){
+  weekendVoucherCtx=null;const result=$('weekend-voucher-result'),input=$('weekend-voucher-code-input');if(result){result.classList.add('hidden');result.replaceChildren();}if(input)input.value='';setWeekendVoucherMessage('');
+  try{$('weekend-voucher-dialog')?.showModal();}catch(_){}setTimeout(()=>input?.focus(),60);
+}
+function renderWeekendVoucherResult(voucher){
+  const host=$('weekend-voucher-result');if(!host)return;host.replaceChildren();host.classList.remove('hidden');
+  const status=weekendVoucherStatusLabel(voucher),redeemable=voucher?.status==='issued';
+  host.innerHTML=`<div class="weekend-voucher-admin-status ${esc(voucher?.status||'issued')}"><strong>${esc(status)}</strong><span>${esc(voucher?.code||'')}</span></div>
+    <dl class="weekend-voucher-admin-grid">
+      <div><dt>Aluno</dt><dd>${esc(voucher?.student_name||'—')}</dd></div>
+      <div><dt>Turma</dt><dd>${esc(voucher?.class_code||voucher?.class_name||'—')}${voucher?.class_name&&voucher?.class_code?` • ${esc(voucher.class_name)}`:''}</dd></div>
+      <div><dt>Recompensa</dt><dd><strong>+${esc(voucher?.reward_points??1)} ponto</strong></dd></div>
+      <div><dt>Emitido em</dt><dd>${esc(formatWeekendVoucherDate(voucher?.issued_at))}</dd></div>
+      <div><dt>Fim de semana</dt><dd>${esc(voucher?.weekend_id||'—')}</dd></div>
+      <div><dt>Motivo</dt><dd>${esc(voucher?.reason||'—')}</dd></div>
+      ${voucher?.redeemed_at?`<div><dt>Resgatado em</dt><dd>${esc(formatWeekendVoucherDate(voucher.redeemed_at))}</dd></div>`:''}
+    </dl>
+    ${redeemable?`<label class="weekend-voucher-note"><span>Observação do resgate (opcional)</span><textarea id="weekend-voucher-redeem-note" placeholder="Ex.: ponto registrado na atividade combinada"></textarea></label><button id="weekend-voucher-redeem-btn" class="button button-primary" type="button">Marcar +1 ponto como resgatado</button>`:''}`;
+  $('weekend-voucher-redeem-btn')?.addEventListener('click',redeemWeekendVoucher);
+}
+async function verifyWeekendVoucherFromForm(event){
+  event.preventDefault();const input=$('weekend-voucher-code-input'),code=normalizeWeekendVoucherCode(input?.value);weekendVoucherCtx=null;
+  const host=$('weekend-voucher-result');if(host){host.classList.add('hidden');host.replaceChildren();}
+  if(!code){setWeekendVoucherMessage('Código inválido. Use o formato FDS-XXXX-XXXX.');return;}
+  if(input)input.value=code;setWeekendVoucherMessage('Verificando código…');
+  try{const data=await staffFunctionResult('weekend-bonus-voucher',{action:'verify',code},'Falha ao verificar o código.');weekendVoucherCtx=data?.voucher||null;renderWeekendVoucherResult(weekendVoucherCtx);setWeekendVoucherMessage('Código válido e conferido no servidor.',true);}catch(error){setWeekendVoucherMessage(error?.code==='voucher_not_found'?'Código não encontrado. Confira com o aluno.':error?.code==='voucher_out_of_scope'?'Este voucher pertence a uma turma fora do seu escopo.':error?.message||'Não foi possível verificar o código.');}
+}
+async function redeemWeekendVoucher(){
+  const code=normalizeWeekendVoucherCode(weekendVoucherCtx?.code);if(!code)return;const btn=$('weekend-voucher-redeem-btn');if(btn)btn.disabled=true;setWeekendVoucherMessage('Registrando resgate…');
+  try{const note=$('weekend-voucher-redeem-note')?.value?.trim()||'';const data=await staffFunctionResult('weekend-bonus-voucher',{action:'redeem',code,note},'Falha ao registrar o resgate.');weekendVoucherCtx=data?.voucher||weekendVoucherCtx;renderWeekendVoucherResult(weekendVoucherCtx);setWeekendVoucherMessage(data?.already_redeemed?'Este código já estava resgatado.':'Resgate registrado. O voucher não pode ser usado novamente.',true);}catch(error){setWeekendVoucherMessage(error?.message||'Não foi possível registrar o resgate.');if(btn)btn.disabled=false;}
 }
 function studentNameById(id){return studentRecords().find(s=>s.id===id)?.full_name||'Aluno';}
 function escapeAttr(s){return esc(s).replace(/'/g,'&#39;');}
@@ -282,6 +347,7 @@ export async function openStaffPanel(){
     staffRole=status?.role||'teacher';
   }catch(error){
     console.error(error);
+    if(['session_revoked','session_claim_missing'].includes(String(error?.code||'')))return;
     staffRole='teacher';
   }
 
@@ -356,14 +422,16 @@ function classForStudent(student){
   return payload.classes.find(c=>c.id===m?.class_id)||null;
 }
 function progressForStudent(id){
-  if(!id) return {rows:[],completed:0,avg:0,last:null,pending:0,changes:0};
+  if(!id) return {rows:[],completed:0,avg:0,last:null,pending:0,changes:0,partial:0,attempts:0};
   const rows=payload.progress.filter(p=>p.student_id===id);
   const completed=rows.filter(r=>r.status==='completed').length;
   const avg=rows.length?Math.round(rows.reduce((a,r)=>a+Number(r.progress_percent||0),0)/rows.length):0;
   const last=rows.map(r=>r.last_activity_at).filter(Boolean).sort().pop()||null;
   const pending=rows.filter(r=>r.approval_status==='pending').length;
   const changes=rows.filter(r=>r.approval_status==='changes_requested').length;
-  return {rows,completed,avg,last,pending,changes};
+  const partial=rows.filter(isPartial).length;
+  const attempts=rows.reduce((a,r)=>a+Number(r.attempts||0),0);
+  return {rows,completed,avg,last,pending,changes,partial,attempts};
 }
 function filteredStudents(){
   const q=$('staff-search').value.trim().toLowerCase();
@@ -372,7 +440,7 @@ function filteredStudents(){
     const reviewOnly=$('staff-review-only')?.checked;
     const accessFilter=$('staff-access-filter')?.value||'all';
     const pr=progressForStudent(p.id);
-    const reviewOk=!reviewOnly || pr.pending>0 || pr.changes>0;
+    const reviewOk=!reviewOnly || pr.pending>0 || pr.changes>0 || pr.partial>0;
     const accessOk =
       accessFilter==='all' ||
       (accessFilter==='never' && !p.id) ||
@@ -390,13 +458,15 @@ function renderSummary(){
   const never=students.filter(s=>!s.id).length;
   const pendingCgm=students.filter(s=>!s.has_cgm).length;
   const reviews=students.reduce((a,s)=>a+progressForStudent(s.id).pending,0);
+  const partials=students.reduce((a,s)=>a+progressForStudent(s.id).partial,0);
   $('staff-summary').innerHTML=`
     <article class="staff-metric"><span>Total de alunos</span><strong>${students.length}</strong><small>no filtro atual</small></article>
     <article class="staff-metric"><span>Progresso médio</span><strong>${avg}%</strong><small>atividades iniciadas</small></article>
     <article class="staff-metric"><span>Já acessaram</span><strong>${logged}</strong><small>contas vinculadas</small></article>
     <article class="staff-metric"><span>Nunca acessaram</span><strong>${never}</strong><small>aguardando login</small></article>
     <article class="staff-metric ${pendingCgm ? 'attention' : ''}"><span>CGM pendente</span><strong>${pendingCgm}</strong><small>cadastros incompletos</small></article>
-    <article class="staff-metric ${reviews ? 'attention' : ''}"><span>Revisões</span><strong>${reviews}</strong><small>aguardando professor</small></article>`;
+    <article class="staff-metric ${reviews ? 'attention' : ''}"><span>Revisões</span><strong>${reviews}</strong><small>aguardando professor</small></article>
+    <article class="staff-metric ${partials ? 'attention' : ''}"><span>Entregas parciais</span><strong>${partials}</strong><small>alunos ainda em andamento</small></article>`;
   const visibleCount=$('staff-visible-count');
   if(visibleCount) visibleCount.textContent=`${students.length} aluno${students.length===1?'':'s'}`;
 }
@@ -414,7 +484,8 @@ function renderStudents(){
       !s.has_cgm?'<span class="badge danger">CGM pendente</span>':'',
       !s.id?'<span class="badge info">Nunca acessou</span>':'<span class="badge success">Conta vinculada</span>',
       pr.pending?`<span class="badge warning">${pr.pending} revisão</span>`:'',
-      pr.changes?`<span class="badge danger">${pr.changes} ajustes</span>`:''
+      pr.changes?`<span class="badge danger">${pr.changes} ajustes</span>`:'',
+      pr.partial?`<span class="badge warning">${pr.partial} parcial${pr.partial===1?'':'is'}</span>`:''
     ].join('');
     return `<article class="student-row ${!s.id?'not-claimed':''}">
       <div class="student-main">
@@ -562,9 +633,10 @@ async function loadReleaseMatrix(){
     if(!subjectIds.length){box.innerHTML='<p class="muted">Nenhuma disciplina vinculada.</p>';return;}
     const [sr,er]=await Promise.all([
       supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
-      supabase.from('exercises').select('id,subject_id,class_id,exercise_number,title,default_locked').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
+      supabase.from('exercises').select('id,subject_id,class_id,exercise_number,title,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
     ]);if(sr.error)throw sr.error;if(er.error)throw er.error;
-    const exercises=(er.data||[]).filter(ex=>!ex.class_id||String(ex.class_id)===String(classId)),subjects=sr.data||[];
+    const subjects=sr.data||[],subjectSlugs=new Map(subjects.map(x=>[String(x.id),String(x.slug||'')]));
+    const exercises=(er.data||[]).filter(ex=>!ex.class_id||String(ex.class_id)===String(classId)).map(ex=>({...ex,subject_slug:subjectSlugs.get(String(ex.subject_id))||''}));
     if(!releaseSubjectId||!subjects.some(x=>String(x.id)===String(releaseSubjectId)))releaseSubjectId=String(subjects[0]?.id||'');
     const ids=exercises.map(x=>x.id);
     const [rr,pp]=await Promise.all([
@@ -579,7 +651,7 @@ async function loadReleaseMatrix(){
 function releaseExercises(){return (releaseCtx?.exercises||[]).filter(ex=>!releaseSubjectId||String(ex.subject_id)===String(releaseSubjectId));}
 
 function classReleaseFor(id){return (releaseCtx?.releases||[]).filter(r=>r.exercise_id===id).sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0))[0]||null}
-function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:1000000,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
+function securityPolicyFor(id){return (releaseCtx?.policies||[]).find(p=>p.exercise_id===id)||{require_fullscreen:true,max_focus_violations:3,block_paste:true,detect_devtools:true,detect_rapid_input:true,block_external_network:false,teacher_live_edit:true}}
 function renderReleaseMatrix(){
   const box=$('release-list');
   box.innerHTML=releaseExercises().map((ex,i)=>{
@@ -587,12 +659,12 @@ function renderReleaseMatrix(){
     return `<details class="release-item" data-exercise="${ex.id}">
       <summary>
         <span class="release-number">${String(ex.exercise_number).padStart(2,'0')}</span>
-        <strong>${esc(ex.title)}</strong>
+        <strong>${esc(ex.title)}${academicMaxPoints(ex)===null?'':` <small class="release-academic-value">• Vale ${formatAcademicPoints(academicMaxPoints(ex))}</small>`}</strong>
         <label class="release-switch" onclick="event.stopPropagation()"><input class="release-enabled" type="checkbox" ${enabled?'checked':''}><span>${enabled?'Liberado':'Bloqueado'}</span></label>
       </summary>
       <div class="release-security-grid">
         <label><span>Tela cheia</span><input class="pol-fullscreen" type="checkbox" ${p.require_fullscreen?'checked':''}></label>
-        <label><span>Saídas de atividade</span><input class="pol-focus" type="text" value="Somente registro • não bloqueia" disabled></label>
+        <label><span>Saídas de atividade</span><input class="pol-focus" type="text" value="Alerta após 3 saídas • não bloqueia" disabled></label>
         <label><span>Bloquear colagem</span><input class="pol-paste" type="checkbox" ${p.block_paste?'checked':''}></label>
         <label><span>Heurística DevTools</span><input class="pol-devtools" type="checkbox" ${p.detect_devtools?'checked':''}></label>
         <label><span>Entrada rápida</span><input class="pol-rapid" type="checkbox" ${p.detect_rapid_input?'checked':''}></label>
@@ -618,7 +690,7 @@ async function saveSecurityPolicy(item){
   const policy={
     exercise_id:exerciseId,
     require_fullscreen:item.querySelector('.pol-fullscreen').checked,
-    max_focus_violations:1000000,
+    max_focus_violations:3,
     block_paste:item.querySelector('.pol-paste').checked,
     detect_devtools:item.querySelector('.pol-devtools').checked,
     detect_rapid_input:item.querySelector('.pol-rapid').checked,
@@ -858,12 +930,12 @@ async function openStudentDetail(studentId,name){
   $('student-detail-body').innerHTML=`
     <div class="student-detail-summary"><strong>${rows.filter(r=>r.status==='completed').length} concluídos</strong><span>${pending} pendentes / não iniciados</span></div>
     <div class="student-exercise-grid">
-      ${rows.map(r=>`
+      ${rows.map(r=>{const ex=allowedExercises.find(item=>String(item.id)===String(r.exercise_id)),max=academicMaxPoints(ex),earned=academicEarnedPoints(ex,r);return `
         <button class="exercise-manage-card ${r.status==='not_started'?'not-started':''}" data-exercise="${r.exercise_id}">
           <span>${esc(exerciseLabel(r.exercise_id))}</span>
-          <strong>${exerciseScore(r)}%</strong>
-          <small>${esc(r.status)} • ${esc(r.approval_status||'not_required')}</small>
-        </button>`).join('') || '<p class="muted">Nenhum exercício disponível para esta turma.</p>'}
+          <strong>${max===null?`${progressScore(r)}%`:`${earned===null?'—':formatAcademicPoints(earned)} / ${formatAcademicPoints(max)}`}</strong>
+          <small>${esc(progressStateLabel(r))}${max===null?'':` • ${progressScore(r)}%`} • ${Number(r.attempts||0)} tentativa(s)</small>
+        </button>`}).join('') || '<p class="muted">Nenhum exercício disponível para esta turma.</p>'}
     </div>
     <div id="exercise-management" class="exercise-management hidden"></div>`;
   $('student-detail-body').querySelectorAll('.exercise-manage-card').forEach(b=>b.onclick=()=>renderExerciseManagement(b.dataset.exercise).catch(error=>{console.error(error);alert('Não foi possível carregar a configuração atual da atividade.');}));
@@ -874,6 +946,7 @@ async function referenceBaseFlags(exerciseId){
 async function renderExerciseManagement(exerciseId){
   detailCtx.exerciseId=exerciseId;
   const r=detailCtx.data.progress.find(x=>x.exercise_id===exerciseId)||{};
+  const exercise=payload.exercises?.find(x=>String(x.id)===String(exerciseId))||null,maxPoints=academicMaxPoints(exercise),earnedPoints=academicEarnedPoints(exercise,r);
   const rel=detailCtx.data.releases.find(x=>x.exercise_id===exerciseId)||{};
   const base=await referenceBaseFlags(exerciseId);
   detailCtx.releaseVersion=String(rel.updated_at||'');
@@ -885,6 +958,7 @@ async function renderExerciseManagement(exerciseId){
       <div><p class="eyebrow">Configuração individual</p><h3>${esc(exerciseLabel(exerciseId))}</h3></div>
       <button id="manage-live-btn" class="button button-ghost button-small">Abrir código</button>
     </div>
+    <div class="student-detail-summary"><strong>${esc(progressStateLabel(r))}</strong><span>${maxPoints===null?'':`Valor máximo ${formatAcademicPoints(maxPoints)} • Nota obtida ${earnedPoints===null?'—':formatAcademicPoints(earnedPoints)} • `}Autocorreção ${Math.round(Number(r.auto_score||0))}% • Melhor entrega ${r.submitted_score==null?'—':`${progressScore(r)}%`} • ${Number(r.attempts||0)} tentativa(s)</span></div>
     <div class="management-grid">
       <section class="management-section">
         <h4>Acomodações e apoio</h4>

@@ -1,8 +1,8 @@
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config.js?v=14.10.1';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config.js?v=14.10.8.18';
 
 const SOURCES = [
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.111.0/dist/umd/supabase.js',
-  'https://unpkg.com/@supabase/supabase-js@2.111.0/dist/umd/supabase.js'
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
+  'https://unpkg.com/@supabase/supabase-js@2.112.3/dist/umd/supabase.js'
 ];
 
 function loadScript(src, index){
@@ -96,3 +96,22 @@ const AUTH_STORAGE_KEY='sb-iresvqwyaqotghjssncg-auth-token';
 export const supabase=SUPABASE_SDK_AVAILABLE
   ? createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{storageKey:AUTH_STORAGE_KEY,persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})
   : unavailableClient(sdkError||new Error('Não foi possível carregar o serviço de autenticação.'));
+
+
+const SESSION_INVALID_CODES=new Set(['session_revoked','session_claim_missing']);
+let sessionInvalidating=null;
+function sessionErrorCode(value){
+  return String(value?.error||value?.code||value?.data?.error||value?.details?.error||'').trim();
+}
+export async function handleSessionInvalid(value){
+  const code=sessionErrorCode(value);
+  if(!SESSION_INVALID_CODES.has(code))return false;
+  if(sessionInvalidating)return sessionInvalidating;
+  sessionInvalidating=(async()=>{
+    try{window.dispatchEvent(new CustomEvent('agv:session-invalid',{detail:{code}}));}catch(_){}
+    try{await supabase.auth.signOut({scope:'local'});}catch(_){}
+    try{localStorage.removeItem(AUTH_STORAGE_KEY);}catch(_){}
+    return true;
+  })().finally(()=>{setTimeout(()=>{sessionInvalidating=null;},500);});
+  return sessionInvalidating;
+}

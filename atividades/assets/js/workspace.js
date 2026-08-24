@@ -1,20 +1,25 @@
-import { runPython } from './python-runtime.js?v=14.10.1';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.1';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.10.1';
-import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.10.1';
-import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.10.1';
-import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.10.1';
-import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.10.1';
-import { validateExercise, renderValidation } from './validation.js?v=14.10.1';
+import { runPython } from './python-runtime.js?v=14.10.8.18';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.18';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.18';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.10.8.18';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.10.8.18';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.10.8.18';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.10.8.18';
+import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.10.8.18';
+import { EXERCISE_REFERENCE_CATALOG_CURRENT } from '../data/exercise-reference-catalog-current.js?v=14.10.8.18';
+import { validateExercise, renderValidation } from './validation.js?v=14.10.8.18';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.10.1';
+} from './supervision.js?v=14.10.8.18';
 
-import { supabase } from './supabase.js?v=14.10.1';
-import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.1';
-import { buildHtmlPreview } from './preview-builder.js?v=14.10.1';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.8.18';
+import { buildHtmlPreview } from './preview-builder.js?v=14.10.8.18';
+import { shouldRecoverCachedDraft } from './draft-recovery.js?v=14.10.8.18';
+import { getWeekendWindow, formatWeekendCountdown, buildWeekendDiagnostics, WEEKEND_SUPPORT_TIME_ZONE } from './weekend-support.js?v=14.10.8.18';
+import { callWeekendVoucher, copyWeekendVoucherCode } from './weekend-voucher.js?v=14.10.8.18';
 
 let state = {
   profile:null,
@@ -35,10 +40,13 @@ let state = {
   toolsOpen:false,
   outputOpen:false,
   pendingServerEvaluation:null,
-  autoGrade:{score:0,graded_at:null,submitted_score:null,dirty:false,pending:false,files:[]},
+  autoGrade:{score:0,graded_at:null,submitted_score:null,submitted_at:null,attempts:0,status:'in_progress',completion_source:null,dirty:false,pending:false,files:[],reference_match:null,current_file_matches:0,legacy_file_matches:0},
   symbolPaletteOpen:false,
   referenceAvailable:false,
   referenceFiles:new Map(),
+  referenceVariants:new Map(),
+  referenceSelections:new Map(),
+  referenceMatchCache:new Map(),
   referenceSource:'none',
   classId:null,
   classroomUrl:null,
@@ -46,6 +54,7 @@ let state = {
   legacyRepositoryUrl:null,
   linksLoaded:false,
   codeFontSize:14,
+  weekend:{window:null,enabled:false,focusLine:null,timer:null,lastDiagnostics:null,voucher:null,voucherLoading:false,voucherError:null},
 };
 
 const $ = (id)=>document.getElementById(id);
@@ -54,25 +63,166 @@ const CODE_FONT_STORAGE='epds:code-font-size';
 const CODE_FONT_MIN=11;
 const CODE_FONT_MAX=22;
 const CODE_FONT_STEP=1;
+function compactTouchWorkspace(){
+  try{return Boolean(window.matchMedia?.('(pointer: coarse)').matches||window.innerWidth<=760);}catch(_){return false;}
+}
+function codeFontMinimum(){return compactTouchWorkspace()?16:CODE_FONT_MIN;}
 function clampCodeFontSize(value){
-  const n=Number(value);
-  return Math.max(CODE_FONT_MIN,Math.min(CODE_FONT_MAX,Number.isFinite(n)?Math.round(n):14));
+  const n=Number(value),min=codeFontMinimum();
+  return Math.max(min,Math.min(CODE_FONT_MAX,Number.isFinite(n)?Math.round(n):Math.max(14,min)));
 }
+
 function loadCodeFontSize(){
-  try{return clampCodeFontSize(localStorage.getItem(CODE_FONT_STORAGE)||14);}catch(_){return 14;}
+  try{return clampCodeFontSize(localStorage.getItem(CODE_FONT_STORAGE)||14);}catch(_){return clampCodeFontSize(14);}
 }
+
 function applyCodeFontSize(value,{persist=true}={}){
   const size=clampCodeFontSize(value);
   state.codeFontSize=size;
+  const gutter=Math.max(52,Math.min(70,Math.ceil(size*2.6+10)));
   document.documentElement.style.setProperty('--code-font-size',`${size}px`);
+  document.documentElement.style.setProperty('--code-gutter-width',`${gutter}px`);
   const label=$('font-size-label');if(label)label.textContent=`${size} px`;
   const dec=$('font-decrease-btn'),inc=$('font-increase-btn');
-  if(dec)dec.disabled=size<=CODE_FONT_MIN;
+  if(dec)dec.disabled=size<=codeFontMinimum();
   if(inc)inc.disabled=size>=CODE_FONT_MAX;
   if(persist){try{localStorage.setItem(CODE_FONT_STORAGE,String(size));}catch(_){}}
   renderEditorLineNumbers();
 }
 function adjustCodeFontSize(delta){applyCodeFontSize(state.codeFontSize+delta);}
+
+const WEEKEND_DISABLED_PREFIX='epds:weekend-help-disabled:';
+const WEEKEND_SEEN_PREFIX='epds:weekend-reward-seen:';
+function weekendStorageKey(prefix,weekendId){return `${prefix}${state.profile?.id||'anon'}:${weekendId||'none'}`;}
+function weekendDisabled(windowInfo=state.weekend?.window){
+  if(!windowInfo?.weekendId)return false;
+  try{return localStorage.getItem(weekendStorageKey(WEEKEND_DISABLED_PREFIX,windowInfo.weekendId))==='1';}catch(_){return false;}
+}
+function setWeekendDisabled(disabled){
+  const info=state.weekend?.window;if(!info?.weekendId)return;
+  try{localStorage.setItem(weekendStorageKey(WEEKEND_DISABLED_PREFIX,info.weekendId),disabled?'1':'0');}catch(_){}
+}
+function weekendRewardSeen(windowInfo=state.weekend?.window){
+  if(!windowInfo?.weekendId)return true;
+  try{return localStorage.getItem(weekendStorageKey(WEEKEND_SEEN_PREFIX,windowInfo.weekendId))==='1';}catch(_){return false;}
+}
+function markWeekendRewardSeen(){
+  const info=state.weekend?.window;if(!info?.weekendId)return;
+  try{localStorage.setItem(weekendStorageKey(WEEKEND_SEEN_PREFIX,info.weekendId),'1');}catch(_){}
+}
+function clearWeekendFocus(){
+  state.weekend.focusLine=null;state.weekend.lastDiagnostics=null;
+  $('weekend-code-focus-line')?.classList.add('hidden');
+  renderEditorLineNumbers();
+}
+function updateWeekendFocusOverlay(){
+  const overlay=$('weekend-code-focus-line'),editor=$('code-editor');if(!overlay||!editor)return;
+  const info=state.weekend?.window,line=Number(state.weekend?.focusLine||0);
+  if(!info?.eligible||!state.weekend.enabled||!Number.isFinite(line)||line<1){overlay.classList.add('hidden');return;}
+  const style=getComputedStyle(editor),lineHeight=parseFloat(style.lineHeight)||22,paddingTop=parseFloat(style.paddingTop)||0;
+  const top=paddingTop+((line-1)*lineHeight)-editor.scrollTop;
+  if(top+lineHeight<0||top>editor.clientHeight){overlay.classList.add('hidden');return;}
+  overlay.style.top=`${Math.max(0,top)}px`;overlay.style.height=`${lineHeight}px`;overlay.classList.remove('hidden');
+}
+function renderWeekendModeBanner(){
+  const banner=$('weekend-mode-banner'),info=state.weekend?.window;if(!banner)return;
+  if(!info?.eligible){banner.classList.add('hidden');clearWeekendFocus();return;}
+  banner.classList.remove('hidden');banner.dataset.enabled=state.weekend.enabled?'true':'false';
+  const title=$('weekend-mode-title'),status=$('weekend-mode-status'),toggle=$('weekend-mode-toggle'),count=$('weekend-mode-countdown'),voucherBtn=$('weekend-voucher-open');
+  if(title)title.textContent=state.weekend.enabled?'Modo Final de Semana ativo':'Ajuda de Final de Semana pausada';
+  if(status)status.textContent=state.weekend.enabled?'Dicas extras + voucher de 1 ponto extra disponíveis até domingo às 18:00 (horário de Brasília).':'A ajuda pode ser reativada; seu voucher de 1 ponto continua disponível para consulta.';
+  if(toggle)toggle.textContent=state.weekend.enabled?'Desativar ajuda extra':'Ativar ajuda extra';
+  if(count)count.textContent=formatWeekendCountdown(info.remainingMs);
+  if(voucherBtn){voucherBtn.classList.remove('hidden');voucherBtn.textContent=state.weekend?.voucher?.code?`Ver código ${state.weekend.voucher.code}`:'Ver código +1 ponto';}
+}
+function renderWeekendVoucherDialog(){
+  const voucher=state.weekend?.voucher,code=$('weekend-reward-code'),status=$('weekend-reward-code-status'),copy=$('weekend-reward-copy');
+  if(code)code.textContent=voucher?.code|| (state.weekend?.voucherLoading?'Gerando…':'Indisponível');
+  if(copy)copy.disabled=!voucher?.code;
+  if(status){
+    if(voucher?.code)status.textContent=`Voucher emitido em ${new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}).format(new Date(voucher.issued_at))}. Envie este código ao professor.`;
+    else if(state.weekend?.voucherLoading)status.textContent='Gerando seu código seguro…';
+    else if(state.weekend?.voucherError)status.textContent='Não foi possível gerar o código agora. Tente novamente antes de domingo às 18h.';
+    else status.textContent='O código será gerado pelo servidor assim que a recompensa estiver disponível.';
+  }
+}
+async function ensureWeekendVoucher({force=false}={}){
+  const info=state.weekend?.window;if(!info?.eligible||!state.profile?.id)return null;
+  if(state.weekend.voucher&&!force)return state.weekend.voucher;
+  if(state.weekend.voucherLoading)return null;
+  state.weekend.voucherLoading=true;state.weekend.voucherError=null;renderWeekendVoucherDialog();
+  try{
+    const data=await callWeekendVoucher('issue',{class_id:state.classId||null,weekend_id:info.weekendId});
+    state.weekend.voucher=data?.voucher||null;
+    return state.weekend.voucher;
+  }catch(error){console.warn('[AGV] Voucher de fim de semana indisponível.',error);state.weekend.voucherError=error;}
+  finally{state.weekend.voucherLoading=false;renderWeekendVoucherDialog();renderWeekendModeBanner();}
+  return null;
+}
+function openWeekendRewardDialog(){
+  const info=state.weekend?.window;if(!info?.eligible)return;
+  renderWeekendVoucherDialog();
+  const dialog=$('weekend-reward-dialog');try{if(dialog&&!dialog.open)dialog.showModal();}catch(_){}
+  ensureWeekendVoucher().catch(()=>{});
+}
+function currentWeekendFileSnapshot(){
+  return state.files.map(file=>({filename:file.filename,content:state.active?.id===file.id&&$('code-editor')?String($('code-editor').value??''):String(file.content??'')}));
+}
+function activeServerDetail(data=state.autoGrade){
+  const files=data?.files||state.autoGrade?.files||[];if(!state.active)return null;
+  return files.find(file=>referenceAliases(file.filename||file.reference_filename||'').some(alias=>referenceAliases(state.active.filename).includes(alias)))||null;
+}
+function renderWeekendSupport(data=state.autoGrade){
+  const guidance=$('exercise-guidance');if(!guidance)return;
+  guidance.querySelector('#weekend-extra-support')?.remove();
+  const info=state.weekend?.window;
+  if(!info?.eligible||!state.weekend.enabled||!state.active){clearWeekendFocus();return;}
+  const reference=referenceForFile(state.active.filename,{fast:true})||'';
+  const diagnostics=buildWeekendDiagnostics({filename:state.active.filename,language:state.active.language||referenceLanguageForFile(state.active.filename),studentContent:$('code-editor')?.value??state.active.content??'',referenceContent:reference,files:currentWeekendFileSnapshot(),serverDetail:activeServerDetail(data)});
+  state.weekend.lastDiagnostics=diagnostics;state.weekend.focusLine=diagnostics.focusLine||null;
+  const box=document.createElement('section');box.id='weekend-extra-support';box.className='weekend-extra-support';
+  const head=document.createElement('div');head.className='weekend-support-head';
+  const heading=document.createElement('strong');heading.textContent='Ajuda extra deste fim de semana';
+  const badge=document.createElement('span');badge.className='weekend-support-badge';badge.textContent='Premiação ativa';head.append(heading,badge);box.append(head);
+  for(const item of diagnostics.suggestions||[]){
+    const card=document.createElement('div');card.className=`weekend-support-item ${item.level||''}`.trim();
+    const title=document.createElement('strong');title.textContent=`${item.focusLine?`Linha ${item.focusLine} • `:''}${item.title||'Próximo ajuste'}`;
+    const msg=document.createElement('span');msg.textContent=String(item.message||'');card.append(title,msg);box.append(card);
+  }
+  if(diagnostics.steps?.length){const title=document.createElement('strong');title.textContent='Passo a passo focado';box.append(title);const ol=document.createElement('ol');diagnostics.steps.forEach(step=>{const li=document.createElement('li');li.textContent=step.replace(/^\d+\.\s*/, '');ol.append(li);});box.append(ol);}
+  guidance.append(box);renderEditorLineNumbers();updateWeekendFocusOverlay();
+}
+let referenceRefreshTimer=0;
+let weekendSupportTimer=0;
+function scheduleReferenceRefresh(){
+  clearTimeout(referenceRefreshTimer);
+  referenceRefreshTimer=setTimeout(()=>{referenceRefreshTimer=0;renderReference();renderLiveMetrics();},compactTouchWorkspace()?650:420);
+}
+function scheduleWeekendSupport(){
+  clearTimeout(weekendSupportTimer);
+  weekendSupportTimer=setTimeout(()=>{weekendSupportTimer=0;renderWeekendSupport();},compactTouchWorkspace()?700:450);
+}
+function tickWeekendMode(){
+  const info=getWeekendWindow(Date.now(),WEEKEND_SUPPORT_TIME_ZONE);state.weekend.window=info;
+  if(!info.eligible){state.weekend.enabled=false;renderWeekendModeBanner();renderWeekendSupport();if(state.weekend.timer){clearInterval(state.weekend.timer);state.weekend.timer=null;}return;}
+  renderWeekendModeBanner();
+}
+function initializeWeekendMode(){
+  if(state.weekend.timer){clearInterval(state.weekend.timer);state.weekend.timer=null;}
+  const info=getWeekendWindow(Date.now(),WEEKEND_SUPPORT_TIME_ZONE);state.weekend.window=info;
+  state.weekend.enabled=Boolean(info.eligible&&!weekendDisabled(info));
+  state.weekend.voucher=null;state.weekend.voucherError=null;state.weekend.voucherLoading=false;
+  renderWeekendModeBanner();renderWeekendSupport();
+  if(info.eligible){
+    state.weekend.timer=setInterval(tickWeekendMode,1000);
+    ensureWeekendVoucher().catch(()=>{});
+    if(!weekendRewardSeen(info))openWeekendRewardDialog();
+  }
+}
+function toggleWeekendMode(){
+  const info=getWeekendWindow(Date.now(),WEEKEND_SUPPORT_TIME_ZONE);state.weekend.window=info;if(!info.eligible)return;
+  state.weekend.enabled=!state.weekend.enabled;setWeekendDisabled(!state.weekend.enabled);renderWeekendModeBanner();renderWeekendSupport();
+}
 
 const CLASSROOM_FALLBACKS = Object.freeze({
   'ee8271e6-390d-455c-badd-c9319a2bf2ec:ad1c2081-9bea-459b-b6f6-272f452bc573':'https://classroom.google.com/c/NzkzNTA2MzQ0MjU1',
@@ -96,6 +246,7 @@ async function callStudentFiles(body){
   if(!error&&!data?.error)return data||{};
   let details=data||null;
   try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  await handleSessionInvalid(details);
   const e=new Error(details?.reason||details?.error||error?.message||'Falha ao salvar arquivo.');
   e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
 }
@@ -105,6 +256,7 @@ async function callAutograde(body){
   if(!error&&!data?.error)return data||{};
   let details=data||null;
   try{if(!details&&error?.context?.clone)details=await error.context.clone().json();}catch(_){}
+  await handleSessionInvalid(details);
   const e=new Error(details?.reason||details?.error||error?.message||'Falha na autocorreção.');
   e.code=details?.error||'function_error';e.status=error?.context?.status||null;e.details=details;throw e;
 }
@@ -285,7 +437,89 @@ function setOutputOpen(open){
 
 function referenceEntry(){
   const key=`${state.subject?.slug||''}:${state.exercise?.exercise_number||''}`;
-  return EXERCISE_REFERENCE_DS2_CORRECTED[key]||EXERCISE_REFERENCES[key]||EXERCISE_REFERENCE_EXTRAS[key]||EXERCISE_REFERENCE_SYNCED[key]||EXERCISE_REFERENCE_3DS_RESTORED[key]||null;
+  return EXERCISE_REFERENCE_CATALOG_CURRENT[key]||EXERCISE_REFERENCE_DS2_CORRECTED[key]||EXERCISE_REFERENCES[key]||EXERCISE_REFERENCE_EXTRAS[key]||EXERCISE_REFERENCE_SYNCED[key]||EXERCISE_REFERENCE_3DS_RESTORED[key]||null;
+}
+
+function localReferenceEntries(){
+  const key=`${state.subject?.slug||''}:${state.exercise?.exercise_number||''}`;
+  return [
+    ['catalog-current',EXERCISE_REFERENCE_CATALOG_CURRENT[key]],
+    ['ds2-corrected',EXERCISE_REFERENCE_DS2_CORRECTED[key]],
+    ['reference',EXERCISE_REFERENCES[key]],
+    ['extra',EXERCISE_REFERENCE_EXTRAS[key]],
+    ['synced',EXERCISE_REFERENCE_SYNCED[key]],
+    ['3ds-restored',EXERCISE_REFERENCE_3DS_RESTORED[key]],
+  ].filter(([,entry])=>entry?.files&&typeof entry.files==='object');
+}
+
+function simpleContentHash(value){
+  const source=normalizeReferenceContent(value);
+  let h=2166136261;
+  for(let i=0;i<source.length;i++){h^=source.charCodeAt(i);h=Math.imul(h,16777619);}
+  return (h>>>0).toString(16).padStart(8,'0');
+}
+function addReferenceVariant(file){
+  if(!file?.filename)return;
+  const key=normalizeFilename(file.filename),content=normalizeReferenceContent(file.content);
+  if(!content.trim())return;
+  if(!state.referenceVariants.has(key))state.referenceVariants.set(key,[]);
+  const list=state.referenceVariants.get(key),hash=file.content_hash||simpleContentHash(content);
+  const found=list.find(item=>normalizeReferenceContent(item.content)===content||(item.content_hash||simpleContentHash(item.content))===hash);
+  if(found){
+    if(file.is_current){Object.assign(found,file,{content,is_current:true});}
+    return;
+  }
+  list.push({...file,content,content_hash:hash});
+}
+function referenceVariantCandidates(filename){
+  const out=[];
+  for(const alias of referenceAliases(filename)){
+    for(const item of state.referenceVariants.get(alias)||[])if(!out.some(existing=>existing.id===item.id&&existing.content_hash===item.content_hash))out.push(item);
+  }
+  const current=referenceFileCurrentFor(filename);
+  if(current&&!out.some(item=>normalizeReferenceContent(item.content)===normalizeReferenceContent(current.content))){
+    out.push({...current,id:`current:${normalizeFilename(current.filename)}:${simpleContentHash(current.content)}`,label:'Atual • sincronizada',version_key:'current',is_current:true,content_hash:simpleContentHash(current.content)});
+  }
+  return out;
+}
+function similarityTokens(value){
+  return (normalizeReferenceContent(value).toLowerCase().match(/===|!==|=>|==|!=|>=|<=|&&|\|\||[a-z_$À-ÿ][\w$À-ÿ-]*|\d+(?:\.\d+)?|[{}()[\]<>:;,.#@%+*\/=!?&|$-]/gi)||[]);
+}
+function referenceSimilarity(student,reference){
+  const a=similarityTokens(student),b=similarityTokens(reference);
+  if(!a.length||!b.length)return 0;
+  const A=new Map(),B=new Map();
+  for(const x of a)A.set(x,(A.get(x)||0)+1);for(const x of b)B.set(x,(B.get(x)||0)+1);
+  let common=0;for(const [k,n] of A)common+=Math.min(n,B.get(k)||0);
+  const precision=common/a.length,recall=common/b.length;
+  return precision+recall?(2*precision*recall)/(precision+recall):0;
+}
+function currentStudentContentFor(filename){
+  const target=state.files.find(file=>referenceAliases(filename).includes(normalizeFilename(file.filename)));
+  return target?currentFileContent(target):'';
+}
+function selectedReferenceVariant(filename){
+  const candidates=referenceVariantCandidates(filename);
+  if(!candidates.length)return null;
+  const key=normalizeFilename(filename),manual=state.referenceSelections.get(key);
+  if(manual&&manual!=='auto'){
+    const selected=candidates.find(item=>String(item.id||item.version_key||item.content_hash)===manual);
+    if(selected){const result={...selected,match_mode:'manual',match_score:referenceSimilarity(currentStudentContentFor(filename),selected.content)};state.referenceMatchCache.set(key,result);return result;}
+  }
+  const student=currentStudentContentFor(filename);
+  const current=candidates.find(item=>item.is_current)||candidates[0];
+  if(!String(student||'').trim()){const result={...current,match_mode:'current-empty',match_score:0};state.referenceMatchCache.set(key,result);return result;}
+  let best=current,bestScore=-1;
+  for(const candidate of candidates){
+    const score=referenceSimilarity(student,candidate.content);
+    if(score>bestScore+0.0001||(Math.abs(score-bestScore)<0.0001&&candidate.is_current)){best=candidate;bestScore=score;}
+  }
+  const result={...best,match_mode:'auto',match_score:Math.max(0,bestScore)};state.referenceMatchCache.set(key,result);return result;
+}
+function cachedReferenceVariant(filename){
+  const key=normalizeFilename(filename),manual=state.referenceSelections.get(key);
+  if(manual&&manual!=='auto')return selectedReferenceVariant(filename);
+  return state.referenceMatchCache.get(key)||referenceFileCurrentFor(filename)||referenceVariantCandidates(filename).find(item=>item.is_current)||referenceVariantCandidates(filename)[0]||null;
 }
 
 function normalizeFilename(value){return String(value||'').trim().toLowerCase();}
@@ -303,7 +537,7 @@ function referenceAliases(filename){
 }
 
 async function loadWorkspaceResources(){
-  state.referenceFiles=new Map();state.referenceSource='none';state.classId=null;state.classroomUrl=null;state.repositoryUrl=null;state.legacyRepositoryUrl=null;state.linksLoaded=false;
+  state.referenceFiles=new Map();state.referenceVariants=new Map();state.referenceSelections=new Map();state.referenceMatchCache=new Map();state.referenceSource='none';state.classId=null;state.classroomUrl=null;state.repositoryUrl=null;state.legacyRepositoryUrl=null;state.linksLoaded=false;
   const fallback=referenceEntry();
   const fallbackFiles=Object.entries(fallback?.files||{}).map(([filename,content])=>({filename,language:(fallback.languages||{})[filename]||'',content:String(content??''),source:'bundle'}));
   let dbRefs=[];
@@ -316,6 +550,15 @@ async function loadWorkspaceResources(){
     dbRefs=Array.isArray(data)?data:[];
   }catch(error){console.warn('[AGV] Referência no Supabase indisponível; usando contingência local.',error);}
   for(const file of fallbackFiles)state.referenceFiles.set(normalizeFilename(file.filename),file);
+  for(const [source,entry] of localReferenceEntries()){
+    for(const [filename,content] of Object.entries(entry.files||{})){
+      addReferenceVariant({
+        id:`bundle:${source}:${normalizeFilename(filename)}:${simpleContentHash(content)}`,
+        filename,language:(entry.languages||{})[filename]||'',content,
+        label:`Histórica local • ${source}`,version_key:`bundle:${source}`,source_kind:'bundle_snapshot',source_ref:source,is_current:false
+      });
+    }
+  }
   let usefulDbRefs=0;
   for(const file of dbRefs){
     const content=String(file?.content??'');
@@ -326,7 +569,16 @@ async function loadWorkspaceResources(){
     usefulDbRefs+=1;
   }
   state.referenceSource=usefulDbRefs?'supabase':fallbackFiles.length?'bundle':'none';
-  state.referenceAvailable=state.referenceFiles.size>0;
+  for(const file of state.referenceFiles.values())addReferenceVariant({...file,id:`current:${normalizeFilename(file.filename)}:${simpleContentHash(file.content)}`,label:file.source==='supabase'?'Atual • sincronizada':'Atual • contingência local',version_key:'current',is_current:true});
+  try{
+    const {data:history,error}=await supabase.from('exercise_reference_file_versions')
+      .select('id,filename,language,content,content_hash,version_key,label,source_kind,source_ref,effective_from,effective_to,is_current,active')
+      .eq('exercise_id',state.exercise.id).eq('active',true)
+      .order('filename',{ascending:true}).order('is_current',{ascending:false});
+    if(error)throw error;
+    for(const file of history||[])addReferenceVariant({...file,source:'history'});
+  }catch(error){console.info('[AGV] Histórico versionado de referências ainda não instalado; mantendo referências atuais e snapshots locais.',error?.message||error);}
+  state.referenceAvailable=state.referenceFiles.size>0||state.referenceVariants.size>0;
 
   try{
     const {data:membership,error}=await supabase.from('class_memberships').select('class_id')
@@ -357,12 +609,22 @@ async function loadWorkspaceResources(){
   updateWorkspaceActionAvailability();
 }
 
-function referenceFileFor(filename){
-  for(const alias of referenceAliases(filename)){
-    const file=state.referenceFiles.get(alias);
-    if(file)return file;
-  }
-  return null;
+function referenceFileCurrentFor(filename){
+  const exact=normalizeFilename(filename);
+  const candidates=referenceAliases(filename)
+    .map(alias=>state.referenceFiles.get(alias))
+    .filter(Boolean);
+  // O Supabase é a fonte oficial mesmo quando usa um alias equivalente ao
+  // nome do arquivo do aluno (style.css/estilo.css, main.kt/MainActivity.kt).
+  // Dentro da mesma fonte, o nome exato continua sendo preferido.
+  return candidates.find(file=>file.source==='supabase'&&normalizeFilename(file.filename)===exact)
+    ||candidates.find(file=>file.source==='supabase')
+    ||candidates.find(file=>normalizeFilename(file.filename)===exact)
+    ||candidates[0]
+    ||null;
+}
+function referenceFileFor(filename,{fast=false}={}){
+  return (fast?cachedReferenceVariant(filename):selectedReferenceVariant(filename))||referenceFileCurrentFor(filename);
 }
 function normalizeReferenceContent(value){
   let source=String(value??'').replace(/\r\n?/g,'\n');
@@ -376,22 +638,50 @@ function normalizeReferenceContent(value){
   }
   return source;
 }
-function referenceForFile(filename){
-  const file=referenceFileFor(filename);
+function referenceForFile(filename,{fast=false}={}){
+  const file=referenceFileFor(filename,{fast});
   return file?normalizeReferenceContent(file.content):null;
 }
 function referenceLanguageForFile(filename){return referenceFileFor(filename)?.language||state.active?.language||'text';}
+
+function renderReferenceVersionControl(filename,file){
+  const select=$('reference-version-select'),status=$('reference-version-status'),wrap=$('reference-version-control');
+  if(!select||!status||!wrap)return;
+  const candidates=referenceVariantCandidates(filename),key=normalizeFilename(filename),selection=state.referenceSelections.get(key)||'auto';
+  select.replaceChildren();
+  const auto=document.createElement('option');auto.value='auto';auto.textContent='Auto • mais próxima do seu código';select.append(auto);
+  const ordered=[...candidates].sort((a,b)=>Number(Boolean(b.is_current))-Number(Boolean(a.is_current))||String(b.effective_from||'').localeCompare(String(a.effective_from||'')));
+  ordered.forEach((candidate,index)=>{
+    const option=document.createElement('option');
+    option.value=String(candidate.id||candidate.version_key||candidate.content_hash);
+    const date=candidate.effective_from?` • ${formatDate(candidate.effective_from)}`:'';
+    option.textContent=candidate.is_current?`Atual${date}`:`Anterior ${index}${date} • ${candidate.source_ref||candidate.label||'histórica'}`;
+    select.append(option);
+  });
+  select.value=[...select.options].some(option=>option.value===selection)?selection:'auto';
+  select.disabled=candidates.length<2;
+  wrap.classList.toggle('single-version',candidates.length<2);
+  const score=Math.round(Number(file?.match_score||0)*100);
+  if(file?.match_mode==='manual')status.textContent=`Exibição manual • compatibilidade estimada ${score}%`;
+  else if(file?.match_mode==='auto'&&!file?.is_current)status.textContent=`Detectada referência anterior • compatibilidade ${score}%`;
+  else if(file?.match_mode==='auto')status.textContent=`Detectada referência atual • compatibilidade ${score}%`;
+  else status.textContent=file?.is_current?'Referência atual':'Referência histórica';
+}
 
 function renderReference(){
   const code=$('reference-code'),name=$('reference-filename'),note=$('reference-note');
   if(!code||!name||!note)return;
   const file=referenceFileFor(state.active?.filename),content=normalizeReferenceContent(file?.content);
   const has=typeof content==='string'&&content.length>0;
-  state.referenceAvailable=state.referenceFiles.size>0;
+  state.referenceAvailable=state.referenceFiles.size>0||state.referenceVariants.size>0;
   name.textContent=state.active?.filename||'arquivo';
+  renderReferenceVersionControl(state.active?.filename,file);
   if(has){
-    const source=file?.source==='supabase'?'referência oficial sincronizada':'referência local de contingência';
-    note.textContent=`${source}. Leia à esquerda e digite manualmente no editor à direita. Copiar, arrastar e colar estão desativados.`;
+    const historical=!file?.is_current;
+    const mode=file?.match_mode==='manual'?'selecionada manualmente':file?.match_mode==='auto'?'detectada automaticamente':'selecionada';
+    note.textContent=historical
+      ?`Referência histórica oficial ${mode} para manter compatibilidade com o código já digitado. Você pode comparar com a versão atual no seletor acima.`
+      :`Referência atual ${mode}. Se o seu código começou antes de uma atualização, o modo Auto pode reconhecer e exibir uma versão anterior. Copiar, arrastar e colar continuam desativados.`;
     code.innerHTML=renderNumberedCode(content,referenceLanguageForFile(state.active?.filename));
     code.dataset.empty='false';
   }else{
@@ -483,9 +773,13 @@ function renderNumberedCode(content,language){
 
 function renderEditorLineNumbers(){
   const editor=$('code-editor'),gutter=$('editor-line-numbers');if(!editor||!gutter)return;
-  const count=Math.max(1,String(editor.value??'').split('\n').length);
-  gutter.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
-  gutter.scrollTop=editor.scrollTop;
+  const count=Math.max(1,String(editor.value??'').split('\n').length),focus=state.weekend?.enabled&&state.weekend?.window?.eligible?Number(state.weekend?.focusLine||0):0;
+  const signature=`${count}:${focus}`;
+  if(gutter.dataset.signature!==signature){
+    gutter.innerHTML=Array.from({length:count},(_,i)=>`<span${i+1===focus?' class="weekend-focus"':''}>${i+1}</span>`).join('');
+    gutter.dataset.signature=signature;
+  }
+  gutter.scrollTop=editor.scrollTop;updateWeekendFocusOverlay();
 }
 
 let highlightFrame=0;
@@ -495,7 +789,9 @@ function renderHighlight(){
     const editor=$('code-editor'),pre=$('code-highlight');
     if(!editor||!pre)return;
     try{
-      pre.innerHTML=highlightCode(editor.value,state.active?.language||'text');
+      const source=String(editor.value??'');
+      if(compactTouchWorkspace()&&source.length>24000)pre.textContent=source;
+      else pre.innerHTML=highlightCode(source,state.active?.language||'text');
       const shell=editor.closest('.editor-shell');
       const highlightReady=Boolean(pre.textContent===editor.value);
       shell?.classList.toggle('highlight-ready',highlightReady);
@@ -553,7 +849,7 @@ function starterForFile(file,defs,safeDefaults){
 
 function defaultFiles(subjectSlug){
   const key=`${subjectSlug}:${state.exercise.exercise_number}`;
-  const meta=EXERCISE_MANIFEST[key] || null;
+  const meta=EXERCISE_MANIFEST_CURRENT[key] || EXERCISE_MANIFEST[key] || null;
   state.meta=meta;
   const safeDefaults=DEFAULTS[subjectSlug]||[];
   const defs=(meta?.files||[]).length ? meta.files : safeDefaults;
@@ -597,6 +893,8 @@ async function ensureFiles(){
     const data=await callStudentFiles({action:'ensure',exercise_id:state.exercise.id,files:seeds.map(({filename,language,content})=>({filename,language,content}))});
     remote=data.files||remote;
   }
+  const canonicalNames=new Set(desired.flatMap(file=>referenceAliases(file.filename)));
+  remote=remote.filter(file=>referenceAliases(file.filename).some(name=>canonicalNames.has(name)));
   state.files=remote;
   state.recoveredFiles=new Set();
   remote.forEach(file=>{
@@ -604,12 +902,10 @@ async function ensureFiles(){
     state.lastSavedContent.set(file.id,serverContent);
     const draft=readCachedDraft(file);
     if(!draft)return;
-    const remoteAt=Date.parse(file.saved_at||0)||0;
-    const newer=Boolean(draft.savedAt&&draft.savedAt>remoteAt+250);
-    if(newer&&draft.content!==serverContent){
+    if(shouldRecoverCachedDraft(file,draft,serverContent)){
       file.content=draft.content;
       state.recoveredFiles.add(file.id);
-    }else if(draft.savedAt&&draft.content===serverContent){
+    }else if(draft.content===serverContent){
       localStorage.removeItem(cacheKey(file));
     }
   });
@@ -642,6 +938,7 @@ async function activateFile(id){
   renderReference();
   renderSymbolPalette();
   renderLiveMetrics();
+  renderWeekendSupport();
   setSaveState(`Revisão ${next.revision||1} • ${formatDate(next.saved_at)}`,'ok');
   sendEditorSnapshot(true);
 }
@@ -984,7 +1281,7 @@ function estimateCodeCompletion(){
   let total=0;
   for(const file of files){
     const student=progressComparable(file.filename,currentFileContent(file));
-    const reference=progressComparable(file.filename,referenceForFile(file.filename)??'');
+    const reference=progressComparable(file.filename,referenceForFile(file.filename,{fast:true})??'');
     let ratio=0;
     if(reference.length)ratio=Math.min(1,student.length/reference.length);
     else ratio=student.length?1:0;
@@ -999,6 +1296,7 @@ function renderLiveMetrics(){
   const score=Math.max(0,Math.min(100,Math.round(Number(state.autoGrade?.score||0))));
   if(scoreEl)scoreEl.textContent=hasGrade?`${score}%`:'—';
   if(errorEl)errorEl.textContent=hasGrade?`${100-score}%`:'—';
+  const exerciseAuto=$('exercise-auto-score');if(exerciseAuto)exerciseAuto.textContent=hasGrade?`${score}%`:'0%';
   $('autograde-meter')?.setAttribute('data-completion',String(completion));
 }
 function invalidateServerEvaluation({schedule=false}={}){
@@ -1038,16 +1336,23 @@ function renderAutoGrade(data=state.autoGrade){
   if(!box)return;
   box.classList.add('server-validation');box.replaceChildren();
   const intro=document.createElement('p');intro.className='muted';
-  intro.textContent=state.autoGrade?.dirty?'A conclusão é estimada localmente; acerto e erro estão sendo recalculados automaticamente no servidor.':'Acerto e erro usam a referência oficial no servidor; conclusão indica quanto da atividade já foi preenchido.';
+  if(state.autoGrade?.dirty)intro.textContent='A conclusão é estimada localmente; acerto e erro estão sendo recalculados automaticamente no servidor.';
+  else if((data?.reference_match||state.autoGrade?.reference_match)==='legacy')intro.textContent='Correção compatível: o servidor reconheceu que seus arquivos correspondem melhor a uma referência anterior oficial.';
+  else if((data?.reference_match||state.autoGrade?.reference_match)==='mixed')intro.textContent='Correção compatível: seus arquivos correspondem a versões oficiais diferentes; cada arquivo está sendo comparado com a referência mais próxima.';
+  else intro.textContent='Acerto e erro usam a referência oficial mais compatível no servidor; conclusão indica quanto da atividade já foi preenchido.';
   box.append(intro);
   const files=data?.files||state.autoGrade?.files||[];
   for(const file of files){
     const row=document.createElement('div');row.className=`validation-row ${Number(file.score||0)>=100?'ok':'pending'}`;
     const mark=document.createElement('span');mark.textContent=Number(file.score||0)>=100?'✓':'○';
-    const name=document.createElement('span');name.textContent=`${String(file.filename||file.reference_filename||'Arquivo')}${file.missing?' • ausente':file.empty?' • vazio':''}`;
+    const name=document.createElement('span');
+    const versionTag=file.matched_reference_current===false?' • ref. anterior':file.matched_reference_current===true?' • ref. atual':'';
+    name.textContent=`${String(file.filename||file.reference_filename||'Arquivo')}${file.missing?' • ausente':file.empty?' • vazio':versionTag}`;
+    if(file.matched_reference_label)name.title=String(file.matched_reference_label);
     const pct=document.createElement('span');pct.className='validation-points';pct.textContent=`${Math.round(Number(file.score||0))}%`;
     row.append(mark,name,pct);box.append(row);
   }
+  renderWeekendSupport(data);
 }
 
 async function runAutoGrade({quiet=false,automatic=false}={}){
@@ -1057,7 +1362,7 @@ async function runAutoGrade({quiet=false,automatic=false}={}){
     const checkFiles=state.files.map(f=>({filename:f.filename,content:f.id===state.active?.id?$('code-editor').value:(f.content||'')}));
     const security=await inspectCode(checkFiles);if(!security.ok){state.autoGrade.pending=false;renderAutoGrade();return null;}
     const data=await callAutograde({action:'grade',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
-    state.autoGrade={score:Number(data.score||0),graded_at:data.graded_at||new Date().toISOString(),submitted_score:state.autoGrade?.submitted_score??null,dirty:false,pending:false,files:data.files||[]};
+    state.autoGrade={...state.autoGrade,score:Number(data.score||0),graded_at:data.graded_at||new Date().toISOString(),dirty:false,pending:false,files:data.files||[],reference_match:data.reference_match||null,current_file_matches:Number(data.current_file_matches||0),legacy_file_matches:Number(data.legacy_file_matches||0)};
     renderAutoGrade(data);
     if(!quiet)setSaveState(`Autocorreção: ${Math.round(Number(data.score||0))}%`,'ok');
     return data;
@@ -1113,12 +1418,12 @@ async function loadEffectiveReleaseSupport(){
 async function loadStudentSupport(){
   const [{data:accommodations},{data:progressRows}] = await Promise.all([
     supabase.from('student_accommodations').select('id,accommodation_type,config,reason,active').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id).eq('active',true),
-    supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
+    supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at,auto_score,auto_score_at,submitted_score,submitted_at,attempts,status,completion_source').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
   ]);
   const support=[...(accommodations||[])];
   const release=state.supportRelease||{};
   const progress=(progressRows||[])[0]||{};
-  state.autoGrade={score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,dirty:false,pending:false,files:state.autoGrade?.files||[]};
+  state.autoGrade={...state.autoGrade,score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,attempts:Number(progress.attempts||0),status:progress.status||'in_progress',completion_source:progress.completion_source||null,dirty:false,pending:false,files:state.autoGrade?.files||[]};
   renderAutoGrade();
   const guidance=document.getElementById('exercise-guidance');
   if(guidance){
@@ -1188,7 +1493,7 @@ function editorSnapshot(){
 export async function mountWorkspace({profile,exercise,subject}){
   state.profile=profile;
   applyCodeFontSize(loadCodeFontSize(),{persist:false}); state.exercise=exercise; state.subject=subject;
-  state.active=null; state.files=[]; state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false; state.supportRelease=null; state.recoveredFiles=new Set();
+  state.active=null; state.files=[]; state.saveQueues=new Map(); state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false; state.supportRelease=null; state.recoveredFiles=new Set(); state.referenceSelections=new Map(); state.referenceMatchCache=new Map();
   setToolsOpen(false);
   setOutputOpen(false);
   showRecoveryBanner(0);
@@ -1197,10 +1502,10 @@ export async function mountWorkspace({profile,exercise,subject}){
   clearIsolatedPreview('Inicie a atividade supervisionada para executar o código.');
   await Promise.all([loadEffectiveReleaseSupport(),loadWorkspaceResources()]);
   await ensureFiles();
-  const meta=state.meta||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||{};
+  const meta=state.meta||EXERCISE_MANIFEST_CURRENT[`${subject.slug}:${exercise.exercise_number}`]||EXERCISE_MANIFEST[`${subject.slug}:${exercise.exercise_number}`]||{};
   state.meta=meta;
   state.pendingServerEvaluation=null;
-  state.autoGrade={score:0,graded_at:null,submitted_score:null,dirty:false,pending:false,files:[]};
+  state.autoGrade={score:0,graded_at:null,submitted_score:null,submitted_at:null,attempts:0,status:'in_progress',completion_source:null,dirty:false,pending:false,files:[],reference_match:null,current_file_matches:0,legacy_file_matches:0};
   state.symbolPaletteOpen=false;
   if($('mark-complete-btn'))$('mark-complete-btn').textContent='Entregar';
   if($('validate-btn'))$('validate-btn').textContent='Auto corrigir';
@@ -1241,6 +1546,7 @@ export async function mountWorkspace({profile,exercise,subject}){
   showOutput('reference');
   runValidation();
   await loadStudentSupport();
+  initializeWeekendMode();
   await prepareSupervision({
     profile,exercise,
     getEditorState:editorSnapshot,
@@ -1253,9 +1559,12 @@ export async function mountWorkspace({profile,exercise,subject}){
 }
 
 export async function unmountWorkspace(){
-  clearTimeout(state.saveTimer);clearTimeout(liveGradeTimer);liveGradeSequence+=1;
+  clearTimeout(state.saveTimer);clearTimeout(liveGradeTimer);clearTimeout(referenceRefreshTimer);clearTimeout(weekendSupportTimer);liveGradeSequence+=1;if(state.weekend?.timer){clearInterval(state.weekend.timer);state.weekend.timer=null;}clearWeekendFocus();
   try{await saveActiveFile(false);}catch(_){}
+  // Barreira final: nenhuma gravação já enfileirada pode ficar solta ao trocar de tela.
+  await waitForPendingSaves();
   await stopSupervision();
+  state.saveQueues=new Map();
   state.active=null;
 }
 
@@ -1272,10 +1581,12 @@ $('code-editor')?.addEventListener('input',(event)=>{
   invalidateServerEvaluation({schedule:true});
   scheduleSave();
   renderHighlight();
+  if((state.referenceSelections.get(normalizeFilename(state.active.filename))||'auto')==='auto')scheduleReferenceRefresh();
+  scheduleWeekendSupport();
   handleEditorInput($('code-editor').value,event);
 });
 ['keyup','click','select'].forEach(evt=>$('code-editor')?.addEventListener(evt,sendCursor));
-$('code-editor')?.addEventListener('scroll',()=>{const e=$('code-editor'),p=$('code-highlight'),g=$('editor-line-numbers');if(p&&e){p.scrollTop=e.scrollTop;p.scrollLeft=e.scrollLeft;}if(g&&e)g.scrollTop=e.scrollTop;});
+$('code-editor')?.addEventListener('scroll',()=>{const e=$('code-editor'),p=$('code-highlight'),g=$('editor-line-numbers');if(p&&e){p.scrollTop=e.scrollTop;p.scrollLeft=e.scrollLeft;}if(g&&e)g.scrollTop=e.scrollTop;updateWeekendFocusOverlay();});
 $('symbols-btn')?.addEventListener('click',()=>{state.symbolPaletteOpen=!state.symbolPaletteOpen;renderSymbolPalette();});
 $('symbol-palette-close')?.addEventListener('click',()=>{state.symbolPaletteOpen=false;renderSymbolPalette();$('code-editor')?.focus();});
 $('toggle-tools-btn')?.addEventListener('click',()=>setToolsOpen(!state.toolsOpen));
@@ -1310,11 +1621,21 @@ $('exercise-submit-form')?.addEventListener('submit',async event=>{
     await saveActiveFile(true);await waitForPendingSaves();
     const data=await callAutograde({action:'submit',exercise_id:state.exercise.id,session_id:getSupervisionSessionId()});
     const score=Math.round(Number(data.score||0));
-    state.autoGrade={score,graded_at:data.graded_at||new Date().toISOString(),submitted_score:score,submitted_at:new Date().toISOString(),dirty:false,files:data.files||[]};
+    const officialScore=Math.round(Number(data.official_score??score));
+    const attempts=Number(data.attempts||state.autoGrade?.attempts||0);
+    const completed=Boolean(data.completed);
+    state.autoGrade={...state.autoGrade,score,graded_at:data.graded_at||new Date().toISOString(),submitted_score:officialScore,submitted_at:data.submitted_at||new Date().toISOString(),attempts,status:completed?'completed':'in_progress',completion_source:completed?'autograde_submission':'autograde_submission_partial',dirty:false,pending:false,files:data.files||[],reference_match:data.reference_match||null,current_file_matches:Number(data.current_file_matches||0),legacy_file_matches:Number(data.legacy_file_matches||0)};
     renderAutoGrade(data);
-    $('exercise-state').textContent=`Entregue • ${score}%`;
-    if(msg){msg.textContent=score===100?'Entrega registrada com 100%.':'Entrega registrada com nota parcial. Você pode continuar ajustando e entregar novamente para melhorar a nota.';msg.className='form-message ok';}
-    setSaveState(`Entrega registrada • ${score}%`,'ok');
+    $('exercise-state').textContent=completed?`Concluído • ${officialScore}%`:`Entrega parcial • ${officialScore}%`;
+    const delivered=$('exercise-submitted-score');if(delivered)delivered.textContent=`${officialScore}%`;
+    const attemptsEl=$('exercise-attempts');if(attemptsEl)attemptsEl.textContent=String(attempts);
+    if(msg){
+      if(completed)msg.textContent='Entrega registrada com 100%. Atividade concluída.';
+      else if(score<officialScore)msg.textContent=`Tentativa registrada com ${score}%. Sua melhor nota entregue continua ${officialScore}%.`;
+      else msg.textContent=`Entrega parcial registrada com ${officialScore}%. Continue ajustando; 100% conclui a atividade.`;
+      msg.className='form-message ok';
+    }
+    setSaveState(completed?`Atividade concluída • ${officialScore}%`:`Entrega parcial • ${officialScore}%`,'ok');
     setTimeout(()=>$('exercise-submit-dialog')?.close(),1200);
   }catch(error){
     const messages={empty_activity:'Digite sua solução antes de entregar.',required_files_incomplete:'Preencha index.html, estilo.css e script.js antes de entregar. A nota pode ser parcial, mas os três arquivos precisam existir e ter conteúdo.',active_supervised_session_required:'A sessão supervisionada precisa estar ativa para entregar.',exercise_locked_by_teacher:'Este exercício está bloqueado pelo professor.',reference_unavailable:'A referência oficial está temporariamente indisponível.',session_revoked:'Sua sessão foi encerrada. Entre novamente no portal.'};
@@ -1325,8 +1646,22 @@ $('exercise-submit-form')?.addEventListener('submit',async event=>{
 
 $('history-btn')?.addEventListener('click',async()=>{await loadHistory();$('history-dialog').showModal();});
 document.querySelectorAll('.output-tab').forEach(b=>b.addEventListener('click',()=>showOutput(b.dataset.output)));
+$('reference-version-select')?.addEventListener('change',event=>{
+  if(!state.active)return;
+  state.referenceSelections.set(normalizeFilename(state.active.filename),String(event.currentTarget.value||'auto'));
+  renderReference();
+  renderLiveMetrics();
+  renderWeekendSupport();
+});
 ['copy','cut','dragstart','contextmenu'].forEach(type=>$('reference-code')?.addEventListener(type,event=>{event.preventDefault();}));
 $('reference-code')?.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&['c','x','a'].includes(String(event.key||'').toLowerCase()))event.preventDefault();});
+$('weekend-mode-toggle')?.addEventListener('click',toggleWeekendMode);
+$('weekend-voucher-open')?.addEventListener('click',openWeekendRewardDialog);
+$('weekend-reward-close')?.addEventListener('click',()=>{markWeekendRewardSeen();try{$('weekend-reward-dialog')?.close();}catch(_){}});
+$('weekend-reward-confirm')?.addEventListener('click',()=>{markWeekendRewardSeen();try{$('weekend-reward-dialog')?.close();}catch(_){}});
+$('weekend-reward-copy')?.addEventListener('click',async()=>{const btn=$('weekend-reward-copy'),code=state.weekend?.voucher?.code;if(!code)return;const ok=await copyWeekendVoucherCode(code);if(btn){const before=btn.textContent;btn.textContent=ok?'Código copiado':'Copie manualmente';setTimeout(()=>{btn.textContent=before||'Copiar código';},1600);}});
+$('weekend-reward-dialog')?.addEventListener('close',markWeekendRewardSeen);
+
 function protectActiveDraft(){
   if(!state.active)return;
   const content=$('code-editor')?.value??state.active.content??'';
