@@ -7,7 +7,8 @@ import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const release=JSON.parse(read('release-v14.10.8.18.json'));
+const releasePath=fs.existsSync(path.join(root,'release-v14.10.8.18.json'))?'release-v14.10.8.18.json':'docs/historico/releases/release-v14.10.8.18.json';
+const release=JSON.parse(read(releasePath));
 const version=JSON.parse(read('atividades/version.json'));
 
 test('P10.9.17 metadados representam a release de pontuação acadêmica',()=>{
