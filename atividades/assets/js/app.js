@@ -1,6 +1,6 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.18';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.18';
-import { callActivityProgress } from './supervision.js?v=14.10.8.18';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.19';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.19';
+import { callActivityProgress } from './supervision.js?v=14.10.8.19';
 import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.18';
 import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.18';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.18';
@@ -157,7 +157,14 @@ async function routeAuthenticatedUser() {
     }
 
     setSessionHeader(true);
-    const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess;
+    let homeStudyAuthorized=false;
+    if(identity.profile.role==='student'&&!currentStaffAccess){
+      try{
+        const {data:adaptationRows}=await supabase.from('student_accommodations').select('config').eq('student_id',identity.profile.id).is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true).order('updated_at',{ascending:false}).limit(3);
+        homeStudyAuthorized=(adaptationRows||[]).some(row=>String(row?.config?.supervision?.mode||'')==='home_study');
+      }catch(error){console.warn('[AGV] Não foi possível confirmar modo domiciliar.',error);}
+    }
+    const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess&&!homeStudyAuthorized;
     setPortalFullscreenRequired(requireStudentFullscreen);
     if(!requireStudentFullscreen&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});
 
@@ -798,10 +805,10 @@ $('recovery-form')?.addEventListener('submit', async (event) => {
   submit.disabled = true;
   submit.textContent = 'Enviando...';
   try {
-    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const redirectTo = new URL('../reset-password/', window.location.href).href;
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
     if (error) throw error;
-    msg.textContent = 'Link enviado. Confira seu e-mail institucional.';
+    msg.textContent = 'Se a conta existir, enviaremos um link para esse e-mail. Confira também a caixa de spam.';
     msg.classList.remove('hidden');
     msg.classList.add('ok');
   } catch (error) {

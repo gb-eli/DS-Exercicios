@@ -1,8 +1,16 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.22.8.14",
-  "date": "2026-08-24",
+  "version": "0.22.8.15",
+  "date": "2026-08-25",
   "features": [
+    "v14.10.8.19 R4: estudo domiciliar preserva bloqueio de colagem, proteção de DevTools e detecção de entrada rápida; somente exigências presenciais incompatíveis são flexibilizadas.",
+    "v14.10.8.19 R4: troca de guia no estudo domiciliar não gera alerta/pontuação de foco, enquanto autenticação, sessão, salvamento e demais proteções continuam ativas.",
+    "v14.10.8.19 R4: progresso das etapas adaptadas sincroniza no Supabase por exercício com RLS individual e fallback local.",
+    "v14.10.8.19 R4: Maria Fernanda recebe explicações por etapa com arquivo/linhas, por que fazer, resultado esperado, alerta e partes do código quando esses metadados existem.",
+    "v14.10.8.19 R4: ajuda de código passa a ter pistas progressivas sem entregar solução pronta; novos pedidos aprovados no painel usam o mesmo conjunto completo de recursos.",
+    "v14.10.8.19: modos pedagógicos individualizados com escolha do aluno, perfil reforçado, controles ampliados e estudo domiciliar sem tela cheia obrigatória.",
+    "v14.10.8.19: acomodações globais passam a valer em todos os exercícios e não expõem diagnóstico/laudo no frontend.",
+    "v14.10.8.18.1: corrige regressão do autosave com fila serial/coalescente por arquivo, sequência de edição, confirmação do backend e rascunho local até confirmação.",
     "v14.10.8.18: valor acadêmico confirmado por exercício exibido ao aluno e ao professor sem alterar autocorreção/progresso.",
     "v14.10.8.18: 1DS Ex01–06 = 0,75; 2DS Front-End Ex01–20 = 0,20; 3DS Ex01–08 = 0,50; demais ficam sem valor automático até confirmação.",
     "Modo supervisionado por atividade com sessão server-side e IP",
@@ -183,7 +191,8 @@
     "v14.10.8.16: modais recebem foco inicial, trap de Tab, Escape e retorno de foco ao elemento de origem.",
     "v14.10.8.16: reduced-motion desativa orbit/portal travel em vez de apenas desacelerar animações.",
     "v14.10.8.16: login do Lobby é simplificado conforme padrão Anti-AI-Slop, preservando a identidade dark/tech.",
-    "v14.10.8.17: Lobby ganha diagnóstico técnico sem dados pessoais para identificar boot, SDK, Service Worker, rede, viewport e modo 3D/leve em aparelhos reais."
+    "v14.10.8.17: Lobby ganha diagnóstico técnico sem dados pessoais para identificar boot, SDK, Service Worker, rede, viewport e modo 3D/leve em aparelhos reais.",
+    "v14.10.8.18.2: recuperação de senha por e-mail redireciona para página pública dedicada, valida o contexto recovery e exige nova autenticação após a troca."
   ],
   "notes": [
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
@@ -204,8 +213,8 @@
     "Refino visual não altera APIs, autenticação, autorização, Supabase, notas, arquivos dos alunos, vouchers ou regras de supervisão.",
     "O grid técnico discreto de fundo, blur funcional da topbar, chips de status e sombras de dialogs foram preservados por terem função/identidade justificável."
   ],
-  "phase": "P10.9.17-academic-exercise-points",
-  "release": "v14.10.8.18",
+  "phase": "P10.9.19-pedagogical-extra-help-r4-audited",
+  "release": "v14.10.8.19",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",

@@ -1,0 +1,43 @@
+{
+  "version": "14.6.0",
+  "date": "2026-08-15",
+  "phase": "P7.7",
+  "title": "Validação Server-Side de Sessão Revogada",
+  "requiresDatabaseMigration": true,
+  "databaseScripts": [
+    "core/database/030_p76_auth_session_revocation.sql",
+    "core/database/031_p77_live_session_guard.sql"
+  ],
+  "requiresEdgeFunctionDeploy": true,
+  "edgeFunctionsChanged": [
+    "activity-progress",
+    "admin-auth-sessions",
+    "admin-profile-user",
+    "admin-roster",
+    "agv-progress-event",
+    "agv-reward-claim",
+    "agv-teacher-activity",
+    "ctf-complete-challenge",
+    "ctf-core-actions",
+    "lab-exercises-core",
+    "lab-virtual-core",
+    "lobby-moderation",
+    "lobby-presence",
+    "security-telemetry",
+    "staff-dashboard",
+    "staff-directory",
+    "student-files",
+    "supervision"
+  ],
+  "liveDeployApplied": false,
+  "liveDeployReason": "Supabase connector unavailable during P7.7 live inspection/deploy.",
+  "frontendActivation": {
+    "authSessionRevocationReady": false
+  },
+  "securityGuarantee": "After migration 031 and Edge Function deploy, critical endpoints reject JWTs whose session_id no longer exists in auth.sessions, closing the residual window after administrative revocation.",
+  "tests": {
+    "files": 42,
+    "tests": 69,
+    "status": "pass"
+  }
+}

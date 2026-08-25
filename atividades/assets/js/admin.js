@@ -927,8 +927,14 @@ async function openStudentDetail(studentId,name){
     ...(progressMap.get(ex.id)||{status:'not_started',progress_percent:0,approval_status:'not_required'})
   }));
   const pending=rows.filter(r=>r.status!=='completed').length;
+  const globalMode=(data.accommodations||[]).find(a=>!a.exercise_id&&a.active&&a.accommodation_type==='learning_mode');
+  const globalConfig=globalMode?.config&&typeof globalMode.config==='object'?globalMode.config:{};
+  const globalLabel=globalMode?String(globalConfig.title||'Apoio pedagógico individualizado'):'';
+  const adaptationRequest=(data.adaptation_requests||[]).find(item=>item.status==='pending');
   $('student-detail-body').innerHTML=`
     <div class="student-detail-summary"><strong>${rows.filter(r=>r.status==='completed').length} concluídos</strong><span>${pending} pendentes / não iniciados</span></div>
+    ${globalMode?`<div class="student-detail-summary adaptation-admin-summary"><strong>${esc(globalLabel)}</strong><span>${globalConfig.default_mode==='adapted'?'Modo adaptado é o padrão inicial':'Aluno escolhe quando ativar'}${globalConfig.allow_switch===false?'':' • troca de modo permitida'}</span></div>`:''}
+    ${adaptationRequest&&!globalMode?`<div class="student-detail-summary adaptation-admin-summary"><strong>Solicitação de adaptação pendente</strong><span>O aluno pediu uma forma de organização pedagógica diferente. Nenhuma justificativa sensível foi solicitada.</span><div class="review-actions"><button id="apply-guided-adaptation" class="button button-ghost button-small" type="button">Aplicar apoio guiado</button><button id="apply-reinforced-adaptation" class="button button-primary button-small" type="button">Aplicar reforçado</button><button id="close-adaptation-request" class="button button-ghost button-small" type="button">Encerrar pedido</button></div></div>`:''}
     <div class="student-exercise-grid">
       ${rows.map(r=>{const ex=allowedExercises.find(item=>String(item.id)===String(r.exercise_id)),max=academicMaxPoints(ex),earned=academicEarnedPoints(ex,r);return `
         <button class="exercise-manage-card ${r.status==='not_started'?'not-started':''}" data-exercise="${r.exercise_id}">
@@ -939,6 +945,29 @@ async function openStudentDetail(studentId,name){
     </div>
     <div id="exercise-management" class="exercise-management hidden"></div>`;
   $('student-detail-body').querySelectorAll('.exercise-manage-card').forEach(b=>b.onclick=()=>renderExerciseManagement(b.dataset.exercise).catch(error=>{console.error(error);alert('Não foi possível carregar a configuração atual da atividade.');}));
+  if(adaptationRequest&&!globalMode){
+    $('apply-guided-adaptation')?.addEventListener('click',()=>applyRequestedAdaptation(adaptationRequest.id,'guided'));
+    $('apply-reinforced-adaptation')?.addEventListener('click',()=>applyRequestedAdaptation(adaptationRequest.id,'reinforced'));
+    $('close-adaptation-request')?.addEventListener('click',()=>resolveAdaptationRequest(adaptationRequest.id,'closed'));
+  }
+}
+
+function adaptationPreset(kind='guided'){
+  const reinforced=kind==='reinforced';
+  return {profile_key:reinforced?'reinforced_code':'guided_code',title:reinforced?'Apoio pedagógico reforçado':'Apoio pedagógico disponível',student_message:reinforced?'A atividade pode ser feita uma etapa por vez, com destaque, ajuda extra de conteúdo e código e checkpoints.':'A atividade pode ser organizada em passos menores, com instruções diretas, explicações de termos e ajuda guiada para código.',default_mode:'conventional',allow_switch:true,offer_prompt:true,recommended_font_size:reinforced?19:18,features:{short_instructions:true,step_by_step:true,focus_cues:true,larger_controls:reinforced,reduced_visual_load:true,predictable_feedback:true,extra_checkpoints:true,extra_help:true,code_help:true,guided_code_help:true,term_explanations:true,content_explanations:true,micro_steps:true,highlight_current_step:true}};
+}
+async function resolveAdaptationRequest(id,status='approved'){
+  const studentId=detailCtx.studentId,name=detailCtx.name;
+  await callStaff({action:'resolve_adaptation_request',id,status});
+  if($('student-detail-dialog')?.open)$('student-detail-dialog').close();
+  await openStudentDetail(studentId,name);
+}
+async function applyRequestedAdaptation(id,kind){
+  const studentId=detailCtx.studentId,name=detailCtx.name;
+  await callStaff({action:'set_accommodation',student_id:studentId,global_scope:true,accommodation_type:'learning_mode',reason:'Plano pedagógico individualizado definido pelo professor.',config:adaptationPreset(kind)});
+  await callStaff({action:'resolve_adaptation_request',id,status:'approved'});
+  if($('student-detail-dialog')?.open)$('student-detail-dialog').close();
+  await openStudentDetail(studentId,name);
 }
 async function referenceBaseFlags(exerciseId){
   try{const {data,error}=await supabase.from('exercise_reference_files').select('filename').eq('exercise_id',exerciseId);if(error)throw error;const names=new Set((data||[]).map(x=>String(x.filename||'').toLowerCase()));return{known:true,html:names.has('index.html')||names.has('index.htm'),css:names.has('estilo.css')||names.has('style.css')||names.has('styles.css'),js:names.has('script.js')||names.has('main.js')||names.has('app.js')}}catch(error){console.warn('Referências não confirmadas no painel administrativo.',error);return{known:false,html:false,css:false,js:false}}

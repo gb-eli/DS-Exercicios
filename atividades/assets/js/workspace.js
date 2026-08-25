@@ -12,7 +12,7 @@ import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.10.8.18';
+} from './supervision.js?v=14.10.8.19';
 
 import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
 import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.8.18';
@@ -20,6 +20,11 @@ import { buildHtmlPreview } from './preview-builder.js?v=14.10.8.18';
 import { shouldRecoverCachedDraft } from './draft-recovery.js?v=14.10.8.18';
 import { getWeekendWindow, formatWeekendCountdown, buildWeekendDiagnostics, WEEKEND_SUPPORT_TIME_ZONE } from './weekend-support.js?v=14.10.8.18';
 import { callWeekendVoucher, copyWeekendVoucherCode } from './weekend-voucher.js?v=14.10.8.18';
+import {
+  resolvePedagogicalAdaptation, loadAdaptationPreference, initializeAdaptationMode, persistAdaptationMode, applyAdaptationClasses,
+  renderAdaptationBanner, maybePromptAdaptation, renderAdaptedGuidance,
+  loadAdaptationRequest, requestPedagogicalAdaptation, loadAdaptationStepProgress, persistAdaptationStepProgress
+} from './adaptations.js?v=14.10.8.19';
 
 let state = {
   profile:null,
@@ -36,6 +41,12 @@ let state = {
   teacherEditing:false,
   lastProgressTouchAt:0,
   supportRelease:null,
+  adaptation:null,
+  adaptationMode:'conventional',
+  adaptationModeState:null,
+  adaptationRequest:null,
+  adaptationBaseFontSize:14,
+  adaptationStepProgress:null,
   recoveredFiles:new Set(),
   toolsOpen:false,
   outputOpen:false,
@@ -1415,12 +1426,52 @@ async function loadEffectiveReleaseSupport(){
   return merged;
 }
 
+function setPedagogicalMode(mode,{persist=true,prompt=false}={}){
+  const next=mode==='adapted'?'adapted':'conventional';
+  state.adaptationMode=next;
+  if(state.adaptation&&persist)void persistAdaptationMode(state.profile,state.adaptation,next,supabase);
+  applyAdaptationClasses(state.adaptation,next);
+  if(state.adaptation){
+    if(next==='adapted'&&Number(state.adaptation.recommendedFontSize||0)>0){
+      applyCodeFontSize(Math.max(state.codeFontSize,Number(state.adaptation.recommendedFontSize)),{persist:false});
+    }else if(next==='conventional'&&Number(state.adaptationBaseFontSize||0)>0){
+      applyCodeFontSize(state.adaptationBaseFontSize,{persist:false});
+    }
+  }
+  renderAdaptationBanner({profile:state.profile,exercise:state.exercise,adaptation:state.adaptation,mode:next,onModeChange:(value)=>setPedagogicalMode(value,{persist:true}),request:state.adaptationRequest,onRequest:submitAdaptationRequest});
+  renderAdaptedGuidance({profile:state.profile,exercise:state.exercise,meta:state.meta||{},adaptation:state.adaptation,mode:next,remoteProgress:state.adaptationStepProgress,onStepProgress:(progress)=>{state.adaptationStepProgress={...progress};void persistAdaptationStepProgress(supabase,state.profile,state.exercise,state.adaptation,progress);}});
+  if(prompt&&state.adaptation){
+    maybePromptAdaptation({adaptation:state.adaptation,state:state.adaptationModeState,onChoose:(value)=>setPedagogicalMode(value,{persist:true})});
+  }
+}
+
+async function submitAdaptationRequest(){
+  const button=document.getElementById('adaptation-mode-toggle');
+  if(button){button.disabled=true;button.textContent='Enviando...'}
+  try{
+    state.adaptationRequest=await requestPedagogicalAdaptation(supabase,state.profile);
+    renderAdaptationBanner({profile:state.profile,exercise:state.exercise,adaptation:state.adaptation,mode:state.adaptationMode,onModeChange:(value)=>setPedagogicalMode(value,{persist:true}),request:state.adaptationRequest,onRequest:submitAdaptationRequest});
+    setSaveState('Solicitação de adaptação enviada ao professor.','ok');
+  }catch(error){
+    console.error(error);
+    if(button){button.disabled=false;button.textContent='Solicitar adaptação'}
+    setSaveState('Não foi possível enviar a solicitação agora.','error');
+  }
+}
+
 async function loadStudentSupport(){
-  const [{data:accommodations},{data:progressRows}] = await Promise.all([
-    supabase.from('student_accommodations').select('id,accommodation_type,config,reason,active').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id).eq('active',true),
+  const [{data:exerciseAccommodations},{data:globalAccommodations},{data:progressRows}] = await Promise.all([
+    supabase.from('student_accommodations').select('id,exercise_id,accommodation_type,config,reason,active,created_at,updated_at').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id).eq('active',true),
+    supabase.from('student_accommodations').select('id,exercise_id,accommodation_type,config,reason,active,created_at,updated_at').eq('student_id',state.profile.id).is('exercise_id',null).eq('active',true),
     supabase.from('student_exercises').select('approval_status,teacher_feedback,teacher_feedback_at,auto_score,auto_score_at,submitted_score,submitted_at,attempts,status,completion_source').eq('student_id',state.profile.id).eq('exercise_id',state.exercise.id)
   ]);
-  const support=[...(accommodations||[])];
+  const support=[...(globalAccommodations||[]),...(exerciseAccommodations||[])];
+  state.adaptation=resolvePedagogicalAdaptation(support);
+  state.adaptationRequest=state.adaptation?null:await loadAdaptationRequest(supabase,state.profile);
+  state.adaptationBaseFontSize=state.codeFontSize;
+  const [remoteAdaptationMode,remoteStepProgress]=state.adaptation?await Promise.all([loadAdaptationPreference(supabase,state.profile,state.adaptation),loadAdaptationStepProgress(supabase,state.profile,state.exercise,state.adaptation)]):[null,null];
+  state.adaptationStepProgress=remoteStepProgress;
+  state.adaptationModeState=initializeAdaptationMode(state.profile,state.adaptation,remoteAdaptationMode);
   const release=state.supportRelease||{};
   const progress=(progressRows||[])[0]||{};
   state.autoGrade={...state.autoGrade,score:Number(progress.auto_score||0),graded_at:progress.auto_score_at||null,submitted_score:progress.submitted_score??null,submitted_at:progress.submitted_at||null,attempts:Number(progress.attempts||0),status:progress.status||'in_progress',completion_source:progress.completion_source||null,dirty:false,pending:false,files:state.autoGrade?.files||[]};
@@ -1443,6 +1494,7 @@ async function loadStudentSupport(){
     if(release.allow_extra_hints) addSupportNote('Dicas extras liberadas','Seu professor habilitou apoio adicional para este exercício.');
     if(release.allow_guided_support) addSupportNote('Apoio guiado liberado','Você pode utilizar as orientações adicionais disponíveis neste exercício.');
     for(const a of support){
+      if(a?.accommodation_type==='learning_mode'||a?.config?.adaptation_profile||a?.config?.profile_key)continue;
       const message=a?.config?.message||a.reason;
       if(message) addSupportNote(a.accommodation_type||'Apoio',message);
     }
@@ -1451,6 +1503,7 @@ async function loadStudentSupport(){
     if(progress.approval_status==='changes_requested') addSupportNote('Ajustes solicitados','Revise o feedback acima e faça as alterações indicadas.','changes');
     if(fragment.childNodes.length) guidance.prepend(fragment);
   }
+  setPedagogicalMode(state.adaptationModeState?.mode||'conventional',{persist:false,prompt:Boolean(state.adaptationModeState?.shouldPrompt)});
 }
 function setWorkspacePaused(paused,message=''){
   const editor=$('code-editor');
@@ -1493,7 +1546,7 @@ function editorSnapshot(){
 export async function mountWorkspace({profile,exercise,subject}){
   state.profile=profile;
   applyCodeFontSize(loadCodeFontSize(),{persist:false}); state.exercise=exercise; state.subject=subject;
-  state.active=null; state.files=[]; state.saveQueues=new Map(); state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false; state.supportRelease=null; state.recoveredFiles=new Set(); state.referenceSelections=new Map(); state.referenceMatchCache=new Map();
+  state.active=null; state.files=[]; state.saveQueues=new Map(); state.lastSavedContent=new Map(); state.remoteEdit=false; state.teacherEditing=false; state.supportRelease=null; state.adaptation=null; state.adaptationMode='conventional'; state.adaptationModeState=null;state.adaptationRequest=null; state.adaptationBaseFontSize=state.codeFontSize; state.adaptationStepProgress=null; applyAdaptationClasses(null,'conventional'); state.recoveredFiles=new Set(); state.referenceSelections=new Map(); state.referenceMatchCache=new Map();
   setToolsOpen(false);
   setOutputOpen(false);
   showRecoveryBanner(0);
@@ -1566,6 +1619,8 @@ export async function unmountWorkspace(){
   await stopSupervision();
   state.saveQueues=new Map();
   state.active=null;
+  state.adaptation=null;state.adaptationMode='conventional';state.adaptationModeState=null;state.adaptationStepProgress=null;applyAdaptationClasses(null,'conventional');
+  try{document.getElementById('adaptation-choice-dialog')?.close()}catch(_){}
 }
 
 

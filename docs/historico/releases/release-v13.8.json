@@ -1,0 +1,9 @@
+{
+  "version": "13.8.0",
+  "date": "2026-08-15",
+  "phase": "P6.10",
+  "title": "Relatórios e Indicadores",
+  "requiresDatabaseMigration": false,
+  "requiresEdgeFunctionDeploy": false,
+  "tests": {"files": 34, "status": "pass"}
+}

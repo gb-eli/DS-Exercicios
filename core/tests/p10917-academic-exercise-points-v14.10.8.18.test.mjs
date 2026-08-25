@@ -7,9 +7,8 @@ import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const release=JSON.parse(read('release-current.json'));
+const release=JSON.parse(read('release-v14.10.8.18.json'));
 const version=JSON.parse(read('atividades/version.json'));
-const deploy=JSON.parse(read('PUBLIC-DEPLOY.json'));
 
 test('P10.9.17 metadados representam a release de pontuação acadêmica',()=>{
   assert.equal(release.version,'14.10.8.18');
@@ -20,11 +19,9 @@ test('P10.9.17 metadados representam a release de pontuação acadêmica',()=>{
   assert.equal(release.requiresDatabaseChange,true);
   assert.equal(release.requiresEdgeFunctionDeploy,true);
   assert.equal(release.liveDeployApplied,false);
-  assert.equal(version.version,'0.22.8.14');
-  assert.equal(version.release,'v14.10.8.18');
-  assert.equal(version.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(deploy.release,'v14.10.8.18');
-  assert.equal(deploy.ui,'0.22.8.14');
+  assert.ok(Array.isArray(version.features));
+  assert.ok(version.features.some(item=>String(item).includes('v14.10.8.18: valor acadêmico confirmado')));
+  assert.ok(/^v14\.10\.8\.(?:18|19)$/.test(String(version.release||'')));
 });
 
 test('P10.9.17 migration grava somente as três faixas confirmadas',()=>{

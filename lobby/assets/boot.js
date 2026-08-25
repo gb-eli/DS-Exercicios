@@ -15,4 +15,4 @@ const showFatal=(error)=>{
 };
 
 globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-import('./lobby.js?v=14.10.8.18').then(()=>globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'})).catch(showFatal);
+import('./lobby.js?v=14.10.8.18.2').then(()=>globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'})).catch(showFatal);

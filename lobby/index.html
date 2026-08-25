@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS 3D</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.18">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.18.2">
   <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.18">
 </head>
 <body>
@@ -20,10 +20,13 @@
         <label>E-mail institucional<input id="email" type="email" autocomplete="username" required placeholder="aluno@escola.pr.gov.br"></label>
         <label>Senha <small>no primeiro acesso do aluno, use o CGM</small><input id="password" type="password" autocomplete="current-password" required></label>
         <button class="primary" type="submit">Entrar no campus 3D</button>
+        <button id="forgot-password-btn" class="login-link" type="button">Esqueci minha senha</button>
       </form>
       <p id="login-message" class="message" aria-live="polite"></p>
     </article>
   </section>
+
+  <dialog id="recovery-dialog" class="recovery-dialog"><form id="recovery-form" class="recovery-card" method="dialog"><div class="recovery-head"><div><p class="eyebrow">Recuperar acesso</p><h2>Redefinir senha</h2></div><button id="recovery-close-btn" class="hud-button" type="button">Fechar</button></div><p class="muted">Informe seu e-mail institucional. Se a conta existir, enviaremos um link seguro para criar uma nova senha.</p><label>E-mail institucional<input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required></label><p id="recovery-message" class="message" aria-live="polite"></p><button class="primary" type="submit">Enviar link</button></form></dialog>
 
   <main id="game-shell" class="game-shell hidden">
     <section class="game-stage" aria-label="Campus virtual 3D">
@@ -120,6 +123,6 @@
   <script src="../core/session/fullscreen-portal.js?v=14.10.8.18"></script>
   <script src="assets/diagnostics.js?v=14.10.8.18"></script>
   <script src="assets/sw-register.js?v=14.10.8.18" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.18" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.18.2" defer></script>
 </body>
 </html>

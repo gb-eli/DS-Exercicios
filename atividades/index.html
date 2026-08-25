@@ -7,7 +7,7 @@
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.18" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.19" />
   <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.18" />
 </head>
 <body>
@@ -225,6 +225,17 @@
           <span id="supervision-warning-text"></span>
           <button id="supervision-return-fullscreen" class="button button-primary button-small hidden" type="button">Entrar em tela cheia</button>
         </div>
+        <section id="adaptation-mode-banner" class="adaptation-mode-banner hidden" aria-live="polite">
+          <div class="adaptation-mode-copy">
+            <span class="adaptation-mode-kicker">Apoio pedagógico</span>
+            <strong id="adaptation-mode-title">Apoio pedagógico disponível</strong>
+            <span id="adaptation-mode-status">Você pode escolher a organização mais confortável para realizar a atividade.</span>
+          </div>
+          <div class="adaptation-mode-actions">
+            <span id="adaptation-mode-badge" class="adaptation-mode-badge">Convencional</span>
+            <button id="adaptation-mode-toggle" class="button button-small adaptation-mode-toggle" type="button">Ativar modo adaptado</button>
+          </div>
+        </section>
         <section id="weekend-mode-banner" class="weekend-mode-banner hidden" aria-live="polite">
           <div class="weekend-mode-copy">
             <span class="weekend-mode-kicker">Benefício de fim de semana</span>
@@ -365,8 +376,24 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.8.18"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.19"></script>
 
+
+    <dialog id="adaptation-choice-dialog" class="history-dialog adaptation-choice-dialog">
+      <div class="history-card panel adaptation-choice-card">
+        <p class="eyebrow">Apoio pedagógico</p>
+        <h3 id="adaptation-choice-title">Você recebeu uma adaptação pedagógica</h3>
+        <p id="adaptation-choice-copy" class="muted">Há uma organização de apoio preparada para esta atividade.</p>
+        <div class="adaptation-choice-note">
+          <strong>Você continua no controle</strong>
+          <span>O conteúdo e a avaliação permanecem os mesmos. Você pode trocar entre os modos a qualquer momento.</span>
+        </div>
+        <div class="adaptation-choice-actions">
+          <button id="adaptation-choice-accept" class="button button-primary" type="button">Usar adaptação</button>
+          <button id="adaptation-choice-conventional" class="button button-ghost" type="button">Permanecer no modo convencional</button>
+        </div>
+      </div>
+    </dialog>
 
     <dialog id="supervision-start-dialog" class="history-dialog supervision-dialog">
       <div class="history-card panel">

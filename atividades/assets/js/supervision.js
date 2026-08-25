@@ -79,6 +79,7 @@ function hideWarning() {
   $('supervision-banner')?.classList.add('hidden');
 }
 function updateViolationChip(count=0) {
+  if(state.policy?.accommodation_mode==='home_study'){chip('Estudo domiciliar • sessão protegida','ok');return;}
   chip(`Supervisionado • ${count} saída${Number(count)===1?'':'s'} registrada${Number(count)===1?'':'s'}`, count ? 'warning' : 'ok');
 }
 function editorState() {
@@ -141,6 +142,7 @@ async function safeEvent(event_type, severity='warning', confidence='objective',
 }
 
 async function focusViolation(type) {
+  if(state.policy?.accommodation_mode==='home_study')return;
   const now = Date.now();
   if (now - state.lastFocusAt < 1300) return; // evita contar fullscreen + visibility na mesma troca
   state.lastFocusAt = now;
@@ -291,7 +293,7 @@ export async function prepareSupervision({ profile, exercise, getEditorState, on
   catch(error){if(error.status===423||error.code==='activity_locked'){lockStudent(error.details?.reason||error.message);return {locked:true};}throw error;}
   state.sessionId=data.session?.id||null;state.channelKey=data.channel_key||null;state.policy={...DEFAULT_POLICY,...(data.policy||{})};updateViolationChip(Number(data.session?.focus_violation_count||0));
   const summary=$('supervision-policy-summary');
-  if(summary){summary.replaceChildren();[state.policy.require_fullscreen?'Tela cheia obrigatória':'Tela cheia opcional','Saídas registradas sem bloqueio automático',state.policy.block_paste?'Colar código bloqueado':'Colar código permitido','IP e eventos de segurança registrados'].forEach(text=>{const span=document.createElement('span');span.textContent=text;summary.appendChild(span);});}
+  if(summary){summary.replaceChildren();const home=state.policy?.accommodation_mode==='home_study';[home?'Estudo domiciliar autorizado':(state.policy.require_fullscreen?'Tela cheia obrigatória':'Tela cheia opcional'),home?'Ritmo assíncrono; troca de guia não interrompe o estudo':'Saídas registradas sem bloqueio automático',state.policy.block_paste?'Colar código bloqueado':'Colar código permitido','Sessão, autenticação e validações de segurança permanecem ativas'].forEach(text=>{const span=document.createElement('span');span.textContent=text;summary.appendChild(span);});}
   const needsFullscreen=state.policy.require_fullscreen&&isFullscreenSupported();
   if(needsFullscreen&&!document.fullscreenElement){
     state.waitingForFullscreen=true;

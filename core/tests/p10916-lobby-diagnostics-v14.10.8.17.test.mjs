@@ -71,6 +71,6 @@ test('P10.9.16 sincroniza cache-bust executável e metadados',()=>{
   assert.equal(rel.requiresDatabaseChange,true);
   assert.equal(rel.requiresEdgeFunctionDeploy,true);
   assert.equal(rel.liveDeployApplied,false);
-  assert.match(read('lobby/assets/vendor-loader.js'),/VERSION='14\.10\.8\.18'/);
-  assert.match(read('lobby/sw.js'),/VERSION='14\.10\.8\.18'/);
+  assert.match(read('lobby/assets/vendor-loader.js'),/VERSION='14\.10\.8\.18(?:\.2)?'/);
+  assert.match(read('lobby/sw.js'),/VERSION='14\.10\.8\.18(?:\.2)?'/);
 });
