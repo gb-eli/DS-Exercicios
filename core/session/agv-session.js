@@ -111,6 +111,9 @@
       const path=redirectTo?`/auth/v1/recover?redirect_to=${encodeURIComponent(redirectTo)}`:'/auth/v1/recover';
       return request(path,{method:'POST',body:{email},token:null});
     }
+    async function temporaryCgmPasswordReset(email,cgm){
+      return request('/functions/v1/temporary-cgm-password-reset',{method:'POST',body:{email,cgm},token:null});
+    }
     async function signOut({reload=false,scope='global'}={}){
       const allowed=new Set(['global','local','others']),chosen=allowed.has(scope)?scope:'global';
       try{if(session||read())await request(`/auth/v1/logout?scope=${encodeURIComponent(chosen)}`,{method:'POST'});}catch{}
@@ -129,7 +132,7 @@
     global.document?.addEventListener?.('visibilitychange',lifecycleCheck);
     function destroy(){destroyed=true;clearTimeout(lifecycleTimer);lifecycleEvents.forEach(type=>global.removeEventListener?.(type,lifecycleCheck));global.document?.removeEventListener?.('visibilitychange',lifecycleCheck);}
     read();
-    return {storageKey,read,save,clear,valid,getSession,requireSession,refresh,getUser,signIn,signUpStudent,resetPasswordForEmail,signOut,request:authorizedFetch,rawRequest:request,onStorage,destroy,get session(){return session;}};
+    return {storageKey,read,save,clear,valid,getSession,requireSession,refresh,getUser,signIn,signUpStudent,resetPasswordForEmail,temporaryCgmPasswordReset,signOut,request:authorizedFetch,rawRequest:request,onStorage,destroy,get session(){return session;}};
   }
   global.AGVSession={create};
 })(window);
