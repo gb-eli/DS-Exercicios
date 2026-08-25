@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS 3D</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.18.2">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.19.1">
   <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.18">
 </head>
 <body>
@@ -26,7 +26,7 @@
     </article>
   </section>
 
-  <dialog id="recovery-dialog" class="recovery-dialog"><form id="recovery-form" class="recovery-card" method="dialog"><div class="recovery-head"><div><p class="eyebrow">Recuperar acesso</p><h2>Redefinir senha</h2></div><button id="recovery-close-btn" class="hud-button" type="button">Fechar</button></div><p class="muted">Informe seu e-mail institucional. Se a conta existir, enviaremos um link seguro para criar uma nova senha.</p><label>E-mail institucional<input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required></label><p id="recovery-message" class="message" aria-live="polite"></p><button class="primary" type="submit">Enviar link</button></form></dialog>
+  <dialog id="recovery-dialog" class="recovery-dialog"><form id="recovery-form" class="recovery-card" method="dialog"><div class="recovery-head"><div><p class="eyebrow">Recuperar acesso</p><h2>Redefinir senha</h2></div><button id="recovery-close-btn" class="hud-button" type="button">Fechar</button></div><p class="muted">Recuperação temporária: confirme seu e-mail institucional e CGM. Se os dados conferirem, sua senha voltará ao CGM e você deverá criar uma senha pessoal no próximo acesso.</p><label>E-mail institucional<input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required></label><label>CGM<input id="recovery-cgm" type="text" inputmode="numeric" autocomplete="off" maxlength="12" pattern="[0-9]{6,12}" placeholder="Digite seu CGM" required></label><p id="recovery-message" class="message" aria-live="polite"></p><button class="primary" type="submit">Redefinir senha para CGM</button></form></dialog>
 
   <main id="game-shell" class="game-shell hidden">
     <section class="game-stage" aria-label="Campus virtual 3D">

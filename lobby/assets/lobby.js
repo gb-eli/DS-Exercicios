@@ -282,9 +282,22 @@ document.querySelectorAll('[data-target-emote]').forEach(b=>b.onclick=()=>emote(
 $('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadActivities().catch(()=>{})});setInterval(()=>{if(!document.hidden)loadActivities().catch(()=>{})},30000);
 const recoveryDialog=$('recovery-dialog');
-$('forgot-password-btn')?.addEventListener('click',()=>{const email=String($('email')?.value||'').trim().toLowerCase();$('recovery-email').value=email;$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
+$('forgot-password-btn')?.addEventListener('click',()=>{const email=String($('email')?.value||'').trim().toLowerCase();$('recovery-email').value=email;$('recovery-cgm').value='';$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
 $('recovery-close-btn')?.addEventListener('click',()=>recoveryDialog?.close());
-$('recovery-form')?.addEventListener('submit',async event=>{event.preventDefault();const email=String($('recovery-email').value||'').trim().toLowerCase(),msg=$('recovery-message'),submit=event.submitter;msg.textContent='';msg.classList.remove('error');if(!email.endsWith('@escola.pr.gov.br')){msg.textContent='Use seu e-mail institucional @escola.pr.gov.br.';msg.classList.add('error');return;}submit.disabled=true;submit.textContent='Enviando…';try{const redirectTo=new URL('../reset-password/',location.href).href;const {error}=await withTimeout(supabase.auth.resetPasswordForEmail(email,{redirectTo}),AUTH_TIMEOUT_MS,'auth_recovery_timeout');if(error)throw error;msg.textContent='Se a conta existir, enviaremos um link para esse e-mail. Confira também a caixa de spam.';}catch(error){console.error(error);msg.textContent='Não foi possível solicitar a recuperação agora. Tente novamente em alguns minutos.';msg.classList.add('error');}finally{submit.disabled=false;submit.textContent='Enviar link';}});
+$('recovery-form')?.addEventListener('submit',async event=>{
+  event.preventDefault();
+  const email=String($('recovery-email').value||'').trim().toLowerCase(),cgm=String($('recovery-cgm').value||'').replace(/\D/g,''),msg=$('recovery-message'),submit=event.submitter;
+  msg.textContent='';msg.classList.remove('error');
+  if(!email.endsWith('@escola.pr.gov.br')){msg.textContent='Use seu e-mail institucional @escola.pr.gov.br.';msg.classList.add('error');return;}
+  if(!/^\d{6,12}$/.test(cgm)){msg.textContent='Informe um CGM válido, usando somente números.';msg.classList.add('error');return;}
+  submit.disabled=true;submit.textContent='Redefinindo…';
+  try{
+    const {data,error}=await withTimeout(supabase.functions.invoke('temporary-cgm-password-reset',{body:{email,cgm}}),AUTH_TIMEOUT_MS,'auth_cgm_recovery_timeout');
+    if(error)throw error;
+    msg.textContent=data?.message||'Se os dados informados estiverem corretos, a senha foi redefinida para o CGM. No próximo acesso, crie uma nova senha pessoal.';
+  }catch(error){console.error(error);msg.textContent='Não foi possível concluir a redefinição agora. Se houve muitas tentativas, aguarde alguns minutos e tente novamente.';msg.classList.add('error');}
+  finally{submit.disabled=false;submit.textContent='Redefinir senha para CGM';}
+});
 
 $('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;msg('Entrando no campus 3D…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:'lobby-3d'});await boot();msg()}catch(err){console.error(err);globalThis.__agvLobbyDiag?.exposeError?.('login_or_boot_failed',String(err?.message||err||'unknown'));msg(lobbyErrorMessage(err),true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
 (async()=>{try{const {data:{session}}=await withTimeout(supabase.auth.getSession(),SESSION_TIMEOUT_MS,'auth_session_timeout');if(session){await boot();return}}catch(e){console.warn(e);globalThis.__agvLobbyDiag?.exposeError?.('session_restore_failed',String(e?.message||e||'unknown'));msg(lobbyErrorMessage(e),true)}showLogin(true)})();

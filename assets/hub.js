@@ -15,9 +15,24 @@
   function renderGuest(){window.AGVFullscreen?.require(false);$('signed').classList.add('hidden');$('login-card').classList.remove('hidden');}
   async function restore(){const s=await auth.getSession();if(!s)return renderGuest();try{const result=await loadProfile();if(result?.redirected)return;renderSigned();}catch{await auth.signOut();renderGuest();}}
   const recoveryDialog=$('recovery-dialog');
-  $('forgot-password-btn')?.addEventListener('click',()=>{const email=$('email').value.trim().toLowerCase();$('recovery-email').value=email;$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
+  $('forgot-password-btn')?.addEventListener('click',()=>{const email=$('email').value.trim().toLowerCase();$('recovery-email').value=email;$('recovery-cgm').value='';$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
   $('recovery-close-btn')?.addEventListener('click',()=>recoveryDialog?.close());
-  $('recovery-form')?.addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,email=$('recovery-email').value.trim().toLowerCase(),msg=$('recovery-message');msg.textContent='';msg.classList.remove('error');if(!email.endsWith(school)){msg.textContent=`Use seu e-mail institucional ${school}.`;msg.classList.add('error');return;}btn.disabled=true;btn.textContent='Enviando…';try{const redirectTo=new URL('reset-password/',location.href).href;await auth.resetPasswordForEmail(email,redirectTo);msg.textContent='Se a conta existir, enviaremos um link para esse e-mail. Confira também a caixa de spam.';}catch(err){console.error(err);msg.textContent='Não foi possível solicitar a recuperação agora. Tente novamente em alguns minutos.';msg.classList.add('error');}finally{btn.disabled=false;btn.textContent='Enviar link';}});
+  $('recovery-form')?.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=e.submitter,email=$('recovery-email').value.trim().toLowerCase(),cgm=String($('recovery-cgm').value||'').replace(/\D/g,''),msg=$('recovery-message');
+    msg.textContent='';msg.classList.remove('error');
+    if(!email.endsWith(school)){msg.textContent=`Use seu e-mail institucional ${school}.`;msg.classList.add('error');return;}
+    if(!/^\d{6,12}$/.test(cgm)){msg.textContent='Informe um CGM válido, usando somente números.';msg.classList.add('error');return;}
+    btn.disabled=true;btn.textContent='Redefinindo…';
+    try{
+      const out=await auth.temporaryCgmPasswordReset(email,cgm);
+      msg.textContent=out?.message||'Se os dados informados estiverem corretos, a senha foi redefinida para o CGM. No próximo acesso, crie uma nova senha pessoal.';
+    }catch(err){
+      console.error(err);
+      msg.textContent=err?.status===429?'Muitas tentativas. Aguarde alguns minutos e tente novamente.':'Não foi possível concluir a redefinição agora. Tente novamente em alguns minutos.';
+      msg.classList.add('error');
+    }finally{btn.disabled=false;btn.textContent='Redefinir senha para CGM';}
+  });
   $('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,email=$('email').value.trim().toLowerCase(),password=$('password').value;if(!email.endsWith(school))return setMsg(`Use seu e-mail institucional ${school}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;setMsg('Entrando…');try{try{await auth.signIn(email,password);}catch(first){if(!/^\d{6,12}$/.test(password))throw first;setMsg('Validando primeiro acesso…');const out=await auth.signUpStudent(email,password,location.href);if(!out?.access_token)await auth.signIn(email,password);}const result=await loadProfile();if(result?.redirected)return;renderSigned();setMsg();}catch(err){console.error(err);await auth.signOut();setMsg('Não foi possível entrar. Aluno no primeiro acesso: use o CGM. Equipe: use sua senha individual.',true);}finally{btn.disabled=false;}});
   $('logout').addEventListener('click',async()=>{await auth.signOut();profile=null;await window.AGVFullscreen?.release?.();renderGuest();});
   auth.onStorage(()=>restore());renderPlatforms();restore();
