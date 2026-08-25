@@ -23,6 +23,58 @@ let lobbyDeepLinkHandled = false;
 let lastDashboardSnapshot = null;
 let exerciseOpening = false;
 
+const CRITICAL_REQUEST_TIMEOUT_MS = 10000;
+const OPTIONAL_REQUEST_TIMEOUT_MS = 4500;
+const DASHBOARD_BOOT_TIMEOUT_MS = 22000;
+const GLOBAL_BOOT_WATCHDOG_MS = 60000;
+let portalBootRun = 0;
+let portalBootWatchdog = null;
+
+function timeoutError(label) {
+  const error = new Error(`Tempo limite excedido em ${label}.`);
+  error.code = 'AGV_BOOT_TIMEOUT';
+  error.stage = label;
+  return error;
+}
+
+function withTimeout(task, ms = CRITICAL_REQUEST_TIMEOUT_MS, label = 'operação') {
+  let timer;
+  return Promise.race([
+    Promise.resolve(task),
+    new Promise((_, reject) => { timer = setTimeout(() => reject(timeoutError(label)), ms); }),
+  ]).finally(() => clearTimeout(timer));
+}
+
+function setLoadingState(title = 'Carregando sua área...', detail = '') {
+  $('loading-spinner')?.classList.remove('hidden');
+  if ($('loading-title')) $('loading-title').textContent = title;
+  if ($('loading-detail')) $('loading-detail').textContent = detail;
+  $('loading-recovery-actions')?.classList.add('hidden');
+}
+
+function showLoadingRecovery(message, detail = '') {
+  $('loading-spinner')?.classList.add('hidden');
+  if ($('loading-title')) $('loading-title').textContent = message || 'Não foi possível concluir o carregamento.';
+  if ($('loading-detail')) $('loading-detail').textContent = detail || 'Sua sessão e seus arquivos foram preservados. Você pode tentar novamente.';
+  $('loading-recovery-actions')?.classList.remove('hidden');
+  showView('loading-view');
+}
+
+function armBootWatchdog(runId) {
+  clearTimeout(portalBootWatchdog);
+  portalBootWatchdog = setTimeout(() => {
+    if (runId !== portalBootRun) return;
+    showLoadingRecovery('O carregamento está demorando mais que o esperado.', 'Verifique sua conexão e tente novamente. Se continuar, renove a sessão.');
+    securityTelemetry('client.portal_boot_timeout', { source: 'atividades', stage: 'global_watchdog' });
+  }, GLOBAL_BOOT_WATCHDOG_MS);
+}
+
+function clearBootWatchdog(runId) {
+  if (runId !== portalBootRun) return;
+  clearTimeout(portalBootWatchdog);
+  portalBootWatchdog = null;
+}
+
 function showView(id) {
   views.forEach((viewId) => $(viewId)?.classList.toggle('hidden', viewId !== id));
 }
@@ -101,40 +153,47 @@ function securitySessionOnce(source='atividades') {
 }
 
 async function loadIdentity() {
-  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  setLoadingState('Carregando sua área...', 'Validando sua sessão.');
+  const { data: { user }, error: userError } = await withTimeout(supabase.auth.getUser(), CRITICAL_REQUEST_TIMEOUT_MS, 'auth.getUser');
   if (userError || !user) return null;
 
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('id, full_name, email, role, active, must_change_password, first_login_at, last_login_at, password_changed_at')
-    .eq('id', user.id)
-    .single();
+  setLoadingState('Carregando sua área...', 'Carregando seu cadastro.');
+  const { data: profile, error: profileError } = await withTimeout(
+    supabase.from('profiles').select('id, full_name, email, role, active, must_change_password, first_login_at, last_login_at, password_changed_at').eq('id', user.id).single(),
+    CRITICAL_REQUEST_TIMEOUT_MS,
+    'profiles'
+  );
   if (profileError) throw profileError;
 
   currentProfile = profile;
   currentStaffAccess = false;
   try {
-    const { data: staffStatus, error: staffError } = await supabase.functions.invoke('staff-dashboard', { body: { action: 'staff_status' } });
+    setLoadingState('Carregando sua área...', 'Confirmando permissões.');
+    const { data: staffStatus, error: staffError } = await withTimeout(
+      supabase.functions.invoke('staff-dashboard', { body: { action: 'staff_status' } }),
+      OPTIONAL_REQUEST_TIMEOUT_MS,
+      'staff_status'
+    );
     if (!staffError && staffStatus?.staff === true) currentStaffAccess = true;
-  } catch (_) {}
+  } catch (error) {
+    console.warn('[AGV] Verificação complementar de staff indisponível; seguindo com o perfil principal.', error);
+  }
   document.getElementById('staff-btn')?.classList.toggle('hidden', !(isStaff(profile) || currentStaffAccess));
 
-  const { data: memberships, error: membershipError } = await supabase
-    .from('class_memberships')
-    .select('class_id,is_primary,joined_at')
-    .eq('user_id', user.id)
-    .eq('active', true)
-    .order('is_primary', { ascending: false })
-    .order('joined_at', { ascending: false })
-    .limit(1);
+  setLoadingState('Carregando sua área...', 'Identificando sua turma.');
+  const { data: memberships, error: membershipError } = await withTimeout(
+    supabase.from('class_memberships').select('class_id,is_primary,joined_at').eq('user_id', user.id).eq('active', true).order('is_primary', { ascending: false }).order('joined_at', { ascending: false }).limit(1),
+    CRITICAL_REQUEST_TIMEOUT_MS,
+    'class_memberships'
+  );
   if (membershipError) throw membershipError;
 
   if (memberships?.length) {
-    const { data: cls, error: classError } = await supabase
-      .from('classes')
-      .select('id, code, name, shift, school_year')
-      .eq('id', memberships[0].class_id)
-      .single();
+    const { data: cls, error: classError } = await withTimeout(
+      supabase.from('classes').select('id, code, name, shift, school_year').eq('id', memberships[0].class_id).single(),
+      CRITICAL_REQUEST_TIMEOUT_MS,
+      'classes'
+    );
     if (classError) throw classError;
     currentClass = cls;
   } else {
@@ -145,9 +204,13 @@ async function loadIdentity() {
 }
 
 async function routeAuthenticatedUser() {
+  const runId = ++portalBootRun;
   showView('loading-view');
+  setLoadingState('Carregando sua área...', 'Validando sua sessão.');
+  armBootWatchdog(runId);
   try {
     const identity = await loadIdentity();
+    if (runId !== portalBootRun) return;
     if (!identity) {
       currentProfile = null;
       currentClass = null;
@@ -160,9 +223,14 @@ async function routeAuthenticatedUser() {
     let homeStudyAuthorized=false;
     if(identity.profile.role==='student'&&!currentStaffAccess){
       try{
-        const {data:adaptationRows}=await supabase.from('student_accommodations').select('config').eq('student_id',identity.profile.id).is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true).order('updated_at',{ascending:false}).limit(3);
+        setLoadingState('Carregando sua área...', 'Aplicando seus recursos de aprendizagem.');
+        const {data:adaptationRows}=await withTimeout(
+          supabase.from('student_accommodations').select('config').eq('student_id',identity.profile.id).is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true).order('updated_at',{ascending:false}).limit(3),
+          OPTIONAL_REQUEST_TIMEOUT_MS,
+          'student_accommodations'
+        );
         homeStudyAuthorized=(adaptationRows||[]).some(row=>String(row?.config?.supervision?.mode||'')==='home_study');
-      }catch(error){console.warn('[AGV] Não foi possível confirmar modo domiciliar.',error);}
+      }catch(error){console.warn('[AGV] Não foi possível confirmar modo domiciliar; acesso seguirá com a política padrão.',error);}
     }
     const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess&&!homeStudyAuthorized;
     setPortalFullscreenRequired(requireStudentFullscreen);
@@ -175,7 +243,7 @@ async function routeAuthenticatedUser() {
     }
 
     if (!identity.profile.active) {
-      await supabase.auth.signOut();
+      await withTimeout(supabase.auth.signOut(), OPTIONAL_REQUEST_TIMEOUT_MS, 'auth.signOut').catch(()=>{});
       setLoginError('Seu acesso está inativo. Procure o professor responsável.');
       showView('login-view');
       return;
@@ -192,14 +260,26 @@ async function routeAuthenticatedUser() {
     }
 
     if (currentStaffAccess || isStaff(identity.profile)) {
-      await openStaffPanel();
+      setLoadingState('Carregando sua área...', 'Abrindo o painel da equipe.');
+      await withTimeout(openStaffPanel(), DASHBOARD_BOOT_TIMEOUT_MS, 'staff_panel');
       return;
     }
-    await renderDashboard();
+
+    setLoadingState('Carregando sua área...', 'Preparando suas atividades.');
+    await withTimeout(renderDashboard(), DASHBOARD_BOOT_TIMEOUT_MS, 'dashboard');
   } catch (error) {
+    if (runId !== portalBootRun) return;
     console.error(error);
-    setLoginError('Não foi possível carregar seu cadastro. Procure o professor se o problema continuar.');
-    showView('login-view');
+    const stage = String(error?.stage || 'inicialização');
+    if (error?.code === 'AGV_BOOT_TIMEOUT') {
+      securityTelemetry('client.portal_boot_timeout', { source: 'atividades', stage });
+      showLoadingRecovery('Não foi possível concluir o carregamento a tempo.', `A etapa “${stage}” demorou demais. Sua sessão foi preservada; tente novamente.`);
+    } else {
+      securityTelemetry('client.portal_boot_error', { source: 'atividades', stage, message: String(error?.message || '').slice(0, 180) });
+      showLoadingRecovery('Não foi possível carregar sua área.', 'O serviço respondeu com erro. Tente novamente; se continuar, renove a sessão.');
+    }
+  } finally {
+    clearBootWatchdog(runId);
   }
 }
 
@@ -375,14 +455,14 @@ async function loadDashboardData() {
     return null;
   };
   try{
-    const {data:links,error:linksError}=await supabase.from('class_subjects').select('subject_id').eq('class_id',currentClass.id).eq('active',true);
+    const {data:links,error:linksError}=await withTimeout(supabase.from('class_subjects').select('subject_id').eq('class_id',currentClass.id).eq('active',true),CRITICAL_REQUEST_TIMEOUT_MS,'class_subjects');
     if(linksError)throw linksError;
     const subjectIds=[...new Set((links||[]).map(row=>row.subject_id).filter(Boolean))];
     if(!subjectIds.length){const old=fallback();if(old){console.warn('[AGV] Vínculo de disciplinas veio vazio; mantendo última lista válida.');return old;}return empty;}
 
     const [subjectsResult,exercisesResult]=await Promise.allSettled([
-      supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),
-      supabase.from('exercises').select('id,subject_id,class_id,exercise_number,slug,title,description,version,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number')
+      withTimeout(supabase.from('subjects').select('id,name,slug').in('id',subjectIds).eq('active',true).order('name'),CRITICAL_REQUEST_TIMEOUT_MS,'subjects'),
+      withTimeout(supabase.from('exercises').select('id,subject_id,class_id,exercise_number,slug,title,description,version,default_locked,config').in('subject_id',subjectIds).eq('active',true).eq('visible',true).order('exercise_number'),CRITICAL_REQUEST_TIMEOUT_MS,'exercises')
     ]);
     const subjectsResponse=subjectsResult.status==='fulfilled'?subjectsResult.value:null;
     const exercisesResponse=exercisesResult.status==='fulfilled'?exercisesResult.value:null;
@@ -395,10 +475,10 @@ async function loadDashboardData() {
     const ids=exercises.map(e=>e.id);
 
     const queries=[
-      supabase.from('student_exercises').select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',currentProfile.id),
-      ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids):Promise.resolve({data:[],error:null}),
-      ids.length?supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids):Promise.resolve({data:[],error:null}),
-      ids.length?supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids):Promise.resolve({data:[],error:null})
+      withTimeout(supabase.from('student_exercises').select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',currentProfile.id),CRITICAL_REQUEST_TIMEOUT_MS,'student_exercises'),
+      ids.length?withTimeout(supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'student_releases'):Promise.resolve({data:[],error:null}),
+      ids.length?withTimeout(supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'class_releases'):Promise.resolve({data:[],error:null}),
+      ids.length?withTimeout(supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'legacy_claims'):Promise.resolve({data:[],error:null})
     ];
     const results=await Promise.allSettled(queries);
     const previous=fallback()||empty;
@@ -484,9 +564,9 @@ async function loadOwnPlatformTelemetry(force=false){
   if(platformTelemetry.loaded&&!force&&Date.now()-platformTelemetry.lastLoadedAt<60000)return platformTelemetry.byCode;
   try{
     const [{data:platforms,error:pe},{data:progress,error:ae},{data:events,error:ee}]=await Promise.all([
-      supabase.from('platforms').select('id,code,name'),
-      supabase.from('activity_progress').select('platform_id,activity_id,status,progress,completed_at,updated_at').order('updated_at',{ascending:false}).limit(400),
-      supabase.from('progress_events').select('platform_id,activity_id,event_type,progress,occurred_at').order('occurred_at',{ascending:false}).limit(500)
+      withTimeout(supabase.from('platforms').select('id,code,name'),OPTIONAL_REQUEST_TIMEOUT_MS,'platforms'),
+      withTimeout(supabase.from('activity_progress').select('platform_id,activity_id,status,progress,completed_at,updated_at').order('updated_at',{ascending:false}).limit(400),OPTIONAL_REQUEST_TIMEOUT_MS,'activity_progress'),
+      withTimeout(supabase.from('progress_events').select('platform_id,activity_id,event_type,progress,occurred_at').order('occurred_at',{ascending:false}).limit(500),OPTIONAL_REQUEST_TIMEOUT_MS,'progress_events')
     ]);
     if(pe||ae||ee)throw pe||ae||ee;
     const codeById=new Map((platforms||[]).map(p=>[String(p.id),String(p.code||'')]));
@@ -515,7 +595,7 @@ function platformProgress(item,progressMap,accessMap){
 }
 async function loadPlatformCatalog(){
   if(platformCatalog.length)return platformCatalog;
-  try{const response=await fetch(PLATFORM_CATALOG_URL,{cache:'no-store'});if(!response.ok)throw new Error('catalog');const data=await response.json();platformCatalog=(data.platforms||[]).filter(x=>x.readyForUnifiedHub).sort((a,b)=>(a.hubOrder||99)-(b.hubOrder||99));}
+  try{const response=await withTimeout(fetch(PLATFORM_CATALOG_URL,{cache:'no-store'}),OPTIONAL_REQUEST_TIMEOUT_MS,'platform_catalog');if(!response.ok)throw new Error('catalog');const data=await response.json();platformCatalog=(data.platforms||[]).filter(x=>x.readyForUnifiedHub).sort((a,b)=>(a.hubOrder||99)-(b.hubOrder||99));}
   catch(error){console.warn('Catálogo de plataformas indisponível',error);platformCatalog=[];}return platformCatalog;
 }
 function markPlatformRecent(id){const now=Date.now(),rows=readLocalList(PLATFORM_RECENTS_KEY).filter(x=>x&&x.id!==id);rows.unshift({id,at:now});writeLocalList(PLATFORM_RECENTS_KEY,rows.slice(0,12));}
@@ -615,7 +695,7 @@ async function renderDashboard() {
   fillActivityBucket('completed-activity-list',completedExercises.slice().sort((a,b)=>new Date(progressMap.get(b.id)?.completed_at||0)-new Date(progressMap.get(a.id)?.completed_at||0)).map((ex)=>activityListRow(ex,{progress:progressMap.get(ex.id),completed:true})),'Você ainda não concluiu atividades.');
   fillActivityBucket('locked-activity-list',lockedExercises.map((ex)=>activityListRow(ex,{progress:progressMap.get(ex.id),locked:true,reason:accessMap.get(ex.id)?.reason})),'Nenhuma atividade bloqueada.');
 
-  await renderPlatformHub();
+  void withTimeout(renderPlatformHub(), OPTIONAL_REQUEST_TIMEOUT_MS + 1500, 'platform_hub').catch((error)=>console.warn('[AGV] Hub de plataformas carregará depois; dashboard principal foi preservado.',error));
 
   const grid = $('subjects-grid');
   grid.innerHTML = '';
@@ -770,6 +850,33 @@ window.addEventListener('keydown', (event) => {
   if (!suspicious || Date.now() - lastDevtoolsSignal < 10 * 60 * 1000) return;
   lastDevtoolsSignal = Date.now();
   securityTelemetry('client.devtools_heuristic', { source: 'atividades', shortcut: event.code || event.key });
+});
+
+$('retry-loading-btn')?.addEventListener('click', () => {
+  routeAuthenticatedUser();
+});
+
+$('renew-session-btn')?.addEventListener('click', async () => {
+  const button = $('renew-session-btn');
+  if (button) { button.disabled = true; button.textContent = 'Renovando...'; }
+  ++portalBootRun;
+  clearTimeout(portalBootWatchdog);
+  try { await withTimeout(supabase.auth.signOut(), OPTIONAL_REQUEST_TIMEOUT_MS, 'auth.signOut'); } catch (_) {}
+  currentProfile = null;
+  currentClass = null;
+  currentSubjects = [];
+  currentExercises = [];
+  currentProgress = [];
+  currentStudentReleases = [];
+  currentClassReleases = [];
+  currentLegacyClaims = [];
+  currentStaffAccess = false;
+  lastDashboardSnapshot = null;
+  setPortalFullscreenRequired(false);
+  setSessionHeader(false);
+  setLoginError('Sessão renovada. Entre novamente para continuar.');
+  showView('login-view');
+  if (button) { button.disabled = false; button.textContent = 'Renovar sessão'; }
 });
 
 if (SUPABASE_SDK_AVAILABLE) {

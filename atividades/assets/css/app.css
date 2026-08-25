@@ -149,6 +149,11 @@ h4{margin:0;font-size:1rem}
   animation:spin .75s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+.loading-state{padding:28px;text-align:center}
+.loading-title{margin:0;font-weight:800;color:var(--text)}
+.loading-detail{margin:0;max-width:380px;color:var(--muted);font-size:.82rem;line-height:1.55}
+.loading-recovery-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:4px}
+.loading-recovery-actions.hidden{display:none}
 
 /* Buttons */
 .button{

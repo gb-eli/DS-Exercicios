@@ -1,0 +1,13 @@
+Atualização incremental v14.10.8.19.2 sobre v14.10.8.19.1.
+Somente arquivos adicionados/alterados. Não contém o repositório completo.
+
+Arquivos:
+atividades/assets/css/app.css
+atividades/assets/js/app.js
+atividades/index.html
+atividades/version.json
+core/tests/p10921-portal-loading-resilience-v14.10.8.19.2.test.mjs
+docs/implementacao/AUDITORIA-HOTFIX-CARREGAMENTO-v14.10.8.19.2.md
+release-current.json
+release-v14.10.8.19.2.json
+version.json

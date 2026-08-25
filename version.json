@@ -3,6 +3,9 @@
   "version": "0.22.8.16",
   "date": "2026-08-25",
   "features": [
+    "v14.10.8.19.2: carregamento do Portal de Exercícios ganha timeout, watchdog e recuperação manual para eliminar tela infinita.",
+    "v14.10.8.19.2: staff_status, acomodações e Hub de plataformas são degradáveis e não bloqueiam o dashboard do aluno.",
+    "v14.10.8.19.2: tela de carregamento mostra a etapa atual e oferece Tentar novamente/Renovar sessão quando necessário.",
     "v14.10.8.19 R4: estudo domiciliar preserva bloqueio de colagem, proteção de DevTools e detecção de entrada rápida; somente exigências presenciais incompatíveis são flexibilizadas.",
     "v14.10.8.19 R4: troca de guia no estudo domiciliar não gera alerta/pontuação de foco, enquanto autenticação, sessão, salvamento e demais proteções continuam ativas.",
     "v14.10.8.19 R4: progresso das etapas adaptadas sincroniza no Supabase por exercício com RLS individual e fallback local.",
