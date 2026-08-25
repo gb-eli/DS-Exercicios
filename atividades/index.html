@@ -376,7 +376,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.8.19"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.19.1"></script>
 
 
     <dialog id="adaptation-choice-dialog" class="history-dialog adaptation-choice-dialog">
@@ -468,7 +468,7 @@
           <div>
             <p class="eyebrow">Recuperar acesso</p>
             <h3>Redefinir senha</h3>
-            <p class="muted">Enviaremos um link para o seu e-mail institucional.</p>
+            <p class="muted">Recuperação temporária: confirme e-mail institucional e CGM. Se os dados conferirem, sua senha volta ao CGM e você deverá criar uma senha pessoal no próximo acesso.</p>
           </div>
           <button id="recovery-close-btn" class="button button-ghost button-small" type="button">Fechar</button>
         </div>
@@ -476,8 +476,12 @@
           <span>E-mail institucional</span>
           <input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required>
         </label>
+        <label>
+          <span>CGM</span>
+          <input id="recovery-cgm" type="text" inputmode="numeric" autocomplete="off" maxlength="12" pattern="[0-9]{6,12}" placeholder="Digite seu CGM" required>
+        </label>
         <p id="recovery-message" class="form-message hidden"></p>
-        <button class="button button-primary" type="submit">Enviar link</button>
+        <button class="button button-primary" type="submit">Redefinir senha para CGM</button>
       </form>
     </dialog>
 

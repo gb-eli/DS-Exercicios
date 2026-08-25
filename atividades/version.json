@@ -6,7 +6,7 @@
     "v14.10.8.19 R4: estudo domiciliar preserva bloqueio de colagem, proteção de DevTools e detecção de entrada rápida; somente exigências presenciais incompatíveis são flexibilizadas.",
     "v14.10.8.19 R4: troca de guia no estudo domiciliar não gera alerta/pontuação de foco, enquanto autenticação, sessão, salvamento e demais proteções continuam ativas.",
     "v14.10.8.19 R4: progresso das etapas adaptadas sincroniza no Supabase por exercício com RLS individual e fallback local.",
-    "v14.10.8.19 R4: Maria Fernanda recebe explicações por etapa com arquivo/linhas, por que fazer, resultado esperado, alerta e partes do código quando esses metadados existem.",
+    "v14.10.8.19 R4: O modo de estudo domiciliar recebe explicações por etapa com arquivo/linhas, por que fazer, resultado esperado, alerta e partes do código quando esses metadados existem.",
     "v14.10.8.19 R4: ajuda de código passa a ter pistas progressivas sem entregar solução pronta; novos pedidos aprovados no painel usam o mesmo conjunto completo de recursos.",
     "v14.10.8.19: modos pedagógicos individualizados com escolha do aluno, perfil reforçado, controles ampliados e estudo domiciliar sem tela cheia obrigatória.",
     "v14.10.8.19: acomodações globais passam a valer em todos os exercícios e não expõem diagnóstico/laudo no frontend.",
@@ -211,7 +211,8 @@
     "v14.10.8.12: pré-ativação do voucher adiciona preflight read-only, checklist de backup, smoke idempotente e rollback; UI funcional permanece 0.22.8.11.",
     "Padrão mestre incorporado ao pacote em PADRAO_MESTRE_FRONTEND_PROFISSIONAL_ANTI_AI_SLOP.md.",
     "Refino visual não altera APIs, autenticação, autorização, Supabase, notas, arquivos dos alunos, vouchers ou regras de supervisão.",
-    "O grid técnico discreto de fundo, blur funcional da topbar, chips de status e sombras de dialogs foram preservados por terem função/identidade justificável."
+    "O grid técnico discreto de fundo, blur funcional da topbar, chips de status e sombras de dialogs foram preservados por terem função/identidade justificável.",
+    "v14.10.8.19.1: recuperação temporária de senha usa e-mail institucional + CGM e Edge Function server-side; o fluxo por link fica reservado para retorno do Resend."
   ],
   "phase": "P10.9.19-pedagogical-extra-help-r4-audited",
   "release": "v14.10.8.19",

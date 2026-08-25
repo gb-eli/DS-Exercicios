@@ -787,37 +787,45 @@ const recoveryDialog = $('recovery-dialog');
 $('forgot-password-btn')?.addEventListener('click', () => {
   const email = normalizeEmail($('email')?.value || '');
   $('recovery-email').value = email;
+  $('recovery-cgm').value = '';
   $('recovery-message').classList.add('hidden');
+  $('recovery-message').classList.remove('ok');
   recoveryDialog?.showModal();
 });
 $('recovery-close-btn')?.addEventListener('click', () => recoveryDialog?.close());
 $('recovery-form')?.addEventListener('submit', async (event) => {
   event.preventDefault();
   const email = normalizeEmail($('recovery-email').value);
+  const cgm = String($('recovery-cgm').value || '').replace(/\D/g, '');
   const msg = $('recovery-message');
   msg.classList.add('hidden');
+  msg.classList.remove('ok');
   if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
     msg.textContent = `Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`;
     msg.classList.remove('hidden');
     return;
   }
+  if (!/^\d{6,12}$/.test(cgm)) {
+    msg.textContent = 'Informe um CGM válido, usando somente números.';
+    msg.classList.remove('hidden');
+    return;
+  }
   const submit = event.submitter;
   submit.disabled = true;
-  submit.textContent = 'Enviando...';
+  submit.textContent = 'Redefinindo...';
   try {
-    const redirectTo = new URL('../reset-password/', window.location.href).href;
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    const { data, error } = await supabase.functions.invoke('temporary-cgm-password-reset', { body: { email, cgm } });
     if (error) throw error;
-    msg.textContent = 'Se a conta existir, enviaremos um link para esse e-mail. Confira também a caixa de spam.';
+    msg.textContent = data?.message || 'Se os dados informados estiverem corretos, a senha foi redefinida para o CGM. No próximo acesso, crie uma nova senha pessoal.';
     msg.classList.remove('hidden');
     msg.classList.add('ok');
   } catch (error) {
     console.error(error);
-    msg.textContent = 'Não foi possível enviar o link agora.';
+    msg.textContent = 'Não foi possível concluir a redefinição agora. Se houve muitas tentativas, aguarde alguns minutos e tente novamente.';
     msg.classList.remove('hidden');
     msg.classList.remove('ok');
   } finally {
     submit.disabled = false;
-    submit.textContent = 'Enviar link';
+    submit.textContent = 'Redefinir senha para CGM';
   }
 });
