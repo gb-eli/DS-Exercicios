@@ -42,6 +42,6 @@ test('tela de recuperação oferece retry e renovação de sessão',async()=>{
 
 test('cache bust do hotfix está aplicado ao CSS e entrypoint',async()=>{
   const html=await read('atividades/index.html');
-  assert.match(html,/app\.css\?v=14\.10\.8\.19\.2/);
-  assert.match(html,/app\.js\?v=14\.10\.8\.19\.2/);
+  assert.match(html,/app\.css\?v=14\.10\.8\.(?:19\.2|20)/);
+  assert.match(html,/app\.js\?v=14\.10\.8\.(?:19\.2|20)/);
 });

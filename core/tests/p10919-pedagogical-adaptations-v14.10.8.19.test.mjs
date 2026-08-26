@@ -22,7 +22,7 @@ test('frontend carrega acomodação global e permite alternar modo',()=>{
 
 test('modo domiciliar remove somente exigências de supervisão presencial',()=>{
   const supervision=read('core/edge-functions/supervision/index.ts');
-  assert.match(supervision,/accommodation_mode:'home_study'/);
+  assert.match(supervision,/accommodation_mode:mode\|\|'relaxed'/);
   assert.match(supervision,/require_fullscreen:false/);
   assert.doesNotMatch(supervision,/block_paste:false/);
   assert.match(supervision,/ignore_focus_events:true/);
@@ -55,7 +55,7 @@ test('solicitação do aluno não coleta diagnóstico e chega ao painel docente'
   assert.match(migration,/pedagogical_adaptation_requests/);
   assert.match(migration,/student_id=\(select auth\.uid\(\)\)/);
   assert.doesNotMatch(migration,/diagnosis|diagnóstico|laudo_text|medical_reason/i);
-  assert.match(adaptations,/Solicitar adaptação/);
+  assert.match(adaptations,/Solicitar outra experiência/);
   assert.match(staff,/resolve_adaptation_request/);
   assert.match(admin,/Aplicar apoio guiado/);
 });
@@ -130,7 +130,7 @@ test('R4 estudo domiciliar usa metadados ricos e não pune troca de guia',()=>{
   assert.match(adaptations,/Por que esta etapa existe/);
   assert.match(adaptations,/Como saber se deu certo/);
   assert.match(adaptations,/Ajuda progressiva — abra somente se precisar/);
-  assert.match(client,/accommodation_mode==='home_study'\)return/);
+  assert.match(client,/\['home_study','relaxed'\]\.includes/);
   assert.match(server,/ignoredFocus/);
   assert.match(server,/adaptationPolicy\(user\.id,s\.exercise_id/);
 });

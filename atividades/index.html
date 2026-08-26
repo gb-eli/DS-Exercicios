@@ -7,7 +7,7 @@
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.19.2" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.20" />
   <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.18" />
 </head>
 <body>
@@ -153,6 +153,25 @@
           </article>
         </section>
 
+        <section id="personalized-experience-section" class="personalized-experience-section hidden" aria-labelledby="personalized-experience-title">
+          <div class="personalized-experience-shell panel">
+            <div class="personalized-experience-heading">
+              <div>
+                <p class="eyebrow">Experiência de aprendizagem</p>
+                <h3 id="personalized-experience-title">Sua experiência personalizada</h3>
+                <p id="personalized-experience-copy" class="muted">Você pode escolher como prefere realizar suas atividades.</p>
+              </div>
+              <span id="personalized-experience-mode" class="personalized-experience-mode">Você escolhe</span>
+            </div>
+            <div class="personalized-mode-switch" role="group" aria-label="Escolher modo de aprendizagem">
+              <button id="personalized-mode-adapted" class="button button-ghost" type="button">Experiência personalizada</button>
+              <button id="personalized-mode-conventional" class="button button-ghost" type="button">Modo convencional</button>
+            </div>
+            <p id="personalized-experience-summary" class="personalized-experience-summary"></p>
+            <div id="personalized-experience-list" class="personalized-experience-list"></div>
+          </div>
+        </section>
+
         <section id="activity-overview" class="activity-overview">
           <div class="section-heading activity-overview-heading">
             <div><p class="eyebrow">Atividades</p><h3>O que está acontecendo agora</h3></div>
@@ -214,6 +233,18 @@
         </section>
       </section>
 
+      <section id="personalized-experience-view" class="exercise-view personalized-experience-view hidden" aria-labelledby="personalized-experience-view-title">
+        <div class="exercise-toolbar panel personalized-experience-toolbar">
+          <button id="personalized-experience-back" class="button button-ghost" type="button">← Voltar</button>
+          <div>
+            <p id="personalized-experience-view-subject" class="eyebrow">Disciplina</p>
+            <h2 id="personalized-experience-view-title">Experiência personalizada</h2>
+          </div>
+          <span id="personalized-experience-view-purpose" class="status-chip">Experiência</span>
+        </div>
+        <div id="personalized-experience-body" class="personalized-experience-body"></div>
+      </section>
+
       <section id="exercise-view" class="exercise-view hidden" aria-labelledby="exercise-title">
         <div class="exercise-toolbar panel">
           <button id="back-dashboard" class="button button-ghost" type="button">← Disciplinas</button>
@@ -232,13 +263,13 @@
         </div>
         <section id="adaptation-mode-banner" class="adaptation-mode-banner hidden" aria-live="polite">
           <div class="adaptation-mode-copy">
-            <span class="adaptation-mode-kicker">Apoio pedagógico</span>
-            <strong id="adaptation-mode-title">Apoio pedagógico disponível</strong>
-            <span id="adaptation-mode-status">Você pode escolher a organização mais confortável para realizar a atividade.</span>
+            <span class="adaptation-mode-kicker">Experiência de aprendizagem</span>
+            <strong id="adaptation-mode-title">Experiência personalizada disponível</strong>
+            <span id="adaptation-mode-status">Você pode escolher a forma de organização que prefere para realizar a atividade.</span>
           </div>
           <div class="adaptation-mode-actions">
             <span id="adaptation-mode-badge" class="adaptation-mode-badge">Convencional</span>
-            <button id="adaptation-mode-toggle" class="button button-small adaptation-mode-toggle" type="button">Ativar modo adaptado</button>
+            <button id="adaptation-mode-toggle" class="button button-small adaptation-mode-toggle" type="button">Usar experiência personalizada</button>
           </div>
         </section>
         <section id="weekend-mode-banner" class="weekend-mode-banner hidden" aria-live="polite">
@@ -381,20 +412,44 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.8.19.2"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.20"></script>
 
+
+    <dialog id="personalized-onboarding-dialog" class="history-dialog personalized-onboarding-dialog">
+      <form id="personalized-onboarding-form" class="history-card panel personalized-onboarding-card">
+        <div class="history-head">
+          <div>
+            <p class="eyebrow">Sua experiência</p>
+            <h3 id="personalized-onboarding-title">Preparamos uma experiência para você</h3>
+          </div>
+        </div>
+        <p id="personalized-onboarding-copy" class="muted"></p>
+        <p id="personalized-onboarding-interests" class="personalized-onboarding-interests"></p>
+        <div class="personalized-onboarding-grid">
+          <label><span>Como você se sente em programação?</span><select id="personalized-level"><option value="essential">Estou começando</option><option value="guided" selected>Já consigo fazer algumas coisas</option><option value="autonomous">Tenho boa autonomia</option><option value="challenge">Gosto de desafios</option></select></label>
+          <fieldset><legend>Onde costuma precisar de mais ajuda?</legend><label><input type="checkbox" name="support-focus" value="statement"> Entender o enunciado</label><label><input type="checkbox" name="support-focus" value="start"> Saber por onde começar</label><label><input type="checkbox" name="support-focus" value="code"> Escrever código</label><label><input type="checkbox" name="support-focus" value="errors"> Encontrar erros</label><label><input type="checkbox" name="support-focus" value="result"> Entender o resultado</label></fieldset>
+          <label><span>Como prefere receber as explicações?</span><select id="personalized-style"><option value="short_steps">Curtas e em etapas</option><option value="examples">Com mais exemplos</option><option value="visual">Mais visuais</option><option value="mixed" selected>Misturadas</option></select></label>
+          <label><span>Quer desafios extras quando terminar?</span><select id="personalized-extra"><option value="yes">Sim</option><option value="sometimes" selected>Só às vezes</option><option value="no">Prefiro concluir o principal</option></select></label>
+        </div>
+        <div class="adaptation-choice-actions">
+          <button class="button button-primary" type="submit">Iniciar minha experiência</button>
+          <button id="personalized-onboarding-conventional" class="button button-ghost" type="button">Continuar no modo convencional</button>
+        </div>
+        <p class="personalized-onboarding-note">Tudo o que você já realizou continua preservado. Você poderá trocar de modo quando quiser.</p>
+      </form>
+    </dialog>
 
     <dialog id="adaptation-choice-dialog" class="history-dialog adaptation-choice-dialog">
       <div class="history-card panel adaptation-choice-card">
         <p class="eyebrow">Apoio pedagógico</p>
-        <h3 id="adaptation-choice-title">Você recebeu uma adaptação pedagógica</h3>
-        <p id="adaptation-choice-copy" class="muted">Há uma organização de apoio preparada para esta atividade.</p>
+        <h3 id="adaptation-choice-title">Preparamos uma experiência para você</h3>
+        <p id="adaptation-choice-copy" class="muted">Há uma organização de aprendizagem preparada para esta atividade.</p>
         <div class="adaptation-choice-note">
           <strong>Você continua no controle</strong>
           <span>O conteúdo e a avaliação permanecem os mesmos. Você pode trocar entre os modos a qualquer momento.</span>
         </div>
         <div class="adaptation-choice-actions">
-          <button id="adaptation-choice-accept" class="button button-primary" type="button">Usar adaptação</button>
+          <button id="adaptation-choice-accept" class="button button-primary" type="button">Iniciar experiência personalizada</button>
           <button id="adaptation-choice-conventional" class="button button-ghost" type="button">Permanecer no modo convencional</button>
         </div>
       </div>
@@ -405,13 +460,13 @@
         <div class="supervision-start-icon" aria-hidden="true">●</div>
         <p class="eyebrow">Atividade supervisionada</p>
         <h3>Antes de começar</h3>
-        <p class="muted">Durante esta atividade, o sistema registra eventos necessários para acompanhamento pedagógico e segurança. Trocas de guia/tela cheia são objetivas; sinais de DevTools e entrada anormal são apenas heurísticas para conferência do professor.</p>
+        <p class="muted">Durante esta atividade, o sistema aplica a política de acompanhamento configurada para a sua experiência. Abaixo você verá exatamente quais recursos estão ativos antes de começar.</p>
         <div id="supervision-policy-summary" class="supervision-policy-summary"></div>
         <div class="supervision-privacy-note">
           <strong>O que fica registrado</strong>
           <span>sessão, exercício atual, arquivo/cursor, IP visto pelo servidor e eventos de segurança. O professor pode acompanhar e editar o código ao vivo.</span>
         </div>
-        <button id="supervision-start-btn" class="button button-primary supervision-start-btn" type="button">Iniciar em tela cheia</button>
+        <button id="supervision-start-btn" class="button button-primary supervision-start-btn" type="button">Iniciar atividade</button>
       </div>
     </dialog>
 

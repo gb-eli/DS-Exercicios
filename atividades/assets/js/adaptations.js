@@ -64,8 +64,8 @@ export function resolvePedagogicalAdaptation(accommodations=[]){
   return {
     id:row.id||null,
     profileKey,
-    title:String(config.student_label||config.title||'Apoio pedagógico disponível'),
-    message:String(config.student_message||config.message||'Esta atividade possui uma organização de apoio preparada para você.'),
+    title:String(config.student_label||config.title||'Experiência personalizada disponível'),
+    message:String(config.student_message||config.message||'Esta atividade possui uma organização de aprendizagem preparada para você.'),
     defaultMode:normalizeMode(config.default_mode||'conventional'),
     allowSwitch:config.allow_switch!==false,
     offerPrompt:config.offer_prompt!==false,
@@ -304,26 +304,26 @@ export function renderAdaptationBanner({profile,exercise,adaptation,mode,onModeC
   if(!adaptation){
     banner.classList.remove('hidden');banner.dataset.mode='request';
     const pending=request?.status==='pending';
-    if(title)title.textContent=pending?'Solicitação de adaptação enviada':'Precisa de outra forma de organização?';
-    if(status)status.textContent=pending?'O professor poderá preparar um modo de apoio para você. Continue normalmente enquanto isso.':'Você pode solicitar uma adaptação pedagógica sem preencher justificativa pessoal nesta tela.';
+    if(title)title.textContent=pending?'Solicitação enviada':'Quer outra forma de organização?';
+    if(status)status.textContent=pending?'O professor poderá preparar outra experiência de aprendizagem para você. Continue normalmente enquanto isso.':'Você pode solicitar outra forma de organização sem informar dados pessoais nesta tela.';
     if(badge)badge.textContent=pending?'Pendente':'Opcional';
-    if(toggle){toggle.hidden=false;toggle.disabled=pending;toggle.textContent=pending?'Solicitação enviada':'Solicitar adaptação';toggle.onclick=()=>{if(!pending)onRequest?.()}}
+    if(toggle){toggle.hidden=false;toggle.disabled=pending;toggle.textContent=pending?'Solicitação enviada':'Solicitar outra experiência';toggle.onclick=()=>{if(!pending)onRequest?.()}}
     return;
   }
   banner.classList.remove('hidden');banner.dataset.mode=mode;
   if(toggle)toggle.disabled=false;
-  if(title)title.textContent=mode==='adapted'?'Modo de apoio ativo':'Apoio pedagógico disponível';
-  if(status)status.textContent=mode==='adapted'?adaptation.message:'Você pode ativar a organização adaptada desta atividade quando quiser.';
-  if(badge)badge.textContent=mode==='adapted'?(adaptation.profileKey.includes('home')?'Estudo domiciliar':'Adaptado'):'Convencional';
+  if(title)title.textContent=mode==='adapted'?'Experiência personalizada ativa':'Experiência personalizada disponível';
+  if(status)status.textContent=mode==='adapted'?adaptation.message:'Você pode experimentar a organização personalizada desta atividade e voltar quando quiser.';
+  if(badge)badge.textContent=mode==='adapted'?(adaptation.profileKey.includes('home')?'Estudo domiciliar':'Personalizada'):'Convencional';
   if(toggle){
     toggle.hidden=!adaptation.allowSwitch;
-    toggle.textContent=mode==='adapted'?'Usar modo convencional':'Ativar modo adaptado';
+    toggle.textContent=mode==='adapted'?'Usar modo convencional':'Usar experiência personalizada';
     toggle.onclick=()=>onModeChange?.(mode==='adapted'?'conventional':'adapted');
   }
   const dialog=document.getElementById('adaptation-choice-dialog');
   if(dialog){
     const heading=document.getElementById('adaptation-choice-title'),copy=document.getElementById('adaptation-choice-copy');
-    if(heading)heading.textContent=adaptation.profileKey.includes('home')?'Seu modo de estudo domiciliar está disponível':'Você recebeu uma adaptação pedagógica';
+    if(heading)heading.textContent=adaptation.profileKey.includes('home')?'Sua experiência de estudo domiciliar está disponível':'Preparamos uma experiência para você';
     if(copy)copy.textContent=adaptation.message;
   }
 }

@@ -1,14 +1,15 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.19';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.19';
-import { callActivityProgress } from './supervision.js?v=14.10.8.19';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.20';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.20';
+import { callActivityProgress } from './supervision.js?v=14.10.8.20';
 import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.18';
 import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.18';
 import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.18';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.18';
 import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.18';
+import { loadPersonalizedExperienceContext, renderPersonalizedExperienceDashboard, renderPersonalizedAssignment, clearPersonalizedTheme } from './personalized-experience.js?v=14.10.8.20';
 
 const $ = (id) => document.getElementById(id);
-const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
+const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'personalized-experience-view', 'exercise-view', 'staff-view'];
 let currentProfile = null;
 let currentClass = null;
 let currentSubjects = [];
@@ -22,6 +23,7 @@ let passwordRecoveryMode = false;
 let lobbyDeepLinkHandled = false;
 let lastDashboardSnapshot = null;
 let exerciseOpening = false;
+let personalizedExperienceContext = null;
 
 const CRITICAL_REQUEST_TIMEOUT_MS = 10000;
 const OPTIONAL_REQUEST_TIMEOUT_MS = 4500;
@@ -229,7 +231,7 @@ async function routeAuthenticatedUser() {
           OPTIONAL_REQUEST_TIMEOUT_MS,
           'student_accommodations'
         );
-        homeStudyAuthorized=(adaptationRows||[]).some(row=>String(row?.config?.supervision?.mode||'')==='home_study');
+        homeStudyAuthorized=(adaptationRows||[]).some(row=>{const sup=row?.config?.supervision||{};const mode=String(sup.mode||'');return mode==='home_study'||mode==='relaxed'||sup.require_fullscreen===false;});
       }catch(error){console.warn('[AGV] Não foi possível confirmar modo domiciliar; acesso seguirá com a política padrão.',error);}
     }
     const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess&&!homeStudyAuthorized;
@@ -439,6 +441,8 @@ $('logout-btn').addEventListener('click', async () => {
   currentLegacyClaims = [];
   currentStaffAccess = false;
   lastDashboardSnapshot = null;
+  personalizedExperienceContext = null;
+  clearPersonalizedTheme();
   passwordRecoveryMode = false;
   setSessionHeader(false);
   $('password').value = '';
@@ -624,6 +628,12 @@ async function renderDashboard() {
   currentStudentReleases = studentReleases;
   currentClassReleases = classReleases;
   currentLegacyClaims = legacyClaims;
+  try {
+    personalizedExperienceContext = await withTimeout(loadPersonalizedExperienceContext(supabase,currentProfile), OPTIONAL_REQUEST_TIMEOUT_MS + 1200, 'personalized_experience');
+  } catch (error) {
+    console.warn('[AGV] Experiência personalizada indisponível nesta inicialização.', error);
+    personalizedExperienceContext = null;
+  }
 
   $('student-first-name').textContent = (currentProfile.full_name || 'Aluno').split(' ')[0];
   $('student-context').textContent = currentClass
@@ -739,6 +749,13 @@ async function renderDashboard() {
     grid.appendChild(card);
   });
 
+  await renderPersonalizedExperienceDashboard({
+    supabase,
+    profile:currentProfile,
+    context:personalizedExperienceContext,
+    onOpenAssignment:openPersonalizedAssignment,
+  });
+
   showView('dashboard-view');
 
   if (!lobbyDeepLinkHandled) {
@@ -758,6 +775,23 @@ async function renderDashboard() {
       }
     }
   }
+}
+
+async function openPersonalizedAssignment(assignment,progress=null){
+  if(!assignment||!personalizedExperienceContext)return;
+  showView('personalized-experience-view');
+  await renderPersonalizedAssignment({
+    supabase,
+    profile:currentProfile,
+    assignment,
+    progress,
+    onBack:()=>renderDashboard(),
+    onUpdated:(next)=>{
+      personalizedExperienceContext.progressByAssignment.set(String(assignment.id),next);
+      const idx=personalizedExperienceContext.progress.findIndex(row=>String(row.assignment_id)===String(assignment.id));
+      if(idx>=0)personalizedExperienceContext.progress[idx]=next;else personalizedExperienceContext.progress.push(next);
+    },
+  });
 }
 
 async function openExercise(exercise) {

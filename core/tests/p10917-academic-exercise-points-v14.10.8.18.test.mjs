@@ -22,7 +22,7 @@ test('P10.9.17 metadados representam a release de pontuação acadêmica',()=>{
   assert.equal(release.liveDeployApplied,false);
   assert.ok(Array.isArray(version.features));
   assert.ok(version.features.some(item=>String(item).includes('v14.10.8.18: valor acadêmico confirmado')));
-  assert.ok(/^v14\.10\.8\.(?:18|19)$/.test(String(version.release||'')));
+  assert.ok(/^v14\.10\.8\.(?:18|19|20)$/.test(String(version.release||'')));
 });
 
 test('P10.9.17 migration grava somente as três faixas confirmadas',()=>{

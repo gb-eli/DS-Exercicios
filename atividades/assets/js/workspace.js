@@ -12,7 +12,7 @@ import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.10.8.19';
+} from './supervision.js?v=14.10.8.20';
 
 import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
 import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.8.18';
@@ -24,7 +24,8 @@ import {
   resolvePedagogicalAdaptation, loadAdaptationPreference, initializeAdaptationMode, persistAdaptationMode, applyAdaptationClasses,
   renderAdaptationBanner, maybePromptAdaptation, renderAdaptedGuidance,
   loadAdaptationRequest, requestPedagogicalAdaptation, loadAdaptationStepProgress, persistAdaptationStepProgress
-} from './adaptations.js?v=14.10.8.19';
+} from './adaptations.js?v=14.10.8.20';
+import { logExperienceEvent } from './personalized-experience.js?v=14.10.8.20';
 
 let state = {
   profile:null,
@@ -1429,7 +1430,10 @@ async function loadEffectiveReleaseSupport(){
 function setPedagogicalMode(mode,{persist=true,prompt=false}={}){
   const next=mode==='adapted'?'adapted':'conventional';
   state.adaptationMode=next;
-  if(state.adaptation&&persist)void persistAdaptationMode(state.profile,state.adaptation,next,supabase);
+  if(state.adaptation&&persist){
+    void persistAdaptationMode(state.profile,state.adaptation,next,supabase);
+    void logExperienceEvent(supabase,state.profile,{adaptation_key:state.adaptation.profileKey,subject_slug:state.subject?.slug||null,event_type:'mode_selected',mode:next,metadata:{source:'workspace',exercise_id:state.exercise?.id||null}});
+  }
   applyAdaptationClasses(state.adaptation,next);
   if(state.adaptation){
     if(next==='adapted'&&Number(state.adaptation.recommendedFontSize||0)>0){
@@ -1451,10 +1455,10 @@ async function submitAdaptationRequest(){
   try{
     state.adaptationRequest=await requestPedagogicalAdaptation(supabase,state.profile);
     renderAdaptationBanner({profile:state.profile,exercise:state.exercise,adaptation:state.adaptation,mode:state.adaptationMode,onModeChange:(value)=>setPedagogicalMode(value,{persist:true}),request:state.adaptationRequest,onRequest:submitAdaptationRequest});
-    setSaveState('Solicitação de adaptação enviada ao professor.','ok');
+    setSaveState('Solicitação de outra experiência enviada ao professor.','ok');
   }catch(error){
     console.error(error);
-    if(button){button.disabled=false;button.textContent='Solicitar adaptação'}
+    if(button){button.disabled=false;button.textContent='Solicitar outra experiência'}
     setSaveState('Não foi possível enviar a solicitação agora.','error');
   }
 }
@@ -1599,6 +1603,9 @@ export async function mountWorkspace({profile,exercise,subject}){
   showOutput('reference');
   runValidation();
   await loadStudentSupport();
+  if(state.adaptation?.profileKey){
+    void logExperienceEvent(supabase,state.profile,{adaptation_key:state.adaptation.profileKey,subject_slug:state.subject?.slug||null,event_type:'experience_opened',mode:state.adaptationMode,metadata:{source:'workspace',exercise_id:state.exercise?.id||null,exercise_number:state.exercise?.exercise_number||null}});
+  }
   initializeWeekendMode();
   await prepareSupervision({
     profile,exercise,
@@ -1612,11 +1619,15 @@ export async function mountWorkspace({profile,exercise,subject}){
 }
 
 export async function unmountWorkspace(){
+  const closingExperience=state.adaptation?.profileKey&&state.profile?.id?{profile:state.profile,adaptation_key:state.adaptation.profileKey,subject_slug:state.subject?.slug||null,mode:state.adaptationMode,exercise_id:state.exercise?.id||null,exercise_number:state.exercise?.exercise_number||null}:null;
   clearTimeout(state.saveTimer);clearTimeout(liveGradeTimer);clearTimeout(referenceRefreshTimer);clearTimeout(weekendSupportTimer);liveGradeSequence+=1;if(state.weekend?.timer){clearInterval(state.weekend.timer);state.weekend.timer=null;}clearWeekendFocus();
   try{await saveActiveFile(false);}catch(_){}
   // Barreira final: nenhuma gravação já enfileirada pode ficar solta ao trocar de tela.
   await waitForPendingSaves();
   await stopSupervision();
+  if(closingExperience){
+    await logExperienceEvent(supabase,closingExperience.profile,{adaptation_key:closingExperience.adaptation_key,subject_slug:closingExperience.subject_slug,event_type:'experience_closed',mode:closingExperience.mode,metadata:{source:'workspace',exercise_id:closingExperience.exercise_id,exercise_number:closingExperience.exercise_number}});
+  }
   state.saveQueues=new Map();
   state.active=null;
   state.adaptation=null;state.adaptationMode='conventional';state.adaptationModeState=null;state.adaptationStepProgress=null;applyAdaptationClasses(null,'conventional');

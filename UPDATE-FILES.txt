@@ -1,13 +1,22 @@
-Atualização incremental v14.10.8.19.2 sobre v14.10.8.19.1.
-Somente arquivos adicionados/alterados. Não contém o repositório completo.
+UPDATE v14.10.8.20 — somente arquivos novos/alterados sobre v14.10.8.19.2
 
-Arquivos:
 atividades/assets/css/app.css
+atividades/assets/js/adaptations.js
+atividades/assets/js/admin-experiences.js
+atividades/assets/js/admin.js
 atividades/assets/js/app.js
+atividades/assets/js/personalized-experience.js
+atividades/assets/js/supervision.js
+atividades/assets/js/workspace.js
 atividades/index.html
 atividades/version.json
+core/database/051_p10922_personalized_learning_experiences.sql
+core/edge-functions/staff-dashboard/index.ts
+core/edge-functions/supervision/index.ts
+core/tests/p10917-academic-exercise-points-v14.10.8.18.test.mjs
+core/tests/p10919-pedagogical-adaptations-v14.10.8.19.test.mjs
 core/tests/p10921-portal-loading-resilience-v14.10.8.19.2.test.mjs
-docs/implementacao/AUDITORIA-HOTFIX-CARREGAMENTO-v14.10.8.19.2.md
+core/tests/p10922-personalized-experiences-v14.10.8.20.test.mjs
 release-current.json
-release-v14.10.8.19.2.json
+release-v14.10.8.20.json
 version.json

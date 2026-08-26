@@ -24,6 +24,64 @@ Deno.serve(async r=>{if(r.method==='OPTIONS')return new Response('ok',{headers:H
  }
  const sid=String(b.student_id||''), eid=String(b.exercise_id||'');
  if(act==='student_detail'){if(!sid)return J({error:'missing_parameters'},400);await scope(sid);const [{data:g},{data:x},{data:y},{data:ar}]=await Promise.all([db.from('student_exercises').select('*').eq('student_id',sid),db.from('student_accommodations').select('*').eq('student_id',sid).eq('active',true),db.from('exercise_releases').select('*').eq('student_id',sid),db.from('pedagogical_adaptation_requests').select('id,status,request_source,created_at,updated_at,resolved_at').eq('student_id',sid).order('created_at',{ascending:false}).limit(10)]);if(admin)return J({progress:g||[],accommodations:x||[],releases:y||[],adaptation_requests:ar||[]});const {data:m}=await db.from('class_memberships').select('class_id').eq('user_id',sid).eq('active',true);const aa=new Set(assigned),cs=(m||[]).map((z:any)=>String(z.class_id)).filter((z:string)=>aa.has(z)),es=await exFor(cs),ei=new Set(es.map((z:any)=>String(z.id)));return J({progress:(g||[]).filter((z:any)=>ei.has(String(z.exercise_id))),accommodations:(x||[]).filter((z:any)=>!z.exercise_id||ei.has(String(z.exercise_id))),releases:(y||[]).filter((z:any)=>ei.has(String(z.exercise_id))),adaptation_requests:ar||[]});}
+ if(act==='experience_overview'){
+  const [{data:classes},{data:memberships},{data:profiles},{data:accommodations},{data:prefs},{data:modePrefs},{data:assignments},{data:xp},{data:events},{data:studentProgress},{data:exercises},{data:subjects}]=await Promise.all([
+    db.from('classes').select('id,code,name').eq('active',true),
+    db.from('class_memberships').select('class_id,user_id,is_primary,active').eq('active',true),
+    db.from('profiles').select('id,full_name,email,last_login_at').eq('role','student').eq('active',true),
+    db.from('student_accommodations').select('student_id,config,updated_at').is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true),
+    db.from('pedagogical_learning_preferences').select('*'),
+    db.from('pedagogical_adaptation_preferences').select('student_id,adaptation_key,mode,updated_at'),
+    db.from('pedagogical_experience_assignments').select('*').order('display_order').order('created_at'),
+    db.from('pedagogical_experience_progress').select('*'),
+    db.from('pedagogical_experience_events').select('id,student_id,assignment_id,adaptation_key,subject_slug,event_type,mode,metadata,occurred_at').order('occurred_at',{ascending:false}).limit(800),
+    db.from('student_exercises').select('student_id,exercise_id,status,progress_percent,last_activity_at,completed_at,submitted_score'),
+    db.from('exercises').select('id,subject_id,exercise_number,title,active').eq('active',true),
+    db.from('subjects').select('id,slug,name')
+  ]);
+  const classMap=new Map((classes||[]).map((x:any)=>[String(x.id),x])),subjectMap=new Map((subjects||[]).map((x:any)=>[String(x.id),x])),exerciseMap=new Map((exercises||[]).map((x:any)=>[String(x.id),x]));
+  const allowedIds=new Set<string>();
+  if(admin){for(const p of profiles||[])allowedIds.add(String(p.id));}
+  else{const aa=new Set(assigned);for(const m of memberships||[])if(aa.has(String(m.class_id)))allowedIds.add(String(m.user_id));}
+  const classByStudent=new Map<string,any>();for(const m of memberships||[]){const uid=String(m.user_id);if(!allowedIds.has(uid))continue;const current=classByStudent.get(uid);if(!current||m.is_primary)classByStudent.set(uid,classMap.get(String(m.class_id))||null);}
+  const rows=(profiles||[]).filter((p:any)=>allowedIds.has(String(p.id))).map((p:any)=>{
+   const id=String(p.id);
+   const acc=(accommodations||[]).filter((x:any)=>String(x.student_id)===id).sort((a:any,b:any)=>Date.parse(b.updated_at||0)-Date.parse(a.updated_at||0))[0]||null;
+   const adaptationKey=String(acc?.config?.profile_key||acc?.config?.adaptation_profile||'support');
+   const conventional=(studentProgress||[]).filter((x:any)=>String(x.student_id)===id).map((x:any)=>{
+    const ex=exerciseMap.get(String(x.exercise_id)),sub=subjectMap.get(String(ex?.subject_id));
+    return {...x,exercise_number:ex?.exercise_number||null,exercise_title:ex?.title||null,subject_slug:sub?.slug||null,subject_name:sub?.name||null};
+   });
+   return {student_id:id,full_name:p.full_name,email:p.email,last_login_at:p.last_login_at,class:classByStudent.get(id)||null,adaptation:acc,preference:(prefs||[]).find((x:any)=>String(x.student_id)===id)||null,mode_preference:(modePrefs||[]).filter((x:any)=>String(x.student_id)===id&&String(x.adaptation_key)===adaptationKey).sort((a:any,b:any)=>Date.parse(b.updated_at||0)-Date.parse(a.updated_at||0))[0]||null,assignments:(assignments||[]).filter((x:any)=>String(x.student_id)===id),experience_progress:(xp||[]).filter((x:any)=>String(x.student_id)===id),events:(events||[]).filter((x:any)=>String(x.student_id)===id).slice(0,120),conventional_progress:conventional};
+  });
+  return J({students:rows,scope:admin?'global':'assigned'});
+ }
+ if(act==='update_experience_assignment'){
+  const id=String(b.id||'');if(!id)return J({error:'missing_parameters'},400);
+  const {data:row}=await db.from('pedagogical_experience_assignments').select('id,student_id').eq('id',id).maybeSingle();if(!row)return J({error:'not_found'},404);await scope(String(row.student_id));
+  const patch:any={updated_at:new Date().toISOString()};
+  if(Object.prototype.hasOwnProperty.call(b,'deadline'))patch.deadline=b.deadline?String(b.deadline):null;
+  if(Object.prototype.hasOwnProperty.call(b,'active'))patch.active=b.active===true;
+  if(Object.prototype.hasOwnProperty.call(b,'display_order'))patch.display_order=Math.max(0,Math.min(999,Number(b.display_order||0)));
+  if(Object.prototype.hasOwnProperty.call(b,'extra_time_minutes'))patch.extra_time_minutes=Math.max(0,Math.min(1440,Number(b.extra_time_minutes||0)));
+  const {data,error}=await db.from('pedagogical_experience_assignments').update(patch).eq('id',id).select().single();if(error)throw error;return J({ok:true,assignment:data});
+ }
+ if(act==='create_experience_assignment'){
+  const studentId=String(b.student_id||''),subjectSlug=String(b.subject_slug||'').trim(),subjectName=String(b.subject_name||'').trim(),title=String(b.title||'').trim(),purpose=String(b.purpose||'complementary'),instruction=String(b.instruction||'').trim();
+  if(!studentId||!subjectSlug||!subjectName||!title||!instruction)return J({error:'missing_parameters'},400);
+  if(!['evaluation','recovery','complementary','extra','practice'].includes(purpose))return J({error:'invalid_purpose'},400);
+  await scope(studentId);
+  const {data:acc}=await db.from('student_accommodations').select('config').eq('student_id',studentId).is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true).order('updated_at',{ascending:false}).limit(1).maybeSingle();
+  if(!acc)return J({error:'personalized_experience_not_enabled'},409);
+  const adaptationKey=String(acc.config?.profile_key||acc.config?.adaptation_profile||'support'),now=new Date().toISOString(),keyPart=crypto.randomUUID().slice(0,8);
+  const row:any={student_id:studentId,adaptation_key:adaptationKey,subject_slug:subjectSlug.slice(0,120),subject_name:subjectName.slice(0,180),experience_key:`teacher-${Date.now()}-${keyPart}`,title:title.slice(0,180),purpose,deadline:b.deadline?String(b.deadline):null,extra_time_minutes:Math.max(0,Math.min(1440,Number(b.extra_time_minutes||0))),display_order:Math.max(0,Math.min(999,Number(b.display_order||50))),active:true,created_by:user.id,updated_at:now,config:{summary:instruction.slice(0,700),kicker:'Atividade personalizada',heading:title.slice(0,180),intro:'Atividade atribuída pelo professor e organizada separadamente do histórico convencional.',steps:[{id:'orientacao',type:'message',title:'Orientação do professor',text:instruction.slice(0,2500)}]}};
+  const {data,error}=await db.from('pedagogical_experience_assignments').insert(row).select().single();if(error)throw error;return J({ok:true,assignment:data});
+ }
+ if(act==='log_teacher_preview'){
+  const studentId=String(b.student_id||''),assignmentId=b.assignment_id?String(b.assignment_id):null;if(!studentId)return J({error:'missing_parameters'},400);await scope(studentId);
+  const {data:acc}=await db.from('student_accommodations').select('config').eq('student_id',studentId).is('exercise_id',null).eq('accommodation_type','learning_mode').eq('active',true).order('updated_at',{ascending:false}).limit(1).maybeSingle();
+  const {error}=await db.from('pedagogical_experience_events').insert({student_id:studentId,assignment_id:assignmentId,adaptation_key:String(acc?.config?.profile_key||acc?.config?.adaptation_profile||'support'),event_type:'teacher_preview_opened',mode:'adapted',metadata:{viewer_id:user.id,viewer_role:role,source:'staff_preview'},occurred_at:new Date().toISOString()});if(error)throw error;return J({ok:true});
+ }
  if(act==='student_files'){if(!sid||!eid)return J({error:'missing_parameters'},400);await scope(sid,eid);const {data,error}=await db.from('student_files').select('id,filename,language,content,revision,saved_at').eq('student_id',sid).eq('exercise_id',eid).order('filename');if(error)throw error;return J({files:data||[]});}
  if(act==='resolve_adaptation_request'){const id=String(b.id||''),status=String(b.status||'approved');if(!id||!['approved','declined','closed'].includes(status))return J({error:'invalid_request'},400);const {data:reqRow}=await db.from('pedagogical_adaptation_requests').select('student_id').eq('id',id).maybeSingle();if(!reqRow)return J({error:'not_found'},404);await scope(String(reqRow.student_id));const {error}=await db.from('pedagogical_adaptation_requests').update({status,resolved_at:new Date().toISOString(),resolved_by:user.id,updated_at:new Date().toISOString()}).eq('id',id);if(error)throw error;return J({ok:true});}
  if(act==='set_accommodation'){if(!sid)return J({error:'missing_parameters'},400);const globalScope=b.global_scope===true||!eid;await scope(sid,globalScope?undefined:eid);const type=String(b.accommodation_type||'support');if(globalScope){const {data:old}=await db.from('student_accommodations').select('id').eq('student_id',sid).is('exercise_id',null).eq('accommodation_type',type).eq('active',true).order('updated_at',{ascending:false}).limit(1).maybeSingle();const patch={student_id:sid,exercise_id:null,accommodation_type:type,config:b.config||{},reason:String(b.reason||''),active:true,created_by:user.id,updated_at:new Date().toISOString()};const z=old?.id?await db.from('student_accommodations').update(patch).eq('id',old.id).select().single():await db.from('student_accommodations').insert(patch).select().single();if(z.error)throw z.error;return J({ok:true,accommodation:z.data});}const {data,error}=await db.from('student_accommodations').insert({student_id:sid,exercise_id:eid,accommodation_type:type,config:b.config||{},reason:String(b.reason||''),active:true,created_by:user.id}).select().single();if(error)throw error;return J({ok:true,accommodation:data});}

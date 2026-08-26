@@ -1,8 +1,12 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.22.8.15",
-  "date": "2026-08-25",
+  "version": "0.22.8.16",
+  "date": "2026-08-26",
   "features": [
+    "v14.10.8.20: experiências personalizadas passam a coexistir com o modo convencional sem sobrescrever códigos, notas, arquivos ou progresso anterior.",
+    "v14.10.8.20: aluno pode alternar entre modos e registrar preferências de nível, tipo de ajuda e estilo de explicação.",
+    "v14.10.8.20: professor/admin recebe central de experiências com progresso por disciplina, histórico, prazo, tempo extra e prévia segura como aluno.",
+    "v14.10.8.20: atividades exclusivas usam progresso e rascunhos próprios, separados de student_exercises e student_files.",
     "v14.10.8.19.2: carregamento do Portal de Exercícios ganha timeout, watchdog e recuperação manual para eliminar tela infinita.",
     "v14.10.8.19.2: staff_status, acomodações e Hub de plataformas são degradáveis e não bloqueiam o dashboard do aluno.",
     "v14.10.8.19.2: tela de carregamento mostra a etapa atual e oferece Tentar novamente/Renovar sessão quando necessário.",
@@ -218,7 +222,7 @@
     "v14.10.8.19.1: recuperação temporária de senha usa e-mail institucional + CGM e Edge Function server-side; o fluxo por link fica reservado para retorno do Resend."
   ],
   "phase": "P10.9.19-pedagogical-extra-help-r4-audited",
-  "release": "v14.10.8.19",
+  "release": "v14.10.8.20",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",
@@ -301,6 +305,7 @@
     "v14.10.8.13: dashboard, workspace, voucher e painel de professor mantêm comportamento e responsividade da v14.10.8.10-v14.10.8.12."
   ],
   "changelog": [
+    "v14.10.8.20: experiências pedagógicas personalizadas paralelas, preservação integral do histórico convencional e acompanhamento docente.",
     "v14.10.8.11: voucher de +1 ponto por estudo no fim de semana com emissão server-side, verificação docente e resgate único.",
     "v14.10.8.10: correções de responsividade e estabilidade para celular/tablet com cache de referência, debounce, gutter incremental, fallback de highlight em arquivos grandes e painel de símbolos compatível com teclado virtual.",
     "v14.10.8.9: modo final de semana automático e opcional com ajuda pedagógica extra até domingo às 18:00, contador regressivo e marcação focada de erros.",
