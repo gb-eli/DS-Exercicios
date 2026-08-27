@@ -5,6 +5,8 @@
   const $=id=>document.getElementById(id);
   const st={profile:null,data:null,sessionId:null,poll:null,busy:false,createClass:null};
   const esc=(v='')=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const mascotMap={robot:'🤖',owl:'🦉',fox:'🦊',dragon:'🐉',wolf:'🐺',eagle:'🦅',octopus:'🐙',capybara:'🦫'};
+  const guildMark=room=>/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(String(room?.emblem_data_url||''))?`<img class="guild-emblem" src="${esc(room.emblem_data_url)}" alt="Emblema de ${esc(room.name)}">`:`<span class="guild-mascot">${mascotMap[room?.mascot_key]||'🤖'}</span>`;
   const api=(action,body={})=>auth.request(`/functions/v1/${cfg.functionName}`,{method:'POST',body:{action,...body}});
   const fmtDate=v=>v?new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(v)):'—';
   const fmtLocal=v=>{if(!v)return'';const d=new Date(v),z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
@@ -99,8 +101,8 @@
   function renderClans(d){
     return `<div class="clan-admin-grid">${d.clans.map(c=>{
       const members=d.members.filter(m=>String(m.clan_id)===String(c.id)),metric=d.metrics?.clans?.[String(c.id)]||{};
-      return `<article class="clan-admin-card">
-        <div class="clan-admin-head"><div><h3>${esc(c.name)}</h3><small class="muted">${members.length}/${d.session.max_clan_size} • ${Number(metric.online_count||0)} online • ${Number(metric.progress_percent||0)}% concluído</small></div><div class="rank-xp"><strong>${Number(metric.ranking_xp||0)}</strong><small>XP equipe / 1000</small></div></div>
+      return `<article class="clan-admin-card" style="--guild-accent:${esc(c.accent_color||'#22d3ee')}">
+        <div class="clan-admin-head"><div class="admin-guild-identity">${guildMark(c)}<div><h3>${esc(c.name)}</h3><small class="muted">${esc(c.company_name||'Empresa sem nome')} • ${members.length}/${d.session.max_clan_size} • ${Number(metric.online_count||0)} online • ${Number(metric.progress_percent||0)}% concluído</small></div></div><div class="rank-xp"><strong>${Number(metric.ranking_xp||0)}</strong><small>XP guilda / 1000</small></div></div>
         <progress class="progress" max="100" value="${Number(metric.progress_percent||0)}"></progress>
         ${phasePills(metric)}
         ${members.length?members.map(m=>{const mm=d.metrics?.members?.[String(m.student_id)]||{};return `<div class="admin-member"><div><strong><span class="online-dot ${mm.online?'on':''}"></span>${esc(m.student?.full_name||'Aluno')}${m.is_leader?' • Líder':''}</strong><small>${esc(roleName(m.role_id))}</small></div><div class="member-progress"><span>${Number(mm.progress_percent||0)}%</span><small>${Number(mm.completed_count||0)}/${Number(mm.total_count||0)} missões • ${Number(mm.xp_earned||0)}/${Number(mm.xp_max||0)} XP</small></div><span class="status-pill">nota ${fmtScore(mm.final_score||0)}</span><button class="button ghost small" data-remove-member="${m.student_id}" type="button">Remover</button></div>`}).join(''):'<div class="notice">Nenhum aluno nesta empresa.</div>'}

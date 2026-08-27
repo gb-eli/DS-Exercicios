@@ -7,7 +7,7 @@
 
   <meta name="color-scheme" content="dark" />
   <title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.20" />
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.28" />
   <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.18" />
 </head>
 <body>
@@ -153,6 +153,23 @@
           </article>
         </section>
 
+        <section id="student-learning-center" class="student-learning-center panel" aria-labelledby="learning-center-title">
+          <div class="learning-center-head">
+            <div>
+              <p class="eyebrow">Central do aluno</p>
+              <h3 id="learning-center-title">Atividades, resultados e próximos passos</h3>
+              <p class="muted">Uma visão única para acompanhar o que falta, o que você já entregou e onde pode melhorar.</p>
+            </div>
+            <div id="learning-center-kpis" class="learning-center-kpis" aria-label="Indicadores de desempenho"></div>
+          </div>
+          <div class="learning-tabs" role="tablist" aria-label="Central do aluno">
+            <button class="learning-tab is-active" type="button" role="tab" aria-selected="true" data-learning-tab="pending">Pendentes <span id="learning-pending-count">0</span></button>
+            <button class="learning-tab" type="button" role="tab" aria-selected="false" data-learning-tab="completed">Realizadas <span id="learning-completed-count">0</span></button>
+            <button class="learning-tab" type="button" role="tab" aria-selected="false" data-learning-tab="performance">Desempenho e erros</button>
+          </div>
+          <div id="learning-center-content" class="learning-center-content" role="tabpanel"></div>
+        </section>
+
         <section id="personalized-experience-section" class="personalized-experience-section hidden" aria-labelledby="personalized-experience-title">
           <div class="personalized-experience-shell panel">
             <div class="personalized-experience-heading">
@@ -232,6 +249,21 @@
           <div id="subjects-grid" class="subjects-grid"></div>
         </section>
       </section>
+
+      <dialog id="pending-summary-dialog" class="pending-summary-dialog">
+        <div class="pending-summary-card">
+          <div class="pending-summary-icon" aria-hidden="true">📌</div>
+          <p class="eyebrow">Seu resumo de hoje</p>
+          <h2 id="pending-summary-title">Você tem atividades pendentes</h2>
+          <p id="pending-summary-copy" class="muted"></p>
+          <div id="pending-summary-list" class="pending-summary-list"></div>
+          <div class="pending-summary-actions">
+            <button id="pending-summary-open" class="button button-ghost" type="button">Ver todas as pendências</button>
+            <button id="pending-summary-ack" class="button button-primary" type="button">Li e entendi</button>
+          </div>
+          <p id="pending-summary-message" class="form-error hidden" role="status"></p>
+        </div>
+      </dialog>
 
       <section id="personalized-experience-view" class="exercise-view personalized-experience-view hidden" aria-labelledby="personalized-experience-view-title">
         <div class="exercise-toolbar panel personalized-experience-toolbar">
@@ -412,7 +444,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.8.20"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.28"></script>
 
 
     <dialog id="personalized-onboarding-dialog" class="history-dialog personalized-onboarding-dialog">

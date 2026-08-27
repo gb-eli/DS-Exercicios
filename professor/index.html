@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Console Professor</title>
-  <link rel="stylesheet" href="assets/professor.css?v=14.10.8.18">
+  <link rel="stylesheet" href="assets/professor.css?v=14.10.8.28">
 </head>
 <body>
   <main class="shell">
@@ -27,6 +27,12 @@
         <div><p class="eyebrow">Modo Professor</p><h1>Acompanhamento + aula guiada</h1><p class="top-subtitle">Turma ao vivo, liberações e referência privada em uma única tela.</p></div>
         <div class="account"><span id="staff-name"></span><span id="staff-role" class="chip"></span><button id="open-hub" class="ghost" type="button">Hub</button><button id="open-lobby" class="ghost" type="button">Lobby</button><button id="teacher-release-toggle" class="ghost" type="button">Liberações</button><button id="teacher-github-audit-toggle" class="ghost" type="button">Auditoria GitHub</button><button id="teacher-github-simulator-toggle" class="ghost" type="button">Simular baixa</button><button id="teacher-import-toggle" class="ghost hidden" type="button">Importar gabaritos</button><button id="logout" class="ghost" type="button">Sair</button></div>
       </header>
+
+      <section id="teacher-command-center" class="teacher-command-center panel" aria-labelledby="teacher-command-title">
+        <div class="teacher-command-head"><div><p class="eyebrow">Central do professor</p><h2 id="teacher-command-title">Sua turma em um único painel</h2><p class="muted">Comece pela prioridade do momento e aprofunde somente quando necessário.</p></div><a class="primary teacher-exam-link" href="../prova/admin.html">Abrir Modo Prova</a></div>
+        <div class="teacher-command-kpis"><article><span>Alunos</span><strong id="teacher-kpi-students">0</strong></article><article><span>Ativos agora</span><strong id="teacher-kpi-online">0</strong></article><article><span>Em andamento</span><strong id="teacher-kpi-working">0</strong></article><article><span>Para revisar</span><strong id="teacher-kpi-review">0</strong></article><article><span>Média de acerto</span><strong id="teacher-kpi-score">—</strong></article></div>
+        <nav class="teacher-command-actions" aria-label="Atalhos de gestão"><button type="button" data-teacher-go="live">Acompanhar turma</button><button type="button" data-teacher-go="release">Liberar atividade</button><button type="button" data-teacher-go="students">Alunos e entregas</button><button type="button" data-teacher-go="review">Correção e feedback</button></nav>
+      </section>
 
       <section id="teacher-release-panel" class="panel release-panel hidden">
         <div class="release-head"><div><p class="eyebrow">Controle pedagógico</p><h2>Liberação em aula</h2><p class="muted">Libere para a turma inteira ou crie uma exceção individual sem sair do acompanhamento.</p></div><span id="release-state" class="chip">Sem override</span></div>
@@ -171,7 +177,7 @@
   </main>
   <script src="assets/config.js?v=14.10.8.18"></script>
   <script src="../core/session/agv-session.js?v=14.10.8.18"></script>
-  <script src="assets/professor.js?v=14.10.8.18"></script>
+  <script src="assets/professor.js?v=14.10.8.28"></script>
   <script src="assets/legacy-github-review.js?v=14.10.8.18"></script>
   <script src="assets/legacy-github-apply-simulator.js?v=14.10.8.18"></script>
 </body>

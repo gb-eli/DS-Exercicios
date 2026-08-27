@@ -25,6 +25,17 @@ const ROLES = [
 ];
 
 const ROOM_THEMES = new Set(["cyber","neon","ocean","violet","sunset","matrix","corporate","mono"]);
+const ROOM_MASCOTS = new Set(["robot","owl","fox","dragon","wolf","eagle","octopus","capybara"]);
+function safeEmblem(value: unknown) {
+  const data = String(value || "").trim();
+  if (!data) return null;
+  if (data.length > 450000) throw new Error("emblem_too_large");
+  const match = data.match(/^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw new Error("invalid_emblem_format");
+  const bytes = Math.floor(match[2].length * 3 / 4) - ((match[2].match(/=+$/)?.[0].length) || 0);
+  if (bytes > 320 * 1024) throw new Error("emblem_too_large");
+  return data;
+}
 
 type ChallengeSeed = {
   challenge_key: string;
@@ -868,7 +879,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
     return { student_id:p.id,name:p.full_name||"Aluno",clan_id:m?.clan_id||null,clan_name:c?.name||null,role_id:m?.role_id||null,role_key:r?.role_key||null,role_name:r?.name||null,is_leader:!!c?.leader_id&&String(c.leader_id)===String(p.id) };
   });
   const roomCards=clansRaw.map((c:any)=>({
-    id:c.id,name:c.name,display_order:c.display_order,theme_key:c.theme_key||"cyber",company_name:c.company_name||"",company_cnpj:c.company_cnpj||"",company_city:c.company_city||"",company_phone:c.company_phone||"",leader_id:c.leader_id||null,
+    id:c.id,name:c.name,display_order:c.display_order,theme_key:c.theme_key||"cyber",accent_color:c.accent_color||"#22d3ee",mascot_key:c.mascot_key||"robot",emblem_data_url:c.emblem_data_url||null,company_name:c.company_name||"",company_cnpj:c.company_cnpj||"",company_city:c.company_city||"",company_phone:c.company_phone||"",leader_id:c.leader_id||null,
     count:members.filter((m:any)=>String(m.clan_id)===String(c.id)).length,
     members:members.filter((m:any)=>String(m.clan_id)===String(c.id)).map((m:any)=>({student_id:m.student_id,name:m.student?.full_name||"Aluno",role_id:m.role_id||null,role_name:roleMap.get(String(m.role_id||""))?.name||null,is_leader:String(c.leader_id||"")===String(m.student_id)})),
   }));
@@ -1033,11 +1044,19 @@ Deno.serve(async (req) => {
       try{ctx=await assertWaitingLeader(db,sid,user.id);}catch(e){return J({error:String((e as Error).message)},403);}
       const theme=String(b.theme_key||ctx.clan.theme_key||"cyber");
       if(!ROOM_THEMES.has(theme))return J({error:"invalid_theme"},400);
+      const mascot=String(b.mascot_key||ctx.clan.mascot_key||"robot");
+      if(!ROOM_MASCOTS.has(mascot))return J({error:"invalid_mascot"},400);
+      const accent=String(b.accent_color||ctx.clan.accent_color||"#22d3ee");
+      if(!/^#[0-9A-Fa-f]{6}$/.test(accent))return J({error:"invalid_accent_color"},400);
+      let emblem=null;try{emblem=safeEmblem(b.emblem_data_url??ctx.clan.emblem_data_url);}catch(error){return J({error:String((error as Error).message)},400);}
       const name=String(b.name||ctx.clan.name||"").trim().slice(0,42);
       if(name.length<2)return J({error:"room_name_too_short"},400);
       const patch={
         name,
         theme_key:theme,
+        accent_color:accent,
+        mascot_key:mascot,
+        emblem_data_url:emblem,
         company_name:String(b.company_name||"").trim().slice(0,80)||null,
         company_cnpj:String(b.company_cnpj||"").trim().slice(0,24)||null,
         company_city:String(b.company_city||"").trim().slice(0,80)||null,
@@ -1046,7 +1065,7 @@ Deno.serve(async (req) => {
       };
       const z=await db.from("practical_exam_clans").update(patch).eq("id",ctx.clan.id).eq("session_id",sid).select().single();
       if(z.error)throw z.error;
-      await db.from("practical_exam_events").insert({session_id:sid,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_room_updated",metadata:{theme_key:theme}});
+      await db.from("practical_exam_events").insert({session_id:sid,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_room_updated",metadata:{theme_key:theme,accent_color:accent,mascot_key:mascot,emblem_updated:Object.prototype.hasOwnProperty.call(b,"emblem_data_url")}});
       return J({ok:true,clan:z.data});
     }
 
@@ -1192,6 +1211,36 @@ Deno.serve(async (req) => {
 
     const c = await staff(db, user);
     if (!c) return J({ error: "staff_only" }, 403);
+
+    if (act === "staff_simulator_catalog") {
+      let cq = db.from("classes").select("id,code,name,shift").eq("active", true).order("name");
+      if (!c.admin) cq = cq.in("id", c.assigned);
+      const { data: classes } = await cq;
+      const requestedClass = id(b.class_id);
+      let roster: any[] = [];
+      if (requestedClass) {
+        scope(c, requestedClass);
+        const { data: cm } = await db.from("class_memberships").select("user_id").eq("class_id", requestedClass).eq("active", true);
+        const ids = (cm || []).map((x: any) => x.user_id);
+        if (ids.length) {
+          const { data: r } = await db.from("profiles").select("id,full_name").in("id", ids).eq("role", "student").eq("active", true).order("full_name");
+          roster = r || [];
+        }
+      }
+      return J({
+        staff: { id: c.id, full_name: c.full_name, role: c.role, admin: c.admin },
+        classes: classes || [],
+        roster,
+        roles: ROLES.map((r) => ({ role_key: r[0], name: r[1], icon: r[2], description: r[3] })),
+        room_themes: [...ROOM_THEMES],
+        room_mascots: [...ROOM_MASCOTS],
+        templates: Object.entries(T).map(([key, v]) => ({
+          key, subject_slug: v.subject_slug, subject_name: v.subject_name, description: v.description,
+          challenges: v.challenges.map((x) => ({ ...x, public_config: x.public_config || {}, answer_key: x.answer_key || {} }))
+        })),
+        simulation: true
+      });
+    }
 
     if (act === "staff_overview") {
       let q = db.from("practical_exam_sessions").select("*").order("created_at", { ascending: false }).limit(80);

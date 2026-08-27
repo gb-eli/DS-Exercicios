@@ -18,12 +18,16 @@ let currentProgress = [];
 let currentStudentReleases = [];
 let currentClassReleases = [];
 let currentLegacyClaims = [];
+let currentStudentReceipts = [];
 let currentStaffAccess = false;
 let passwordRecoveryMode = false;
 let lobbyDeepLinkHandled = false;
 let lastDashboardSnapshot = null;
 let exerciseOpening = false;
 let personalizedExperienceContext = null;
+let learningCenterTab = 'pending';
+let learningCenterModel = null;
+let pendingNoticeSnapshot = null;
 
 const CRITICAL_REQUEST_TIMEOUT_MS = 10000;
 const OPTIONAL_REQUEST_TIMEOUT_MS = 4500;
@@ -450,12 +454,12 @@ $('logout-btn').addEventListener('click', async () => {
 });
 
 async function loadDashboardData() {
-  const empty={subjects:[],exercises:[],progress:[],studentReleases:[],classReleases:[],legacyClaims:[]};
+  const empty={subjects:[],exercises:[],progress:[],studentReleases:[],classReleases:[],legacyClaims:[],receipts:[]};
   if(!currentClass)return empty;
   const snapshotKey=`${currentProfile?.id||''}:${currentClass.id}`;
   const fallback=()=>{
     if(lastDashboardSnapshot?.key===snapshotKey)return {...lastDashboardSnapshot.data,stale:true};
-    if(currentExercises.length||currentSubjects.length)return {subjects:currentSubjects,exercises:currentExercises,progress:currentProgress,studentReleases:currentStudentReleases,classReleases:currentClassReleases,legacyClaims:currentLegacyClaims,stale:true};
+    if(currentExercises.length||currentSubjects.length)return {subjects:currentSubjects,exercises:currentExercises,progress:currentProgress,studentReleases:currentStudentReleases,classReleases:currentClassReleases,legacyClaims:currentLegacyClaims,receipts:currentStudentReceipts,stale:true};
     return null;
   };
   try{
@@ -479,10 +483,11 @@ async function loadDashboardData() {
     const ids=exercises.map(e=>e.id);
 
     const queries=[
-      withTimeout(supabase.from('student_exercises').select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,security_locked,security_lock_reason,completion_source,auto_score,auto_score_at,submitted_score,submitted_at').eq('student_id',currentProfile.id),CRITICAL_REQUEST_TIMEOUT_MS,'student_exercises'),
+      withTimeout(supabase.from('student_exercises').select('exercise_id,status,progress_percent,attempts,started_at,completed_at,last_activity_at,approval_status,teacher_feedback,teacher_feedback_at,security_locked,security_lock_reason,completion_source,auto_score,auto_score_at,autograde_details,submitted_score,submitted_at').eq('student_id',currentProfile.id),CRITICAL_REQUEST_TIMEOUT_MS,'student_exercises'),
       ids.length?withTimeout(supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('student_id',currentProfile.id).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'student_releases'):Promise.resolve({data:[],error:null}),
       ids.length?withTimeout(supabase.from('exercise_releases').select('id,exercise_id,enabled,release_at,lock_at,updated_at').eq('class_id',currentClass.id).is('student_id',null).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'class_releases'):Promise.resolve({data:[],error:null}),
-      ids.length?withTimeout(supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'legacy_claims'):Promise.resolve({data:[],error:null})
+      ids.length?withTimeout(supabase.from('legacy_exercise_claims').select('id,exercise_id,repository_url,status,next_exercise_id,submitted_at,teacher_feedback').eq('student_id',currentProfile.id).in('exercise_id',ids),CRITICAL_REQUEST_TIMEOUT_MS,'legacy_claims'):Promise.resolve({data:[],error:null}),
+      withTimeout(supabase.from('student_dashboard_receipts').select('notice_key,notice_type,acknowledged_at').eq('student_id',currentProfile.id).order('acknowledged_at',{ascending:false}).limit(80),OPTIONAL_REQUEST_TIMEOUT_MS,'student_dashboard_receipts')
     ];
     const results=await Promise.allSettled(queries);
     const previous=fallback()||empty;
@@ -492,7 +497,7 @@ async function loadDashboardData() {
       if(result.value?.error){console.warn(`[AGV] Consulta ${key} falhou; preservando dados anteriores.`,result.value.error);return previous[key]||[];}
       return result.value?.data||[];
     };
-    const data={subjects,exercises,progress:pick(0,'progress'),studentReleases:pick(1,'studentReleases'),classReleases:pick(2,'classReleases'),legacyClaims:pick(3,'legacyClaims')};
+    const data={subjects,exercises,progress:pick(0,'progress'),studentReleases:pick(1,'studentReleases'),classReleases:pick(2,'classReleases'),legacyClaims:pick(3,'legacyClaims'),receipts:pick(4,'receipts')};
     lastDashboardSnapshot={key:snapshotKey,data};
     return data;
   }catch(error){
@@ -554,6 +559,90 @@ function fillActivityBucket(id,rows,emptyText){
   const host=$(id);if(!host)return;host.replaceChildren();
   if(!rows.length){const empty=document.createElement('p');empty.className='student-activity-empty';empty.textContent=emptyText;host.appendChild(empty);return;}
   rows.forEach((row)=>host.appendChild(row));
+}
+
+function progressScore(progress){
+  const value=progress?.submitted_score ?? (progress?.auto_score_at ? progress?.auto_score : null);
+  if(value===null||value===undefined||!Number.isFinite(Number(value)))return null;
+  return Math.max(0,Math.min(100,Math.round(Number(value))));
+}
+function stableNoticeHash(value=''){
+  let hash=2166136261;
+  for(const char of String(value)){hash^=char.charCodeAt(0);hash=Math.imul(hash,16777619);}
+  return (hash>>>0).toString(36);
+}
+function performanceReasons(progress={}){
+  const reasons=[];
+  if(progress.teacher_feedback)reasons.push({kind:'teacher',text:String(progress.teacher_feedback)});
+  const details=progress.autograde_details||{};
+  for(const filename of details.required_incomplete||[])reasons.push({kind:'error',text:`Arquivo obrigatório não entregue: ${filename}.`});
+  for(const file of details.files||[]){
+    const name=file?.filename||file?.reference_filename||'arquivo';
+    if(file?.missing){reasons.push({kind:'error',text:`${name}: arquivo não encontrado na entrega.`});continue;}
+    if(file?.empty){reasons.push({kind:'error',text:`${name}: o arquivo está vazio.`});continue;}
+    if(file?.syntax_ok===false)reasons.push({kind:'error',text:`${name}: revise a sintaxe antes de reenviar.`});
+    const score=Number(file?.score);
+    if(Number.isFinite(score)&&score<100&&!file?.missing&&!file?.empty)reasons.push({kind:'improve',text:`${name}: ${Math.round(score)}% de acerto; confira requisitos, estrutura e detalhes esperados.`});
+  }
+  if(!reasons.length&&progress.approval_status==='changes_requested')reasons.push({kind:'improve',text:'O professor solicitou ajustes. Abra a atividade para consultar a orientação completa.'});
+  if(!reasons.length&&progressScore(progress)!==null&&progressScore(progress)<100)reasons.push({kind:'improve',text:'Há diferenças em relação aos critérios esperados. Abra a atividade, execute a validação e revise os itens indicados.'});
+  return reasons.slice(0,6);
+}
+function learningActivityHtml(exercise,progress,mode){
+  const subject=subjectForExercise(exercise)?.name||'Disciplina',score=progressScore(progress),reasons=performanceReasons(progress),pct=Math.round(Number(progress?.progress_percent||0));
+  const status=mode==='completed'?'Realizada':progress?.status==='in_progress'?'Em andamento':'Pendente';
+  const action=mode==='completed'?'Revisar atividade':progress?.status==='in_progress'?'Continuar':'Começar';
+  return `<article class="learning-activity-card"><div class="learning-activity-main"><span class="learning-activity-number">${String(exercise.exercise_number||0).padStart(2,'0')}</span><div><small>${escapeHtml(subject)} • ${escapeHtml(status)}</small><strong>${escapeHtml(exerciseDisplayTitle(exercise))}</strong>${mode==='performance'&&reasons.length?`<ul class="learning-error-list">${reasons.map(item=>`<li class="${item.kind}">${escapeHtml(item.text)}</li>`).join('')}</ul>`:`<span class="muted">${score===null?`${pct}% de progresso`:`${score}% de desempenho${score<100?' • veja como melhorar':''}`}</span>`}</div></div><div class="learning-activity-result">${score===null?'<strong>—</strong><small>sem nota</small>':`<strong>${score}%</strong><small>${100-score}% a revisar</small>`}<button class="button button-ghost button-small" type="button" data-learning-open="${escapeHtml(exercise.id)}">${action}</button></div></article>`;
+}
+function renderLearningCenterTab(){
+  const host=$('learning-center-content');if(!host||!learningCenterModel)return;
+  document.querySelectorAll('[data-learning-tab]').forEach(button=>{const active=button.dataset.learningTab===learningCenterTab;button.classList.toggle('is-active',active);button.setAttribute('aria-selected',String(active));});
+  const {pending,completed,graded}=learningCenterModel;
+  const rows=learningCenterTab==='pending'?pending:learningCenterTab==='completed'?completed:graded;
+  const mode=learningCenterTab;
+  host.innerHTML=rows.length?rows.map(({exercise,progress})=>learningActivityHtml(exercise,progress,mode)).join(''):`<div class="learning-empty"><strong>${mode==='pending'?'Você está em dia.':mode==='completed'?'Nenhuma atividade realizada ainda.':'Ainda não há correções ou percentuais disponíveis.'}</strong><span>${mode==='pending'?'Quando uma nova atividade for liberada, ela aparecerá aqui.':mode==='completed'?'Suas entregas concluídas aparecerão neste histórico.':'Envie uma atividade para receber os indicadores de acerto e os pontos a revisar.'}</span></div>`;
+  host.querySelectorAll('[data-learning-open]').forEach(button=>button.addEventListener('click',()=>{const exercise=currentExercises.find(item=>String(item.id)===String(button.dataset.learningOpen));if(exercise)openExercise(exercise);}));
+}
+function renderLearningCenter(availableExercises,completedExercises,progressMap){
+  const pending=availableExercises.map(exercise=>({exercise,progress:progressMap.get(exercise.id)||null}));
+  const completed=completedExercises.slice().sort((a,b)=>Date.parse(progressMap.get(b.id)?.completed_at||0)-Date.parse(progressMap.get(a.id)?.completed_at||0)).map(exercise=>({exercise,progress:progressMap.get(exercise.id)||null}));
+  const graded=currentExercises.map(exercise=>({exercise,progress:progressMap.get(exercise.id)||null})).filter(item=>progressScore(item.progress)!==null||item.progress?.teacher_feedback).sort((a,b)=>Date.parse(b.progress?.submitted_at||b.progress?.auto_score_at||0)-Date.parse(a.progress?.submitted_at||a.progress?.auto_score_at||0));
+  learningCenterModel={pending,completed,graded};
+  const scores=graded.map(item=>progressScore(item.progress)).filter(value=>value!==null),average=scores.length?Math.round(scores.reduce((sum,value)=>sum+value,0)/scores.length):null,errors=scores.reduce((sum,value)=>sum+(100-value),0);
+  $('learning-pending-count').textContent=String(pending.length);$('learning-completed-count').textContent=String(completed.length);
+  $('learning-center-kpis').innerHTML=`<div><span>Pendentes</span><strong>${pending.length}</strong></div><div><span>Realizadas</span><strong>${completed.length}</strong></div><div><span>Média de acerto</span><strong>${average===null?'—':`${average}%`}</strong></div><div><span>Pontos a revisar</span><strong>${scores.length?errors:'—'}</strong></div>`;
+  renderLearningCenterTab();
+  maybeShowPendingSummary(pending);
+}
+function pendingSnapshotKey(pending){
+  const source=pending.map(({exercise,progress})=>`${exercise.id}:${progress?.status||'new'}:${progressScore(progress)??'x'}`).sort().join('|');
+  return `pending-summary:${stableNoticeHash(source)}`;
+}
+function receiptWasRecorded(key){
+  if(currentStudentReceipts.some(row=>row.notice_key===key))return true;
+  try{return localStorage.getItem(`agv:receipt:${currentProfile?.id}:${key}`)==='1';}catch(_){return false;}
+}
+function maybeShowPendingSummary(pending){
+  if(!pending.length)return;
+  const key=pendingSnapshotKey(pending);if(receiptWasRecorded(key)||pendingNoticeSnapshot?.key===key)return;
+  pendingNoticeSnapshot={key,pending};
+  $('pending-summary-title').textContent=`Você tem ${pending.length} atividade${pending.length===1?'':'s'} pendente${pending.length===1?'':'s'}`;
+  $('pending-summary-copy').textContent='Confira as prioridades abaixo. Ao marcar como lido, essa confirmação fica registrada e o aviso volta somente quando suas pendências mudarem.';
+  $('pending-summary-list').innerHTML=pending.slice(0,5).map(({exercise,progress})=>`<div><span>${String(exercise.exercise_number||0).padStart(2,'0')}</span><div><strong>${escapeHtml(exerciseDisplayTitle(exercise))}</strong><small>${escapeHtml(subjectForExercise(exercise)?.name||'Disciplina')} • ${progress?.status==='in_progress'?'continuar':'começar'}</small></div></div>`).join('')+(pending.length>5?`<p class="muted">+ ${pending.length-5} atividade${pending.length-5===1?'':'s'} na Central do Aluno.</p>`:'');
+  const dialog=$('pending-summary-dialog');if(dialog&&!dialog.open)setTimeout(()=>{if(!dialog.open)dialog.showModal();},180);
+}
+async function acknowledgePendingSummary(){
+  if(!pendingNoticeSnapshot)return;
+  const button=$('pending-summary-ack'),message=$('pending-summary-message'),{key,pending}=pendingNoticeSnapshot;button.disabled=true;button.textContent='Registrando…';message.classList.add('hidden');
+  const payload={pending_count:pending.length,exercise_ids:pending.map(item=>item.exercise.id).slice(0,80),source:'student_learning_center'};
+  try{
+    const {error}=await supabase.from('student_dashboard_receipts').upsert({student_id:currentProfile.id,notice_key:key,notice_type:'pending_summary',notice_payload:payload,acknowledged_at:new Date().toISOString()},{onConflict:'student_id,notice_key'});
+    if(error)throw error;
+    currentStudentReceipts.unshift({notice_key:key,notice_type:'pending_summary',acknowledged_at:new Date().toISOString()});
+    try{localStorage.setItem(`agv:receipt:${currentProfile.id}:${key}`,'1');}catch(_){}
+    $('pending-summary-dialog')?.close();
+  }catch(error){console.error(error);message.textContent='Não foi possível registrar a leitura agora. Verifique a conexão e tente novamente.';message.classList.remove('hidden');}
+  finally{button.disabled=false;button.textContent='Li e entendi';}
 }
 
 
@@ -621,13 +710,14 @@ async function renderPlatformHub(){
 
 async function renderDashboard() {
   showView('loading-view');
-  const { subjects, exercises, progress, studentReleases, classReleases, legacyClaims } = await loadDashboardData();
+  const { subjects, exercises, progress, studentReleases, classReleases, legacyClaims, receipts=[] } = await loadDashboardData();
   currentSubjects = subjects;
   currentExercises = exercises;
   currentProgress = progress;
   currentStudentReleases = studentReleases;
   currentClassReleases = classReleases;
   currentLegacyClaims = legacyClaims;
+  currentStudentReceipts = receipts;
   try {
     personalizedExperienceContext = await withTimeout(loadPersonalizedExperienceContext(supabase,currentProfile), OPTIONAL_REQUEST_TIMEOUT_MS + 1200, 'personalized_experience');
   } catch (error) {
@@ -704,6 +794,7 @@ async function renderDashboard() {
   fillActivityBucket('available-activity-list',availableExercises.map((ex)=>activityListRow(ex,{progress:progressMap.get(ex.id)})),'Nenhuma atividade pendente agora.');
   fillActivityBucket('completed-activity-list',completedExercises.slice().sort((a,b)=>new Date(progressMap.get(b.id)?.completed_at||0)-new Date(progressMap.get(a.id)?.completed_at||0)).map((ex)=>activityListRow(ex,{progress:progressMap.get(ex.id),completed:true})),'Você ainda não concluiu atividades.');
   fillActivityBucket('locked-activity-list',lockedExercises.map((ex)=>activityListRow(ex,{progress:progressMap.get(ex.id),locked:true,reason:accessMap.get(ex.id)?.reason})),'Nenhuma atividade bloqueada.');
+  renderLearningCenter(availableExercises,completedExercises,progressMap);
 
   void withTimeout(renderPlatformHub(), OPTIONAL_REQUEST_TIMEOUT_MS + 1500, 'platform_hub').catch((error)=>console.warn('[AGV] Hub de plataformas carregará depois; dashboard principal foi preservado.',error));
 
@@ -839,6 +930,9 @@ async function openExercise(exercise) {
 
 $('back-dashboard').addEventListener('click', async()=>{await unmountWorkspace();await renderDashboard();});
 $('view-all-activities-btn')?.addEventListener('click',()=>document.getElementById('activity-overview')?.scrollIntoView({behavior:'smooth',block:'start'}));
+document.querySelectorAll('[data-learning-tab]').forEach(button=>button.addEventListener('click',()=>{learningCenterTab=button.dataset.learningTab||'pending';renderLearningCenterTab();}));
+$('pending-summary-ack')?.addEventListener('click',acknowledgePendingSummary);
+$('pending-summary-open')?.addEventListener('click',()=>{learningCenterTab='pending';renderLearningCenterTab();$('pending-summary-dialog')?.close();$('student-learning-center')?.scrollIntoView({behavior:'smooth',block:'start'});});
 document.addEventListener('epds:security-back',async()=>{await unmountWorkspace();await renderDashboard();});
 
 function escapeHtml(value) {
@@ -904,6 +998,7 @@ $('renew-session-btn')?.addEventListener('click', async () => {
   currentStudentReleases = [];
   currentClassReleases = [];
   currentLegacyClaims = [];
+  currentStudentReceipts = [];
   currentStaffAccess = false;
   lastDashboardSnapshot = null;
   setPortalFullscreenRequired(false);
