@@ -5,3 +5,6 @@
 
 /* v14.10.8.18.2 — recuperação de senha */
 .text-action{margin-top:10px;padding:10px 4px;border:0;background:transparent;color:var(--cyan);font:800 .86rem/1.2 inherit;cursor:pointer;text-align:left}.text-action:hover{text-decoration:underline}.recovery-dialog{width:min(520px,calc(100% - 24px));padding:0;border:1px solid var(--line);border-radius:16px;background:#0b1821;color:var(--text);box-shadow:0 24px 80px #0009}.recovery-dialog::backdrop{background:#02080db8}.recovery-card{padding:22px}.recovery-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.recovery-head h2{margin:4px 0 0}.recovery-card>.muted{line-height:1.5}.recovery-card .btn.primary{width:100%;margin-top:12px}@media(max-width:560px){.recovery-card{padding:18px}.recovery-head{align-items:stretch;flex-direction:column}.recovery-head .btn{width:100%}}
+
+/* v14.10.8.21 — Modo Prova Prática */
+.exam-card{border-color:#385a6a}.exam-card.exam-hot{border-color:#d44f5c;background:linear-gradient(150deg,#241116,#0c1c24);box-shadow:0 0 0 1px #ff6f7b22,0 16px 45px #0005}.exam-card.exam-hot .go,.exam-card.exam-hot strong{color:#ffc0c5}.exam-card.exam-hot .icon{filter:saturate(1.2)}

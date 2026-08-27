@@ -9,7 +9,18 @@
   const setMsg=(t='',error=false)=>{const e=$('login-message');e.textContent=t;e.classList.toggle('error',error)};
   async function loadProfile(){const user=await auth.getUser();const rows=await auth.request(`/rest/v1/profiles?select=id,full_name,email,role,active,must_change_password&id=eq.${encodeURIComponent(user.id)}&limit=1`);const p=Array.isArray(rows)?rows[0]:null;if(!p?.active)throw new Error('Acesso inativo.');profile=p;if(p.must_change_password){location.replace('atividades/');return {redirected:true,profile:p};}return {redirected:false,profile:p};}
   function syncFullscreen(){window.AGVFullscreen?.require(profile?.role==='student');}
-  function renderSigned(){const role=profile?.role||'student';syncFullscreen();$('login-card').classList.add('hidden');$('signed').classList.remove('hidden');$('user-name').textContent=profile?.full_name||profile?.email||'Usuário';$('user-role').textContent=role==='student'?'Aluno':role==='teacher'?'Professor':role==='admin'?'Administrador':'Super Admin';document.querySelectorAll('[data-role]').forEach(el=>{const allowed=el.dataset.role.split(',').includes(role);el.classList.toggle('hidden',!allowed)});}
+  function renderSigned(){const role=profile?.role||'student';syncFullscreen();$('login-card').classList.add('hidden');$('signed').classList.remove('hidden');$('user-name').textContent=profile?.full_name||profile?.email||'Usuário';$('user-role').textContent=role==='student'?'Aluno':role==='teacher'?'Professor':role==='admin'?'Administrador':'Super Admin';document.querySelectorAll('[data-role]').forEach(el=>{const allowed=el.dataset.role.split(',').includes(role);el.classList.toggle('hidden',!allowed)});renderPracticalExam().catch(()=>{});}
+
+  async function renderPracticalExam(){
+    const card=$('practical-exam-card'),title=$('practical-exam-title'),copy=$('practical-exam-copy'),go=$('practical-exam-go');if(!card||!profile)return;
+    const staff=['teacher','admin','super_admin'].includes(profile.role);card.href=staff?'prova/admin.html':'prova/';
+    try{
+      const out=await auth.request('/functions/v1/practical-exam',{method:'POST',body:{action:'hub_state'}});
+      card.classList.toggle('exam-hot',out?.active===true);
+      if(out?.active){title.textContent=staff?`🔴 PROVA PRÁTICA EM ANDAMENTO (${out.count||1})`:'🔴 PROVA PRÁTICA EM ANDAMENTO';copy.textContent=out?.session?.title?`${out.session.subject_name||'Avaliação'} • ${out.session.title}`:'Há uma avaliação ativa agora.';go.textContent=staff?'Gerenciar agora →':'Entrar agora →';}
+      else{title.textContent='Modo Prova Prática';copy.textContent=staff?'Criar e acompanhar avaliações em empresas, cargos e missões.':'Nenhuma prova em andamento. Quando o professor abrir uma avaliação, ela aparecerá aqui.';go.textContent=staff?'Abrir gestão →':'Abrir →';}
+    }catch(_){card.classList.remove('exam-hot');}
+  }
 
   async function renderPlatforms(){const host=$('hub-platform-grid');if(!host)return;try{const r=await fetch('core/catalog/platform-integration-v14.0.json',{cache:'no-store'});if(!r.ok)throw new Error('catalog');const data=await r.json();const items=(data.platforms||[]).filter(x=>x.readyForUnifiedHub).slice(0,10);host.replaceChildren();for(const item of items){const a=document.createElement('a');a.className='platform-mini';a.href=item.route;a.innerHTML=`<span>${item.icon||'🧩'}</span><div><strong>${item.name}</strong><small>${item.category||'Plataforma integrada'}</small></div><b>→</b>`;host.appendChild(a)}}catch(_){host.textContent='O catálogo de plataformas está temporariamente indisponível.'}}
   function renderGuest(){window.AGVFullscreen?.require(false);$('signed').classList.add('hidden');$('login-card').classList.remove('hidden');}
