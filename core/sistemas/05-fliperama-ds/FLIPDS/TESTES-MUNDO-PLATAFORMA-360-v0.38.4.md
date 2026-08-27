@@ -1,0 +1,134 @@
+# Testes — Mundo Plataforma DS 360 v0.38.4 · Região Industrial
+
+- Verificações: **128**
+- Aprovadas: **128**
+- Falhas: **0**
+
+- ✅ 4 regiões declaradas
+- ✅ Industrial identificada
+- ✅ Industrial 96x84
+- ✅ 3 painéis de energia
+- ✅ 3 consoles de carga
+- ✅ 1 console mestre
+- ✅ 3 esteiras
+- ✅ 4 plataformas móveis
+- ✅ 2 elevadores ou mais
+- ✅ 4 checkpoints
+- ✅ 5 patrulhas
+- ✅ 5 perigos
+- ✅ IDs industriais únicos — 49 IDs
+- ✅ plataforma dock-a dentro
+- ✅ plataforma dock-a positiva
+- ✅ plataforma dock-b dentro
+- ✅ plataforma dock-b positiva
+- ✅ plataforma power-west dentro
+- ✅ plataforma power-west positiva
+- ✅ plataforma power-center dentro
+- ✅ plataforma power-center positiva
+- ✅ plataforma power-east dentro
+- ✅ plataforma power-east positiva
+- ✅ plataforma logistics-a dentro
+- ✅ plataforma logistics-a positiva
+- ✅ plataforma logistics-b dentro
+- ✅ plataforma logistics-b positiva
+- ✅ plataforma crane-yard-a dentro
+- ✅ plataforma crane-yard-a positiva
+- ✅ plataforma crane-yard-b dentro
+- ✅ plataforma crane-yard-b positiva
+- ✅ plataforma control-step-a dentro
+- ✅ plataforma control-step-a positiva
+- ✅ plataforma control-step-b dentro
+- ✅ plataforma control-step-b positiva
+- ✅ plataforma control-room dentro
+- ✅ plataforma control-room positiva
+- ✅ plataforma portal-approach-industrial dentro
+- ✅ plataforma portal-approach-industrial positiva
+- ✅ móvel cargo-lift-west dentro
+- ✅ móvel cargo-lift-west eixo válido
+- ✅ móvel cargo-lift-west movimento válido
+- ✅ móvel cargo-lift-east dentro
+- ✅ móvel cargo-lift-east eixo válido
+- ✅ móvel cargo-lift-east movimento válido
+- ✅ móvel gantry-shuttle dentro
+- ✅ móvel gantry-shuttle eixo válido
+- ✅ móvel gantry-shuttle movimento válido
+- ✅ móvel control-elevator dentro
+- ✅ móvel control-elevator eixo válido
+- ✅ móvel control-elevator movimento válido
+- ✅ esteira belt-a dentro
+- ✅ esteira belt-a direção normalizada
+- ✅ esteira belt-a velocidade positiva
+- ✅ esteira belt-b dentro
+- ✅ esteira belt-b direção normalizada
+- ✅ esteira belt-b velocidade positiva
+- ✅ esteira belt-c dentro
+- ✅ esteira belt-c direção normalizada
+- ✅ esteira belt-c velocidade positiva
+- ✅ checkpoint industrial-cp-dock dentro
+- ✅ checkpoint industrial-cp-dock fora de perigo
+- ✅ checkpoint industrial-cp-dock fora de obstáculo
+- ✅ checkpoint industrial-cp-power dentro
+- ✅ checkpoint industrial-cp-power fora de perigo
+- ✅ checkpoint industrial-cp-power fora de obstáculo
+- ✅ checkpoint industrial-cp-logistics dentro
+- ✅ checkpoint industrial-cp-logistics fora de perigo
+- ✅ checkpoint industrial-cp-logistics fora de obstáculo
+- ✅ checkpoint industrial-cp-control dentro
+- ✅ checkpoint industrial-cp-control fora de perigo
+- ✅ checkpoint industrial-cp-control fora de obstáculo
+- ✅ interação power-panel-west dentro
+- ✅ interação power-panel-west apoiada
+- ✅ interação power-panel-center dentro
+- ✅ interação power-panel-center apoiada
+- ✅ interação power-panel-east dentro
+- ✅ interação power-panel-east apoiada
+- ✅ interação cargo-console-a dentro
+- ✅ interação cargo-console-a apoiada
+- ✅ interação cargo-console-b dentro
+- ✅ interação cargo-console-b apoiada
+- ✅ interação cargo-console-c dentro
+- ✅ interação cargo-console-c apoiada
+- ✅ interação control-console dentro
+- ✅ interação control-console apoiada
+- ✅ spawn industrial seguro
+- ✅ portal industrial dentro
+- ✅ portal industrial fora de obstáculo
+- ✅ Vale preserva 6 Orbes
+- ✅ Vila preserva 3 missões
+- ✅ Floresta preserva 3 Nós
+- ✅ save novo schema 4
+- ✅ campanha tem 4 regiões
+- ✅ Vale → Vila
+- ✅ Vila → Floresta
+- ✅ Floresta → Industrial
+- ✅ Industrial inicia energia 0/3
+- ✅ 3 painéis liberam logística
+- ✅ 3 cargas liberam controle
+- ✅ console mestre sincroniza
+- ✅ Industrial conclui campanha
+- ✅ vitória na região 4
+- ✅ migra schema3
+- ✅ schema3 concluído entra na Industrial
+- ✅ save migrado vira schema4
+- ✅ pontuação preservada na migração
+- ✅ vidas preservadas na migração
+- ✅ restaura schema4
+- ✅ schema4 preserva etapa industrial
+- ✅ esteira desloca personagem — deslocamento=0.068
+- ✅ simulação possui esteiras
+- ✅ render possui indústria
+- ✅ game carrega industrial.json
+- ✅ ready anuncia 4 regiões
+- ✅ versão pública v0.38.4
+- ✅ Service Worker v0.38.4
+- ✅ Industrial no cache offline
+- ✅ wrapper reconhece 4 regiões
+- ✅ catálogo marca Fase 7.25
+- ✅ catálogo cita Região Industrial
+- ✅ perfil externo cita 4 regiões
+- ✅ tutorial externo cita 3 cargas
+- ✅ ficha educacional cita Industrial
+- ✅ save educacional cita schema 4
+- ✅ game HUD possui Energia
+- ✅ game trata evento cargo-route
+- ✅ game vitória usa 4 regiões

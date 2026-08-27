@@ -1,0 +1,29 @@
+{
+  "version": "14.2.0",
+  "date": "2026-08-15",
+  "phase": "P7.3",
+  "title": "Preview Seguro Isolado",
+  "requiresDatabaseMigration": false,
+  "requiresEdgeFunctionDeploy": false,
+  "security": {
+    "mainCspUnsafeInline": false,
+    "mainCspUnsafeEval": false,
+    "keepsWasmUnsafeEval": true,
+    "previewHost": "atividades/preview/index.html",
+    "outerSandbox": "allow-scripts-only",
+    "innerSandbox": "allow-scripts-only",
+    "sameOriginPrivilege": false,
+    "channel": "postMessage + random token + event.source validation"
+  },
+  "compatibility": {
+    "htmlCssJsPreview": true,
+    "pythonPyodide": true,
+    "autosave": true,
+    "supervision": true
+  },
+  "tests": {
+    "files": 38,
+    "tests": 55,
+    "status": "pass"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "platformId": "lab-ds1",
+  "name": "Plataforma 1DS — Central de Disciplinas",
+  "version": "1.12.0",
+  "integrationVersion": "0.9.0-p6.7-wave1",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth contract",
+    "economy": "none",
+    "progress": "local per discipline"
+  },
+  "candidateHookFiles": [
+    "core/auth-contract.js",
+    "core/storage.js",
+    "core/central.js",
+    "assets/js/auth.js",
+    "assets/js/app.js"
+  ],
+  "integrationStatus": "p6.7-wave1-central-session-authority-progress-cache",
+  "capabilitiesLive": {
+    "auth": true,
+    "progress": true,
+    "teacherReview": true,
+    "teacherReference": true,
+    "xp": false,
+    "points": false,
+    "wallet": false,
+    "store": false,
+    "inventory": false,
+    "marketplace": false,
+    "crossPcFileSync": false,
+    "crossSurfaceSession": true,
+    "localProgressIsAuthority": false
+  },
+  "canonicalActivities": 11,
+  "requiredClassCode": "1DS-A-MANHA",
+  "edgeFunctions": {
+    "student": "lab-exercises-core v1",
+    "teacher": "agv-teacher-activity v3"
+  },
+  "analysisValidation": "lab-analysis-validate v1 + database completion guard",
+  "security": {
+    "studentReferenceStripped": true,
+    "teacherAnswersInStudentBundle": false,
+    "economicReward": "no_economic_reward"
+  },
+  "session": {
+    "authority": "AGV Core / Supabase Auth",
+    "storage": "sb-iresvqwyaqotghjssncg-auth-token",
+    "crossSurface": true,
+    "legacySessionStorage": "migration_only"
+  },
+  "localStatePolicy": {
+    "identity": "not_authoritative",
+    "progress": "cache_and_offline_only",
+    "preferences": "local_allowed",
+    "officialProgress": "lab-exercises-core"
+  }
+}

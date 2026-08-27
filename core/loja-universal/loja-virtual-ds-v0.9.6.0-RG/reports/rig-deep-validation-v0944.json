@@ -1,0 +1,98 @@
+{
+  "version": "0.9.4.4",
+  "generatedAt": "2026-08-03T17:21:22.374741+00:00",
+  "rig": "DS_HUMANOID_VOXEL_RIG_2",
+  "glbs": [
+    {
+      "file": "avatar-tech-v1-lod0.glb",
+      "bytes": 105972,
+      "nodes": 97,
+      "animations": 28,
+      "channels": 174,
+      "accessors": 352,
+      "bufferViews": 352,
+      "binBytes": 17212,
+      "valid": true,
+      "issues": []
+    },
+    {
+      "file": "avatar-tech-v1-lod1.glb",
+      "bytes": 105324,
+      "nodes": 90,
+      "animations": 28,
+      "channels": 174,
+      "accessors": 352,
+      "bufferViews": 352,
+      "binBytes": 17212,
+      "valid": true,
+      "issues": []
+    },
+    {
+      "file": "avatar-tech-v1-lod2.glb",
+      "bytes": 104520,
+      "nodes": 81,
+      "animations": 28,
+      "channels": 174,
+      "accessors": 352,
+      "bufferViews": 352,
+      "binBytes": 17212,
+      "valid": true,
+      "issues": []
+    }
+  ],
+  "trimesh": [
+    {
+      "file": "avatar-tech-v1-lod0.glb",
+      "geometryCount": 14,
+      "bounds": [
+        [
+          -1.8287444729580935,
+          -0.12999999999999987,
+          -1.0875000000000001
+        ],
+        [
+          1.37,
+          6.67,
+          0.91
+        ]
+      ],
+      "valid": true
+    },
+    {
+      "file": "avatar-tech-v1-lod1.glb",
+      "geometryCount": 14,
+      "bounds": [
+        [
+          -1.8287444729580935,
+          -0.12999999999999987,
+          -1.0875000000000001
+        ],
+        [
+          1.37,
+          6.47,
+          0.91
+        ]
+      ],
+      "valid": true
+    },
+    {
+      "file": "avatar-tech-v1-lod2.glb",
+      "geometryCount": 14,
+      "bounds": [
+        [
+          -1.8287444729580935,
+          -0.12999999999999987,
+          -1.0875000000000001
+        ],
+        [
+          1.37,
+          6.47,
+          0.91
+        ]
+      ],
+      "valid": true
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

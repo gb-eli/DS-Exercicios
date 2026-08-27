@@ -1,0 +1,102 @@
+{
+  "version": "0.35.2",
+  "phase": "Fase 7.16C — Upgrade gráfico dos jogos atuais · Bloco 3/3",
+  "games": {
+    "state-quest-rpg": {
+      "direction": "RPG top-down com mapa em profundidade e leitura de personagens",
+      "effects": [
+        "painel em profundidade",
+        "paredes com bevel",
+        "sombras de entidades",
+        "aura do herói"
+      ],
+      "profiles": [
+        "Histórico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    },
+    "bit-bridge-16": {
+      "direction": "plataforma comparativa 8→16 bits com volume e energia",
+      "effects": [
+        "sombras de plataformas",
+        "glow de perigos",
+        "checkpoint luminoso",
+        "portal energético"
+      ],
+      "profiles": [
+        "Histórico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    },
+    "raycast-corridors": {
+      "direction": "raycasting 2.5D com atmosfera e leitura de distância",
+      "effects": [
+        "céu/piso estratificados",
+        "horizonte luminoso",
+        "halos de objetivos",
+        "retícula técnica"
+      ],
+      "profiles": [
+        "Histórico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    },
+    "polygon-sector-94": {
+      "direction": "arena WebGL low-poly com beacons e bordas energizadas",
+      "effects": [
+        "torres de canto",
+        "beacons orbitais",
+        "faixas emissivas",
+        "ambientação escalonada"
+      ],
+      "profiles": [
+        "Histórico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    },
+    "camera-evolution": {
+      "direction": "laboratório de câmeras com trilhos, balizas e leitura de FOV",
+      "effects": [
+        "trilhos luminosos",
+        "balizas laterais",
+        "indicador visual proporcional ao FOV",
+        "ambientação escalonada"
+      ],
+      "profiles": [
+        "Histórico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    },
+    "voxelcraft-ds": {
+      "direction": "mundo voxel com céu e iluminação dinâmica",
+      "effects": [
+        "céu dinâmico",
+        "fog com transição",
+        "sol visual",
+        "HUD e hotbar com profundidade"
+      ],
+      "profiles": [
+        "Econômico",
+        "Baixo",
+        "Médio",
+        "Alto",
+        "Ultra"
+      ]
+    }
+  }
+}

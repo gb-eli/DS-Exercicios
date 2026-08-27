@@ -1,0 +1,15 @@
+{
+  "version": "v12.2-P5.8-LABORATORIOS-INTERATIVOS",
+  "phase": "P5.8",
+  "date": "2026-08-15",
+  "lobby_version": "1.0.0",
+  "base": "v12.1-P5.7-INTERIORES-LABORATORIOS",
+  "highlights": [
+    "Estações e cadeiras interativas nos quatro laboratórios",
+    "Monitores ligam ao usar a estação e avatar senta localmente",
+    "Quadro inteligente contextual por turma",
+    "Área de apresentação reservada à equipe"
+  ],
+  "requires_database_migration": false,
+  "requires_edge_function_deploy": false
+}

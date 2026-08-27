@@ -1,0 +1,1496 @@
+{
+  "version": "v14.8-private-validation",
+  "generatedAt": "2026-08-17",
+  "records": [
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:analise-metodo-sistemas:01",
+      "name": "Atores e Casos de Uso",
+      "subject": "analise-metodo-sistemas",
+      "number": 1,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "analise-metodo-sistemas",
+        "number": 1,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:analise-metodo-sistemas:02",
+      "name": "Analisando requisitos de um sistema",
+      "subject": "analise-metodo-sistemas",
+      "number": 2,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "analise-metodo-sistemas",
+        "number": 2,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:analise-metodo-sistemas:03",
+      "name": "Requisitos funcionais e não funcionais na prática",
+      "subject": "analise-metodo-sistemas",
+      "number": 3,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "analise-metodo-sistemas",
+        "number": 3,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:01",
+      "name": "Exercício 01 — Variáveis, tipos, entrada e saída",
+      "subject": "introducao-programacao",
+      "number": 1,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 1,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:02",
+      "name": "Exercício 02 — Operadores e cálculos em Python",
+      "subject": "introducao-programacao",
+      "number": 2,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 2,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:03",
+      "name": "Exercício 03 — Condições com if e else em Python",
+      "subject": "introducao-programacao",
+      "number": 3,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 3,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:04",
+      "name": "Exercício 04 — Condições com if, elif e else em Python",
+      "subject": "introducao-programacao",
+      "number": 4,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 4,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:05",
+      "name": "Exercício 05 — Operadores lógicos e validações em Python",
+      "subject": "introducao-programacao",
+      "number": 5,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 5,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:06",
+      "name": "Exercício 06 — Repetição com for em Python",
+      "subject": "introducao-programacao",
+      "number": 6,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 6,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:07",
+      "name": "Exercício 07 — Contadores e acumuladores em Python",
+      "subject": "introducao-programacao",
+      "number": 7,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 7,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds1",
+      "activity_id": "exercise:introducao-programacao:08",
+      "name": "Exercício 08 — Repetição com while em Python",
+      "subject": "introducao-programacao",
+      "number": 8,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "introducao-programacao",
+        "number": 8,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:01",
+      "name": "Exercício 01 — Inovação, invenção e melhoria",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 1,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 1,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:02",
+      "name": "Exercício 02 — Tipos de inovação",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 2,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 2,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:03",
+      "name": "Exercício 03 — Tecnologias emergentes e oportunidades",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 3,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 3,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:04",
+      "name": "Exercício 04 — Problemas que merecem solução",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 4,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 4,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:05",
+      "name": "Exercício 05 — Inovação responsável",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 5,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 5,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:06",
+      "name": "Exercício 06 — Definindo o usuário",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 6,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 6,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:07",
+      "name": "Exercício 07 — Persona",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 7,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 7,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:08",
+      "name": "Exercício 08 — Mapa de empatia",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 8,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 8,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:09",
+      "name": "Exercício 09 — Entrevista de descoberta",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 9,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 9,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:10",
+      "name": "Exercício 10 — Declaração do problema",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 10,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 10,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:11",
+      "name": "Exercício 11 — Geração de ideias",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 11,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 11,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:12",
+      "name": "Exercício 12 — Priorização de ideias",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 12,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 12,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:13",
+      "name": "Exercício 13 — Proposta de valor",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 13,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 13,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:14",
+      "name": "Exercício 14 — Concorrentes e alternativas atuais",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 14,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 14,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:15",
+      "name": "Exercício 15 — Nome, marca e propriedade intelectual",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 15,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 15,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:16",
+      "name": "Exercício 16 — Segmentos de clientes e usuários",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 16,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 16,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:17",
+      "name": "Exercício 17 — Canais e relacionamento",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 17,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 17,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:18",
+      "name": "Exercício 18 — Recursos, atividades e parceiros",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 18,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 18,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:19",
+      "name": "Exercício 19 — Fontes de receita",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 19,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 19,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:20",
+      "name": "Exercício 20 — Estrutura de custos",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 20,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 20,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:21",
+      "name": "Exercício 21 — MVP: mínimo produto viável",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 21,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 21,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:22",
+      "name": "Exercício 22 — Protótipo e fluxo de uso",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 22,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 22,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:23",
+      "name": "Exercício 23 — Experimento de validação",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 23,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 23,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:24",
+      "name": "Exercício 24 — Métricas de produto",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 24,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 24,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:25",
+      "name": "Exercício 25 — Preço e percepção de valor",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 25,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 25,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:26",
+      "name": "Exercício 26 — Viabilidade financeira simplificada",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 26,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 26,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:27",
+      "name": "Exercício 27 — Riscos do projeto e plano de resposta",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 27,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 27,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:28",
+      "name": "Exercício 28 — Pitch de 60 segundos",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 28,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 28,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:29",
+      "name": "Exercício 29 — Pitch deck do projeto",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 29,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 29,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:inovacao-tecnologica-empreendedorismo:30",
+      "name": "Exercício 30 — Projeto integrado de inovação",
+      "subject": "inovacao-tecnologica-empreendedorismo",
+      "number": 30,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "inovacao-tecnologica-empreendedorismo",
+        "number": 30,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:01",
+      "name": "Exercício 01 — Alterando HTML com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 1,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 1,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:02",
+      "name": "Exercício 02 — Modo Claro e Modo Escuro com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 2,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 2,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:03",
+      "name": "Exercício 03 — Alterando Tamanho, Fonte e Estilo do Texto",
+      "subject": "programacao-front-end",
+      "number": 3,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 3,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:04",
+      "name": "Exercício 04 — Capturando Nome com Input",
+      "subject": "programacao-front-end",
+      "number": 4,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 4,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:05",
+      "name": "Exercício 05 — Contador de Cliques com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 5,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 5,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:06",
+      "name": "Exercício 06 — Calculadora Simples com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 6,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 6,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:07",
+      "name": "Exercício 07 — Conversor de Temperatura com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 7,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 7,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:08",
+      "name": "Exercício 08 — Média e Situação do Aluno com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 8,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 8,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:09",
+      "name": "Exercício 09 — Validação de Campo com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 9,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 9,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:10",
+      "name": "Exercício 10 — Login Simples com Condição em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 10,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 10,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:11",
+      "name": "Exercício 11 — Contador com Laço de Repetição em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 11,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 11,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:12",
+      "name": "Exercício 12 — Identificando Tipos de Dados com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 12,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 12,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:13",
+      "name": "Exercício 13 — Trabalhando com var, let e const em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 13,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 13,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:14",
+      "name": "Exercício 14 — Variáveis Locais e Globais em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 14,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 14,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:15",
+      "name": "Exercício 15 — Funções com Parâmetros e Retorno em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 15,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 15,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:16",
+      "name": "Exercício 16 — Lista de Nomes com Array em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 16,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 16,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:17",
+      "name": "Exercício 17 — Percorrendo Arrays com forEach em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 17,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 17,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:18",
+      "name": "Exercício 18 — Eventos com addEventListener em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 18,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 18,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:19",
+      "name": "Exercício 19 — Manipulando Classes com classList em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 19,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 19,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:20",
+      "name": "Exercício 20 — Lista de Tarefas com JavaScript",
+      "subject": "programacao-front-end",
+      "number": 20,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 20,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:21",
+      "name": "Exercício 21 — Lista de Tarefas com Edição e Remoção",
+      "subject": "programacao-front-end",
+      "number": 21,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 21,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:22",
+      "name": "Exercício 22 — Cadastro Simples com Objeto em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 22,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 22,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:23",
+      "name": "Exercício 23 — Cadastro de Alunos com Array de Objetos",
+      "subject": "programacao-front-end",
+      "number": 23,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 23,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:24",
+      "name": "Exercício 24 — Salvando Dados com localStorage",
+      "subject": "programacao-front-end",
+      "number": 24,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 24,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:25",
+      "name": "Exercício 25 — Consulta de CEP com ViaCEP",
+      "subject": "programacao-front-end",
+      "number": 25,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 25,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:26",
+      "name": "Exercício 26 — Consulta de CEP com Tratamento de Erros",
+      "subject": "programacao-front-end",
+      "number": 26,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 26,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:27",
+      "name": "Exercício 27 — Arrow Functions em JavaScript",
+      "subject": "programacao-front-end",
+      "number": 27,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 27,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds2",
+      "activity_id": "exercise:programacao-front-end:28",
+      "name": "Exercício 28 — Transformando Dados com map()",
+      "subject": "programacao-front-end",
+      "number": 28,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end",
+        "number": 28,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:01",
+      "name": "Exercício 01 — Estrutura Semântica de um Sistema de Chamados",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 1,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 1,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:02",
+      "name": "Exercício 02 — Formulário Acessível: HTML de Presente + CSS + JavaScript",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 2,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 2,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:03",
+      "name": "Exercício 03 — Tabela de Registros e Status",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 3,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 3,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:04",
+      "name": "Exercício 04 — Painel de Prioridades com Filtro Interativo",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 4,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 4,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:05",
+      "name": "Exercício 05 — Atividade futura ainda não publicada",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 5,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 5,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:06",
+      "name": "Exercício 06 — Atividade futura ainda não publicada",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 6,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 6,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:07",
+      "name": "Exercício 07 — Atividade futura ainda não publicada",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 7,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 7,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-ds3",
+      "activity_id": "exercise:programacao-desenvolvimento-sistemas:08",
+      "name": "Exercício 08 — Atividade futura ainda não publicada",
+      "subject": "programacao-desenvolvimento-sistemas",
+      "number": 8,
+      "minimum_seconds": 0,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-desenvolvimento-sistemas",
+        "number": 8,
+        "legacyCode": null,
+        "minimumSeconds": 0,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:01",
+      "name": "FE01 - Ambiente, VS Code, pastas e primeiro projeto",
+      "subject": "programacao-front-end-sub",
+      "number": 1,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 1,
+        "legacyCode": "FE01",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:02",
+      "name": "FE02 - HTML semântico em uma página profissional",
+      "subject": "programacao-front-end-sub",
+      "number": 2,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 2,
+        "legacyCode": "FE02",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:03",
+      "name": "FE03 - Formulário acessível de cadastro",
+      "subject": "programacao-front-end-sub",
+      "number": 3,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 3,
+        "legacyCode": "FE03",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:04",
+      "name": "FE04 - CSS: seletores, cascata, variáveis e Box Model",
+      "subject": "programacao-front-end-sub",
+      "number": 4,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 4,
+        "legacyCode": "FE04",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:05",
+      "name": "FE05 - Layout profissional com Flexbox",
+      "subject": "programacao-front-end-sub",
+      "number": 5,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 5,
+        "legacyCode": "FE05",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:06",
+      "name": "FE06 - Grid, media queries e responsividade",
+      "subject": "programacao-front-end-sub",
+      "number": 6,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 6,
+        "legacyCode": "FE06",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-front-end-sub:07",
+      "name": "FE07 - Do algoritmo ao código: Python e JavaScript",
+      "subject": "programacao-front-end-sub",
+      "number": 7,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-front-end-sub",
+        "number": 7,
+        "legacyCode": "FE07",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-mobile-sub:01",
+      "name": "MOB01 - Introdução ao Mobile",
+      "subject": "programacao-mobile-sub",
+      "number": 1,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-mobile-sub",
+        "number": 1,
+        "legacyCode": "MOB01",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-mobile-sub:02",
+      "name": "MOB02 - Como funciona um dispositivo móvel",
+      "subject": "programacao-mobile-sub",
+      "number": 2,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-mobile-sub",
+        "number": 2,
+        "legacyCode": "MOB02",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-mobile-sub:03",
+      "name": "MOB03 - Tecnologias Mobile",
+      "subject": "programacao-mobile-sub",
+      "number": 3,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-mobile-sub",
+        "number": 3,
+        "legacyCode": "MOB03",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    },
+    {
+      "platform_code": "lab-sub",
+      "activity_id": "exercise:programacao-mobile-sub:04",
+      "name": "MOB04 - Ecossistema de Desenvolvimento Mobile",
+      "subject": "programacao-mobile-sub",
+      "number": 4,
+      "minimum_seconds": 300,
+      "reward_policy": "no_economic_reward",
+      "metadata": {
+        "kind": "exercise",
+        "subject": "programacao-mobile-sub",
+        "number": 4,
+        "legacyCode": "MOB04",
+        "minimumSeconds": 300,
+        "source": "canonical-student-bundle"
+      }
+    }
+  ]
+}

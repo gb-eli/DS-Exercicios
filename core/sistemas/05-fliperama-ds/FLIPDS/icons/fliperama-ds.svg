@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Fliperama DS">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071222"/><stop offset="1" stop-color="#120925"/></linearGradient></defs>
+  <rect width="512" height="512" rx="96" fill="url(#g)"/>
+  <rect x="58" y="58" width="396" height="396" rx="62" fill="none" stroke="#49e7ff" stroke-width="14"/>
+  <path d="M132 172h122c69 0 112 35 112 91 0 57-43 92-112 92h-38v59h-84V172Zm115 116c24 0 38-9 38-25 0-15-14-24-38-24h-31v49h31Z" fill="#f3f8ff"/>
+  <path d="M350 164h38v204h-38z" fill="#9678ff"/>
+  <circle cx="388" cy="390" r="30" fill="#49e7ff" opacity=".22"/><circle cx="388" cy="390" r="11" fill="#49e7ff"/>
+</svg>

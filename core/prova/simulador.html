@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071018">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>DS Exercícios — Simulador da Experiência do Aluno</title>
+  <link rel="stylesheet" href="assets/prova.css?v=14.10.8.27">
+</head>
+<body>
+  <main class="exam-shell simulator-shell">
+    <header class="exam-top">
+      <a class="brand-link" href="admin.html"><span class="brand-mark">DS</span><div><strong>Simulador da Experiência do Aluno</strong><small>Modo administrativo • sem gravação real</small></div></a>
+      <div class="top-actions"><span class="pill warn">SIMULAÇÃO</span><span id="connection-pill" class="pill">Conectando</span><a class="button ghost" href="admin.html">← Gestão da prova</a><button id="logout" class="button ghost hidden" type="button">Sair</button></div>
+    </header>
+
+    <section id="login-view" class="login-layout compact-login">
+      <article class="hero-panel"><p class="eyebrow">Ambiente de teste</p><h1>Veja a prova<br>como o aluno vê.</h1><p>Teste lobby, salas, líder, áreas, desafios, XP e rankings sem criar sessão, sem alterar nota e sem gravar progresso real.</p></article>
+      <form id="login-form" class="panel login-card"><p class="eyebrow">Equipe autorizada</p><h2>Entrar</h2><label>E-mail institucional<input id="email" type="email" autocomplete="username" required></label><label>Senha<input id="password" type="password" autocomplete="current-password" required></label><button class="button primary" type="submit">Abrir simulador</button><p id="login-message" class="message" aria-live="polite"></p></form>
+    </section>
+
+    <section id="app-view" class="hidden">
+      <section class="panel simulator-control-panel">
+        <div class="section-head simulator-head"><div><p class="eyebrow">Central de simulação</p><h1>Experiência do aluno</h1><p>As respostas e XP abaixo existem apenas nesta aba. Atualizar a página zera a simulação.</p></div><span id="staff-label" class="status-pill good">Admin</span></div>
+        <div class="simulator-controls">
+          <label>Turma<select id="sim-class"></select></label>
+          <label>Prova<select id="sim-template"></select></label>
+          <label>Tela<select id="sim-view"><option value="lobby">Lobby geral</option><option value="room">Sala da equipe</option><option value="challenge">Desafios</option><option value="ranking">Ranking geral</option></select></label>
+          <label>Área<select id="sim-role"></select></label>
+          <label>Perfil<select id="sim-profile"><option value="member">Integrante</option><option value="leader">Líder da equipe</option></select></label>
+          <label>Dispositivo<select id="sim-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Celular</option></select></label>
+          <label>Tema<select id="sim-theme"><option value="cyber">Cyber</option><option value="neon">Neon</option><option value="ocean">Ocean</option><option value="violet">Violet</option><option value="sunset">Sunset</option><option value="matrix">Matrix</option><option value="corporate">Corporate</option><option value="mono">Mono</option></select></label>
+          <div class="simulator-actions"><button id="sim-reset" class="button ghost" type="button">Reiniciar</button><button id="sim-next" class="button primary" type="button">Próximo desafio →</button></div>
+        </div>
+      </section>
+
+      <div class="simulator-workspace">
+        <aside class="panel simulator-inspector">
+          <p class="eyebrow">Inspector</p><h2>Estado simulado</h2>
+          <div id="sim-inspector"></div>
+          <details class="sim-answer-key"><summary>Gabarito administrativo</summary><div id="sim-answer"></div></details>
+          <div class="sim-safe-note"><strong>Não grava no banco</strong><span>Nenhum botão desta tela cria XP, altera ranking ou modifica equipe real.</span></div>
+        </aside>
+        <section class="simulator-stage-wrap">
+          <div class="sim-device-frame desktop" id="sim-device-frame">
+            <div class="sim-device-bar"><span></span><strong id="sim-device-title">Desktop • aluno</strong><span>● ● ●</span></div>
+            <div id="sim-stage" class="sim-stage"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="../core/session/agv-session.js?v=14.10.8.19.1"></script>
+  <script src="assets/config.js?v=14.10.8.27"></script>
+  <script src="assets/simulator-catalog.js?v=14.10.8.27"></script>
+  <script src="assets/simulator.js?v=14.10.8.27"></script>
+</body>
+</html>

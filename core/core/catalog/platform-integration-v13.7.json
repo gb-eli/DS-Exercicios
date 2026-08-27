@@ -1,0 +1,341 @@
+{
+  "schema": "agv-platform-integration-catalog",
+  "schemaVersion": 2,
+  "version": "13.7.0",
+  "generatedAt": "2026-08-15",
+  "phase": "P6.9-unified-events-telemetry",
+  "platforms": [
+    {
+      "id": "lab-virtual",
+      "name": "Laboratório Virtual DS",
+      "version": "4.28.0",
+      "route": "sistemas/01-lab-virtual/LABDS/index.html",
+      "integrationStatus": "integrated-wave2",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "server-side Core economy; local state cache/offline",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Laboratórios",
+      "icon": "🧪",
+      "audiences": [
+        "DS_ALL"
+      ],
+      "description": "Explorar laboratórios e ferramentas virtuais.",
+      "hubOrder": 1,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "ctf-ds",
+      "name": "CTF DS",
+      "version": "3.2.0",
+      "route": "sistemas/02-ctf-ds/ctf/index.html",
+      "integrationStatus": "integrated-wave2",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "server-side via ctf-complete-challenge/ctf-core-actions",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Desafios",
+      "icon": "🛡️",
+      "audiences": [
+        "DS_ALL"
+      ],
+      "description": "Missões de segurança e desafios CTF.",
+      "hubOrder": 2,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "planetario-ds",
+      "name": "COSMOS / Planetário DS",
+      "version": "34.0.0",
+      "route": "sistemas/03-planetario-ds/universods/index.html",
+      "integrationStatus": "integrated-wave4",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "server-only; local XP visual/cache",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Exploração",
+      "icon": "🪐",
+      "audiences": [
+        "DS_ALL"
+      ],
+      "description": "Exploração espacial e experiências interativas.",
+      "hubOrder": 3,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "desafio-ds",
+      "name": "Desafio DS",
+      "version": "33.0.0-pilot",
+      "route": "sistemas/04-desafio-ds/desafio 33/index.html",
+      "integrationStatus": "integrated-wave3",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "server-only; local XP ledger visual/cache",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Desafios",
+      "icon": "⚡",
+      "audiences": [
+        "DS_ALL"
+      ],
+      "description": "Desafios técnicos e atividades rápidas.",
+      "hubOrder": 4,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "fliperama-ds",
+      "name": "Fliperama DS",
+      "version": "0.39.0-hotfix1",
+      "route": "sistemas/05-fliperama-ds/flipds/index.html",
+      "integrationStatus": "integrated-wave4",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "server-only; local scores/cache",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Jogos",
+      "icon": "🕹️",
+      "audiences": [
+        "DS_ALL"
+      ],
+      "description": "Jogos educacionais e prática gamificada.",
+      "hubOrder": 5,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "game-informatica",
+      "name": "Desafio Informática",
+      "version": "2.5.7 build 20260811r38",
+      "route": "sistemas/06-game-informatica/desafio-informatica-v2.2.0/index.html",
+      "integrationStatus": "integrated-wave3",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "not applicable / no official local wallet",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Complementares",
+      "icon": "💻",
+      "audiences": [
+        "ALL"
+      ],
+      "description": "Desafios de informática e habilidades digitais.",
+      "hubOrder": 6,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "lab-sub",
+      "name": "Plataforma 2DS Sub — Aluno",
+      "version": "0.1.42",
+      "route": "sistemas/07-lab-exercicios-sub/versao-aluno/index.html",
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "none",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Minha turma",
+      "icon": "🌙",
+      "audiences": [
+        "DS-SUB-NOITE"
+      ],
+      "description": "Plataforma prática do DS Subsequente.",
+      "hubOrder": 7,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "lab-ds1",
+      "name": "Plataforma 1DS — Central de Disciplinas",
+      "version": "1.12.0",
+      "route": "sistemas/08-lab-exercicios-ds1/modo-aluno/index.html",
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "none",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Minha turma",
+      "icon": "1️⃣",
+      "audiences": [
+        "1DS-A-MANHA"
+      ],
+      "description": "Central prática da 1ª Série DS.",
+      "hubOrder": 8,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "lab-ds2",
+      "name": "Plataforma 2DS — Duas Disciplinas",
+      "version": "0.7.1",
+      "route": "sistemas/09-lab-exercicios-ds2/modo-aluno/index.html",
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "none",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Minha turma",
+      "icon": "2️⃣",
+      "audiences": [
+        "2DS-A-MANHA"
+      ],
+      "description": "Central prática da 2ª Série DS.",
+      "hubOrder": 9,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    },
+    {
+      "id": "lab-ds3",
+      "name": "Plataforma 3DS — Aluno",
+      "version": "0.11.9",
+      "route": "sistemas/10-lab-exercicios-ds3/modo-aluno/index.html",
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core",
+      "localStateRole": "cache/offline/preferences",
+      "economy": "none",
+      "readyForUnifiedHub": true,
+      "notes": "Official rewards remain server-side; local state is not authoritative.",
+      "category": "Minha turma",
+      "icon": "3️⃣",
+      "audiences": [
+        "3DS-C-MANHA"
+      ],
+      "description": "Central prática da 3ª Série DS.",
+      "hubOrder": 10,
+      "telemetry": {
+        "source": "activity_progress+progress_events",
+        "studentReadableOwn": true,
+        "metrics": [
+          "last_activity",
+          "completed_activities",
+          "recent_events_7d",
+          "active_days"
+        ],
+        "timeMetric": "only_when_session_evidence_exists"
+      }
+    }
+  ],
+  "sharedServices": [
+    {
+      "id": "loja-virtual-ds",
+      "name": "Loja Virtual DS",
+      "folder": "loja-universal/loja-virtual-ds-v0.9.6.0-RG",
+      "version": "0.9.6.0-RG",
+      "role": "universal-store-ui-and-assets",
+      "status": "advanced-local-wallet-to-centralize",
+      "auth": "no standalone authority after migration",
+      "economy": "current local foundation/ledger -> migrate to AGV Core",
+      "inventory": "current local inventory -> migrate to AGV Core inventory_instances",
+      "sdk": "DSStoreSDK v0.9.0 -> compatibility facade over AGVCore",
+      "priority": "P0",
+      "hooks": [
+        "src/core/foundation.js",
+        "src/sdk/ds-store-sdk.js",
+        "config/economy.config.json",
+        "config/integration.config.json",
+        "schemas/transaction.schema.json"
+      ]
+    }
+  ]
+}

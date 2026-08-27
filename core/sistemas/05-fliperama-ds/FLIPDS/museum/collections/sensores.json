@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "collection": "sensores",
+  "items": [
+    "light-gun",
+    "kinect",
+    "ps-camera-vr",
+    "flight-hotas"
+  ]
+}

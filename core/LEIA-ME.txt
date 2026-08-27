@@ -1,0 +1,20 @@
+ATUALIZAÇÃO — ALERTA INDIVIDUAL CARLA
+
+Arquivos para subir no repositório DS-Exercicios:
+
+1) /index.html
+   - SUBSTITUIR o index.html da raiz.
+
+2) /assets/carla-alert.js
+   - NOVO arquivo dentro da pasta assets.
+
+Comportamento:
+- Aguarda o login normal do Hub.
+- Verifica o nome exibido na sessão autenticada.
+- Somente se o usuário for CARLA KATHIELY DOS SANTOS SOUZA mostra:
+  "Pare de reclamar, Carla."
+- Não altera Supabase, senha, perfil, banco de dados ou outros alunos.
+
+Depois de subir:
+- abra o GitHub Pages;
+- faça Ctrl+F5 se o navegador estiver com cache antigo.

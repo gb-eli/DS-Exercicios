@@ -1,0 +1,12 @@
+{
+  "version": "0.9.6.0-RG",
+  "strategy": "gzip-lossless-with-original-fallback",
+  "verifySha256": true,
+  "preferCompressed": true,
+  "preserveOriginals": true,
+  "rejectLossyByDefault": true,
+  "futureCandidates": [
+    "EXT_meshopt_compression",
+    "KTX2/BasisU for future textured assets"
+  ]
+}

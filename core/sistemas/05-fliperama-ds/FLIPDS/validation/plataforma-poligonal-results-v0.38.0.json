@@ -1,0 +1,443 @@
+{
+  "suite": "Plataforma Poligonal DS 3D v0.38.0",
+  "checks": 87,
+  "passed": 87,
+  "failed": 0,
+  "items": [
+    {
+      "name": "schema do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "quatro áreas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "nomes únicos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 spawn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 solo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 3 fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 checkpoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 portal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 plataforma móvel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 1 inimigos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a1-c1 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a1-c2 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a1-c3 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "m1 movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "bugbot-1 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "bugbot-2 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 spawn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 solo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 3 fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 checkpoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 portal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 plataforma móvel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 2 inimigos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a2-c1 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a2-c2 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a2-c3 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "m1 movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "glitch-1 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "glitch-2 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 spawn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 solo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 3 fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 checkpoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 portal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 plataforma móvel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 3 inimigos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a3-c1 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a3-c2 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a3-c3 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "m1 movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sentinel-1 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sentinel-2 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 spawn",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 solo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 3 fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 checkpoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 portal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 plataforma móvel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "área 4 inimigos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a4-c1 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a4-c2 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a4-c3 dentro do mundo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "m1 movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "guardian-1 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "guardian-2 patrulha válida",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "12 fragmentos totais",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "8 inimigos totais",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 plataformas móveis",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Three.js local",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "câmera perspectiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "câmera follow suave",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "gravidade",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "coyote time",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "jump buffer",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "colisão topo 3D",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma móvel carrega jogador",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "gamepad",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "touch",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "arraste câmera",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save schema 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save de fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint salvo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "portal exige 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vitória 12 fragmentos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mensagem portal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime loader",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime wrapper",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "iframe isolado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "perfil externo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ficha educacional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 progressões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mídia logo.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade logo.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mídia preview-01.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade preview-01.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mídia preview-02.svg",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acessibilidade preview-02.svg",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}
