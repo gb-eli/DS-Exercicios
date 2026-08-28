@@ -1,8 +1,0 @@
-const clone=value=>structuredClone(value);
-const duration=ms=>{const total=Math.max(0,Math.floor(Number(ms||0)/1000)),h=Math.floor(total/3600),m=Math.floor(total%3600/60),s=total%60;return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;};
-export class TeacherTrailDashboard {
-  constructor(storage){this.storage=storage;}
-  statusFor(profile,plan){const root=this.storage.get(`guided-trails:${profile.id}`,{})||{},saved=root.trails?.[plan.id]||{},completed=[...new Set(saved.completedStepIds||[])].filter(id=>plan.steps.some(step=>step.id===id));const activeMs=Object.values(saved.stepActiveMs||{}).reduce((sum,value)=>sum+Number(value||0),0);return {profile:clone(profile),planId:plan.id,planTitle:plan.title,className:profile.className,state:saved.state||'READY',completed:completed.length,total:plan.steps.length,percent:Math.round(completed.length/plan.steps.length*100),activeMs,activeLabel:duration(activeMs),startedAt:saved.startedAt||null,completedAt:saved.completedAt||null,currentIndex:Number(saved.currentIndex||0),records:clone(saved.completedRecords||[]),events:clone(saved.events||[]),evidenceByStep:clone(saved.evidenceByStep||{})};}
-  summarize(plans,profiles){const rows=[];for(const plan of plans)for(const profile of profiles)rows.push(this.statusFor(profile,plan));return rows;}
-  toCsv(rows){const esc=value=>`"${String(value??'').replace(/"/g,'""')}"`;const header=['Trilha','Turma','Estudante','Estado','Concluídas','Total','Progresso','Tempo ativo','Início','Conclusão'];return [header,...rows.map(row=>[row.planTitle,row.className,row.profile.name,row.state,row.completed,row.total,`${row.percent}%`,row.activeLabel,row.startedAt||'',row.completedAt||''])].map(line=>line.map(esc).join(';')).join('\n');}
-}
