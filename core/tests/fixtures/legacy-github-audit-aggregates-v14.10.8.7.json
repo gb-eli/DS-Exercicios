@@ -1,0 +1,47 @@
+{
+  "claims_audited": 136,
+  "claims_gradeable": 116,
+  "claims_manual_review_without_score": 20,
+  "production_writes": false,
+  "grades_applied": false,
+  "feedback_applied": false,
+  "claims_status_changed": false,
+  "blocks": {
+    "1ds": {
+      "claims_audited": 43,
+      "students": 10,
+      "writes_applied": false
+    },
+    "2ds_frontend": {
+      "claims_audited": 59,
+      "students": 4,
+      "writes_applied": false
+    },
+    "remaining": {
+      "claims_audited": 34,
+      "manual_review_without_score": 20,
+      "sub_claims": 14,
+      "sub_status_counts": {
+        "correct": 11,
+        "partial": 1,
+        "nonfunctional": 2
+      },
+      "scope_conflicts": {
+        "subject_scope_mismatch": 12,
+        "identity_scope_mismatch": 8
+      }
+    }
+  },
+  "status_counts": {
+    "correct": 69,
+    "correct_historical": 10,
+    "correct_minor": 11,
+    "partial": 8,
+    "nonfunctional": 15,
+    "not_found": 1,
+    "incomplete": 1,
+    "wrong_exercise": 1,
+    "subject_scope_mismatch": 12,
+    "identity_scope_mismatch": 8
+  }
+}

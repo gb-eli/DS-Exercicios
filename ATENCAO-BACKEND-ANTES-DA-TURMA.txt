@@ -1,0 +1,11 @@
+ATENÇÃO — BACKEND DO MODO PROVA
+
+Na validação de 27/08/2026, a função practical-exam publicada no Supabase estava ACTIVE na versão 8, porém o código dessa versão NÃO contém o endpoint staff_simulator_catalog e ainda mantém o fluxo antigo select_role.
+
+Portanto, para usar o lobby com votação de líder, poderes do líder e o simulador administrativo completo, publique o backend incluído neste patch:
+
+deploy/DEPLOY-BACKEND-MODO-PROVA-v14.10.8.27.ps1
+
+Depois confirme no painel Supabase que practical-exam recebeu uma nova versão e está ACTIVE com JWT obrigatório.
+
+Não abra a sessão real para a turma enquanto frontend v27 e backend deste pacote não estiverem alinhados.

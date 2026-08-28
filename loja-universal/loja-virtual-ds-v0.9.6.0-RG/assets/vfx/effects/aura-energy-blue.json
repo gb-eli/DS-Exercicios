@@ -1,0 +1,18 @@
+{
+  "id": "aura-energy-blue",
+  "name": "Aura Ascendente Épica",
+  "type": "aura",
+  "variant": "energy",
+  "category": "aura",
+  "rarity": "epic",
+  "price": 5000,
+  "durationMs": 0,
+  "loop": true,
+  "colors": [
+    "#2ad7ff",
+    "#1b76ff",
+    "#9a67ff"
+  ],
+  "pack": "vfx-auras-epic",
+  "description": "Colunas de energia azul sobem ao redor do personagem."
+}

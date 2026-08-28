@@ -1,0 +1,20 @@
+{
+  "version": "0.9.5.1",
+  "fullProjectBytes": 57049044,
+  "developmentVisualAssetsBytes": 40347505,
+  "developmentVisualAssetsFiles": 53,
+  "runtimePackCount": 7,
+  "removedRuntimePack": "module-visual-reference",
+  "replacementRuntimePack": "graphics-cinematic",
+  "notes": [
+    "Arquivos mestres preservados no projeto completo",
+    "GitHub Pages exclui concept arts, previews históricos, testes e fontes"
+  ],
+  "runtimeBuildBytes": 5523965,
+  "developmentAssetsBuildBytes": 51443164,
+  "fullBuildBytes": 56981216,
+  "runtimeReductionVsFullPercent": 90.31,
+  "runtimeFiles": 426,
+  "runtimeReferenceErrors": [],
+  "status": "PASS"
+}

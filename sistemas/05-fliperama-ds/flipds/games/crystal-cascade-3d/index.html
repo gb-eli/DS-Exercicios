@@ -1,0 +1,7 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Crystal Cascade 3D</title><link rel="stylesheet" href="style.css"></head><body>
+<canvas id="scene" aria-hidden="true"></canvas><main class="shell"><header class="hud"><div><b>CRYSTAL CASCADE 3D</b><span id="levelLabel">Fase 1/12</span></div><div class="stats"><span>Mov. <b id="moves">0</b></span><span>Pontos <b id="score">0</b></span><span>Combo <b id="combo">×1</b></span></div></header>
+<section class="mission"><div><strong id="missionTitle"></strong><small id="missionText"></small></div><div id="stars" class="stars">☆☆☆</div></section>
+<section class="board-wrap"><div id="board" class="board" role="grid" aria-label="Tabuleiro 8 por 8"></div></section>
+<footer><div id="goal" class="goal"></div><div class="actions"><button id="reset">Reiniciar</button><button id="next" hidden>Próxima fase</button></div></footer></main>
+<div id="result" class="result" hidden><div class="result-card"><h2 id="resultTitle"></h2><p id="resultText"></p><button id="resultAction">Continuar</button></div></div>
+<script src="engine.js"></script><script type="module" src="game.js"></script></body></html>

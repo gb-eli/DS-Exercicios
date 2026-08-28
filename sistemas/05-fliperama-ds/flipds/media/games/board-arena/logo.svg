@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" viewBox="0 0 640 220" role="img" aria-label="Logo Board Arena DS">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06101f"/><stop offset="1" stop-color="#111d38"/></linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#49e7ff"/><stop offset="1" stop-color="#748cff"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="640" height="220" rx="26" fill="url(#bg)"/>
+  <path d="M22 48 48 22h544l26 26v124l-26 26H48l-26-26Z" fill="none" stroke="#49e7ff" stroke-opacity=".65" stroke-width="2"/>
+  <g transform="translate(54 42)" filter="url(#glow)">
+    <rect width="132" height="132" rx="18" fill="#081a2d" stroke="#49e7ff" stroke-width="3"/>
+    <path d="M44 0v132M88 0v132M0 44h132M0 88h132" stroke="#254e6e" stroke-width="3"/>
+    <path d="m14 14 24 24m0-24L14 38" stroke="#49e7ff" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="66" cy="66" r="13" fill="none" stroke="#a46fff" stroke-width="6"/>
+    <path d="m100 100 20 20m0-20-20 20" stroke="#49e7ff" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="22" cy="110" r="11" fill="#ff5d73" stroke="#ffc0c8" stroke-width="3"/>
+    <circle cx="110" cy="22" r="11" fill="#151922" stroke="#a8b8ce" stroke-width="3"/>
+  </g>
+  <text x="396" y="91" text-anchor="middle" fill="#f7fbff" font-family="Arial,system-ui" font-weight="900" font-size="45">BOARD ARENA</text>
+  <text x="396" y="139" text-anchor="middle" fill="url(#cyan)" font-family="Arial,system-ui" font-weight="900" font-size="43">DS</text>
+  <text x="396" y="171" text-anchor="middle" fill="#9eb1cc" font-family="monospace" font-size="14">MATRIZES · TURNOS · ESTRATÉGIA · IA</text>
+</svg>

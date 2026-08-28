@@ -1,0 +1,25 @@
+{
+  "version": "v12.9-P6.5-PAINEL-PROFESSOR",
+  "phase": "P6.5",
+  "date": "2026-08-15",
+  "base": "v12.8-P6.4-AMBIENTE-ATIVIDADES",
+  "type": "teacher-console-operations-guided-mode",
+  "highlights": [
+    "Acompanhamento de turma no Console Professor com presença conservadora",
+    "KPIs de alunos, ativos, em atividade e atenção",
+    "Clique do acompanhamento abre o detalhe do aluno",
+    "Modo Aula Guiada com código privado revelado em etapas",
+    "Explicações contextuais leves para HTML, CSS, JavaScript e Python",
+    "Refresh de acompanhamento somente com Console visível"
+  ],
+  "functional_runtime_changes": true,
+  "requires_database_migration": false,
+  "requires_edge_function_deploy": false,
+  "live_backend_note": "P6.5 reutiliza staff-dashboard e agv-teacher-activity existentes. Gabaritos permanecem server-only e nenhuma autoridade nova é dada ao navegador.",
+  "tests": {
+    "test_files": 25,
+    "tests": 31,
+    "passed": 31,
+    "failed": 0
+  }
+}

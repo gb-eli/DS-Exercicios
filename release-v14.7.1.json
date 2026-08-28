@@ -1,0 +1,8 @@
+{
+  "version": "14.7.1",
+  "date": "2026-08-17",
+  "phase": "HOTFIX-AULA",
+  "title": "Professor: grupo, prazo, Lobby e localização operacional",
+  "requires_database_change": false,
+  "requires_edge_function_deploy": false
+}

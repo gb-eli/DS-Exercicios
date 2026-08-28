@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-08-13",
+  "phase": "Fase 0 / início P0",
+  "coreSdkVersion": "0.2.0",
+  "entries": [
+    {
+      "id": "loja-virtual-ds",
+      "priority": "P0",
+      "version": "0.9.6.0-RG",
+      "root": "loja-universal/loja-virtual-ds-v0.9.6.0-RG",
+      "auth_authority": "não deve ser standalone após migração",
+      "progress_authority": "não aplicável como plataforma principal",
+      "economy_authority": "LOCAL em src/core/foundation.js (saldo, ledger, inventário, reward, purchase)",
+      "migration_hook": [
+        "src/core/foundation.js",
+        "src/sdk/ds-store-sdk.js"
+      ],
+      "risk": "CRÍTICO — navegador ainda é autoridade econômica no modo legado/demo",
+      "implemented": "DSStoreSDK agora possui transporte agv-core; amount legado deixa de ser autoridade nesse transporte."
+    },
+    {
+      "id": "lab-virtual",
+      "priority": "P1",
+      "version": "4.28.0",
+      "root": "sistemas/01-lab-virtual/LABDS",
+      "auth_authority": "EduAuth local + chaves/PINs no bundle",
+      "progress_authority": "IndexedDB/localStorage via lab/js/storage.js",
+      "economy_authority": "XP/progresso local; referências parciais a wallet",
+      "migration_hook": [
+        "lab/js/eduauth/eduauth.js",
+        "lab/js/storage.js",
+        "lab/js/session.js",
+        "lab/js/learning-mode.js",
+        "lab/js/app.js"
+      ],
+      "risk": "ALTO",
+      "implemented": "baseline apenas; ainda não conectado ao Core para não quebrar regressão."
+    },
+    {
+      "id": "ctf-ds",
+      "priority": "P1",
+      "version": "3.2.0",
+      "root": "sistemas/02-ctf-ds/ctf",
+      "auth_authority": "EduAuth local",
+      "progress_authority": "mission progress/storage local",
+      "economy_authority": "wallet/ledger local em js/core/wallet.js",
+      "migration_hook": [
+        "js/core/wallet.js",
+        "js/core/mission-progress.js",
+        "js/core/storage.js",
+        "js/core/state.js",
+        "js/eduauth/index.js",
+        "js/app.js"
+      ],
+      "risk": "CRÍTICO",
+      "implemented": "baseline apenas; ainda não conectado ao Core para não quebrar regressão."
+    },
+    {
+      "id": "desafio-ds",
+      "priority": "P1",
+      "version": "33.0.0-pilot",
+      "root": "sistemas/04-desafio-ds/desafio 33",
+      "auth_authority": "EduAuth local",
+      "progress_authority": "guided/runtime local",
+      "economy_authority": "XP ledger local; moedas apenas referências",
+      "migration_hook": [
+        "js/eduauth/core.js",
+        "js/xp-ledger.js",
+        "js/app.js",
+        "js/guided.js",
+        "js/platform-shell.js"
+      ],
+      "risk": "ALTO",
+      "implemented": "baseline apenas; ainda não conectado ao Core para não quebrar regressão."
+    },
+    {
+      "id": "game-informatica",
+      "priority": "P1",
+      "version": "2.5.7 build 20260811r38",
+      "root": "sistemas/06-game-informatica/desafio-informatica-v2.2.0",
+      "auth_authority": "EduAuth/perfil protegido local",
+      "progress_authority": "IndexedDB/perfil criptografado + progresso local",
+      "economy_authority": "wallet não aplicável; XP/progresso local",
+      "migration_hook": [
+        "assets/js/eduauth/index.js",
+        "assets/js/storage.js",
+        "assets/js/app.js",
+        "assets/js/data.js"
+      ],
+      "risk": "ALTO",
+      "implemented": "baseline apenas; ainda não conectado ao Core para não quebrar regressão."
+    }
+  ],
+  "baselineTests": {
+    "loja_validate_v0960rg": "PASS",
+    "loja_sdk_node_cwd_correct": "PASS",
+    "ctf_npm_test": "PASS",
+    "game_informatica_npm_test": "PASS"
+  },
+  "productionBlockers": [
+    "Definir/adaptar schema AGV Core no projeto Supabase central sem colidir com profiles/platforms existentes.",
+    "Implantar agv-progress-event e agv-reward-claim antes de ativar AGV_CORE_CONFIG.enabled.",
+    "Migrar UI da Loja de purchase/reward síncronos locais para intents/confirmações assíncronas oficiais.",
+    "Reconciliar catálogo visual da Loja com store_items antes de aceitar compras oficiais.",
+    "Não usar foundation.js como autoridade oficial em produção."
+  ]
+}

@@ -1,0 +1,44 @@
+do $$ declare p uuid; begin
+select id into p from public.platforms where code='lab-virtual';
+if p is null then raise exception 'platform lab-virtual missing'; end if;
+insert into public.activity_catalog(platform_id,activity_id,name,reward_policy,max_xp,max_points,max_coins,repeatable,active,metadata) values
+(p,'completion:audio:classification:140','audio:classification:140','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:140","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:audio:classification:440','audio:classification:440','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:440","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:audio:classification:900','audio:classification:900','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:900","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:audio:classification:2200','audio:classification:2200','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:2200","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:audio:classification:4800','audio:classification:4800','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:4800","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:audio:classification:9000','audio:classification:9000','rule_validated',25,0,10,false,true,'{"kind":"completion","completionId":"audio:classification:9000","toolId":"audio-lab","category":"audio","minSeconds":2}'::jsonb),
+(p,'completion:energy:voltage','energy:voltage','rule_validated',60,0,25,false,true,'{"kind":"completion","completionId":"energy:voltage","toolId":"energy-systems","category":"energy","minSeconds":5}'::jsonb),
+(p,'completion:energy:solar','energy:solar','rule_validated',60,0,25,false,true,'{"kind":"completion","completionId":"energy:solar","toolId":"energy-systems","category":"energy","minSeconds":5}'::jsonb),
+(p,'completion:energy:wind','energy:wind','rule_validated',60,0,25,false,true,'{"kind":"completion","completionId":"energy:wind","toolId":"energy-systems","category":"energy","minSeconds":5}'::jsonb),
+(p,'completion:school-randomizer:names','school-randomizer:names','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:names","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:school-randomizer:teams','school-randomizer:teams','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:teams","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:school-randomizer:numbers','school-randomizer:numbers','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:numbers","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:school-randomizer:classes','school-randomizer:classes','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:classes","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:school-randomizer:rooms','school-randomizer:rooms','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:rooms","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:school-randomizer:allocation','school-randomizer:allocation','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"school-randomizer:allocation","toolId":"school-randomizer","category":"randomizer","minSeconds":2}'::jsonb),
+(p,'completion:tutorial:classroom-entregar','tutorial:classroom-entregar','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:classroom-entregar","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:classroom-comentarios','tutorial:classroom-comentarios','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:classroom-comentarios","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb),
+(p,'completion:tutorial:classroom-drive-link','tutorial:classroom-drive-link','rule_validated',35,0,15,false,true,'{"kind":"completion","completionId":"tutorial:classroom-drive-link","toolId":"tutorial-center","category":"tutorial","minSeconds":8}'::jsonb)
+on conflict(platform_id,activity_id) do update set name=excluded.name,reward_policy=excluded.reward_policy,max_xp=excluded.max_xp,max_points=excluded.max_points,max_coins=excluded.max_coins,repeatable=excluded.repeatable,active=true,metadata=excluded.metadata;
+delete from public.reward_rules where platform_id=p and activity_id in ('completion:audio:classification:140','completion:audio:classification:440','completion:audio:classification:900','completion:audio:classification:2200','completion:audio:classification:4800','completion:audio:classification:9000','completion:energy:voltage','completion:energy:solar','completion:energy:wind','completion:school-randomizer:names','completion:school-randomizer:teams','completion:school-randomizer:numbers','completion:school-randomizer:classes','completion:school-randomizer:rooms','completion:school-randomizer:allocation','completion:tutorial:classroom-entregar','completion:tutorial:classroom-comentarios','completion:tutorial:classroom-drive-link');
+insert into public.reward_rules(platform_id,activity_id,event_type,trust_level,xp,points,coins,repeatable,active,metadata) values
+(p,'completion:audio:classification:140','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:440','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:900','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:2200','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:4800','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:audio:classification:9000','activity.completed','server_verified',25,0,10,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:energy:voltage','activity.completed','server_verified',60,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:energy:solar','activity.completed','server_verified',60,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:energy:wind','activity.completed','server_verified',60,0,25,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:names','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:teams','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:numbers','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:classes','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:rooms','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:school-randomizer:allocation','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:classroom-entregar','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:classroom-comentarios','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb),
+(p,'completion:tutorial:classroom-drive-link','activity.completed','server_verified',35,0,15,false,true,'{"source":"lab-virtual-core"}'::jsonb);
+end $$;

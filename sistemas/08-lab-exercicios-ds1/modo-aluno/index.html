@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#08111f">
+  <title>1º DS - Central de Disciplinas - Aluno</title>
+  <link rel="stylesheet" href="core/core.css">
+<link rel="stylesheet" href="../../../core/session/fullscreen-portal.css?v=14.10.8.18"></head>
+<body class="ds-central" data-role="aluno">
+  <div class="ds-central-shell">
+    <header class="ds-central-topbar">
+      <div class="ds-brand-lockup">
+        <span class="ds-brand-mark" aria-hidden="true">1DS</span>
+        <div>
+          <small>PLATAFORMA 1º DS - ALUNO</small>
+          <strong>Central de Estudos</strong>
+        </div>
+      </div>
+      <div class="ds-top-meta">
+        <span class="chip info">2 disciplinas</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="ds-central-hero ds-central-hero-compact">
+        <div>
+          <span class="ds-kicker">ACESSO RÁPIDO</span>
+          <h1>Escolha a sala e entre na disciplina.</h1>
+          <p>Uma entrada simples para acessar somente o que será usado na aula.</p>
+        </div>
+      </section>
+
+      <section class="ds-class-step" aria-labelledby="classStepTitle">
+        <div class="ds-step-number" aria-hidden="true">1</div>
+        <div class="ds-class-copy">
+          <span class="ds-kicker">TURMA / SALA</span>
+          <h2 id="classStepTitle">Onde você está?</h2>
+          <p>A escolha fica salva neste equipamento e pode ser alterada quando necessário.</p>
+        </div>
+        <label class="ds-class-field">
+          <span>Escolher turma e sala</span>
+          <select id="classroomSelect" aria-describedby="classroomHint">
+            <option value="">Selecione...</option>
+            <option value="1ds-a-manha" data-room="Sala 6">1ª série DS A - Manhã - Sala 6</option>
+          </select>
+          <small id="classroomHint">Turma disponível nesta versão da plataforma.</small>
+        </label>
+        <div id="classroomSelected" class="ds-class-confirm" hidden aria-live="polite">
+          <span>Turma selecionada</span>
+          <strong>1ª série DS A - Manhã</strong>
+          <small>Sala 6</small>
+        </div>
+      </section>
+
+      <section class="ds-disciplines-head" aria-labelledby="disciplinesTitle">
+        <div class="ds-step-number" aria-hidden="true">2</div>
+        <div>
+          <span class="ds-kicker">DISCIPLINAS</span>
+          <h2 id="disciplinesTitle">O que você vai estudar agora?</h2>
+        </div>
+        <span id="disciplineLockHint" class="ds-lock-hint">Escolha a turma/sala para liberar.</span>
+      </section>
+
+      <section class="ds-discipline-grid ds-discipline-grid-clean" aria-label="Disciplinas do 1º DS">
+        <article class="ds-discipline-card ds-card-programming" data-discipline-card>
+          <div class="ds-card-topline">
+            <div class="ds-discipline-icon" aria-hidden="true">&lt;/&gt;</div>
+            <span class="ds-mini-status active">ATIVA</span>
+          </div>
+          <h2>Introdução à Programação</h2>
+          <p>Prática de programação com editor, execução, validação e progresso individual.</p>
+          <div class="ds-card-metrics">
+            <span><strong>8</strong> atividades</span>
+            <span>Python e fundamentos</span>
+          </div>
+          <a class="button ds-card-action is-locked" data-discipline-link href="disciplinas/introducao-programacao/index.html" aria-disabled="true" tabindex="-1">Entrar</a>
+        </article>
+
+        <article class="ds-discipline-card analysis ds-card-analysis" data-discipline-card>
+          <div class="ds-card-topline">
+            <div class="ds-discipline-icon" aria-hidden="true">A/M</div>
+            <span class="ds-mini-status active">ATIVA</span>
+          </div>
+          <h2>Análise e Métodos para Sistemas</h2>
+          <p>Análise prática de requisitos, processos, métodos ágeis e modelagem de sistemas.</p>
+          <div class="ds-card-metrics">
+            <span><strong>2</strong> atividades</span>
+            <span>Requisitos e modelagem</span>
+          </div>
+          <a class="button secondary ds-card-action is-locked" data-discipline-link href="disciplinas/analise-metodos/index.html" aria-disabled="true" tabindex="-1">Entrar</a>
+        </article>
+      </section>
+
+      <section class="ds-flow-note" aria-label="Fluxo da plataforma">
+        <span><b>1</b> Escolha a sala</span>
+        <i aria-hidden="true">›</i>
+        <span><b>2</b> Escolha a disciplina</span>
+        <i aria-hidden="true">›</i>
+        <span><b>3</b> Continue a atividade</span>
+      </section>
+    </main>
+
+    <footer class="ds-central-footer">
+      <span>1º DS - Central multidisciplinar</span>
+      <span>v1.12.0 - Etapa 5C</span>
+    </footer>
+  </div>
+  <script src="core/storage.js"></script>
+  <script src="core/downloads.js"></script>
+  <script src="core/a11y.js"></script>
+  <script src="core/auth-contract.js"></script>
+  <script src="core/core.js"></script>
+  <script src="core/central.js"></script>
+<script src="../../../core/session/fullscreen-portal.js?v=14.10.8.18"></script><script src="../../../core/session/agv-session.js?v=14.10.8.18"></script><script src="../../../core/session/fullscreen-platform-bridge.js?v=14.10.8.18"></script></body>
+</html>

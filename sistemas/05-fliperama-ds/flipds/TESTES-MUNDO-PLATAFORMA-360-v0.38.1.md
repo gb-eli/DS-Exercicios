@@ -1,0 +1,109 @@
+# Testes — Mundo Plataforma DS 360 v0.38.1
+
+- Verificações: **103**
+- Aprovadas: **103**
+- Falhas: **0**
+
+- ✅ schema da região
+- ✅ nome Vale Nexus 360
+- ✅ mundo 72×72
+- ✅ cinco setores incluindo hub
+- ✅ setor norte
+- ✅ setor leste
+- ✅ setor sul
+- ✅ setor oeste
+- ✅ IDs únicos — 48 IDs
+- ✅ 6 orbes
+- ✅ 3 balizas
+- ✅ 3 checkpoints
+- ✅ 4 plataformas móveis
+- ✅ 8 campos Glitch
+- ✅ 6 patrulhas
+- ✅ portal central
+- ✅ orb-n1 dentro do Vale
+- ✅ orb-n2 dentro do Vale
+- ✅ orb-e1 dentro do Vale
+- ✅ orb-e2 dentro do Vale
+- ✅ orb-s1 dentro do Vale
+- ✅ orb-w1 dentro do Vale
+- ✅ beacon-n dentro do Vale
+- ✅ beacon-e dentro do Vale
+- ✅ beacon-w dentro do Vale
+- ✅ cp-n dentro do Vale
+- ✅ cp-n fora de perigo
+- ✅ cp-se dentro do Vale
+- ✅ cp-se fora de perigo
+- ✅ cp-w dentro do Vale
+- ✅ cp-w fora de perigo
+- ✅ mn movimento válido
+- ✅ me movimento válido
+- ✅ ms movimento válido
+- ✅ mw movimento válido
+- ✅ drone-n1 patrulha válida
+- ✅ drone-n2 patrulha válida
+- ✅ drone-e1 patrulha válida
+- ✅ drone-s1 patrulha válida
+- ✅ drone-s2 patrulha válida
+- ✅ drone-w1 patrulha válida
+- ✅ orb-n1 apoiado em plataforma
+- ✅ orb-n2 apoiado em plataforma
+- ✅ orb-e1 apoiado em plataforma
+- ✅ orb-e2 apoiado em plataforma
+- ✅ orb-s1 apoiado em plataforma
+- ✅ orb-w1 apoiado em plataforma
+- ✅ beacon-n apoiada em plataforma
+- ✅ beacon-e apoiada em plataforma
+- ✅ beacon-w apoiada em plataforma
+- ✅ simulação começa com 3 vidas
+- ✅ simulação começa sem orbes
+- ✅ simulação começa sem balizas
+- ✅ save schema 1
+- ✅ progresso declara 6 orbes
+- ✅ progresso declara 3 balizas
+- ✅ movimento altera X
+- ✅ salto aplica velocidade vertical
+- ✅ plataforma móvel evolui no tempo
+- ✅ 6 orbes podem ser sincronizados
+- ✅ 3 balizas podem ser ativadas
+- ✅ portal conclui com 6+3
+- ✅ vitória gera evento
+- ✅ restore aceita snapshot atual
+- ✅ restore preserva 6 orbes
+- ✅ restore preserva 3 balizas
+- ✅ restore preserva conclusão
+- ✅ campo Glitch causa dano
+- ✅ patrulha causa dano
+- ✅ checkpoint pode ser ativado
+- ✅ Three.js local
+- ✅ câmera perspectiva
+- ✅ yaw de câmera
+- ✅ pitch limitado
+- ✅ modo panorama 360
+- ✅ bússola em graus
+- ✅ câmera olha para jogador
+- ✅ qualidade controla sombras
+- ✅ densidade por perfil
+- ✅ render lê simulação
+- ✅ gamepad API
+- ✅ analógico direito controla câmera
+- ✅ arraste controla câmera
+- ✅ tecla C alterna 360
+- ✅ touch panorama 360
+- ✅ movimento relativo à câmera
+- ✅ save local
+- ✅ ponte postMessage
+- ✅ runtime loader no portal
+- ✅ runtime wrapper
+- ✅ iframe isolado
+- ✅ catálogo 23ª experiência
+- ✅ perfil externo
+- ✅ ficha educacional
+- ✅ progressão educacional rica
+- ✅ Service Worker v0.38.1
+- ✅ runtime no cache offline
+- ✅ mídia logo.svg
+- ✅ acessibilidade logo.svg — 1497 bytes
+- ✅ mídia preview-01.svg
+- ✅ acessibilidade preview-01.svg — 1576 bytes
+- ✅ mídia preview-02.svg
+- ✅ acessibilidade preview-02.svg — 1762 bytes

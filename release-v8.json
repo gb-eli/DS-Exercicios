@@ -1,0 +1,63 @@
+{
+  "name": "AGV Ecossistema Unificado",
+  "version": "v8-LABS-DS-CORE-PROFESSOR",
+  "date": "2026-08-13",
+  "labExercises": {
+    "catalogTotal": 88,
+    "byPlatform": {
+      "lab-ds1": 11,
+      "lab-ds2": 58,
+      "lab-ds3": 8,
+      "lab-sub": 11
+    },
+    "centralAuth": true,
+    "centralProgress": true,
+    "economicReward": "none",
+    "edgeFunction": "lab-exercises-core v1",
+    "analysisValidation": "lab-analysis-validate v1",
+    "teacherReview": true,
+    "crossPcFileSync": false
+  },
+  "antiAnswerLeak": {
+    "studentProfessorPayloads": 0,
+    "analysisKeysMovedServerSide": true,
+    "ds2ResponseExamplesRemoved": 196,
+    "ds2ComparisonCodeRemoved": 62,
+    "ds2ExtraSolutionSnippetsRemoved": 87,
+    "nonProvidedFilesAreStarters": true
+  },
+  "teacherMode": {
+    "edgeFunction": "agv-teacher-activity v3",
+    "privateTable": "activity_teacher_content",
+    "directAnonAccess": false,
+    "directAuthenticatedAccess": false,
+    "classScopedTeachers": true,
+    "reviewAndFeedback": true,
+    "adminPrivateImport": true,
+    "privateExerciseImportPrepared": 88,
+    "privateSolutionFilesPrepared": 168,
+    "liveReferences": {
+      "lab-virtual": 88,
+      "lab-ds1": 4,
+      "lab-ds2": 0,
+      "lab-ds3": 0,
+      "lab-sub": 0
+    }
+  },
+  "securityAdvisor": {
+    "knownWarnings": [
+      "legacy claim_core_reward SECURITY DEFINER executable by authenticated",
+      "Leaked Password Protection disabled"
+    ],
+    "newV8Warnings": 0
+  },
+  "notes": [
+    "Private teacher answers are not embedded in the public ZIP.",
+    "Admin must import the separate private JSON to make all 88 coding references live.",
+    "Legacy portals centralize Auth/progress, not code/file cross-PC synchronization."
+  ],
+  "package": {
+    "publicFiles": 4092,
+    "privateTeacherJsonEmbedded": false
+  }
+}

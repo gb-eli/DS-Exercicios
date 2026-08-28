@@ -1,0 +1,304 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.36.1",
+  "phase": "Fase 7.17B — Expansão real das fases · Bloco 2/3",
+  "generatedAt": "2026-08-08T14:05:58.506Z",
+  "summary": {
+    "passed": 47,
+    "failed": 0,
+    "total": 47
+  },
+  "checks": [
+    {
+      "name": "Puzzle Forge · caminho campanha 3 etapas",
+      "status": "pass",
+      "detail": "caminho: 3 desafios encadeados."
+    },
+    {
+      "name": "Puzzle Forge · circuito campanha 3 etapas",
+      "status": "pass",
+      "detail": "circuito: 3 desafios encadeados."
+    },
+    {
+      "name": "Puzzle Forge · sequencia campanha 3 etapas",
+      "status": "pass",
+      "detail": "sequencia: 3 desafios encadeados."
+    },
+    {
+      "name": "Puzzle Forge · labirinto campanha 3 etapas",
+      "status": "pass",
+      "detail": "labirinto: 3 desafios encadeados."
+    },
+    {
+      "name": "Puzzle Forge · migração schema 1→2",
+      "status": "pass",
+      "detail": "Save antigo permanece como desafio único, sem inventar progresso adicional."
+    },
+    {
+      "name": "Puzzle Forge · avaliação final por estrelas",
+      "status": "pass",
+      "detail": "Conclusão eficiente da terceira etapa recebe três estrelas."
+    },
+    {
+      "name": "Raster Rally · cinco pistas",
+      "status": "pass",
+      "detail": "5 pistas no campeonato.",
+      "data": [
+        {
+          "id": "aurora-coast",
+          "laps": 2,
+          "segments": 104
+        },
+        {
+          "id": "serra-circuit",
+          "laps": 2,
+          "segments": 118
+        },
+        {
+          "id": "tempest-run",
+          "laps": 2,
+          "segments": 128
+        },
+        {
+          "id": "metro-neon",
+          "laps": 3,
+          "segments": 120
+        },
+        {
+          "id": "eclipse-pass",
+          "laps": 3,
+          "segments": 123
+        }
+      ]
+    },
+    {
+      "name": "Raster Rally · pistas finais 3 voltas",
+      "status": "pass",
+      "detail": "Metro Neon e Passo do Eclipse possuem três voltas."
+    },
+    {
+      "name": "Raster Rally · aurora-coast estruturada",
+      "status": "pass",
+      "detail": "Circuito Aurora: 104 segmentos."
+    },
+    {
+      "name": "Raster Rally · serra-circuit estruturada",
+      "status": "pass",
+      "detail": "Circuito da Serra: 118 segmentos."
+    },
+    {
+      "name": "Raster Rally · tempest-run estruturada",
+      "status": "pass",
+      "detail": "Rota Tempestade: 128 segmentos."
+    },
+    {
+      "name": "Raster Rally · metro-neon estruturada",
+      "status": "pass",
+      "detail": "Anel Metro Neon: 120 segmentos."
+    },
+    {
+      "name": "Raster Rally · eclipse-pass estruturada",
+      "status": "pass",
+      "detail": "Passo do Eclipse: 123 segmentos."
+    },
+    {
+      "name": "Raster Rally · progressão até quinta pista",
+      "status": "pass",
+      "detail": "Chegou à pista 5/5."
+    },
+    {
+      "name": "State Quest · cinco mapas",
+      "status": "pass",
+      "detail": "5 mapas conectados.",
+      "data": [
+        "village",
+        "wilds",
+        "archive",
+        "relay",
+        "core"
+      ]
+    },
+    {
+      "name": "State Quest · mapa village 18×12",
+      "status": "pass",
+      "detail": "Vila de Itera: grade válida."
+    },
+    {
+      "name": "State Quest · início village caminhável",
+      "status": "pass",
+      "detail": "Vila de Itera: spawn acessível."
+    },
+    {
+      "name": "State Quest · mapa wilds 18×12",
+      "status": "pass",
+      "detail": "Campo de Ruído: grade válida."
+    },
+    {
+      "name": "State Quest · início wilds caminhável",
+      "status": "pass",
+      "detail": "Campo de Ruído: spawn acessível."
+    },
+    {
+      "name": "State Quest · mapa archive 18×12",
+      "status": "pass",
+      "detail": "Arquivo de Ecos: grade válida."
+    },
+    {
+      "name": "State Quest · início archive caminhável",
+      "status": "pass",
+      "detail": "Arquivo de Ecos: spawn acessível."
+    },
+    {
+      "name": "State Quest · mapa relay 18×12",
+      "status": "pass",
+      "detail": "Torre de Sincronização: grade válida."
+    },
+    {
+      "name": "State Quest · início relay caminhável",
+      "status": "pass",
+      "detail": "Torre de Sincronização: spawn acessível."
+    },
+    {
+      "name": "State Quest · mapa core 18×12",
+      "status": "pass",
+      "detail": "Instalação do Núcleo: grade válida."
+    },
+    {
+      "name": "State Quest · início core caminhável",
+      "status": "pass",
+      "detail": "Instalação do Núcleo: spawn acessível."
+    },
+    {
+      "name": "State Quest · cinco missões",
+      "status": "pass",
+      "detail": "Fonte, sinal, arquivo, torre e núcleo registrados."
+    },
+    {
+      "name": "State Quest · migração save antigo no Núcleo",
+      "status": "pass",
+      "detail": "Save antigo no Núcleo migra sem bloquear o final."
+    },
+    {
+      "name": "State Quest · nova campanha inicia bloqueada",
+      "status": "pass",
+      "detail": "Novas missões respeitam ordem narrativa."
+    },
+    {
+      "name": "State Quest · Cache de Memória opcional",
+      "status": "pass",
+      "detail": "Objetivo secundário concede bônus sem liberar nem bloquear a campanha principal."
+    },
+    {
+      "name": "Raycast · três operações",
+      "status": "pass",
+      "detail": "3 operações registradas.",
+      "data": [
+        {
+          "id": "gateway",
+          "keys": 2,
+          "terminals": 3
+        },
+        {
+          "id": "archive",
+          "keys": 2,
+          "terminals": 3
+        },
+        {
+          "id": "spectral-core",
+          "keys": 3,
+          "terminals": 4
+        }
+      ]
+    },
+    {
+      "name": "Raycast · mapa 1 24×18",
+      "status": "pass",
+      "detail": "Operação 1 · Nó de Entrada: dimensões uniformes."
+    },
+    {
+      "name": "Raycast · objetivos 1",
+      "status": "pass",
+      "detail": "K/T/E suficientes para Operação 1 · Nó de Entrada."
+    },
+    {
+      "name": "Raycast · mapa 2 24×18",
+      "status": "pass",
+      "detail": "Operação 2 · Arquivo Submerso: dimensões uniformes."
+    },
+    {
+      "name": "Raycast · objetivos 2",
+      "status": "pass",
+      "detail": "K/T/E suficientes para Operação 2 · Arquivo Submerso."
+    },
+    {
+      "name": "Raycast · mapa 3 24×18",
+      "status": "pass",
+      "detail": "Operação 3 · Núcleo Espectral: dimensões uniformes."
+    },
+    {
+      "name": "Raycast · objetivos 3",
+      "status": "pass",
+      "detail": "K/T/E suficientes para Operação 3 · Núcleo Espectral."
+    },
+    {
+      "name": "Raycast · schema 2 e operação inicial",
+      "status": "pass",
+      "detail": "Campanha começa na operação 1."
+    },
+    {
+      "name": "Raycast · migração schema 1→2",
+      "status": "pass",
+      "detail": "Save antigo migra para a primeira operação."
+    },
+    {
+      "name": "Raycast · campanha chega à vitória",
+      "status": "pass",
+      "detail": "As três operações encadeiam até a extração final.",
+      "data": {
+        "status": "won",
+        "mapIndex": 2,
+        "score": 7665
+      }
+    },
+    {
+      "name": "Conteúdo · Puzzle sincronizado",
+      "status": "pass",
+      "detail": "Perfil declara 12 desafios."
+    },
+    {
+      "name": "Conteúdo · Rally sincronizado",
+      "status": "pass",
+      "detail": "Perfil declara cinco pistas."
+    },
+    {
+      "name": "Conteúdo · State Quest sincronizado",
+      "status": "pass",
+      "detail": "Perfil declara cinco mapas e missões."
+    },
+    {
+      "name": "Conteúdo · Raycast sincronizado",
+      "status": "pass",
+      "detail": "Perfil declara três operações."
+    },
+    {
+      "name": "Conteúdo · Rally sem referência a três pistas",
+      "status": "pass",
+      "detail": "História e pseudocódigo refletem as cinco pistas."
+    },
+    {
+      "name": "Conteúdo · State Quest sem referências 3→5 antigas",
+      "status": "pass",
+      "detail": "Ficha técnica reflete cinco mapas e cinco missões."
+    },
+    {
+      "name": "Resultado · Rally usa cinco pistas",
+      "status": "pass",
+      "detail": "Tela de resultado usa pista x/5."
+    },
+    {
+      "name": "Resultado · State e Raycast usam metas atuais",
+      "status": "pass",
+      "detail": "Resultados não fixam os números antigos de campanha."
+    }
+  ]
+}

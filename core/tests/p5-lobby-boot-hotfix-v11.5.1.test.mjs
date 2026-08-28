@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const index=fs.readFileSync(new URL('../../lobby/index.html',import.meta.url),'utf8');
+const vendor=fs.readFileSync(new URL('../../lobby/assets/vendor-loader.js',import.meta.url),'utf8');
+const supa=fs.readFileSync(new URL('../../lobby/assets/supabase.js',import.meta.url),'utf8');
+const boot=fs.readFileSync(new URL('../../lobby/assets/boot.js',import.meta.url),'utf8');
+const cfg=fs.readFileSync(new URL('../../lobby/assets/config.js',import.meta.url),'utf8');
+assert.match(index,/script-src 'self' https:\/\/cdn\.jsdelivr\.net https:\/\/unpkg\.com;/);
+assert.match(index,/assets\/vendor-loader\.js\?v=14\.10\.8/);
+assert.match(vendor,/@supabase\/supabase-js@2\.112\.3\/dist\/umd\/supabase\.js/);
+assert.doesNotMatch(`${vendor}\n${supa}`,/\+esm/);
+assert.match(vendor,/dataset\.agvSupabaseSource/);
+assert.match(supa,/globalThis\.supabase\?\.createClient/);
+assert.match(boot,/import\('\.\/lobby\.js\?v=14\.10\.8\.18'\)/);
+assert.match(boot,/\.catch\(showFatal\)/);
+assert.match(boot,/Não foi possível carregar o Lobby/);
+assert.match(cfg,/LOBBY_VERSION=/);
+console.log('PASS p5 lobby boot compatibility audit');

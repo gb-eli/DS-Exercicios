@@ -1,0 +1,47 @@
+Fliperama DS v0.38.4 — comparação com v0.38.3
+
+Adicionados: 13
++ ARQUIVOS-ALTERADOS-v0.38.4.txt
++ BUGS-CORRIGIDOS-v0.38.4.md
++ CHANGELOG-v0.38.4.md
++ CHECKLIST-TESTES-v0.38.4.md
++ MATRIZ-TESTES-JOGOS-v0.38.4.md
++ RELATORIO-VALIDACAO-FASE-7-25-v0.38.4.md
++ TESTES-MUNDO-PLATAFORMA-360-v0.38.4.md
++ TESTES-REGRESSAO-v0.38.4.md
++ games/mundo-plataforma-ds-360/industrial.json
++ validation/http-route-results-v0.38.4.json
++ validation/mundo-plataforma-360-results-v0.38.4.json
++ validation/release-regression-results-v0.38.4.json
++ validation/test-mundo-plataforma-360-v0.38.4.mjs
+
+Modificados: 27
+~ HASHES-SHA256.txt
+~ PLANO-PROXIMAS-ETAPAS.md
+~ README.md
+~ app.js
+~ diagnostico-jogos.html
+~ diagnostico.html
+~ education/game-learning.json
+~ game-profiles.json
+~ games/mundo-plataforma-ds-360/game.js
+~ games/mundo-plataforma-ds-360/render.mjs
+~ games/mundo-plataforma-ds-360/simulation.mjs
+~ index.html
+~ media/games/mundo-plataforma-ds-360/preview-02.svg
+~ sw.js
+~ validation/arcade-expansion-test-results.json
+~ validation/cpu-multiplayer-quality-results.json
+~ validation/educational-content-test-results.json
+~ validation/game-audit-results.json
+~ validation/museum-timeline-test-results.json
+~ validation/platform-physics-test-results.json
+~ validation/test-arcade-expansion.js
+~ validation/test-educational-content.js
+~ validation/test-museum-timeline.js
+~ validation/test-plataforma-classica-v0.37.1.js
+~ validation/test-ux-responsive.js
+~ validation/ux-responsive-test-results.json
+~ version.json
+
+Removidos: 0

@@ -1,0 +1,198 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.39.0",
+  "phase": "Fase 7.15A — regressão preservada na v0.39.0",
+  "generatedAt": "2026-08-08T19:12:46.777Z",
+  "summary": {
+    "total": 37,
+    "passed": 37,
+    "failed": 0
+  },
+  "results": [
+    {
+      "name": "Expansão arcade preservada na v0.39.0",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Fase pública atual sincronizada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Interface de missão inserida",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Interface de medalha inserida",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Tutorial de ações inserido",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Estatísticas locais com chave versionada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "CSS responsivo da expansão",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Vector Tennis · metas 3/5/7",
+      "status": "pass",
+      "detail": "obtido {\"iniciante\":3,\"normal\":5,\"desafio\":7} · esperado {\"iniciante\":3,\"normal\":5,\"desafio\":7}"
+    },
+    {
+      "name": "Vector Tennis · save antigo migrado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Vector Tennis · ficha educacional atualizada",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Space Blocks · metas dos quatro modos",
+      "status": "pass",
+      "detail": "obtido {\"progressivo\":0,\"pratica\":0,\"sprint12\":12,\"maratona24\":24} · esperado {\"progressivo\":0,\"pratica\":0,\"sprint12\":12,\"maratona24\":24}"
+    },
+    {
+      "name": "Space Blocks · save schema 1 migrado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Space Blocks · Sprint conclui ao atingir a meta",
+      "status": "pass",
+      "detail": "13 linhas · piece-locked,line-cleared,challenge-complete"
+    },
+    {
+      "name": "Space Blocks · ficha possui Sprint e Maratona",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Vector Fleet · campanhas e vidas",
+      "status": "pass",
+      "detail": "obtido {\"cadete\":{\"target\":5,\"lives\":4},\"piloto\":{\"target\":6,\"lives\":3},\"comandante\":{\"target\":7,\"lives\":3}} · esperado {\"cadete\":{\"target\":5,\"lives\":4},\"piloto\":{\"target\":6,\"lives\":3},\"comandante\":{\"target\":7,\"lives\":3}}"
+    },
+    {
+      "name": "Vector Fleet · save antigo migrado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Vector Fleet · vitória na última onda",
+      "status": "pass",
+      "detail": "victory"
+    },
+    {
+      "name": "Reator de Blocos · cinco fases percorridas",
+      "status": "pass",
+      "detail": "2,3,4,5,5 · victory"
+    },
+    {
+      "name": "Reator de Blocos · fase 4 possui padrão próprio",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Reator de Blocos · fase 5 possui núcleo dividido",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Reator de Blocos · ficha anuncia cinco fases",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Sentinela Orbital · campanhas 4/5/6",
+      "status": "pass",
+      "detail": "obtido {\"cadete\":4,\"defensor\":5,\"elite\":6} · esperado {\"cadete\":4,\"defensor\":5,\"elite\":6}"
+    },
+    {
+      "name": "Sentinela Orbital · save antigo migrado",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Sentinela Orbital · vitória na onda 6",
+      "status": "pass",
+      "detail": "victory"
+    },
+    {
+      "name": "Sentinela Orbital · formação ampliada na onda 6",
+      "status": "pass",
+      "detail": "60 inimigos"
+    },
+    {
+      "name": "Motion Beat · cinco modos disponíveis",
+      "status": "pass",
+      "detail": "{\"aprendiz\":32,\"normal\":40,\"desafio\":60,\"maratona\":80,\"acessivel\":28}"
+    },
+    {
+      "name": "Motion Beat · parser reconhece modos novos",
+      "status": "pass",
+      "detail": "obtido [\"normal\",\"maratona\"] · esperado [\"normal\",\"maratona\"]"
+    },
+    {
+      "name": "Motion Beat · normal concluível",
+      "status": "pass",
+      "detail": "40/40"
+    },
+    {
+      "name": "Motion Beat · maratona concluível",
+      "status": "pass",
+      "detail": "80/80"
+    },
+    {
+      "name": "vector-tennis · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "5 etapas"
+    },
+    {
+      "name": "space-blocks · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "5 etapas"
+    },
+    {
+      "name": "vector-fleet · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "5 etapas"
+    },
+    {
+      "name": "block-reactor · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "6 etapas"
+    },
+    {
+      "name": "orbital-sentinel · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "5 etapas"
+    },
+    {
+      "name": "motion-beat · progressão educacional ampliada",
+      "status": "pass",
+      "detail": "6 etapas"
+    },
+    {
+      "name": "Regras de medalha bronze/prata/ouro presentes",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Expansão arcade preservada com novo runtime isolado",
+      "status": "pass",
+      "detail": ""
+    }
+  ]
+}

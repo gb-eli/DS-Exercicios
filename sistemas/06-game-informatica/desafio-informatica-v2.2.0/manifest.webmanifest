@@ -1,0 +1,10 @@
+{
+  "name": "Desafio de Informática AGV",
+  "short_name": "Informática AGV",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#071426",
+  "theme_color": "#071426",
+  "lang": "pt-BR",
+  "description": "Plataforma educacional de Informática Empresarial com ferramentas realistas, avaliações flexíveis, progresso protegido e evidências em PDF."
+}

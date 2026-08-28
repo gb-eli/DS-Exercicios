@@ -1,0 +1,33 @@
+{
+  "schema": "agv-v8-live-status",
+  "date": "2026-08-13",
+  "supabaseProjectRef": "iresvqwyaqotghjssncg",
+  "edgeFunctions": {
+    "lab-exercises-core": 1,
+    "lab-analysis-validate": 1,
+    "agv-teacher-activity": 3,
+    "staff-dashboard": 6
+  },
+  "activities": {
+    "lab-ds1": 11,
+    "lab-ds2": 58,
+    "lab-ds3": 8,
+    "lab-sub": 11,
+    "total": 88
+  },
+  "teacherReferencesLive": {
+    "lab-virtual": 88,
+    "lab-ds1": 4,
+    "lab-ds2": 0,
+    "lab-ds3": 0,
+    "lab-sub": 0
+  },
+  "teacherReferencesPrivatePrepared": 88,
+  "solutionFilesPrivatePrepared": 168,
+  "studentAnswerLeakAudit": "pass",
+  "analysisCompletionGuard": "active",
+  "limitations": [
+    "legacy portal files/code are not synchronized cross-PC",
+    "private teacher JSON still requires admin import for remaining references"
+  ]
+}

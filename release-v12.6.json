@@ -1,0 +1,23 @@
+{
+  "version": "v12.6-P6.2-CENTRAL-SEGURANCA",
+  "phase": "P6.2",
+  "date": "2026-08-15",
+  "base": "v12.5-P6.1-ADMIN-CENTRAL-ACOMPANHAMENTO",
+  "type": "security-operations-center",
+  "highlights": [
+    "Central de Segurança com triagem por severidade, categoria, IP, localização e dispositivo",
+    "Acesso confirmado fora do Paraná destacado como CRÍTICO para revisão",
+    "Geolocalização inconclusiva separada de incidente confirmado",
+    "Filtros, reconhecimento de eventos e exportação CSV administrativa",
+    "Auto-refresh da tela Segurança apenas quando visível"
+  ],
+  "functional_runtime_changes": true,
+  "requires_database_migration": false,
+  "requires_edge_function_deploy": false,
+  "live_backend_note": "Supabase connector unavailable during this execution; no live schema or edge-function changes performed.",
+  "tests": {
+    "suites": 22,
+    "passed": 22,
+    "failed": 0
+  }
+}

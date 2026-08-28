@@ -1,0 +1,30 @@
+{
+  "version": "14.10.8.29-final",
+  "date": "2026-08-28",
+  "title": "Central de Apoio + Recuperação 2DS Sub",
+  "base": "DS-Exercicios-main-v14.10.8.29",
+  "incorporates": "Recuperacao-2DS-Sub-v1.1.0-completa",
+  "scope": ["frontend", "accessibility", "pedagogy", "database", "edge-functions", "security"],
+  "changes": [
+    "Preserva integralmente a Central de Apoio e o staff-dashboard da base.",
+    "Adiciona revisão coletiva sincronizada, prova individual, painel docente e chat privado de Recuperação.",
+    "Move notas exclusivas do professor para o backend e mantém o gabarito fora do frontend.",
+    "Valida o vínculo do aluno à sessão em chat e intervenções individuais.",
+    "Bloqueia entrega da prova enquanto a sessão estiver pausada.",
+    "Remove conteúdo pessoal e hostil legado que não fazia parte do fluxo funcional.",
+    "Remove unsafe-inline da CSP das páginas de Recuperação."
+  ],
+  "compatibility": {
+    "requires_migrations_in_order": [
+      "058_p10929_student_support_hub.sql",
+      "059_p10930_recovery_exam_2ds_sub.sql",
+      "060_p10930_recovery_review_sync_chat_v1_1_0.sql"
+    ],
+    "requires_edge_functions": ["staff-dashboard", "recovery-exam"],
+    "recovery_exam_verify_jwt": true
+  },
+  "deployment": {
+    "production_state_verified_for_recovery": false,
+    "note": "O pacote foi preparado e validado localmente; implantação de Recuperação deve ser executada e confirmada separadamente."
+  }
+}

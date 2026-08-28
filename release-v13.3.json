@@ -1,0 +1,8 @@
+{
+  "version": "13.3.0",
+  "phase": "P6.7-wave3",
+  "date": "2026-08-15",
+  "title": "Integração Desafio DS + Game Informática",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionChange": false
+}

@@ -1,0 +1,126 @@
+{
+  "version": "0.9.6.0-RG",
+  "addResult": {
+    "ok": true,
+    "item": {
+      "id": "scanner-prisma",
+      "name": "Scanner Prisma",
+      "category": "tool",
+      "rarity": "rare",
+      "basePrice": 1800,
+      "icon": "📟",
+      "slot": "held-item-right",
+      "previewType": "item360",
+      "pack": "tools-scanners",
+      "description": "Scanner portátil com tela holográfica.",
+      "thumbnail": "../assets/equipment/previews/scanner-prisma.webp",
+      "vectorPreview": "../assets/items/vectors/scanner-prisma.svg",
+      "assetVersion": "0.3.0",
+      "materials": [
+        "painted-metal",
+        "emissive-cyan"
+      ],
+      "model3d": "../assets/equipment/models/scanner-prisma.glb",
+      "equipmentVersion": "0.5.0",
+      "attachments": [
+        {
+          "slot": "held-item-right"
+        }
+      ]
+    },
+    "state": {
+      "schemaVersion": 1,
+      "profileId": "perfil-demo",
+      "itemIds": [
+        "scanner-prisma"
+      ],
+      "quickAnimations": [
+        "Wave",
+        "Jump",
+        "DanceLoop",
+        "VictoryPose",
+        "WalkShowcase",
+        "ThumbsUp"
+      ],
+      "quickMessages": [
+        "Olá!",
+        "Bom dia!",
+        "Vamos estudar!",
+        "Vamos programar!",
+        "Vamos fazer um desafio!",
+        "Meu nome é Estudante DS."
+      ],
+      "selectedItemId": "scanner-prisma",
+      "updatedAt": "2026-08-03T22:12:57.463Z",
+      "lastAction": {
+        "type": "ADD_ITEM",
+        "id": "scanner-prisma",
+        "at": "2026-08-03T22:12:57.463Z"
+      }
+    }
+  },
+  "scannerInBackpack": true,
+  "scannerRendered": true,
+  "backpackItems": 1,
+  "quickAnimations": 6,
+  "quickMessages": 6,
+  "renderedSlots": 8,
+  "renderedAnimations": 6,
+  "renderedMessages": 6,
+  "diagnostics": {
+    "version": "0.9.6.0-RG",
+    "profileId": "perfil-demo",
+    "storageKey": "ds-backpack-v1:perfil-demo",
+    "items": {
+      "used": 1,
+      "limit": 8
+    },
+    "animations": {
+      "used": 6,
+      "limit": 6
+    },
+    "messages": {
+      "used": 6,
+      "limit": 6
+    },
+    "groups": {
+      "wearable": {
+        "used": 0,
+        "limit": 4,
+        "label": "Visual e equipamentos"
+      },
+      "tool": {
+        "used": 1,
+        "limit": 2,
+        "label": "Ferramentas"
+      },
+      "effect": {
+        "used": 0,
+        "limit": 2,
+        "label": "Auras e efeitos"
+      }
+    },
+    "updatedAt": "2026-08-03T22:12:57.496Z"
+  },
+  "persistenceStatus": {
+    "state": "saved",
+    "lastSavedAt": "2026-08-03T22:12:57.918Z",
+    "lastError": null,
+    "source": "ds-backpack-change",
+    "checkpointCount": 3,
+    "storageKey": "ds-profile-persistence-v1:perfil-demo"
+  },
+  "validBackup": {
+    "ok": true
+  },
+  "tamperedBackup": {
+    "ok": false,
+    "message": "O backup não passou na verificação de integridade."
+  },
+  "financialDataIncluded": false,
+  "webglAvailable": false,
+  "mobileScrollWidth": 390,
+  "mobileViewport": 390,
+  "errors": [],
+  "passed": true
+}

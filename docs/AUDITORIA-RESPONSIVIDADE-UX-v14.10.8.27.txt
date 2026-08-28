@@ -1,0 +1,45 @@
+AUDITORIA DE RESPONSIVIDADE E UX — MODO PROVA v14.10.8.27
+
+ESCOPO
+Android ~390 px, celulares até 430 px, tablet ~820 px, notebook 1366x768 e desktop.
+
+CORREÇÕES DE MAIOR RISCO
+1. Evitado re-render periódico enquanto o aluno está digitando/selecionando ou com rascunho pendente.
+   Motivo: a sincronização de 7 s podia reconstruir a tela e interromper a edição.
+2. Criado resumo móvel de desempenho durante os desafios:
+   - XP individual
+   - progresso da equipe
+   - posição do aluno
+   - posição da equipe
+3. Inputs/selects/textarea com 16 px no mobile para evitar zoom indesejado.
+4. Botões e áreas de toque ampliados para aproximadamente 44–48 px.
+5. Lobby reorganizado para uma coluna em celular; nomes longos podem quebrar linha sem causar overflow.
+6. Sala do líder reorganizada em uma coluna no celular; botão de expulsar passa a ocupar largura segura.
+7. Desafios de arrastar continuam com alternativa por toque/botões; áreas de drop e ordenação ampliadas.
+8. Ranking, progresso e cards deixam de usar tipografia excessivamente pequena no mobile.
+9. Simulador: preview passa a aparecer antes do Inspector em telas menores.
+10. Admin: formulários e ações passam a uma coluna; tabelas largas continuam com rolagem horizontal controlada.
+11. Adicionado foco visível de teclado e suporte a prefers-reduced-motion.
+12. Reduzido peso visual/sombras no mobile para melhorar leitura e desempenho.
+
+VALIDAÇÃO TÉCNICA
+- student.js: node --check OK
+- admin.js: node --check OK
+- simulator.js: node --check OK
+- CSS: chaves balanceadas OK
+- simulator-catalog.js: sem answer_key embutido
+- student.js: sem answer_key
+
+TESTE RECOMENDADO ANTES DA TURMA
+A. Simulador > 1DS > cada uma das 8 áreas > Celular.
+B. Simulador > 2DS > cada uma das 8 áreas > Celular.
+C. Lobby com nomes longos e sala com 6 integrantes.
+D. Líder: configurar empresa, distribuir áreas e expulsar integrante.
+E. Desafio: digitar por mais de 10 s e confirmar que o campo não é reconstruído pela sincronização.
+F. Rascunho: escrever, aguardar confirmação, atualizar e recuperar.
+G. Ranking: abrir com listas longas.
+H. Pausa/retomada e cronômetro.
+I. Tablet e notebook 1366x768.
+
+OBSERVAÇÃO
+A auditoria desta versão é focada em bloqueadores e legibilidade. Ajustes estéticos finos podem ser feitos após o primeiro teste real com a turma sem alterar a arquitetura do backend.

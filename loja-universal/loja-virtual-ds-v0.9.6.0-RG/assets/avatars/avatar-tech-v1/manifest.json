@@ -1,0 +1,34 @@
+{
+  "id": "avatar-tech-v1",
+  "version": "0.9.4.4",
+  "format": "glTF 2.0 / GLB",
+  "rig": "DS_HUMANOID_VOXEL_RIG_2",
+  "original": true,
+  "lods": [
+    {
+      "level": 0,
+      "file": "avatar-tech-v1-lod0.glb",
+      "target": "advanced/ultra/realism"
+    },
+    {
+      "level": 1,
+      "file": "avatar-tech-v1-lod1.glb",
+      "target": "intermediate"
+    },
+    {
+      "level": 2,
+      "file": "avatar-tech-v1-lod2.glb",
+      "target": "basic"
+    }
+  ],
+  "animations": "animations.json",
+  "slots": "slots.json",
+  "materials": "materials.json",
+  "defaultItems": [],
+  "fallback2D": "../../characters/avatar-tech-base.webp",
+  "textureBindings": "texture-bindings.json",
+  "equipmentManifest": "../../equipment/equipment-manifest.json",
+  "presets": "../../equipment/presets.json",
+  "vfxManifest": "../../vfx/vfx-manifest.json",
+  "rigContract": "rig-v2.json"
+}
