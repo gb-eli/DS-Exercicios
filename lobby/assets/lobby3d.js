@@ -3,7 +3,7 @@ let rigApiPromise=null;
 async function ensureRigApi(){
   if(rigApi)return rigApi;
   if(rigApiPromise)return rigApiPromise;
-  rigApiPromise=import('./rigged-avatar.js?v=14.10.8.39').then(mod=>{rigApi=mod;globalThis.__agvLobbyDiag?.record?.('optional_module_loaded',{asset:'rigged-avatar.js'});return mod;}).catch(error=>{
+  rigApiPromise=import('./rigged-avatar.js?v=14.10.8.40').then(mod=>{rigApi=mod;globalThis.__agvLobbyDiag?.record?.('optional_module_loaded',{asset:'rigged-avatar.js'});return mod;}).catch(error=>{
     globalThis.__agvLobbyDiag?.record?.('optional_module_failed',{asset:'rigged-avatar.js',message:String(error?.message||error).slice(0,180)});
     console.warn('Avatar GLB opcional indisponível; usando avatar procedural.',error);
     return null;
@@ -14,7 +14,7 @@ async function loadRiggedAvatarAsset(...args){const api=await ensureRigApi();if(
 function createRiggedAvatar(...args){return rigApi?.createRiggedAvatar?.(...args)||null;}
 function updateRiggedAvatar(...args){return rigApi?.updateRiggedAvatar?.(...args)||false;}
 function disposeRiggedAvatar(...args){return rigApi?.disposeRiggedAvatar?.(...args);}
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.39';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.40';
 const DB_SCALE=20;
 const WORLD_X=40;
 const WORLD_Z=25;
@@ -205,8 +205,8 @@ export async function createLobby3D({canvas,zones,state,isStaff,className,onInte
   const seats=[{id:'bench-west',x:-8,z:-.8,rot:Math.PI/2},{id:'bench-east',x:8,z:.8,rot:-Math.PI/2},{id:'bench-south',x:-.8,z:-8,rot:0},{id:'bench-north',x:.8,z:8,rot:Math.PI}];
   const worldObjects=[];
   // P5.7: interiores 3D são instâncias locais. Coordenadas internas nunca são enviadas diretamente ao backend.
-  const interiorOrigins={1ds:[-54,0,55],2ds:[-18,0,55],3ds:[18,0,55],sub:[54,0,55]};
-  const exteriorEntrances={1ds:{x:-27,z:-11.95,rot:0},2ds:{x:27,z:-11.95,rot:0},3ds:{x:-27,z:11.95,rot:Math.PI},sub:{x:27,z:11.95,rot:Math.PI}};
+  const interiorOrigins={'1ds':[-54,0,55],'2ds':[-18,0,55],'3ds':[18,0,55],sub:[54,0,55]};
+  const exteriorEntrances={'1ds':{x:-27,z:-11.95,rot:0},'2ds':{x:27,z:-11.95,rot:0},'3ds':{x:-27,z:11.95,rot:Math.PI},sub:{x:27,z:11.95,rot:Math.PI}};
   const interiors=new Map(),entranceDoors=[];
   for(const z of zones){const origin=interiorOrigins[z.key],color=new THREE.Color(z.accent).getHex(),room=labInterior({accent:color,key:z.key,title:z.label,origin});scene.add(room.group);interiors.set(z.key,{...room,origin,zone:z});worldObjects.push(...room.refs);const ent=exteriorEntrances[z.key],door=automaticDoor(color);door.position.set(ent.x,0,ent.z);door.rotation.y=ent.rot;scene.add(door);entranceDoors.push({door,key:z.key,x:ent.x,z:ent.z});worldObjects.push({id:`entrance-${z.key}`,type:'building-entrance',zoneKey:z.key,name:`Entrada ${z.label} • Laboratório`,x:ent.x,z:ent.z,radius:2.1});}
   const kiosk=campusKiosk(4.7,-4.8);scene.add(kiosk);worldObjects.push({id:'campus-kiosk',type:'kiosk',name:'Totem do Campus',x:4.7,z:-4.8,radius:2.0});

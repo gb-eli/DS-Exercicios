@@ -11,17 +11,17 @@
 </head>
 <body>
 <main class="card">
-  <header class="head"><p class="eyebrow">AGV Education Core • Recovery Utility</p><h1>Reparar Campus DS 3D</h1><p class="sub">Remove somente o Service Worker e os caches do Lobby, verifica se a release 14.10.8.39 foi realmente publicada e reabre o Campus com uma carga limpa.</p></header>
+  <header class="head"><p class="eyebrow">AGV Education Core • Recovery Utility</p><h1>Reparar Campus DS 3D</h1><p class="sub">Remove somente o Service Worker e os caches do Lobby, verifica se a release 14.10.8.40 foi realmente publicada e reabre o Campus com uma carga limpa.</p></header>
   <section class="body">
     <div id="status" class="status"></div>
     <pre id="log" aria-live="polite">Preparando reparo…</pre>
-    <div class="actions"><button id="retry" type="button">Executar novamente</button><a id="open" class="btn primary hidden" href="lobby/?diag=1&v=14.10.8.39">Abrir Campus limpo</a></div>
+    <div class="actions"><button id="retry" type="button">Executar novamente</button><a id="open" class="btn primary hidden" href="lobby/?diag=1&v=14.10.8.40">Abrir Campus limpo</a></div>
   </section>
 </main>
 <script>
 (()=>{
 'use strict';
-const RELEASE='14.10.8.39';
+const RELEASE='14.10.8.40';
 const logEl=document.getElementById('log'), statusEl=document.getElementById('status'), openEl=document.getElementById('open');
 const logs=[];
 const log=(m)=>{logs.push(`[${new Date().toLocaleTimeString()}] ${m}`);logEl.textContent=logs.join('\n')};
@@ -66,7 +66,7 @@ async function run(){
     statusEl.innerHTML=row('Release esperada',RELEASE,'ok')+row('Service Worker antigo',cleared.unregistered?'removido':'nenhum registro antigo encontrado','ok')+row('Caches do Lobby',`${cleared.deleted} removido(s)`,'ok')+row('Arquivos publicados',failed.length?`${results.length-failed.length}/${results.length}`:`${results.length}/${results.length} OK`,failed.length?'bad':'ok');
     for(const r of results)log(`${r.ok?'OK':'FALHA'} ${r.path} • HTTP ${r.status} • ${r.bytes} bytes • marker=${r.marker} • html=${r.htmlLike}`);
     if(failed.length){
-      log('A release 14.10.8.39 ainda NÃO está publicada corretamente na raiz do GitHub Pages. Não redirecionarei para evitar recarregar a versão antiga.');
+      log('A release 14.10.8.40 ainda NÃO está publicada corretamente na raiz do GitHub Pages. Não redirecionarei para evitar recarregar a versão antiga.');
       return;
     }
     log('Publicação validada. O Campus pode ser reaberto com carga limpa.');

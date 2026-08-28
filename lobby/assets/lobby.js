@@ -1,7 +1,7 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.39';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.39';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.39';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.39';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.40';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.40';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.40';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.40';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{

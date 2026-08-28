@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='14.10.8.39';
+const VERSION='14.10.8.40';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
@@ -10,14 +10,14 @@ const SDK_URLS=new Set([
 const LOCAL_SHELL=[
   './',
   './index.html',
-  './assets/vendor-loader.js?v=14.10.8.39',
-  './assets/boot.js?v=14.10.8.39',
-  './assets/supabase.js?v=14.10.8.39',
-  './assets/lobby.js?v=14.10.8.39',
-  './assets/config.js?v=14.10.8.39',
-  './assets/lobby3d.js?v=14.10.8.39',
-  './assets/lobby-lite.js?v=14.10.8.39',
-  './assets/lobby.css?v=14.10.8.39'
+  './assets/vendor-loader.js?v=14.10.8.40',
+  './assets/boot.js?v=14.10.8.40',
+  './assets/supabase.js?v=14.10.8.40',
+  './assets/lobby.js?v=14.10.8.40',
+  './assets/config.js?v=14.10.8.40',
+  './assets/lobby3d.js?v=14.10.8.40',
+  './assets/lobby-lite.js?v=14.10.8.40',
+  './assets/lobby.css?v=14.10.8.40'
 ];
 
 self.addEventListener('install',event=>{
