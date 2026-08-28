@@ -7,5 +7,6 @@ window.AGV_ADMIN_CONFIG = Object.freeze({
   profileFunction: 'admin-profile-user',
   authSessionsFunction: 'admin-auth-sessions',
   authSessionRevocationReady: 'auto',
-  teacherFunction: 'agv-teacher-activity'
+  teacherFunction: 'agv-teacher-activity',
+  accessFunction: 'admin-access-management'
 });

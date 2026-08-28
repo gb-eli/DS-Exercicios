@@ -60,7 +60,7 @@ test('teacher can supervise guild chat and mobile has compact mission view',()=>
 });
 
 test('cache and release metadata are bumped',()=>{
-  assert.match(read('prova/index.html'),/14\.10\.8\.33/);
+  assert.match(read('prova/index.html'),/14\.10\.8\.(?:33|3[4-9])/);
   const release=JSON.parse(read('release-v14.10.8.33.json'));
   assert.equal(release.compatibility.requires_new_migration,false);
   assert.equal(release.assessment_operation.automatic_finish,false);

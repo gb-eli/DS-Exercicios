@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='14.10.8.18';
+const VERSION='14.10.8.35';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
@@ -10,11 +10,14 @@ const SDK_URLS=new Set([
 const LOCAL_SHELL=[
   './',
   './index.html',
-  './assets/vendor-loader.js?v=14.10.8.18',
-  './assets/boot.js?v=14.10.8.18',
-  './assets/supabase.js?v=14.10.8.18',
-  './assets/lobby.js?v=14.10.8.18',
-  './assets/lobby.css?v=14.10.8.18'
+  './assets/vendor-loader.js?v=14.10.8.35',
+  './assets/boot.js?v=14.10.8.35',
+  './assets/supabase.js?v=14.10.8.35',
+  './assets/lobby.js?v=14.10.8.35',
+  './assets/config.js?v=14.10.8.35',
+  './assets/lobby3d.js?v=14.10.8.35',
+  './assets/lobby-lite.js?v=14.10.8.35',
+  './assets/lobby.css?v=14.10.8.35'
 ];
 
 self.addEventListener('install',event=>{
@@ -49,14 +52,18 @@ async function cacheFirstSdk(request,clientId){
   return response;
 }
 
-async function staleWhileRevalidate(request){
+async function networkFirstLocal(request,clientId){
   const cache=await caches.open(CACHE_NAME);
-  const cached=await cache.match(request);
-  const network=fetch(request).then(async response=>{
+  try{
+    const response=await fetch(request,{cache:'no-store'});
     if(response?.ok){try{await cache.put(request,response.clone());}catch{}}
+    await notifyClient(clientId,{localAsset:'network',path:new URL(request.url).pathname,version:VERSION});
     return response;
-  }).catch(()=>null);
-  return cached || network || Response.error();
+  }catch(error){
+    const cached=await cache.match(request,{ignoreSearch:false});
+    if(cached){await notifyClient(clientId,{localAsset:'cache_fallback',path:new URL(request.url).pathname,version:VERSION});return cached;}
+    throw error;
+  }
 }
 
 self.addEventListener('fetch',event=>{
@@ -67,6 +74,6 @@ self.addEventListener('fetch',event=>{
     return;
   }
   if(url.origin===self.location.origin && url.pathname.includes('/lobby/')){
-    event.respondWith(staleWhileRevalidate(event.request));
+    event.respondWith(networkFirstLocal(event.request,event.clientId));
   }
 });

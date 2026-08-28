@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
 
-  const RELEASE='14.10.8.18';
+  const RELEASE='14.10.8.35';
   const MAX_EVENTS=40;
   const startedAt=Date.now();
   const params=new URLSearchParams(location.search);
@@ -27,7 +27,7 @@
     events.push(item);
     if(events.length>MAX_EVENTS)events.splice(0,events.length-MAX_EVENTS);
     if(type==='stage'&&data?.stage)state.stage=safeText(data.stage);
-    if(type==='error')state.lastError={t:item.t,code:safeText(data?.code||'unknown'),message:safeText(data?.message||'')};
+    if(type==='error')state.lastError={t:item.t,code:safeText(data?.code||'unknown'),message:safeText(data?.message||''),file:safeText(data?.file||''),line:Number(data?.line||0)||null,column:Number(data?.column||0)||null,stack:safeText(data?.stack||'')};
     renderIfOpen();
     return item;
   }
@@ -156,8 +156,12 @@
 
   addEventListener('online',()=>record('network',{online:true}));
   addEventListener('offline',()=>record('network',{online:false}));
-  addEventListener('error',event=>{const target=event.target;if(target?.tagName==='SCRIPT')record('resource_error',{resource:safeText(target.src||'script')})},true);
-  addEventListener('unhandledrejection',event=>record('promise_rejection',{message:safeText(event.reason?.message||event.reason||'unknown')}));
+  addEventListener('error',event=>{
+    const target=event.target;
+    if(target?.tagName==='SCRIPT'){record('resource_error',{resource:safeText(target.src||'script')});return;}
+    record('error',{code:'runtime_error',message:safeText(event.message||'runtime_error'),file:safeText(event.filename||''),line:event.lineno||null,column:event.colno||null,stack:safeText(event.error?.stack||'')});
+  },true);
+  addEventListener('unhandledrejection',event=>record('error',{code:'unhandled_rejection',message:safeText(event.reason?.message||event.reason||'unknown'),stack:safeText(event.reason?.stack||'')}));
   addEventListener('resize',()=>update({device:deviceSnapshot()}),{passive:true});
   document.addEventListener('keydown',event=>{if(event.altKey&&event.shiftKey&&String(event.key).toLowerCase()==='d'){event.preventDefault();panel?.classList.contains('hidden')===false?close():open()}else if(event.key==='Escape'&&panel&&!panel.classList.contains('hidden')){event.preventDefault();close()}},true);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureUi,{once:true});else ensureUi();

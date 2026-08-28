@@ -1,5 +1,5 @@
-import {loadRiggedAvatarAsset,createRiggedAvatar,updateRiggedAvatar,disposeRiggedAvatar} from './rigged-avatar.js?v=14.10.8.18';
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.18';
+import {loadRiggedAvatarAsset,createRiggedAvatar,updateRiggedAvatar,disposeRiggedAvatar} from './rigged-avatar.js?v=14.10.8.35';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.35';
 const DB_SCALE=20;
 const WORLD_X=40;
 const WORLD_Z=25;

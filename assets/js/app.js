@@ -1,11 +1,11 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.18';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.18.1';
-import { callActivityProgress } from './supervision.js?v=14.10.8.18';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.18';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.18';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.18';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.18';
-import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.18';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.35';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.35.1';
+import { callActivityProgress } from './supervision.js?v=14.10.8.35';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.35';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.35';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.35';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.35';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.35';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
@@ -338,7 +338,7 @@ $('password-form').addEventListener('submit', async (event) => {
 
 
 $('hub-btn')?.addEventListener('click', () => { window.location.href = '../'; });
-$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.18'; });
+$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.35'; });
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
