@@ -1,2 +1,0 @@
-carla-alert.js: OK
-index.html: OK

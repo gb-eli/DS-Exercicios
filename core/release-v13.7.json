@@ -1,9 +1,0 @@
-{
-  "version": "13.7.0",
-  "date": "2026-08-15",
-  "phase": "P6.9",
-  "title": "Eventos e Telemetria Unificada",
-  "requiresDatabaseMigration": false,
-  "requiresEdgeFunctionDeploy": false,
-  "tests": {"files": 33, "status": "pass"}
-}

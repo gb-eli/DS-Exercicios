@@ -1,5 +1,0 @@
-import { SPECTRAL_LIBRARY } from '../../data/observatorySystems.js';
-export class SpectrumAnalyzer {
-  identify(lines=[],tolerance=.9){const scores=SPECTRAL_LIBRARY.map(element=>{let matched=0,error=0;for(const expected of element.lines){const closest=lines.reduce((best,value)=>Math.abs(value-expected)<Math.abs(best-expected)?value:best,lines[0]??1e9);const delta=Math.abs(closest-expected);if(delta<=tolerance){matched++;error+=delta;}}const coverage=matched/element.lines.length;const precision=matched?Math.max(0,1-error/(matched*tolerance)):0;return {id:element.id,label:element.label,score:Math.round((coverage*.75+precision*.25)*100),matched,total:element.lines.length,context:element.context};}).sort((a,b)=>b.score-a.score);return {best:scores[0],ranking:scores};}
-  synthetic(elementId,{redshift=0,noise=.08}={}){const element=SPECTRAL_LIBRARY.find(item=>item.id===elementId)??SPECTRAL_LIBRARY[0];return element.lines.map((value,index)=>Number((value*(1+redshift)+(index%2?noise:-noise)).toFixed(2)));}
-}
