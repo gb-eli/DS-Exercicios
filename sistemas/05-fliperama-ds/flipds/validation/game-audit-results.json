@@ -1,0 +1,5136 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.39.0",
+  "phase": "Fase 7.28 — Chess Arena 360 · Estratégia 3D",
+  "generatedAt": "2026-08-08T20:08:52.425Z",
+  "moduleCount": 120,
+  "summary": {
+    "games": 25,
+    "gamesPassed": 25,
+    "gamesWithWarnings": 0,
+    "gamesFailed": 0,
+    "checksPassed": 899,
+    "checksWithWarnings": 0,
+    "checksFailed": 0
+  },
+  "correctedCriticalBugs": [
+    "Labirinto de Dados fase 1: três coletas isoladas impediam a vitória.",
+    "Puzzle Forge: o editor aceitava labirintos sem rota até a saída.",
+    "State Quest RPG: o Console do Núcleo estava fechado por uma parede contínua.",
+    "Corredores Raycast: a área inicial não se conectava ao restante do mapa.",
+    "Trap Lab: o mesmo checkpoint podia emitir eventos repetidos continuamente.",
+    "Board Arena: CPU instantânea e previsível substituída por turnos separados, quatro dificuldades e análise visual.",
+    "Dama: destinos legais, captura obrigatória e capturas encadeadas implementadas.",
+    "Trap Lab: terminal final reposicionado e saltos receberam coyote time e jump buffer.",
+    "Ponte 8→16 Bits: plataformas, perigos, checkpoints, coleta e Zona 4 foram corrigidos.",
+    "Setor Poligonal 94: plataformas altas, rampas, câmera, sensibilidade, anti-travamento e portal educativo corrigidos.",
+    "Câmeras em Evolução: seis câmeras, três FOVs, colisão da câmera, arraste e progressão educativa validados.",
+    "VoxelCraft DS: Three.js local, persistência em camadas, spawn seguro, chunks, câmera, controles e modo Econômico recuperados."
+  ],
+  "globalFindings": [],
+  "games": [
+    {
+      "id": "vector-tennis",
+      "title": "Vector Tennis",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "space-blocks",
+      "title": "Space Blocks",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "vector-fleet",
+      "title": "Vector Fleet",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "block-reactor",
+      "title": "Reator de Blocos",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "orbital-sentinel",
+      "title": "Sentinela Orbital",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "trap-lab",
+      "title": "Trap Lab",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Estrutura da fase 1",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Estrutura da fase 2",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Estrutura da fase 3",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Estrutura da fase 4",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Estrutura da fase 5",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Estrutura da fase 6",
+          "status": "pass",
+          "detail": "Um início e uma saída foram encontrados."
+        },
+        {
+          "label": "Registro de checkpoint",
+          "status": "pass",
+          "detail": "O checkpoint emite um único evento ao ser alcançado."
+        },
+        {
+          "label": "percurso explorador",
+          "status": "pass",
+          "detail": "As 6 fases foram atravessadas pelo agente físico no modo explorador, incluindo portões e terminal final.",
+          "data": [
+            {
+              "completed": true,
+              "frames": 345,
+              "jumps": 0,
+              "interactions": 0,
+              "finalStatus": "playing",
+              "nextLevel": 2
+            },
+            {
+              "completed": true,
+              "frames": 352,
+              "jumps": 3,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 3
+            },
+            {
+              "completed": true,
+              "frames": 378,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 4
+            },
+            {
+              "completed": true,
+              "frames": 378,
+              "jumps": 6,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 5
+            },
+            {
+              "completed": true,
+              "frames": 354,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 6
+            },
+            {
+              "completed": true,
+              "frames": 378,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "victory",
+              "nextLevel": 6
+            }
+          ]
+        },
+        {
+          "label": "percurso programador",
+          "status": "pass",
+          "detail": "As 6 fases foram atravessadas pelo agente físico no modo programador, incluindo portões e terminal final.",
+          "data": [
+            {
+              "completed": true,
+              "frames": 320,
+              "jumps": 0,
+              "interactions": 0,
+              "finalStatus": "playing",
+              "nextLevel": 2
+            },
+            {
+              "completed": true,
+              "frames": 330,
+              "jumps": 3,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 3
+            },
+            {
+              "completed": true,
+              "frames": 359,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 4
+            },
+            {
+              "completed": true,
+              "frames": 361,
+              "jumps": 6,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 5
+            },
+            {
+              "completed": true,
+              "frames": 335,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 6
+            },
+            {
+              "completed": true,
+              "frames": 360,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "victory",
+              "nextLevel": 6
+            }
+          ]
+        },
+        {
+          "label": "percurso precisao",
+          "status": "pass",
+          "detail": "As 6 fases foram atravessadas pelo agente físico no modo precisao, incluindo portões e terminal final.",
+          "data": [
+            {
+              "completed": true,
+              "frames": 298,
+              "jumps": 0,
+              "interactions": 0,
+              "finalStatus": "playing",
+              "nextLevel": 2
+            },
+            {
+              "completed": true,
+              "frames": 308,
+              "jumps": 3,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 3
+            },
+            {
+              "completed": true,
+              "frames": 345,
+              "jumps": 7,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 4
+            },
+            {
+              "completed": true,
+              "frames": 324,
+              "jumps": 6,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 5
+            },
+            {
+              "completed": true,
+              "frames": 316,
+              "jumps": 8,
+              "interactions": 1,
+              "finalStatus": "playing",
+              "nextLevel": 6
+            },
+            {
+              "completed": true,
+              "frames": 345,
+              "jumps": 7,
+              "interactions": 1,
+              "finalStatus": "victory",
+              "nextLevel": 6
+            }
+          ]
+        },
+        {
+          "label": "coyote time",
+          "status": "pass",
+          "detail": "O salto ainda é aceito logo após o personagem deixar uma borda."
+        },
+        {
+          "label": "jump buffer",
+          "status": "pass",
+          "detail": "Um comando de salto realizado pouco antes da aterrissagem é executado ao tocar o chão."
+        },
+        {
+          "label": "migração de save",
+          "status": "pass",
+          "detail": "Saves schema 1 são migrados para o novo estado físico schema 2."
+        }
+      ]
+    },
+    {
+      "id": "data-maze",
+      "title": "Labirinto de Dados",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Alcançabilidade da fase 1",
+          "status": "pass",
+          "detail": "211/211 células caminháveis acessíveis; 205 coletas válidas.",
+          "data": {
+            "levelId": 1,
+            "levelName": "Memória Central",
+            "walkableCount": 211,
+            "reachableCount": 211,
+            "unreachable": [],
+            "unreachableCritical": []
+          }
+        },
+        {
+          "label": "Alcançabilidade da fase 2",
+          "status": "pass",
+          "detail": "223/223 células caminháveis acessíveis; 217 coletas válidas.",
+          "data": {
+            "levelId": 2,
+            "levelName": "Barramento Cruzado",
+            "walkableCount": 223,
+            "reachableCount": 223,
+            "unreachable": [],
+            "unreachableCritical": []
+          }
+        },
+        {
+          "label": "Alcançabilidade da fase 3",
+          "status": "pass",
+          "detail": "207/207 células caminháveis acessíveis; 201 coletas válidas.",
+          "data": {
+            "levelId": 3,
+            "levelName": "Núcleo Recursivo",
+            "walkableCount": 207,
+            "reachableCount": 207,
+            "unreachable": [],
+            "unreachableCritical": []
+          }
+        },
+        {
+          "label": "Alcançabilidade da fase 4",
+          "status": "pass",
+          "detail": "223/223 células caminháveis acessíveis; 217 coletas válidas.",
+          "data": {
+            "levelId": 4,
+            "levelName": "Matriz Espelhada",
+            "walkableCount": 223,
+            "reachableCount": 223,
+            "unreachable": [],
+            "unreachableCritical": []
+          }
+        },
+        {
+          "label": "Alcançabilidade da fase 5",
+          "status": "pass",
+          "detail": "241/241 células caminháveis acessíveis; 235 coletas válidas.",
+          "data": {
+            "levelId": 5,
+            "levelName": "Cache Fantasma",
+            "walkableCount": 241,
+            "reachableCount": 241,
+            "unreachable": [],
+            "unreachableCritical": []
+          }
+        },
+        {
+          "label": "Progressão entre mapas",
+          "status": "pass",
+          "detail": "5 fases avançam e a última condição gera vitória.",
+          "data": {
+            "events": [
+              "level-complete",
+              "level-complete",
+              "level-complete",
+              "level-complete",
+              "victory"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "room-quest",
+      "title": "Aventura de Salas",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Grafo das 12 salas",
+          "status": "pass",
+          "detail": "46 entidades e transições verificadas sem bloqueio local."
+        }
+      ]
+    },
+    {
+      "id": "raster-rally",
+      "title": "Raster Rally",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "state-quest-rpg",
+      "title": "State Quest RPG",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Objetivos e transições",
+          "status": "pass",
+          "detail": "31 entidades e saídas acessíveis, incluindo o Console do Núcleo."
+        }
+      ]
+    },
+    {
+      "id": "bit-bridge-16",
+      "title": "Ponte 8→16 Bits",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Fragmentos e portal",
+          "status": "pass",
+          "detail": "15 fragmentos únicos posicionados dentro do mundo; 12 exigidos."
+        },
+        {
+          "label": "envelope vertical",
+          "status": "pass",
+          "detail": "Todas as plataformas exigem no máximo 130.0 px de subida para um salto capaz de 137.3 px.",
+          "data": {
+            "jumpHeight": 137.28571428571428,
+            "maxRise": 130
+          }
+        },
+        {
+          "label": "aterrissagem nas plataformas",
+          "status": "pass",
+          "detail": "As 17 plataformas podem ser alcançadas diretamente por um salto de recuperação.",
+          "data": [
+            {
+              "platform": 1,
+              "landed": true
+            },
+            {
+              "platform": 2,
+              "landed": true
+            },
+            {
+              "platform": 3,
+              "landed": true
+            },
+            {
+              "platform": 4,
+              "landed": true
+            },
+            {
+              "platform": 5,
+              "landed": true
+            },
+            {
+              "platform": 6,
+              "landed": true
+            },
+            {
+              "platform": 7,
+              "landed": true
+            },
+            {
+              "platform": 8,
+              "landed": true
+            },
+            {
+              "platform": 9,
+              "landed": true
+            },
+            {
+              "platform": 10,
+              "landed": true
+            },
+            {
+              "platform": 11,
+              "landed": true
+            },
+            {
+              "platform": 12,
+              "landed": true
+            },
+            {
+              "platform": 13,
+              "landed": true
+            },
+            {
+              "platform": 14,
+              "landed": true
+            },
+            {
+              "platform": 15,
+              "landed": true
+            },
+            {
+              "platform": 16,
+              "landed": true
+            },
+            {
+              "platform": 17,
+              "landed": true
+            }
+          ]
+        },
+        {
+          "label": "salto sobre perigos",
+          "status": "pass",
+          "detail": "Os 9 perigos foram atravessados sem perda de vida em simulação física.",
+          "data": [
+            {
+              "hazard": 1,
+              "crossed": true
+            },
+            {
+              "hazard": 2,
+              "crossed": true
+            },
+            {
+              "hazard": 3,
+              "crossed": true
+            },
+            {
+              "hazard": 4,
+              "crossed": true
+            },
+            {
+              "hazard": 5,
+              "crossed": true
+            },
+            {
+              "hazard": 6,
+              "crossed": true
+            },
+            {
+              "hazard": 7,
+              "crossed": true
+            },
+            {
+              "hazard": 8,
+              "crossed": true
+            },
+            {
+              "hazard": 9,
+              "crossed": true
+            }
+          ]
+        },
+        {
+          "label": "fragmentos alcançáveis",
+          "status": "pass",
+          "detail": "Todos os 15 fragmentos estão associados a plataformas alcançáveis e dentro da área de coleta ampliada."
+        },
+        {
+          "label": "checkpoints seguros",
+          "status": "pass",
+          "detail": "Nenhum respawn de checkpoint sobrepõe uma área de dano.",
+          "data": {
+            "checkpoints": [
+              1050,
+              2050,
+              3200,
+              4300,
+              5450
+            ]
+          }
+        },
+        {
+          "label": "quarta zona",
+          "status": "pass",
+          "detail": "O setor intermediário registra corretamente a Zona 4."
+        },
+        {
+          "label": "quinta zona",
+          "status": "pass",
+          "detail": "A expansão registra corretamente a Zona 5."
+        },
+        {
+          "label": "sexta zona",
+          "status": "pass",
+          "detail": "A expansão registra corretamente a Zona 6."
+        },
+        {
+          "label": "portal final",
+          "status": "pass",
+          "detail": "O portal conclui a experiência quando 12 fragmentos foram coletados."
+        },
+        {
+          "label": "coyote time",
+          "status": "pass",
+          "detail": "O salto de borda é aceito dentro da janela de tolerância."
+        },
+        {
+          "label": "jump buffer",
+          "status": "pass",
+          "detail": "O salto antecipado é executado após a aterrissagem."
+        },
+        {
+          "label": "migração de save",
+          "status": "pass",
+          "detail": "Saves schema 1 são migrados para o novo estado físico schema 2."
+        }
+      ]
+    },
+    {
+      "id": "raycast-corridors",
+      "title": "Corredores Raycast",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Missão completa por busca de estados",
+          "status": "pass",
+          "detail": "Rota encontrada com 2 chaves e 3 terminais; 3829 estados analisados.",
+          "data": {
+            "locations": {
+              "keys": [
+                [
+                  5,
+                  3
+                ],
+                [
+                  11,
+                  13
+                ]
+              ],
+              "doors": [
+                [
+                  6,
+                  7
+                ],
+                [
+                  4,
+                  15
+                ]
+              ],
+              "terminals": [
+                [
+                  9,
+                  8
+                ],
+                [
+                  1,
+                  13
+                ],
+                [
+                  15,
+                  15
+                ]
+              ],
+              "start": [
+                1,
+                1
+              ],
+              "exit": [
+                21,
+                16
+              ]
+            },
+            "visitedStates": 3829
+          }
+        }
+      ]
+    },
+    {
+      "id": "polygon-sector-94",
+      "title": "Setor Poligonal 94",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Objetivos da arena 3D",
+          "status": "pass",
+          "detail": "6 núcleos/lentes, checkpoints e portal posicionados fora dos colisores."
+        },
+        {
+          "label": "plataforma alta bloqueia lateral",
+          "status": "pass",
+          "detail": "A plataforma central bloqueia a entrada pelo chão, mas aceita o avatar sobre sua superfície."
+        },
+        {
+          "label": "sem subida instantânea",
+          "status": "pass",
+          "detail": "O avatar não pode subir diretamente para 2,7 m apenas entrando no volume da plataforma."
+        },
+        {
+          "label": "rampa progressiva",
+          "status": "pass",
+          "detail": "A rampa central sobe progressivamente do solo ao topo da plataforma.",
+          "data": {
+            "heights": [
+              0,
+              0.47250000000000014,
+              0.9450000000000003,
+              1.4175000000000004,
+              1.8900000000000003,
+              2.3625000000000003,
+              2.7
+            ]
+          }
+        },
+        {
+          "label": "percurso completo",
+          "status": "pass",
+          "detail": "Núcleos/lentes, checkpoints, rampa central e portal pertencem ao mesmo percurso navegável.",
+          "data": {
+            "visited": 3512,
+            "unreachable": []
+          }
+        },
+        {
+          "label": "coyote time",
+          "status": "pass",
+          "detail": "O salto ainda é aceito por alguns milissegundos após deixar uma borda."
+        },
+        {
+          "label": "jump buffer",
+          "status": "pass",
+          "detail": "O salto pressionado pouco antes da aterrissagem é executado automaticamente."
+        },
+        {
+          "label": "sensibilidade",
+          "status": "pass",
+          "detail": "O nível Alto produz rotação perceptivelmente maior que o nível Médio.",
+          "data": {
+            "normalDelta": 0.1349999999999998,
+            "fastDelta": 0.17820000000000036
+          }
+        },
+        {
+          "label": "arraste de câmera",
+          "status": "pass",
+          "detail": "Arraste horizontal gira o avatar e arraste vertical altera a inclinação da câmera."
+        },
+        {
+          "label": "recuperação anti-travamento",
+          "status": "pass",
+          "detail": "Posições inválidas retornam ao último ponto seguro."
+        },
+        {
+          "label": "câmera fora dos obstáculos",
+          "status": "pass",
+          "detail": "A posição final da câmera não fica dentro de paredes, pilares ou plataformas.",
+          "data": {
+            "camera": {
+              "position": {
+                "x": -3.608334318916311e-17,
+                "y": 1.48,
+                "z": 1.4107142857142856
+              },
+              "target": {
+                "x": 9.184850993605148e-17,
+                "y": 0.76,
+                "z": 3.5
+              }
+            }
+          }
+        },
+        {
+          "label": "migração de save",
+          "status": "pass",
+          "detail": "Save schema 1 é convertido para schema 2 com os novos campos físicos e de câmera."
+        },
+        {
+          "label": "portal exige aprendizagem",
+          "status": "pass",
+          "detail": "Coletar os itens sem experimentar câmeras/material/FOV não libera o portal."
+        },
+        {
+          "label": "portal educativo",
+          "status": "pass",
+          "detail": "O portal é concluível depois de cumprir as coletas e comparações educativas."
+        }
+      ]
+    },
+    {
+      "id": "camera-evolution",
+      "title": "Câmeras em Evolução",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Objetivos da arena 3D",
+          "status": "pass",
+          "detail": "6 núcleos/lentes, checkpoints e portal posicionados fora dos colisores."
+        },
+        {
+          "label": "plataforma alta bloqueia lateral",
+          "status": "pass",
+          "detail": "A plataforma central bloqueia a entrada pelo chão, mas aceita o avatar sobre sua superfície."
+        },
+        {
+          "label": "sem subida instantânea",
+          "status": "pass",
+          "detail": "O avatar não pode subir diretamente para 2,7 m apenas entrando no volume da plataforma."
+        },
+        {
+          "label": "rampa progressiva",
+          "status": "pass",
+          "detail": "A rampa central sobe progressivamente do solo ao topo da plataforma.",
+          "data": {
+            "heights": [
+              0,
+              0.47250000000000014,
+              0.9450000000000003,
+              1.4175000000000004,
+              1.8900000000000003,
+              2.3625000000000003,
+              2.7
+            ]
+          }
+        },
+        {
+          "label": "percurso completo",
+          "status": "pass",
+          "detail": "Núcleos/lentes, checkpoints, rampa central e portal pertencem ao mesmo percurso navegável.",
+          "data": {
+            "visited": 3512,
+            "unreachable": []
+          }
+        },
+        {
+          "label": "coyote time",
+          "status": "pass",
+          "detail": "O salto ainda é aceito por alguns milissegundos após deixar uma borda."
+        },
+        {
+          "label": "jump buffer",
+          "status": "pass",
+          "detail": "O salto pressionado pouco antes da aterrissagem é executado automaticamente."
+        },
+        {
+          "label": "sensibilidade",
+          "status": "pass",
+          "detail": "O nível Alto produz rotação perceptivelmente maior que o nível Médio.",
+          "data": {
+            "normalDelta": 0.1349999999999998,
+            "fastDelta": 0.17820000000000036
+          }
+        },
+        {
+          "label": "arraste de câmera",
+          "status": "pass",
+          "detail": "Arraste horizontal gira o avatar e arraste vertical altera a inclinação da câmera."
+        },
+        {
+          "label": "recuperação anti-travamento",
+          "status": "pass",
+          "detail": "Posições inválidas retornam ao último ponto seguro."
+        },
+        {
+          "label": "câmera fora dos obstáculos",
+          "status": "pass",
+          "detail": "A posição final da câmera não fica dentro de paredes, pilares ou plataformas.",
+          "data": {
+            "camera": {
+              "position": {
+                "x": -4.023839482912735e-17,
+                "y": 1.4935714285714285,
+                "z": 1.3428571428571425
+              },
+              "target": {
+                "x": 8.572527594031472e-17,
+                "y": 0.78,
+                "z": 3.4
+              }
+            }
+          }
+        },
+        {
+          "label": "migração de save",
+          "status": "pass",
+          "detail": "Save schema 1 é convertido para schema 2 com os novos campos físicos e de câmera."
+        },
+        {
+          "label": "portal exige aprendizagem",
+          "status": "pass",
+          "detail": "Coletar os itens sem experimentar câmeras/material/FOV não libera o portal."
+        },
+        {
+          "label": "portal educativo",
+          "status": "pass",
+          "detail": "O portal é concluível depois de cumprir as coletas e comparações educativas."
+        }
+      ]
+    },
+    {
+      "id": "board-arena",
+      "title": "Board Arena",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Jogo da Velha · iniciante",
+          "status": "pass",
+          "detail": "Turno da CPU separado, atraso visual e resposta concluída."
+        },
+        {
+          "label": "Jogo da Velha · normal",
+          "status": "pass",
+          "detail": "Turno da CPU separado, atraso visual e resposta concluída."
+        },
+        {
+          "label": "Jogo da Velha · estrategista",
+          "status": "pass",
+          "detail": "Turno da CPU separado, atraso visual e resposta concluída."
+        },
+        {
+          "label": "Jogo da Velha · mestre",
+          "status": "pass",
+          "detail": "Turno da CPU separado, atraso visual e resposta concluída."
+        },
+        {
+          "label": "Minimax Mestre",
+          "status": "pass",
+          "detail": "A CPU Mestre não perdeu em 100 partidas contra jogadas aleatórias."
+        },
+        {
+          "label": "Aleatoriedade controlada",
+          "status": "pass",
+          "detail": "7 respostas diferentes observadas no nível Iniciante."
+        },
+        {
+          "label": "Dama · iniciante",
+          "status": "pass",
+          "detail": "Destinos legais, tempo de análise e retorno de turno validados."
+        },
+        {
+          "label": "Dama · normal",
+          "status": "pass",
+          "detail": "Destinos legais, tempo de análise e retorno de turno validados."
+        },
+        {
+          "label": "Dama · estrategista",
+          "status": "pass",
+          "detail": "Destinos legais, tempo de análise e retorno de turno validados."
+        },
+        {
+          "label": "Dama · mestre",
+          "status": "pass",
+          "detail": "Destinos legais, tempo de análise e retorno de turno validados."
+        },
+        {
+          "label": "Captura encadeada",
+          "status": "pass",
+          "detail": "Duas capturas consecutivas foram exigidas e contabilizadas com a mesma peça."
+        },
+        {
+          "label": "Migração de save antigo",
+          "status": "pass",
+          "detail": "Save schema 1 / Aprendiz convertido para schema 3 / Iniciante com adversário CPU."
+        }
+      ]
+    },
+    {
+      "id": "puzzle-forge",
+      "title": "Puzzle Forge",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        },
+        {
+          "label": "Labirinto padrão",
+          "status": "pass",
+          "detail": "Saída alcançável em 12 movimentos mínimos."
+        },
+        {
+          "label": "Proteção do editor",
+          "status": "pass",
+          "detail": "Um layout totalmente bloqueado foi reparado com rota de 12 movimentos."
+        }
+      ]
+    },
+    {
+      "id": "motion-beat",
+      "title": "Motion Beat DS",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Inicialização da simulação",
+          "status": "pass",
+          "detail": "Construtor, início, um ciclo de atualização e restauração executaram sem exceção."
+        }
+      ]
+    },
+    {
+      "id": "voxelcraft-ds",
+      "title": "VoxelCraft DS",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Schema de save 11",
+          "status": "pass",
+          "detail": "O sanitizador converte estados antigos para o schema 11."
+        },
+        {
+          "label": "Sanitização de jogador",
+          "status": "pass",
+          "detail": "Vida, fome, câmera e inclinação permanecem dentro dos limites."
+        },
+        {
+          "label": "Sanitização de edições",
+          "status": "pass",
+          "detail": "Chaves e tipos inválidos são descartados."
+        },
+        {
+          "label": "Sanitização de inventário",
+          "status": "pass",
+          "detail": "Itens desconhecidos são removidos e quantidades são limitadas."
+        },
+        {
+          "label": "Fallback localStorage",
+          "status": "pass",
+          "detail": "Sem IndexedDB, o mundo permanece persistente no localStorage."
+        },
+        {
+          "label": "Fallback em memória",
+          "status": "pass",
+          "detail": "Quando os armazenamentos persistentes falham, a sessão continua em memória."
+        },
+        {
+          "label": "Three.js local",
+          "status": "pass",
+          "detail": "O renderizador não depende de CDN externa."
+        },
+        {
+          "label": "Spawn e recuperação seguros",
+          "status": "pass",
+          "detail": "Saves inválidos e quedas recuperam o personagem."
+        },
+        {
+          "label": "Proteção contra autoaprisionamento",
+          "status": "pass",
+          "detail": "Não é permitido colocar um bloco dentro do personagem."
+        },
+        {
+          "label": "Bordas de chunks",
+          "status": "pass",
+          "detail": "A edição na borda reconstrói os chunks vizinhos."
+        },
+        {
+          "label": "Coyote time e jump buffer",
+          "status": "pass",
+          "detail": "Saltos toleram borda e comando antecipado."
+        },
+        {
+          "label": "Câmera com colisão",
+          "status": "pass",
+          "detail": "A terceira pessoa recua antes do terreno."
+        },
+        {
+          "label": "Pointer Lock com fallback",
+          "status": "pass",
+          "detail": "Falhas de captura do mouse geram orientação e comandos alternativos."
+        },
+        {
+          "label": "Suporte a gamepad",
+          "status": "pass",
+          "detail": "Movimento, câmera e ações principais possuem mapeamento de controle."
+        },
+        {
+          "label": "Limite de edições",
+          "status": "pass",
+          "detail": "O mundo bloqueia crescimento indefinido do mapa de edições."
+        },
+        {
+          "label": "Modo seguro automático",
+          "status": "pass",
+          "detail": "Falhas de GPU podem reiniciar o módulo no perfil Econômico."
+        },
+        {
+          "label": "Fila de salvamento",
+          "status": "pass",
+          "detail": "Gravações simultâneas são serializadas."
+        },
+        {
+          "label": "Interface de modo seguro",
+          "status": "pass",
+          "detail": "A interface oferece recuperação e informa o backend de armazenamento."
+        },
+        {
+          "label": "Manifesto atualizado",
+          "status": "pass",
+          "detail": "Manifesto identifica a integração 12, schema 11 e estado jogável."
+        },
+        {
+          "label": "Catálogo jogável",
+          "status": "pass",
+          "detail": "O VoxelCraft permanece jogável e carregável nas versões posteriores à Fase 7.12."
+        },
+        {
+          "label": "Cache offline completo",
+          "status": "pass",
+          "detail": "Todos os arquivos essenciais do VoxelCraft estão no shell offline."
+        },
+        {
+          "label": "Comunicação segura do iframe",
+          "status": "pass",
+          "detail": "Mensagens de erro e modo seguro chegam ao runtime principal."
+        }
+      ]
+    },
+    {
+      "id": "duo-elementos-ds",
+      "title": "Duo Elementos DS",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Manifesto de níveis usa schema 1",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Campanha possui 8 fases",
+          "status": "pass",
+          "detail": "8 fases"
+        },
+        {
+          "label": "IDs das fases são 1..8",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Títulos das fases são únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Mundo lógico 960×540",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: relés únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: gates únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "0/0"
+        },
+        {
+          "label": "Fase 1: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 1: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 2: relés únicos",
+          "status": "pass",
+          "detail": "fire-a, water-a"
+        },
+        {
+          "label": "Fase 2: gates únicos",
+          "status": "pass",
+          "detail": "gate-a"
+        },
+        {
+          "label": "Fase 2: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 2: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "1/1"
+        },
+        {
+          "label": "Fase 2: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 2: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 2: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: relés únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: gates únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "0/0"
+        },
+        {
+          "label": "Fase 3: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 3: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 4: relés únicos",
+          "status": "pass",
+          "detail": "fire-b, water-b"
+        },
+        {
+          "label": "Fase 4: gates únicos",
+          "status": "pass",
+          "detail": "gate-b1, gate-b2"
+        },
+        {
+          "label": "Fase 4: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 4: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "2/2"
+        },
+        {
+          "label": "Fase 4: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 4: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 4: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 5: relés únicos",
+          "status": "pass",
+          "detail": "fire-c, water-c"
+        },
+        {
+          "label": "Fase 5: gates únicos",
+          "status": "pass",
+          "detail": "gate-c1, gate-c2"
+        },
+        {
+          "label": "Fase 5: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 5: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "2/2"
+        },
+        {
+          "label": "Fase 5: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 5: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 5: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 6: relés únicos",
+          "status": "pass",
+          "detail": "archive-fire, archive-water"
+        },
+        {
+          "label": "Fase 6: gates únicos",
+          "status": "pass",
+          "detail": "archive-gate1, archive-gate2"
+        },
+        {
+          "label": "Fase 6: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 6: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "2/2"
+        },
+        {
+          "label": "Fase 6: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 6: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 6: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 7: relés únicos",
+          "status": "pass",
+          "detail": "tower-fire, tower-water"
+        },
+        {
+          "label": "Fase 7: gates únicos",
+          "status": "pass",
+          "detail": "tower-gate"
+        },
+        {
+          "label": "Fase 7: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 7: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "1/1"
+        },
+        {
+          "label": "Fase 7: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 7: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 7: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 8: relés únicos",
+          "status": "pass",
+          "detail": "nexus-f1, nexus-w1, nexus-f2, nexus-w2"
+        },
+        {
+          "label": "Fase 8: gates únicos",
+          "status": "pass",
+          "detail": "nexus-g1, nexus-g2"
+        },
+        {
+          "label": "Fase 8: requisitos de gates existem",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 8: gates desbloqueáveis",
+          "status": "pass",
+          "detail": "2/2"
+        },
+        {
+          "label": "Fase 8: saídas dos dois elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 8: spawns válidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase 8: objetivos definidos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase final exige quatro relés",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Fase final exige seis núcleos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torres Gêmeas começa com jogadores em lados diferentes",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Há perigos de fogo, água e neutros",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Há relés Ígneo e Aqua",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Há núcleos específicos e neutros",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Core solo mapeia controle genérico ao personagem ativo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Core solo troca personagem ativo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Core local mantém entradas independentes",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Core possui polling de gamepad",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "HTML usa canvas e controles touch",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime possui coyote time e jump buffer",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime possui afinidade elemental",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime salva progresso serializável",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime possui checkpoints",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime emite conclusão da campanha",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime respeita redução de movimento",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Runtime limita partículas em qualidade baixa",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal registra loader do Duo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal registra modo solo e local",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal registra controles independentes",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal possui HUD específico",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal possui resultado específico",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Catálogo contém Duo Elementos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Ficha educacional externa existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Ficha educacional possui 8 etapas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Previews e logo existem",
+          "status": "pass",
+          "detail": "OK"
+        }
+      ]
+    },
+    {
+      "id": "plataforma-classica-ds",
+      "title": "Plataforma Clássica DS",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "schema de fases = 1",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mundo Campo dos Pixels",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "exatamente 6 fases",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 título",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=2"
+        },
+        {
+          "label": "fase 1 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=3"
+        },
+        {
+          "label": "fase 1 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 1 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 1 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=8"
+        },
+        {
+          "label": "fase 1 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 1 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 1 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=3"
+        },
+        {
+          "label": "fase 2 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 2 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 2 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=7"
+        },
+        {
+          "label": "fase 2 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=9"
+        },
+        {
+          "label": "fase 2 chip 5 alcançável",
+          "status": "pass",
+          "detail": "platform=12"
+        },
+        {
+          "label": "fase 2 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=11"
+        },
+        {
+          "label": "fase 2 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 2 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 3 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 3 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=6"
+        },
+        {
+          "label": "fase 3 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=8"
+        },
+        {
+          "label": "fase 3 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=12"
+        },
+        {
+          "label": "fase 3 chip 5 alcançável",
+          "status": "pass",
+          "detail": "platform=14"
+        },
+        {
+          "label": "fase 3 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=10"
+        },
+        {
+          "label": "fase 3 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 3 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 4 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 4 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=6"
+        },
+        {
+          "label": "fase 4 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=8"
+        },
+        {
+          "label": "fase 4 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=10"
+        },
+        {
+          "label": "fase 4 chip 5 alcançável",
+          "status": "pass",
+          "detail": "platform=12"
+        },
+        {
+          "label": "fase 4 chip 6 alcançável",
+          "status": "pass",
+          "detail": "platform=15"
+        },
+        {
+          "label": "fase 4 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=14"
+        },
+        {
+          "label": "fase 4 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 4 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 5 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=6"
+        },
+        {
+          "label": "fase 5 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=7"
+        },
+        {
+          "label": "fase 5 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=9"
+        },
+        {
+          "label": "fase 5 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=11"
+        },
+        {
+          "label": "fase 5 chip 5 alcançável",
+          "status": "pass",
+          "detail": "platform=15"
+        },
+        {
+          "label": "fase 5 chip 6 alcançável",
+          "status": "pass",
+          "detail": "platform=17"
+        },
+        {
+          "label": "fase 5 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=13"
+        },
+        {
+          "label": "fase 5 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 5 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 largura progressiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui pelo menos 4 chips",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui 1 segredo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui perigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 possui inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 spawn apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 portal em plataforma alcançável",
+          "status": "pass",
+          "detail": "platform=4"
+        },
+        {
+          "label": "fase 6 chip 1 alcançável",
+          "status": "pass",
+          "detail": "platform=5"
+        },
+        {
+          "label": "fase 6 chip 2 alcançável",
+          "status": "pass",
+          "detail": "platform=6"
+        },
+        {
+          "label": "fase 6 chip 3 alcançável",
+          "status": "pass",
+          "detail": "platform=8"
+        },
+        {
+          "label": "fase 6 chip 4 alcançável",
+          "status": "pass",
+          "detail": "platform=10"
+        },
+        {
+          "label": "fase 6 chip 5 alcançável",
+          "status": "pass",
+          "detail": "platform=14"
+        },
+        {
+          "label": "fase 6 chip 6 alcançável",
+          "status": "pass",
+          "detail": "platform=16"
+        },
+        {
+          "label": "fase 6 segredo 1 alcançável",
+          "status": "pass",
+          "detail": "platform=12"
+        },
+        {
+          "label": "fase 6 checkpoint fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase 6 spawn fora de perigo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase final possui boss",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "boss exige 3 impactos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "boss é Guardião do Clock",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fases 1-5 sem boss",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game usa coyote time",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game usa jump buffer",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui câmera lateral",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui Gamepad API",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui touch",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game exige chips e boss",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui modo histórico",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game possui modo moderno",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mesma simulação para os estilos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "save schema 1",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "evento ready",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "evento finished",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ponte de mensagem correta",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "runtime integrado ao loader",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "runtime wrapper integrado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "iframe sob demanda",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "HUD portal 1/6",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "resultado Mundo 1",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perfil externo existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perfil oferece 2 estilos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perfil default moderno",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ficha educacional existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ficha declara 6 progressões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia logo.svg existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia logo.svg acessível",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-01.svg existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-01.svg acessível",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-02.svg existe",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-02.svg acessível",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "versão pública atual preserva Plataforma Clássica",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "fase pública atual preserva Plataforma Clássica",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "app build atual preserva Plataforma Clássica",
+          "status": "pass",
+          "detail": "OK"
+        }
+      ]
+    },
+    {
+      "id": "mundo-plataforma-ds-360",
+      "title": "Mundo Plataforma DS 360",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "5 regiões declaradas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre identificada",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre é região 5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre 72x72",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Portal no topo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "3 consoles de sincronização",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "1 Núcleo Central",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "6 plataformas móveis",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "5 elevadores verticais ou mais",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "5 checkpoints verticais",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "5 patrulhas na torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "5 perigos em múltiplas alturas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "13 plataformas fixas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "IDs da Torre únicos",
+          "status": "pass",
+          "detail": "41 IDs"
+        },
+        {
+          "label": "plataforma tower-base dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma tower-base dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-west dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-west dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-east dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-east dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-bridge dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-1-bridge dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-east dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-east dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-west dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-west dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-bridge dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-2-bridge dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-west dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-west dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-east dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-east dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-bridge dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma ring-3-bridge dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma crown-platform dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma crown-platform dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma core-dais dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma core-dais dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma portal-dais dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma portal-dais dimensões positivas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-base dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-base eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-base movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "elevador lift-base alcança faixa vertical",
+          "status": "pass",
+          "detail": "range=2"
+        },
+        {
+          "label": "móvel lift-ring-1 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-1 eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-1 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "elevador lift-ring-1 alcança faixa vertical",
+          "status": "pass",
+          "detail": "range=2.4"
+        },
+        {
+          "label": "móvel lift-ring-2 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-2 eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-2 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "elevador lift-ring-2 alcança faixa vertical",
+          "status": "pass",
+          "detail": "range=2.5"
+        },
+        {
+          "label": "móvel lift-ring-3 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-3 eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel lift-ring-3 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "elevador lift-ring-3 alcança faixa vertical",
+          "status": "pass",
+          "detail": "range=2.3"
+        },
+        {
+          "label": "móvel crown-lift dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel crown-lift eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel crown-lift movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "elevador crown-lift alcança faixa vertical",
+          "status": "pass",
+          "detail": "range=2.1"
+        },
+        {
+          "label": "móvel external-shuttle dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel external-shuttle eixo válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "móvel external-shuttle movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-base dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-base apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-base fora de obstáculo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring1 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring1 apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring1 fora de obstáculo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring2 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring2 apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring2 fora de obstáculo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring3 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring3 apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-ring3 fora de obstáculo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-crown dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-crown apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint tower-cp-crown fora de obstáculo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-1 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-1 apoiada",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-2 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-2 apoiada",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-3 dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-sync-3 apoiada",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-core dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "interação tower-core apoiada",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "spawn da Torre seguro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "portal final dentro",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "portal final apoiado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataformas cobrem cinco faixas verticais",
+          "status": "pass",
+          "detail": "1.0,4.5,4.5,4.5,9.5,9.5,9.5,15.0,15.0,15.0,20.5,25.5,27.5"
+        },
+        {
+          "label": "elevador lift-base tem curso > 4",
+          "status": "pass",
+          "detail": "0.3–4.3"
+        },
+        {
+          "label": "elevador lift-ring-1 tem curso > 4",
+          "status": "pass",
+          "detail": "4.6–9.3"
+        },
+        {
+          "label": "elevador lift-ring-2 tem curso > 4",
+          "status": "pass",
+          "detail": "9.4–14.4"
+        },
+        {
+          "label": "elevador lift-ring-3 tem curso > 4",
+          "status": "pass",
+          "detail": "15.1–19.8"
+        },
+        {
+          "label": "elevador crown-lift tem curso > 4",
+          "status": "pass",
+          "detail": "20.5–24.8"
+        },
+        {
+          "label": "save novo schema 5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "campanha tem 5 regiões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Vale → Vila",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Vila → Floresta",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Floresta → Industrial",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Industrial → Torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre inicia 0/3",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "3 consoles liberam Núcleo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "portal ainda fechado antes do Núcleo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Núcleo Central ativo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "portal final liberado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre conclui campanha",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "vitória na região 5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "evento final Convergência Central",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "migra schema4",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "schema4 concluído entra na Torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "save migrado vira schema5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "pontuação preservada na migração",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "vidas preservadas na migração",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "evento de migração 4→5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "restaura schema5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "schema5 preserva Torre ativa",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "schema5 preserva 3 consoles",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "schema5 preserva Núcleo pendente",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint alto não ativa pelo chão",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint alto ativa na altura correta",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perigo elevado causa dano na altura",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perigo elevado não atinge jogador no chão",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "simulação possui Torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "simulação possui checkpoint por altura",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "simulação possui perigo 3D",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "render possui Torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game carrega tower.json",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ready anuncia 5 regiões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "versão pública v0.38.6",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Service Worker v0.38.6",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Torre no cache offline",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "wrapper reconhece 5 regiões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "catálogo marca Fase 7.26",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "catálogo cita Torre Central",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perfil externo cita 5 regiões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "tutorial externo cita 3 consoles",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ficha educacional cita Torre",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "save educacional cita schema 5",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game HUD possui Sincronia",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game trata evento tower-core",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "game vitória usa 5 regiões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "preview mostra Torre Central",
+          "status": "pass",
+          "detail": "OK"
+        }
+      ]
+    },
+    {
+      "id": "chess-arena-360",
+      "title": "Chess Arena 360",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Posição inicial tem 20 jogadas legais",
+          "status": "pass",
+          "detail": "20"
+        },
+        {
+          "label": "Perft depth 1 = 20",
+          "status": "pass",
+          "detail": "20"
+        },
+        {
+          "label": "Perft depth 2 = 400",
+          "status": "pass",
+          "detail": "400"
+        },
+        {
+          "label": "Perft depth 3 = 8902",
+          "status": "pass",
+          "detail": "8902"
+        },
+        {
+          "label": "FEN inicial preservado",
+          "status": "pass",
+          "detail": "FEN"
+        },
+        {
+          "label": "Conversão de casa a1",
+          "status": "pass",
+          "detail": "56"
+        },
+        {
+          "label": "Conversão de casa h1",
+          "status": "pass",
+          "detail": "63"
+        },
+        {
+          "label": "Conversão de casa a8",
+          "status": "pass",
+          "detail": "0"
+        },
+        {
+          "label": "Conversão de casa h8",
+          "status": "pass",
+          "detail": "7"
+        },
+        {
+          "label": "Conversão de casa e4",
+          "status": "pass",
+          "detail": "36"
+        },
+        {
+          "label": "Conversão de casa d5",
+          "status": "pass",
+          "detail": "27"
+        },
+        {
+          "label": "Lance f2f3 é legal",
+          "status": "pass",
+          "detail": "f2f3"
+        },
+        {
+          "label": "Lance e7e5 é legal",
+          "status": "pass",
+          "detail": "e7e5"
+        },
+        {
+          "label": "Lance g2g4 é legal",
+          "status": "pass",
+          "detail": "g2g4"
+        },
+        {
+          "label": "Lance d8h4 é legal",
+          "status": "pass",
+          "detail": "d8h4"
+        },
+        {
+          "label": "Mate do louco detecta xeque-mate",
+          "status": "pass",
+          "detail": "{\"status\":\"checkmate\",\"winner\":\"b\",\"check\":true}"
+        },
+        {
+          "label": "Rei em xeque reconhecido",
+          "status": "pass",
+          "detail": "torre em e2"
+        },
+        {
+          "label": "Jogadas legais removem permanência em xeque",
+          "status": "pass",
+          "detail": "3 jogadas"
+        },
+        {
+          "label": "Roque curto branco disponível",
+          "status": "pass",
+          "detail": "e1-g1"
+        },
+        {
+          "label": "Roque longo branco disponível",
+          "status": "pass",
+          "detail": "e1-c1"
+        },
+        {
+          "label": "Roque curto move torre",
+          "status": "pass",
+          "detail": "K g1 / R f1"
+        },
+        {
+          "label": "Roque através de casa atacada é proibido",
+          "status": "pass",
+          "detail": "f1 atacada"
+        },
+        {
+          "label": "En passant é gerado",
+          "status": "pass",
+          "detail": "e5-d6"
+        },
+        {
+          "label": "En passant remove peão capturado",
+          "status": "pass",
+          "detail": "peão branco em d6"
+        },
+        {
+          "label": "Promoção oferece quatro peças",
+          "status": "pass",
+          "detail": "q,r,b,n"
+        },
+        {
+          "label": "Subpromoção para cavalo funciona",
+          "status": "pass",
+          "detail": "N em a8"
+        },
+        {
+          "label": "Afogamento detectado",
+          "status": "pass",
+          "detail": "{\"status\":\"stalemate\",\"winner\":null,\"check\":false}"
+        },
+        {
+          "label": "Material insuficiente: reis",
+          "status": "pass",
+          "detail": "{\"status\":\"draw-insufficient\",\"winner\":null,\"check\":false}"
+        },
+        {
+          "label": "Material insuficiente: rei e bispo",
+          "status": "pass",
+          "detail": "{\"status\":\"draw-insufficient\",\"winner\":null,\"check\":false}"
+        },
+        {
+          "label": "Regra dos 50 lances",
+          "status": "pass",
+          "detail": "{\"status\":\"draw-50\",\"winner\":null,\"check\":false}"
+        },
+        {
+          "label": "Repetição lance g1f3",
+          "status": "pass",
+          "detail": "g1f3"
+        },
+        {
+          "label": "Repetição lance g8f6",
+          "status": "pass",
+          "detail": "g8f6"
+        },
+        {
+          "label": "Repetição lance f3g1",
+          "status": "pass",
+          "detail": "f3g1"
+        },
+        {
+          "label": "Repetição lance f6g8",
+          "status": "pass",
+          "detail": "f6g8"
+        },
+        {
+          "label": "Repetição lance g1f3",
+          "status": "pass",
+          "detail": "g1f3"
+        },
+        {
+          "label": "Repetição lance g8f6",
+          "status": "pass",
+          "detail": "g8f6"
+        },
+        {
+          "label": "Repetição lance f3g1",
+          "status": "pass",
+          "detail": "f3g1"
+        },
+        {
+          "label": "Repetição lance f6g8",
+          "status": "pass",
+          "detail": "f6g8"
+        },
+        {
+          "label": "Repetição tripla detectada",
+          "status": "pass",
+          "detail": "{\"status\":\"draw-threefold\",\"winner\":null,\"check\":false}"
+        },
+        {
+          "label": "Mover torre remove direito de roque correspondente",
+          "status": "pass",
+          "detail": "Qkq"
+        },
+        {
+          "label": "Snapshot schema 1 restaura",
+          "status": "pass",
+          "detail": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"
+        },
+        {
+          "label": "Snapshot restaura FEN",
+          "status": "pass",
+          "detail": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"
+        },
+        {
+          "label": "Snapshot restaura histórico de repetição",
+          "status": "pass",
+          "detail": "3"
+        },
+        {
+          "label": "CPU iniciante retorna lance legal",
+          "status": "pass",
+          "detail": "15-23-"
+        },
+        {
+          "label": "CPU normal retorna lance legal",
+          "status": "pass",
+          "detail": "1-18-"
+        },
+        {
+          "label": "CPU estrategica retorna lance legal",
+          "status": "pass",
+          "detail": "12-20-"
+        },
+        {
+          "label": "CPU mestre retorna lance legal",
+          "status": "pass",
+          "detail": "6-21-"
+        },
+        {
+          "label": "CPU Mestre prioriza mate imediato",
+          "status": "pass",
+          "detail": "g7-h7"
+        },
+        {
+          "label": "Arquivo do jogo: index.html",
+          "status": "pass",
+          "detail": "index.html"
+        },
+        {
+          "label": "Arquivo do jogo: style.css",
+          "status": "pass",
+          "detail": "style.css"
+        },
+        {
+          "label": "Arquivo do jogo: engine.js",
+          "status": "pass",
+          "detail": "engine.js"
+        },
+        {
+          "label": "Arquivo do jogo: ai.js",
+          "status": "pass",
+          "detail": "ai.js"
+        },
+        {
+          "label": "Arquivo do jogo: game.js",
+          "status": "pass",
+          "detail": "game.js"
+        },
+        {
+          "label": "Mídia: logo.svg",
+          "status": "pass",
+          "detail": "logo.svg"
+        },
+        {
+          "label": "Mídia: preview-01.svg",
+          "status": "pass",
+          "detail": "preview-01.svg"
+        },
+        {
+          "label": "Mídia: preview-02.svg",
+          "status": "pass",
+          "detail": "preview-02.svg"
+        },
+        {
+          "label": "Integração app: chess-arena-360",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: games/chess-arena-360/runtime",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: fliperama-ds-chess-arena-360",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Perfil externo registrado",
+          "status": "pass",
+          "detail": "game-profiles.json"
+        },
+        {
+          "label": "Ficha educacional registrada",
+          "status": "pass",
+          "detail": "education/game-learning.json"
+        },
+        {
+          "label": "Versão pública v0.39.0",
+          "status": "pass",
+          "detail": "version/app"
+        },
+        {
+          "label": "Service Worker v0.39.0",
+          "status": "pass",
+          "detail": "sw.js"
+        },
+        {
+          "label": "Service Worker inclui Chess Arena",
+          "status": "pass",
+          "detail": "offline"
+        },
+        {
+          "label": "Three.js local reutilizado",
+          "status": "pass",
+          "detail": "sem CDN"
+        },
+        {
+          "label": "Interface expõe visão superior",
+          "status": "pass",
+          "detail": "index.html"
+        },
+        {
+          "label": "Interface expõe quatro CPUs",
+          "status": "pass",
+          "detail": "4 níveis"
+        }
+      ]
+    },
+    {
+      "id": "hexa-reactor",
+      "title": "Hexa Reactor",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "Campanha possui 12 níveis",
+          "status": "pass",
+          "detail": "encontrados 12"
+        },
+        {
+          "label": "Tabuleiro axial radius-2 possui 19 posições",
+          "status": "pass",
+          "detail": "19"
+        },
+        {
+          "label": "Hexágono possui seis direções",
+          "status": "pass",
+          "detail": "6"
+        },
+        {
+          "label": "Fase 1 IDs únicos",
+          "status": "pass",
+          "detail": "5 peças"
+        },
+        {
+          "label": "Fase 1 posições únicas",
+          "status": "pass",
+          "detail": "5 células"
+        },
+        {
+          "label": "Fase 1 possui receptor",
+          "status": "pass",
+          "detail": "2 receptores"
+        },
+        {
+          "label": "Fase 1 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 1 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 1 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 2/2; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 1 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 8/15"
+        },
+        {
+          "label": "Fase 1 dificuldade não regride",
+          "status": "pass",
+          "detail": "15 giros"
+        },
+        {
+          "label": "Fase 1 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 2 IDs únicos",
+          "status": "pass",
+          "detail": "6 peças"
+        },
+        {
+          "label": "Fase 2 posições únicas",
+          "status": "pass",
+          "detail": "6 células"
+        },
+        {
+          "label": "Fase 2 possui receptor",
+          "status": "pass",
+          "detail": "2 receptores"
+        },
+        {
+          "label": "Fase 2 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 2 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 2 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 2/2; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 2 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 12/20"
+        },
+        {
+          "label": "Fase 2 dificuldade não regride",
+          "status": "pass",
+          "detail": "20 giros"
+        },
+        {
+          "label": "Fase 2 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 3 IDs únicos",
+          "status": "pass",
+          "detail": "7 peças"
+        },
+        {
+          "label": "Fase 3 posições únicas",
+          "status": "pass",
+          "detail": "7 células"
+        },
+        {
+          "label": "Fase 3 possui receptor",
+          "status": "pass",
+          "detail": "2 receptores"
+        },
+        {
+          "label": "Fase 3 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 3 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 3 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 2/2; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 3 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 16/25"
+        },
+        {
+          "label": "Fase 3 dificuldade não regride",
+          "status": "pass",
+          "detail": "25 giros"
+        },
+        {
+          "label": "Fase 3 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 4 IDs únicos",
+          "status": "pass",
+          "detail": "9 peças"
+        },
+        {
+          "label": "Fase 4 posições únicas",
+          "status": "pass",
+          "detail": "9 células"
+        },
+        {
+          "label": "Fase 4 possui receptor",
+          "status": "pass",
+          "detail": "3 receptores"
+        },
+        {
+          "label": "Fase 4 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 4 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 4 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 3/3; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 4 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 20/30"
+        },
+        {
+          "label": "Fase 4 dificuldade não regride",
+          "status": "pass",
+          "detail": "30 giros"
+        },
+        {
+          "label": "Fase 4 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 5 IDs únicos",
+          "status": "pass",
+          "detail": "9 peças"
+        },
+        {
+          "label": "Fase 5 posições únicas",
+          "status": "pass",
+          "detail": "9 células"
+        },
+        {
+          "label": "Fase 5 possui receptor",
+          "status": "pass",
+          "detail": "3 receptores"
+        },
+        {
+          "label": "Fase 5 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 5 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 5 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 3/3; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 5 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 30/41"
+        },
+        {
+          "label": "Fase 5 dificuldade não regride",
+          "status": "pass",
+          "detail": "41 giros"
+        },
+        {
+          "label": "Fase 5 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 6 IDs únicos",
+          "status": "pass",
+          "detail": "10 peças"
+        },
+        {
+          "label": "Fase 6 posições únicas",
+          "status": "pass",
+          "detail": "10 células"
+        },
+        {
+          "label": "Fase 6 possui receptor",
+          "status": "pass",
+          "detail": "4 receptores"
+        },
+        {
+          "label": "Fase 6 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 6 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 6 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 4/4; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 6 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 36/48"
+        },
+        {
+          "label": "Fase 6 dificuldade não regride",
+          "status": "pass",
+          "detail": "48 giros"
+        },
+        {
+          "label": "Fase 6 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 7 IDs únicos",
+          "status": "pass",
+          "detail": "11 peças"
+        },
+        {
+          "label": "Fase 7 posições únicas",
+          "status": "pass",
+          "detail": "11 células"
+        },
+        {
+          "label": "Fase 7 possui receptor",
+          "status": "pass",
+          "detail": "5 receptores"
+        },
+        {
+          "label": "Fase 7 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 7 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 7 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 5/5; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 7 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 40/53"
+        },
+        {
+          "label": "Fase 7 dificuldade não regride",
+          "status": "pass",
+          "detail": "53 giros"
+        },
+        {
+          "label": "Fase 7 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 8 IDs únicos",
+          "status": "pass",
+          "detail": "11 peças"
+        },
+        {
+          "label": "Fase 8 posições únicas",
+          "status": "pass",
+          "detail": "11 células"
+        },
+        {
+          "label": "Fase 8 possui receptor",
+          "status": "pass",
+          "detail": "6 receptores"
+        },
+        {
+          "label": "Fase 8 possui fonte",
+          "status": "pass",
+          "detail": "1 fontes"
+        },
+        {
+          "label": "Fase 8 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 8 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 6/6; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 8 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 39/53"
+        },
+        {
+          "label": "Fase 8 dificuldade não regride",
+          "status": "pass",
+          "detail": "53 giros"
+        },
+        {
+          "label": "Fase 8 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 9 IDs únicos",
+          "status": "pass",
+          "detail": "9 peças"
+        },
+        {
+          "label": "Fase 9 posições únicas",
+          "status": "pass",
+          "detail": "9 células"
+        },
+        {
+          "label": "Fase 9 possui receptor",
+          "status": "pass",
+          "detail": "4 receptores"
+        },
+        {
+          "label": "Fase 9 possui fonte",
+          "status": "pass",
+          "detail": "2 fontes"
+        },
+        {
+          "label": "Fase 9 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 9 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 4/4; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 9 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 28/43"
+        },
+        {
+          "label": "Fase 9 dificuldade não regride",
+          "status": "pass",
+          "detail": "43 giros"
+        },
+        {
+          "label": "Fase 9 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 10 IDs únicos",
+          "status": "pass",
+          "detail": "12 peças"
+        },
+        {
+          "label": "Fase 10 posições únicas",
+          "status": "pass",
+          "detail": "12 células"
+        },
+        {
+          "label": "Fase 10 possui receptor",
+          "status": "pass",
+          "detail": "4 receptores"
+        },
+        {
+          "label": "Fase 10 possui fonte",
+          "status": "pass",
+          "detail": "2 fontes"
+        },
+        {
+          "label": "Fase 10 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 10 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 4/4; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 10 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 42/58"
+        },
+        {
+          "label": "Fase 10 dificuldade não regride",
+          "status": "pass",
+          "detail": "58 giros"
+        },
+        {
+          "label": "Fase 10 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 11 IDs únicos",
+          "status": "pass",
+          "detail": "14 peças"
+        },
+        {
+          "label": "Fase 11 posições únicas",
+          "status": "pass",
+          "detail": "14 células"
+        },
+        {
+          "label": "Fase 11 possui receptor",
+          "status": "pass",
+          "detail": "3 receptores"
+        },
+        {
+          "label": "Fase 11 possui fonte",
+          "status": "pass",
+          "detail": "2 fontes"
+        },
+        {
+          "label": "Fase 11 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 11 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 3/3; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 11 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 48/65"
+        },
+        {
+          "label": "Fase 11 dificuldade não regride",
+          "status": "pass",
+          "detail": "65 giros"
+        },
+        {
+          "label": "Fase 11 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fase 12 IDs únicos",
+          "status": "pass",
+          "detail": "17 peças"
+        },
+        {
+          "label": "Fase 12 posições únicas",
+          "status": "pass",
+          "detail": "17 células"
+        },
+        {
+          "label": "Fase 12 possui receptor",
+          "status": "pass",
+          "detail": "5 receptores"
+        },
+        {
+          "label": "Fase 12 possui fonte",
+          "status": "pass",
+          "detail": "3 fontes"
+        },
+        {
+          "label": "Fase 12 começa não resolvida",
+          "status": "pass",
+          "detail": "estado inicial"
+        },
+        {
+          "label": "Fase 12 solução estabiliza fluxo",
+          "status": "pass",
+          "detail": "receptores 5/5; overload 0; leaks 0"
+        },
+        {
+          "label": "Fase 12 cabe no orçamento touch",
+          "status": "pass",
+          "detail": "giros 55/73"
+        },
+        {
+          "label": "Fase 12 dificuldade não regride",
+          "status": "pass",
+          "detail": "73 giros"
+        },
+        {
+          "label": "Fase 12 snapshot restaura",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Fases finais usam múltiplas fontes",
+          "status": "pass",
+          "detail": "2,2,2,3"
+        },
+        {
+          "label": "Campanha possui células de sobrecarga",
+          "status": "pass",
+          "detail": "10 fases"
+        },
+        {
+          "label": "Rotação consome exatamente um giro",
+          "status": "pass",
+          "detail": "20->19"
+        },
+        {
+          "label": "Fonte fixa não gira",
+          "status": "pass",
+          "detail": "fixed"
+        },
+        {
+          "label": "Integração app: hexa-reactor",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: games/hexa-reactor/runtime",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: fliperama-ds-hexa-reactor",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Arquivo do jogo: index.html",
+          "status": "pass",
+          "detail": "index.html"
+        },
+        {
+          "label": "Arquivo do jogo: style.css",
+          "status": "pass",
+          "detail": "style.css"
+        },
+        {
+          "label": "Arquivo do jogo: engine.js",
+          "status": "pass",
+          "detail": "engine.js"
+        },
+        {
+          "label": "Arquivo do jogo: game.js",
+          "status": "pass",
+          "detail": "game.js"
+        },
+        {
+          "label": "Arquivo do jogo: levels.json",
+          "status": "pass",
+          "detail": "levels.json"
+        },
+        {
+          "label": "Mídia: logo.svg",
+          "status": "pass",
+          "detail": "logo.svg"
+        },
+        {
+          "label": "Mídia: preview-01.svg",
+          "status": "pass",
+          "detail": "preview-01.svg"
+        },
+        {
+          "label": "Mídia: preview-02.svg",
+          "status": "pass",
+          "detail": "preview-02.svg"
+        },
+        {
+          "label": "Perfil externo registrado",
+          "status": "pass",
+          "detail": "game-profiles.json"
+        },
+        {
+          "label": "Ficha educacional registrada",
+          "status": "pass",
+          "detail": "game-learning.json"
+        },
+        {
+          "label": "Service Worker inclui Hexa Reactor",
+          "status": "pass",
+          "detail": "offline"
+        },
+        {
+          "label": "Three.js local reutilizado",
+          "status": "pass",
+          "detail": "sem CDN"
+        }
+      ]
+    },
+    {
+      "id": "plataforma-poligonal-ds-3d",
+      "title": "Plataforma Poligonal DS 3D",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "schema do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "quatro áreas",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "nomes únicos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 spawn",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 solo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 3 fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 plataforma móvel",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 1 inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a1-c1 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a1-c2 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a1-c3 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "m1 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "bugbot-1 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "bugbot-2 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 spawn",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 solo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 3 fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 plataforma móvel",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 2 inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a2-c1 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a2-c2 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a2-c3 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "m1 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "glitch-1 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "glitch-2 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 spawn",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 solo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 3 fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 plataforma móvel",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 3 inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a3-c1 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a3-c2 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a3-c3 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "m1 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "sentinel-1 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "sentinel-2 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 spawn",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 solo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 3 fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 checkpoint",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 plataforma móvel",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "área 4 inimigos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a4-c1 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a4-c2 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "a4-c3 dentro do mundo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "m1 movimento válido",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "guardian-1 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "guardian-2 patrulha válida",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "12 fragmentos totais",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "8 inimigos totais",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "4 plataformas móveis",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "Three.js local",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "câmera perspectiva",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "câmera follow suave",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "gravidade",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "coyote time",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "jump buffer",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "colisão topo 3D",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "plataforma móvel carrega jogador",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "gamepad",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "touch",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "arraste câmera",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "save schema 1",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "save de fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "checkpoint salvo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "portal exige 3",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "vitória 12 fragmentos",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mensagem portal",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "runtime loader",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "runtime wrapper",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "iframe isolado",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "perfil externo",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "ficha educacional",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "4 progressões",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia logo.svg",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "acessibilidade logo.svg",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-01.svg",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "acessibilidade preview-01.svg",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "mídia preview-02.svg",
+          "status": "pass",
+          "detail": "OK"
+        },
+        {
+          "label": "acessibilidade preview-02.svg",
+          "status": "pass",
+          "detail": "OK"
+        }
+      ]
+    },
+    {
+      "id": "crystal-cascade-3d",
+      "title": "Crystal Cascade 3D",
+      "status": "pass",
+      "checks": [
+        {
+          "label": "12 fases definidas",
+          "status": "pass",
+          "detail": "encontradas 12"
+        },
+        {
+          "label": "Tabuleiro 8×8",
+          "status": "pass",
+          "detail": "estrutura principal"
+        },
+        {
+          "label": "Seis famílias de cristais",
+          "status": "pass",
+          "detail": "cyan, amber, emerald, violet, rose, azure"
+        },
+        {
+          "label": "Fase 1 possui nome",
+          "status": "pass",
+          "detail": "Pulso Inicial"
+        },
+        {
+          "label": "Fase 1 possui movimentos",
+          "status": "pass",
+          "detail": "24"
+        },
+        {
+          "label": "Fase 1 possui meta crescente",
+          "status": "pass",
+          "detail": "1800"
+        },
+        {
+          "label": "Fase 1 bloqueadores válidos",
+          "status": "pass",
+          "detail": "0 células"
+        },
+        {
+          "label": "Fase 1 coletas válidas",
+          "status": "pass",
+          "detail": "{\"cyan\":8}"
+        },
+        {
+          "label": "Fase 1 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 1 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 1 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 4280; movimentos 21; gelo 0"
+        },
+        {
+          "label": "Fase 2 possui nome",
+          "status": "pass",
+          "detail": "Prisma Duplo"
+        },
+        {
+          "label": "Fase 2 possui movimentos",
+          "status": "pass",
+          "detail": "23"
+        },
+        {
+          "label": "Fase 2 possui meta crescente",
+          "status": "pass",
+          "detail": "2400"
+        },
+        {
+          "label": "Fase 2 bloqueadores válidos",
+          "status": "pass",
+          "detail": "0 células"
+        },
+        {
+          "label": "Fase 2 coletas válidas",
+          "status": "pass",
+          "detail": "{\"amber\":10,\"violet\":8}"
+        },
+        {
+          "label": "Fase 2 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 2 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 2 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 23060; movimentos 17; gelo 0"
+        },
+        {
+          "label": "Fase 3 possui nome",
+          "status": "pass",
+          "detail": "Câmara de Eco"
+        },
+        {
+          "label": "Fase 3 possui movimentos",
+          "status": "pass",
+          "detail": "22"
+        },
+        {
+          "label": "Fase 3 possui meta crescente",
+          "status": "pass",
+          "detail": "3000"
+        },
+        {
+          "label": "Fase 3 bloqueadores válidos",
+          "status": "pass",
+          "detail": "4 células"
+        },
+        {
+          "label": "Fase 3 coletas válidas",
+          "status": "pass",
+          "detail": "{\"emerald\":12}"
+        },
+        {
+          "label": "Fase 3 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 3 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 3 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 14930; movimentos 16; gelo 0"
+        },
+        {
+          "label": "Fase 4 possui nome",
+          "status": "pass",
+          "detail": "Anel Congelado"
+        },
+        {
+          "label": "Fase 4 possui movimentos",
+          "status": "pass",
+          "detail": "24"
+        },
+        {
+          "label": "Fase 4 possui meta crescente",
+          "status": "pass",
+          "detail": "3600"
+        },
+        {
+          "label": "Fase 4 bloqueadores válidos",
+          "status": "pass",
+          "detail": "12 células"
+        },
+        {
+          "label": "Fase 4 coletas válidas",
+          "status": "pass",
+          "detail": "{}"
+        },
+        {
+          "label": "Fase 4 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 4 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 4 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 15170; movimentos 15; gelo 0"
+        },
+        {
+          "label": "Fase 5 possui nome",
+          "status": "pass",
+          "detail": "Ressonância"
+        },
+        {
+          "label": "Fase 5 possui movimentos",
+          "status": "pass",
+          "detail": "22"
+        },
+        {
+          "label": "Fase 5 possui meta crescente",
+          "status": "pass",
+          "detail": "4300"
+        },
+        {
+          "label": "Fase 5 bloqueadores válidos",
+          "status": "pass",
+          "detail": "4 células"
+        },
+        {
+          "label": "Fase 5 coletas válidas",
+          "status": "pass",
+          "detail": "{\"rose\":12,\"cyan\":10}"
+        },
+        {
+          "label": "Fase 5 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 5 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 5 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 16280; movimentos 8; gelo 0"
+        },
+        {
+          "label": "Fase 6 possui nome",
+          "status": "pass",
+          "detail": "Grade de Pressão"
+        },
+        {
+          "label": "Fase 6 possui movimentos",
+          "status": "pass",
+          "detail": "25"
+        },
+        {
+          "label": "Fase 6 possui meta crescente",
+          "status": "pass",
+          "detail": "5000"
+        },
+        {
+          "label": "Fase 6 bloqueadores válidos",
+          "status": "pass",
+          "detail": "10 células"
+        },
+        {
+          "label": "Fase 6 coletas válidas",
+          "status": "pass",
+          "detail": "{}"
+        },
+        {
+          "label": "Fase 6 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 6 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 6 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 31810; movimentos 8; gelo 0"
+        },
+        {
+          "label": "Fase 7 possui nome",
+          "status": "pass",
+          "detail": "Prisma Quebrado"
+        },
+        {
+          "label": "Fase 7 possui movimentos",
+          "status": "pass",
+          "detail": "24"
+        },
+        {
+          "label": "Fase 7 possui meta crescente",
+          "status": "pass",
+          "detail": "5600"
+        },
+        {
+          "label": "Fase 7 bloqueadores válidos",
+          "status": "pass",
+          "detail": "8 células"
+        },
+        {
+          "label": "Fase 7 coletas válidas",
+          "status": "pass",
+          "detail": "{\"amber\":14,\"emerald\":12}"
+        },
+        {
+          "label": "Fase 7 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 7 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 7 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 27520; movimentos 3; gelo 0"
+        },
+        {
+          "label": "Fase 8 possui nome",
+          "status": "pass",
+          "detail": "Órbita Violeta"
+        },
+        {
+          "label": "Fase 8 possui movimentos",
+          "status": "pass",
+          "detail": "20"
+        },
+        {
+          "label": "Fase 8 possui meta crescente",
+          "status": "pass",
+          "detail": "6200"
+        },
+        {
+          "label": "Fase 8 bloqueadores válidos",
+          "status": "pass",
+          "detail": "12 células"
+        },
+        {
+          "label": "Fase 8 coletas válidas",
+          "status": "pass",
+          "detail": "{\"violet\":18}"
+        },
+        {
+          "label": "Fase 8 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 8 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 8 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 27340; movimentos 13; gelo 0"
+        },
+        {
+          "label": "Fase 9 possui nome",
+          "status": "pass",
+          "detail": "Cascata Quântica"
+        },
+        {
+          "label": "Fase 9 possui movimentos",
+          "status": "pass",
+          "detail": "24"
+        },
+        {
+          "label": "Fase 9 possui meta crescente",
+          "status": "pass",
+          "detail": "7000"
+        },
+        {
+          "label": "Fase 9 bloqueadores válidos",
+          "status": "pass",
+          "detail": "6 células"
+        },
+        {
+          "label": "Fase 9 coletas válidas",
+          "status": "pass",
+          "detail": "{\"cyan\":12,\"rose\":12}"
+        },
+        {
+          "label": "Fase 9 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 9 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 9 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 15600; movimentos 16; gelo 0"
+        },
+        {
+          "label": "Fase 10 possui nome",
+          "status": "pass",
+          "detail": "Núcleo Hexa"
+        },
+        {
+          "label": "Fase 10 possui movimentos",
+          "status": "pass",
+          "detail": "25"
+        },
+        {
+          "label": "Fase 10 possui meta crescente",
+          "status": "pass",
+          "detail": "7800"
+        },
+        {
+          "label": "Fase 10 bloqueadores válidos",
+          "status": "pass",
+          "detail": "10 células"
+        },
+        {
+          "label": "Fase 10 coletas válidas",
+          "status": "pass",
+          "detail": "{\"emerald\":14,\"amber\":14}"
+        },
+        {
+          "label": "Fase 10 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 10 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 10 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 33040; movimentos 13; gelo 0"
+        },
+        {
+          "label": "Fase 11 possui nome",
+          "status": "pass",
+          "detail": "Tempestade Prismática"
+        },
+        {
+          "label": "Fase 11 possui movimentos",
+          "status": "pass",
+          "detail": "23"
+        },
+        {
+          "label": "Fase 11 possui meta crescente",
+          "status": "pass",
+          "detail": "8600"
+        },
+        {
+          "label": "Fase 11 bloqueadores válidos",
+          "status": "pass",
+          "detail": "11 células"
+        },
+        {
+          "label": "Fase 11 coletas válidas",
+          "status": "pass",
+          "detail": "{\"violet\":14,\"rose\":14}"
+        },
+        {
+          "label": "Fase 11 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 11 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 11 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 23960; movimentos 15; gelo 0"
+        },
+        {
+          "label": "Fase 12 possui nome",
+          "status": "pass",
+          "detail": "Coração da Cascata"
+        },
+        {
+          "label": "Fase 12 possui movimentos",
+          "status": "pass",
+          "detail": "20"
+        },
+        {
+          "label": "Fase 12 possui meta crescente",
+          "status": "pass",
+          "detail": "10000"
+        },
+        {
+          "label": "Fase 12 bloqueadores válidos",
+          "status": "pass",
+          "detail": "16 células"
+        },
+        {
+          "label": "Fase 12 coletas válidas",
+          "status": "pass",
+          "detail": "{\"cyan\":10,\"amber\":10,\"emerald\":10,\"violet\":10,\"rose\":10}"
+        },
+        {
+          "label": "Fase 12 inicia sem match automático",
+          "status": "pass",
+          "detail": "tabuleiro limpo"
+        },
+        {
+          "label": "Fase 12 inicia com jogada possível",
+          "status": "pass",
+          "detail": "ao menos uma troca válida"
+        },
+        {
+          "label": "Fase 12 conclusão automatizada",
+          "status": "pass",
+          "detail": "status victory; score 30770; movimentos 7; gelo 0"
+        },
+        {
+          "label": "Troca sem combinação é rejeitada",
+          "status": "pass",
+          "detail": "0↔8"
+        },
+        {
+          "label": "Combinação de 4 cria especial",
+          "status": "pass",
+          "detail": "[{\"index\":2,\"type\":\"row\"}]"
+        },
+        {
+          "label": "Combinação de 5 cria explosão",
+          "status": "pass",
+          "detail": "[{\"index\":2,\"type\":\"bomb\"}]"
+        },
+        {
+          "label": "Snapshot restaura tabuleiro",
+          "status": "pass",
+          "detail": "schema 1"
+        },
+        {
+          "label": "Integração app: crystal-cascade-3d",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: games/crystal-cascade-3d/runtime",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Integração app: fliperama-ds-crystal-cascade",
+          "status": "pass",
+          "detail": "app.js"
+        },
+        {
+          "label": "Arquivo do jogo: index.html",
+          "status": "pass",
+          "detail": "index.html"
+        },
+        {
+          "label": "Arquivo do jogo: style.css",
+          "status": "pass",
+          "detail": "style.css"
+        },
+        {
+          "label": "Arquivo do jogo: engine.js",
+          "status": "pass",
+          "detail": "engine.js"
+        },
+        {
+          "label": "Arquivo do jogo: game.js",
+          "status": "pass",
+          "detail": "game.js"
+        },
+        {
+          "label": "Arquivo do jogo: levels.json",
+          "status": "pass",
+          "detail": "levels.json"
+        },
+        {
+          "label": "Mídia: logo.svg",
+          "status": "pass",
+          "detail": "logo.svg"
+        },
+        {
+          "label": "Mídia: preview-01.svg",
+          "status": "pass",
+          "detail": "preview-01.svg"
+        },
+        {
+          "label": "Mídia: preview-02.svg",
+          "status": "pass",
+          "detail": "preview-02.svg"
+        },
+        {
+          "label": "Perfil externo registrado",
+          "status": "pass",
+          "detail": "game-profiles.json"
+        },
+        {
+          "label": "Ficha educacional registrada",
+          "status": "pass",
+          "detail": "game-learning.json"
+        },
+        {
+          "label": "Three.js local reutilizado",
+          "status": "pass",
+          "detail": "sem CDN"
+        },
+        {
+          "label": "Sem identidade comercial copiada",
+          "status": "pass",
+          "detail": "identidade autoral"
+        }
+      ]
+    }
+  ]
+}

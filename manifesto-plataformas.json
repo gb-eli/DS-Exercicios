@@ -1,0 +1,265 @@
+{
+  "schema": "agv-education-core-platform-set",
+  "schemaVersion": 3,
+  "generatedAt": "2026-08-15",
+  "platforms": [
+    {
+      "id": "lab-virtual",
+      "name": "Laboratório Virtual DS",
+      "folder": "01-lab-virtual",
+      "canonical_root": "LABDS",
+      "version": "4.28.0",
+      "status": "agv-core-wave2-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "server-side Core economy; local state cache/offline",
+      "progress": "AGV Core official + local rich cache",
+      "priority": "P1-integrated",
+      "hooks": [
+        "lab/js/eduauth/eduauth.js",
+        "lab/js/storage.js",
+        "lab/js/session.js",
+        "lab/js/learning-mode.js",
+        "lab/js/app.js"
+      ],
+      "integrationStatus": "integrated-wave2",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "ctf-ds",
+      "name": "CTF DS",
+      "folder": "02-ctf-ds",
+      "canonical_root": "ctf",
+      "version": "3.2.0",
+      "status": "agv-core-wave2-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "server-side via ctf-complete-challenge/ctf-core-actions",
+      "progress": "AGV Core official + local cache/offline",
+      "priority": "P1-integrated",
+      "hooks": [
+        "js/core/wallet.js",
+        "js/core/mission-progress.js",
+        "js/core/storage.js",
+        "js/core/state.js",
+        "js/eduauth/index.js",
+        "js/app.js"
+      ],
+      "integrationStatus": "integrated-wave2",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "planetario-ds",
+      "name": "COSMOS / Planetário DS",
+      "folder": "03-planetario-ds",
+      "canonical_root": "universods",
+      "version": "34.0.0",
+      "status": "agv-core-wave4-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "server-only; local XP visual/cache",
+      "progress": "local rich progress + agv-progress-event",
+      "priority": "P1-integrated",
+      "hooks": [
+        "src/agv-core-session.js",
+        "src/core/profiles/ProfileStore.js",
+        "src/main.js"
+      ],
+      "integrationStatus": "integrated-wave4",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "desafio-ds",
+      "name": "Desafio DS",
+      "folder": "04-desafio-ds",
+      "canonical_root": "desafio 33",
+      "version": "33.0.0-pilot",
+      "status": "agv-core-wave3-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "server-only; local XP ledger visual/cache",
+      "progress": "local guided progress + agv-progress-event",
+      "priority": "P1-integrated",
+      "hooks": [
+        "js/eduauth/core.js",
+        "js/xp-ledger.js",
+        "js/app.js",
+        "js/guided.js",
+        "js/platform-shell.js"
+      ],
+      "integrationStatus": "integrated-wave3",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "fliperama-ds",
+      "name": "Fliperama DS",
+      "folder": "05-fliperama-ds",
+      "canonical_root": "flipds",
+      "version": "0.39.0-hotfix1",
+      "status": "agv-core-wave4-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "server-only; local scores/cache",
+      "progress": "local game saves + agv-progress-event",
+      "priority": "P1-integrated",
+      "hooks": [
+        "agv-core-session.js",
+        "app.js",
+        "index.html"
+      ],
+      "integrationStatus": "integrated-wave4",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "game-informatica",
+      "name": "Desafio Informática",
+      "folder": "06-game-informatica",
+      "canonical_root": "desafio-informatica-v2.2.0",
+      "version": "2.5.7 build 20260811r38",
+      "status": "agv-core-wave3-integrated",
+      "auth": "AGV Core shared Supabase session",
+      "economy": "not applicable / no official local wallet",
+      "progress": "local lesson progress + agv-progress-event",
+      "priority": "P1-integrated",
+      "hooks": [
+        "assets/js/eduauth/index.js",
+        "assets/js/storage.js",
+        "assets/js/app.js",
+        "assets/js/data.js"
+      ],
+      "integrationStatus": "integrated-wave3",
+      "authAuthority": "agv-core",
+      "progressAuthority": "agv-progress-event"
+    },
+    {
+      "id": "lab-sub",
+      "name": "Plataforma 2DS Sub — Aluno",
+      "folder": "07-lab-exercicios-sub",
+      "canonical_root": "versao-aluno",
+      "version": "0.1.42",
+      "status": "agv-core-central-session-progress-cache",
+      "auth": "AGV Core / sessão Supabase unificada",
+      "economy": "none",
+      "progress": "AGV Core oficial + cache local/offline",
+      "priority": "P6.7-wave-1-done",
+      "hooks": [
+        "assets/js/auth-aluno.js",
+        "assets/js/aluno.js",
+        "assets/js/utils.js",
+        "assets/js/shell.js"
+      ],
+      "authority": {
+        "identity": "AGV Core",
+        "officialProgress": "lab-exercises-core",
+        "local": "cache/preferences only"
+      },
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core"
+    },
+    {
+      "id": "lab-ds1",
+      "name": "Plataforma 1DS — Central de Disciplinas",
+      "folder": "08-lab-exercicios-ds1",
+      "canonical_root": "modo-aluno",
+      "version": "1.12.0",
+      "status": "agv-core-central-session-progress-cache",
+      "auth": "AGV Core / sessão Supabase unificada",
+      "economy": "none",
+      "progress": "AGV Core oficial + cache local/offline",
+      "priority": "P6.7-wave-1-done",
+      "hooks": [
+        "core/auth-contract.js",
+        "core/storage.js",
+        "core/central.js",
+        "assets/js/auth.js",
+        "assets/js/app.js"
+      ],
+      "authority": {
+        "identity": "AGV Core",
+        "officialProgress": "lab-exercises-core",
+        "local": "cache/preferences only"
+      },
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core"
+    },
+    {
+      "id": "lab-ds2",
+      "name": "Plataforma 2DS — Duas Disciplinas",
+      "folder": "09-lab-exercicios-ds2",
+      "canonical_root": "modo-aluno",
+      "version": "0.7.1",
+      "status": "agv-core-central-session-progress-cache",
+      "auth": "AGV Core / sessão Supabase unificada",
+      "economy": "none",
+      "progress": "AGV Core oficial + cache local/offline",
+      "priority": "P6.7-wave-1-done",
+      "hooks": [
+        "assets/js/auth.js",
+        "assets/js/aluno.js",
+        "frontend/assets/js/auth.js",
+        "frontend/assets/js/aluno.js",
+        "inovacao/assets/js/auth-shared.js",
+        "inovacao/assets/js/inovacao.js"
+      ],
+      "authority": {
+        "identity": "AGV Core",
+        "officialProgress": "lab-exercises-core",
+        "local": "cache/preferences only"
+      },
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core"
+    },
+    {
+      "id": "lab-ds3",
+      "name": "Plataforma 3DS — Aluno",
+      "folder": "10-lab-exercicios-ds3",
+      "canonical_root": "modo-aluno",
+      "version": "0.11.9",
+      "status": "agv-core-central-session-progress-cache",
+      "auth": "AGV Core / sessão Supabase unificada",
+      "economy": "none",
+      "progress": "AGV Core oficial + cache local/offline",
+      "priority": "P6.7-wave-1-done",
+      "hooks": [
+        "assets/js/auth.js",
+        "assets/js/aluno.js",
+        "assets/js/utils.js",
+        "assets/js/shell.js"
+      ],
+      "authority": {
+        "identity": "AGV Core",
+        "officialProgress": "lab-exercises-core",
+        "local": "cache/preferences only"
+      },
+      "integrationStatus": "integrated-wave1",
+      "authAuthority": "agv-core",
+      "progressAuthority": "lab-exercises-core"
+    }
+  ],
+  "sharedServices": [
+    {
+      "id": "loja-virtual-ds",
+      "name": "Loja Virtual DS",
+      "folder": "loja-universal/loja-virtual-ds-v0.9.6.0-RG",
+      "version": "0.9.6.0-RG",
+      "role": "universal-store-ui-and-assets",
+      "status": "advanced-local-wallet-to-centralize",
+      "auth": "no standalone authority after migration",
+      "economy": "current local foundation/ledger -> migrate to AGV Core",
+      "inventory": "current local inventory -> migrate to AGV Core inventory_instances",
+      "sdk": "DSStoreSDK v0.9.0 -> compatibility facade over AGVCore",
+      "priority": "P0",
+      "hooks": [
+        "src/core/foundation.js",
+        "src/sdk/ds-store-sdk.js",
+        "config/economy.config.json",
+        "config/integration.config.json",
+        "schemas/transaction.schema.json"
+      ]
+    }
+  ],
+  "integrationWave": "P6.7-complete"
+}

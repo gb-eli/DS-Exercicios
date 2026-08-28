@@ -1,0 +1,15 @@
+{
+  "snapshot_date": "2026-08-22",
+  "production_write_applied": false,
+  "legacy_claims": 136,
+  "pending_claims": 136,
+  "non_pending_claims": 0,
+  "student_exercises_for_claims": 136,
+  "student_exercises_completed": 57,
+  "student_exercises_in_progress": 79,
+  "completion_source_legacy_claim": 136,
+  "with_submitted_score": 1,
+  "existing_submitted_score_min": 95,
+  "existing_submitted_score_max": 95,
+  "note": "Snapshot agregado e não identificável usado apenas para validar o simulador read-only."
+}

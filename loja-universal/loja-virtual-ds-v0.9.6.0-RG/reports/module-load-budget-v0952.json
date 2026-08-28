@@ -1,0 +1,166 @@
+{
+  "version": "0.9.6.0-RG",
+  "initial": {
+    "before": {
+      "javascriptBytes": 612153,
+      "cssBytes": 111914,
+      "scripts": [
+        {
+          "path": "config-cache-memory.js",
+          "bytes": 1004
+        },
+        {
+          "path": "cache-memory-manager.js",
+          "bytes": 10107
+        },
+        {
+          "path": "performance-manager.js",
+          "bytes": 9095
+        },
+        {
+          "path": "graphics-mode-controller.js",
+          "bytes": 2335
+        },
+        {
+          "path": "package-data.js",
+          "bytes": 47299
+        },
+        {
+          "path": "package-manager.js",
+          "bytes": 17862
+        },
+        {
+          "path": "benchmark-engine.js",
+          "bytes": 26509
+        },
+        {
+          "path": "config-data.js",
+          "bytes": 7586
+        },
+        {
+          "path": "catalog-data.js",
+          "bytes": 35308
+        },
+        {
+          "path": "equipment-data.js",
+          "bytes": 16825
+        },
+        {
+          "path": "vfx-data.js",
+          "bytes": 5957
+        },
+        {
+          "path": "integration-data.js",
+          "bytes": 2109
+        },
+        {
+          "path": "../dist/ds-store-foundation.js",
+          "bytes": 24060
+        },
+        {
+          "path": "../dist/ds-store-sdk.js",
+          "bytes": 12467
+        },
+        {
+          "path": "avatar-assets.js",
+          "bytes": 146238
+        },
+        {
+          "path": "equipment-assets.js",
+          "bytes": 139823
+        },
+        {
+          "path": "app.js",
+          "bytes": 60818
+        },
+        {
+          "path": "avatar3d.js",
+          "bytes": 22495
+        },
+        {
+          "path": "product3d.js",
+          "bytes": 11721
+        },
+        {
+          "path": "vfx-engine.js",
+          "bytes": 12535
+        }
+      ],
+      "styles": [
+        {
+          "path": "styles.css",
+          "bytes": 111914
+        }
+      ]
+    },
+    "after": {
+      "javascriptBytes": 185007,
+      "cssBytes": 73651,
+      "scripts": [
+        {
+          "path": "boot.module.js",
+          "bytes": 1032
+        },
+        {
+          "path": "modules/shared.module.js",
+          "bytes": 2426
+        },
+        {
+          "path": "config-cache-memory.js",
+          "bytes": 1004
+        },
+        {
+          "path": "cache-memory-manager.js",
+          "bytes": 10107
+        },
+        {
+          "path": "performance-manager.js",
+          "bytes": 9095
+        },
+        {
+          "path": "graphics-mode-controller.js",
+          "bytes": 2335
+        },
+        {
+          "path": "config-data.js",
+          "bytes": 11832
+        },
+        {
+          "path": "catalog-data.js",
+          "bytes": 35308
+        },
+        {
+          "path": "equipment-data.js",
+          "bytes": 16825
+        },
+        {
+          "path": "vfx-data.js",
+          "bytes": 5957
+        },
+        {
+          "path": "../dist/ds-store-foundation.js",
+          "bytes": 24060
+        },
+        {
+          "path": "runtime-loader.js",
+          "bytes": 1934
+        },
+        {
+          "path": "app.js",
+          "bytes": 63092
+        }
+      ],
+      "styles": [
+        {
+          "path": "styles-core.css",
+          "bytes": 73651
+        }
+      ]
+    }
+  },
+  "reductions": {
+    "javascriptPercent": 69.78,
+    "cssPercent": 34.19
+  },
+  "qualityPolicy": "Assets 3D e gráficos permanecem byte a byte idênticos."
+}

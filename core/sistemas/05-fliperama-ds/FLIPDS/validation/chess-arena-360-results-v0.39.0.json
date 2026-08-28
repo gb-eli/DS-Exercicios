@@ -1,0 +1,349 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.39.0",
+  "phase": "Fase 7.28",
+  "game": "Chess Arena 360",
+  "generatedAt": "2026-08-08T19:16:41.952Z",
+  "summary": {
+    "checks": 67,
+    "passed": 67,
+    "failed": 0
+  },
+  "items": [
+    {
+      "name": "Posição inicial tem 20 jogadas legais",
+      "passed": true,
+      "detail": "20"
+    },
+    {
+      "name": "Perft depth 1 = 20",
+      "passed": true,
+      "detail": "20"
+    },
+    {
+      "name": "Perft depth 2 = 400",
+      "passed": true,
+      "detail": "400"
+    },
+    {
+      "name": "Perft depth 3 = 8902",
+      "passed": true,
+      "detail": "8902"
+    },
+    {
+      "name": "FEN inicial preservado",
+      "passed": true,
+      "detail": "FEN"
+    },
+    {
+      "name": "Conversão de casa a1",
+      "passed": true,
+      "detail": "56"
+    },
+    {
+      "name": "Conversão de casa h1",
+      "passed": true,
+      "detail": "63"
+    },
+    {
+      "name": "Conversão de casa a8",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "Conversão de casa h8",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "Conversão de casa e4",
+      "passed": true,
+      "detail": "36"
+    },
+    {
+      "name": "Conversão de casa d5",
+      "passed": true,
+      "detail": "27"
+    },
+    {
+      "name": "Lance f2f3 é legal",
+      "passed": true,
+      "detail": "f2f3"
+    },
+    {
+      "name": "Lance e7e5 é legal",
+      "passed": true,
+      "detail": "e7e5"
+    },
+    {
+      "name": "Lance g2g4 é legal",
+      "passed": true,
+      "detail": "g2g4"
+    },
+    {
+      "name": "Lance d8h4 é legal",
+      "passed": true,
+      "detail": "d8h4"
+    },
+    {
+      "name": "Mate do louco detecta xeque-mate",
+      "passed": true,
+      "detail": "{\"status\":\"checkmate\",\"winner\":\"b\",\"check\":true}"
+    },
+    {
+      "name": "Rei em xeque reconhecido",
+      "passed": true,
+      "detail": "torre em e2"
+    },
+    {
+      "name": "Jogadas legais removem permanência em xeque",
+      "passed": true,
+      "detail": "3 jogadas"
+    },
+    {
+      "name": "Roque curto branco disponível",
+      "passed": true,
+      "detail": "e1-g1"
+    },
+    {
+      "name": "Roque longo branco disponível",
+      "passed": true,
+      "detail": "e1-c1"
+    },
+    {
+      "name": "Roque curto move torre",
+      "passed": true,
+      "detail": "K g1 / R f1"
+    },
+    {
+      "name": "Roque através de casa atacada é proibido",
+      "passed": true,
+      "detail": "f1 atacada"
+    },
+    {
+      "name": "En passant é gerado",
+      "passed": true,
+      "detail": "e5-d6"
+    },
+    {
+      "name": "En passant remove peão capturado",
+      "passed": true,
+      "detail": "peão branco em d6"
+    },
+    {
+      "name": "Promoção oferece quatro peças",
+      "passed": true,
+      "detail": "q,r,b,n"
+    },
+    {
+      "name": "Subpromoção para cavalo funciona",
+      "passed": true,
+      "detail": "N em a8"
+    },
+    {
+      "name": "Afogamento detectado",
+      "passed": true,
+      "detail": "{\"status\":\"stalemate\",\"winner\":null,\"check\":false}"
+    },
+    {
+      "name": "Material insuficiente: reis",
+      "passed": true,
+      "detail": "{\"status\":\"draw-insufficient\",\"winner\":null,\"check\":false}"
+    },
+    {
+      "name": "Material insuficiente: rei e bispo",
+      "passed": true,
+      "detail": "{\"status\":\"draw-insufficient\",\"winner\":null,\"check\":false}"
+    },
+    {
+      "name": "Regra dos 50 lances",
+      "passed": true,
+      "detail": "{\"status\":\"draw-50\",\"winner\":null,\"check\":false}"
+    },
+    {
+      "name": "Repetição lance g1f3",
+      "passed": true,
+      "detail": "g1f3"
+    },
+    {
+      "name": "Repetição lance g8f6",
+      "passed": true,
+      "detail": "g8f6"
+    },
+    {
+      "name": "Repetição lance f3g1",
+      "passed": true,
+      "detail": "f3g1"
+    },
+    {
+      "name": "Repetição lance f6g8",
+      "passed": true,
+      "detail": "f6g8"
+    },
+    {
+      "name": "Repetição lance g1f3",
+      "passed": true,
+      "detail": "g1f3"
+    },
+    {
+      "name": "Repetição lance g8f6",
+      "passed": true,
+      "detail": "g8f6"
+    },
+    {
+      "name": "Repetição lance f3g1",
+      "passed": true,
+      "detail": "f3g1"
+    },
+    {
+      "name": "Repetição lance f6g8",
+      "passed": true,
+      "detail": "f6g8"
+    },
+    {
+      "name": "Repetição tripla detectada",
+      "passed": true,
+      "detail": "{\"status\":\"draw-threefold\",\"winner\":null,\"check\":false}"
+    },
+    {
+      "name": "Mover torre remove direito de roque correspondente",
+      "passed": true,
+      "detail": "Qkq"
+    },
+    {
+      "name": "Snapshot schema 1 restaura",
+      "passed": true,
+      "detail": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"
+    },
+    {
+      "name": "Snapshot restaura FEN",
+      "passed": true,
+      "detail": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"
+    },
+    {
+      "name": "Snapshot restaura histórico de repetição",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "CPU iniciante retorna lance legal",
+      "passed": true,
+      "detail": "15-23-"
+    },
+    {
+      "name": "CPU normal retorna lance legal",
+      "passed": true,
+      "detail": "1-18-"
+    },
+    {
+      "name": "CPU estrategica retorna lance legal",
+      "passed": true,
+      "detail": "12-20-"
+    },
+    {
+      "name": "CPU mestre retorna lance legal",
+      "passed": true,
+      "detail": "6-21-"
+    },
+    {
+      "name": "CPU Mestre prioriza mate imediato",
+      "passed": true,
+      "detail": "g7-h7"
+    },
+    {
+      "name": "Arquivo do jogo: index.html",
+      "passed": true,
+      "detail": "index.html"
+    },
+    {
+      "name": "Arquivo do jogo: style.css",
+      "passed": true,
+      "detail": "style.css"
+    },
+    {
+      "name": "Arquivo do jogo: engine.js",
+      "passed": true,
+      "detail": "engine.js"
+    },
+    {
+      "name": "Arquivo do jogo: ai.js",
+      "passed": true,
+      "detail": "ai.js"
+    },
+    {
+      "name": "Arquivo do jogo: game.js",
+      "passed": true,
+      "detail": "game.js"
+    },
+    {
+      "name": "Mídia: logo.svg",
+      "passed": true,
+      "detail": "logo.svg"
+    },
+    {
+      "name": "Mídia: preview-01.svg",
+      "passed": true,
+      "detail": "preview-01.svg"
+    },
+    {
+      "name": "Mídia: preview-02.svg",
+      "passed": true,
+      "detail": "preview-02.svg"
+    },
+    {
+      "name": "Integração app: chess-arena-360",
+      "passed": true,
+      "detail": "app.js"
+    },
+    {
+      "name": "Integração app: games/chess-arena-360/runtime",
+      "passed": true,
+      "detail": "app.js"
+    },
+    {
+      "name": "Integração app: fliperama-ds-chess-arena-360",
+      "passed": true,
+      "detail": "app.js"
+    },
+    {
+      "name": "Perfil externo registrado",
+      "passed": true,
+      "detail": "game-profiles.json"
+    },
+    {
+      "name": "Ficha educacional registrada",
+      "passed": true,
+      "detail": "education/game-learning.json"
+    },
+    {
+      "name": "Versão pública v0.39.0",
+      "passed": true,
+      "detail": "version/app"
+    },
+    {
+      "name": "Service Worker v0.39.0",
+      "passed": true,
+      "detail": "sw.js"
+    },
+    {
+      "name": "Service Worker inclui Chess Arena",
+      "passed": true,
+      "detail": "offline"
+    },
+    {
+      "name": "Three.js local reutilizado",
+      "passed": true,
+      "detail": "sem CDN"
+    },
+    {
+      "name": "Interface expõe visão superior",
+      "passed": true,
+      "detail": "index.html"
+    },
+    {
+      "name": "Interface expõe quatro CPUs",
+      "passed": true,
+      "detail": "4 níveis"
+    }
+  ]
+}

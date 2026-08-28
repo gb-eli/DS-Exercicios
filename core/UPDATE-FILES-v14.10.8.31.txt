@@ -1,0 +1,20 @@
+ATUALIZAÇÃO v14.10.8.31 — PLAYER EXPERIENCE LAB / LOBBY MULTIPLAYER
+
+ARQUIVOS PRINCIPAIS ALTERADOS
+- prova/simulador.html
+- prova/assets/simulator.js
+- prova/assets/prova.css
+- prova/assets/student.js
+- core/prova/ (espelho dos arquivos acima)
+- core/tests/p10932-prova-collective-ux-v14.10.8.31.test.mjs
+- release-v14.10.8.31.json
+- release-current.json
+
+HERDA DA v14.10.8.30
+- DS1/DS2 Modo Prova Coletiva: guildas, liderança, cargos, chat, missões, fullscreen e XP separado da nota.
+- DS3: Retomada sincronizada 8 x 3 + Recuperação 20 x 0,25 = 5,0.
+- Adaptações pedagógicas e estudo domiciliar.
+- migrations 061 e 062.
+
+ATENÇÃO BACKEND
+Se o simulador ainda mostrar “Catálogo local de demonstração”, o frontend está funcionando, porém a Edge Function practical-exam publicada ainda não contém staff_simulator_catalog. Redeployar core/edge-functions/practical-exam/.

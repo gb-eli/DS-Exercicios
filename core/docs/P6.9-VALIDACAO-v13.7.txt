@@ -1,0 +1,8 @@
+P6.9 v13.7 — validação
+- Core tests: 33/33 arquivos PASS
+- JS syntax: app.js/admin.js PASS
+- Student telemetry: RLS own-only activity_progress + progress_events
+- Admin telemetry: existing authorized agv-teacher-activity recent endpoint
+- No service_role in frontend
+- No migration / no new Edge Function required
+- Time metric is not inferred from sparse events

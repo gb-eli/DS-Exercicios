@@ -1,0 +1,49 @@
+{
+  "version": "14.10.3",
+  "date": "2026-08-19",
+  "phase": "P10.2-responsive-workspace-hardening",
+  "title": "Responsividade do workspace, gutter dinâmico e metadata de publicação coerente",
+  "baseVersion": "14.10.1",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "liveDeployApplied": false,
+  "publicBundleContainsPrivateRules": false,
+  "fixes": [
+    "Corrige alias referencia.md/atividade.md e main.kt/MainActivity.kt no painel de referência",
+    "Remove newline artificial da camada de syntax highlight e elimina fonte de linha fantasma/alinhamento",
+    "Preview HTML/CSS/JS preserva defer ao embutir script local e executa o JavaScript depois do DOM",
+    "Adiciona Conclusão, Acerto e Erro durante a digitação; correção server-side é atualizada após pausa",
+    "Mantém botões permanentes GitHub e Classroom com salvamento antes de abrir",
+    "Consolida contraste e espaçamento da referência sem whitespace DOM fantasma",
+    "Sincroniza código-fonte local de student-files com reconciliação de arquivos, save_all/checkpoint e session guard",
+    "Restaura testes de auditoria 8.7–9.5 e adiciona testes de regressão v14.10.0",
+    "Desativa bloqueio automático por quantidade de saídas; eventos continuam registrados para supervisão.",
+    "Libera registros e sessões que estavam bloqueados especificamente por limite de saídas.",
+    "Unifica fonte e altura de linha do editor, syntax highlight, gutter e referência.",
+    "Adiciona controles −/+ de 11px a 22px aplicados simultaneamente à referência e ao editor, com persistência local.",
+    "Mantém uma linha visual por linha real do código, sem linha/whitespace fantasma.",
+    "Gutter dos números de linha passa a acompanhar o zoom de fonte e evita corte em linhas de 3–4 dígitos.",
+    "Subbar de arquivos no mobile usa grid estável, sem margem negativa nem largura calculada que podia sobrepor o status de salvamento.",
+    "Controles de fonte −/+ ocupam uma linha própria em telas estreitas e continuam sincronizando referência/editor.",
+    "Abas Referência/Preview/Terminal ganham overflow horizontal seguro em telas muito estreitas.",
+    "PUBLIC-DEPLOY.json passa a refletir a release/UI reais; release-current deixa explícito que o frontend ainda precisa ser publicado."
+  ],
+  "status": "RELEASE_CANDIDATE",
+  "databaseMigrationAppliedToProduction": true,
+  "databaseMigrations": [
+    "core/database/039_p101_disable_automatic_focus_exit_locking.sql"
+  ],
+  "edgeFunctionAppliedToProduction": "supervision v3 permanece ativo; política de produção neutraliza o bloqueio por quantidade de saídas. Fonte futura já remove o bloqueio automático.",
+  "knownPending": [
+    "Publicar o frontend v14.10.3 no host atual e executar smoke autenticado em desktop e celular. O backend de produção permanece o mesmo da v14.10.1."
+  ],
+  "productionBackendVerified": true,
+  "productionBackendSnapshot": {
+    "student-files": "v7 ACTIVE",
+    "exercise-autograde": "v3 ACTIVE",
+    "staff-dashboard": "v10 ACTIVE",
+    "supervision": "v3 ACTIVE + política não bloqueante (1.000.000)"
+  },
+  "backendUnchangedFrom": "14.10.1"
+}

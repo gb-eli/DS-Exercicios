@@ -1,0 +1,7 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
+const root=path.resolve(import.meta.dirname,'../..');const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+for(const [base,adapter] of [['sistemas/03-planetario-ds/universods','src/agv-core-session.js'],['sistemas/05-fliperama-ds/flipds','agv-core-session.js']]){const s=read(base+'/'+adapter);assert.match(s,/sb-iresvqwyaqotghjssncg-auth-token/);assert.match(s,/agv-progress-event/);assert.match(s,/authority:'agv-core'/);assert.doesNotMatch(s,/service_role/i);assert.match(read(base+'/index.html'),/agv-core-session\.js/);}
+const planet=read('sistemas/03-planetario-ds/universods/src/core/profiles/ProfileStore.js');assert.match(planet,/AGVPlatformCore\.progress\('activity\.completed'/);assert.match(planet,/source:'planetario-profile-store'/);
+const flip=read('sistemas/05-fliperama-ds/flipds/app.js');assert.match(flip,/AGVPlatformCore\.progress\('activity\.started'/);assert.match(flip,/AGVPlatformCore\.progress\('activity\.progress'/);assert.match(flip,/AGVPlatformCore\.progress\('activity\.completed'/);assert.doesNotMatch(flip,/service_role/i);
+const pm=JSON.parse(read('sistemas/03-planetario-ds/_AGV_CORE/platform-integration.json'));const fm=JSON.parse(read('sistemas/05-fliperama-ds/_AGV_CORE/platform-integration.json'));assert.equal(pm.authority.identity,'agv-core');assert.equal(fm.authority.economy,'server-only');
+console.log('P6.7 Wave 4 — PASS');

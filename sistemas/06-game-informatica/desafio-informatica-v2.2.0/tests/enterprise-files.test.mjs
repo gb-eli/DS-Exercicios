@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {EnterpriseFileWorkspace,ENTERPRISE_FILES_VERSION} from '../assets/js/enterprise-files.js';
+
+const ws=new EnterpriseFileWorkspace({sheetName:'Base de custos',documentName:'Relatório final'});
+assert.equal(ws.serialize().version,ENTERPRISE_FILES_VERSION);
+const produced=ws.produceArtifact({name:'relatorio-final.pdf',sourceId:'doc-main'});
+assert.equal(produced.length,2);
+assert.equal(ws.validateForSend(produced[0],{expectedName:'relatorio-final.pdf'}).valid,true);
+const drive=produced.find(item=>item.source==='Meu Drive');
+assert.equal(ws.validateForSend(drive,{expectedName:'relatorio-final.pdf',recipient:'direcao'}).valid,false,'Link restrito deve exigir acesso.');
+const req=ws.requestAccess(drive.id,'direcao@simulacao.edu.br');assert.equal(req.ok,true);
+assert.equal(ws.pendingAccessRequests().length,1);
+assert.equal(ws.resolveAccessRequest(req.request.id,'approve','commenter').ok,true);
+assert.equal(ws.validateForSend(ws.serialize().files.find(item=>item.id===drive.id),{expectedName:'relatorio-final.pdf'}).valid,true);
+ws.touchSource('doc-main','correção do prazo');
+assert.equal(ws.serialize().files.filter(item=>item.status==='stale').length,2,'Exportações antigas devem ficar desatualizadas.');
+assert.ok(ws.validateForSend(ws.serialize().files[0],{expectedName:'relatorio-final.pdf'}).issues.some(item=>item.id==='stale-version'));
+const fresh=ws.produceArtifact({name:'relatorio-final.pdf',sourceId:'doc-main'});
+assert.equal(ws.validateForSend(fresh[0],{expectedName:'relatorio-final.pdf'}).valid,true);
+const duplicate=ws.duplicateFile(fresh[0].id,'relatorio-final-copia.pdf');assert.equal(duplicate.ok,true);
+assert.ok(ws.validateForSend(duplicate.file,{expectedName:'relatorio-final.pdf'}).issues.some(item=>item.id==='wrong-version-name'));
+const conflict=ws.createConflict('doc-main',{remoteVersion:8});assert.equal(conflict.status,'pending');
+assert.ok(ws.validateForSend(fresh[0],{expectedName:'relatorio-final.pdf'}).issues.some(item=>item.id==='conflict-pending'));
+assert.equal(ws.resolveConflict(conflict.id,'keep-local').ok,true);
+assert.equal(ws.pendingConflicts().length,0);
+assert.ok(ws.metrics().incidents>=2);
+console.log('Enterprise file workspace: versions, stale artifacts, access requests, duplicates, conflicts and send validation validated.');

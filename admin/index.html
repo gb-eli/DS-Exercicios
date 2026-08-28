@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>DS Exercícios — Administração</title>
+  <link rel="stylesheet" href="assets/admin.css?v=14.10.8.36">
+</head>
+<body>
+  <section id="login-view" class="login-shell">
+    <form id="login-form" class="login-card">
+      <p class="eyebrow">DS Exercícios · AGV Education Core</p>
+      <h1>Administração</h1>
+      <p class="muted">Gestão pedagógica, usuários, progresso e segurança.</p>
+      <label><span>E-mail institucional</span><input id="email" type="email" autocomplete="username" required></label>
+      <label><span>Senha</span><input id="password" type="password" autocomplete="current-password" required></label>
+      <button class="primary" type="submit">Entrar</button>
+      <p id="login-message" class="message" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <div id="app-view" class="admin-app hidden">
+    <aside class="nav">
+      <div class="brand"><span class="brand-mark">DS</span><div><strong>DS Exercícios</strong><small>Administração</small></div></div>
+      <nav id="main-nav">
+        <span class="nav-label">Gestão diária</span>
+        <button class="nav-item active" data-view="overview"><span>◫</span> Painel de Gestão</button>
+        <button class="nav-item" data-view="pedagogy"><span>◎</span> Central Pedagógica</button>
+        <button class="nav-item" data-view="users"><span>♙</span> Alunos e Turmas</button>
+        <button class="nav-item" data-view="access"><span>🔑</span> Gestão de Acessos</button>
+        <button class="nav-item" data-view="reports"><span>↗</span> Indicadores e Relatórios</button>
+        <a class="nav-item nav-exam" href="../prova/admin.html"><span>⚔</span> Modo Prova</a>
+        <details class="nav-more">
+          <summary>Ferramentas avançadas</summary>
+          <div>
+            <button class="nav-item" data-view="monitor">Acompanhamento ao vivo</button>
+            <button class="nav-item" data-view="classes">Turmas</button>
+            <button class="nav-item" data-view="activities">Liberação de atividades</button>
+            <button class="nav-item" data-view="corrections">Fila de correções</button>
+            <button class="nav-item" data-view="code">Código dos alunos</button>
+            <button class="nav-item" data-view="sessions">Sessões</button>
+            <button class="nav-item" data-view="github">Entregas GitHub</button>
+            <button class="nav-item" data-view="security">Segurança</button>
+            <button class="nav-item" data-view="audit">Auditoria</button>
+            <button class="nav-item" data-view="settings">Configurações</button>
+          </div>
+        </details>
+      </nav>
+      <div class="nav-footer"><span id="admin-name"></span><small id="admin-role"></small><button id="open-hub" class="ghost compact" type="button">Hub</button><button id="open-professor" class="ghost compact" type="button">Console Professor</button><button id="logout" class="ghost compact" type="button">Sair</button></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><button id="mobile-menu" class="icon-btn" type="button">☰</button><div><p class="eyebrow" id="view-eyebrow">Central operacional</p><h1 id="view-title">Visão Geral</h1></div></div><div class="top-actions"><span id="sync-status" class="chip">Sincronizando</span><button id="refresh" class="ghost" type="button">Atualizar</button></div></header>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <dialog id="student-dialog" class="dialog wide"><div class="dialog-head"><div><p class="eyebrow">Perfil 360º</p><h2 id="student-dialog-title">Aluno</h2></div><button class="icon-btn" data-close="student-dialog" type="button">×</button></div><div id="student-dialog-body"></div></dialog>
+  <dialog id="edit-dialog" class="dialog"><div class="dialog-head"><div><p class="eyebrow">Gestão de usuário</p><h2 id="edit-dialog-title">Editar aluno</h2></div><button class="icon-btn" data-close="edit-dialog" type="button">×</button></div><form id="edit-form" class="form-grid"><input id="edit-student-id" type="hidden"><label>Nome<input id="edit-name" required maxlength="180"></label><label>Turma<select id="edit-class"></select></label><label>CGM cadastral<input id="edit-cgm" inputmode="numeric" maxlength="12" placeholder="Não é senha"></label><label class="span2">Motivo / observação<input id="edit-reason" maxlength="1000" placeholder="Opcional, mas recomendado para auditoria"></label><div class="span2 button-row"><button class="ghost" type="button" id="force-password">Forçar troca de senha</button><button class="ghost" type="button" id="end-sessions">Encerrar sessões de atividade</button><button class="ghost" type="button" id="revoke-auth-sessions" disabled title="Validando automaticamente o backend de revogação">Revogar login em todos os dispositivos</button><button class="primary" type="submit">Salvar alterações</button></div><p id="edit-message" class="message span2"></p></form></dialog>
+  <dialog id="prereg-dialog" class="dialog"><div class="dialog-head"><div><p class="eyebrow">Pré-cadastro</p><h2 id="prereg-dialog-title">Editar autorizado</h2></div><button class="icon-btn" data-close="prereg-dialog" type="button">×</button></div><form id="prereg-form" class="form-grid"><input id="prereg-id" type="hidden"><label>E-mail institucional<input id="prereg-email" type="email"></label><label>CGM<input id="prereg-cgm" inputmode="numeric"></label><label>Status<select id="prereg-status"><option>Matriculado</option><option>Transferido</option></select></label><div class="button-row"><button class="primary" type="submit">Salvar</button></div><p id="prereg-message" class="message span2"></p></form></dialog>
+
+  <dialog id="activity-dialog" class="dialog wide"><div class="dialog-head"><div><p class="eyebrow">Central de Atividades</p><h2 id="activity-dialog-title">Configurar atividade</h2><p class="muted" id="activity-class-name"></p></div><button class="icon-btn" data-close="activity-dialog" type="button">×</button></div><form id="activity-form" class="form-grid"><input id="activity-exercise-id" type="hidden"><input id="activity-class-id" type="hidden"><label>Aplicar para<select id="activity-scope"><option value="class">Turma inteira</option><option value="student">Um aluno</option><option value="group">Grupo de alunos</option></select></label><label class="check-field"><input id="activity-enabled" type="checkbox" checked><span>Atividade habilitada</span></label><label>Abertura programada<input id="activity-release-at" type="datetime-local"></label><label>Encerramento programado<input id="activity-lock-at" type="datetime-local"></label><label id="activity-student-wrap" class="span2 hidden">Aluno com conta ativada<select id="activity-student"></select></label><div id="activity-group-wrap" class="span2 hidden"><span class="field-label">Grupo — contas ativadas</span><div id="activity-group" class="student-grid"></div></div><div class="span2 support-box"><div><strong>Recursos liberados</strong><p class="muted">Esses controles acompanham a liberação da atividade e podem ser usados como apoio pedagógico.</p></div><div class="support-grid"><label class="check-field"><input id="activity-html" type="checkbox"><span>HTML base</span></label><label class="check-field"><input id="activity-css" type="checkbox"><span>CSS base</span></label><label class="check-field"><input id="activity-js" type="checkbox"><span>JavaScript base</span></label><label class="check-field"><input id="activity-hints" type="checkbox"><span>Dicas extras</span></label><label class="check-field"><input id="activity-guided" type="checkbox"><span>Ajuda guiada</span></label></div></div><div class="span2 button-row"><button id="activity-clear-override" class="ghost hidden" type="button">Voltar a herdar da turma</button><button class="primary" type="submit">Salvar configuração</button></div><p id="activity-message" class="message span2"></p></form></dialog>
+
+  <dialog id="code-dialog" class="dialog code-dialog"><div class="dialog-head"><div><p class="eyebrow">Código do aluno</p><h2 id="code-title">Arquivos</h2></div><button class="icon-btn" data-close="code-dialog" type="button">×</button></div><div id="code-body"></div></dialog>
+
+  <script src="assets/config.js?v=14.10.8.36"></script>
+  <script src="../core/session/agv-session.js?v=14.10.8.36"></script>
+  <script src="assets/admin.js?v=14.10.8.36"></script>
+</body>
+</html>

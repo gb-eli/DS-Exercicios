@@ -1,0 +1,1149 @@
+{
+  "vector-tennis": {
+    "experienceType": "Reconstrução educacional jogável",
+    "stageLabel": "Partidas contra CPU ou dois jogadores até 3, 5 ou 7 pontos",
+    "modes": [
+      "Vs CPU",
+      "CPU Surpresa",
+      "2 jogadores locais",
+      "Metas de 3, 5 ou 7 pontos"
+    ],
+    "difficulties": [
+      "Iniciante",
+      "Normal",
+      "Desafio",
+      "Aleatória por partida"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Tutorial de saque e movimento",
+      "Escolher adversário e meta",
+      "Aprender reação e ângulo do rebote",
+      "Comparar perfis da CPU",
+      "Buscar medalhas por vitória e rally"
+    ],
+    "historyFacts": [
+      "A referência histórica é Tennis for Two, apresentado em 1958 em um osciloscópio.",
+      "A experiência histórica usava dois controles; a reconstrução DS preserva o modo local e acrescenta uma CPU didática autoral."
+    ],
+    "curiosities": [
+      "O ponto de contato na raquete altera o ângulo da bola.",
+      "A CPU não acompanha a bola a cada quadro: reage em intervalos, prevê a chegada e aplica erro probabilístico.",
+      "A personalidade da CPU pode ser ofensiva, defensiva, posicional ou imprevisível."
+    ],
+    "codeTitle": "Reação variável da CPU",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (cpu.reactionMs <= 0) {\n  const arrival = predictBallAtPaddle(ball);\n  const error = randomBetween(-profile.error, profile.error);\n  cpu.targetY = arrival + error;\n  cpu.reactionMs = randomBetween(profile.minMs, profile.maxMs);\n}",
+    "qualityNotes": [
+      "Histórico: contraste monocromático e linhas simples.",
+      "Baixo: menos brilho e grade, mantendo a mesma física.",
+      "Médio/Alto/Automático: acabamento, brilho e textos de estratégia; as regras não mudam com a qualidade."
+    ]
+  },
+  "space-blocks": {
+    "experienceType": "Jogo de puzzle autoral inspirado",
+    "stageLabel": "Níveis progressivos por linhas concluídas",
+    "modes": [
+      "Progressivo sem limite",
+      "Prática lenta",
+      "Sprint de 12 linhas",
+      "Maratona de 24 linhas"
+    ],
+    "difficulties": [
+      "Velocidade inicial baixa",
+      "Progressão automática",
+      "Desafio por nível"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Tutorial de matriz, movimento e rotação",
+      "Sprint: concluir 12 linhas",
+      "Maratona: concluir 24 linhas",
+      "Progressivo: níveis de velocidade sem meta final",
+      "Medalhas por linhas, nível e conclusão"
+    ],
+    "historyFacts": [
+      "A referência do gênero é Tetris, criado em 1984 para o Electronika 60.",
+      "Space Blocks usa identidade, peças e apresentação próprias para ensinar matrizes e rotação."
+    ],
+    "curiosities": [
+      "Uma peça pode ser testada antes da rotação para evitar atravessar paredes.",
+      "A grade é uma matriz; cada célula informa se está livre ou ocupada."
+    ],
+    "codeTitle": "Validação de uma peça na matriz",
+    "codeLanguage": "JavaScript",
+    "codeExample": "function canPlace(piece, board) {\n  return piece.cells.every(({ x, y }) =>\n    y >= 0 && y < board.length &&\n    x >= 0 && x < board[0].length &&\n    board[y][x] === 0\n  );\n}",
+    "qualityNotes": [
+      "Histórico: paleta e efeitos reduzidos.",
+      "Baixo: partículas mínimas.",
+      "Ultra: brilho, partículas e acabamento avançado."
+    ]
+  },
+  "vector-fleet": {
+    "experienceType": "Arcade vetorial autoral inspirado",
+    "stageLabel": "Campanha de 5, 6 ou 7 ondas conforme a dificuldade",
+    "modes": [
+      "Sobrevivência",
+      "Treinamento de inércia",
+      "Desafio por ondas"
+    ],
+    "difficulties": [
+      "Cadete",
+      "Piloto",
+      "Ás"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Treino de rotação e impulso",
+      "Cadete: cinco ondas",
+      "Piloto: seis ondas",
+      "Comandante: sete ondas",
+      "Medalhas por onda, vitória, vidas e pontuação"
+    ],
+    "historyFacts": [
+      "A referência histórica é Asteroids, lançado pela Atari em 1979 com display vetorial.",
+      "A versão DS preserva os conceitos de inércia e tela conectada, com arte e código próprios."
+    ],
+    "curiosities": [
+      "Ao cruzar uma borda, a nave reaparece no lado oposto.",
+      "Asteroides maiores se fragmentam em partes menores com novas trajetórias."
+    ],
+    "codeTitle": "Movimento com inércia e amortecimento",
+    "codeLanguage": "JavaScript",
+    "codeExample": "ship.vx += Math.cos(ship.angle) * thrust * dt;\nship.vy += Math.sin(ship.angle) * thrust * dt;\n\nship.vx *= 0.992;\nship.vy *= 0.992;\nship.x = (ship.x + ship.vx * dt + 1) % 1;\nship.y = (ship.y + ship.vy * dt + 1) % 1;",
+    "qualityNotes": [
+      "Histórico: traços vetoriais e poucos efeitos.",
+      "Baixo/Médio: menos partículas.",
+      "Alto/Ultra: trilhas, brilho e fragmentação completa."
+    ]
+  },
+  "block-reactor": {
+    "experienceType": "Reconstrução educacional com editor",
+    "stageLabel": "Campanha de cinco fases e editor autoral",
+    "modes": [
+      "Campanha",
+      "Fase personalizada",
+      "Treinamento de rebote"
+    ],
+    "difficulties": [
+      "Aprendiz",
+      "Operador",
+      "Especialista"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Fase 1: formação introdutória",
+      "Fase 2: blocos resistentes e bônus",
+      "Fase 3: explosivos e lacunas",
+      "Fase 4: bordas alternadas",
+      "Fase 5: núcleo dividido e maior densidade",
+      "Medalhas por fase, vitória, combo e vidas"
+    ],
+    "historyFacts": [
+      "O gênero foi popularizado por Breakout, lançado pela Atari em 1976.",
+      "Reator de Blocos usa fases orientadas a dados, blocos especiais e editor autoral."
+    ],
+    "curiosities": [
+      "O ângulo de saída depende da região da raquete atingida.",
+      "Uma fase pode ser armazenada como uma sequência curta de símbolos."
+    ],
+    "codeTitle": "Rebote calculado pela posição de contato",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const offset = (ball.x - paddle.x) / paddle.width;\nconst angle = offset * Math.PI * 0.42;\nball.vx = Math.sin(angle) * speed;\nball.vy = -Math.cos(angle) * speed;",
+    "qualityNotes": [
+      "Histórico: visual raster simplificado.",
+      "Baixo: menos partículas e brilho.",
+      "Ultra: efeitos de explosão e pós-processamento completos."
+    ]
+  },
+  "orbital-sentinel": {
+    "experienceType": "Arcade de defesa reconstruído",
+    "stageLabel": "Defesa em 4, 5 ou 6 ondas conforme a dificuldade",
+    "modes": [
+      "Defesa",
+      "Treinamento",
+      "Sobrevivência"
+    ],
+    "difficulties": [
+      "Defensor",
+      "Veterano",
+      "Comandante"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Treino de movimentação e tiro",
+      "Cadete: quatro ondas",
+      "Defensor: cinco ondas",
+      "Elite: seis ondas e formação ampliada",
+      "Medalhas por onda, vitória, vidas e pontuação"
+    ],
+    "historyFacts": [
+      "A referência histórica é Space Invaders, lançado em 1978.",
+      "A formação, símbolos, áudio, arte e código do Fliperama DS são autorais."
+    ],
+    "curiosities": [
+      "A formação pode acelerar quando restam poucos inimigos.",
+      "Barreiras destrutíveis exigem decidir entre atacar e preservar proteção."
+    ],
+    "codeTitle": "Movimento coletivo de uma formação",
+    "codeLanguage": "JavaScript",
+    "codeExample": "formation.x += direction * speed * dt;\n\nif (formationTouchesEdge()) {\n  direction *= -1;\n  formation.y += stepDown;\n}",
+    "qualityNotes": [
+      "Histórico: pixels, som simples e poucos efeitos.",
+      "Baixo/Médio: projéteis e partículas reduzidos.",
+      "Alto/Ultra: impactos, brilho e camadas adicionais."
+    ]
+  },
+  "trap-lab": {
+    "experienceType": "Jogo de plataforma e laboratório de lógica",
+    "stageLabel": "6 fases concluíveis com checkpoints",
+    "modes": [
+      "Explorador",
+      "Programador",
+      "Precisão"
+    ],
+    "difficulties": [
+      "Explorador",
+      "Programador",
+      "Precisão"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Fase 1: movimento e leitura do cenário",
+      "Fase 2: portões, saltos e interação",
+      "Fase 3: armadilhas combinadas e terminal final",
+      "Fase 4: poços, dois checkpoints e portão lógico",
+      "Fase 5: corredor binário com três vãos",
+      "Fase 6: núcleo de saída e sequência final"
+    ],
+    "historyFacts": [
+      "Trap Lab estuda a evolução dos jogos de plataforma de 8 bits.",
+      "Personagem, mapas, armadilhas, áudio e código são próprios do laboratório."
+    ],
+    "curiosities": [
+      "Coyote time aceita o salto por alguns milissegundos após sair da borda.",
+      "Jump buffer registra o salto pressionado pouco antes da aterrissagem."
+    ],
+    "codeTitle": "Coyote time e salto antecipado",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (player.onGround) coyoteMs = 110;\nelse coyoteMs = Math.max(0, coyoteMs - deltaMs);\n\nif (jumpPressed) jumpBufferMs = 130;\nif (jumpBufferMs > 0 && coyoteMs > 0) jump();",
+    "qualityNotes": [
+      "Histórico: tilemap e paleta retrô.",
+      "Baixo: efeitos mínimos.",
+      "Alto: partículas, iluminação e feedback completos."
+    ]
+  },
+  "data-maze": {
+    "experienceType": "Labirinto de coleta autoral",
+    "stageLabel": "5 mapas validados e concluíveis",
+    "modes": [
+      "Campanha",
+      "Treinamento",
+      "Desafio de rota"
+    ],
+    "difficulties": [
+      "Operador",
+      "Analista",
+      "Especialista"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Mapa 1: Memória Central",
+      "Mapa 2: Barramento Cruzado",
+      "Mapa 3: Núcleo Recursivo",
+      "Mapa 4: Matriz Espelhada",
+      "Mapa 5: Cache Fantasma"
+    ],
+    "historyFacts": [
+      "O gênero de labirinto e coleta ganhou grande popularidade nos arcades do início dos anos 1980.",
+      "Labirinto de Dados possui mapas, drones, itens, arte e lógica próprios."
+    ],
+    "curiosities": [
+      "Todos os pontos obrigatórios são verificados por busca de caminho antes da publicação.",
+      "Drones podem alternar estados como patrulha, perseguição, vulnerável e retorno."
+    ],
+    "codeTitle": "Busca para garantir itens alcançáveis",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const queue = [start];\nconst visited = new Set([key(start)]);\n\nwhile (queue.length) {\n  const current = queue.shift();\n  for (const next of neighbors(current)) {\n    if (isWalkable(next) && !visited.has(key(next))) {\n      visited.add(key(next));\n      queue.push(next);\n    }\n  }\n}",
+    "qualityNotes": [
+      "Histórico: aparência arcade simplificada.",
+      "Baixo: menos efeitos de trilha.",
+      "Alto: iluminação, partículas e feedback de estados."
+    ]
+  },
+  "room-quest": {
+    "experienceType": "Aventura de exploração baseada em estados",
+    "stageLabel": "12 salas conectadas por itens, flags e condições",
+    "modes": [
+      "Campanha",
+      "Exploração",
+      "Rota alternativa"
+    ],
+    "difficulties": [
+      "Guiado",
+      "Normal",
+      "Investigador"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Explorar as oito salas históricas iniciais",
+      "Ativar energia, sinal e abrir o cofre",
+      "Entrar na nova ala de relé e refrigeração",
+      "Executar diagnóstico e aplicar o selo do núcleo",
+      "Retornar ao Observatório com o Núcleo de Memória"
+    ],
+    "historyFacts": [
+      "Aventura de Salas estuda jogos de exploração e aventura baseados em comandos, itens e estados.",
+      "O mapa é um grafo autoral em que salas e saídas dependem do progresso."
+    ],
+    "curiosities": [
+      "Uma porta pode depender de mais de uma condição, como chave e terminal ativo.",
+      "O save registra flags, inventário e sala atual, não objetos gráficos."
+    ],
+    "codeTitle": "Saída condicionada por flags",
+    "codeLanguage": "JavaScript",
+    "codeExample": "function canEnter(exit, state) {\n  return exit.requiredFlags.every(flag =>\n    state.flags.includes(flag)\n  );\n}\n\nif (canEnter(exit, state)) moveTo(exit.roomId);",
+    "qualityNotes": [
+      "Histórico: texto e símbolos mais simples.",
+      "Baixo/Médio: animações reduzidas.",
+      "Alto: transições, partículas e destaques completos."
+    ]
+  },
+  "raster-rally": {
+    "experienceType": "Corrida arcade educacional",
+    "stageLabel": "5 pistas · 12 voltas de campeonato",
+    "modes": [
+      "Treinamento",
+      "Corrida",
+      "Contra o tempo"
+    ],
+    "difficulties": [
+      "Novato",
+      "Piloto",
+      "Pro"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Circuito Aurora",
+      "Circuito da Serra",
+      "Rota Tempestade",
+      "Anel Metro Neon",
+      "Passo do Eclipse"
+    ],
+    "historyFacts": [
+      "Raster Rally estuda a evolução das corridas raster dos arcades dos anos 1980.",
+      "Pista, veículos, física e identidade visual são próprios do Fliperama DS."
+    ],
+    "curiosities": [
+      "Frear antes da curva preserva aderência e reduz correções bruscas.",
+      "Checkpoints funcionam como uma máquina de estados ordenada."
+    ],
+    "codeTitle": "Checkpoints em sequência",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (carTouches(checkpoints[nextCheckpoint])) {\n  nextCheckpoint += 1;\n  timeRemaining += checkpointBonus;\n}\n\nif (nextCheckpoint === checkpoints.length) finishRace();",
+    "qualityNotes": [
+      "Histórico: pista raster e baixa densidade.",
+      "Baixo: menos objetos e partículas.",
+      "Ultra: sombras, trilhas e telemetria completa."
+    ]
+  },
+  "state-quest-rpg": {
+    "experienceType": "RPG educacional baseado em estados",
+    "stageLabel": "5 mapas · 5 missões · 2 finais",
+    "modes": [
+      "Campanha",
+      "Exploração",
+      "Combate por turnos"
+    ],
+    "difficulties": [
+      "Aprendiz",
+      "Aventureiro",
+      "Estrategista"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Restaurar a Fonte de Luz",
+      "Neutralizar o Sinal Perdido",
+      "Recuperar o Arquivo de Ecos",
+      "Sincronizar a Torre",
+      "Recuperar opcionalmente o Cache de Memória no Arquivo de Ecos",
+      "Decidir o destino do Núcleo"
+    ],
+    "historyFacts": [
+      "State Quest RPG estuda a consolidação dos RPGs eletrônicos nos anos 1980.",
+      "Mapas, personagens, diálogos, inimigos e regras são autorais."
+    ],
+    "curiosities": [
+      "Diálogos podem alterar flags que mudam missões futuras.",
+      "Combate por turnos separa intenção, resolução e animação."
+    ],
+    "codeTitle": "Missão controlada por estados",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (!quest.started && talkedToMentor) {\n  quest.started = true;\n}\n\nif (quest.started && inventory.has('core-key')) {\n  quest.completed = true;\n}",
+    "qualityNotes": [
+      "Histórico: sprites e interface retrô.",
+      "Baixo: transições simples.",
+      "Alto: efeitos, retratos e feedback completos."
+    ]
+  },
+  "bit-bridge-16": {
+    "experienceType": "Simulador jogável de evolução gráfica",
+    "stageLabel": "6 zonas e portal final",
+    "modes": [
+      "8 bits",
+      "16 bits",
+      "Comparação instantânea"
+    ],
+    "difficulties": [
+      "Aprendiz",
+      "Normal",
+      "Desafio"
+    ],
+    "graphics": [
+      "Histórico 8 bits",
+      "Histórico 16 bits",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Zona 1: movimento básico",
+      "Zona 2: saltos e coleta",
+      "Zona 3: perigos e checkpoint",
+      "Zona 4: alternância de geração sob pressão",
+      "Zona 5: sequência longa de plataformas e riscos",
+      "Zona 6: fragmentos finais e portal"
+    ],
+    "historyFacts": [
+      "A experiência compara a transição de 8 para 16 bits no fim dos anos 1980 e início dos anos 1990.",
+      "A lógica permanece igual; o aluno altera somente a apresentação visual e sonora."
+    ],
+    "curiosities": [
+      "A troca de geração não reinicia posição, vidas ou fragmentos.",
+      "Paralaxe cria sensação de profundidade movendo camadas em velocidades diferentes."
+    ],
+    "codeTitle": "Separação entre simulação e renderização",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const state = simulation.update(input, deltaMs);\n\nif (generation === '8-bit') {\n  render8Bit(state);\n} else {\n  render16Bit(state);\n}",
+    "qualityNotes": [
+      "8 bits: paleta e sprites reduzidos.",
+      "16 bits: mais cores, quadros e paralaxe.",
+      "Modos modernos preservam a lógica e ampliam o acabamento."
+    ]
+  },
+  "polygon-sector-94": {
+    "experienceType": "Laboratório jogável de plataforma 3D",
+    "stageLabel": "3 protocolos progressivos na mesma arena 3D",
+    "modes": [
+      "Exploração",
+      "Comparação de materiais",
+      "Comparação de câmeras"
+    ],
+    "difficulties": [
+      "Cadete",
+      "Piloto",
+      "Arquiteto"
+    ],
+    "graphics": [
+      "Histórico low-poly",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Protocolo 1 · Geometria Base — coletar três núcleos e validar a malha",
+      "Protocolo 2 · Materiais e Rotas — testar flat/textura/PBR e ativar dois checkpoints",
+      "Protocolo 3 · Câmeras de Produção — registrar três câmeras, recuperar núcleos e finalizar o setor",
+      "Concluir 3/3 protocolos no portal final"
+    ],
+    "historyFacts": [
+      "A experiência representa a popularização doméstica do 3D poligonal nos anos 1990.",
+      "Arena, missão, materiais, shaders e código são autorais."
+    ],
+    "curiosities": [
+      "Todo objeto 3D é formado por vértices que compõem triângulos.",
+      "A câmera externa recua quando encontraria uma parede.",
+      "A campanha reutiliza a mesma arena para mostrar que regras, câmera e material podem evoluir sem trocar o mundo físico."
+    ],
+    "codeTitle": "Transformação de um vértice 3D",
+    "codeLanguage": "GLSL / JavaScript",
+    "codeExample": "// No vertex shader\ngl_Position = projection * view * model * vec4(position, 1.0);\n\n// No JavaScript\nconst mvp = multiply(projection, view, model);",
+    "qualityNotes": [
+      "Histórico: poucas faces e materiais simples.",
+      "Baixo: sombras e partículas reduzidas.",
+      "Ultra: materiais, iluminação e pós-processamento ampliados."
+    ]
+  },
+  "camera-evolution": {
+    "experienceType": "Simulador jogável de câmeras 3D",
+    "stageLabel": "3 experimentos progressivos de câmera e enquadramento",
+    "modes": [
+      "Fixa",
+      "Orbital",
+      "Primeira pessoa",
+      "Terceira pessoa",
+      "Perseguição",
+      "Superior"
+    ],
+    "difficulties": [
+      "Cadete",
+      "Piloto",
+      "Arquiteto"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Experimento 1 · Enquadramento — coletar três lentes e comparar ao menos duas câmeras",
+      "Experimento 2 · Campo de Visão — registrar 45°, 60° e 75° e os dois checkpoints",
+      "Experimento 3 · Sistema Completo — registrar seis câmeras, recuperar lentes e finalizar",
+      "Concluir 3/3 experimentos no portal final"
+    ],
+    "historyFacts": [
+      "O laboratório representa a consolidação das câmeras em mundos 3D nos anos 1990.",
+      "A mesma arena permite comparar enquadramento sem alterar a missão."
+    ],
+    "curiosities": [
+      "FOV alto amplia a visão periférica, mas pode aumentar distorção.",
+      "Uma câmera de terceira pessoa precisa testar colisão entre alvo e posição desejada."
+    ],
+    "codeTitle": "Posição de câmera atrás do jogador",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const desired = player.position.clone()\n  .add(backward.multiplyScalar(distance))\n  .add(new Vector3(0, height, 0));\n\ncamera.position.copy(resolveCameraCollision(player.position, desired));",
+    "qualityNotes": [
+      "Histórico: distâncias e materiais simples.",
+      "Baixo: sem efeitos caros.",
+      "Ultra: iluminação, materiais e transições avançadas."
+    ]
+  },
+  "raycast-corridors": {
+    "experienceType": "Reconstrução técnica de raycasting 2.5D",
+    "stageLabel": "3 operações em mapas 24×18",
+    "modes": [
+      "Primeira pessoa",
+      "Mapa",
+      "Tela dividida"
+    ],
+    "difficulties": [
+      "Operador",
+      "Analista",
+      "Especialista"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Operação 1 · Nó de Entrada",
+      "Operação 2 · Arquivo Submerso",
+      "Operação 3 · Núcleo Espectral",
+      "Coletar chaves e ativar terminais por operação",
+      "Concluir a extração final"
+    ],
+    "historyFacts": [
+      "Raycasting permitiu criar corredores com aparência 3D usando mapas bidimensionais.",
+      "Corredores Raycast possui mapa, missão, texturas e código próprios."
+    ],
+    "curiosities": [
+      "Cada coluna da tela pode ser calculada por um raio lançado no mapa.",
+      "O mapa continua 2D, mesmo quando a apresentação parece tridimensional."
+    ],
+    "codeTitle": "Lançamento de um raio no mapa",
+    "codeLanguage": "JavaScript",
+    "codeExample": "for (let column = 0; column < width; column++) {\n  const rayAngle = cameraAngle + angleFor(column);\n  const hit = castRay(player, rayAngle, map);\n  drawWallColumn(column, hit.distance, hit.texture);\n}",
+    "qualityNotes": [
+      "Histórico: baixa resolução interna.",
+      "Baixo: menos colunas e efeitos.",
+      "Alto: maior resolução, texturas e iluminação."
+    ]
+  },
+  "voxelcraft-ds": {
+    "experienceType": "Laboratório 3D de mundo voxel",
+    "stageLabel": "3 etapas progressivas por modo, com mundo persistente",
+    "modes": [
+      "Aprendizagem",
+      "Livre",
+      "Desafio"
+    ],
+    "difficulties": [
+      "Aprendizagem guiada",
+      "Livre",
+      "Desafio ampliado"
+    ],
+    "graphics": [
+      "Econômico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático seguro"
+    ],
+    "progression": [
+      "Etapa 1 · Streaming/cartografia de chunks",
+      "Etapa 2 · Recursos, mineração e inventário",
+      "Etapa 3 · Construção/engenharia e navegação",
+      "Persistir etapa, XP, inventário, posição e alterações do mundo"
+    ],
+    "historyFacts": [
+      "VoxelCraft DS estuda mundos de blocos, geração procedural e carregamento por chunks.",
+      "O módulo usa Three.js local e pode reduzir a qualidade automaticamente."
+    ],
+    "curiosities": [
+      "Somente chunks próximos são mantidos ativos para controlar memória.",
+      "Editar um bloco na borda exige reconstruir também o chunk vizinho.",
+      "A etapa da campanha é salva separadamente das edições do terreno, permitindo continuar a missão sem reconstruir o mundo."
+    ],
+    "codeTitle": "Localização do chunk de um bloco",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const chunkX = Math.floor(blockX / CHUNK_SIZE);\nconst chunkZ = Math.floor(blockZ / CHUNK_SIZE);\nconst key = `${chunkX}:${chunkZ}`;\n\nworld.rebuildChunk(key);\nworld.rebuildBorderNeighbors(blockX, blockZ);",
+    "qualityNotes": [
+      "Econômico: mundo e distância reduzidos.",
+      "Médio: equilíbrio entre detalhes e desempenho.",
+      "Alto: maior distância, sombras e densidade, quando suportado."
+    ]
+  },
+  "board-arena": {
+    "experienceType": "Coleção de tabuleiros com multiplayer local e IA",
+    "stageLabel": "Partidas independentes por jogo, adversário e dificuldade",
+    "modes": [
+      "Jogo da Velha vs CPU",
+      "Jogo da Velha local",
+      "Dama 8×8 vs CPU",
+      "Dama 8×8 local",
+      "CPU Surpresa"
+    ],
+    "difficulties": [
+      "Iniciante",
+      "Normal",
+      "Estratégico",
+      "Mestre",
+      "Aleatória por partida"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Aprender regras e turnos",
+      "Jogar com outra pessoa no mesmo dispositivo",
+      "Vencer CPU Iniciante e Normal",
+      "Estudar bloqueios, capturas e promoções",
+      "Enfrentar CPU Estratégica, Mestre ou Surpresa"
+    ],
+    "historyFacts": [
+      "Jogos de tabuleiro foram usados cedo para pesquisar interação e inteligência artificial.",
+      "OXO, de 1952, é uma referência histórica do jogo da velha em computador.",
+      "A Dama desta plataforma é uma variante didática 8×8; damas voadoras e captura máxima não estão implementadas."
+    ],
+    "curiosities": [
+      "A CPU Mestre do Jogo da Velha usa minimax para evitar derrotas.",
+      "Dificuldade e personalidade são separadas: duas CPUs do mesmo nível podem escolher estratégias diferentes.",
+      "Na Dama, capturas são obrigatórias e podem continuar com a mesma peça."
+    ],
+    "codeTitle": "Dificuldade e personalidade da CPU",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const legal = legalMoves(board);\nconst scored = legal.map(move => ({\n  move,\n  value: evaluate(move, difficulty, personality)\n}));\nconst chosen = difficulty === 'mestre'\n  ? best(scored)\n  : weightedRandom(scored);",
+    "qualityNotes": [
+      "Histórico: grade e peças com acabamento simples.",
+      "Baixo/Médio: menos animação de pulso, mantendo regras e destaques legais.",
+      "Alto/Ultra: feedback completo de turno e análise; a inteligência não depende da qualidade gráfica."
+    ]
+  },
+  "puzzle-forge": {
+    "experienceType": "Coleção de puzzles e editor de labirinto",
+    "stageLabel": "12 desafios em 4 campanhas + editor 7×7",
+    "modes": [
+      "Caminhos",
+      "Circuitos",
+      "Sequência",
+      "Labirinto",
+      "Editor 7×7"
+    ],
+    "difficulties": [
+      "Aprendiz",
+      "Desafio"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Automático"
+    ],
+    "progression": [
+      "Completar 3 desafios de Caminhos rotativos",
+      "Completar 3 desafios de Circuitos lógicos",
+      "Completar 3 desafios de Sequência de memória",
+      "Completar 3 labirintos progressivos",
+      "Criar e testar um mapa próprio",
+      "Receber 1–3 estrelas conforme erros e eficiência ao concluir cada minicampanha"
+    ],
+    "historyFacts": [
+      "Puzzle Forge reúne problemas clássicos de lógica representados por matrizes e estados.",
+      "O editor repara automaticamente mapas sem rota para evitar desafios impossíveis."
+    ],
+    "curiosities": [
+      "BFS encontra o menor caminho em grades sem pesos diferentes.",
+      "Um circuito do tipo Lights Out altera a célula escolhida e seus vizinhos."
+    ],
+    "codeTitle": "Menor caminho em uma grade",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const queue = [{ cell: start, distance: 0 }];\nconst seen = new Set([start]);\n\nwhile (queue.length) {\n  const { cell, distance } = queue.shift();\n  if (cell === goal) return distance;\n  enqueueUnvisitedNeighbors(cell, distance + 1, queue, seen);\n}",
+    "qualityNotes": [
+      "Histórico: formas e paleta reduzidas.",
+      "Baixo: animações curtas.",
+      "Alto: transições, brilho e feedback de solução."
+    ]
+  },
+  "motion-beat": {
+    "experienceType": "Jogo de ritmo e sincronização",
+    "stageLabel": "Faixa completa com combo e precisão",
+    "modes": [
+      "Aprendiz",
+      "Normal",
+      "Desafio",
+      "Maratona de 16 compassos",
+      "Acessível"
+    ],
+    "difficulties": [
+      "Aprendiz",
+      "Desafio",
+      "Acessível"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Aprendiz: padrão introdutório",
+      "Normal: dez compassos",
+      "Desafio: velocidade e contratempos",
+      "Maratona: dezesseis compassos",
+      "Acessível: janela ampliada",
+      "Medalhas por precisão e erros"
+    ],
+    "historyFacts": [
+      "Jogos de ritmo combinam música, eventos temporizados e resposta do jogador.",
+      "Motion Beat usa faixa e áudio sintetizado autorais, sem arquivos externos."
+    ],
+    "curiosities": [
+      "O julgamento depende da diferença em milissegundos entre ação e tempo alvo.",
+      "O modo Acessível amplia a janela, reduz velocidade visual e aumenta elementos."
+    ],
+    "codeTitle": "Julgamento por diferença de tempo",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const errorMs = Math.abs(inputTime - note.targetTime);\n\nif (errorMs <= perfectWindow) judge('PERFEITO');\nelse if (errorMs <= goodWindow) judge('BOM');\nelse judge('ERRO');",
+    "qualityNotes": [
+      "Histórico: pista simples e poucos efeitos.",
+      "Baixo: partículas mínimas.",
+      "Ultra: brilho, trilhas e feedback de combo completo."
+    ]
+  },
+  "duo-elementos-ds": {
+    "experienceType": "Jogo cooperativo de plataforma autoral",
+    "stageLabel": "Campanha de 8 fases · Solo ou 2 jogadores locais",
+    "modes": [
+      "Solo com troca de personagem",
+      "2 jogadores locais",
+      "Dois gamepads",
+      "Controles touch"
+    ],
+    "difficulties": [
+      "Progressão guiada",
+      "Desafio cooperativo"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Estação de Sincronia",
+      "Travas Térmicas",
+      "Fluxos Cruzados",
+      "Relé Duplo",
+      "Câmara de Pressão",
+      "Arquivo de Núcleos",
+      "Torres Gêmeas",
+      "Câmara Nexus"
+    ],
+    "historyFacts": [
+      "Jogos cooperativos de plataforma popularizaram personagens com habilidades complementares e puzzles que exigem coordenação.",
+      "Duo Elementos DS usa essa ideia de gênero com personagens, mapas, arte, regras e código próprios, sem reproduzir fases ou assets de obras comerciais."
+    ],
+    "curiosities": [
+      "No modo Solo, deixar um personagem parado em uma posição útil e alternar o controle reproduz o raciocínio cooperativo com uma pessoa.",
+      "O Multiplayer Local Core separa ações lógicas dos dispositivos físicos, permitindo reutilizar teclado, toque e gamepads em outros jogos."
+    ],
+    "codeTitle": "Entrada independente por jogador",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const p1 = input.state(0);\nconst p2 = input.state(1);\n\nupdatePlayer(ember, p1, dt);\nupdatePlayer(tide, p2, dt);\n\nif (solo && switchPressed) {\n  activePlayer = 1 - activePlayer;\n}",
+    "qualityNotes": [
+      "Baixo reduz partículas e brilhos sem modificar colisões ou objetivos.",
+      "Médio/Alto adicionam halos, partículas e maior profundidade de cenário.",
+      "Ultra amplia efeitos visuais, mantendo a mesma simulação e o mesmo save."
+    ]
+  },
+  "plataforma-classica-ds": {
+    "experienceType": "Plataforma lateral autoral · evolução visual histórica/moderna",
+    "stageLabel": "Mundo 1 · Campo dos Pixels · 6 fases",
+    "modes": [
+      "Histórico · leitura pixel/8–16 bits",
+      "Moderno · parallax, glow e partículas"
+    ],
+    "difficulties": [
+      "Progressão por fase",
+      "Desafio final do Guardião do Clock"
+    ],
+    "graphics": [
+      "Histórico",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "1-1 Sinal de Partida",
+      "1-2 Bosque de Bits",
+      "1-3 Cavernas de Cache",
+      "1-4 Fábrica de Clock",
+      "1-5 Torres de Render",
+      "1-6 Castelo do Kernel"
+    ],
+    "historyFacts": [
+      "Jogos de plataforma laterais consolidaram salto, inimigos patrulhando, colecionáveis, checkpoints e mundos progressivos como uma linguagem reconhecível do videogame.",
+      "Plataforma Clássica DS usa essa gramática como estudo histórico, mas emprega personagem, inimigos, mapas, nomes, arte, áudio e código próprios."
+    ],
+    "curiosities": [
+      "O modo Histórico troca a linguagem de renderização sem alterar coordenadas, colisões ou regras.",
+      "Coyote time e jump buffer tornam o controle mais tolerante sem mudar o desenho das fases."
+    ],
+    "codeTitle": "Coyote time e jump buffer",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (grounded) coyoteMs = 105;\nif (jumpPressed) jumpBufferMs = 125;\n\nif (coyoteMs > 0 && jumpBufferMs > 0) {\n  velocityY = -jumpSpeed;\n  coyoteMs = 0;\n  jumpBufferMs = 0;\n}",
+    "qualityNotes": [
+      "Histórico usa formas rígidas, scanlines e pixelização intencional.",
+      "Moderno acrescenta parallax, sombras, partículas e iluminação sem mudar a simulação.",
+      "Perfis baixos reduzem partículas para preservar desempenho em dispositivos escolares."
+    ]
+  },
+  "crystal-cascade-3d": {
+    "experienceType": "Match-3 autoral com cenário WebGL",
+    "stageLabel": "Ato Prismático · 12 fases",
+    "modes": [
+      "Campanha progressiva",
+      "Desafio de estrelas por eficiência"
+    ],
+    "difficulties": [
+      "Movimentos limitados",
+      "Metas combinadas",
+      "Bloqueadores crescentes"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Pulso Inicial",
+      "Prisma Duplo",
+      "Câmara de Eco",
+      "Anel Congelado",
+      "Ressonância",
+      "Grade de Pressão",
+      "Prisma Quebrado",
+      "Órbita Violeta",
+      "Cascata Quântica",
+      "Núcleo Hexa",
+      "Tempestade Prismática",
+      "Coração da Cascata"
+    ],
+    "historyFacts": [
+      "Puzzles de combinação em grade exploram reconhecimento de padrões, planejamento e cascatas.",
+      "Crystal Cascade 3D usa identidade, cristais, níveis, código e apresentação próprios."
+    ],
+    "curiosities": [
+      "Trocas sem combinação não consomem movimento.",
+      "Tabuleiros sem jogada válida são embaralhados automaticamente."
+    ],
+    "codeTitle": "Detecção de sequência em matriz",
+    "codeLanguage": "JavaScript",
+    "codeExample": "for (const row of rows) localizarSequencias(row, 3);\nfor (const column of columns) localizarSequencias(column, 3);\naplicarGravidadeECascata();",
+    "qualityNotes": [
+      "Tabuleiro usa profundidade CSS 3D com acessibilidade.",
+      "Backdrop Three.js local adiciona luz e cristais sem controlar regras.",
+      "Perfis baixos reduzem malhas e pixel ratio."
+    ]
+  },
+  "plataforma-poligonal-ds-3d": {
+    "experienceType": "Plataforma 3D autoral em terceira pessoa",
+    "stageLabel": "Campanha · 4 áreas · 12 fragmentos",
+    "modes": [
+      "Campanha progressiva",
+      "Exploração em terceira pessoa"
+    ],
+    "difficulties": [
+      "Progressão por altura",
+      "Patrulhas e plataformas móveis"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Praça Poligonal",
+      "Bosque Low-Poly",
+      "Fábrica de Malhas",
+      "Torre do Render"
+    ],
+    "historyFacts": [
+      "A chegada dos jogos de plataforma tridimensionais exigiu novas soluções de câmera, navegação e leitura de profundidade.",
+      "Esta experiência usa conceitos do gênero sem reproduzir personagens, mapas ou assets de franquias comerciais."
+    ],
+    "curiosities": [
+      "A câmera segue um ponto acima do personagem em vez de ser parte da simulação física.",
+      "Os perfis gráficos alteram sombras, pixel ratio e densidade decorativa, mas não modificam a geometria jogável."
+    ],
+    "codeTitle": "Câmera em terceira pessoa suavizada",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const desired = target.clone()\n  .add(backward.multiplyScalar(distance))\n  .add(new THREE.Vector3(0, height, 0));\ncamera.position.lerp(desired, 1 - Math.exp(-dt * 6));\ncamera.lookAt(target);",
+    "qualityNotes": [
+      "Three.js local e carregamento sob demanda.",
+      "Sombras ativadas apenas nos perfis superiores.",
+      "Geometria procedural low-poly evita dependência de assets externos pesados."
+    ]
+  },
+  "mundo-plataforma-ds-360": {
+    "experienceType": "Mundo plataforma 3D/360 autoral com exploração radial, NPCs, missões, indústria e torre vertical",
+    "stageLabel": "Regiões 1–5 · Vale Nexus + Vila Tecnológica + Floresta de Circuitos + Região Industrial + Torre Central",
+    "modes": [
+      "Exploração em terceira pessoa",
+      "Panorama 360° orbital",
+      "Interação contextual com NPCs e terminais"
+    ],
+    "difficulties": [
+      "Orientação espacial em cinco regiões conectadas",
+      "Plataformas, patrulhas, desafios verticais, esteiras, elevadores e ascensão da torre"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Vale Nexus · 6 Orbes + 3 Balizas",
+      "Vila Tecnológica · 3 missões",
+      "Floresta de Circuitos · 3 Nós de Energia",
+      "Região Industrial · Energia → Logística → Controle",
+      "Torre Central · 3 Consoles → Núcleo → Portal final"
+    ],
+    "historyFacts": [
+      "Mundos 3D ampliaram o problema de orientação do jogador e tornaram a câmera uma parte central do design de níveis.",
+      "Esta experiência usa exploração em 360° e câmera orbital com ambiente, personagem, objetivos e código próprios."
+    ],
+    "curiosities": [
+      "Os objetivos mudam de natureza em cada região sem trocar o núcleo de física e câmera.",
+      "A Torre Central reutiliza a mesma simulação com plataformas no eixo Y para criar uma campanha predominantemente vertical."
+    ],
+    "codeTitle": "Estado persistente entre cinco regiões e plataformas móveis em três eixos",
+    "codeLanguage": "JavaScript",
+    "codeExample": "if (save.schemaVersion === 4 && save.completed) enterCentralTower();\nif (platform.axis === 'y') movePlatformVertically();\nif (towerSync.size === 3 && towerCore) openFinalPortal();",
+    "qualityNotes": [
+      "Three.js local e carregamento somente ao abrir o jogo.",
+      "Perfis baixos reduzem pixel ratio, sombras e densidade decorativa sem alterar a geometria jogável.",
+      "Save schema 5 migra automaticamente a v0.38.4 e preserva o progresso das quatro regiões anteriores."
+    ]
+  },
+  "hexa-reactor": {
+    "experienceType": "Puzzle hexagonal autoral com fluxo de energia e ambientação 3D",
+    "stageLabel": "Campanha · 12 níveis",
+    "modes": [
+      "Campanha progressiva",
+      "Desafio de estrelas por eficiência"
+    ],
+    "difficulties": [
+      "Giros limitados",
+      "Múltiplas fontes",
+      "Células de sobrecarga",
+      "Vazamentos energizados"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Pulso de Partida",
+      "Bifurcação Azul",
+      "Anel de Retorno",
+      "Três Saídas",
+      "Ponte de Fase",
+      "Malha em Y",
+      "Circuito Espelhado",
+      "Núcleo de Seis Faces",
+      "Fontes Gêmeas",
+      "Sobreposição Controlada",
+      "Matriz de Segurança",
+      "Coração Hexagonal"
+    ],
+    "historyFacts": [
+      "Grades hexagonais oferecem seis vizinhos imediatos e aparecem em jogos de estratégia, mapas e simulações de redes.",
+      "Hexa Reactor aplica conectividade e rotação em uma campanha autoral, sem reproduzir tabuleiros ou assets comerciais."
+    ],
+    "curiosities": [
+      "A simulação usa coordenadas axiais q/r para localizar vizinhos.",
+      "O fluxo é propagado por busca em largura a partir de todas as fontes ativas."
+    ],
+    "codeTitle": "Propagação de energia por busca em largura",
+    "codeLanguage": "JavaScript",
+    "codeExample": "const queue = [...sources];\nwhile (queue.length) {\n  const cell = queue.shift();\n  for (const neighbor of connectedNeighbors(cell)) {\n    if (!powered.has(neighbor.id)) queue.push(neighbor);\n  }\n}",
+    "qualityNotes": [
+      "Three.js local produz somente a ambientação; o tabuleiro permanece DOM acessível.",
+      "Perfis baixos reduzem peças decorativas e pixel ratio sem alterar o puzzle.",
+      "Estado do tabuleiro é serializável e independente do renderizador."
+    ]
+  },
+  "chess-arena-360": {
+    "experienceType": "Xadrez tridimensional autoral com CPU progressiva",
+    "stageLabel": "Partida completa · local ou CPU",
+    "modes": [
+      "2 jogadores locais",
+      "CPU Iniciante",
+      "CPU Normal",
+      "CPU Estratégica",
+      "CPU Mestre"
+    ],
+    "difficulties": [
+      "Aleatoriedade controlada",
+      "Avaliação de 1 lance",
+      "Minimax 2 camadas",
+      "Alpha-beta 3 camadas"
+    ],
+    "graphics": [
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Ultra",
+      "Automático"
+    ],
+    "progression": [
+      "Desenvolver peças e controlar o centro",
+      "Proteger o rei e reconhecer xeques",
+      "Usar roque, en passant e promoção quando aplicáveis",
+      "Converter vantagem em xeque-mate ou reconhecer condições de empate"
+    ],
+    "historyFacts": [
+      "Programas de xadrez são exemplos clássicos de busca em árvore e avaliação heurística.",
+      "Chess Arena 360 implementa regras, CPU, peças low-poly e interface próprias do Fliperama DS."
+    ],
+    "curiosities": [
+      "A posição inicial possui 20 jogadas legais; após dois meios-lances existem 400 posições possíveis.",
+      "A poda alpha-beta pode evitar analisar ramos que não alterariam a decisão final."
+    ],
+    "codeTitle": "Poda alpha-beta em uma árvore de jogadas",
+    "codeLanguage": "JavaScript",
+    "codeExample": "for (const move of legalMoves) {\n  const score = search(next(move), depth - 1, alpha, beta);\n  alpha = Math.max(alpha, score);\n  if (beta <= alpha) break;\n}",
+    "qualityNotes": [
+      "Three.js local e carregamento sob demanda.",
+      "Perfis baixos reduzem antialias e pixel ratio sem alterar regras.",
+      "O motor de xadrez não depende da cena 3D."
+    ]
+  }
+}

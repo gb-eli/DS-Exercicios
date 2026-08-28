@@ -1,0 +1,18 @@
+{
+  "desktop": {
+    "score": 35.7,
+    "mode": "basic",
+    "api": "none",
+    "overflow": false,
+    "rows": 5,
+    "errors": []
+  },
+  "mobile": {
+    "score": 52.7,
+    "mode": "intermediate",
+    "api": "none",
+    "overflow": false,
+    "rows": 5,
+    "errors": []
+  }
+}

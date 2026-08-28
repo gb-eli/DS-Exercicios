@@ -1,0 +1,660 @@
+{
+  "schema": "agv-curriculum-plan",
+  "schemaVersion": 3,
+  "version": "2.5.7",
+  "term": "2º trimestre de 2026 — fechamento em agosto",
+  "school": "Colégio Estadual Alberto Gomes Veiga",
+  "subject": "Informática Empresarial",
+  "teacher": "Professor Gabriel",
+  "audience": {
+    "course": "Técnico em Administração",
+    "ageRange": "14–18 anos",
+    "classes": [
+      "1º ADM",
+      "2º ADM"
+    ],
+    "location": "Paranaguá — Paraná"
+  },
+  "pedagogicalGoal": "Cativar o estudante por meio de situações profissionais fictícias e preparar para rotinas reais de escritório, RH, financeiro, gestão, documentos, planilhas, apresentações e comunicação.",
+  "methodology": {
+    "name": "Ciclo AGV de aprendizagem prática",
+    "stages": [
+      "Contexto profissional",
+      "Retomada do conhecimento",
+      "Explicação passo a passo",
+      "Prática guiada ou autônoma",
+      "Fixação e decisão",
+      "Evidência e reflexão"
+    ],
+    "principles": [
+      "Linguagem adequada para adolescentes",
+      "Progressão de autonomia entre 1º e 2º ADM",
+      "Dados fictícios e proteção de privacidade",
+      "Ferramentas semelhantes às rotinas de trabalho",
+      "Erro tratado como oportunidade de correção",
+      "Ajuda detalhada sem entregar a resposta",
+      "Evidência exportável e entrega orientada"
+    ]
+  },
+  "regionalFramework": {
+    "focus": [
+      "Colégio Alberto Gomes Veiga",
+      "Paranaguá",
+      "Curitiba",
+      "Paraná"
+    ],
+    "use": "Cenários fictícios de escola, empresas, equipes regionais, RH, financeiro, atendimento, fornecedores, projetos e reuniões.",
+    "safeguards": "Nenhum cenário afirma parceria real, utiliza dados pessoais ou representa informação operacional verdadeira de organizações citadas."
+  },
+  "timing": {
+    "typicalLesson": "15–25 min",
+    "pdfAutomaticReleaseMinutes": 5,
+    "diagnosticMinimumMinutes": 15,
+    "classPeriodMinutes": 50
+  },
+  "principles": [
+    "As Aulas 1, 2 e 3 do 1º ADM permanecem congeladas em suas etapas por já terem sido aplicadas.",
+    "As demais aulas seguem contexto, retomada, explicação, prática, fixação e evidência.",
+    "O 1º ADM recebe mais orientação e o 2º ADM trabalha com maior autonomia e análise.",
+    "As ferramentas priorizam planilhas, fórmulas, documentos, PDF, Gmail e apresentações.",
+    "Hardware, jogos e experiências 3D não são requisitos das trilhas atuais.",
+    "Todo nome, valor, empresa, pessoa e situação operacional usado na prática é fictício.",
+    "Avaliação e recuperação verificam competências equivalentes por problemáticas diferentes."
+  ],
+  "classes": {
+    "1ADM": {
+      "label": "Trilha prática de Informática Empresarial — 1º ADM",
+      "weeks": 4,
+      "meetingsPerWeek": 2,
+      "totalMeetings": 8,
+      "completedOrders": [
+        1,
+        2,
+        3
+      ],
+      "emphasis": "Planilhas, fórmulas, Gmail, documentos, apresentações, RH e financeiro com contextos de Paranaguá, Curitiba e Paraná",
+      "sequence": [
+        "Planilhas e organização",
+        "Formatação profissional",
+        "Cálculos administrativos",
+        "RH e financeiro com fórmulas",
+        "Gmail, Drive e PDF",
+        "Apresentações para reuniões",
+        "Projeto Conexão AGV com o Trabalho",
+        "Regularização de uma ação regional"
+      ],
+      "methodology": [
+        "Contexto profissional",
+        "Retomada",
+        "Explicação passo a passo",
+        "Prática guiada",
+        "Fixação",
+        "Evidência"
+      ],
+      "alreadyApplied": [
+        "1ADM-01",
+        "1ADM-02",
+        "1ADM-03"
+      ],
+      "lessons": [
+        {
+          "id": "1ADM-01",
+          "order": 1,
+          "type": "content",
+          "title": "Criando, organizando e compartilhando planilhas",
+          "subtitle": "Do arquivo vazio a uma estrutura administrativa organizada.",
+          "curriculumRevision": "2026T2-preserved",
+          "estimated": "15–25 min",
+          "application": "Informática Empresarial e rotina administrativa",
+          "evidence": "Comprovante da atividade e registro das ações",
+          "regionalContext": "Organização de arquivos e planilhas do Colégio Alberto Gomes Veiga, em Paranaguá, com exemplos administrativos fictícios do Paraná.",
+          "professionalRole": "auxiliar administrativo organizando informações",
+          "careerSkills": [
+            "Organização de arquivos",
+            "Estruturação de dados",
+            "Compartilhamento responsável",
+            "Atenção a detalhes"
+          ],
+          "learningPath": [
+            "Contexto",
+            "Demonstração",
+            "Prática guiada",
+            "Fixação",
+            "Desafio",
+            "Evidência"
+          ],
+          "objectives": [
+            "Criar e nomear uma planilha",
+            "Identificar linhas, colunas, células e intervalos",
+            "Organizar abas",
+            "Compartilhar com a permissão correta"
+          ],
+          "experiences": [
+            "explain",
+            "demo",
+            "quiz",
+            "sheet",
+            "quiz",
+            "sheet",
+            "quiz",
+            "challenge"
+          ]
+        },
+        {
+          "id": "1ADM-02",
+          "order": 2,
+          "type": "content",
+          "title": "Formatação profissional de planilhas",
+          "subtitle": "Transforme dados soltos em uma tabela clara, legível e funcional.",
+          "curriculumRevision": "2026T2-preserved",
+          "estimated": "15–25 min",
+          "application": "Informática Empresarial e rotina administrativa",
+          "evidence": "Comprovante da atividade e registro das ações",
+          "regionalContext": "Relatórios e controles administrativos fictícios do AGV e de organizações de Paranaguá e do Paraná.",
+          "professionalRole": "assistente administrativo preparando uma planilha profissional",
+          "careerSkills": [
+            "Comunicação visual",
+            "Padronização",
+            "Legibilidade",
+            "Conferência"
+          ],
+          "learningPath": [
+            "Contexto",
+            "Demonstração",
+            "Prática guiada",
+            "Fixação",
+            "Desafio",
+            "Evidência"
+          ],
+          "objectives": [
+            "Criar hierarquia visual",
+            "Aplicar negrito, itálico, cores, fontes e bordas",
+            "Organizar títulos e cabeçalhos",
+            "Evitar excesso visual"
+          ],
+          "experiences": [
+            "explain",
+            "demo",
+            "quiz",
+            "sheet",
+            "quiz",
+            "sheet",
+            "office-lab",
+            "challenge"
+          ]
+        },
+        {
+          "id": "1ADM-03",
+          "order": 3,
+          "type": "content",
+          "title": "Cálculos administrativos básicos",
+          "subtitle": "Transforme dados de compras, estoque e despesas em resultados confiáveis.",
+          "curriculumRevision": "2026T2-admin-v229",
+          "estimated": "15–25 min",
+          "application": "Financeiro, compras, estoque e controle de materiais",
+          "evidence": "Planilha administrativa com fórmulas e conferência",
+          "regionalContext": "Compras, estoque e despesas fictícias de uma rotina administrativa em Paranaguá, com referências regionais do Paraná.",
+          "professionalRole": "assistente administrativo apoiando compras e financeiro",
+          "careerSkills": [
+            "Cálculo administrativo",
+            "Conferência de valores",
+            "Controle de materiais",
+            "Interpretação de resultados"
+          ],
+          "learningPath": [
+            "Contexto",
+            "Demonstração",
+            "Prática guiada",
+            "Fixação",
+            "Desafio",
+            "Evidência"
+          ],
+          "objectives": [
+            "Usar referências de células",
+            "Aplicar as quatro operações",
+            "Conferir totais e saldos",
+            "Interpretar o resultado antes de comunicar"
+          ],
+          "experiences": [
+            "explain",
+            "demo",
+            "office-lab",
+            "formula",
+            "quiz",
+            "challenge"
+          ]
+        },
+        {
+          "id": "1ADM-04",
+          "order": 4,
+          "type": "content",
+          "title": "Planilhas e fórmulas para RH e financeiro",
+          "subtitle": "Use fórmulas para acompanhar horas, pendências e valores em uma rotina administrativa próxima do mercado de trabalho.",
+          "curriculumRevision": "2026T2-1adm-formulas-v256",
+          "estimated": "15–22 min",
+          "application": "Apoio ao RH, financeiro, secretaria e acompanhamento de capacitações",
+          "evidence": "Planilha de acompanhamento com fórmulas conferidas e interpretação dos indicadores",
+          "regionalContext": "Colégio Alberto Gomes Veiga, Paranaguá e equipes fictícias de apoio em Curitiba e no Paraná.",
+          "professionalRole": "Assistente administrativo de RH e financeiro",
+          "careerSkills": [
+            "Organização de dados",
+            "Raciocínio lógico",
+            "Conferência de informações",
+            "Comunicação de resultados"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Retomar referências e intervalos",
+            "Aplicar SOMA, MÉDIA, SE e CONT.SE",
+            "Interpretar resultados antes de comunicar",
+            "Identificar como as fórmulas apoiam decisões administrativas"
+          ],
+          "experiences": [
+            "explain",
+            "explain",
+            "office-lab",
+            "formula",
+            "quiz",
+            "explain"
+          ]
+        },
+        {
+          "id": "1ADM-05",
+          "order": 5,
+          "type": "content",
+          "title": "Gmail, Drive e PDF na comunicação administrativa",
+          "subtitle": "Produza um documento, organize o acesso e envie uma mensagem profissional com o arquivo correto.",
+          "curriculumRevision": "2026T2-1adm-email-v256",
+          "estimated": "15–22 min",
+          "application": "Comunicação entre escola, setores, fornecedores e equipes administrativas",
+          "evidence": "Comunicado em PDF, permissão revisada e e-mail profissional enviado na simulação",
+          "regionalContext": "Rotina administrativa do AGV em Paranaguá com comunicação fictícia a uma equipe de apoio em Curitiba.",
+          "professionalRole": "Auxiliar administrativo de comunicação e documentos",
+          "careerSkills": [
+            "Redação profissional",
+            "Organização de arquivos",
+            "Segurança da informação",
+            "Atenção a destinatários e anexos"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Reconhecer a estrutura de um e-mail profissional",
+            "Produzir e revisar um documento",
+            "Escolher permissão adequada",
+            "Anexar e encaminhar a versão correta"
+          ],
+          "experiences": [
+            "explain",
+            "explain",
+            "document-lab",
+            "email-lab",
+            "quiz",
+            "explain"
+          ]
+        },
+        {
+          "id": "1ADM-06",
+          "order": 6,
+          "type": "content",
+          "title": "Google Apresentações para reuniões e projetos",
+          "subtitle": "Transforme dados em uma apresentação curta, visual e adequada a uma reunião administrativa.",
+          "curriculumRevision": "2026T2-1adm-slides-v256",
+          "estimated": "15–22 min",
+          "application": "Reuniões, projetos escolares, atendimento, prestação de contas e apresentação de resultados",
+          "evidence": "Apresentação administrativa revisada, apresentada e compartilhada como Leitor",
+          "regionalContext": "Feira de Profissões do AGV em Paranaguá com inscrições fictícias de Paranaguá, Curitiba e outras regiões do Paraná.",
+          "professionalRole": "Assistente administrativo de projetos e reuniões",
+          "careerSkills": [
+            "Síntese de informações",
+            "Comunicação visual",
+            "Apresentação oral",
+            "Organização de projetos"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Planejar a mensagem antes de montar slides",
+            "Escolher layout e hierarquia visual",
+            "Usar gráfico e tópicos com propósito",
+            "Revisar notas e compartilhamento"
+          ],
+          "experiences": [
+            "explain",
+            "explain",
+            "presentation-lab",
+            "quiz",
+            "explain"
+          ]
+        },
+        {
+          "id": "1ADM-07",
+          "order": 7,
+          "type": "assessment",
+          "title": "Avaliação prática — Projeto Conexão AGV com o Trabalho",
+          "subtitle": "Analise inscrições, produza um relatório e comunique uma proposta para uma ação profissional fictícia.",
+          "curriculumRevision": "2026T2-1adm-assessment-v256",
+          "estimated": "15–25 min",
+          "application": "Planejamento de eventos, controle de inscrições, produção de relatórios e comunicação institucional",
+          "evidence": "Planilha analisada, relatório em PDF, apresentação e e-mail profissional",
+          "regionalContext": "Projeto fictício do AGV em Paranaguá com participantes de Paranaguá, Curitiba e outras cidades do Paraná.",
+          "professionalRole": "Assistente administrativo de projetos",
+          "careerSkills": [
+            "Planejamento",
+            "Análise de dados",
+            "Produção documental",
+            "Comunicação profissional"
+          ],
+          "learningPath": [
+            "Briefing",
+            "Planejamento da solução",
+            "Execução nas ferramentas",
+            "Revisão",
+            "Entrega da evidência"
+          ],
+          "objectives": [
+            "Interpretar uma demanda com autonomia",
+            "Aplicar filtros e fórmulas",
+            "Produzir evidências coerentes",
+            "Revisar comunicação e compartilhamento"
+          ],
+          "experiences": [
+            "explain",
+            "office-lab",
+            "formula",
+            "document-lab",
+            "presentation-lab",
+            "email-lab"
+          ]
+        },
+        {
+          "id": "1ADM-08",
+          "order": 8,
+          "type": "recovery",
+          "title": "Recuperação prática — regularização de uma ação regional",
+          "subtitle": "Corrija um cenário diferente da avaliação e produza um plano de regularização com novas evidências.",
+          "curriculumRevision": "2026T2-1adm-recovery-v256",
+          "estimated": "15–25 min",
+          "application": "Acompanhamento de pendências, controle de fornecedores e comunicação de ações corretivas",
+          "evidence": "Base regularizada, plano em PDF, apresentação e e-mail à coordenação",
+          "regionalContext": "Cenário fictício de organização de materiais e serviços entre Paranaguá, Curitiba e fornecedores do Paraná.",
+          "professionalRole": "Assistente administrativo de regularização",
+          "careerSkills": [
+            "Resolução de problemas",
+            "Controle de prazos",
+            "Conferência documental",
+            "Comunicação de ações corretivas"
+          ],
+          "learningPath": [
+            "Briefing alternativo",
+            "Diagnóstico do problema",
+            "Correção prática",
+            "Plano de ação",
+            "Comunicação"
+          ],
+          "objectives": [
+            "Identificar atrasos e riscos",
+            "Reaplicar fórmulas em outra base",
+            "Planejar ações corretivas",
+            "Comunicar a retomada com clareza"
+          ],
+          "experiences": [
+            "explain",
+            "office-lab",
+            "formula",
+            "document-lab",
+            "presentation-lab",
+            "email-lab"
+          ]
+        }
+      ]
+    },
+    "2ADM": {
+      "label": "Trilha prática de Informática Empresarial — 2º ADM",
+      "weeks": 4,
+      "meetingsPerWeek": 2,
+      "totalMeetings": 5,
+      "completedOrders": [],
+      "emphasis": "Planilhas, análise administrativa, RH, financeiro, documentos, apresentações e comunicação regional no Paraná",
+      "sequence": [
+        "Rotina administrativa regional",
+        "Indicadores de RH e financeiro",
+        "Comunicação gerencial",
+        "Expansão de atendimento no Paraná",
+        "Continuidade de serviços administrativos"
+      ],
+      "methodology": [
+        "Briefing profissional",
+        "Retomada estratégica",
+        "Execução nas ferramentas",
+        "Decisão administrativa",
+        "Revisão",
+        "Evidência"
+      ],
+      "alreadyApplied": [],
+      "lessons": [
+        {
+          "id": "2ADM-01",
+          "order": 1,
+          "type": "content",
+          "title": "Rotina administrativa regional com planilhas e comunicação",
+          "subtitle": "Organize demandas de Paranaguá e Curitiba, produza indicadores e encaminhe um resumo profissional.",
+          "curriculumRevision": "2026T2-2adm-office-v256",
+          "estimated": "15–22 min",
+          "application": "Controle de solicitações, acompanhamento regional, documentos e comunicação entre equipes",
+          "evidence": "Planilha organizada, fórmulas validadas, resumo em PDF e e-mail profissional",
+          "regionalContext": "Empresa fictícia com unidade administrativa em Paranaguá e equipe de suporte em Curitiba.",
+          "professionalRole": "Técnico em Administração responsável por uma rotina digital",
+          "careerSkills": [
+            "Visão de processo",
+            "Produtividade digital",
+            "Conferência de dados",
+            "Comunicação entre equipes"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Integrar planilha, fórmulas, documento e e-mail",
+            "Organizar demandas por localidade e setor",
+            "Interpretar indicadores",
+            "Revisar a cadeia completa da informação"
+          ],
+          "experiences": [
+            "explain",
+            "explain",
+            "office-lab",
+            "formula",
+            "document-lab",
+            "email-lab",
+            "quiz"
+          ]
+        },
+        {
+          "id": "2ADM-02",
+          "order": 2,
+          "type": "content",
+          "title": "RH e financeiro: indicadores para tomada de decisão",
+          "subtitle": "Analise jornada, capacitação e despesas com fórmulas e critérios administrativos.",
+          "curriculumRevision": "2026T2-2adm-rh-finance-v256",
+          "estimated": "15–22 min",
+          "application": "Gestão de pessoas, orçamento de capacitação, controle de benefícios e acompanhamento de pendências",
+          "evidence": "Planilha analisada, fórmulas avançadas e justificativa administrativa",
+          "regionalContext": "Equipe fictícia de RH com colaboradores em Paranaguá e Curitiba e ações de capacitação no Paraná.",
+          "professionalRole": "Técnico em Administração apoiando RH e financeiro",
+          "careerSkills": [
+            "Análise de indicadores",
+            "Gestão de pessoas",
+            "Controle financeiro",
+            "Tomada de decisão"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Relacionar dados de pessoas e valores",
+            "Aplicar SE, CONT.SE e SOMASE",
+            "Comparar localidades e setores",
+            "Justificar uma recomendação"
+          ],
+          "experiences": [
+            "explain",
+            "office-lab",
+            "formula",
+            "quiz",
+            "explain"
+          ]
+        },
+        {
+          "id": "2ADM-03",
+          "order": 3,
+          "type": "content",
+          "title": "Documentos, apresentações e comunicação gerencial",
+          "subtitle": "Transforme uma análise em relatório, apresentação e mensagem profissional para diferentes públicos.",
+          "curriculumRevision": "2026T2-2adm-communication-v256",
+          "estimated": "15–22 min",
+          "application": "Relatórios gerenciais, reuniões, prestação de contas, colaboração e comunicação regional",
+          "evidence": "Relatório em PDF, apresentação compartilhada e e-mail profissional",
+          "regionalContext": "Relatório fictício de atendimento administrativo envolvendo Paranaguá, Curitiba e outras regiões do Paraná.",
+          "professionalRole": "Técnico em Administração responsável por comunicação gerencial",
+          "careerSkills": [
+            "Gestão documental",
+            "Comunicação visual",
+            "Colaboração digital",
+            "Adequação ao público"
+          ],
+          "learningPath": [
+            "Contexto profissional",
+            "Retomada",
+            "Explicação passo a passo",
+            "Prática guiada",
+            "Fixação",
+            "Evidência"
+          ],
+          "objectives": [
+            "Adaptar a informação ao público",
+            "Controlar comentários e versões",
+            "Produzir uma apresentação objetiva",
+            "Encaminhar materiais com permissão adequada"
+          ],
+          "experiences": [
+            "explain",
+            "document-lab",
+            "presentation-lab",
+            "email-lab",
+            "quiz"
+          ]
+        },
+        {
+          "id": "2ADM-04",
+          "order": 4,
+          "type": "assessment",
+          "title": "Avaliação prática — expansão de atendimento no Paraná",
+          "subtitle": "Analise uma demanda regional, produza uma recomendação e comunique a decisão com autonomia.",
+          "curriculumRevision": "2026T2-2adm-assessment-v256",
+          "estimated": "15–25 min",
+          "application": "Planejamento regional, análise de capacidade, orçamento e comunicação gerencial",
+          "evidence": "Base analisada, recomendação em PDF, apresentação e e-mail à direção",
+          "regionalContext": "Empresa fictícia avaliando ampliar atendimento entre Paranaguá, Curitiba e outras regiões do Paraná.",
+          "professionalRole": "Técnico em Administração apoiando uma decisão gerencial",
+          "careerSkills": [
+            "Análise integrada",
+            "Planejamento regional",
+            "Gestão de evidências",
+            "Comunicação executiva"
+          ],
+          "learningPath": [
+            "Briefing",
+            "Planejamento",
+            "Análise",
+            "Produção de evidências",
+            "Revisão e entrega"
+          ],
+          "objectives": [
+            "Interpretar uma demanda regional",
+            "Aplicar fórmulas e filtros com autonomia",
+            "Relacionar indicadores a uma decisão",
+            "Produzir e comunicar evidências profissionais"
+          ],
+          "experiences": [
+            "explain",
+            "office-lab",
+            "formula",
+            "document-lab",
+            "presentation-lab",
+            "email-lab"
+          ]
+        },
+        {
+          "id": "2ADM-05",
+          "order": 5,
+          "type": "recovery",
+          "title": "Recuperação prática — continuidade de serviços administrativos",
+          "subtitle": "Resolva atrasos e falhas de comunicação em um cenário diferente da avaliação.",
+          "curriculumRevision": "2026T2-2adm-recovery-v256",
+          "estimated": "15–25 min",
+          "application": "Gestão de fornecedores, controle de prazos, continuidade operacional e comunicação de crise",
+          "evidence": "Base regularizada, plano de continuidade em PDF, apresentação e e-mail à coordenação",
+          "regionalContext": "Cenário fictício de serviços administrativos entre Paranaguá, Curitiba e fornecedores do Paraná.",
+          "professionalRole": "Técnico em Administração responsável por continuidade operacional",
+          "careerSkills": [
+            "Gestão de riscos",
+            "Controle de fornecedores",
+            "Plano de ação",
+            "Comunicação de crise"
+          ],
+          "learningPath": [
+            "Briefing alternativo",
+            "Diagnóstico",
+            "Priorização",
+            "Plano de continuidade",
+            "Comunicação"
+          ],
+          "objectives": [
+            "Diagnosticar atrasos e impactos",
+            "Aplicar fórmulas em nova base",
+            "Planejar continuidade",
+            "Comunicar ações e responsáveis"
+          ],
+          "experiences": [
+            "explain",
+            "office-lab",
+            "formula",
+            "document-lab",
+            "presentation-lab",
+            "email-lab"
+          ]
+        }
+      ]
+    }
+  }
+}

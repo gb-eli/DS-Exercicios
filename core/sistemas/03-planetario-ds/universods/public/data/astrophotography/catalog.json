@@ -1,0 +1,24 @@
+{
+  "schema": "cosmos-ds-astrophotography-lab-v1",
+  "phase": "C4.2",
+  "cameras": 4,
+  "targets": 6,
+  "capturePresets": 4,
+  "calibrationFrames": 3,
+  "stackMethods": 3,
+  "palettes": 4,
+  "conditions": 4,
+  "capabilities": {
+    "sessionPlanner": true,
+    "planetaryVideo": true,
+    "deepSkySequence": true,
+    "calibration": true,
+    "alignmentAndStacking": true,
+    "histogram": true,
+    "falseColor": true,
+    "localNotebook": true,
+    "guidedEvidence": true,
+    "offlineProcedural": true
+  },
+  "opticalSetups": 4
+}

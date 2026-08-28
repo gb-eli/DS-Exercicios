@@ -1,0 +1,12 @@
+{
+  "errors": [],
+  "lite": "lite",
+  "advanced": "advanced",
+  "cinematic": "cinematic",
+  "activeName": "Renderer Cinematic",
+  "panel": 1,
+  "shader": {
+    "available": false
+  },
+  "mobileOverflow": false
+}

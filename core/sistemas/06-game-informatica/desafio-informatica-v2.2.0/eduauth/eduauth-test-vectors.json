@@ -1,0 +1,255 @@
+{
+  "schema": "eduauth-test-vectors",
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "coreVersion": "1.0.0",
+  "environment": "development",
+  "warning": "DEVELOPMENT TEST KEY — DO NOT USE IN PRODUCTION",
+  "generatedAt": "2026-07-30T16:30:00.000Z",
+  "testKeys": {
+    "classHmacKeyBase64": "1Gs+af77dKsMHrM7TCJW4d/CZusK0XeaT/J1ZUPITkc=",
+    "sessionHmacKeyBase64": "C91nlspEQFH5EJWTQ9s0S2sWImZ/0AekCRzHaBP3MCo=",
+    "signingPublicJwk": {
+      "key_ops": [
+        "verify"
+      ],
+      "ext": true,
+      "kty": "EC",
+      "x": "fJjFL-vATHoNbu6_naHT4H0l7b7E9G8IT2AolJPgymk",
+      "y": "nLZGWG5qQu1-IN9XGMVuaDxHNM8dyFDr5nioO3Nnr_k",
+      "crv": "P-256"
+    }
+  },
+  "fixedTime": {
+    "iso": "2026-07-29T15:00:00.000Z",
+    "unixSeconds": 1785337200
+  },
+  "vectors": [
+    {
+      "id": "class-valid",
+      "description": "Código coletivo válido para 1º ADM, Aula 01.",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "CLASS_SHARED_PIN",
+        "keyId": "desafio-informatica-agv-class-01",
+        "keyVersion": 1,
+        "platformId": "desafio-informatica-agv",
+        "classId": "1adm",
+        "subjectId": "informatica-empresarial",
+        "lessonId": "1adm-01",
+        "activityId": "guided-lesson",
+        "actionId": "lesson-start",
+        "timeSlot": 1983708,
+        "policyVersion": 1,
+        "resourceId": "1ADM-01",
+        "resourceIdHash": "ER0H8"
+      },
+      "canonicalContext": {
+        "actionId": "lesson-start",
+        "activityId": "guided-lesson",
+        "classId": "1adm",
+        "keyId": "desafio-informatica-agv-class-01",
+        "keyVersion": 1,
+        "lessonId": "1adm-01",
+        "mode": "CLASS_SHARED_PIN",
+        "platformId": "desafio-informatica-agv",
+        "policyVersion": 1,
+        "protocol": "EDUAUTH",
+        "resourceId": "1ADM-01",
+        "resourceIdHash": "ER0H8",
+        "subjectId": "informatica-empresarial",
+        "timeSlot": 1983708,
+        "version": 1
+      },
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "hmacSha256Hex": "2bbb2be7c5183d812136788a0c69c772674e534f1671b5dc6845b1ba63e3d748",
+      "pin": "57217930",
+      "expected": "valid"
+    },
+    {
+      "id": "class-expired",
+      "description": "Mesmo código coletivo consultado depois da tolerância.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "pin": "57217930",
+      "validationTimeUnixSeconds": 1785340800,
+      "expected": "expired"
+    },
+    {
+      "id": "class-other-class",
+      "description": "PIN coletivo não deve validar em outra turma.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "pin": "57217930",
+      "mutatedContext": {
+        "classId": "2adm"
+      },
+      "expected": "invalid"
+    },
+    {
+      "id": "class-other-lesson",
+      "description": "PIN coletivo não deve validar em outra aula.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "pin": "57217930",
+      "mutatedContext": {
+        "lessonId": "1adm-02"
+      },
+      "expected": "invalid"
+    },
+    {
+      "id": "class-other-platform",
+      "description": "Código contém platformCode 01 e deve ser rejeitado por registro diferente.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "mutatedPlatformCode": "02",
+      "expected": "invalid"
+    },
+    {
+      "id": "request-typo",
+      "description": "Código-base com erro de digitação.",
+      "requestCode": "EB1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "expected": "checksum-invalid"
+    },
+    {
+      "id": "checksum-invalid",
+      "description": "Checksum alterado.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0A",
+      "expected": "checksum-invalid"
+    },
+    {
+      "id": "session-valid",
+      "description": "Código individual válido e vinculado à sessão.",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SESSION_SCOPED_PIN",
+        "keyId": "desafio-informatica-agv-session-01",
+        "keyVersion": 1,
+        "platformId": "desafio-informatica-agv",
+        "classId": "1adm",
+        "subjectId": "informatica-empresarial",
+        "lessonId": "diagnostico",
+        "activityId": "diagnostic-class",
+        "actionId": "early-completion",
+        "timeSlot": 9918540,
+        "policyVersion": 1,
+        "resourceId": "diagnostico",
+        "resourceIdHash": "DYZJ2",
+        "sessionId": "24H36",
+        "requestId": "8HAPC",
+        "sessionNonce": "EY49J",
+        "profileIdHash": "NAXWR",
+        "issuedAt": 1785337200,
+        "issuedOffset5": 0,
+        "expiresAt": 1785337380
+      },
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "hmacSha256Hex": "a1a04160f6a4252a3e18a00d4432306edbee99ceedd4107a7cc9bdd5d9626c9b",
+      "pin": "0222573104",
+      "expected": "valid"
+    },
+    {
+      "id": "session-other-session",
+      "description": "PIN individual não deve validar em outra sessão.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "pin": "0222573104",
+      "mutatedContext": {
+        "sessionId": "04106"
+      },
+      "expected": "invalid"
+    },
+    {
+      "id": "session-expired",
+      "description": "PIN individual expirado.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "pin": "0222573104",
+      "validationTimeUnixSeconds": 1785337381,
+      "expected": "expired"
+    },
+    {
+      "id": "session-reused",
+      "description": "Solicitação de uso único deve ser consumida após sucesso.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "pin": "0222573104",
+      "expected": "valid-once"
+    },
+    {
+      "id": "attempt-limit",
+      "description": "Cinco tentativas incorretas invalidam a solicitação.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "invalidPins": [
+        "0000000000",
+        "1111111111",
+        "2222222222",
+        "3333333333",
+        "4444444444"
+      ],
+      "expected": "invalidated"
+    },
+    {
+      "id": "page-refresh",
+      "description": "Solicitação permanece em sessionStorage ao atualizar a página.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "expected": "preserved-in-tab"
+    },
+    {
+      "id": "session-closed",
+      "description": "Fechar a aba encerra sessionStorage.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "expected": "removed"
+    },
+    {
+      "id": "clock-drift",
+      "description": "Uma faixa de tolerância pode ser aceita conforme a política.",
+      "requestCode": "EA1-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "pin": "57217930",
+      "validationTimeUnixSeconds": 1785338100,
+      "expected": "valid-with-drift"
+    },
+    {
+      "id": "unknown-registry",
+      "description": "Código interno desconhecido deve ser rejeitado.",
+      "expected": "registry-error"
+    },
+    {
+      "id": "incompatible-version",
+      "description": "Prefixo EA2 não é compatível com EA1.",
+      "requestCode": "EA2-C1-K01-040G-2081-040G-07J4-VG-ZB0E",
+      "expected": "version-error"
+    },
+    {
+      "id": "unauthorized-action",
+      "description": "A autorização não pode ser usada para outra ação.",
+      "requestCode": "EA1-S1-K01-040G-22R3-0C0G-15TR-9G8J-4CT4-ANK7-F24S-NAXW-RVXZ-4400-097N",
+      "pin": "0222573104",
+      "mutatedContext": {
+        "actionId": "result-release"
+      },
+      "expected": "invalid"
+    },
+    {
+      "id": "signed-valid",
+      "description": "Autorização assinada válida.",
+      "payload": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SIGNED_GRANT",
+        "authorizationId": "grant-test-001",
+        "platformId": "desafio-informatica-agv",
+        "actionId": "early-completion",
+        "resourceIdHash": "DYZJ2",
+        "sessionId": "24H36",
+        "requestId": "8HAPC",
+        "issuedAt": 1785337200,
+        "expiresAt": 1893456000,
+        "reason": "Vetor de teste EduAuth"
+      },
+      "token": "EA1-G1.eyJhY3Rpb25JZCI6ImVhcmx5LWNvbXBsZXRpb24iLCJhdXRob3JpemF0aW9uSWQiOiJncmFudC10ZXN0LTAwMSIsImV4cGlyZXNBdCI6MTg5MzQ1NjAwMCwiaXNzdWVkQXQiOjE3ODUzMzcyMDAsIm1vZGUiOiJTSUdORURfR1JBTlQiLCJwbGF0Zm9ybUlkIjoiZGVzYWZpby1pbmZvcm1hdGljYS1hZ3YiLCJwcm90b2NvbCI6IkVEVUFVVEgiLCJyZWFzb24iOiJWZXRvciBkZSB0ZXN0ZSBFZHVBdXRoIiwicmVxdWVzdElkIjoiOEhBUEMiLCJyZXNvdXJjZUlkSGFzaCI6IkRZWkoyIiwic2Vzc2lvbklkIjoiMjRIMzYiLCJ2ZXJzaW9uIjoxfQ.ERYmsyVCJVm4NNQF1SIIgJmv5oqbIF_3LpwB8po0tcEt_UQ89EDZQ9ieEPybaoozVnZgI__yH3Q23l7UiNU0Pw",
+      "expected": "valid"
+    },
+    {
+      "id": "signed-altered",
+      "description": "Autorização assinada alterada.",
+      "token": "EA1-G1.eyJhY3Rpb25JZCI6ImVhcmx5LWNvbXBsZXRpb24iLCJhdXRob3JpemF0aW9uSWQiOiJncmFudC10ZXN0LTAwMSIsImV4cGlyZXNBdCI6MTg5MzQ1NjAwMCwiaXNzdWVkQXQiOjE3ODUzMzcyMDAsIm1vZGUiOiJTSUdORURfR1JBTlQiLCJwbGF0Zm9ybUlkIjoiZGVzYWZpby1pbmZvcm1hdGljYS1hZ3YiLCJwcm90b2NvbCI6IkVEVUFVVEgiLCJyZWFzb24iOiJWZXRvciBkZSB0ZXN0ZSBFZHVBdXRoIiwicmVxdWVzdElkIjoiOEhBUEMiLCJyZXNvdXJjZUlkSGFzaCI6IkRZWkoyIiwic2Vzc2lvbklkIjoiMjRIMzYiLCJ2ZXJzaW9uIjoxfQ.ERYmsyVCJVm4NNQF1SIIgJmv5oqbIF_3LpwB8po0tcEt_UQ89EDZQ9ieEPybaoozVnZgI__yH3Q23l7UiNU0PA",
+      "expected": "signature-invalid"
+    }
+  ]
+}

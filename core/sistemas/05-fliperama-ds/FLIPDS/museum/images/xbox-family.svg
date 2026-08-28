@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+<title id="t">Família Xbox</title><desc id="d">Ilustração vetorial autoral para o museu do Fliperama DS.</desc>
+<rect width="800" height="600" fill="#081426"/><path d="M0 90h800M0 510h800M80 0v600M720 0v600" stroke="#49e7ff" opacity=".12"/>
+<circle cx="400" cy="300" r="235" fill="none" stroke="#9273ff" opacity=".12" stroke-width="2"/><circle cx="400" cy="300" r="185" fill="none" stroke="#49e7ff" opacity=".09"/>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#49e7ff"/><stop offset="1" stop-color="#9273ff"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="url(#g)" stroke="#49e7ff" stroke-width="6" stroke-linejoin="round" filter="url(#glow)"><path d="M250 140h300l80 70v230l-80 70H250l-80-70V210z"/><path d="M365 190h70v270h-70z"/><circle cx="495" cy="345" r="18"/><path d="M230 235h80v18h-80z"/></g>
+<text x="55" y="70" fill="#49e7ff" font-family="ui-monospace,monospace" font-size="20" font-weight="700" letter-spacing="3">FLIPERAMA DS · MUSEU</text>
+<text x="55" y="535" fill="#f4f8ff" font-family="system-ui,sans-serif" font-size="30" font-weight="750">Família Xbox</text>
+<text x="55" y="568" fill="#49e7ff" font-family="ui-monospace,monospace" font-size="18">2001–2020 · Evolução Xbox</text>
+</svg>

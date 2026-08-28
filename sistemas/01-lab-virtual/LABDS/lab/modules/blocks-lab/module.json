@@ -1,0 +1,13 @@
+{
+  "id": "blocks-lab",
+  "name": "Blocks",
+  "version": "4.17.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/blocks-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

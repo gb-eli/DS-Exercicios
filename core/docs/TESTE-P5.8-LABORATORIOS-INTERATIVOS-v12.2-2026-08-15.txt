@@ -1,0 +1,13 @@
+AGV ECOSSISTEMA UNIFICADO — P5.8 / v12.2
+Data: 2026-08-15
+
+Validações:
+- 19/19 suítes Node aprovadas.
+- lobby.js: sintaxe válida.
+- lobby3d.js: sintaxe válida.
+- release-v12.2.json: JSON válido.
+- Estações interativas presentes: toggleStation.
+- Quadro contextual presente: showBoard.
+- Área de apresentação presente e restringida na UI a equipe.
+- Nenhum claim_core_reward introduzido na interação do Lobby.
+- Nenhuma migration ou Edge Function requerida.

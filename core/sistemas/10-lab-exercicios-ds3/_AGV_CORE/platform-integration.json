@@ -1,0 +1,67 @@
+{
+  "platformId": "lab-ds3",
+  "name": "Plataforma 3DS — Aluno",
+  "version": "0.11.9",
+  "integrationVersion": "0.9.0-p6.7-wave1",
+  "canonicalRoot": "modo-aluno",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "local auth",
+    "economy": "none",
+    "progress": "local exercise progress"
+  },
+  "candidateHookFiles": [
+    "assets/js/auth.js",
+    "assets/js/aluno.js",
+    "assets/js/utils.js",
+    "assets/js/shell.js"
+  ],
+  "integrationStatus": "p6.7-wave1-central-session-authority-progress-cache",
+  "capabilitiesLive": {
+    "auth": true,
+    "progress": true,
+    "teacherReview": true,
+    "teacherReference": true,
+    "xp": false,
+    "points": false,
+    "wallet": false,
+    "store": false,
+    "inventory": false,
+    "marketplace": false,
+    "crossPcFileSync": false,
+    "crossSurfaceSession": true,
+    "localProgressIsAuthority": false
+  },
+  "canonicalActivities": 8,
+  "requiredClassCode": "3DS-C-MANHA",
+  "edgeFunctions": {
+    "student": "lab-exercises-core v1",
+    "teacher": "agv-teacher-activity v3"
+  },
+  "security": {
+    "studentReferenceStripped": true,
+    "teacherAnswersInStudentBundle": false,
+    "economicReward": "no_economic_reward"
+  },
+  "session": {
+    "authority": "AGV Core / Supabase Auth",
+    "storage": "sb-iresvqwyaqotghjssncg-auth-token",
+    "crossSurface": true,
+    "legacySessionStorage": "migration_only"
+  },
+  "localStatePolicy": {
+    "identity": "not_authoritative",
+    "progress": "cache_and_offline_only",
+    "preferences": "local_allowed",
+    "officialProgress": "lab-exercises-core"
+  }
+}

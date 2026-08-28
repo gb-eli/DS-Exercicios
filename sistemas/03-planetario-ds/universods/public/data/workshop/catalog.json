@@ -1,0 +1,8 @@
+{
+  "schema": "cosmos-ds-space-workshop-v1",
+  "phase": "C3.2",
+  "systems": ["satellite", "rover", "capsule", "station", "shuttle"],
+  "difficultyModes": ["guided", "intermediate", "advanced"],
+  "flows": ["energy", "data", "command"],
+  "educationalNotice": "Modelos didáticos para estudo de arquitetura, montagem, diagnóstico, sensores, software e telemetria."
+}

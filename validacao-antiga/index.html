@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR" data-fullscreen-exempt="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; style-src 'self'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>Validar atividades antigas • DS</title>
+  <link rel="stylesheet" href="../atividades/assets/css/app.css?v=14.9.1">
+  <link rel="stylesheet" href="assets/legacy.css?v=14.9.1">
+</head>
+<body class="legacy-validation-page">
+  <main class="legacy-validation-shell">
+    <header class="legacy-validation-head">
+      <div><p class="eyebrow">Exercícios Práticos DS</p><h1>Validar atividades do portal antigo</h1><p class="muted">Esta é a única área do portal que pode ser usada fora da tela cheia. Selecione as atividades já realizadas e informe o repositório GitHub onde elas estão salvas.</p></div>
+      <button id="back-portal" class="button button-primary" type="button">Voltar ao portal</button>
+    </header>
+    <section class="panel legacy-repo-panel">
+      <label><span>Link do repositório GitHub</span><input id="repository-url" type="url" inputmode="url" autocomplete="url" placeholder="https://github.com/usuario/repositorio"></label>
+      <p class="muted">Use o repositório que contém os exercícios feitos na plataforma anterior. A validação ficará aguardando conferência do professor.</p>
+    </section>
+    <section class="panel">
+      <div class="legacy-list-head"><div><h2>Escolha as atividades</h2><p id="student-context" class="muted">Carregando sua turma…</p></div><div class="legacy-list-actions"><button id="select-all" class="button button-ghost button-small" type="button">Selecionar todas</button><button id="clear-all" class="button button-ghost button-small" type="button">Limpar</button></div></div>
+      <div id="legacy-subjects" class="legacy-subjects"><p class="muted">Carregando atividades…</p></div>
+    </section>
+    <section class="legacy-submit-bar panel">
+      <div><strong id="selected-count">0 atividades selecionadas</strong><span id="submit-status" class="muted">Nenhuma alteração enviada.</span></div>
+      <button id="submit-legacy" class="button button-primary" type="button" disabled>Enviar para validação</button>
+    </section>
+  </main>
+  <script type="module" src="assets/legacy.js?v=14.9.1"></script>
+</body>
+</html>

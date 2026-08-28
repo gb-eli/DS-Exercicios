@@ -1,0 +1,93 @@
+# Testes — Plataforma Poligonal DS 3D v0.38.0
+
+- Verificações: **87**
+- Aprovadas: **87**
+- Falhas: **0**
+
+- ✅ schema do mundo
+- ✅ quatro áreas
+- ✅ nomes únicos
+- ✅ área 1 spawn
+- ✅ área 1 solo
+- ✅ área 1 3 fragmentos
+- ✅ área 1 checkpoint
+- ✅ área 1 portal
+- ✅ área 1 plataforma móvel
+- ✅ área 1 inimigos
+- ✅ a1-c1 dentro do mundo
+- ✅ a1-c2 dentro do mundo
+- ✅ a1-c3 dentro do mundo
+- ✅ m1 movimento válido
+- ✅ bugbot-1 patrulha válida
+- ✅ bugbot-2 patrulha válida
+- ✅ área 2 spawn
+- ✅ área 2 solo
+- ✅ área 2 3 fragmentos
+- ✅ área 2 checkpoint
+- ✅ área 2 portal
+- ✅ área 2 plataforma móvel
+- ✅ área 2 inimigos
+- ✅ a2-c1 dentro do mundo
+- ✅ a2-c2 dentro do mundo
+- ✅ a2-c3 dentro do mundo
+- ✅ m1 movimento válido
+- ✅ glitch-1 patrulha válida
+- ✅ glitch-2 patrulha válida
+- ✅ área 3 spawn
+- ✅ área 3 solo
+- ✅ área 3 3 fragmentos
+- ✅ área 3 checkpoint
+- ✅ área 3 portal
+- ✅ área 3 plataforma móvel
+- ✅ área 3 inimigos
+- ✅ a3-c1 dentro do mundo
+- ✅ a3-c2 dentro do mundo
+- ✅ a3-c3 dentro do mundo
+- ✅ m1 movimento válido
+- ✅ sentinel-1 patrulha válida
+- ✅ sentinel-2 patrulha válida
+- ✅ área 4 spawn
+- ✅ área 4 solo
+- ✅ área 4 3 fragmentos
+- ✅ área 4 checkpoint
+- ✅ área 4 portal
+- ✅ área 4 plataforma móvel
+- ✅ área 4 inimigos
+- ✅ a4-c1 dentro do mundo
+- ✅ a4-c2 dentro do mundo
+- ✅ a4-c3 dentro do mundo
+- ✅ m1 movimento válido
+- ✅ guardian-1 patrulha válida
+- ✅ guardian-2 patrulha válida
+- ✅ 12 fragmentos totais
+- ✅ 8 inimigos totais
+- ✅ 4 plataformas móveis
+- ✅ Three.js local
+- ✅ câmera perspectiva
+- ✅ câmera follow suave
+- ✅ gravidade
+- ✅ coyote time
+- ✅ jump buffer
+- ✅ colisão topo 3D
+- ✅ plataforma móvel carrega jogador
+- ✅ gamepad
+- ✅ touch
+- ✅ arraste câmera
+- ✅ save schema 1
+- ✅ save de fragmentos
+- ✅ checkpoint salvo
+- ✅ portal exige 3
+- ✅ vitória 12 fragmentos
+- ✅ mensagem portal
+- ✅ runtime loader
+- ✅ runtime wrapper
+- ✅ iframe isolado
+- ✅ perfil externo
+- ✅ ficha educacional
+- ✅ 4 progressões
+- ✅ mídia logo.svg
+- ✅ acessibilidade logo.svg
+- ✅ mídia preview-01.svg
+- ✅ acessibilidade preview-01.svg
+- ✅ mídia preview-02.svg
+- ✅ acessibilidade preview-02.svg

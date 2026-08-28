@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071018">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>DS Exercícios — Gestão da Prova Prática</title>
+  <link rel="stylesheet" href="assets/prova.css?v=14.10.8.36">
+</head>
+<body>
+  <main class="exam-shell admin-shell">
+    <header class="exam-top">
+      <a class="brand-link" href="../admin/"><span class="brand-mark">DS</span><div><strong>Gestão da Prova Prática</strong><small>Professor / Administração</small></div></a>
+      <div class="top-actions"><span id="connection-pill" class="pill">Conectando</span><a class="button ghost" href="../admin/">Admin</a><a class="button ghost" href="../professor/">Professor</a><button id="logout" class="button ghost hidden" type="button">Sair</button></div>
+    </header>
+
+    <section id="login-view" class="login-layout compact-login">
+      <article class="hero-panel"><p class="eyebrow">Central da partida coletiva</p><h1>Controle a partida<br>em tempo real.</h1><p>Abra o lobby, acompanhe guildas, liderança e cargos, pause a partida, corrija missões e programe a publicação das notas.</p></article>
+      <form id="login-form" class="panel login-card"><p class="eyebrow">Equipe autorizada</p><h2>Entrar</h2><label>E-mail institucional<input id="email" type="email" autocomplete="username" required></label><label>Senha<input id="password" type="password" autocomplete="current-password" required></label><button class="button primary" type="submit">Abrir gestão</button><p id="login-message" class="message" aria-live="polite"></p></form>
+    </section>
+
+    <section id="app-view" class="hidden">
+      <div class="admin-toolbar"><div><p class="eyebrow">Prova prática</p><h1 id="admin-title">Sessões de avaliação</h1><p id="admin-subtitle" class="muted"></p></div><div class="top-actions"><a class="button simulator-entry" href="simulador.html">🎮 Simular experiência do aluno</a><button id="back-sessions" class="button ghost hidden" type="button">← Sessões</button><button id="refresh" class="button ghost" type="button">Atualizar</button></div></div>
+      <div id="admin-content" class="content-grid"><div class="panel loading-card">Carregando painel…</div></div>
+    </section>
+  </main>
+  <script src="../core/session/agv-session.js?v=14.10.8.36"></script>
+  <script src="assets/config.js?v=14.10.8.36"></script>
+  <script src="assets/admin.js?v=14.10.8.36"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+AGV — P4 LOBBY GERAL + 4 TURMAS — v11
+Data: 14/08/2026
+
+Checklist de contrato:
+- lobby/index.html existe
+- lobby canvas 1600x1000
+- 4 zonas: 1DS, 2DS, 3DS, Sub
+- movimento WASD/setas + toque
+- interação E/Enter
+- 4 portais visuais distintos
+- portal de outra turma não abre atividade
+- portal próprio depende de release válida
+- múltiplas atividades liberadas abrem seletor
+- atividade escolhida usa deep-link UUID
+- portal de atividades revalida no backend
+- presença social usa lobby_presence + RLS
+- emotes sem chat livre
+- default_locked=true para exercícios ativos
+- nenhum gabarito privado no lobby

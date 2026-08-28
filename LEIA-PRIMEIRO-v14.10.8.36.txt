@@ -1,0 +1,20 @@
+AGV EDUCATION CORE — v14.10.8.36
+HOTFIX DE PUBLICAÇÃO / CAMPUS DS 3D
+
+IMPORTANTE: este ZIP foi montado ROOT-READY.
+Ao abrir o ZIP, você deve ver diretamente pastas como:
+  lobby/
+  core/
+  atividades/
+  admin/
+  prova/
+
+NÃO existe uma pasta externa DS-Exercicios-main envolvendo tudo.
+Extraia/copiei o conteúdo diretamente para a RAIZ do repositório DS-Exercicios e aceite substituir os arquivos existentes.
+
+Depois do GitHub Pages publicar:
+1. Abra https://gb-eli.github.io/DS-Exercicios/repair-lobby.html
+2. O reparador remove o Service Worker/cache antigo do Lobby.
+3. Ele verifica se os seis arquivos principais já são v14.10.8.36.
+4. Só então abre o Campus.
+5. No Diagnóstico técnico, a release DEVE ser 14.10.8.36. Se continuar 14.10.8.18, a nova versão não foi publicada no caminho correto.

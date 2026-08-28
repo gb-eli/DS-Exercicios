@@ -1,0 +1,16 @@
+{
+  "schema": "cosmos-ds-technical-panels-v1",
+  "version": "29.0.0",
+  "systems": 5,
+  "viewModes": ["external", "cutaway", "xray", "exploded"],
+  "features": {
+    "telemetry": true,
+    "hotspots": true,
+    "commands": true,
+    "faultInjection": true,
+    "guidedProcedure": true,
+    "evidence": true,
+    "offline": true
+  },
+  "notice": "Valores, falhas e procedimentos são modelos didáticos e não especificações operacionais reais."
+}

@@ -1,0 +1,648 @@
+{
+  "suite": "Mundo Plataforma DS 360 v0.38.4 · Região Industrial",
+  "checks": 128,
+  "passed": 128,
+  "failed": 0,
+  "items": [
+    {
+      "name": "4 regiões declaradas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Industrial identificada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Industrial 96x84",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 painéis de energia",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 consoles de carga",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1 console mestre",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 esteiras",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 plataformas móveis",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "2 elevadores ou mais",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "4 checkpoints",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "5 patrulhas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "5 perigos",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "IDs industriais únicos",
+      "passed": true,
+      "detail": "49 IDs"
+    },
+    {
+      "name": "plataforma dock-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma dock-a positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma dock-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma dock-b positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-west dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-west positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-center dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-center positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-east dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma power-east positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma logistics-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma logistics-a positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma logistics-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma logistics-b positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma crane-yard-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma crane-yard-a positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma crane-yard-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma crane-yard-b positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-step-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-step-a positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-step-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-step-b positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-room dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma control-room positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma portal-approach-industrial dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "plataforma portal-approach-industrial positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-west dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-west eixo válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-west movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-east dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-east eixo válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel cargo-lift-east movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel gantry-shuttle dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel gantry-shuttle eixo válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel gantry-shuttle movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel control-elevator dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel control-elevator eixo válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "móvel control-elevator movimento válido",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-a direção normalizada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-a velocidade positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-b direção normalizada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-b velocidade positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-c dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-c direção normalizada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira belt-c velocidade positiva",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-dock dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-dock fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-dock fora de obstáculo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-power dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-power fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-power fora de obstáculo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-logistics dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-logistics fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-logistics fora de obstáculo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-control dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-control fora de perigo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "checkpoint industrial-cp-control fora de obstáculo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-west dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-west apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-center dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-center apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-east dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação power-panel-east apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-a dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-a apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-b dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-b apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-c dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação cargo-console-c apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação control-console dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "interação control-console apoiada",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "spawn industrial seguro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "portal industrial dentro",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "portal industrial fora de obstáculo",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vale preserva 6 Orbes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vila preserva 3 missões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Floresta preserva 3 Nós",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save novo schema 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campanha tem 4 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vale → Vila",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Vila → Floresta",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Floresta → Industrial",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Industrial inicia energia 0/3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 painéis liberam logística",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "3 cargas liberam controle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "console mestre sincroniza",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Industrial conclui campanha",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vitória na região 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "migra schema3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schema3 concluído entra na Industrial",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save migrado vira schema4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pontuação preservada na migração",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "vidas preservadas na migração",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restaura schema4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schema4 preserva etapa industrial",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "esteira desloca personagem",
+      "passed": true,
+      "detail": "deslocamento=0.068"
+    },
+    {
+      "name": "simulação possui esteiras",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "render possui indústria",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game carrega industrial.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ready anuncia 4 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "versão pública v0.38.4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Service Worker v0.38.4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Industrial no cache offline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wrapper reconhece 4 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "catálogo marca Fase 7.25",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "catálogo cita Região Industrial",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "perfil externo cita 4 regiões",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "tutorial externo cita 3 cargas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ficha educacional cita Industrial",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save educacional cita schema 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game HUD possui Energia",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game trata evento cargo-route",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game vitória usa 4 regiões",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

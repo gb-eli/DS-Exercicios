@@ -1,0 +1,15 @@
+{
+  "version": "v12.1-P5.7-INTERIORES-LABORATORIOS",
+  "phase": "P5.7",
+  "date": "2026-08-15",
+  "lobby_version": "0.9.0",
+  "base": "v12.0-P5.6-CAMPUS-DINAMICO",
+  "highlights": [
+    "Interiores 3D para 1DS, 2DS, 3DS e SUB",
+    "Portas automáticas de entrada e saída",
+    "Laboratórios com computadores, quadro inteligente, rack e terminal pedagógico",
+    "Coordenadas internas desacopladas da presença pública"
+  ],
+  "requires_database_migration": false,
+  "requires_edge_function_deploy": false
+}

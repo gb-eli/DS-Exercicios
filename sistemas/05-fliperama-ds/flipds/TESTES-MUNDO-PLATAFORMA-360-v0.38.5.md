@@ -1,0 +1,149 @@
+# Testes — Mundo Plataforma DS 360 v0.38.5 · Torre Central
+
+- Verificações: **143**
+- Aprovadas: **143**
+- Falhas: **0**
+
+- ✅ 5 regiões declaradas
+- ✅ Torre identificada
+- ✅ Torre é região 5
+- ✅ Torre 72x72
+- ✅ Portal no topo
+- ✅ 3 consoles de sincronização
+- ✅ 1 Núcleo Central
+- ✅ 6 plataformas móveis
+- ✅ 5 elevadores verticais ou mais
+- ✅ 5 checkpoints verticais
+- ✅ 5 patrulhas na torre
+- ✅ 5 perigos em múltiplas alturas
+- ✅ 13 plataformas fixas
+- ✅ IDs da Torre únicos — 41 IDs
+- ✅ plataforma tower-base dentro
+- ✅ plataforma tower-base dimensões positivas
+- ✅ plataforma ring-1-west dentro
+- ✅ plataforma ring-1-west dimensões positivas
+- ✅ plataforma ring-1-east dentro
+- ✅ plataforma ring-1-east dimensões positivas
+- ✅ plataforma ring-1-bridge dentro
+- ✅ plataforma ring-1-bridge dimensões positivas
+- ✅ plataforma ring-2-east dentro
+- ✅ plataforma ring-2-east dimensões positivas
+- ✅ plataforma ring-2-west dentro
+- ✅ plataforma ring-2-west dimensões positivas
+- ✅ plataforma ring-2-bridge dentro
+- ✅ plataforma ring-2-bridge dimensões positivas
+- ✅ plataforma ring-3-west dentro
+- ✅ plataforma ring-3-west dimensões positivas
+- ✅ plataforma ring-3-east dentro
+- ✅ plataforma ring-3-east dimensões positivas
+- ✅ plataforma ring-3-bridge dentro
+- ✅ plataforma ring-3-bridge dimensões positivas
+- ✅ plataforma crown-platform dentro
+- ✅ plataforma crown-platform dimensões positivas
+- ✅ plataforma core-dais dentro
+- ✅ plataforma core-dais dimensões positivas
+- ✅ plataforma portal-dais dentro
+- ✅ plataforma portal-dais dimensões positivas
+- ✅ móvel lift-base dentro
+- ✅ móvel lift-base eixo válido
+- ✅ móvel lift-base movimento válido
+- ✅ elevador lift-base alcança faixa vertical — range=2
+- ✅ móvel lift-ring-1 dentro
+- ✅ móvel lift-ring-1 eixo válido
+- ✅ móvel lift-ring-1 movimento válido
+- ✅ elevador lift-ring-1 alcança faixa vertical — range=2.4
+- ✅ móvel lift-ring-2 dentro
+- ✅ móvel lift-ring-2 eixo válido
+- ✅ móvel lift-ring-2 movimento válido
+- ✅ elevador lift-ring-2 alcança faixa vertical — range=2.5
+- ✅ móvel lift-ring-3 dentro
+- ✅ móvel lift-ring-3 eixo válido
+- ✅ móvel lift-ring-3 movimento válido
+- ✅ elevador lift-ring-3 alcança faixa vertical — range=2.3
+- ✅ móvel crown-lift dentro
+- ✅ móvel crown-lift eixo válido
+- ✅ móvel crown-lift movimento válido
+- ✅ elevador crown-lift alcança faixa vertical — range=2.1
+- ✅ móvel external-shuttle dentro
+- ✅ móvel external-shuttle eixo válido
+- ✅ móvel external-shuttle movimento válido
+- ✅ checkpoint tower-cp-base dentro
+- ✅ checkpoint tower-cp-base apoiado
+- ✅ checkpoint tower-cp-base fora de obstáculo
+- ✅ checkpoint tower-cp-ring1 dentro
+- ✅ checkpoint tower-cp-ring1 apoiado
+- ✅ checkpoint tower-cp-ring1 fora de obstáculo
+- ✅ checkpoint tower-cp-ring2 dentro
+- ✅ checkpoint tower-cp-ring2 apoiado
+- ✅ checkpoint tower-cp-ring2 fora de obstáculo
+- ✅ checkpoint tower-cp-ring3 dentro
+- ✅ checkpoint tower-cp-ring3 apoiado
+- ✅ checkpoint tower-cp-ring3 fora de obstáculo
+- ✅ checkpoint tower-cp-crown dentro
+- ✅ checkpoint tower-cp-crown apoiado
+- ✅ checkpoint tower-cp-crown fora de obstáculo
+- ✅ interação tower-sync-1 dentro
+- ✅ interação tower-sync-1 apoiada
+- ✅ interação tower-sync-2 dentro
+- ✅ interação tower-sync-2 apoiada
+- ✅ interação tower-sync-3 dentro
+- ✅ interação tower-sync-3 apoiada
+- ✅ interação tower-core dentro
+- ✅ interação tower-core apoiada
+- ✅ spawn da Torre seguro
+- ✅ portal final dentro
+- ✅ portal final apoiado
+- ✅ plataformas cobrem cinco faixas verticais — 1.0,4.5,4.5,4.5,9.5,9.5,9.5,15.0,15.0,15.0,20.5,25.5,27.5
+- ✅ elevador lift-base tem curso > 4 — 0.3–4.3
+- ✅ elevador lift-ring-1 tem curso > 4 — 4.6–9.3
+- ✅ elevador lift-ring-2 tem curso > 4 — 9.4–14.4
+- ✅ elevador lift-ring-3 tem curso > 4 — 15.1–19.8
+- ✅ elevador crown-lift tem curso > 4 — 20.5–24.8
+- ✅ save novo schema 5
+- ✅ campanha tem 5 regiões
+- ✅ Vale → Vila
+- ✅ Vila → Floresta
+- ✅ Floresta → Industrial
+- ✅ Industrial → Torre
+- ✅ Torre inicia 0/3
+- ✅ 3 consoles liberam Núcleo
+- ✅ portal ainda fechado antes do Núcleo
+- ✅ Núcleo Central ativo
+- ✅ portal final liberado
+- ✅ Torre conclui campanha
+- ✅ vitória na região 5
+- ✅ evento final Convergência Central
+- ✅ migra schema4
+- ✅ schema4 concluído entra na Torre
+- ✅ save migrado vira schema5
+- ✅ pontuação preservada na migração
+- ✅ vidas preservadas na migração
+- ✅ evento de migração 4→5
+- ✅ restaura schema5
+- ✅ schema5 preserva Torre ativa
+- ✅ schema5 preserva 3 consoles
+- ✅ schema5 preserva Núcleo pendente
+- ✅ checkpoint alto não ativa pelo chão
+- ✅ checkpoint alto ativa na altura correta
+- ✅ perigo elevado causa dano na altura
+- ✅ perigo elevado não atinge jogador no chão
+- ✅ simulação possui Torre
+- ✅ simulação possui checkpoint por altura
+- ✅ simulação possui perigo 3D
+- ✅ render possui Torre
+- ✅ game carrega tower.json
+- ✅ ready anuncia 5 regiões
+- ✅ versão pública v0.38.5
+- ✅ Service Worker v0.38.5
+- ✅ Torre no cache offline
+- ✅ wrapper reconhece 5 regiões
+- ✅ catálogo marca Fase 7.26
+- ✅ catálogo cita Torre Central
+- ✅ perfil externo cita 5 regiões
+- ✅ tutorial externo cita 3 consoles
+- ✅ ficha educacional cita Torre
+- ✅ save educacional cita schema 5
+- ✅ game HUD possui Sincronia
+- ✅ game trata evento tower-core
+- ✅ game vitória usa 5 regiões
+- ✅ preview mostra Torre Central

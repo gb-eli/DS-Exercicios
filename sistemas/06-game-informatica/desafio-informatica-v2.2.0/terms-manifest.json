@@ -1,0 +1,35 @@
+{
+  "schema": "agv-terms-manifest",
+  "schemaVersion": 1,
+  "platformId": "desafio-informatica-agv",
+  "platformVersion": "2.5.7",
+  "general": {
+    "id": "desafio-informatica-termo-geral",
+    "version": "1.2.0",
+    "updatedAt": "2026-08-03",
+    "sha256": "3ced4ab4e1d499e23aeb8fc64dd228d65ea53e397df7ec53663889dfad5981b6",
+    "required": true
+  },
+  "activities": {
+    "guided": {
+      "id": "guided-rules",
+      "version": "1.2.0",
+      "sha256": "5fe851206606c1e795c6ed6cc5b101bd83d355fb80de960c52841d7c0ed15396",
+      "teacherAuthorizationRequired": false
+    },
+    "diagnostic-general": {
+      "id": "diagnostic-general-rules",
+      "version": "1.1.0",
+      "sha256": "c12008c23436e72b395649dc914ae15d945c0e66348ed6a68fe9c04796b9a2bf",
+      "teacherAuthorizationRequired": false
+    },
+    "diagnostic-class": {
+      "id": "diagnostic-class-rules",
+      "version": "1.1.0",
+      "sha256": "32e075ddfdcfe4977cfe688825e1b876e4a48ac0ead97632d8b136e61db2627a",
+      "teacherAuthorizationRequired": false
+    }
+  },
+  "storage": "perfil criptografado + checkpoint redundante + cadeia de auditoria",
+  "requiresNewAcceptanceOnMaterialChange": true
+}

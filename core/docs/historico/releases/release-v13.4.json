@@ -1,0 +1,8 @@
+{
+  "version": "13.4.0",
+  "phase": "P6.7-wave4",
+  "date": "2026-08-15",
+  "title": "Integração Planetário DS + Fliperama DS",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionChange": false
+}

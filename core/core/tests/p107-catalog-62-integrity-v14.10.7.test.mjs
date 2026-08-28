@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const manifest=fs.readFileSync('atividades/assets/data/exercise-manifest-current.js','utf8');
+const refs=fs.readFileSync('atividades/assets/data/exercise-reference-catalog-current.js','utf8');
+const workspace=fs.readFileSync('atividades/assets/js/workspace.js','utf8');
+const grade=fs.readFileSync('core/edge-functions/exercise-autograde/index.ts','utf8');
+test('P10.7 Front-End Sub 08-10 usa três arquivos canônicos',()=>{for(const n of [8,9,10]){const block=manifest.match(new RegExp(`programacao-front-end-sub:${n}[\\s\\S]*?(?=\\n  \\\"|\\n};)`))?.[0]||'';assert.match(block,/index\.html/);assert.match(block,/estilo\.css/);assert.match(block,/script\.js/);}});
+test('P10.7 3DS ex04 usa cinco arquivos multipágina',()=>{for(const f of ['index.html','chamados.html','equipe.html','estilo.css','script.js'])assert.match(manifest,new RegExp(f.replace('.','\\.')));assert.match(refs,/Navegação e Organização de Páginas/);});
+test('P10.7 Mobile 01-05 não cria arquivos Web antigos',()=>{for(const n of [1,2,3,5])assert.match(manifest,new RegExp(`programacao-mobile-sub:${n}[\\s\\S]*?MainActivity\\.kt`));assert.match(manifest,/programacao-mobile-sub:4[\s\S]*MainActivity\.kt[\s\S]*strings\.xml/);});
+test('P10.7 referencia.md Mobile é orientação e não arquivo do aluno',()=>{const mobile=manifest.slice(manifest.indexOf('programacao-mobile-sub:1'));assert.doesNotMatch(mobile,/filename:\"referencia\.md\"/);assert.match(refs,/referencia\.md/);});
+test('P10.7 autocorreção Mobile ignora helper e exige arquivos canônicos',()=>{assert.match(grade,/subjectSlug==='programacao-mobile-sub'/);assert.match(grade,/referencia\.md/);assert.match(grade,/MainActivity\.kt/);assert.match(grade,/strings\.xml/);assert.match(grade,/autograde-v8-reference-history/);});
+test('P10.7 workspace prioriza catálogo canônico e esconde legado sem apagar banco',()=>{assert.match(workspace,/EXERCISE_MANIFEST_CURRENT/);assert.match(workspace,/EXERCISE_REFERENCE_CATALOG_CURRENT/);assert.match(workspace,/canonicalNames/);assert.match(workspace,/remote\.filter/);});
+test('P10.7 migration completa descrições Front-End Sub',()=>{const sql=fs.readFileSync('core/database/043_p107_complete_sub_frontend_descriptions.sql','utf8');assert.match(sql,/programacao-front-end-sub/);assert.match(sql,/exercise_number between 2 and 6/);});

@@ -1,0 +1,14 @@
+UPDATE v14.10.8.29 — Central de Apoio sobre o pacote recebido
+
+ATUALIZAR-CENTRAL-APOIO-v14.10.8.29.md
+atividades/assets/css/support-hub.css
+atividades/assets/js/admin-support.js
+atividades/assets/js/admin-experiences.js
+atividades/assets/js/admin.js
+atividades/assets/js/app.js
+atividades/assets/js/support-hub.js
+atividades/index.html
+core/database/058_p10929_student_support_hub.sql
+core/edge-functions/staff-dashboard/index.ts
+core/tests/p10929-student-support-hub-v14.10.8.29.test.mjs
+release-v14.10.8.29.json

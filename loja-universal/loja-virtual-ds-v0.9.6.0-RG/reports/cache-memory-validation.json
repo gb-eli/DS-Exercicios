@@ -1,0 +1,1 @@
+{"passed": true, "packs": 8, "syntax": {"demo/cache-memory-manager.js": true, "demo/package-manager.js": true, "demo/app.js": true, "demo/avatar3d.js": true, "demo/product3d.js": true, "demo/vfx-engine.js": true, "sw.js": true}, "regression": "passed", "features": 8}
