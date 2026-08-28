@@ -59,6 +59,41 @@ Deno.serve(async r=>{if(r.method==='OPTIONS')return new Response('ok',{headers:H
   return J({ok:true,mode:apply?'apply':'preview',candidates:candidates.length,processed:items.length,applied,updated,skipped,has_more:(raw||[]).length>candidates.length,items,policy:{never_reduces_score:true,manual_reviews_preserved:true,batch_limit:limit}});
  }
  const sid=String(b.student_id||''), eid=String(b.exercise_id||'');
+ if(act==='support_overview'){
+  const [{data:classes},{data:memberships},{data:students}]=await Promise.all([
+   db.from('classes').select('id,code,name').eq('active',true),
+   db.from('class_memberships').select('class_id,user_id,is_primary,active').eq('active',true),
+   db.from('profiles').select('id,full_name,email,last_login_at').eq('role','student').eq('active',true)
+  ]);
+  const allowedIds=new Set<string>();
+  if(admin){for(const student of students||[])allowedIds.add(String(student.id));}
+  else{const aa=new Set(assigned);for(const membership of memberships||[])if(aa.has(String(membership.class_id)))allowedIds.add(String(membership.user_id));}
+  const ids=[...allowedIds];if(!ids.length)return J({students:[],threads:[],messages:[],focus_checkins:[],scope:admin?'global':'assigned'});
+  const [{data:threads,error:te},{data:checkins,error:ce}]=await Promise.all([
+   db.from('student_support_threads').select('*').in('student_id',ids).order('last_message_at',{ascending:false}).limit(1000),
+   db.from('student_focus_checkins').select('id,student_id,assignment_id,exercise_id,response,context,occurred_at').in('student_id',ids).order('occurred_at',{ascending:false}).limit(1000)
+  ]);if(te||ce)throw te||ce;
+  const threadIds=(threads||[]).map((thread:any)=>thread.id);let messages:any[]=[];
+  if(threadIds.length){const result=await db.from('student_support_messages').select('id,thread_id,author_id,body,created_at').in('thread_id',threadIds).order('created_at',{ascending:false}).limit(3000);if(result.error)throw result.error;messages=result.data||[];}
+  const classMap=new Map((classes||[]).map((row:any)=>[String(row.id),row])),classByStudent=new Map<string,any>();
+  for(const membership of memberships||[]){const uid=String(membership.user_id);if(!allowedIds.has(uid))continue;const current=classByStudent.get(uid);if(!current||membership.is_primary)classByStudent.set(uid,classMap.get(String(membership.class_id))||null);}
+  return J({students:(students||[]).filter((student:any)=>allowedIds.has(String(student.id))).map((student:any)=>({...student,class:classByStudent.get(String(student.id))||null})),threads:threads||[],messages,focus_checkins:checkins||[],scope:admin?'global':'assigned'});
+ }
+ if(act==='support_reply'){
+  const threadId=String(b.thread_id||''),body=String(b.body||'').trim();if(!threadId||!body||body.length>4000)return J({error:'invalid_parameters'},400);
+  const {data:thread}=await db.from('student_support_threads').select('id,student_id,status').eq('id',threadId).maybeSingle();if(!thread)return J({error:'not_found'},404);await scope(String(thread.student_id));if(thread.status==='closed')return J({error:'thread_closed'},409);
+  const now=new Date().toISOString(),{data:message,error}=await db.from('student_support_messages').insert({thread_id:threadId,author_id:user.id,body}).select().single();if(error)throw error;
+  const update=await db.from('student_support_threads').update({status:'answered',updated_at:now,last_message_at:now}).eq('id',threadId);if(update.error)throw update.error;return J({ok:true,message});
+ }
+ if(act==='support_set_status'){
+  const threadId=String(b.thread_id||''),status=String(b.status||'');if(!threadId||!['open','answered','waiting_student','closed'].includes(status))return J({error:'invalid_parameters'},400);
+  const {data:thread}=await db.from('student_support_threads').select('id,student_id').eq('id',threadId).maybeSingle();if(!thread)return J({error:'not_found'},404);await scope(String(thread.student_id));const {data,error}=await db.from('student_support_threads').update({status,updated_at:new Date().toISOString()}).eq('id',threadId).select().single();if(error)throw error;return J({ok:true,thread:data});
+ }
+ if(act==='support_send_notification'){
+  const studentId=String(b.student_id||''),title=String(b.title||'').trim(),body=String(b.body||'').trim(),tone=String(b.tone||'encouragement');
+  if(!studentId||!title||!body||title.length>120||body.length>1000||!['encouragement','celebration','guidance','reminder'].includes(tone))return J({error:'invalid_parameters'},400);await scope(studentId);
+  const {data,error}=await db.from('student_support_notifications').insert({student_id:studentId,title,body,tone,created_by:user.id}).select().single();if(error)throw error;return J({ok:true,notification:data});
+ }
  if(act==='student_detail'){if(!sid)return J({error:'missing_parameters'},400);await scope(sid);const [{data:g},{data:x},{data:y},{data:ar}]=await Promise.all([db.from('student_exercises').select('*').eq('student_id',sid),db.from('student_accommodations').select('*').eq('student_id',sid).eq('active',true),db.from('exercise_releases').select('*').eq('student_id',sid),db.from('pedagogical_adaptation_requests').select('id,status,request_source,created_at,updated_at,resolved_at').eq('student_id',sid).order('created_at',{ascending:false}).limit(10)]);if(admin)return J({progress:g||[],accommodations:x||[],releases:y||[],adaptation_requests:ar||[]});const {data:m}=await db.from('class_memberships').select('class_id').eq('user_id',sid).eq('active',true);const aa=new Set(assigned),cs=(m||[]).map((z:any)=>String(z.class_id)).filter((z:string)=>aa.has(z)),es=await exFor(cs),ei=new Set(es.map((z:any)=>String(z.id)));return J({progress:(g||[]).filter((z:any)=>ei.has(String(z.exercise_id))),accommodations:(x||[]).filter((z:any)=>!z.exercise_id||ei.has(String(z.exercise_id))),releases:(y||[]).filter((z:any)=>ei.has(String(z.exercise_id))),adaptation_requests:ar||[]});}
  if(act==='experience_overview'){
   const [{data:classes},{data:memberships},{data:profiles},{data:accommodations},{data:prefs},{data:modePrefs},{data:assignments},{data:xp},{data:events},{data:studentProgress},{data:exercises},{data:subjects}]=await Promise.all([

@@ -1,11 +1,20 @@
 {
-  "name": "AGV Hub Educacional - Public Deploy",
-  "release": "v14.10.8.18",
-  "ui": "0.22.8.14",
-  "date": "2026-08-24",
+  "name": "AGV Hub Educacional - pacote público integrado",
+  "release": "v14.10.8.29-final",
+  "date": "2026-08-28",
   "containsBackendMigrations": true,
   "containsEdgeFunctions": true,
-  "fullscreenIntegratedRoutes": 10,
-  "fullscreenExemptRoute": "validacao-antiga/",
-  "note": "Pontuação acadêmica confirmada por exercício. Migration 048 grava academic_max_points em exercises.config; staff-dashboard entrega config/subject_slug ao painel professor. Nenhuma nota existente é alterada automaticamente."
+  "publicFrontendPaths": [
+    "assets/",
+    "index.html",
+    "professor/",
+    "recuperacao/",
+    "sistemas/"
+  ],
+  "neverPublishAsStatic": [
+    "core/",
+    "deploy/",
+    "docs/"
+  ],
+  "note": "O ZIP completo contém fontes de backend para implantação controlada. Gabaritos e notas docentes não estão no catálogo público de recuperacao/assets/catalog.js."
 }

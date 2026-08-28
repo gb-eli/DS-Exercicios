@@ -1,22 +1,14 @@
-UPDATE v14.10.8.20 — somente arquivos novos/alterados sobre v14.10.8.19.2
+UPDATE v14.10.8.29 — Central de Apoio sobre o pacote recebido
 
-atividades/assets/css/app.css
-atividades/assets/js/adaptations.js
+ATUALIZAR-CENTRAL-APOIO-v14.10.8.29.md
+atividades/assets/css/support-hub.css
+atividades/assets/js/admin-support.js
 atividades/assets/js/admin-experiences.js
 atividades/assets/js/admin.js
 atividades/assets/js/app.js
-atividades/assets/js/personalized-experience.js
-atividades/assets/js/supervision.js
-atividades/assets/js/workspace.js
+atividades/assets/js/support-hub.js
 atividades/index.html
-atividades/version.json
-core/database/051_p10922_personalized_learning_experiences.sql
+core/database/058_p10929_student_support_hub.sql
 core/edge-functions/staff-dashboard/index.ts
-core/edge-functions/supervision/index.ts
-core/tests/p10917-academic-exercise-points-v14.10.8.18.test.mjs
-core/tests/p10919-pedagogical-adaptations-v14.10.8.19.test.mjs
-core/tests/p10921-portal-loading-resilience-v14.10.8.19.2.test.mjs
-core/tests/p10922-personalized-experiences-v14.10.8.20.test.mjs
-release-current.json
-release-v14.10.8.20.json
-version.json
+core/tests/p10929-student-support-hub-v14.10.8.29.test.mjs
+release-v14.10.8.29.json

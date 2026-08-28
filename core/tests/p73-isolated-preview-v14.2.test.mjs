@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'../..');
+const html=fs.readFileSync(path.join(root,'atividades/index.html'),'utf8');
+const workspace=fs.readFileSync(path.join(root,'atividades/assets/js/workspace.js'),'utf8');
+const app=fs.readFileSync(path.join(root,'atividades/assets/js/app.js'),'utf8');
+const admin=fs.readFileSync(path.join(root,'atividades/assets/js/admin.js'),'utf8');
+const hostHtml=fs.readFileSync(path.join(root,'atividades/preview/index.html'),'utf8');
+const hostJs=fs.readFileSync(path.join(root,'atividades/preview/host.js'),'utf8');
+
+assert.doesNotMatch(html,/script-src[^\"]*'unsafe-inline'/,'main app script CSP has no unsafe-inline');
+assert.doesNotMatch(html,/style-src[^\"]*'unsafe-inline'/,'main app style CSP has no unsafe-inline');
+assert.match(html,/id="preview-frame"[^>]*src="preview\/index\.html(?:\?v=[^"]+)?"/,'preview uses dedicated host');
+assert.match(html,/sandbox="allow-scripts"/,'outer preview sandbox stays scripts-only');
+assert.doesNotMatch(html,/allow-same-origin/,'main preview never gets same-origin privilege');
+assert.doesNotMatch(workspace,/\.srcdoc\s*=/,'workspace no longer injects student document into app iframe');
+assert.match(workspace,/agv-preview:init/,'preview host handshake exists');
+assert.match(workspace,/crypto\.getRandomValues/,'preview channel uses random token');
+assert.match(hostHtml,/script-src 'self' 'unsafe-inline'/,'unsafe-inline is scoped to preview host policy');
+assert.match(hostHtml,/id="student-preview"[^>]*sandbox="allow-scripts"/,'student code runs in nested scripts-only sandbox');
+assert.doesNotMatch(hostHtml,/allow-same-origin/,'nested student document stays opaque-origin');
+assert.match(hostJs,/new Blob\(\[safe\]/,'student document is rendered through isolated blob');
+assert.match(hostJs,/event\.source!==controller/,'preview host accepts only its controller source');
+assert.doesNotMatch(`${html}\n${app}\n${admin}`,/style="/,'main Activities UI has no inline style attributes');
+assert.doesNotMatch(`${app}\n${admin}`,/\.style\./,'main Activities JS no longer writes inline CSS');
+assert.match(app,/<progress class="platform-progress-native"/,'platform progress uses CSP-safe progress element');
+console.log('P7.3 isolated preview v14.2 — PASS');

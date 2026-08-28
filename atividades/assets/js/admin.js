@@ -2,6 +2,7 @@
 import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.18';
 import { normalizeWeekendVoucherCode, formatWeekendVoucherDate } from './weekend-voucher.js?v=14.10.8.18';
 import { openExperienceCenter } from './admin-experiences.js?v=14.10.8.20';
+import { openSupportCenter } from './admin-support.js?v=14.10.8.29';
 
 let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='', weekendVoucherCtx=null;
 const $=id=>document.getElementById(id);
@@ -70,6 +71,7 @@ function ensureAdminShell(){
             <button id="staff-weekend-voucher-btn" class="button button-ghost" type="button">Ponto extra</button>
             <button id="staff-releases-btn" class="button button-ghost" type="button">Liberações</button>
             <button id="staff-experiences-btn" class="button button-ghost" type="button">Experiências</button>
+            <button id="staff-support-btn" class="button button-ghost" type="button">Mensagens</button>
             <button id="staff-admin-central-btn" class="button button-ghost hidden" type="button">Admin Central</button>
             <button id="staff-team-btn" class="button button-ghost" type="button">Equipe</button>
             <button id="staff-refresh-btn" class="button button-primary" type="button">Atualizar</button>
@@ -243,6 +245,7 @@ function ensureAdminShell(){
     $('staff-weekend-voucher-btn')?.addEventListener('click',openWeekendVoucherVerifier);
     $('staff-releases-btn')?.addEventListener('click',openReleaseManager);
     $('staff-experiences-btn')?.addEventListener('click',()=>openExperienceCenter({supabase}));
+    $('staff-support-btn')?.addEventListener('click',()=>openSupportCenter({supabase}));
     $('supervision-center-close')?.addEventListener('click',closeSupervisionCenter);
     $('legacy-review-close')?.addEventListener('click',()=>$('legacy-review-dialog')?.close());
     $('ranking-close')?.addEventListener('click',()=>$('ranking-dialog')?.close());

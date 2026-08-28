@@ -7,6 +7,7 @@ import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.18';
 import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.18';
 import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.18';
 import { loadPersonalizedExperienceContext, renderPersonalizedExperienceDashboard, renderPersonalizedAssignment, clearPersonalizedTheme } from './personalized-experience.js?v=14.10.8.20';
+import { initializeStudentSupportHub, destroyStudentSupportHub } from './support-hub.js?v=14.10.8.29';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'personalized-experience-view', 'exercise-view', 'staff-view'];
@@ -446,6 +447,7 @@ $('logout-btn').addEventListener('click', async () => {
   currentStaffAccess = false;
   lastDashboardSnapshot = null;
   personalizedExperienceContext = null;
+  destroyStudentSupportHub();
   clearPersonalizedTheme();
   passwordRecoveryMode = false;
   setSessionHeader(false);
@@ -845,6 +847,12 @@ async function renderDashboard() {
     profile:currentProfile,
     context:personalizedExperienceContext,
     onOpenAssignment:openPersonalizedAssignment,
+  });
+
+  initializeStudentSupportHub({
+    supabase,
+    profile:currentProfile,
+    context:personalizedExperienceContext,
   });
 
   showView('dashboard-view');
