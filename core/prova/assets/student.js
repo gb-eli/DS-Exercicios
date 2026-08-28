@@ -3,7 +3,7 @@
   const cfg=window.AGV_PRACTICAL_EXAM_CONFIG;
   const auth=window.AGVSession.create({supabaseUrl:cfg.supabaseUrl,publishableKey:cfg.publishableKey});
   const $=id=>document.getElementById(id);
-  const st={profile:null,sessions:[],detail:null,sessionId:null,poll:null,heartbeat:null,timer:null,lobbyTimer:null,busy:false,emblemDraft:null,draftTimers:new Map(),draftStatus:new Map()};
+  const st={profile:null,sessions:[],accommodation:null,detail:null,sessionId:null,poll:null,heartbeat:null,timer:null,lobbyTimer:null,busy:false,emblemDraft:null,draftTimers:new Map(),draftStatus:new Map(),lastStatus:null,introSession:null,chat:{open:false,poll:null,lastHtml:''}};
   const esc=(v='')=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const statusInfo=s=>({draft:['Rascunho',''],waiting_room:['Pré-lobby','live'],locked:['Equipes bloqueadas','warn'],running:['Em andamento','live'],paused:['Pausada','warn'],finished:['Finalizada',''],grading:['Em correção',''],score_scheduled:['Nota programada','warn'],published:['Nota publicada','good'],cancelled:['Cancelada','danger']}[s]||[s||'—','']);
   const fmtTime=sec=>{sec=Math.max(0,Math.floor(Number(sec)||0));const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return h?`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`};
@@ -15,6 +15,14 @@
   const api=(action,body={})=>auth.request(`/functions/v1/${cfg.functionName}`,{method:'POST',body:{action,...body}});
   const msg=(t='',err=false)=>{const e=$('login-message');if(e){e.textContent=t;e.classList.toggle('error',err)}};
   function setConnection(text,kind=''){const e=$('connection-pill');if(!e)return;e.textContent=text;e.className=`pill ${kind}`.trim();}
+  function applyAccommodation(a=st.accommodation||st.detail?.accommodation||{}){
+    const scale=Math.min(1.2,Math.max(1,Number(a.font_scale)||1));
+    document.documentElement.style.fontSize=`${Math.round(16*scale)}px`;
+    document.body.classList.toggle('exam-reduce-motion',!!a.reduce_motion);
+    document.body.classList.toggle('exam-focus-mode',!!a.focus_mode);
+    document.body.classList.toggle('exam-home-study',!!a.home_study);
+    document.body.classList.toggle('exam-fullscreen-optional',!!a.fullscreen_optional);
+  }
   async function loadProfile(){const u=await auth.getUser();const rows=await auth.request(`/rest/v1/profiles?select=id,full_name,email,role,active,must_change_password&id=eq.${encodeURIComponent(u.id)}&limit=1`);const p=Array.isArray(rows)?rows[0]:null;if(!p?.active)throw new Error('Acesso inativo.');if(p.must_change_password){location.replace('../atividades/');return null;}st.profile=p;return p;}
   function draftKey(c){return `agv-practical-draft:${st.profile?.id||'x'}:${st.sessionId}:${c.id}`;}
   function readDraft(c){try{return JSON.parse(localStorage.getItem(draftKey(c))||'null');}catch{return null;}}
@@ -32,8 +40,8 @@
   function renderSessions(){
     document.documentElement.dataset.examTheme='';
     const host=$('exam-content');
-    if(!st.sessions.length){host.innerHTML='<div class="panel empty-card"><strong>Nenhuma prova prática disponível agora.</strong><p>Quando o professor abrir o pré-lobby ou publicar uma avaliação, ela aparecerá aqui.</p><a class="button ghost" href="../atividades/">Ir para atividades convencionais</a></div>';return;}
-    host.innerHTML=`<section><div class="section-head"><div><p class="eyebrow">Avaliações</p><h2>Modo Prova Prática</h2><p>Pré-lobby para formar a equipe e depois uma prova colaborativa cronometrada.</p></div></div><div class="session-grid">${st.sessions.map(s=>{
+    if(!st.sessions.length){host.innerHTML='<div class="panel empty-card"><strong>Nenhuma Prova Coletiva disponível agora.</strong><p>Quando o professor abrir o lobby ou publicar uma avaliação, ela aparecerá aqui.</p><a class="button ghost" href="../atividades/">Ir para atividades convencionais</a></div>';return;}
+    host.innerHTML=`<section><div class="section-head"><div><p class="eyebrow">MATCHMAKING ACADÊMICO</p><h2>Modo Prova Coletiva</h2><p>Entre no lobby, monte sua guilda, assuma um cargo e cumpra missões em equipe.</p></div></div><div class="session-grid">${st.sessions.map(s=>{
       const [label,kind]=statusInfo(s.status);
       const context=s.status==='score_scheduled'?`Publicação: ${fmtDate(s.score_publish_at)}`:s.status==='running'?`Tempo restante: ${fmtTime(s.remaining_seconds)}`:s.status==='waiting_room'?`Pré-lobby: ${fmtTime(s.lobby_remaining_seconds)} • prova ${Number(s.duration_minutes||50)} min`:esc(s.description||'Avaliação prática em grupo.');
       return `<article class="panel session-card"><div class="session-meta"><span class="status-pill ${kind}">${esc(label)}</span><span class="status-pill">${Number(s.max_score||0).toLocaleString('pt-BR')} pts</span></div><h3>${esc(s.title)}</h3><p>${esc(s.subject_name)}</p><p>${context}</p><button class="button ${['waiting_room','locked','running','paused'].includes(s.status)?'primary':'ghost'}" data-open-session="${s.id}" type="button">${s.status==='published'?'Ver resultado':'Abrir avaliação'}</button></article>`;
@@ -155,12 +163,44 @@
     const myTeamRank=(d.rankings?.teams||[]).find(x=>String(x.clan_id)===String(d.me?.clan_id));
     const myStudentRank=(d.rankings?.students||[]).find(x=>String(x.student_id)===String(d.me?.student_id));
     const mobileDock=`<section class="mobile-performance-dock" aria-label="Resumo do desempenho"><div><span>Seu XP</span><strong>${Number(myXp.earned||0)}/${Number(myXp.max||0)}</strong></div><div><span>Equipe</span><strong>${Number(d.team_progress?.progress_percent||0)}%</strong></div><div><span>Rank aluno</span><strong>${myStudentRank?.position?`${myStudentRank.position}º`:'—'}</strong></div><div><span>Rank equipe</span><strong>${myTeamRank?.position?`${myTeamRank.position}º`:'—'}</strong></div></section>`;
-    return `${mobileDock}<div class="layout2"><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Missões da empresa</p><h2>Desafios por fases</h2><p>São 8 áreas disponíveis; cada integrante escolhe uma área exclusiva e realiza os dois desafios daquela área.</p></div></div><div class="challenge-list">${list}</div></section><aside class="content-grid sticky-side">
+    return `${mobileDock}<div class="layout2"><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Missões da guilda</p><h2>Missões por fases</h2><p>São 8 áreas disponíveis; cada integrante escolhe uma área exclusiva e realiza os dois desafios daquela área.</p></div></div><div class="challenge-list">${list}</div></section><aside class="content-grid sticky-side">
       <section class="panel section-panel"><p class="eyebrow">Sua área</p><h3>${esc(roleName)}</h3><p class="muted">${esc(d.roles.find(r=>String(r.id)===String(d.me?.role_id||''))?.description||'')}</p><div class="xp-summary"><div><span>Seu XP</span><strong>${Number(myXp.earned||0)} <small>/ ${Number(myXp.max||0)}</small></strong></div><div><span>Progresso XP</span><strong>${Number(myXp.percent||0)}%</strong></div></div></section>
-      <section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Sua equipe</p><h3>${esc(d.clans.find(c=>String(c.id)===String(d.me?.clan_id||''))?.name||'Sem equipe')}</h3><p>${esc(d.clans.find(c=>String(c.id)===String(d.me?.clan_id||''))?.company_name||'Empresa da equipe')} • Líder: <strong>${esc(d.leader?.name||'—')}</strong></p></div><span class="status-pill ${Number(d.team_progress?.progress_percent||0)>=100?'good':'live'}">${Number(d.team_progress?.progress_percent||0)}%</span></div><div class="progress-wrap"><progress class="progress" max="100" value="${Number(d.team_progress?.progress_percent||0)}"></progress><small class="muted">Progresso coletivo das áreas escolhidas.</small></div><div class="xp-team"><span>XP normalizado da equipe</span><strong>${Number(teamXp.ranking_xp||0)} <small>/ 1000</small></strong></div><h4 class="room-ranking-title">Ranking da sua sala</h4><div class="team-progress-list">${teamMembers}</div></section>
+      <section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Sua equipe</p><h3>${esc(d.clans.find(c=>String(c.id)===String(d.me?.clan_id||''))?.name||'Sem equipe')}</h3><p>${esc(d.clans.find(c=>String(c.id)===String(d.me?.clan_id||''))?.company_name||'Guilda da equipe')} • Líder: <strong>${esc(d.leader?.name||'—')}</strong></p></div><span class="status-pill ${Number(d.team_progress?.progress_percent||0)>=100?'good':'live'}">${Number(d.team_progress?.progress_percent||0)}%</span></div><div class="progress-wrap"><progress class="progress" max="100" value="${Number(d.team_progress?.progress_percent||0)}"></progress><small class="muted">Progresso coletivo das áreas escolhidas.</small></div><div class="xp-team"><span>XP normalizado da equipe</span><strong>${Number(teamXp.ranking_xp||0)} <small>/ 1000</small></strong></div><h4 class="room-ranking-title">Ranking da sua sala</h4><div class="team-progress-list">${teamMembers}</div></section>
       <details class="panel section-panel ranking-panel"><summary><strong>Ver ranking geral da turma</strong><span>Equipes + alunos</span></summary><div class="ranking-tabs"><h4>Equipes</h4><div class="rank-list">${teams||'<small class="muted">Ranking ainda sem dados.</small>'}</div><h4>Alunos</h4><div class="rank-list">${students||'<small class="muted">Ranking ainda sem dados.</small>'}</div></div></details>
       <section class="notice">Nota final = <strong>50% desempenho da equipe + 50% desempenho individual</strong>. XP é usado para progresso/ranking e é calculado exclusivamente pelo servidor.</section>
     </aside></div>`;
+  }
+
+  function gameHud(d){
+    const room=(d.clans||[]).find(c=>String(c.id)===String(d.me?.clan_id||'')),role=(d.roles||[]).find(r=>String(r.id)===String(d.me?.role_id||''));
+    if(!room)return '';
+    const phase=d.session.status==='waiting_room'?'LOBBY':d.session.status==='locked'?'EQUIPES TRAVADAS':d.session.status==='paused'?'PAUSA TÁTICA':d.session.status==='running'?'MISSÃO ATIVA':'PARTIDA';
+    return `<section class="game-hud" style="--guild-accent:${esc(room.accent_color||'#22d3ee')}"><div class="hud-guild">${guildMark(room)}<span><small>${esc(phase)}</small><strong>${esc(room.name||'Guilda')}</strong></span></div><div class="hud-stat"><small>Cargo</small><strong>${esc(role?.icon||'🎮')} ${esc(role?.name||'Aguardando líder')}</strong></div><div class="hud-stat"><small>Liderança</small><strong>${esc(d.leader?.name||'Em votação')}</strong></div><div class="hud-stat"><small>XP</small><strong>${Number(d.xp?.individual?.earned||0)}</strong></div><button class="button hud-chat" data-open-team-chat type="button">💬 Chat da guilda</button></section>`;
+  }
+  function ensureTeamChatRoot(){let root=document.getElementById('team-chat-root');if(!root){root=document.createElement('div');root.id='team-chat-root';document.body.appendChild(root)}return root}
+  function roleForStudent(studentId){const member=(st.detail?.team||[]).find(x=>String(x.student_id)===String(studentId));return (st.detail?.roles||[]).find(r=>String(r.id)===String(member?.role_id||''))}
+  async function loadTeamChat(force=false){
+    if(!st.chat.open||!st.sessionId)return;
+    const out=await api('team_chat_list',{session_id:st.sessionId});
+    const host=document.getElementById('team-chat-messages');if(!host)return;
+    const html=(out.messages||[]).map(m=>{const mine=String(m.sender_id)===String(st.profile?.id),role=roleForStudent(m.sender_id);return `<article class="team-chat-msg ${mine?'mine':''}"><header><strong>${mine?'Você':esc(m.sender_name||'Integrante')}</strong><span>${esc(role?.icon||'🎮')} ${esc(role?.name||'Guilda')} • ${new Date(m.created_at).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</span></header><p>${esc(m.message)}</p></article>`}).join('')||'<p class="muted">O canal ainda está silencioso. Use-o para coordenar tarefas, não para compartilhar dados pessoais.</p>';
+    if(force||html!==st.chat.lastHtml){host.innerHTML=html;host.scrollTop=host.scrollHeight;st.chat.lastHtml=html;}
+  }
+  async function openTeamChat(){
+    if(!st.detail?.me?.clan_id)return;
+    st.chat.open=true;const room=(st.detail.clans||[]).find(c=>String(c.id)===String(st.detail.me.clan_id)),root=ensureTeamChatRoot();
+    root.innerHTML=`<div class="team-chat-backdrop"><aside class="team-chat-panel panel" style="--guild-accent:${esc(room?.accent_color||'#22d3ee')}"><header class="team-chat-head">${guildMark(room)}<div><p class="eyebrow">Canal de esquadrão</p><h2>${esc(room?.name||'Guilda')}</h2><small>Chat visível somente para integrantes desta guilda e auditável no servidor.</small></div><button class="button ghost small" data-close-team-chat type="button">Fechar</button></header><div id="team-chat-messages" class="team-chat-messages" aria-live="polite"></div><form id="team-chat-form" class="team-chat-compose"><textarea id="team-chat-text" maxlength="500" rows="2" placeholder="Coordene a missão com sua equipe…"></textarea><button class="button primary" type="submit">Enviar</button></form><p class="team-chat-rule">Canal da equipe: foco em estratégia, divisão de tarefas, dúvidas e andamento das missões.</p></aside></div>`;
+    root.querySelector('[data-close-team-chat]').onclick=closeTeamChat;
+    root.querySelector('#team-chat-form').onsubmit=sendTeamChat;
+    await loadTeamChat(true);clearInterval(st.chat.poll);st.chat.poll=setInterval(()=>loadTeamChat(false).catch(()=>{}),2500);
+  }
+  function closeTeamChat(){st.chat.open=false;clearInterval(st.chat.poll);st.chat.poll=null;st.chat.lastHtml='';const root=document.getElementById('team-chat-root');if(root)root.innerHTML=''}
+  async function sendTeamChat(e){e.preventDefault();const ta=document.getElementById('team-chat-text'),text=String(ta?.value||'').trim();if(!text)return;const btn=e.submitter||e.target.querySelector('button');btn.disabled=true;try{await api('team_chat_send',{session_id:st.sessionId,message:text});ta.value='';await loadTeamChat(true)}catch(err){alert(String(err?.data?.error||err?.message||'Não foi possível enviar a mensagem.').replaceAll('_',' '))}finally{btn.disabled=false}}
+  function showMatchIntro(d){
+    if(!d||d.session.status!=='running'||st.introSession===String(d.session.id))return;
+    st.introSession=String(d.session.id);const room=(d.clans||[]).find(c=>String(c.id)===String(d.me?.clan_id||'')),host=document.createElement('div');host.className='match-intro';
+    host.innerHTML=`<div class="match-intro-grid"></div><article><span class="match-kicker">MATCH FOUND</span>${guildMark(room,'hero')}<p>ESQUADRÃO SINCRONIZADO</p><h1>${esc(room?.name||'Guilda')}</h1><div class="match-countdown"><b>3</b><b>2</b><b>1</b></div><strong class="match-go">MISSÃO INICIADA</strong></article>`;
+    document.body.appendChild(host);setTimeout(()=>host.classList.add('go'),180);setTimeout(()=>host.remove(),(d.accommodation?.reduce_motion||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)?1300:4300);
   }
 
   function resultView(d){
@@ -171,8 +211,8 @@
   function renderDetail(){
     const d=st.detail,host=$('exam-content');if(!d)return renderSessions();const [label,kind]=statusInfo(d.session.status);
     const myRoom=(d.clans||[]).find(c=>String(c.id)===String(d.me?.clan_id||''));document.documentElement.dataset.examTheme=myRoom?.theme_key||'cyber';
-    host.innerHTML=`<section class="panel exam-hero"><div><p class="eyebrow">${esc(d.session.subject_name)}</p><h1>${esc(d.session.title)}</h1><p>${esc(d.session.description||'')}</p><div class="session-meta"><span class="status-pill ${kind}">${esc(label)}</span><span class="status-pill">${Number(d.session.max_score||0).toLocaleString('pt-BR')} pontos</span><span class="status-pill">até ${Number(d.session.max_clan_size||6)} por equipe</span></div></div>${['running','paused'].includes(d.session.status)?`<div id="exam-timer" class="timer"><span>Tempo restante</span><strong>${fmtTime(d.session.remaining_seconds)}</strong><small>${Number(d.session.duration_minutes||50)} min de prova</small></div>`:''}</section><div class="control-bar"><button class="button ghost small" data-back-sessions type="button">← Avaliações</button></div>${['waiting_room','locked'].includes(d.session.status)?waitingRoom(d):d.session.status==='running'?challengesView(d):d.session.status==='paused'?`<div class="notice warn"><strong>⏸ Avaliação pausada pelo professor.</strong><br>O backend bloqueia novos envios até a retomada.</div>${challengesView(d)}`:resultView(d)}`;
-    const supervised=['locked','running','paused'].includes(d.session.status);window.AGVFullscreen?.require(supervised);if(supervised)window.AGVFullscreen?.request?.({silent:true}).catch?.(()=>{});startTimers();
+    host.innerHTML=`<section class="panel exam-hero multiplayer-hero"><div><p class="eyebrow">MODO PROVA COLETIVA • ${esc(d.session.subject_name)}</p><h1>${esc(d.session.title)}</h1><p>${esc(d.session.description||'')}</p><div class="session-meta"><span class="status-pill ${kind}">${esc(label)}</span><span class="status-pill">${Number(d.session.max_score||0).toLocaleString('pt-BR')} pontos</span><span class="status-pill">squad de até ${Number(d.session.max_clan_size||6)}</span></div></div>${['running','paused'].includes(d.session.status)?`<div id="exam-timer" class="timer"><span>Tempo de partida</span><strong>${fmtTime(d.session.remaining_seconds)}</strong><small>${Number(d.session.duration_minutes||50)} min</small></div>`:''}</section>${gameHud(d)}<div class="control-bar"><button class="button ghost small" data-back-sessions type="button">← Sair da sala</button></div>${['waiting_room','locked'].includes(d.session.status)?waitingRoom(d):d.session.status==='running'?challengesView(d):d.session.status==='paused'?`<div class="notice warn"><strong>⏸ Pausa tática ativada pelo professor.</strong><br>Os envios definitivos ficam bloqueados até a retomada.</div>${challengesView(d)}`:resultView(d)}`;
+    st.accommodation=d.accommodation||st.accommodation||{};applyAccommodation(st.accommodation);const supervised=['waiting_room','locked','running','paused'].includes(d.session.status)&&!st.accommodation?.fullscreen_optional;document.body.classList.toggle('collective-match-active',['waiting_room','locked','running','paused'].includes(d.session.status));window.AGVFullscreen?.require(supervised);if(supervised)window.AGVFullscreen?.request?.({silent:true}).catch?.(()=>{});startTimers();
   }
 
   function startTimers(){
@@ -187,18 +227,18 @@
     st.timer=setInterval(()=>{if(!paused)remaining=Math.max(0,remaining-1);const el=$('exam-timer');if(el){el.classList.toggle('danger',remaining<=300);const strong=el.querySelector('strong');if(strong)strong.textContent=fmtTime(remaining);}if(remaining<=0&&!paused){clearInterval(st.timer);setTimeout(refreshDetail,1200);}},1000);
   }
 
-  async function loadSessions(){setConnection('Sincronizando');const out=await api('student_state');st.sessions=out.sessions||[];setConnection('Online','good');renderSessions();}
+  async function loadSessions(){setConnection('Sincronizando');const out=await api('student_state');st.sessions=out.sessions||[];st.accommodation=out.accommodation||{};applyAccommodation(st.accommodation);setConnection('Online','good');renderSessions();}
   async function refreshDetail(){
     if(!st.sessionId||st.busy)return;
     const active=document.activeElement;
     const editing=!!(active&&$('exam-content')?.contains(active)&&['INPUT','TEXTAREA','SELECT'].includes(active.tagName));
     const pendingDraft=[...st.draftTimers.values()].some(Boolean);
     if(editing||pendingDraft||st.emblemDraft!==null)return;
-    try{const out=await api('student_state',{session_id:st.sessionId});st.detail=out;setConnection('Online','good');renderDetail();}catch(e){console.error(e);setConnection('Falha de sincronização','danger');}
+    try{const out=await api('student_state',{session_id:st.sessionId});const prev=st.lastStatus||st.detail?.session?.status;st.detail=out;st.accommodation=out.accommodation||st.accommodation||{};st.lastStatus=out.session?.status;setConnection('Online','good');renderDetail();if(prev!==out.session?.status&&out.session?.status==='running')showMatchIntro(out);}catch(e){console.error(e);setConnection('Falha de sincronização','danger');}
   }
-  async function openSession(id){st.sessionId=String(id);const out=await api('student_state',{session_id:st.sessionId});st.detail=out;renderDetail();restartLiveLoops();}
+  async function openSession(id){st.sessionId=String(id);const listed=st.sessions.find(s=>String(s.id)===String(id));if(['waiting_room','locked','running','paused'].includes(listed?.status)&&!st.accommodation?.fullscreen_optional){window.AGVFullscreen?.require(true);try{await window.AGVFullscreen?.request?.({silent:false});}catch{}}const out=await api('student_state',{session_id:st.sessionId});st.detail=out;st.accommodation=out.accommodation||st.accommodation||{};st.lastStatus=out.session?.status;renderDetail();if(out.session?.status==='running')showMatchIntro(out);restartLiveLoops();}
   function restartLiveLoops(){clearInterval(st.poll);clearInterval(st.heartbeat);st.poll=setInterval(()=>{if(!document.hidden)refreshDetail();},7000);st.heartbeat=setInterval(()=>{if(st.sessionId)api('heartbeat',{session_id:st.sessionId}).catch(()=>{});},20000);if(st.sessionId)api('heartbeat',{session_id:st.sessionId}).catch(()=>{});}
-  function stopLive(){clearInterval(st.poll);clearInterval(st.heartbeat);clearInterval(st.timer);clearInterval(st.lobbyTimer);for(const x of st.draftTimers.values())clearTimeout(x);st.draftTimers.clear();st.poll=st.heartbeat=st.timer=st.lobbyTimer=null;window.AGVFullscreen?.require(false);}
+  function stopLive(){clearInterval(st.poll);clearInterval(st.heartbeat);clearInterval(st.timer);clearInterval(st.lobbyTimer);for(const x of st.draftTimers.values())clearTimeout(x);st.draftTimers.clear();st.poll=st.heartbeat=st.timer=st.lobbyTimer=null;st.lastStatus=null;st.introSession=null;closeTeamChat();document.body.classList.remove('collective-match-active');window.AGVFullscreen?.require(false);}
   async function doAction(fn){if(st.busy)return;st.busy=true;try{await fn();await refreshDetail();}catch(e){console.error(e);alert(String(e?.data?.error||e?.message||'Não foi possível concluir a ação.').replaceAll('_',' '));}finally{st.busy=false;}}
   function challengeById(id){return st.detail?.challenges?.find(c=>String(c.id)===String(id));}
   async function submitChallenge(id){
@@ -212,8 +252,8 @@
   }
 
   $('exam-content').addEventListener('click',e=>{
-    const t=e.target.closest('[data-open-session],[data-back-sessions],[data-join-clan],[data-leave-clan],[data-leader-vote],[data-leader-kick],[data-remove-emblem],[data-submit-challenge]');if(!t)return;
-    if(t.dataset.openSession)return openSession(t.dataset.openSession).catch(console.error);
+    const t=e.target.closest('[data-open-session],[data-back-sessions],[data-join-clan],[data-leave-clan],[data-leader-vote],[data-leader-kick],[data-remove-emblem],[data-submit-challenge],[data-open-team-chat]');if(!t)return;
+    if(t.dataset.openSession)return openSession(t.dataset.openSession).catch(console.error);if(t.hasAttribute('data-open-team-chat'))return openTeamChat().catch(console.error);
     if(t.hasAttribute('data-back-sessions')){stopLive();st.detail=null;st.sessionId=null;st.emblemDraft=null;return loadSessions().catch(console.error);}
     if(t.dataset.joinClan)return doAction(()=>api('join_clan',{session_id:st.sessionId,clan_id:t.dataset.joinClan}));
     if(t.hasAttribute('data-leave-clan'))return doAction(()=>api('leave_clan',{session_id:st.sessionId}));

@@ -796,6 +796,38 @@ function metrics(s: any, cs: any[], ms: any[], subs: any[], roles: any[], awards
   return { clans, members, rankings: { teams: teamRanking, students: studentRanking } };
 }
 
+function practicalLearningModeAccommodation(config: any) {
+  const cfg = config && typeof config === "object" ? config : {};
+  const features = cfg.features && typeof cfg.features === "object" ? cfg.features : {};
+  const supervision = cfg.supervision && typeof cfg.supervision === "object" ? cfg.supervision : {};
+  const profileKey = String(cfg.profile_key || cfg.adaptation_profile || "");
+  const supervisionMode = String(supervision.mode || "");
+  const home = profileKey.includes("home") || supervisionMode === "home_study" || supervisionMode === "relaxed" || supervision.require_fullscreen === false || features.independent_study === true || features.home_detailed_guidance === true;
+  return {
+    adapted: String(cfg.default_mode || "") === "adapted" || !!profileKey,
+    reduce_motion: features.reduced_visual_load === true || features.predictable_feedback === true || cfg.reduce_motion === true,
+    focus_mode: features.focus_cues !== false || features.reduced_visual_load === true,
+    font_scale: features.larger_controls === true ? 1.12 : 1,
+    fullscreen_optional: home,
+    home_study: home,
+    extra_checkpoints: features.extra_checkpoints === true || features.micro_steps === true,
+  };
+}
+async function practicalStudentAccommodation(db: any, userId: string | null) {
+  const base = { adapted:false, reduce_motion:false, focus_mode:false, font_scale:1, fullscreen_optional:false, home_study:false, extra_checkpoints:false };
+  if (!userId) return base;
+  try {
+    const { data: row, error } = await db.from("student_accommodations")
+      .select("config").eq("student_id", userId).is("exercise_id", null)
+      .eq("accommodation_type", "learning_mode").eq("active", true)
+      .order("updated_at", { ascending: false }).limit(1).maybeSingle();
+    if (error || !row?.config) return base;
+    return { ...base, ...practicalLearningModeAccommodation(row.config) };
+  } catch {
+    return base;
+  }
+}
+
 async function bundle(db: any, s: any, studentId: string | null = null, isStaff = false) {
   const [ca, ro, ch, me, su, xp, votes, blocked] = await Promise.all([
     db.from("practical_exam_clans").select("*").eq("session_id", s.id).eq("active", true).order("display_order"),
@@ -830,6 +862,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
     return { session: sessionWithTimers, clans: clansRaw, roles: ro.data || [], challenges: ch.data || [], members:staffMembers, submissions: su.data || [], events: ev || [], metrics: M, leader_votes:votes.data||[] };
   }
 
+  const accommodation = await practicalStudentAccommodation(db, studentId);
   const mine = members.find((m: any) => String(m.student_id) === String(studentId));
   const clan = mine?.clan_id ? String(mine.clan_id) : null;
   const currentClan=clan?clanMap.get(clan):null;
@@ -919,6 +952,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
       score_publish_at: s.score_publish_at,
       remaining_seconds: remaining(s),
     },
+    accommodation,
     clans: roomCards,
     roles: ro.data || [],
     me: mine ? { ...mine, is_leader: String(mine.student_id) === leaderId } : null,
@@ -978,11 +1012,12 @@ Deno.serve(async (req) => {
       const cids = (m || []).map((x: any) => String(x.class_id));
       const sid = id(b.session_id);
       if (!sid) {
-        if (!cids.length) return J({ sessions: [] });
+        const accommodation = await practicalStudentAccommodation(db, user.id);
+        if (!cids.length) return J({ sessions: [], accommodation });
         const { data: ss } = await db.from("practical_exam_sessions").select("*").in("class_id", cids).in("status", ["waiting_room", "locked", "running", "paused", "finished", "grading", "score_scheduled", "published"]).order("created_at", { ascending: false }).limit(12);
         const out = [];
         for (let s of ss || []) out.push(await refresh(db, s));
-        return J({ sessions: out.map((s: any) => ({ ...s, remaining_seconds: remaining(s), lobby_remaining_seconds: lobbyRemaining(s) })) });
+        return J({ sessions: out.map((s: any) => ({ ...s, remaining_seconds: remaining(s), lobby_remaining_seconds: lobbyRemaining(s) })), accommodation });
       }
       let { data: s } = await db.from("practical_exam_sessions").select("*").eq("id", sid).maybeSingle();
       if (!s || !cids.includes(String(s.class_id))) return J({ error: "out_of_scope" }, 403);
@@ -1102,6 +1137,47 @@ Deno.serve(async (req) => {
       await recomputeLeader(db,sid,String(ctx.clan.id));
       await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_member_kicked",metadata:{}});
       return J({ok:true});
+    }
+
+
+    if (act === "team_chat_list" || act === "team_chat_send") {
+      if (p.role !== "student") return J({ error: "student_only" }, 403);
+      const sid = id(b.session_id);
+      const { data: session } = await db.from("practical_exam_sessions").select("id,class_id,status").eq("id", sid).maybeSingle();
+      if (!session) return J({ error: "not_found" }, 404);
+      const { data: membership } = await db.from("class_memberships").select("user_id")
+        .eq("class_id", session.class_id).eq("user_id", user.id).eq("active", true).maybeSingle();
+      if (!membership) return J({ error: "out_of_scope" }, 403);
+      const { data: member } = await db.from("practical_exam_members")
+        .select("clan_id,status").eq("session_id", sid).eq("student_id", user.id).maybeSingle();
+      if (!member?.clan_id || member.status === "removed") return J({ error: "join_guild_first" }, 409);
+      if (act === "team_chat_send") {
+        if (!["waiting_room","locked","running","paused"].includes(String(session.status))) return J({ error: "chat_unavailable" }, 409);
+        const message = String(b.message || "").trim().slice(0, 500);
+        if (!message) return J({ error: "empty_message" }, 400);
+        const { data: last } = await db.from("practical_exam_team_chat_messages")
+          .select("created_at").eq("session_id", sid).eq("sender_id", user.id)
+          .order("created_at", { ascending: false }).limit(1).maybeSingle();
+        if (last?.created_at && Date.now() - Date.parse(last.created_at) < 900) return J({ error: "chat_rate_limited" }, 429);
+        const inserted = await db.from("practical_exam_team_chat_messages").insert({
+          session_id: sid, clan_id: member.clan_id, sender_id: user.id, message,
+        }).select("id,session_id,clan_id,sender_id,message,created_at").single();
+        if (inserted.error) throw inserted.error;
+        await db.from("practical_exam_events").insert({
+          session_id:sid,student_id:user.id,clan_id:member.clan_id,actor_id:user.id,
+          event_type:"team_chat_message",metadata:{message_id:inserted.data.id}
+        });
+      }
+      const { data: rows, error } = await db.from("practical_exam_team_chat_messages")
+        .select("id,sender_id,message,created_at").eq("session_id", sid).eq("clan_id", member.clan_id)
+        .order("created_at", { ascending: true }).limit(100);
+      if (error) throw error;
+      const senderIds=[...new Set((rows||[]).map((x:any)=>String(x.sender_id)))];
+      const { data: profiles } = senderIds.length
+        ? await db.from("profiles").select("id,full_name").in("id",senderIds)
+        : { data: [] };
+      const names=new Map((profiles||[]).map((x:any)=>[String(x.id),String(x.full_name||"Aluno")]));
+      return J({ messages:(rows||[]).map((x:any)=>({...x,sender_name:names.get(String(x.sender_id))||"Aluno"})) });
     }
 
     if (act === "heartbeat") {

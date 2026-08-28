@@ -18,6 +18,7 @@ const STAFF = ["teacher", "admin", "super_admin"];
 const SUBJECTS: Record<string, { name: string; cards: number; stages: number }> = {
   frontend_sub: { name: "Programação Front-End", cards: 9, stages: 3 },
   mobile_sub: { name: "Programação Mobile I", cards: 11, stages: 3 },
+  programacao_ds3: { name: "Programação no Desenvolvimento de Sistemas — 3DS", cards: 8, stages: 3 },
 };
 
 function elapsed(session: any) {
@@ -136,6 +137,38 @@ async function sessionForStudent(db: any, sessionId: string, userId: string) {
     .maybeSingle();
   return membership ? session : null;
 }
+function learningModeExamAccommodation(config: any) {
+  const cfg = config && typeof config === "object" ? config : {};
+  const features = cfg.features && typeof cfg.features === "object" ? cfg.features : {};
+  const profileKey = String(cfg.profile_key || cfg.adaptation_profile || "");
+  const home = profileKey.includes("home") || features.independent_study === true || features.home_detailed_guidance === true;
+  return {
+    reduce_motion: features.reduced_visual_load === true || features.predictable_feedback === true,
+    focus_mode: features.focus_cues !== false || features.reduced_visual_load === true,
+    font_scale: features.larger_controls === true ? 1.12 : 1,
+    fullscreen_optional: home,
+    home_study: home,
+    extra_checkpoints: features.extra_checkpoints === true || features.micro_steps === true,
+  };
+}
+async function syncLearningModeAccommodation(db: any, member: any, userId: string) {
+  const { data: row } = await db.from("student_accommodations")
+    .select("config").eq("student_id", userId).is("exercise_id", null)
+    .eq("accommodation_type", "learning_mode").eq("active", true)
+    .order("updated_at", { ascending: false }).limit(1).maybeSingle();
+  if (!row?.config) return member;
+  const inherited = learningModeExamAccommodation(row.config);
+  const current = member?.accommodation && typeof member.accommodation === "object" ? member.accommodation : {};
+  const merged = { ...inherited, ...current };
+  if (JSON.stringify(merged) !== JSON.stringify(current)) {
+    const { data: updated, error } = await db.from("recovery_exam_members")
+      .update({ accommodation: merged, updated_at: now() })
+      .eq("session_id", member.session_id).eq("student_id", userId).select().single();
+    if (error) throw error;
+    return updated;
+  }
+  return member;
+}
 async function ensureMember(db: any, session: any, userId: string) {
   let { data: member } = await db.from("recovery_exam_members")
     .select("*")
@@ -151,6 +184,7 @@ async function ensureMember(db: any, session: any, userId: string) {
     if (inserted.error) throw inserted.error;
     member = inserted.data;
   }
+  member = await syncLearningModeAccommodation(db, member, userId);
   return member;
 }
 async function isRecoveryMember(db: any, sessionId: string, studentId: string) {

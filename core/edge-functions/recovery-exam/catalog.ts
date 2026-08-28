@@ -1295,6 +1295,708 @@ export const RECOVERY_QUESTIONS:RecoveryQuestion[] = [
     "hint": "Depois do toque, primeiro obtenha o dado; depois valide; só então prepare e mostre o resultado.",
     "explanation": "Uma sequência coerente é ler a entrada, validar, preparar a resposta e atualizar a interface.",
     "visual": null
+  },
+{
+    "subject": "programacao_ds3",
+    "key": "ds301",
+    "topic": "Python — Variáveis",
+    "prompt": "Em Python, qual linha cria uma variável chamada idade contendo o número inteiro 16?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "idade = 16"
+      },
+      {
+        "id": "b",
+        "label": "16 = idade"
+      },
+      {
+        "id": "c",
+        "label": "int idade = 16"
+      },
+      {
+        "id": "d",
+        "label": "idade == 16"
+      }
+    ],
+    "correct": "a",
+    "hint": "Procure uma atribuição: nome da variável à esquerda e valor à direita.",
+    "explanation": "idade = 16 atribui o inteiro 16 à variável idade.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds302",
+    "topic": "Python — Tipos",
+    "prompt": "Relacione cada valor ao tipo básico mais adequado.",
+    "type": "match",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "texto",
+        "label": "\"Paranaguá\""
+      },
+      {
+        "id": "inteiro",
+        "label": "27"
+      },
+      {
+        "id": "decimal",
+        "label": "7.5"
+      },
+      {
+        "id": "booleano",
+        "label": "True"
+      }
+    ],
+    "correct": {
+      "texto": "str",
+      "inteiro": "int",
+      "decimal": "float",
+      "booleano": "bool"
+    },
+    "hint": "Observe aspas, ponto decimal e os valores True/False.",
+    "explanation": "str representa texto, int inteiro, float decimal e bool valores lógicos.",
+    "visual": {
+      "targets": [
+        {
+          "id": "str",
+          "label": "str — texto"
+        },
+        {
+          "id": "int",
+          "label": "int — inteiro"
+        },
+        {
+          "id": "float",
+          "label": "float — número decimal"
+        },
+        {
+          "id": "bool",
+          "label": "bool — verdadeiro/falso"
+        }
+      ]
+    }
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds303",
+    "topic": "Python — Funções",
+    "prompt": "Qual cabeçalho define corretamente uma função Python chamada dobro que recebe o parâmetro numero?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "def dobro(numero):"
+      },
+      {
+        "id": "b",
+        "label": "function dobro(numero)"
+      },
+      {
+        "id": "c",
+        "label": "dobro = function(numero):"
+      },
+      {
+        "id": "d",
+        "label": "def dobro = numero:"
+      }
+    ],
+    "correct": "a",
+    "hint": "Em Python, funções começam com def e terminam o cabeçalho com dois-pontos.",
+    "explanation": "def dobro(numero): é a sintaxe correta para definir a função.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds304",
+    "topic": "Python — Funções",
+    "prompt": "Relacione cada parte de uma função Python à sua finalidade.",
+    "type": "match",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "def",
+        "label": "def"
+      },
+      {
+        "id": "parametro",
+        "label": "parâmetro"
+      },
+      {
+        "id": "return",
+        "label": "return"
+      },
+      {
+        "id": "chamada",
+        "label": "dobro(4)"
+      }
+    ],
+    "correct": {
+      "def": "cria",
+      "parametro": "recebe",
+      "return": "devolve",
+      "chamada": "executa"
+    },
+    "hint": "Pense no caminho definição → entrada → resultado → chamada.",
+    "explanation": "def define; parâmetros recebem dados; return devolve valor; a chamada usa a função.",
+    "visual": {
+      "targets": [
+        {
+          "id": "cria",
+          "label": "inicia a definição da função"
+        },
+        {
+          "id": "recebe",
+          "label": "recebe um valor na função"
+        },
+        {
+          "id": "devolve",
+          "label": "devolve um resultado"
+        },
+        {
+          "id": "executa",
+          "label": "chama/executa a função"
+        }
+      ]
+    }
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds305",
+    "topic": "Python — Condições",
+    "prompt": "Considere idade = 17. Qual condição testa corretamente se a pessoa tem 18 anos ou mais?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "if idade >= 18:"
+      },
+      {
+        "id": "b",
+        "label": "if idade = 18:"
+      },
+      {
+        "id": "c",
+        "label": "if idade => 18:"
+      },
+      {
+        "id": "d",
+        "label": "if 18 >= idade = True:"
+      }
+    ],
+    "correct": "a",
+    "hint": "O operador >= significa maior ou igual.",
+    "explanation": "if idade >= 18: testa corretamente a condição.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds306",
+    "topic": "Python — Condições",
+    "prompt": "Ordene os blocos de uma decisão com três caminhos.",
+    "type": "order",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "if",
+        "label": "if condição_1:"
+      },
+      {
+        "id": "elif",
+        "label": "elif condição_2:"
+      },
+      {
+        "id": "else",
+        "label": "else:"
+      }
+    ],
+    "correct": [
+      "if",
+      "elif",
+      "else"
+    ],
+    "hint": "A primeira condição começa com if e o caminho restante termina em else.",
+    "explanation": "Uma cadeia típica é if → elif → else.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds307",
+    "topic": "Python — While",
+    "prompt": "Qual frase descreve corretamente o laço while?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "Repete um bloco enquanto uma condição permanecer verdadeira."
+      },
+      {
+        "id": "b",
+        "label": "Executa o bloco exatamente uma vez."
+      },
+      {
+        "id": "c",
+        "label": "Repete somente quando existe uma lista."
+      },
+      {
+        "id": "d",
+        "label": "Substitui qualquer função que tenha parâmetro."
+      }
+    ],
+    "correct": "a",
+    "hint": "while depende de uma condição lógica.",
+    "explanation": "while repete enquanto sua condição for verdadeira.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds308",
+    "topic": "Python — While",
+    "prompt": "Um contador deve mostrar 1, 2 e 3 e então parar. Ordene a lógica.",
+    "type": "order",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "init",
+        "label": "contador = 1"
+      },
+      {
+        "id": "while",
+        "label": "while contador <= 3:"
+      },
+      {
+        "id": "print",
+        "label": "print(contador)"
+      },
+      {
+        "id": "inc",
+        "label": "contador += 1"
+      }
+    ],
+    "correct": [
+      "init",
+      "while",
+      "print",
+      "inc"
+    ],
+    "hint": "Inicialize antes do laço; dentro dele mostre e atualize o contador.",
+    "explanation": "A sequência inicializa, testa, usa o valor e o incrementa.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds309",
+    "topic": "Python — While",
+    "prompt": "Qual problema existe em `contador = 0` seguido de `while contador < 5: print(contador)` sem outra instrução no bloco?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "O contador não muda e o laço pode ficar infinito."
+      },
+      {
+        "id": "b",
+        "label": "print transforma contador em texto automaticamente e encerra o laço."
+      },
+      {
+        "id": "c",
+        "label": "while só aceita valores booleanos literais True ou False."
+      },
+      {
+        "id": "d",
+        "label": "A variável contador deixa de existir ao entrar no laço."
+      }
+    ],
+    "correct": "a",
+    "hint": "Pergunte: o que fará contador chegar a 5?",
+    "explanation": "Sem atualizar contador, a condição contador < 5 permanece verdadeira.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds310",
+    "topic": "Python — Integração",
+    "prompt": "Uma regra calcula desconto em vários pontos do programa. Qual decisão melhora a reutilização da lógica?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "Criar uma função que receba os dados necessários e devolva o desconto."
+      },
+      {
+        "id": "b",
+        "label": "Copiar o mesmo bloco de if em todos os pontos."
+      },
+      {
+        "id": "c",
+        "label": "Transformar todas as variáveis em textos."
+      },
+      {
+        "id": "d",
+        "label": "Usar um while infinito e interromper manualmente."
+      }
+    ],
+    "correct": "a",
+    "hint": "Procure a estrutura criada para reutilizar uma tarefa.",
+    "explanation": "Uma função centraliza a regra e pode ser chamada onde for necessária.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds311",
+    "topic": "HTML semântico",
+    "prompt": "Qual tag identifica o conteúdo principal exclusivo de uma página HTML?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "<main>"
+      },
+      {
+        "id": "b",
+        "label": "<nav>"
+      },
+      {
+        "id": "c",
+        "label": "<footer>"
+      },
+      {
+        "id": "d",
+        "label": "<style>"
+      }
+    ],
+    "correct": "a",
+    "hint": "O nome da tag indica conteúdo principal.",
+    "explanation": "<main> representa o conteúdo principal da página.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds312",
+    "topic": "HTML — Tags",
+    "prompt": "Relacione as tags ao papel mais adequado.",
+    "type": "match",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "header",
+        "label": "<header>"
+      },
+      {
+        "id": "nav",
+        "label": "<nav>"
+      },
+      {
+        "id": "section",
+        "label": "<section>"
+      },
+      {
+        "id": "footer",
+        "label": "<footer>"
+      }
+    ],
+    "correct": {
+      "header": "intro",
+      "nav": "navigation",
+      "section": "group",
+      "footer": "end"
+    },
+    "hint": "Use o significado semântico de cada elemento.",
+    "explanation": "header introduz, nav navega, section agrupa tema e footer encerra.",
+    "visual": {
+      "targets": [
+        {
+          "id": "intro",
+          "label": "conteúdo introdutório/cabeçalho"
+        },
+        {
+          "id": "navigation",
+          "label": "região de navegação"
+        },
+        {
+          "id": "group",
+          "label": "seção temática"
+        },
+        {
+          "id": "end",
+          "label": "rodapé/encerramento"
+        }
+      ]
+    }
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds313",
+    "topic": "HTML — Tags",
+    "prompt": "Qual alternativa cria uma imagem com texto alternativo adequado?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "<img src=\"logo.png\" alt=\"Logo da escola\">"
+      },
+      {
+        "id": "b",
+        "label": "<image href=\"logo.png\">"
+      },
+      {
+        "id": "c",
+        "label": "<img>logo.png</img>"
+      },
+      {
+        "id": "d",
+        "label": "<a img=\"logo.png\">Logo</a>"
+      }
+    ],
+    "correct": "a",
+    "hint": "A tag img usa src e o atributo alt descreve a imagem.",
+    "explanation": "img usa src para o arquivo e alt para alternativa textual.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds314",
+    "topic": "CSS",
+    "prompt": "Qual é a função principal do CSS em uma página web?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "Controlar a apresentação visual e o layout."
+      },
+      {
+        "id": "b",
+        "label": "Executar laços while do Python."
+      },
+      {
+        "id": "c",
+        "label": "Definir a semântica das regiões HTML."
+      },
+      {
+        "id": "d",
+        "label": "Armazenar dados de usuário no banco."
+      }
+    ],
+    "correct": "a",
+    "hint": "Separe estrutura, aparência e comportamento.",
+    "explanation": "CSS controla apresentação, como cores, tamanhos, espaçamento e layout.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds315",
+    "topic": "CSS — Seletores",
+    "prompt": "Qual regra altera a cor do texto de todos os elementos h1?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "h1 { color: blue; }"
+      },
+      {
+        "id": "b",
+        "label": "color(h1) = blue;"
+      },
+      {
+        "id": "c",
+        "label": "<h1 color=\"blue\">"
+      },
+      {
+        "id": "d",
+        "label": "h1 = { text: blue }"
+      }
+    ],
+    "correct": "a",
+    "hint": "Uma regra CSS usa seletor, chaves, propriedade e valor.",
+    "explanation": "h1 { color: blue; } usa sintaxe CSS válida.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds316",
+    "topic": "CSS — Box Model",
+    "prompt": "Ordene o Box Model do centro para fora.",
+    "type": "order",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "content",
+        "label": "conteúdo"
+      },
+      {
+        "id": "padding",
+        "label": "padding"
+      },
+      {
+        "id": "border",
+        "label": "border"
+      },
+      {
+        "id": "margin",
+        "label": "margin"
+      }
+    ],
+    "correct": [
+      "content",
+      "padding",
+      "border",
+      "margin"
+    ],
+    "hint": "Comece pelo conteúdo e termine pelo espaço externo.",
+    "explanation": "A ordem é conteúdo → padding → border → margin.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds317",
+    "topic": "JavaScript",
+    "prompt": "Qual declaração é adequada para uma referência que não precisa ser reatribuída?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "const turma = \"3DS\";"
+      },
+      {
+        "id": "b",
+        "label": "let const turma = \"3DS\";"
+      },
+      {
+        "id": "c",
+        "label": "variable turma := \"3DS\";"
+      },
+      {
+        "id": "d",
+        "label": "def turma = \"3DS\";"
+      }
+    ],
+    "correct": "a",
+    "hint": "No JavaScript moderno, const cria uma referência que não será reatribuída.",
+    "explanation": "const é apropriado quando não precisamos reatribuir a referência.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds318",
+    "topic": "JavaScript — Eventos",
+    "prompt": "Qual código registra uma reação ao clique de um botão armazenado na variável botao?",
+    "type": "single",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "a",
+        "label": "botao.addEventListener('click', () => { /* ação */ });"
+      },
+      {
+        "id": "b",
+        "label": "botao.click = while(true);"
+      },
+      {
+        "id": "c",
+        "label": "on click botao: ação"
+      },
+      {
+        "id": "d",
+        "label": "botao.addCSS('click');"
+      }
+    ],
+    "correct": "a",
+    "hint": "Procure o método usado para registrar listeners de eventos.",
+    "explanation": "addEventListener conecta um evento, como click, a uma função.",
+    "visual": null
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds319",
+    "topic": "Web — Responsabilidades",
+    "prompt": "Relacione cada tecnologia à responsabilidade principal no navegador.",
+    "type": "match",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "html",
+        "label": "HTML"
+      },
+      {
+        "id": "css",
+        "label": "CSS"
+      },
+      {
+        "id": "js",
+        "label": "JavaScript"
+      }
+    ],
+    "correct": {
+      "html": "structure",
+      "css": "presentation",
+      "js": "behavior"
+    },
+    "hint": "Pense em estrutura, aparência e comportamento.",
+    "explanation": "HTML estrutura, CSS apresenta e JavaScript adiciona comportamento.",
+    "visual": {
+      "targets": [
+        {
+          "id": "structure",
+          "label": "estrutura e significado"
+        },
+        {
+          "id": "presentation",
+          "label": "apresentação e layout"
+        },
+        {
+          "id": "behavior",
+          "label": "comportamento e interação"
+        }
+      ]
+    }
+  },
+  {
+    "subject": "programacao_ds3",
+    "key": "ds320",
+    "topic": "Integração",
+    "prompt": "Uma página deve ler um clique e atualizar uma mensagem. Ordene um fluxo conceitual coerente.",
+    "type": "order",
+    "points": 0.25,
+    "options": [
+      {
+        "id": "html",
+        "label": "Criar no HTML o botão e a área de mensagem"
+      },
+      {
+        "id": "css",
+        "label": "Aplicar no CSS a apresentação necessária"
+      },
+      {
+        "id": "js-listener",
+        "label": "Registrar no JavaScript o evento de clique"
+      },
+      {
+        "id": "js-update",
+        "label": "No evento, atualizar a mensagem no DOM"
+      }
+    ],
+    "correct": [
+      "html",
+      "css",
+      "js-listener",
+      "js-update"
+    ],
+    "hint": "Primeiro os elementos precisam existir; depois podem ser apresentados e conectados ao comportamento.",
+    "explanation": "Um fluxo coerente cria a estrutura, estiliza, registra o evento e então atualiza o DOM.",
+    "visual": null
   }
 ] as RecoveryQuestion[];
 

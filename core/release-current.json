@@ -1,37 +1,50 @@
 {
-  "version": "14.10.8.24",
-  "title": "Modo Prova Prática — 8 áreas, continuidade entre aulas e ranking geral",
+  "version": "14.10.8.30",
+  "title": "Modo Prova Coletiva multiplayer + Retomada/Recuperação DS3 + adaptações",
   "scope": [
     "frontend",
     "practical-exam",
-    "assessment",
-    "eight-areas",
-    "server-drafts",
-    "xp-ranking",
+    "multiplayer-lobby",
+    "guild-chat",
+    "recovery-ds3",
+    "synchronized-review",
+    "accessibility",
+    "pedagogy",
     "database",
-    "edge-function"
+    "edge-function",
+    "rls"
   ],
   "changes": [
-    "Disponibiliza oito áreas: Análise de Sistemas/Product Owner, Back-end, Front-end, Banco de Dados, QA/Testador, Design/UX/UI, Cyber Segurança e Inovação & Empreendedorismo.",
-    "A equipe continua com 2 a 6 integrantes; cada integrante ocupa exatamente uma área e a mesma área não pode ser repetida dentro da equipe.",
-    "O servidor impede iniciar uma avaliação com integrante alocado sem área definida.",
-    "Cada área possui dois desafios equivalentes em teto de XP, com predominância de múltipla escolha e situações reais de uma empresa de software.",
-    "Back-end aborda Python básico; Front-end aborda HTML/CSS; Banco de Dados aborda SELECT/WHERE/AND/OR; QA aborda bugs; Design inclui protótipo por link; Cyber inclui SHA-256, XSS e sanitização; Business inclui MVP, BMC, pitch e negociação.",
-    "Rascunhos passam a ser persistidos no Supabase sem conceder XP, permitindo pausar hoje e continuar amanhã inclusive em outro computador.",
-    "Tempo padrão passa a 50 minutos ativos, além do pré-lobby configurável; a pausa congela a contagem e a retomada continua do saldo restante.",
-    "Nota acadêmica padrão passa a 50% equipe + 50% individual, enquanto ranking e progresso usam XP server-side normalizado.",
-    "Aluno vê painel lateral com líder, áreas, progresso individual/equipe, XP e ranking geral da turma; professor mantém visão detalhada de equipes, alunos, rascunhos e correções.",
-    "Gabaritos, cálculo de correção e concessão de XP permanecem exclusivamente no backend; o frontend nunca informa XP nem recebe answer_key."
+    "DS1/DS2: renomeia e reposiciona a experiência como Modo Prova Coletiva, com lobby de guildas/squads, identidade visual, liderança por votação e cargos exclusivos.",
+    "DS1/DS2: adiciona HUD de partida, entrada em fullscreen quando exigido, animação MATCH FOUND / 3-2-1 / MISSÃO INICIADA, missões por fases e chat privado auditável da guilda.",
+    "DS1/DS2: mantém XP/ranking separados da nota acadêmica e mantém correção/gabaritos exclusivamente no backend.",
+    "DS3: adiciona Programação no Desenvolvimento de Sistemas ao catálogo da recuperação, cobrindo Python (variáveis, tipos, funções, condições e while), HTML semântico/tags, CSS básico e JavaScript básico.",
+    "DS3: adiciona retomada gamificada com 8 blocos e 3 checkpoints por bloco; professor controla o avanço e os alunos recebem a mesma tela/etapa sincronizada.",
+    "DS3: recuperação individual possui 20 itens de 0,25 ponto, totalizando 5,0 pontos, com ready check e animação de início.",
+    "Adaptações: Modo Prova Coletiva passa a herdar learning_mode global do aluno (movimento reduzido, foco, controles ampliados e checkpoints extras).",
+    "Estudo domiciliar: fullscreen deixa de ser obrigatório quando o perfil pedagógico indicar home_study/fullscreen_optional, inclusive na prova coletiva e na recuperação.",
+    "Privacidade: vínculos nominais e seed individual não são incluídos no bundle público; conteúdo diferenciado é entregue por experiências pedagógicas privadas no banco."
   ],
   "compatibility": {
     "preserves_conventional_history": true,
     "preserves_personalized_experiences": true,
+    "awards_client_side_xp": false,
     "requires_migrations": [
-      "052_p10923_practical_exam_mode.sql",
-      "053_p10924_practical_exam_xp_rankings.sql",
-      "054_p10925_practical_exam_interactive_challenges.sql",
-      "055_p10926_practical_exam_two_class_persistence.sql"
+      "061_p10931_recovery_ds3_programacao.sql",
+      "062_p10931_practical_exam_guild_chat.sql"
     ],
-    "requires_edge_functions": ["practical-exam"]
+    "requires_edge_functions": [
+      "practical-exam",
+      "recovery-exam"
+    ],
+    "private_operation": [
+      "Aplicar separadamente o seed nominal de estudo domiciliar somente no banco, nunca no diretório público do site."
+    ]
+  },
+  "privacy": {
+    "student_names_in_public_bundle": false,
+    "diagnostic_labels_in_student_ui": false,
+    "private_roster_seed_separate": true,
+    "guild_chat_auditable": true
   }
 }
