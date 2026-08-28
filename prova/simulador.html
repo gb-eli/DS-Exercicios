@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#071018">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>DS Exercícios — Simulador da Experiência do Aluno</title>
-  <link rel="stylesheet" href="assets/prova.css?v=14.10.8.27">
+  <link rel="stylesheet" href="assets/prova.css?v=14.10.8.31">
 </head>
 <body>
   <main class="exam-shell simulator-shell">
@@ -22,8 +22,32 @@
     </section>
 
     <section id="app-view" class="hidden">
-      <section class="panel simulator-control-panel">
-        <div class="section-head simulator-head"><div><p class="eyebrow">Central de simulação</p><h1>Experiência do aluno</h1><p>As respostas e XP abaixo existem apenas nesta aba. Atualizar a página zera a simulação.</p></div><span id="staff-label" class="status-pill good">Admin</span></div>
+      <section class="simulator-commandbar">
+        <div class="sim-command-brand"><span class="sim-live-dot"></span><div><strong>PLAYER EXPERIENCE LAB</strong><small>Prévia segura • nenhuma gravação real</small></div></div>
+        <nav class="sim-view-tabs" aria-label="Telas do simulador">
+          <button class="active" data-sim-view-tab="lobby" type="button">Lobby</button>
+          <button data-sim-view-tab="room" type="button">Guilda</button>
+          <button data-sim-view-tab="challenge" type="button">Missões</button>
+          <button data-sim-view-tab="ranking" type="button">Ranking</button>
+        </nav>
+        <div class="sim-command-actions">
+          <button id="sim-intro" class="button ghost small" type="button">▶ Simular início</button>
+          <button id="sim-immersive" class="button primary small" type="button">⛶ Tela cheia</button>
+        </div>
+      </section>
+
+      <div class="simulator-workspace simulator-workspace-v31">
+        <section class="simulator-stage-wrap">
+          <div class="sim-device-frame desktop" id="sim-device-frame">
+            <div class="sim-device-bar"><span class="sim-device-leds"><i></i><i></i><i></i></span><strong id="sim-device-title">Desktop • integrante</strong><span class="sim-device-mode">LIVE PREVIEW</span></div>
+            <div id="sim-stage" class="sim-stage"></div>
+          </div>
+        </section>
+      </div>
+
+      <details class="panel simulator-control-panel simulator-drawer">
+        <summary><span>⚙️ Configurar simulação</span><small>turma, prova, área, perfil, dispositivo e tema</small></summary>
+        <div class="section-head simulator-head"><div><p class="eyebrow">Central de simulação</p><h2>Ajustes da experiência</h2><p>Use somente para testar variações. A prévia acima é o que deve dominar visualmente.</p></div><span id="staff-label" class="status-pill good">Admin</span></div>
         <div class="simulator-controls">
           <label>Turma<select id="sim-class"></select></label>
           <label>Prova<select id="sim-template"></select></label>
@@ -32,29 +56,19 @@
           <label>Perfil<select id="sim-profile"><option value="member">Integrante</option><option value="leader">Líder da equipe</option></select></label>
           <label>Dispositivo<select id="sim-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Celular</option></select></label>
           <label>Tema<select id="sim-theme"><option value="cyber">Cyber</option><option value="neon">Neon</option><option value="ocean">Ocean</option><option value="violet">Violet</option><option value="sunset">Sunset</option><option value="matrix">Matrix</option><option value="corporate">Corporate</option><option value="mono">Mono</option></select></label>
-          <div class="simulator-actions"><button id="sim-reset" class="button ghost" type="button">Reiniciar</button><button id="sim-next" class="button primary" type="button">Próximo desafio →</button></div>
+          <div class="simulator-actions"><button id="sim-reset" class="button ghost" type="button">Reiniciar</button><button id="sim-next" class="button primary" type="button">Próxima missão →</button></div>
         </div>
-      </section>
+      </details>
 
-      <div class="simulator-workspace">
-        <aside class="panel simulator-inspector">
-          <p class="eyebrow">Inspector</p><h2>Estado simulado</h2>
-          <div id="sim-inspector"></div>
-          <details class="sim-answer-key"><summary>Gabarito administrativo</summary><div id="sim-answer"></div></details>
-          <div class="sim-safe-note"><strong>Não grava no banco</strong><span>Nenhum botão desta tela cria XP, altera ranking ou modifica equipe real.</span></div>
-        </aside>
-        <section class="simulator-stage-wrap">
-          <div class="sim-device-frame desktop" id="sim-device-frame">
-            <div class="sim-device-bar"><span></span><strong id="sim-device-title">Desktop • aluno</strong><span>● ● ●</span></div>
-            <div id="sim-stage" class="sim-stage"></div>
-          </div>
-        </section>
-      </div>
+      <details class="panel simulator-inspector simulator-drawer">
+        <summary><span>🧪 Ferramentas do professor</span><small>estado simulado e gabarito</small></summary>
+        <div class="sim-inspector-body"><div><p class="eyebrow">Diagnóstico</p><h2>Estado simulado</h2><div id="sim-inspector"></div></div><div><details class="sim-answer-key"><summary>Gabarito administrativo</summary><div id="sim-answer"></div></details><div class="sim-safe-note"><strong>Não grava no banco</strong><span>Nenhum botão desta tela cria XP, altera ranking ou modifica equipe real.</span></div></div></div>
+      </details>
     </section>
   </main>
   <script src="../core/session/agv-session.js?v=14.10.8.19.1"></script>
-  <script src="assets/config.js?v=14.10.8.27"></script>
-  <script src="assets/simulator-catalog.js?v=14.10.8.27"></script>
-  <script src="assets/simulator.js?v=14.10.8.27"></script>
+  <script src="assets/config.js?v=14.10.8.31"></script>
+  <script src="assets/simulator-catalog.js?v=14.10.8.31"></script>
+  <script src="assets/simulator.js?v=14.10.8.31"></script>
 </body>
 </html>
