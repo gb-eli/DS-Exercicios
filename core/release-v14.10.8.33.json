@@ -50,8 +50,6 @@
   },
   "privacy": {
     "student_names_in_public_bundle": false,
-    "private_home_study_seed_separate": true,
-    "private_roster_seed_separate": true,
-    "diagnostic_labels_in_student_ui": false
+    "private_home_study_seed_separate": true
   }
 }

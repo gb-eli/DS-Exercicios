@@ -1,0 +1,47 @@
+{
+  "version": "14.10.8.32",
+  "title": "Matchmaking cinematográfico + lobby FPS avaliativo multiplayer",
+  "scope": [
+    "frontend",
+    "practical-exam",
+    "multiplayer-lobby",
+    "matchmaking",
+    "game-ux",
+    "fullscreen",
+    "accessibility",
+    "simulator"
+  ],
+  "changes": [
+    "Entrada real do aluno passa a exibir sequência cinematográfica BUSCANDO PARTIDA → SINCRONIZANDO SERVIDOR → BUSCANDO JOGADORES → MONTANDO ESQUADRÃO → CARREGANDO MISSÃO → LOBBY PRONTO.",
+    "Matchmaking usa o carregamento real do backend e mostra slots do squad sincronizados quando a resposta da sessão chega.",
+    "Simulador administrativo ganha sequência completa de matchmaking, formação do squad e deploy 3-2-1 antes de MISSÃO INICIADA.",
+    "Lobby real recebe faixa tática de telemetria com jogadores alocados, região, missão e estado do squad.",
+    "Plano de fundo do modo coletivo recebe wallpaper procedural tático, grid, radar, scanlines e HUD mais próximo de FPS multiplayer sem depender de assets externos.",
+    "Mantém fullscreen supervisionado; estudo domiciliar e fullscreen_optional continuam respeitados.",
+    "Reduce motion e Focus Mode reduzem/removem radar, grid em movimento e scanlines para alunos com adaptação pedagógica.",
+    "Mantém integralmente DS3 Retomada + Recuperação e chat/guildas/migrations 061-062 das versões anteriores."
+  ],
+  "compatibility": {
+    "inherits_from": "14.10.8.31",
+    "requires_new_migration": false,
+    "requires_existing_migrations": [
+      "061_p10931_recovery_ds3_programacao.sql",
+      "062_p10931_practical_exam_guild_chat.sql"
+    ],
+    "requires_edge_functions": [
+      "practical-exam",
+      "recovery-exam"
+    ],
+    "backend_note": "Nenhuma mudança de schema nesta revisão. O practical-exam do pacote continua necessário para catálogo real/chat."
+  },
+  "accessibility": {
+    "reduce_motion": true,
+    "focus_mode": true,
+    "home_study_fullscreen_optional": true
+  },
+  "privacy": {
+    "student_names_in_public_bundle": false,
+    "private_home_study_seed_separate": true,
+    "simulator_writes_real_data": false
+  }
+}

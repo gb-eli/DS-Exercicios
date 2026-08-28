@@ -530,10 +530,8 @@ async function refresh(db: any, s: any) {
     const { data } = await db.from("practical_exam_sessions").update({ status: "published", updated_at: now() }).eq("id", s.id).select().single();
     return data || s;
   }
-  if (s.status === "running" && remaining(s) <= 0) {
-    const { data } = await db.from("practical_exam_sessions").update({ status: "finished", finished_at: now(), updated_at: now() }).eq("id", s.id).select().single();
-    return data || s;
-  }
+  // A prova coletiva pode atravessar aulas e continuar em casa.
+  // O cronômetro é apenas informativo; somente o professor encerra a operação.
   return s;
 }
 
@@ -546,7 +544,7 @@ async function staff(db: any, u: any) {
   if (!p?.active || p.must_change_password || !STAFF.includes(role)) return null;
   const admin = ["admin", "super_admin"].includes(role);
   const { data: t } = admin ? { data: [] } : await db.from("teacher_classes").select("class_id").eq("teacher_email", String(u.email).toLowerCase()).eq("active", true);
-  return { role, admin, assigned: admin ? null : (t || []).map((x: any) => String(x.class_id)), full_name: w?.full_name || p.full_name };
+  return { id:String(u.id), role, admin, assigned: admin ? null : (t || []).map((x: any) => String(x.class_id)), full_name: w?.full_name || p.full_name };
 }
 function scope(ctx: any, cid: unknown) {
   if (!ctx.admin && !ctx.assigned.includes(String(cid))) throw new Error("class_out_of_scope");
@@ -571,14 +569,16 @@ async function recomputeLeader(db: any, sessionId: string, clanId: string) {
     counts[candidate]=(counts[candidate]||0)+1;
   }
   const maxVotes=Math.max(0,...Object.values(counts));
-  const winners=maxVotes>0?Object.entries(counts).filter(([,n])=>n===maxVotes).map(([candidate])=>candidate):[];
+  const validVotes=(votes||[]).filter((v:any)=>valid.has(String(v.voter_id))&&valid.has(String(v.candidate_id))).length;
+  const quorum=Math.floor(valid.size/2)+1;
+  const winners=validVotes>=quorum&&maxVotes>0?Object.entries(counts).filter(([,n])=>n===maxVotes).map(([candidate])=>candidate):[];
   const leaderId=winners.length===1?winners[0]:null;
   await db.from("practical_exam_clans").update({
     leader_id:leaderId,
     leader_elected_at:leaderId?now():null,
     updated_at:now(),
   }).eq("id", clanId).eq("session_id", sessionId);
-  return { leader_id:leaderId, tied:winners.length>1, counts, max_votes:maxVotes };
+  return { leader_id:leaderId, tied:winners.length>1, counts, max_votes:maxVotes, quorum, total_votes:validVotes };
 }
 
 async function assertWaitingLeader(db:any, sessionId:string, userId:string) {
@@ -829,7 +829,7 @@ async function practicalStudentAccommodation(db: any, userId: string | null) {
 }
 
 async function bundle(db: any, s: any, studentId: string | null = null, isStaff = false) {
-  const [ca, ro, ch, me, su, xp, votes, blocked] = await Promise.all([
+  const [ca, ro, ch, me, su, xp, votes, blocked, continuation] = await Promise.all([
     db.from("practical_exam_clans").select("*").eq("session_id", s.id).eq("active", true).order("display_order"),
     db.from("practical_exam_roles").select("*").eq("session_id", s.id).eq("active", true).order("display_order"),
     db.from("practical_exam_challenges").select(isStaff ? "*" : "id,session_id,challenge_key,phase_no,title,prompt,challenge_type,scope,role_key,points,xp_max,public_config,depends_on_keys,display_order,active").eq("session_id", s.id).eq("active", true).order("phase_no").order("display_order"),
@@ -838,6 +838,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
     db.from("practical_exam_xp_awards").select("session_id,challenge_id,student_id,clan_id,component,xp,max_xp,source_submission_id,computed_at").eq("session_id", s.id),
     db.from("practical_exam_leader_votes").select("clan_id,voter_id,candidate_id,updated_at").eq("session_id", s.id),
     studentId ? db.from("practical_exam_clan_blocks").select("clan_id").eq("session_id",s.id).eq("student_id",studentId).eq("active",true) : Promise.resolve({data:[]}),
+    db.from("practical_exam_events").select("event_type,occurred_at").eq("session_id",s.id).in("event_type",["session_home_continuation","session_resume_class"]).order("occurred_at",{ascending:false}).limit(1),
   ]);
   const { data: classMemberships } = await db.from("class_memberships").select("user_id").eq("class_id",s.class_id).eq("active",true);
   const classIds=(classMemberships||[]).map((x:any)=>String(x.user_id));
@@ -851,15 +852,20 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
   const clanMap=new Map(clansRaw.map((c:any)=>[String(c.id),c]));
   const roleMap=new Map((ro.data||[]).map((r:any)=>[String(r.id),r]));
 
-  const sessionWithTimers = { ...s, remaining_seconds: remaining(s), lobby_remaining_seconds: lobbyRemaining(s) };
+  const continuationMode=String(continuation.data?.[0]?.event_type||"")==="session_home_continuation";
+  const sessionWithTimers = { ...s, remaining_seconds: remaining(s), elapsed_seconds: elapsed(s), lobby_remaining_seconds: lobbyRemaining(s), home_continuation_enabled:continuationMode, completion_mode:"manual" };
   if (isStaff) {
     const staffMembers = members.map((m:any)=>({
       ...m,
       is_leader:!!m.clan_id&&String(clanMap.get(String(m.clan_id))?.leader_id||"")===String(m.student_id),
       progress:M.members[String(m.student_id)]||null,
     }));
-    const { data: ev } = await db.from("practical_exam_events").select("*").eq("session_id", s.id).order("occurred_at", { ascending: false }).limit(200);
-    return { session: sessionWithTimers, clans: clansRaw, roles: ro.data || [], challenges: ch.data || [], members:staffMembers, submissions: su.data || [], events: ev || [], metrics: M, leader_votes:votes.data||[] };
+    const [{ data: ev },{ data: chatRows }] = await Promise.all([
+      db.from("practical_exam_events").select("*").eq("session_id", s.id).order("occurred_at", { ascending: false }).limit(250),
+      db.from("practical_exam_team_chat_messages").select("id,clan_id,sender_id,message,created_at").eq("session_id",s.id).order("created_at",{ascending:false}).limit(250),
+    ]);
+    const staffChat=(chatRows||[]).map((x:any)=>({...x,sender_name:pm.get(String(x.sender_id))?.full_name||"Aluno"}));
+    return { session: sessionWithTimers, clans: clansRaw, roles: ro.data || [], challenges: ch.data || [], members:staffMembers, submissions: su.data || [], events: ev || [], team_chat:staffChat, metrics: M, leader_votes:votes.data||[] };
   }
 
   const accommodation = await practicalStudentAccommodation(db, studentId);
@@ -874,14 +880,21 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
   const visible = (su.data || []).filter((x: any) => x.student_id ? tids.has(String(x.student_id)) : String(x.clan_id) === String(clan));
   const finalizedVisible = visible.filter((x: any) => String(x.status || "") !== "draft");
   const done = new Set(finalizedVisible.map((x: any) => (ch.data || []).find((c: any) => String(c.id) === String(x.challenge_id))?.challenge_key).filter(Boolean));
+  const occupiedRoleKeys=new Set(rawTeam.map((m:any)=>roleMap.get(String(m.role_id||""))?.role_key).filter(Boolean));
+  const requiredIndividualKeys=(ch.data||[]).filter((x:any)=>x.scope==="individual"&&occupiedRoleKeys.has(x.role_key)).map((x:any)=>String(x.challenge_key));
   const challenges = (ch.data || []).map((c: any) => {
-    const locked = (c.depends_on_keys || []).some((k: string) => !done.has(k));
+    const basePending=(c.depends_on_keys || []).filter((k:string)=>!done.has(k));
+    const squadPending=String(c.challenge_key)==="final"?requiredIndividualKeys.filter((k:string)=>!done.has(k)):[];
+    const pendingKeys=[...new Set([...basePending,...squadPending])];
+    const locked = pendingKeys.length>0;
     const own = visible.find((x: any) => String(x.challenge_id) === String(c.id) && (c.scope === "clan" ? String(x.clan_id) === String(clan) : String(x.student_id) === String(studentId)));
     const draft = own && String(own.status) === "draft";
     const allowedOwner = c.scope === "clan" ? String(studentId) === leaderId : c.role_key === role?.role_key;
     return {
       ...c,
       locked,
+      pending_dependency_keys:pendingKeys,
+      squad_gate:String(c.challenge_key)==="final"?{required:requiredIndividualKeys.length,completed:requiredIndividualKeys.length-squadPending.length,pending:squadPending.length}:null,
       team_submitted: done.has(c.challenge_key),
       can_submit: s.status === "running" && !locked && !!clan && allowedOwner && !done.has(c.challenge_key),
       can_edit_draft: ["running","paused"].includes(String(s.status)) && !locked && !!clan && allowedOwner && !done.has(c.challenge_key),
@@ -914,7 +927,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
   const roomCards=clansRaw.map((c:any)=>({
     id:c.id,name:c.name,display_order:c.display_order,theme_key:c.theme_key||"cyber",accent_color:c.accent_color||"#22d3ee",mascot_key:c.mascot_key||"robot",emblem_data_url:c.emblem_data_url||null,company_name:c.company_name||"",company_cnpj:c.company_cnpj||"",company_city:c.company_city||"",company_phone:c.company_phone||"",leader_id:c.leader_id||null,
     count:members.filter((m:any)=>String(m.clan_id)===String(c.id)).length,
-    members:members.filter((m:any)=>String(m.clan_id)===String(c.id)).map((m:any)=>({student_id:m.student_id,name:m.student?.full_name||"Aluno",role_id:m.role_id||null,role_name:roleMap.get(String(m.role_id||""))?.name||null,is_leader:String(c.leader_id||"")===String(m.student_id)})),
+    members:members.filter((m:any)=>String(m.clan_id)===String(c.id)).map((m:any)=>({student_id:m.student_id,name:m.student?.full_name||"Aluno",role_id:m.role_id||null,role_name:roleMap.get(String(m.role_id||""))?.name||null,role_selected_at:m.role_selected_at||null,ready:!!m.role_id&&!!m.role_selected_at,is_leader:String(c.leader_id||"")===String(m.student_id)})),
   }));
   const teamVotes=(votes.data||[]).filter((v:any)=>clan&&String(v.clan_id)===clan);
   const counts:Record<string,number>={};
@@ -927,6 +940,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
     max_votes:maxVotes,
     tied,
     total_votes:teamVotes.length,
+    quorum:Math.floor(rawTeam.length/2)+1,
   }:null;
 
   return {
@@ -951,6 +965,9 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
       finished_at: s.finished_at,
       score_publish_at: s.score_publish_at,
       remaining_seconds: remaining(s),
+      elapsed_seconds: elapsed(s),
+      completion_mode:"manual",
+      home_continuation_enabled:continuationMode,
     },
     accommodation,
     clans: roomCards,
@@ -1017,7 +1034,7 @@ Deno.serve(async (req) => {
         const { data: ss } = await db.from("practical_exam_sessions").select("*").in("class_id", cids).in("status", ["waiting_room", "locked", "running", "paused", "finished", "grading", "score_scheduled", "published"]).order("created_at", { ascending: false }).limit(12);
         const out = [];
         for (let s of ss || []) out.push(await refresh(db, s));
-        return J({ sessions: out.map((s: any) => ({ ...s, remaining_seconds: remaining(s), lobby_remaining_seconds: lobbyRemaining(s) })), accommodation });
+        return J({ sessions: out.map((s: any) => ({ ...s, remaining_seconds: remaining(s), elapsed_seconds:elapsed(s), completion_mode:"manual", lobby_remaining_seconds: lobbyRemaining(s) })), accommodation });
       }
       let { data: s } = await db.from("practical_exam_sessions").select("*").eq("id", sid).maybeSingle();
       if (!s || !cids.includes(String(s.class_id))) return J({ error: "out_of_scope" }, 403);
@@ -1117,26 +1134,38 @@ Deno.serve(async (req) => {
       if(!roleRow)return J({error:"role_not_found"},404);
       const {data:taken}=await db.from("practical_exam_members").select("student_id").eq("session_id",sid).eq("clan_id",ctx.clan.id).eq("role_id",roleId).neq("student_id",student).neq("status","removed").maybeSingle();
       if(taken)return J({error:"role_taken"},409);
-      const z=await db.from("practical_exam_members").update({role_id:roleId,role_selected_at:now(),status:"ready",updated_at:now()}).eq("session_id",sid).eq("student_id",student).select().single();
+      const z=await db.from("practical_exam_members").update({role_id:roleId,role_selected_at:null,status:"waiting",updated_at:now()}).eq("session_id",sid).eq("student_id",student).select().single();
       if(z.error)throw z.error;
       await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_role_assigned",metadata:{role_id:roleId}});
       return J({ok:true,member:z.data});
     }
 
-    if (act === "leader_kick_member") {
+    if (act === "accept_role") {
+      if (p.role !== "student") return J({ error:"student_only" },403);
+      const sid=id(b.session_id);
+      const {data:session}=await db.from("practical_exam_sessions").select("status").eq("id",sid).maybeSingle();
+      if(!session||!["waiting_room","locked"].includes(String(session.status)))return J({error:"role_acceptance_closed"},409);
+      const {data:member}=await db.from("practical_exam_members").select("student_id,clan_id,role_id,role_selected_at").eq("session_id",sid).eq("student_id",user.id).neq("status","removed").maybeSingle();
+      if(!member?.clan_id||!member.role_id)return J({error:"role_not_assigned"},409);
+      if(member.role_selected_at)return J({ok:true,already_ready:true});
+      const z=await db.from("practical_exam_members").update({role_selected_at:now(),status:"ready",updated_at:now()}).eq("session_id",sid).eq("student_id",user.id).select().single();
+      if(z.error)throw z.error;
+      await db.from("practical_exam_events").insert({session_id:sid,student_id:user.id,clan_id:member.clan_id,actor_id:user.id,event_type:"role_accepted",metadata:{role_id:member.role_id}});
+      return J({ok:true,member:z.data});
+    }
+
+    if (act === "leader_request_member_removal" || act === "leader_kick_member") {
       if (p.role !== "student") return J({ error:"student_only" },403);
       const sid=id(b.session_id), student=id(b.student_id);
       let ctx;
       try{ctx=await assertWaitingLeader(db,sid,user.id);}catch(e){return J({error:String((e as Error).message)},403);}
-      if(student===String(user.id))return J({error:"leader_cannot_kick_self"},409);
+      if(student===String(user.id))return J({error:"leader_cannot_remove_self"},409);
       const {data:target}=await db.from("practical_exam_members").select("student_id").eq("session_id",sid).eq("student_id",student).eq("clan_id",ctx.clan.id).neq("status","removed").maybeSingle();
       if(!target)return J({error:"member_not_in_room"},404);
-      await db.from("practical_exam_members").update({clan_id:null,role_id:null,status:"waiting",updated_at:now()}).eq("session_id",sid).eq("student_id",student);
-      await db.from("practical_exam_clan_blocks").upsert({session_id:sid,clan_id:ctx.clan.id,student_id:student,kicked_by:user.id,active:true,reason:"leader_kick",updated_at:now()},{onConflict:"session_id,clan_id,student_id"});
-      await db.from("practical_exam_leader_votes").delete().eq("session_id",sid).eq("clan_id",ctx.clan.id).or(`voter_id.eq.${student},candidate_id.eq.${student}`);
-      await recomputeLeader(db,sid,String(ctx.clan.id));
-      await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_member_kicked",metadata:{}});
-      return J({ok:true});
+      const reason=String(b.reason||"").trim().slice(0,300);
+      const z=await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_member_removal_requested",metadata:{target_student_id:student,reason}}).select("id").single();
+      if(z.error)throw z.error;
+      return J({ok:true,requires_teacher_approval:true,request_id:z.data.id});
     }
 
 
@@ -1200,13 +1229,19 @@ Deno.serve(async (req) => {
       if (!s || !["running","paused"].includes(String(s.status))) return J({ error: "exam_not_available" }, 409);
       const [{ data: m }, { data: c }] = await Promise.all([
         db.from("practical_exam_members").select("*,role:practical_exam_roles(role_key)").eq("session_id", sid).eq("student_id", user.id).maybeSingle(),
-        db.from("practical_exam_challenges").select("id,scope,role_key,challenge_type,public_config").eq("id", cid).eq("session_id", sid).eq("active", true).maybeSingle(),
+        db.from("practical_exam_challenges").select("id,challenge_key,scope,role_key,challenge_type,public_config,depends_on_keys").eq("id", cid).eq("session_id", sid).eq("active", true).maybeSingle(),
       ]);
       if (!m?.clan_id || !c) return J({ error: "not_ready" }, 403);
       if (c.scope === "individual" && c.role_key !== m.role?.role_key) return J({ error: "challenge_belongs_to_another_role" }, 403);
       if (c.scope === "clan") {
         const { data: clanRow } = await db.from("practical_exam_clans").select("leader_id").eq("session_id",sid).eq("id",m.clan_id).maybeSingle();
         if (!clanRow?.leader_id || String(clanRow.leader_id) !== String(user.id)) return J({ error: "leader_only_collective_submission" }, 403);
+      }
+      if ((c.depends_on_keys||[]).length || String((c as any).challenge_key)==="final") {
+        const {data:fullSession}=await db.from("practical_exam_sessions").select("*").eq("id",sid).maybeSingle();
+        const d=await bundle(db,fullSession,user.id,false);
+        const cc=d.challenges.find((x:any)=>String(x.id)===cid);
+        if(cc?.locked)return J({error:"dependencies_pending"},409);
       }
       const ans = b.answer && typeof b.answer === "object" ? b.answer : {};
       let safeAnswer:any = ans;
@@ -1409,17 +1444,21 @@ Deno.serve(async (req) => {
       if (cmd === "open_waiting" && ["draft", "locked"].includes(s.status)) { x.status = "waiting_room"; x.lobby_opened_at = now(); }
       else if (cmd === "lock" && s.status === "waiting_room") x.status = "locked";
       else if (cmd === "start" && ["waiting_room", "locked"].includes(s.status)) {
-        const { data: ready } = await db.from("practical_exam_members").select("student_id,clan_id,role_id").eq("session_id", sid).neq("status","removed");
+        const { data: ready } = await db.from("practical_exam_members").select("student_id,clan_id,role_id,role_selected_at").eq("session_id", sid).neq("status","removed");
         const assigned = (ready || []).filter((m:any)=>m.clan_id);
         if(!assigned.length)return J({error:"no_teams_ready"},409);
         const pendingAreas = assigned.filter((m:any)=>!m.role_id);
         if (pendingAreas.length) return J({ error:"areas_pending", pending:pendingAreas.length },409);
+        const pendingReady = assigned.filter((m:any)=>m.role_id&&!m.role_selected_at);
+        if (pendingReady.length) return J({ error:"ready_check_pending", pending:pendingReady.length },409);
         const occupied=[...new Set(assigned.map((m:any)=>String(m.clan_id)))];
         const {data:roomRows}=await db.from("practical_exam_clans").select("id,leader_id").eq("session_id",sid).in("id",occupied);
         const missingLeaders=(roomRows||[]).filter((r:any)=>!r.leader_id);
         if(missingLeaders.length)return J({error:"leaders_pending",pending:missingLeaders.length},409);
         x.status = "running"; x.started_at = s.started_at || now(); x.paused_at = null;
       }
+      else if (cmd === "home_continuation" && s.status === "running") { /* mantém a operação aberta; evento abaixo sinaliza continuidade em casa */ }
+      else if (cmd === "resume_class" && s.status === "running") { /* mantém a operação aberta; evento abaixo sinaliza retomada presencial */ }
       else if (cmd === "pause" && s.status === "running") { x.status = "paused"; x.paused_at = now(); }
       else if (cmd === "resume" && s.status === "paused") { x.status = "running"; x.pause_total_seconds = Number(s.pause_total_seconds || 0) + (s.paused_at ? Math.floor((Date.now() - Date.parse(s.paused_at)) / 1000) : 0); x.paused_at = null; }
       else if (cmd === "finish" && ["running", "paused", "locked"].includes(s.status)) { x.status = "finished"; x.finished_at = now(); x.paused_at = null; }
@@ -1438,6 +1477,39 @@ Deno.serve(async (req) => {
       if (z.error) throw z.error;
       await db.from("practical_exam_events").insert({ session_id: sid, actor_id: user.id, event_type: `session_${cmd}`, metadata: {} });
       return J({ ok: true, session: z.data });
+    }
+
+    if (act === "staff_set_leader") {
+      const sid=id(b.session_id),clanId=id(b.clan_id),student=id(b.student_id);
+      const {data:s}=await db.from("practical_exam_sessions").select("class_id,status").eq("id",sid).maybeSingle();
+      if(!s)return J({error:"not_found"},404);
+      scope(c,s.class_id);
+      if(["finished","grading","score_scheduled","published","cancelled"].includes(String(s.status)))return J({error:"leadership_locked"},409);
+      const {data:m}=await db.from("practical_exam_members").select("student_id").eq("session_id",sid).eq("clan_id",clanId).eq("student_id",student).neq("status","removed").maybeSingle();
+      if(!m)return J({error:"member_not_in_clan"},404);
+      const z=await db.from("practical_exam_clans").update({leader_id:student,leader_elected_at:now(),updated_at:now()}).eq("session_id",sid).eq("id",clanId).select().single();
+      if(z.error)throw z.error;
+      await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:clanId,actor_id:user.id,event_type:"staff_leader_assigned",metadata:{interim:["running","paused"].includes(String(s.status))}});
+      return J({ok:true,clan:z.data});
+    }
+
+    if (act === "resolve_member_removal") {
+      const sid=id(b.session_id),requestId=id(b.request_id),decision=String(b.decision||"");
+      const {data:s}=await db.from("practical_exam_sessions").select("class_id,status").eq("id",sid).maybeSingle();
+      if(!s)return J({error:"not_found"},404);scope(c,s.class_id);
+      const {data:reqEvent}=await db.from("practical_exam_events").select("id,student_id,clan_id,event_type").eq("id",requestId).eq("session_id",sid).eq("event_type","leader_member_removal_requested").maybeSingle();
+      if(!reqEvent)return J({error:"request_not_found"},404);
+      const {data:resolved}=await db.from("practical_exam_events").select("id").eq("session_id",sid).in("event_type",["staff_member_removal_approved","staff_member_removal_denied"]).contains("metadata",{request_event_id:requestId}).limit(1).maybeSingle();
+      if(resolved)return J({error:"request_already_resolved"},409);
+      if(!["approve","deny"].includes(decision))return J({error:"invalid_decision"},400);
+      if(decision==="approve"){
+        if(!["waiting_room","locked"].includes(String(s.status)))return J({error:"removal_only_before_start"},409);
+        await db.from("practical_exam_members").update({clan_id:null,role_id:null,role_selected_at:null,status:"waiting",updated_at:now()}).eq("session_id",sid).eq("student_id",reqEvent.student_id);
+        await db.from("practical_exam_leader_votes").delete().eq("session_id",sid).or(`voter_id.eq.${reqEvent.student_id},candidate_id.eq.${reqEvent.student_id}`);
+        if(reqEvent.clan_id)await recomputeLeader(db,sid,String(reqEvent.clan_id));
+      }
+      await db.from("practical_exam_events").insert({session_id:sid,student_id:reqEvent.student_id,clan_id:reqEvent.clan_id,actor_id:user.id,event_type:decision==="approve"?"staff_member_removal_approved":"staff_member_removal_denied",metadata:{request_event_id:requestId}});
+      return J({ok:true,decision});
     }
 
     if (act === "move_member") {
@@ -1461,7 +1533,7 @@ Deno.serve(async (req) => {
         const { data: taken } = await db.from("practical_exam_members").select("student_id").eq("session_id", sid).eq("clan_id", clan).eq("role_id", role).neq("student_id", student).neq("status", "removed").maybeSingle();
         if (taken) return J({ error: "role_taken" }, 409);
       }
-      const row: any = { session_id: sid, student_id: student, clan_id: clan, role_id: clan ? role : null, status: clan ? (role ? "ready" : "waiting") : "waiting", updated_at: now(), last_seen_at: now() };
+      const row: any = { session_id: sid, student_id: student, clan_id: clan, role_id: clan ? role : null, role_selected_at:clan&&role?null:null, status:"waiting", updated_at: now(), last_seen_at: now() };
       const z = oldMember ? await db.from("practical_exam_members").update(row).eq("session_id", sid).eq("student_id", student).select().single() : await db.from("practical_exam_members").insert(row).select().single();
       if (z.error) throw z.error;
       await db.from("practical_exam_leader_votes").delete().eq("session_id",sid).or(`voter_id.eq.${student},candidate_id.eq.${student}`);

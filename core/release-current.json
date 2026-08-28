@@ -1,29 +1,35 @@
 {
-  "version": "14.10.8.31",
-  "title": "Player Experience Lab + lobby multiplayer imersivo do Modo Prova Coletiva",
+  "version": "14.10.8.33",
+  "title": "Prova coletiva multi-encontro + governança de squad",
   "scope": [
-    "frontend",
     "practical-exam",
     "multiplayer-lobby",
-    "simulator",
-    "fullscreen",
-    "game-ux",
-    "guilds",
-    "chat",
-    "accessibility"
+    "teamwork",
+    "leader-permissions",
+    "home-continuation",
+    "manual-finish",
+    "responsive-ux",
+    "teacher-supervision"
   ],
   "changes": [
-    "Simulador administrativo deixa de priorizar seletores e Inspector: a experiência do aluno passa a ocupar a área principal, com controles e diagnóstico recolhíveis.",
-    "Lobby do simulador recebe linguagem visual de multiplayer: guildas nomeadas, emblemas, tags, slots de jogadores, vagas, liderança, ready-check e jogadores procurando squad.",
-    "Adiciona HUD compacto de partida, Player Experience Lab, navegação de teste Lobby/Guilda/Missões/Ranking e prévia por desktop/tablet/celular.",
-    "Adiciona botão de tela cheia no simulador e animação MATCH FOUND / 3-2-1 / MISSÃO INICIADA para validar a transição antes da aula.",
-    "Sala da guilda ganha squad loadout, objetivos pré-partida, eleição, painel do líder e chat visual de equipe na simulação.",
-    "Entrada real do aluno passa a usar CTAs Entrar no lobby / Entrar na partida e mantém fullscreen obrigatório quando aplicável, chat real da guilda e intro de partida.",
-    "Fallback do simulador passa a ser identificado como catálogo local de demonstração, evitando confundir dados mock com dados reais.",
-    "Mantém integralmente Retomada + Recuperação DS3 e as adaptações pedagógicas/estudo domiciliar da v14.10.8.30."
+    "A prova coletiva deixa de encerrar automaticamente por cronômetro: somente o professor finaliza definitivamente.",
+    "O relógio da operação passa a ser informativo e mostra tempo decorrido.",
+    "Novo comando docente 'Encerrar encontro • continuar em casa' mantém a mesma sessão aberta para continuidade entre aulas.",
+    "Novo comando 'Retomar encontro presencial' sinaliza a volta da turma sem criar nova prova.",
+    "Eleição de liderança passa a exigir quórum de maioria dos integrantes da guilda.",
+    "Cargo designado pelo líder exige aceite explícito do aluno no Ready Check antes do início.",
+    "Professor pode designar líder/interino mesmo durante uma operação em andamento.",
+    "Líder não expulsa integrante diretamente: envia solicitação de troca para aprovação docente.",
+    "Missão final fica bloqueada até que todas as missões individuais das áreas ocupadas pela guilda estejam concluídas.",
+    "Mission Board reforça handoffs entre Análise, Design, Front-end, Back-end, Banco, QA, Cyber e Negócios.",
+    "Ranking de guildas ganha prioridade e ranking individual passa a ser secundário no painel docente.",
+    "Professor passa a ter supervisão somente leitura do chat das guildas.",
+    "Mobile ganha filtro 'Minha missão + equipe' para reduzir densidade e manter o squad completo acessível.",
+    "Reconexão usa intro curta RECONNECTING SQUAD em vez de repetir toda a abertura cinematográfica.",
+    "Mantidas adaptações pedagógicas, reduce_motion, focus_mode e fullscreen opcional para estudo domiciliar."
   ],
   "compatibility": {
-    "inherits_from": "14.10.8.30",
+    "inherits_from": "14.10.8.32",
     "requires_new_migration": false,
     "requires_existing_migrations": [
       "061_p10931_recovery_ds3_programacao.sql",
@@ -33,11 +39,19 @@
       "practical-exam",
       "recovery-exam"
     ],
-    "backend_note": "Se o simulador mostrar Catálogo local de demonstração, redeployar practical-exam deste pacote; a versão publicada antiga não possui staff_simulator_catalog."
+    "backend_note": "Redeploy obrigatório de practical-exam porque as regras de encerramento, liderança, Ready Check e missão final mudaram no backend."
+  },
+  "assessment_operation": {
+    "starts_today": true,
+    "can_continue_at_home": true,
+    "can_continue_next_class": true,
+    "automatic_finish": false,
+    "teacher_controls_final_finish": true
   },
   "privacy": {
     "student_names_in_public_bundle": false,
     "private_home_study_seed_separate": true,
-    "simulator_writes_real_data": false
+    "private_roster_seed_separate": true,
+    "diagnostic_labels_in_student_ui": false
   }
 }
