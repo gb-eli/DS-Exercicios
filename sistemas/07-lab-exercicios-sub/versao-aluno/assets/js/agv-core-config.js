@@ -1,1 +1,0 @@
-window.AGV_LAB_EXERCISES_CONFIG={"platformId":"lab-sub","subjectMap":{"frontend":"programacao-front-end-sub","mobile":"programacao-mobile-sub"},"classLabel":"Desenvolvimento de Sistemas — Subsequente","title":"LAB DS Sub — Exercícios Práticos"};

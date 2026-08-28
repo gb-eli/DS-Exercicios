@@ -1,1 +1,0 @@
-# lab-exercicios-ds1

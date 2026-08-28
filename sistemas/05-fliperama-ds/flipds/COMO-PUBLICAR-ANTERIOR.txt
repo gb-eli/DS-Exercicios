@@ -1,4 +1,0 @@
-FLIPERAMA DS v0.20.0 · FASE 7.1
-
-Plataforma completa: envie todos os arquivos e pastas para a raiz publicada. Não misture com o Fliperama DS Pocket do Lab Virtual DS.
-O Phaser permanece separado; Board Arena e Puzzle Forge são carregados sob demanda e o VoxelCraft usa Three.js isolado.

@@ -1,5 +1,0 @@
-import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
-test('P6.8 catalogo canonico possui 10 plataformas prontas',()=>{const c=JSON.parse(read('core/catalog/platform-integration-v13.6.json'));assert.equal(c.version,'13.6.0');assert.equal(c.platforms.filter(x=>x.readyForUnifiedHub).length,10);for(const p of c.platforms){assert.equal(p.authAuthority,'agv-core');assert.ok(Array.isArray(p.audiences));assert.ok(p.route)}});
-test('P6.8 painel do aluno renderiza hub sem autoridade economica',()=>{const h=read('atividades/index.html'),js=read('atividades/assets/js/app.js');assert.match(h,/id="platform-hub"/);assert.match(js,/platform-integration-(?:v13\.(?:6|7)|v14\.0)\.json/);assert.match(js,/PLATFORM_FAVORITES_KEY/);assert.doesNotMatch(js,/claim_core_reward|service_role/i)});
-test('P6.8 hub raiz consome catalogo canonico',()=>{const h=read('index.html'),js=read('assets/hub.js');assert.match(h,/hub-platform-grid/);assert.match(js,/platform-integration-(?:v13\.(?:6|7)|v14\.0)\.json/)});
