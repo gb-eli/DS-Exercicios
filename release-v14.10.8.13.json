@@ -1,0 +1,189 @@
+{
+  "version": "14.10.8.13",
+  "date": "2026-08-22",
+  "phase": "P10.9.12-ux-anti-ai-slop-refinement",
+  "title": "Refino UX/UI profissional Anti-AI-Slop",
+  "baseVersion": "14.10.8",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "liveDeployApplied": false,
+  "publicBundleContainsPrivateRules": false,
+  "fixes": [
+    "Remove ornamentos sem função da próxima atividade e do benefício de fim de semana.",
+    "Elimina gradientes decorativos, glow, shimmer e movimento ornamental das superfícies recentes.",
+    "Consolida raio principal em 14px e remove sombra universal dos painéis.",
+    "Mantém cards apenas onde representam entidades/grupos reais e preserva pills somente para status/contadores.",
+    "Transforma recompensa em comunicação operacional específica com voucher, instrução e benefícios em lista.",
+    "Remove deslocamento decorativo no hover dos cards de plataforma e usa progresso em cor sólida.",
+    "Preserva responsividade mobile/tablet, acessibilidade, foco, touch e todas as regras de negócio."
+  ],
+  "status": "RELEASE_CANDIDATE",
+  "databaseMigrationAppliedToProduction": false,
+  "databaseMigrations": [
+    "044_p109_reference_file_version_history.sql",
+    "045_p1092_legacy_github_repository_audit.sql",
+    "046_p1096_github_teacher_review_fields.sql",
+    "047_p10910_weekend_bonus_vouchers.sql"
+  ],
+  "edgeFunctionAppliedToProduction": "NÃO APLICADO NESTE PACOTE • backend do voucher continua condicionado a backup restaurável + migration 047 + deploy JWT obrigatório.",
+  "knownPending": [
+    "Confirmar backup lógico/restaurável do Supabase antes da primeira DDL.",
+    "Repetir fingerprints do snapshot imediatamente antes de qualquer migration.",
+    "Aplicar primeiro 044 e validar histórico de referências; 045 permanece candidata até conclusão da auditoria GitHub read-only.",
+    "Rastrear os 22 repositórios normalizados por commit SHA e mapear as 136 reivindicações sem escrever resultados em produção.",
+    "Revisar manualmente vínculos suspeitos, especialmente repositório associado a mais de um aluno e reivindicações de disciplina incompatível com o conteúdo.",
+    "Somente depois da revisão docente habilitar baixa/nota/feedback via fluxo service-role auditado.",
+    "Revisar docente as 43 sugestões do 1DS e as 59 sugestões do 2DS Front-End antes de qualquer baixa/nota.",
+    "Aplicar a mesma auditoria read-only às 34 claims restantes: 2DS Inovação, 3DS e SUB.",
+    "20 claims GitHub permanecem sem nota por conflito de disciplina/identidade e exigem revisão docente do vínculo.",
+    "Nenhuma baixa/nota/feedback será aplicada até aprovação humana explícita.",
+    "Professor deve exportar decisões reais e revisar a simulação completa antes de qualquer aplicação.",
+    "Confirmar backup lógico/restaurável do Supabase antes de habilitar endpoint transacional de aplicação.",
+    "Itens bloqueados pelo simulador nunca podem ser aplicados em lote sem decisão humana específica.",
+    "Executar validação final em aparelhos físicos representativos (Android Chrome, iPhone/iPad Safari) antes de considerar encerrados bugs específicos de navegador/teclado.",
+    "Coletar feedback dos alunos após publicação da v14.10.8.10 e registrar aparelho, navegador e exercício quando houver nova ocorrência mobile/tablet.",
+    "Confirmar backup restaurável antes de aplicar a migration 047 em produção.",
+    "Após a migration 047, implantar a Edge Function weekend-bonus-voucher com verify_jwt=true.",
+    "Testar emissão real com um aluno e resgate real com professor antes de liberar o +1 para toda a turma."
+  ],
+  "productionBackendVerified": true,
+  "productionBackendSnapshot": {
+    "student_files": "450 arquivos atuais no levantamento de 22/08/2026",
+    "student_file_history": "14.130 revisões históricas no snapshot read-only de 22/08/2026 10:12 BRT",
+    "exercise_reference_files": "199 referências atuais; tabela original não possui versionamento histórico",
+    "reference_risk": "197 pares aluno/exercício com código; 133 iniciaram antes do timestamp mais recente da referência e 24 atravessaram esse timestamp",
+    "exercise_autograde": "v7 ACTIVE, verify_jwt=true, preservado em produção durante esta auditoria"
+  },
+  "backendUnchangedFrom": "Produção não alterada; candidato v8 foi reconstruído sobre os contratos ativos do exercise-autograde v7.",
+  "preMigrationSnapshot": "AUDITORIA-FASE1-SNAPSHOT-READONLY-2026-08-22.md",
+  "productionWriteApproved": false,
+  "backupConfirmed": false,
+  "legacyGithubSnapshot": {
+    "claims": "136 pendentes",
+    "students": "18",
+    "raw_urls": "26",
+    "normalized_repositories": "22",
+    "by_scope": {
+      "1DS introducao-programacao": "43 claims / 10 alunos / 15 repos",
+      "2DS inovacao": "12 claims / 2 alunos / 2 repos",
+      "2DS programacao-front-end": "59 claims / 4 alunos / 4 repos",
+      "3DS programacao-desenvolvimento-sistemas": "8 claims / 1 aluno / 1 repo",
+      "SUB programacao-front-end-sub": "14 claims / 3 alunos / 3 repos"
+    },
+    "writes_applied": false
+  },
+  "legacyGithub1dsAudit": {
+    "claims_audited": 43,
+    "students": 10,
+    "repositories_or_urls": 15,
+    "writes_applied": false,
+    "status_counts": {
+      "correct": 19,
+      "correct_historical": 10,
+      "correct_minor": 2,
+      "partial": 5,
+      "nonfunctional": 5,
+      "not_found": 1,
+      "incomplete": 1
+    },
+    "average_suggested_score": "8.27/10 (apenas sugestão para revisão docente)"
+  },
+  "runtimeCacheVersion": "14.10.8.13",
+  "legacyGithub2dsFrontendAudit": {
+    "claims_audited": 59,
+    "students": 4,
+    "repositories": 4,
+    "writes_applied": false,
+    "status_counts": {
+      "correct": 39,
+      "correct_minor": 9,
+      "wrong_exercise": 1,
+      "partial": 2,
+      "nonfunctional": 8
+    },
+    "average_suggested_score": "8.66/10 (apenas sugestão para revisão docente)"
+  },
+  "legacyGithubRemainingAudit": {
+    "claims_audited": 34,
+    "gradeable_claims": 14,
+    "manual_review_without_score": 20,
+    "writes_applied": false,
+    "status_counts": {
+      "subject_scope_mismatch": 12,
+      "identity_scope_mismatch": 8,
+      "correct": 11,
+      "nonfunctional": 2,
+      "partial": 1
+    },
+    "average_suggested_score_gradeable_only": "8.86/10"
+  },
+  "legacyGithubCompleteAudit": {
+    "claims_audited": 136,
+    "gradeable_claims": 116,
+    "manual_review_without_score": 20,
+    "writes_applied": false,
+    "status_counts": {
+      "correct": 69,
+      "partial": 8,
+      "correct_minor": 11,
+      "correct_historical": 10,
+      "nonfunctional": 15,
+      "not_found": 1,
+      "incomplete": 1,
+      "wrong_exercise": 1,
+      "subject_scope_mismatch": 12,
+      "identity_scope_mismatch": 8
+    },
+    "average_suggested_score_gradeable_only": "8.54/10"
+  },
+  "notes": [
+    "Painel Professor: revisão local das 136 auditorias GitHub; dados privados não embarcados no deploy; decisões exportáveis sem escrita em produção.",
+    "v14.10.8.8: simulador read-only compara decisões docentes com o estado atual e exporta plano; nenhuma baixa/nota é aplicada.",
+    "v14.10.8.10: auditoria UX mobile/tablet corrige overflow, empilhamento em tablets, alvos touch, zoom do editor e carga por tecla; nenhuma escrita em produção.",
+    "v14.10.8.13: Padrão Mestre Anti-AI-Slop incorporado e aplicado ao frontend crítico.",
+    "Apenas apresentação/UX foi refinada; nenhuma escrita em produção e nenhuma regra de nota/progresso foi alterada."
+  ],
+  "applicationSimulator": {
+    "mode": "read-only",
+    "decisions_schema": "agv-legacy-github-teacher-decisions-v1",
+    "plan_schema": "agv-legacy-github-application-plan-v1",
+    "score_conversion": "0-10 × 10 = 0-100",
+    "production_write_applied": false,
+    "current_snapshot": {
+      "claims": 136,
+      "pending": 136,
+      "completed": 57,
+      "in_progress": 79,
+      "completion_source_legacy_claim": 136,
+      "with_submitted_score": 1,
+      "existing_submitted_score": "95/100"
+    },
+    "automatic_blocks": [
+      "suspicious_link",
+      "claim_not_pending",
+      "missing_score",
+      "lower_existing_score",
+      "different_completion_source",
+      "state_changed_after_decision",
+      "claim_not_uniquely_matched"
+    ]
+  },
+  "weekendRewardMode": {
+    "time_zone": "America/Sao_Paulo",
+    "starts": "sábado 00:00",
+    "ends": "domingo 18:00",
+    "default_enabled": true,
+    "student_can_disable": true,
+    "student_can_reenable_while_valid": true,
+    "changes_grades": false,
+    "changes_database": false,
+    "benefits": [
+      "dicas extras",
+      "indicação do arquivo e região do erro",
+      "destaque de linha",
+      "passo a passo focado"
+    ]
+  },
+  "uiVersion": "0.22.8.10"
+}

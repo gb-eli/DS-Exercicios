@@ -1,0 +1,5 @@
+{
+  "version": "0.9.0",
+  "source": "config/integration.config.json",
+  "policy": "Cada plataforma utiliza somente seus próprios eventos e não importa ferramentas de outros sistemas."
+}

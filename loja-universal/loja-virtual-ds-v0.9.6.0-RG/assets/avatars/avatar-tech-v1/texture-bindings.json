@@ -1,0 +1,18 @@
+{
+  "version": "0.4.0",
+  "policy": "Bindings preparados para futura conversão KTX2/BasisU; o GLB v0.4 usa fatores PBR e emissivos leves.",
+  "bindings": {
+    "Skin": "../../materials/webp/skin.webp",
+    "SkinHighlight": "../../materials/webp/skin.webp",
+    "Hair": "../../materials/webp/hair.webp",
+    "TechFabric": "../../materials/webp/fabric.webp",
+    "TechFabricBlue": "../../materials/webp/fabric.webp",
+    "Pants": "../../materials/webp/fabric.webp",
+    "BootRubber": "../../materials/webp/rubber.webp",
+    "NeonCyan": "../../materials/webp/emissive-cyan.webp",
+    "Metal": "../../materials/webp/metal.webp",
+    "Gold": "../../materials/webp/energy-gold.webp",
+    "ShieldBlue": "../../materials/webp/painted-metal.webp",
+    "HoloGlass": "../../materials/webp/holographic.webp"
+  }
+}

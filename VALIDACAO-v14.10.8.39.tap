@@ -1,0 +1,300 @@
+TAP version 13
+# Subtest: frontend carrega acomodação global e permite alternar modo
+ok 1 - frontend carrega acomodação global e permite alternar modo
+  ---
+  duration_ms: 3.564872
+  type: 'test'
+  ...
+# Subtest: modo domiciliar remove somente exigências de supervisão presencial
+ok 2 - modo domiciliar remove somente exigências de supervisão presencial
+  ---
+  duration_ms: 0.539786
+  type: 'test'
+  ...
+# Subtest: roster individual não fica versionado no migration público
+ok 3 - roster individual não fica versionado no migration público
+  ---
+  duration_ms: 0.678664
+  type: 'test'
+  ...
+# Subtest: painel professor recebe acomodação global sem expor diagnóstico
+ok 4 - painel professor recebe acomodação global sem expor diagnóstico
+  ---
+  duration_ms: 1.739501
+  type: 'test'
+  ...
+# Subtest: solicitação do aluno não coleta diagnóstico e chega ao painel docente
+ok 5 - solicitação do aluno não coleta diagnóstico e chega ao painel docente
+  ---
+  duration_ms: 4.608242
+  type: 'test'
+  ...
+# Subtest: preferência de modo persiste no Supabase e roster fica no schema private
+ok 6 - preferência de modo persiste no Supabase e roster fica no schema private
+  ---
+  duration_ms: 1.320044
+  type: 'test'
+  ...
+# Subtest: migration reconhece acomodações legadas adapted_mode
+ok 7 - migration reconhece acomodações legadas adapted_mode
+  ---
+  duration_ms: 0.314431
+  type: 'test'
+  ...
+# Subtest: manifesto candidato v14.10.8.19 registra banco e Edge Functions pendentes
+ok 8 - manifesto candidato v14.10.8.19 registra banco e Edge Functions pendentes
+  ---
+  duration_ms: 0.229782
+  type: 'test'
+  ...
+# Subtest: R4 oferece ajuda extra, destaque de etapa e suporte de código sem resposta pronta
+ok 9 - R4 oferece ajuda extra, destaque de etapa e suporte de código sem resposta pronta
+  ---
+  duration_ms: 1.513036
+  type: 'test'
+  ...
+# Subtest: R4 possui orientação domiciliar detalhada e retomável
+ok 10 - R4 possui orientação domiciliar detalhada e retomável
+  ---
+  duration_ms: 0.797884
+  type: 'test'
+  ...
+# Subtest: R4 sincroniza progresso das etapas com RLS individual
+ok 11 - R4 sincroniza progresso das etapas com RLS individual
+  ---
+  duration_ms: 1.327146
+  type: 'test'
+  ...
+# Subtest: R4 estudo domiciliar usa metadados ricos e não pune troca de guia
+ok 12 - R4 estudo domiciliar usa metadados ricos e não pune troca de guia
+  ---
+  duration_ms: 0.352472
+  type: 'test'
+  ...
+# Subtest: R4 preset docente inclui conjunto completo de apoio
+ok 13 - R4 preset docente inclui conjunto completo de apoio
+  ---
+  duration_ms: 1.018385
+  type: 'test'
+  ...
+# Subtest: DS1/DS2 practical exam exposes multiplayer lobby, guild chat and pedagogical accommodations
+ok 14 - DS1/DS2 practical exam exposes multiplayer lobby, guild chat and pedagogical accommodations
+  ---
+  duration_ms: 8.705578
+  type: 'test'
+  ...
+# Subtest: DS3 recovery has 20 questions worth exactly 5 points
+ok 15 - DS3 recovery has 20 questions worth exactly 5 points
+  ---
+  duration_ms: 1.520323
+  type: 'test'
+  ...
+# Subtest: DS3 review is teacher-synchronized content: 8 cards x 3 stages
+ok 16 - DS3 review is teacher-synchronized content: 8 cards x 3 stages
+  ---
+  duration_ms: 1.560081
+  type: 'test'
+  ...
+# Subtest: database patches preserve RLS boundaries and enable DS3 subject
+ok 17 - database patches preserve RLS boundaries and enable DS3 subject
+  ---
+  duration_ms: 0.464686
+  type: 'test'
+  ...
+# Subtest: public package contains no nominal Maria Fernanda seed
+ok 18 - public package contains no nominal Maria Fernanda seed
+  ---
+  duration_ms: 1.053122
+  type: 'test'
+  ...
+# Subtest: simulator prioritizes immersive player preview over admin controls
+ok 19 - simulator prioritizes immersive player preview over admin controls
+  ---
+  duration_ms: 1.249935
+  type: 'test'
+  ...
+# Subtest: simulator lobby exposes real session preview without invented gamer data
+ok 20 - simulator lobby exposes real session preview without invented gamer data
+  ---
+  duration_ms: 3.14625
+  type: 'test'
+  ...
+# Subtest: student entry remains real multiplayer and uses match-oriented CTA
+ok 21 - student entry remains real multiplayer and uses match-oriented CTA
+  ---
+  duration_ms: 1.034459
+  type: 'test'
+  ...
+# Subtest: v31 CSS contains responsive immersive game surfaces
+ok 22 - v31 CSS contains responsive immersive game surfaces
+  ---
+  duration_ms: 2.619019
+  type: 'test'
+  ...
+# p10933 professional transition compatibility v14.10.8.39: OK
+# Subtest: core/tests/p10933-cinematic-matchmaking-v14.10.8.32.test.mjs
+ok 4 - core/tests/p10933-cinematic-matchmaking-v14.10.8.32.test.mjs
+  ---
+  duration_ms: 142.303947
+  type: 'test'
+  ...
+# Subtest: collective exam is manually finished and supports home continuation
+ok 24 - collective exam is manually finished and supports home continuation
+  ---
+  duration_ms: 7.724913
+  type: 'test'
+  ...
+# Subtest: leader governance has quorum, ready check and teacher-controlled member changes
+ok 25 - leader governance has quorum, ready check and teacher-controlled member changes
+  ---
+  duration_ms: 2.859803
+  type: 'test'
+  ...
+# Subtest: final mission is squad-gated by occupied roles
+ok 26 - final mission is squad-gated by occupied roles
+  ---
+  duration_ms: 6.952716
+  type: 'test'
+  ...
+# Subtest: teacher can supervise guild chat and mobile has compact mission view
+ok 27 - teacher can supervise guild chat and mobile has compact mission view
+  ---
+  duration_ms: 4.069631
+  type: 'test'
+  ...
+# Subtest: cache and release metadata are bumped
+ok 28 - cache and release metadata are bumped
+  ---
+  duration_ms: 0.890095
+  type: 'test'
+  ...
+# Subtest: v14.10.8.36 practical exam has persistent guild governance
+ok 29 - v14.10.8.36 practical exam has persistent guild governance
+  ---
+  duration_ms: 6.017209
+  type: 'test'
+  ...
+# Subtest: access management is server-side, audited and scoped
+ok 30 - access management is server-side, audited and scoped
+  ---
+  duration_ms: 0.835196
+  type: 'test'
+  ...
+# Subtest: admin exposes Gestão de Acessos without exposing raw CGM/password
+ok 31 - admin exposes Gestão de Acessos without exposing raw CGM/password
+  ---
+  duration_ms: 5.319936
+  type: 'test'
+  ...
+# Subtest: student Activities treats staff check as optional
+ok 32 - student Activities treats staff check as optional
+  ---
+  duration_ms: 1.42836
+  type: 'test'
+  ...
+# Subtest: Lobby runtime is release-consistent and network-first
+ok 33 - Lobby runtime is release-consistent and network-first
+  ---
+  duration_ms: 3.303186
+  type: 'test'
+  ...
+# Subtest: public frontend has a single source of truth at repository root
+ok 34 - public frontend has a single source of truth at repository root
+  ---
+  duration_ms: 1.498403
+  type: 'test'
+  ...
+# Subtest: core is restricted to shared/backend concerns
+ok 35 - core is restricted to shared/backend concerns
+  ---
+  duration_ms: 4.215403
+  type: 'test'
+  ...
+# Subtest: current central runtime points at v14.10.8.37
+ok 36 - current central runtime points at v14.10.8.37
+  ---
+  duration_ms: 0.771228
+  type: 'test'
+  ...
+# Subtest: old divergent mirror versions cannot be reached through core frontend paths
+ok 37 - old divergent mirror versions cannot be reached through core frontend paths
+  ---
+  duration_ms: 0.353803
+  type: 'test'
+  ...
+# Subtest: boot validates module contracts instead of requiring a release marker in every asset
+ok 38 - boot validates module contracts instead of requiring a release marker in every asset
+  ---
+  duration_ms: 1.436881
+  type: 'test'
+  ...
+# Subtest: config.js is a valid stable module even without embedded build release
+ok 39 - config.js is a valid stable module even without embedded build release
+  ---
+  duration_ms: 0.355872
+  type: 'test'
+  ...
+# Subtest: preflight checks all runtime modules by contract signatures
+ok 40 - preflight checks all runtime modules by contract signatures
+  ---
+  duration_ms: 2.713413
+  type: 'test'
+  ...
+# Subtest: current release is v14.10.8.38 or newer and repair page targets current release
+ok 41 - current release is v14.10.8.38 or newer and repair page targets current release
+  ---
+  duration_ms: 0.737016
+  type: 'test'
+  ...
+# Subtest: Lobby isolates optional rigged avatar from the static module graph
+ok 42 - Lobby isolates optional rigged avatar from the static module graph
+  ---
+  duration_ms: 10.11789
+  type: 'test'
+  ...
+# Subtest: teacher dashboard no longer declares zero-score winners and uses operational state
+ok 43 - teacher dashboard no longer declares zero-score winners and uses operational state
+  ---
+  duration_ms: 1.133715
+  type: 'test'
+  ...
+# Subtest: simulator prefers real session data and removes invented gamer brands
+ok 44 - simulator prefers real session data and removes invented gamer brands
+  ---
+  duration_ms: 1.972823
+  type: 'test'
+  ...
+# Subtest: student surface keeps pedagogy but drops fake infrastructure language
+ok 45 - student surface keeps pedagogy but drops fake infrastructure language
+  ---
+  duration_ms: 1.660555
+  type: 'test'
+  ...
+# Subtest: anti-AI styling removes universal glow/gradient from the primary Prova surfaces
+ok 46 - anti-AI styling removes universal glow/gradient from the primary Prova surfaces
+  ---
+  duration_ms: 7.368332
+  type: 'test'
+  ...
+# Subtest: release metadata is synchronized
+ok 47 - release metadata is synchronized
+  ---
+  duration_ms: 0.516227
+  type: 'test'
+  ...
+# PASS p5-rigged-glb-v11.7
+# Subtest: core/tests/p5-rigged-glb-v11.7.test.mjs
+ok 10 - core/tests/p5-rigged-glb-v11.7.test.mjs
+  ---
+  duration_ms: 92.18322
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 606.289731

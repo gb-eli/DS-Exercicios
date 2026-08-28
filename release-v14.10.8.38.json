@@ -1,0 +1,28 @@
+{
+  "version": "14.10.8.38",
+  "release": "14.10.8.38",
+  "date": "2026-08-28",
+  "title": "Hotfix do preflight do Campus — validação por contrato de módulo",
+  "scope": [
+    "lobby",
+    "campus-3d",
+    "boot",
+    "asset-validation",
+    "cache",
+    "repository-structure"
+  ],
+  "changes": [
+    "Corrige falso positivo asset_invalido:config.js no boot do Campus.",
+    "Preflight deixa de exigir a string da release dentro de todo arquivo JavaScript.",
+    "Valida cada módulo por HTTP, tipo de conteúdo, ausência de HTML e assinaturas mínimas do contrato.",
+    "Evita que config.js e lobby-lite.js válidos sejam rejeitados apenas por não conterem o número da build.",
+    "Mantém a estrutura normalizada sem core/core e sem espelhos públicos dentro de core/.",
+    "Atualiza a cadeia pública do Lobby e Service Worker para 14.10.8.38."
+  ],
+  "compatibility": {
+    "inherits_from": "14.10.8.37",
+    "requires_new_migration": false,
+    "requires_edge_function_redeploy": false,
+    "structural_cleanup_only": false
+  }
+}

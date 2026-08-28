@@ -1,0 +1,25 @@
+{
+  "schema": "cosmos-ds-telescope-lab-v1",
+  "version": "31.0.0",
+  "reviewedAt": "2026-08-04",
+  "instruments": 7,
+  "targets": 10,
+  "eyepieces": 4,
+  "filters": 6,
+  "skyConditions": 5,
+  "capabilities": {
+    "assembly": true,
+    "alignment": true,
+    "focus": true,
+    "eyepieces": true,
+    "filters": true,
+    "lightPollution": true,
+    "atmosphericSeeing": true,
+    "radioSimulation": true,
+    "comparison": true,
+    "guidedEvidence": true,
+    "offlineCore": true
+  },
+  "pricePolicy": "Faixas didáticas amplas e datadas; valores de mercado variam e não constituem recomendação de compra.",
+  "safety": "Nunca observe o Sol sem filtro frontal certificado e supervisão especializada."
+}

@@ -1,0 +1,77 @@
+{
+  "id": "graphics-ultra-core",
+  "name": "Ultra — Materiais e Ambiente Premium",
+  "tier": "ultra",
+  "version": "0.9.6.0-RG",
+  "required": false,
+  "autoInstall": false,
+  "description": "Pacote Ultra real com ambiente LDR 2K, detalhe 1K, palco Full HD e sprite de luz, carregado sob demanda.",
+  "requires": [
+    "graphics-high-core"
+  ],
+  "qualityModes": [
+    "ultra"
+  ],
+  "accent": "purple",
+  "files": [
+    {
+      "path": "../assets/ui/animated/coin-transfer.svg",
+      "bytes": 2018,
+      "sha256": "3df4bf332f6bd7a632eb363c4568fe2afa33dade5c0bb6106cc60c7b485f7975"
+    },
+    {
+      "path": "../assets/ui/animated/validation-orbit.svg",
+      "bytes": 2251,
+      "sha256": "bbe673fedcdee2b15dc9caa744b31489094f28cf53814cf75fd5f4d4b6518306"
+    },
+    {
+      "path": "../assets/ui/backgrounds/grid-neon.svg",
+      "bytes": 1629,
+      "sha256": "29d309c7525424974a2aca15c626234a22d8ab2b8e8f4bea87f4923182205286"
+    },
+    {
+      "path": "../assets/ui/backgrounds/holo-panel.svg",
+      "bytes": 1723,
+      "sha256": "b42d48eb1b1da396b3a9307b083263d231b5c7b30ab57820cdced7cfdf63a1ae"
+    },
+    {
+      "path": "../assets/runtime/ultra/env-ultra-2048.webp",
+      "bytes": 55032,
+      "sha256": "a7bcb1f6d49391407c404876570c90c0a74badf54ab074072f6b0b4149bf65ee"
+    },
+    {
+      "path": "../assets/runtime/ultra/material-detail-ultra-1024.webp",
+      "bytes": 624800,
+      "sha256": "4634975a451f65a5b289a7f250bfeae9491d796f7b29a95a3b848f13222d3dcd"
+    },
+    {
+      "path": "../assets/runtime/ultra/stage-ultra-1920.webp",
+      "bytes": 50184,
+      "sha256": "a588459ece2799c21e48c62c9ec52c1c116a696a2d40bf74ad91de3b62c23f14"
+    },
+    {
+      "path": "../assets/runtime/ultra/flare-ultra-512.webp",
+      "bytes": 11694,
+      "sha256": "bbcfe12bd29aeb7e40887244e8237da5c4e7a0b9fde7923802908f1643f7edeb"
+    },
+    {
+      "path": "../assets/runtime/ultra/lighting-ultra.json",
+      "bytes": 1079,
+      "sha256": "149ea83f0a6ec34651bf716f75697912f779eadafef7d6b0b1335c1c2cbd480b"
+    },
+    {
+      "path": "../assets/runtime/ultra/runtime-manifest.json",
+      "bytes": 1373,
+      "sha256": "bca77c5ea3cae8384539f9541a221ab39faece01454483eae00eb1fe3f519569"
+    }
+  ],
+  "recommendedFor": "GPU dedicada",
+  "memoryEstimateMB": 640,
+  "targetFps": "45–60",
+  "bytes": 751783,
+  "displaySize": "734.2 KB",
+  "fileCount": 10,
+  "managerCompatibility": ">=0.9.6",
+  "assetMaturity": "premium-runtime-v1",
+  "premium3DAssets": true
+}

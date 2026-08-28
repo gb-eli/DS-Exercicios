@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "checks": {
+    "title": "Loja Virtual DS v0.8.0 — Carteira e Integridade Financeira",
+    "views": 13,
+    "cards": 75,
+    "balance_initial": "4.800",
+    "wallet_visible": true,
+    "validation_visible": true,
+    "pending_high": "1",
+    "pending_after_approve": "0",
+    "balance_after_approve": "9.800",
+    "pending_critical": "1",
+    "blocked": "50.000",
+    "ledger_details": true,
+    "mobile_overflow": false
+  }
+}

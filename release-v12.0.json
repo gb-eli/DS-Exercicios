@@ -1,0 +1,15 @@
+{
+  "version": "v12.0-P5.6-CAMPUS-DINAMICO",
+  "phase": "P5.6",
+  "date": "2026-08-14",
+  "lobby_version": "0.8.0",
+  "base": "v11.9-P5.5-CAMPUS-VIVO",
+  "highlights": [
+    "NPCs/alunos autônomos circulando em rotas locais",
+    "Grupos ambientais nos pontos de encontro",
+    "Ciclo visual de horário com iluminação e placa dinâmica",
+    "Objetos funcionais preservados no perfil Eco"
+  ],
+  "requires_database_migration": false,
+  "requires_edge_function_deploy": false
+}

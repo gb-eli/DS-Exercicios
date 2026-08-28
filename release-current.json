@@ -1,0 +1,30 @@
+{
+  "version": "14.10.8.39",
+  "release": "14.10.8.39",
+  "date": "2026-08-28",
+  "title": "Hotfix Lobby 3D + revisão anti-AI do Modo Prova",
+  "scope": [
+    "lobby",
+    "campus-3d",
+    "modo-prova",
+    "student-ux",
+    "teacher-ux",
+    "simulator"
+  ],
+  "changes": [
+    "Isola rigged-avatar.js como módulo opcional para impedir que falha transitiva derrube o import principal do Lobby.",
+    "Mantém fallback procedural do avatar e registra diagnóstico do módulo opcional.",
+    "Remove ranking vencedor quando toda pontuação está zerada.",
+    "Pré-lobby expirado passa a informar Aguardando professor em vez de 00:00 como estado terminal.",
+    "Reorganiza painel docente com KPIs operacionais, equipes legíveis, ação contextual de liderança e configuração recolhida.",
+    "Reduz card soup, gradientes, glow, mascotes e linguagem gamer genérica no Modo Prova.",
+    "Prévia docente tenta usar staff_overview da sessão real e deixa de depender de empresas/jogadores fictícios.",
+    "Fluxo do aluno mantém equipe, liderança, funções, confirmação, chat e atividades com linguagem pedagógica mais direta."
+  ],
+  "compatibility": {
+    "inherits_from": "14.10.8.38",
+    "requires_new_migration": false,
+    "requires_edge_function_redeploy": false,
+    "structural_cleanup_only": false
+  }
+}

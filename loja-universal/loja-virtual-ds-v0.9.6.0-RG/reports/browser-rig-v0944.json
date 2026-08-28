@@ -1,0 +1,22 @@
+{
+  "mode": "inline-browser",
+  "desktop": {
+    "bodyText": 1579,
+    "nav": 14,
+    "avatarView": 1,
+    "rigButtons": 4,
+    "animationButtons": 18,
+    "canvasVisible": false,
+    "fallbackVisible": true,
+    "activeAnimation": null,
+    "rigInfo": null
+  },
+  "mobile": {
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "overflow": false,
+    "rigButtons": 4,
+    "activeAnimation": null
+  },
+  "errors": []
+}

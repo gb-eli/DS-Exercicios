@@ -1,0 +1,32 @@
+SMOKE TEST — MODO PROVA v14.10.8.25
+
+Antes da turma entrar:
+[ ] 1. Abrir a prova com 3 ou 4 contas em navegadores/janelas diferentes.
+[ ] 2. Confirmar que o Lobby Geral mostra todos os nomes da turma e a situação de cada aluno.
+[ ] 3. Entrar/sair/trocar de SALA antes do início.
+[ ] 4. Confirmar bloqueio ao tentar entrar em sala cheia.
+[ ] 5. Fazer votação de líder. Confirmar que um voto pode ser alterado.
+[ ] 6. Criar empate e confirmar que a sala fica SEM líder até desempatar.
+[ ] 7. Confirmar que o mais votado vira líder.
+[ ] 8. Como líder: alterar nome da sala/equipe, tema, empresa fictícia, CNPJ, cidade e telefone.
+[ ] 9. Como líder: atribuir áreas diferentes aos membros.
+[ ] 10. Tentar atribuir a mesma área a dois integrantes e confirmar bloqueio do servidor.
+[ ] 11. Como líder: expulsar um integrante antes do início.
+[ ] 12. Confirmar que o expulso não volta para a mesma sala, mas consegue escolher outra sala disponível.
+[ ] 13. Confirmar que o líder NÃO consegue expulsar a si mesmo.
+[ ] 14. Confirmar que o professor não consegue iniciar se existir integrante sem área.
+[ ] 15. Confirmar que o professor não consegue iniciar se sala ocupada estiver sem líder.
+[ ] 16. Iniciar a prova e confirmar que aluno não troca/sai de sala e líder não altera composição/funções.
+[ ] 17. Conferir painel lateral: integrante, líder, área, XP, progresso individual e progresso da equipe.
+[ ] 18. Conferir ranking da sala, ranking geral de equipes e ranking individual geral.
+[ ] 19. Enviar desafio, repetir clique/requisição e confirmar que XP não duplica.
+[ ] 20. Salvar rascunho, atualizar página e confirmar recuperação pelo servidor.
+[ ] 21. Pausar prova; confirmar que respostas definitivas ficam bloqueadas e cronômetro congela.
+[ ] 22. Retomar; confirmar continuidade.
+
+SEGURANÇA ESPERADA
+- Frontend não possui answer_key.
+- Frontend não escreve na tabela practical_exam_xp_awards.
+- Usuário authenticated não tem INSERT/UPDATE/DELETE direto de XP.
+- Usuário não pode autoatribuir área via RPC antiga.
+- Voto, liderança, expulsão e atribuição de áreas são validados pelo servidor.
