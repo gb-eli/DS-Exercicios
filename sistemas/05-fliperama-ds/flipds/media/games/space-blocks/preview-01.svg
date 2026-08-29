@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Space Blocks"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050914"/><stop offset=".52" stop-color="#101637"/><stop offset="1" stop-color="#02050d"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#49e7ff" stop-opacity=".7"/><stop offset="1" stop-color="#49e7ff" stop-opacity="0"/></radialGradient>
+<filter id="soft"><feGaussianBlur stdDeviation="16"/></filter><filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity=".55"/></filter>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#8eefff" stroke-opacity=".07"/></pattern>
+</defs>
+<rect width="960" height="540" fill="url(#bg)"/><rect width="960" height="540" fill="url(#grid)"/>
+<circle cx="165" cy="100" r="180" fill="url(#glow)" opacity=".34"/><circle cx="825" cy="430" r="250" fill="url(#glow)" opacity=".18"/>
+<g transform="translate(185 55)" filter="url(#shadow)"><rect x="0" y="0" width="340" height="330" rx="18" fill="#07142a" stroke="#49e7ff" stroke-opacity=".55" stroke-width="3"/>
+ <g stroke="#315477" stroke-opacity=".45"><path d="M34 0V330"/><path d="M68 0V330"/><path d="M102 0V330"/><path d="M136 0V330"/><path d="M170 0V330"/><path d="M204 0V330"/><path d="M238 0V330"/><path d="M272 0V330"/><path d="M306 0V330"/><path d="M0 33H340"/><path d="M0 66H340"/><path d="M0 99H340"/><path d="M0 132H340"/><path d="M0 165H340"/><path d="M0 198H340"/><path d="M0 231H340"/><path d="M0 264H340"/><path d="M0 297H340"/></g>
+ <g stroke="#fff" stroke-opacity=".28" stroke-width="2"><rect x="70" y="260" width="31" height="31" rx="3" fill="#49e7ff"/><rect x="104" y="260" width="31" height="31" rx="3" fill="#49e7ff"/><rect x="138" y="260" width="31" height="31" rx="3" fill="#49e7ff"/><rect x="138" y="226" width="31" height="31" rx="3" fill="#49e7ff"/><rect x="205" y="293" width="31" height="31" rx="3" fill="#9273ff"/><rect x="239" y="293" width="31" height="31" rx="3" fill="#9273ff"/><rect x="273" y="293" width="31" height="31" rx="3" fill="#9273ff"/><rect x="239" y="259" width="31" height="31" rx="3" fill="#9273ff"/><rect x="104" y="293" width="31" height="31" rx="3" fill="#4ee0a8"/></g></g><g transform="translate(585 100)"><rect width="210" height="195" rx="18" fill="#071020" stroke="#9273ff" stroke-opacity=".45"/><text x="28" y="38" fill="#9db0c9" font-family="monospace" font-size="14">PRÓXIMA PEÇA</text><rect x="76" y="72" width="34" height="34" rx="4" fill="#ffd166"/><rect x="112" y="72" width="34" height="34" rx="4" fill="#ffd166"/><rect x="76" y="108" width="34" height="34" rx="4" fill="#ffd166"/><rect x="112" y="108" width="34" height="34" rx="4" fill="#ffd166"/></g>
+<rect x="28" y="28" width="904" height="484" rx="28" fill="none" stroke="#49e7ff" stroke-opacity=".22"/>
+<g filter="url(#shadow)"><rect x="42" y="400" width="600" height="94" rx="22" fill="#030712" fill-opacity=".78" stroke="#49e7ff" stroke-opacity=".28"/></g>
+<text x="70" y="442" fill="#f5fbff" font-family="Arial,sans-serif" font-size="32" font-weight="800">Space Blocks</text>
+<text x="70" y="472" fill="#a9b9ce" font-family="Arial,sans-serif" font-size="17">puzzle de blocos · sprint · maratona</text>
+<text x="884" y="477" text-anchor="end" fill="#49e7ff" font-family="monospace" font-size="13" font-weight="700">FLIPERAMA DS · MODERNO</text>
+</svg>

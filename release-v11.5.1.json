@@ -1,0 +1,13 @@
+{
+  "version": "v11.5.1-P5.1.1-BOOT-HOTFIX",
+  "phase": "P5.1.1",
+  "title": "Lobby 3D Boot Hotfix",
+  "date": "2026-08-14",
+  "base": "v11.5",
+  "changes": [
+    "Corrige CSP que bloqueava o carregamento do SDK Supabase no Lobby",
+    "Mantém jsDelivr restrito somente em script-src e SDK fixado em @supabase/supabase-js@2.111.0",
+    "Adiciona boot.js com erro visível quando um módulo não consegue carregar",
+    "Lobby version 0.3.2"
+  ]
+}

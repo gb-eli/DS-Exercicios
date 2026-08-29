@@ -1,0 +1,6 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Integração direta DS</title>
+<script src="../../demo/integration-data.js"></script><script src="../../demo/config-data.js"></script><script src="../../demo/catalog-data.js"></script><script src="../../dist/ds-store-foundation.js"></script><script src="../../dist/ds-store-sdk.js"></script>
+<button id="reward">Concluir missão</button><pre id="output"></pre><script>
+const sdk=DSStoreSDK.createAdapter('desafio-ds',{profileId:'aluno-exemplo',store:DSStore});
+document.querySelector('#reward').onclick=async()=>{const result=await sdk.missionCompleted({eventId:'missao-exemplo-'+Date.now(),amount:350,evidenceId:'evidencia-001',activityId:'missao-01'});document.querySelector('#output').textContent=JSON.stringify(result,null,2)};
+</script></html>

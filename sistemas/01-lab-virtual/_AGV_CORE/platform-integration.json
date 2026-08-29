@@ -1,0 +1,38 @@
+{
+  "platformId": "lab-virtual",
+  "name": "Laboratório Virtual DS",
+  "version": "4.28.0",
+  "integrationVersion": "P6.7-wave2-v13.2",
+  "canonicalRoot": "LABDS",
+  "capabilitiesTarget": {
+    "auth": true,
+    "progress": true,
+    "xp": true,
+    "points": true,
+    "wallet": true,
+    "store": true,
+    "inventory": true,
+    "marketplace": true
+  },
+  "legacy": {
+    "auth": "EduAuth/local storage",
+    "economy": "local/partial wallet references",
+    "progress": "rich local progress + XP"
+  },
+  "candidateHookFiles": [
+    "lab/js/eduauth/eduauth.js",
+    "lab/js/storage.js",
+    "lab/js/session.js",
+    "lab/js/learning-mode.js",
+    "lab/js/app.js"
+  ],
+  "sessionAuthority": {
+    "authority": "agv-core",
+    "storage": "sb-iresvqwyaqotghjssncg-auth-token",
+    "scope": "shared-ecosystem-session",
+    "legacySession": "migration-only"
+  },
+  "localStatePolicy": "cache-offline-preferences-only",
+  "progressAuthority": "lab-virtual-core",
+  "economyAuthority": "server-side AGV Core rules"
+}

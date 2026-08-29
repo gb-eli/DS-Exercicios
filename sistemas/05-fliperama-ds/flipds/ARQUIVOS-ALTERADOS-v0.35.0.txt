@@ -1,0 +1,55 @@
+Fliperama DS v0.35.0 — arquivos alterados em relação à v0.34.2
+
+ALTERADO	MATRIZ-TESTES-JOGOS-v0.34.2.md
+ALTERADO	PLANO-PROXIMAS-ETAPAS.md
+ALTERADO	README.md
+ALTERADO	TESTES-VOXELCRAFT-v0.31.0.md
+ALTERADO	app.css
+ALTERADO	app.js
+ALTERADO	diagnostico-jogos.html
+ALTERADO	diagnostico.html
+ALTERADO	education/game-learning.json
+ALTERADO	index.html
+ALTERADO	media/games/block-reactor/preview-01.svg
+ALTERADO	media/games/block-reactor/preview-02.svg
+ALTERADO	media/games/data-maze/preview-01.svg
+ALTERADO	media/games/data-maze/preview-02.svg
+ALTERADO	media/games/raster-rally/preview-01.svg
+ALTERADO	media/games/raster-rally/preview-02.svg
+ALTERADO	media/games/space-blocks/preview-01.svg
+ALTERADO	media/games/space-blocks/preview-02.svg
+ALTERADO	media/games/trap-lab/preview-01.svg
+ALTERADO	media/games/trap-lab/preview-02.svg
+ALTERADO	media/games/vector-fleet/preview-01.svg
+ALTERADO	media/games/vector-fleet/preview-02.svg
+ALTERADO	sw.js
+ALTERADO	validation/arcade-expansion-test-results.json
+ALTERADO	validation/audit-games.js
+ALTERADO	validation/cpu-multiplayer-quality-results.json
+ALTERADO	validation/educational-content-test-results.json
+ALTERADO	validation/game-audit-results.json
+ALTERADO	validation/museum-timeline-test-results.json
+ALTERADO	validation/platform-physics-test-results.json
+ALTERADO	validation/test-arcade-expansion.js
+ALTERADO	validation/test-cpu-multiplayer-quality.js
+ALTERADO	validation/test-educational-content.js
+ALTERADO	validation/test-museum-timeline.js
+ALTERADO	validation/test-ux-responsive.js
+ALTERADO	validation/three-d-test-results.json
+ALTERADO	validation/ux-responsive-test-results.json
+ALTERADO	validation/voxelcraft-test-results.json
+ALTERADO	version.json
+NOVO	BUGS-CORRIGIDOS-v0.35.0.md
+NOVO	CHANGELOG-v0.35.0.md
+NOVO	CHECKLIST-TESTES-v0.35.0.md
+NOVO	MATRIZ-TESTES-JOGOS-v0.35.0.md
+NOVO	RELATORIO-VALIDACAO-FASE-7-16A-v0.35.0.md
+NOVO	TESTES-UPGRADE-GRAFICO-v0.35.0.md
+NOVO	graphics/README.md
+NOVO	graphics/visual-upgrade-v0.35.0.json
+NOVO	validation/http-route-results-v0.35.0.json
+NOVO	validation/test-visual-upgrade.js
+NOVO	validation/visual-upgrade-simulation-baseline-v0.34.2.json
+NOVO	validation/visual-upgrade-test-results-v0.35.0.json
+
+Resumo: 39 alterados, 12 novos, 0 removidos.

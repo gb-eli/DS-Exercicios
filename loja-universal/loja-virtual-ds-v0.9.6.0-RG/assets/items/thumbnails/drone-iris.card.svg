@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" >
+<defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset=".55" stop-color="#0d1c32"/><stop offset="1" stop-color="#070914"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd766"/><stop offset="1" stop-color="#ff8a00"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef8ff"/><stop offset=".24" stop-color="#7b91a8"/><stop offset=".52" stop-color="#24364a"/><stop offset=".78" stop-color="#9bb0c2"/><stop offset="1" stop-color="#263546"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#ffd766" stop-opacity=".65"/><stop offset="1" stop-color="#ffd766" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000" flood-opacity=".62"/></filter>
+    <filter id="neon" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#63d8ff" stroke-opacity=".08" stroke-width="1"/></pattern>
+    <linearGradient id="rarity" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd766"/><stop offset="1" stop-color="#ff8a00"/></linearGradient></defs>
+    <rect width="512" height="512" rx="54" fill="url(#bg)"/>
+    <rect width="512" height="512" rx="54" fill="url(#grid)"/>
+    <circle cx="256" cy="242" r="190" fill="url(#glow)" opacity=".48"/>
+    <path d="M42 108V46h62M408 46h58v62M42 404v62h62M408 466h58v-62" fill="none" stroke="url(#rarity)" stroke-width="6" stroke-linecap="round" opacity=".65"/>
+    <ellipse cx="256" cy="441" rx="150" ry="25" fill="#000" opacity=".38"/>
+    <ellipse cx="256" cy="421" rx="122" ry="28" fill="none" stroke="url(#rarity)" stroke-width="8" opacity=".7" filter="url(#neon)"/>
+    <g filter="url(#shadow)"><ellipse cx="256" cy="247" rx="100" ry="83" fill="#1b3044" stroke="#72889a" stroke-width="8"/><circle cx="256" cy="247" r="52" fill="#071827" stroke="#2ad7ff" stroke-width="8"/><circle cx="256" cy="247" r="21" fill="#9a69ff" filter="url(#neon)"/><path d="M170 205L96 145M342 205l74-60M170 289l-74 60M342 289l74 60" stroke="#415e74" stroke-width="18"/><ellipse cx="86" cy="135" rx="65" ry="22" fill="none" stroke="#2ad7ff" stroke-width="7"/><ellipse cx="426" cy="135" rx="65" ry="22" fill="none" stroke="#2ad7ff" stroke-width="7"/><ellipse cx="86" cy="359" rx="65" ry="22" fill="none" stroke="#9a69ff" stroke-width="7"/><ellipse cx="426" cy="359" rx="65" ry="22" fill="none" stroke="#9a69ff" stroke-width="7"/></g></svg>

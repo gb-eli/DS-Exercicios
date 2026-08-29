@@ -1,0 +1,27 @@
+{
+  "version": "14.10.8.28",
+  "title": "Central do Aluno, Central Pedagógica e Guildas",
+  "scope": ["student-ux", "teacher-dashboard", "admin-dashboard", "historical-regrade", "practical-exam", "guilds", "responsive-ui"],
+  "changes": [
+    "Central do Aluno com abas Pendentes, Realizadas e Desempenho e erros.",
+    "Alerta após o login com confirmação de leitura persistida no Supabase.",
+    "Percentual de acerto, percentual a revisar, feedback docente e motivos técnicos derivados da autocorreção.",
+    "Central do Professor com indicadores e atalhos para acompanhamento, liberações, alunos, entregas e feedback.",
+    "Administração reorganizada em quatro fluxos principais, mantendo ferramentas avançadas acessíveis.",
+    "Central Pedagógica administrativa reúne atividades, correções, desempenho e perfil 360 graus.",
+    "Correção histórica em lotes com prévia, confirmação explícita, referências versionadas e preservação da melhor nota e das decisões manuais.",
+    "Lobby do Modo Prova organizado em cinco etapas, do lobby geral ao bloqueio das guildas.",
+    "Guildas com líder eleito, cargos exclusivos, tema, cor, mascote e emblema raster de até 320 KB.",
+    "Ranking de guildas e alunos, desafios por cargo e indicadores individuais e coletivos preservados."
+  ],
+  "database": ["057_p10928_learning_center_and_guild_identity.sql"],
+  "edge_functions": ["staff-dashboard", "practical-exam"],
+  "security": {
+    "student_receipts_rls": true,
+    "historical_regrade_never_reduces_score": true,
+    "manual_reviews_preserved": true,
+    "emblem_mime_allowlist": ["image/png", "image/jpeg", "image/webp"],
+    "emblem_max_bytes": 327680,
+    "xp_server_authoritative": true
+  }
+}

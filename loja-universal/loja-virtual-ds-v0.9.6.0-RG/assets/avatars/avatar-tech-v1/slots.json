@@ -1,0 +1,72 @@
+{
+  "rig": "DS_HUMANOID_VOXEL_RIG_2",
+  "coordinateSystem": "Y-up, +Z front",
+  "units": "meters-like scene units",
+  "version": "0.9.4.4",
+  "slots": [
+    {
+      "id": "hair",
+      "node": "SLOT_HAIR"
+    },
+    {
+      "id": "head",
+      "node": "SLOT_HEAD"
+    },
+    {
+      "id": "face",
+      "node": "SLOT_FACE"
+    },
+    {
+      "id": "torso",
+      "node": "SLOT_TORSO"
+    },
+    {
+      "id": "shoulder-left",
+      "node": "SLOT_SHOULDER_L"
+    },
+    {
+      "id": "shoulder-right",
+      "node": "SLOT_SHOULDER_R"
+    },
+    {
+      "id": "held-item-left",
+      "node": "SLOT_HAND_L"
+    },
+    {
+      "id": "held-item-right",
+      "node": "SLOT_HAND_R"
+    },
+    {
+      "id": "back",
+      "node": "SLOT_BACK"
+    },
+    {
+      "id": "shield",
+      "node": "SLOT_SHIELD"
+    },
+    {
+      "id": "waist",
+      "node": "SLOT_WAIST"
+    },
+    {
+      "id": "foot-left",
+      "node": "SLOT_FOOT_L"
+    },
+    {
+      "id": "foot-right",
+      "node": "SLOT_FOOT_R"
+    },
+    {
+      "id": "vehicle",
+      "node": "SLOT_VEHICLE"
+    },
+    {
+      "id": "aura",
+      "node": "SLOT_AURA"
+    },
+    {
+      "id": "companion",
+      "node": "SLOT_COMPANION"
+    }
+  ]
+}

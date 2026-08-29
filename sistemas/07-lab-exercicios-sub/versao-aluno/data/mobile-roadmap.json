@@ -1,0 +1,430 @@
+{
+  "disciplina": {
+    "id": "mobile",
+    "nome": "Programação Mobile",
+    "prefixo": "MOB",
+    "slug": "mobile",
+    "storagePrefix": "ds2sub_mobile",
+    "repositorio": "atividades-mobile-sub",
+    "minimoSegundos": 300,
+    "cargaHorariaPlano": 84,
+    "cargaSemanalLocal": 4,
+    "status": "fase-1-implementada-auditada-visual",
+    "versaoImplementacao": "0.1.35"
+  },
+  "principioPedagogico": "Fundamentos e experiência mobile antes de frameworks: introdução → responsividade → ergonomia → layout → JavaScript → recursos do dispositivo → PWA → React Native.",
+  "quantidadeExercicios": 42,
+  "fases": [
+    {
+      "id": 1,
+      "nome": "Introdução ao Desenvolvimento Mobile",
+      "inicio": "MOB01",
+      "fim": "MOB04",
+      "quantidade": 4,
+      "conteudos": [
+        "o que é mobile",
+        "como funciona um dispositivo móvel",
+        "tecnologias mobile",
+        "ecossistema e ferramentas"
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Responsividade e Mobile First",
+      "inicio": "MOB05",
+      "fim": "MOB09",
+      "quantidade": 5,
+      "conteudos": [
+        "responsividade",
+        "viewport e unidades responsivas",
+        "media queries",
+        "mobile first",
+        "breakpoints"
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "inicio": "MOB10",
+      "fim": "MOB14",
+      "quantidade": 5,
+      "conteudos": [
+        "zona do polegar",
+        "área de toque",
+        "navegação mobile",
+        "formulários no celular",
+        "UX e acessibilidade"
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "Layout Mobile com CSS",
+      "inicio": "MOB15",
+      "fim": "MOB19",
+      "quantidade": 5,
+      "conteudos": [
+        "Flexbox Mobile",
+        "CSS Grid Mobile",
+        "Grid responsivo",
+        "layout adaptativo",
+        "dashboard mobile"
+      ]
+    },
+    {
+      "id": 5,
+      "nome": "JavaScript Aplicado ao Mobile",
+      "inicio": "MOB20",
+      "fim": "MOB30",
+      "quantidade": 11,
+      "conteudos": [
+        "JavaScript na interface",
+        "eventos",
+        "menu mobile",
+        "modal e bottom sheet",
+        "validação",
+        "arrays e objetos",
+        "localStorage",
+        "tema claro/escuro",
+        "interface dinâmica",
+        "APIs",
+        "projeto Web Mobile"
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "Recursos do Dispositivo",
+      "inicio": "MOB31",
+      "fim": "MOB35",
+      "quantidade": 5,
+      "conteudos": [
+        "touch e gestos",
+        "orientação",
+        "câmera e QR Code",
+        "geolocalização",
+        "offline e armazenamento"
+      ]
+    },
+    {
+      "id": 7,
+      "nome": "PWA",
+      "inicio": "MOB36",
+      "fim": "MOB39",
+      "quantidade": 4,
+      "conteudos": [
+        "introdução a PWA",
+        "manifest",
+        "service worker",
+        "instalação no celular"
+      ]
+    },
+    {
+      "id": 8,
+      "nome": "React Native e Projeto Final",
+      "inicio": "MOB40",
+      "fim": "MOB42",
+      "quantidade": 3,
+      "conteudos": [
+        "React Native + Expo",
+        "estado, componentes e navegação",
+        "projeto final mobile"
+      ]
+    }
+  ],
+  "exercicios": [
+    {
+      "codigo": "MOB01",
+      "fase": 1,
+      "faseNome": "Introdução ao Desenvolvimento Mobile",
+      "titulo": "Introdução ao Mobile",
+      "status": "implementado"
+    },
+    {
+      "codigo": "MOB02",
+      "fase": 1,
+      "faseNome": "Introdução ao Desenvolvimento Mobile",
+      "titulo": "Como funciona um dispositivo móvel",
+      "status": "implementado"
+    },
+    {
+      "codigo": "MOB03",
+      "fase": 1,
+      "faseNome": "Introdução ao Desenvolvimento Mobile",
+      "titulo": "Tecnologias Mobile",
+      "status": "implementado"
+    },
+    {
+      "codigo": "MOB04",
+      "fase": 1,
+      "faseNome": "Introdução ao Desenvolvimento Mobile",
+      "titulo": "Ecossistema de desenvolvimento",
+      "status": "implementado"
+    },
+    {
+      "codigo": "MOB05",
+      "fase": 2,
+      "faseNome": "Responsividade e Mobile First",
+      "titulo": "Responsividade",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB06",
+      "fase": 2,
+      "faseNome": "Responsividade e Mobile First",
+      "titulo": "Viewport e unidades responsivas",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB07",
+      "fase": 2,
+      "faseNome": "Responsividade e Mobile First",
+      "titulo": "Media Queries",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB08",
+      "fase": 2,
+      "faseNome": "Responsividade e Mobile First",
+      "titulo": "Mobile First",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB09",
+      "fase": 2,
+      "faseNome": "Responsividade e Mobile First",
+      "titulo": "Breakpoints",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB10",
+      "fase": 3,
+      "faseNome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "titulo": "Zona do polegar",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB11",
+      "fase": 3,
+      "faseNome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "titulo": "Área de toque",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB12",
+      "fase": 3,
+      "faseNome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "titulo": "Navegação Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB13",
+      "fase": 3,
+      "faseNome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "titulo": "Formulários Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB14",
+      "fase": 3,
+      "faseNome": "Ergonomia, Zona do Polegar e UX Mobile",
+      "titulo": "UX Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB15",
+      "fase": 4,
+      "faseNome": "Layout Mobile com CSS",
+      "titulo": "Flexbox Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB16",
+      "fase": 4,
+      "faseNome": "Layout Mobile com CSS",
+      "titulo": "CSS Grid Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB17",
+      "fase": 4,
+      "faseNome": "Layout Mobile com CSS",
+      "titulo": "Grid responsivo",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB18",
+      "fase": 4,
+      "faseNome": "Layout Mobile com CSS",
+      "titulo": "Interface adaptativa",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB19",
+      "fase": 4,
+      "faseNome": "Layout Mobile com CSS",
+      "titulo": "Dashboard Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB20",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "JavaScript em interfaces mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB21",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Eventos e interação",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB22",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Menu mobile com JavaScript",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB23",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Modal e Bottom Sheet",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB24",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Formulários e validação",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB25",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Arrays e objetos",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB26",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "LocalStorage",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB27",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Tema claro/escuro",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB28",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Interface dinâmica",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB29",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Consumo de API",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB30",
+      "fase": 5,
+      "faseNome": "JavaScript Aplicado ao Mobile",
+      "titulo": "Projeto Web Mobile",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB31",
+      "fase": 6,
+      "faseNome": "Recursos do Dispositivo",
+      "titulo": "Touch e gestos",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB32",
+      "fase": 6,
+      "faseNome": "Recursos do Dispositivo",
+      "titulo": "Orientação da tela",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB33",
+      "fase": 6,
+      "faseNome": "Recursos do Dispositivo",
+      "titulo": "Câmera e QR Code",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB34",
+      "fase": 6,
+      "faseNome": "Recursos do Dispositivo",
+      "titulo": "Geolocalização",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB35",
+      "fase": 6,
+      "faseNome": "Recursos do Dispositivo",
+      "titulo": "Offline e armazenamento",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB36",
+      "fase": 7,
+      "faseNome": "PWA",
+      "titulo": "Introdução a PWA",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB37",
+      "fase": 7,
+      "faseNome": "PWA",
+      "titulo": "Manifest",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB38",
+      "fase": 7,
+      "faseNome": "PWA",
+      "titulo": "Service Worker",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB39",
+      "fase": 7,
+      "faseNome": "PWA",
+      "titulo": "Instalação no celular",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB40",
+      "fase": 8,
+      "faseNome": "React Native e Projeto Final",
+      "titulo": "Introdução ao React Native / Expo",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB41",
+      "fase": 8,
+      "faseNome": "React Native e Projeto Final",
+      "titulo": "Estado, componentes e navegação",
+      "status": "planejado"
+    },
+    {
+      "codigo": "MOB42",
+      "fase": 8,
+      "faseNome": "React Native e Projeto Final",
+      "titulo": "Projeto Final Mobile",
+      "status": "planejado"
+    }
+  ],
+  "versaoImplementacao": "0.1.37"
+}

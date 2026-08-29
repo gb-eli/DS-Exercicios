@@ -1,0 +1,15 @@
+{
+  "version": "14.10.8.44",
+  "date": "2026-08-28",
+  "title": "Campus DS — base modular e Camera V2",
+  "changes": [
+    "Manifesto único de mundo compartilhado entre Lobby 2D e 3D",
+    "Camera V2 separada do motor principal",
+    "Modos Exploração, Ampla e Campus",
+    "Colisão de câmera por raycast contra prédios, portas e interiores",
+    "Suavização de alvo, câmera e FOV dinâmico ao correr",
+    "Coordenadas de prédios, portais, interiores e limites consolidadas",
+    "Fallback 2D e regras de Supabase preservados",
+    "Sem alterações de banco de dados"
+  ]
+}

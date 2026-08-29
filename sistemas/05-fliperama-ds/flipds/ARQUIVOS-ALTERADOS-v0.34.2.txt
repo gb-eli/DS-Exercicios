@@ -1,0 +1,36 @@
+# Arquivos alterados — Fliperama DS v0.34.2
+
+- NOVO: `BUGS-CORRIGIDOS-v0.34.2.md`
+- NOVO: `CHANGELOG-v0.34.2.md`
+- NOVO: `CHECKLIST-TESTES-v0.34.2.md`
+- NOVO: `MATRIZ-TESTES-JOGOS-v0.34.2.md`
+- NOVO: `PLANO-MASTER-FLIPERAMA-DS-40-JOGOS.md`
+- ALTERADO: `PLANO-PROXIMAS-ETAPAS.md`
+- ALTERADO: `README.md`
+- NOVO: `RELATORIO-VALIDACAO-HOTFIX-UX-v0.34.2.md`
+- NOVO: `TESTES-UX-RESPONSIVIDADE-v0.34.2.md`
+- ALTERADO: `TESTES-VOXELCRAFT-v0.31.0.md`
+- ALTERADO: `app.css`
+- ALTERADO: `app.js`
+- ALTERADO: `diagnostico-jogos.html`
+- NOVO: `diagnostico-ux.html`
+- ALTERADO: `diagnostico.html`
+- ALTERADO: `index.html`
+- ALTERADO: `sw.js`
+- ALTERADO: `validation/arcade-expansion-test-results.json`
+- ALTERADO: `validation/audit-games.js`
+- ALTERADO: `validation/cpu-multiplayer-quality-results.json`
+- ALTERADO: `validation/educational-content-test-results.json`
+- ALTERADO: `validation/game-audit-results.json`
+- NOVO: `validation/http-route-results-v0.34.2.json`
+- ALTERADO: `validation/museum-timeline-test-results.json`
+- ALTERADO: `validation/platform-physics-test-results.json`
+- ALTERADO: `validation/test-arcade-expansion.js`
+- ALTERADO: `validation/test-cpu-multiplayer-quality.js`
+- ALTERADO: `validation/test-educational-content.js`
+- ALTERADO: `validation/test-museum-timeline.js`
+- NOVO: `validation/test-ux-responsive.js`
+- ALTERADO: `validation/three-d-test-results.json`
+- NOVO: `validation/ux-responsive-test-results.json`
+- ALTERADO: `validation/voxelcraft-test-results.json`
+- ALTERADO: `version.json`

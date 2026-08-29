@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" >
+<defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset=".55" stop-color="#0d1c32"/><stop offset="1" stop-color="#070914"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c7d3df"/><stop offset="1" stop-color="#708090"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef8ff"/><stop offset=".24" stop-color="#7b91a8"/><stop offset=".52" stop-color="#24364a"/><stop offset=".78" stop-color="#9bb0c2"/><stop offset="1" stop-color="#263546"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#c7d3df" stop-opacity=".65"/><stop offset="1" stop-color="#c7d3df" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000" flood-opacity=".62"/></filter>
+    <filter id="neon" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#63d8ff" stroke-opacity=".08" stroke-width="1"/></pattern>
+    <linearGradient id="rarity" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c7d3df"/><stop offset="1" stop-color="#708090"/></linearGradient></defs>
+    <rect width="512" height="512" rx="54" fill="url(#bg)"/>
+    <rect width="512" height="512" rx="54" fill="url(#grid)"/>
+    <circle cx="256" cy="242" r="190" fill="url(#glow)" opacity=".48"/>
+    <path d="M42 108V46h62M408 46h58v62M42 404v62h62M408 466h58v-62" fill="none" stroke="url(#rarity)" stroke-width="6" stroke-linecap="round" opacity=".65"/>
+    <ellipse cx="256" cy="441" rx="150" ry="25" fill="#000" opacity=".38"/>
+    <ellipse cx="256" cy="421" rx="122" ry="28" fill="none" stroke="url(#rarity)" stroke-width="8" opacity=".7" filter="url(#neon)"/>
+    <g filter="url(#shadow)"><rect x="202" y="304" width="95" height="42" rx="13" fill="#111923"/><rect x="287" y="304" width="42" height="100" rx="13" fill="#111923"/><rect x="321" y="388" width="58" height="30" rx="11" fill="#243b4e"/><rect x="192" y="335" width="105" height="38" rx="12" fill="#243b4e"/><rect x="196" y="205" width="120" height="108" rx="22" fill="#16293d" stroke="#314a63" stroke-width="5"/><path d="M208 224h96" stroke="#2ad7ff" stroke-width="8"/><rect x="147" y="205" width="42" height="108" rx="18" fill="#16293d"/><rect x="323" y="205" width="42" height="108" rx="18" fill="#16293d"/><rect x="211" y="113" width="90" height="84" rx="18" fill="#d99a6f" stroke="#5a2d22" stroke-width="4"/><path d="M208 135v-24q0-35 48-35t48 35v18l-18-16-18 12-16-15-22 18z" fill="#231b20"/><path d="M273 86h20v40h-13z" fill="#2ad7ff" filter="url(#neon)"/><rect x="230" y="149" width="11" height="7" rx="3" fill="#13213a"/><rect x="271" y="149" width="11" height="7" rx="3" fill="#13213a"/><path d="M244 178q12 9 25 0" fill="none" stroke="#5a2d22" stroke-width="4" stroke-linecap="round"/></g></svg>

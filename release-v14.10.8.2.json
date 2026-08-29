@@ -1,0 +1,51 @@
+{
+  "version": "14.10.8.2",
+  "date": "2026-08-22",
+  "phase": "P10.9.1-pre-migration-readonly",
+  "title": "Pré-migração read-only de referências históricas",
+  "baseVersion": "14.10.8",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": true,
+  "requiresPrivateSecret": false,
+  "liveDeployApplied": false,
+  "publicBundleContainsPrivateRules": false,
+  "fixes": [
+    "Preserva variantes históricas oficiais por arquivo sem alterar student_files nem student_file_history.",
+    "Adiciona seleção Auto/Atual/Anteriores no código de referência com detecção por similaridade do arquivo digitado.",
+    "Autocorreção v8 compara cada arquivo do aluno com todas as variantes oficiais disponíveis e usa a melhor compatível.",
+    "Registra no retorno e em autograde_details se cada arquivo casou com referência atual ou anterior e se o exercício ficou current/legacy/mixed.",
+    "Migration 044 captura automaticamente futuras mudanças de exercise_reference_files em histórico imutável com RLS.",
+    "Importa 257 snapshots de referência conhecidos dos catálogos locais auditados, deduplicados por conteúdo no banco.",
+    "Sincroniza o fallback local de Front-End Sub 08–10 com index.html, estilo.css e script.js atuais do Supabase.",
+    "Mantém fallback seguro: sem a nova tabela histórica, frontend e Edge Function continuam operando com a referência atual.",
+    "Candidato exercise-autograde v8 preserva as rotas de ajuda progressiva já ativas em produção v7 e adiciona compatibilidade histórica sem regressão desses fluxos.",
+    "Fase 1 read-only captura fingerprints de referências, arquivos dos alunos, histórico e progresso sem alterar produção.",
+    "Corrige teste legado do autograder para reconhecer a autoridade server-reference-v8-history preservando 208/208 testes.",
+    "Incorpora o plano mestre de versionamento e auditoria de alunos ao pacote de continuidade.",
+    "Produção permanece sem tabelas históricas e com exercise-autograde v7; migration e Edge Function candidatas continuam não aplicadas."
+  ],
+  "status": "RELEASE_CANDIDATE",
+  "databaseMigrationAppliedToProduction": false,
+  "databaseMigrations": [
+    "044_p109_reference_file_version_history.sql"
+  ],
+  "edgeFunctionAppliedToProduction": "NÃO APLICADO NESTE PACOTE • produção permanece exercise-autograde v7 ACTIVE; candidato local é v8-reference-history (merge de v7 + histórico)",
+  "knownPending": [
+    "Confirmar backup lógico/restaurável do Supabase antes da primeira DDL.",
+    "Aplicar a migration histórica somente após o preflight repetir os fingerprints do snapshot.",
+    "Publicar exercise-autograde v8-reference-history somente depois da migration e smoke autenticado.",
+    "Rodar auditoria histórica dos alunos em modo leitura antes de qualquer alteração de nota ou feedback."
+  ],
+  "productionBackendVerified": true,
+  "productionBackendSnapshot": {
+    "student_files": "450 arquivos atuais no levantamento de 22/08/2026",
+    "student_file_history": "14.130 revisões históricas no snapshot read-only de 22/08/2026 10:12 BRT",
+    "exercise_reference_files": "199 referências atuais; tabela original não possui versionamento histórico",
+    "reference_risk": "197 pares aluno/exercício com código; 133 iniciaram antes do timestamp mais recente da referência e 24 atravessaram esse timestamp",
+    "exercise_autograde": "v7 ACTIVE, verify_jwt=true, preservado em produção durante esta auditoria"
+  },
+  "backendUnchangedFrom": "Produção não alterada; candidato v8 foi reconstruído sobre os contratos ativos do exercise-autograde v7.",
+  "preMigrationSnapshot": "AUDITORIA-FASE1-SNAPSHOT-READONLY-2026-08-22.md",
+  "productionWriteApproved": false,
+  "backupConfirmed": false
+}

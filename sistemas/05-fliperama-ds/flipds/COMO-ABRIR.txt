@@ -1,0 +1,15 @@
+FLIPERAMA DS v0.34.1
+
+O index.html está na raiz do pacote.
+
+FORMA RECOMENDADA
+1. Extraia todo o ZIP.
+2. Abra a pasta em um servidor local ou publique no GitHub Pages.
+3. Acesse index.html.
+
+ABERTURA DIRETA
+Alguns navegadores permitem abrir index.html diretamente, mas Service Worker, módulos e armazenamento funcionam melhor por HTTP/HTTPS.
+
+DIAGNÓSTICO
+Abra diagnostico.html para verificar arquivos, WebGL e armazenamento.
+Abra diagnostico-jogos.html para consultar os 18 jogos, a CPU e os modos locais.

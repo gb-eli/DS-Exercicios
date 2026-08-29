@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" viewBox="0 0 640 220" role="img" aria-label="Logo Setor Poligonal 94">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08152c"/><stop offset="1" stop-color="#16070b"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="640" height="220" rx="24" fill="url(#g)"/><path d="M44 34H596L616 54V166L596 186H44L24 166V54Z" fill="none" stroke="#ff795f" stroke-width="3"/>
+<g transform="translate(60 72)" fill="none" stroke="#ffe06b" stroke-width="4" filter="url(#glow)"><path d="M0 40 34 0l42 24-8 52-48 10Z"/><path d="m34 0 12 43 30-19M46 43 20 86m26-43 22 33"/></g>
+<text x="150" y="104" fill="#f3f8ff" font-family="Arial,system-ui,sans-serif" font-weight="800" font-size="40">Setor Poligonal 94</text>
+<text x="152" y="142" fill="#ff795f" font-family="monospace" font-weight="700" font-size="17">FLIPERAMA DS · 1994 · FASE 5.2</text>
+<circle cx="574" cy="70" r="20" fill="#ffe06b" opacity=".2"/><circle cx="574" cy="70" r="8" fill="#ffe06b"/></svg>

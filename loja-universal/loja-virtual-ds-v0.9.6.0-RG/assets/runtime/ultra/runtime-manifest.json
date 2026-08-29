@@ -1,0 +1,56 @@
+{
+  "version": "0.9.6.0-RG",
+  "tier": "ultra",
+  "assetMaturity": "premium-runtime-v1",
+  "realRuntimeAssets": true,
+  "physicalHDR": false,
+  "files": [
+    {
+      "path": "env-ultra-2048.webp",
+      "bytes": 55032,
+      "sha256": "a7bcb1f6d49391407c404876570c90c0a74badf54ab074072f6b0b4149bf65ee",
+      "image": {
+        "width": 2048,
+        "height": 1024,
+        "mode": "RGB"
+      }
+    },
+    {
+      "path": "flare-ultra-512.webp",
+      "bytes": 11694,
+      "sha256": "bbcfe12bd29aeb7e40887244e8237da5c4e7a0b9fde7923802908f1643f7edeb",
+      "image": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGBA"
+      }
+    },
+    {
+      "path": "lighting-ultra.json",
+      "bytes": 1076,
+      "sha256": "f5fa24a32f3f4ac9c4122f261c6d04942df332e69506f91214dbfda5f08005b9",
+      "image": null
+    },
+    {
+      "path": "material-detail-ultra-1024.webp",
+      "bytes": 624800,
+      "sha256": "4634975a451f65a5b289a7f250bfeae9491d796f7b29a95a3b848f13222d3dcd",
+      "image": {
+        "width": 1024,
+        "height": 1024,
+        "mode": "RGB"
+      }
+    },
+    {
+      "path": "stage-ultra-1920.webp",
+      "bytes": 50184,
+      "sha256": "a588459ece2799c21e48c62c9ec52c1c116a696a2d40bf74ad91de3b62c23f14",
+      "image": {
+        "width": 1920,
+        "height": 1080,
+        "mode": "RGB"
+      }
+    }
+  ],
+  "totalBytes": 742786
+}

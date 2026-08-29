@@ -1,0 +1,52 @@
+{
+  "schema": "agv-version-manifest",
+  "schemaVersion": 1,
+  "portalVersion": "2.5.7",
+  "build": "20260811r38",
+  "releaseDate": "2026-08-11",
+  "dataSchemaVersion": 24,
+  "status": "Aulas abertas e comprovante em cinco minutos",
+  "toolVersions": {
+    "guidedLessons": "2.5.7",
+    "diagnostic": "2.5.7",
+    "profiles": "2.5.7",
+    "eduauthCore": "1.0.0",
+    "officeTools": "2.5.7"
+  },
+  "fixes": [
+    "Correções de interação e cálculo no editor de planilhas: seleção, barra de fórmulas, fontes, formatação e cache.",
+    "Removida a exigência de senha para abrir aulas do 1º e do 2º ADM",
+    "Tempo mínimo do comprovante reduzido para cinco minutos",
+    "Painel do professor simplificado para aulas abertas"
+  ],
+  "improvements": [
+    "Aviso de acesso livre para estudo em casa",
+    "Regularização de atividades atrasadas sem dependência do professor",
+    "Código coletivo preservado apenas como liberação opcional"
+  ],
+  "knownIssues": [
+    "EduAuth ainda utiliza chaves de desenvolvimento",
+    "GitHub Pages não oferece autenticação de servidor",
+    "Recuperação final depende do futuro EduAuth Professor",
+    "CSP mantém estilos inline por compatibilidade"
+  ],
+  "contributors": {
+    "lead": "Professor Gabriel",
+    "studentCredits": "coletivos e sujeitos à autorização"
+  },
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "IndexedDB",
+    "Web Crypto API",
+    "Service Worker",
+    "Canvas PDF",
+    "Document workspace state engine",
+    "Email workspace state engine",
+    "Enterprise dependency graph engine",
+    "Enterprise file integrity engine"
+  ],
+  "formalHistoryStartsAt": "1.6.0",
+  "registeredVersions": 28
+}

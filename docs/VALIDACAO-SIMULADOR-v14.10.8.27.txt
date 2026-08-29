@@ -1,0 +1,23 @@
+CHECKLIST RÁPIDO — SIMULADOR DO ALUNO v14.10.8.27
+
+1. Entrar em prova/admin.html com conta admin/professor.
+2. Confirmar botão “🎮 Simular experiência do aluno”.
+3. Abrir simulador e alternar 1DS / 2DS.
+4. Alternar as 8 áreas e verificar que existem desafios específicos.
+5. Testar Lobby Geral em Desktop e Celular.
+6. Testar Sala da Equipe como Integrante e como Líder.
+7. Como líder, alterar nome da empresa, cidade, CNPJ fictício, telefone e tema.
+8. Abrir Desafios e testar: única, múltiplas, classificação, resposta/código.
+9. Enviar respostas no simulador e conferir XP local sem alteração na prova real.
+10. Abrir Ranking Geral e conferir equipes + alunos.
+11. Atualizar a página: XP/respostas simulados devem zerar.
+12. Conferir que não foi criada sessão nova no painel real.
+13. Se backend v27 estiver publicado, abrir “Gabarito administrativo” e conferir resposta.
+14. Se backend ainda não estiver publicado, o simulador deve continuar abrindo em fallback sem gabarito.
+
+TESTE DE RESPONSIVIDADE (próxima revisão)
+- 390 px / Android;
+- 768–820 px / tablet;
+- 1366 x 768;
+- 1920 x 1080;
+- verificar overflow horizontal, botões, selects, cards, editor de código, ranking e lobby.

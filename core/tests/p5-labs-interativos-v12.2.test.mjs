@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const js=fs.readFileSync(new URL('../../lobby/assets/lobby3d.js', import.meta.url),'utf8');
+const ui=fs.readFileSync(new URL('../../lobby/assets/lobby.js', import.meta.url),'utf8');
+const cfg=fs.readFileSync(new URL('../../lobby/assets/config.js', import.meta.url),'utf8');
+assert.ok(cfg.includes("LOBBY_VERSION='1.0.1'"));
+for(const token of ['labChair','toggleStation','showBoard','presentation-spot','togglePresentation']) assert.ok(js.includes(token),`faltando ${token}`);
+assert.ok(ui.includes("Área de apresentação reservada"));
+assert.ok(ui.includes("monitor ligado"));
+assert.ok(!ui.includes('claim_core_reward'), 'interação visual não pode conceder recompensa');
+console.log('PASS p5-labs-interativos-v12.2');

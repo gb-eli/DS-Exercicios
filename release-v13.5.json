@@ -1,0 +1,8 @@
+{
+  "version": "13.5.0",
+  "phase": "P6.7-final-audit",
+  "date": "2026-08-15",
+  "title": "Auditoria final e catálogo canônico de integração",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionChange": false
+}

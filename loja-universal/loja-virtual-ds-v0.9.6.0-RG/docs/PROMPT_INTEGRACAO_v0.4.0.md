@@ -1,0 +1,3 @@
+# Prompt de integração — Loja Virtual DS v0.4.0
+
+Integre a Loja Virtual DS v0.4.0 preservando perfis, carteira, extrato e inventário existentes. Carregue o módulo 3D apenas quando o usuário abrir Personagem, prévia 360° ou um item compatível. Use `assets/avatars/avatar-tech-v1/manifest.json` como contrato do avatar. Selecione LOD2 no modo econômico, LOD1 no equilibrado/automático e LOD0 em alta/ultra. Mapeie os clips pelos IDs do arquivo `animations.json` e os itens pelos nós definidos em `slots.json`. Não use o renderer como fonte de verdade para itens adquiridos: a plataforma deve consultar o inventário validado e então habilitar o nó correspondente. Preserve o fallback 2D e a redução de movimento.

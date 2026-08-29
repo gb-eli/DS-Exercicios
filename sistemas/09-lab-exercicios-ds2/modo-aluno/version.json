@@ -1,0 +1,19 @@
+{
+  "name": "Plataforma 2DS — Duas Disciplinas — Aluno",
+  "version": "0.7.1",
+  "releasedAt": "2026-08-13T12:39:00-03:00",
+  "disciplines": [
+    {
+      "id": "frontend",
+      "name": "Programação Front-End",
+      "exercises": 28,
+      "version": "0.5.30"
+    },
+    {
+      "id": "inovacao",
+      "name": "Inovação Tecnológica e Empreendedorismo",
+      "exercises": 30,
+      "version": "0.2.0"
+    }
+  ]
+}

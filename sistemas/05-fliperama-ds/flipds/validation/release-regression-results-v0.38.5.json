@@ -1,0 +1,91 @@
+{
+  "product": "Fliperama DS",
+  "version": "0.38.5",
+  "phase": "Fase 7.26 — Mundo Plataforma DS 360 · Torre Central",
+  "generatedAt": "2026-08-08T10:33:00-03:00",
+  "summary": {
+    "total": 1073,
+    "passed": 1073,
+    "failed": 0
+  },
+  "suites": [
+    {
+      "name": "CPU e multiplayer",
+      "checks": 141,
+      "passed": 141,
+      "failed": 0
+    },
+    {
+      "name": "Arcade",
+      "checks": 37,
+      "passed": 37,
+      "failed": 0
+    },
+    {
+      "name": "Conteúdo educacional",
+      "checks": 150,
+      "passed": 150,
+      "failed": 0
+    },
+    {
+      "name": "Museu/Linha do Tempo",
+      "checks": 62,
+      "passed": 62,
+      "failed": 0
+    },
+    {
+      "name": "UX/responsividade",
+      "checks": 25,
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "name": "Física",
+      "checks": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "name": "Campanhas 3D",
+      "checks": 28,
+      "passed": 28,
+      "failed": 0
+    },
+    {
+      "name": "VoxelCraft",
+      "checks": 26,
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "name": "Duo Elementos",
+      "checks": 88,
+      "passed": 88,
+      "failed": 0
+    },
+    {
+      "name": "Crystal Cascade",
+      "checks": 118,
+      "passed": 118,
+      "failed": 0
+    },
+    {
+      "name": "Plataforma Clássica",
+      "checks": 150,
+      "passed": 150,
+      "failed": 0
+    },
+    {
+      "name": "Plataforma Poligonal 3D",
+      "checks": 87,
+      "passed": 87,
+      "failed": 0
+    },
+    {
+      "name": "Mundo Plataforma DS 360 v0.38.5",
+      "checks": 143,
+      "passed": 143,
+      "failed": 0
+    }
+  ]
+}

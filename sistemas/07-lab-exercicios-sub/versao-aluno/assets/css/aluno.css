@@ -1,0 +1,1171 @@
+.student-main { width: min(1740px,100%); margin: auto; padding: 16px; }
+.progress-card {
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: 1fr minmax(280px,420px);
+  align-items: center;
+  gap: 22px;
+}
+.progress-card h2 { margin: 8px 0; }
+.progress-card p { color: var(--muted); margin-bottom: 0; }
+.progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.progress-track { height: 13px; background: #26324a; border-radius: 999px; overflow: hidden; }
+.progress-track div { height: 100%; width: 0; background: linear-gradient(90deg,#40c77b,#69e7a0); transition: .25s; }
+.student-quick-tools { margin: 12px 0; padding: 10px; display: flex; gap: 8px; overflow-x: auto; }
+.student-quick-tools button { flex: 0 0 auto; }
+.student-file-tabs { display: flex; gap: 8px; margin: 13px 0; overflow-x: auto; }
+.student-file-tabs button { min-width: 160px; flex: 0 0 auto; background: #1b2942; }
+.student-file-tabs button.active { background: var(--primary); }
+.student-file-tabs button.done::after { content: " ✓"; color: #79efa9; }
+.student-section[hidden] { display: none; }
+
+.explain-grid {
+  display: grid;
+  grid-template-columns: 340px minmax(0,1.1fr) minmax(380px,.9fr);
+  gap: 13px;
+  align-items: start;
+}
+.explain-card { padding: 22px; height: fit-content; position: sticky; top: calc(var(--header-height) + 10px); }
+.explain-card p { font-size: 17px; line-height: 1.62; color: var(--muted); }
+.explain-card .step-result { padding: 11px; margin-top: 12px; border-radius: 9px; background: rgba(94,120,255,.12); line-height: 1.5; }
+.explain-actions, .full-actions, .delivery-actions, .download-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.no-select { user-select: none; -webkit-user-select: none; }
+.explain-code .code-lines { max-height: 610px; }
+.tutorial-preview .preview-canvas { min-height: 390px; }
+.tutorial-preview .device-frame iframe { height: 405px; }
+
+.full-intro { padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+.full-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(380px,.8fr); gap: 13px; align-items: start; }
+.full-grid .code-lines { max-height: 650px; }
+.practice-toolbar { padding: 12px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.practice-toolbar > div { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.lab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "ref editor" "preview preview" "behavior behavior" "terminal terminal";
+  gap: 12px;
+}
+.reference-practice { grid-area: ref; }
+.student-editor { grid-area: editor; }
+.practice-preview { grid-area: preview; }
+.python-terminal { grid-area: terminal; }
+.preview-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #121c2c; border-bottom: 1px solid var(--line); }
+.editor-body { display: grid; grid-template-columns: 55px minmax(0,1fr); height: 560px; background: var(--code); overflow: hidden; }
+.line-numbers { background: #090e18; border-right: 1px solid #202c40; color: #66748d; font: 15px/1.55 Consolas, "Cascadia Code", monospace; padding: 12px 0; overflow: hidden; text-align: right; }
+.line-numbers div { padding-right: 12px; height: 23.25px; }
+.line-numbers div.active { color: white; background: rgba(79,114,255,.2); }
+.editor-stage { position: relative; overflow: hidden; background: #0b1220; }
+.editor-stage > #highlightLayer {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 1;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  white-space: pre;
+  overflow: visible;
+  opacity: 0;
+  color: #dce6ff;
+  font: var(--student-code-font-size, 15px)/1.55 Consolas, "Cascadia Code", monospace;
+  tab-size: 4;
+  transform-origin: top left;
+  will-change: transform;
+}
+.editor-stage[data-highlight-ready="true"] > #highlightLayer { opacity: 1; }
+.editor-stage[data-highlight-ready="true"] > textarea {
+  background: transparent;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.editor-stage[data-highlight-ready="true"] > textarea::selection {
+  background: rgba(70,95,168,.68);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.editor-body.cm-enabled #highlightLayer { display: none !important; }
+.editor-stage > textarea {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  border: 0;
+  resize: none;
+  outline: 0;
+  background: #0b1220;
+  color: #dce6ff;
+  caret-color: #ffffff;
+  -webkit-text-fill-color: #dce6ff;
+  font: 15px/1.55 Consolas, "Cascadia Code", monospace;
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.editor-stage > textarea:focus-visible { box-shadow: inset 0 0 0 2px rgba(126,151,255,.75); }
+.editor-stage > textarea::selection { background: #465fa8; color: #ffffff; -webkit-text-fill-color: #ffffff; }
+.editor-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 7px; flex-wrap: wrap; }
+.editor-help { margin: 0; padding: 9px 14px; border-top: 1px solid var(--line); background: #0a1323; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.editor-help kbd { padding: 1px 5px; border: 1px solid #42516a; border-bottom-width: 2px; border-radius: 5px; background: #111c2d; color: #f3f6ff; font: inherit; }
+.line-numbers { pointer-events: none; user-select: none; -webkit-user-select: none; }
+#validationMessage { min-height: 42px; margin: 0; padding: 10px 14px; border-top: 1px solid var(--line); }
+.completion-card { padding: 26px; }
+.checklist { background: #0a1323; border-radius: 12px; padding: 14px 18px; margin: 18px 0; }
+.checklist p { margin: 8px 0; }
+.delivery-note { margin-top: 20px; padding: 14px; background: #17243a; border-radius: 10px; line-height: 1.6; }
+.completion-guides { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.completion-guides article { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1424; }
+.completion-guides h3 { margin-top: 0; }
+
+@media (max-width: 1380px) {
+  .explain-grid { grid-template-columns: 315px minmax(0,1fr); }
+  .tutorial-preview { grid-column: 1 / -1; }
+}
+@media (max-width: 1080px) {
+  .explain-grid, .full-grid { grid-template-columns: 1fr; }
+  .explain-card { position: static; }
+  .lab-grid { grid-template-columns: 1fr; grid-template-areas: "ref" "editor" "preview" "behavior" "terminal"; }
+  .progress-card { grid-template-columns: 1fr; }
+  .full-intro, .practice-toolbar { align-items: flex-start; flex-direction: column; }
+  .editor-body { height: 470px; }
+}
+@media (max-width: 680px) {
+  .student-main { padding: 9px; }
+  .progress-card { padding: 15px; }
+  .student-quick-tools { margin: 9px 0; }
+  .explain-card { padding: 17px; }
+  .editor-body { grid-template-columns: 42px minmax(0,1fr); height: 410px; }
+  .line-numbers, .editor-stage > #highlightLayer, .editor-stage > textarea { font-size: 13px; }
+  .line-numbers div { height: 20.15px; }
+  .download-actions > *, .delivery-actions > * { width: 100%; }
+  .completion-card { padding: 18px; }
+  .completion-guides { grid-template-columns: 1fr; }
+}
+
+
+.validation-details {
+  border-top: 1px solid var(--line);
+  padding: 14px;
+  background: linear-gradient(180deg, rgba(255,184,77,.09), rgba(9,14,24,.96));
+}
+.validation-details[hidden] { display: none; }
+.validation-details-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.validation-details-head > div { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.validation-details h3, .validation-details h4 { margin: 0; }
+.validation-details > p { color: var(--muted); line-height: 1.55; }
+.validation-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.validation-columns > div { border: 1px solid var(--line); background: rgba(8,14,25,.78); border-radius: 10px; padding: 12px; }
+.validation-columns ul { margin: 10px 0 0; padding-left: 20px; }
+.validation-columns li { margin: 8px 0; line-height: 1.45; }
+.validation-columns li strong { color: #fff; }
+.validation-line { display: inline-flex; margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(94,120,255,.18); color: #bfcaff; font-size: 12px; }
+.validation-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+@media (max-width: 680px) {
+  .validation-columns { grid-template-columns: 1fr; }
+  .validation-details-head { align-items: stretch; flex-direction: column; }
+  .validation-actions > * { width: 100%; }
+}
+
+
+.code-health { margin: 0 0 12px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px 18px; align-items: center; }
+.code-health-main { min-width: 0; }
+.code-health-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.code-health-title strong { font-size: 16px; }
+.code-health-track { height: 12px; background: #273249; border-radius: 99px; overflow: hidden; }
+.code-health-track i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#5e78ff,#45d483); transition: width .22s ease; }
+.code-health[data-state="error"] .code-health-track i { background: linear-gradient(90deg,#ff9259,#ff6b74); }
+.code-health[data-state="starting"] .code-health-track i { background: #5e78ff; }
+.code-health-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; color: var(--muted); font-size: 13px; }
+.code-health-score { min-width: 120px; text-align: center; }
+.code-health-score strong { display: block; font-size: 30px; }
+.code-health-score span { color: var(--muted); font-size: 13px; }
+@media (max-width:680px){.code-health{grid-template-columns:1fr}.code-health-score{text-align:left}.code-health-score strong{display:inline;font-size:23px;margin-right:6px}}
+
+
+
+/* v0.4.1 - layout do aluno */
+.code-health-title strong::after { content: ""; }
+.editor-body { height: clamp(380px, 56vh, 590px); }
+.student-quick-tools { flex-wrap: wrap; overflow: visible; }
+.student-file-tabs { scrollbar-width: thin; }
+.progress-card { grid-template-columns: minmax(0,1fr) minmax(260px,390px); }
+.explain-card { max-height: calc(100vh - var(--header-height) - 28px); overflow: auto; }
+
+@media (max-width: 1180px) {
+  .lab-grid { grid-template-columns: 1fr; grid-template-areas: "ref" "editor" "preview" "terminal"; }
+  .reference-practice .code-lines { max-height: 430px; }
+}
+@media (max-width: 900px) {
+  .progress-card { grid-template-columns: 1fr; }
+  .student-quick-tools { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .student-quick-tools button { width: 100%; }
+  .explain-card { max-height: none; }
+}
+@media (max-width: 680px) {
+  .student-quick-tools { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .practice-toolbar > div, .practice-toolbar button { width: 100%; }
+  .practice-toolbar button { justify-content: center; }
+  .code-health-meta { flex-direction: column; }
+  .editor-body { height: clamp(350px, 56vh, 470px); }
+}
+@media (max-width: 430px) {
+  .student-quick-tools { grid-template-columns: 1fr; }
+  .student-file-tabs { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); overflow: visible; }
+  .student-file-tabs button { min-width: 0; width: 100%; padding-inline: 5px; font-size: 12px; }
+  .progress-card h2 { font-size: 21px; }
+}
+
+.preview-message[data-state=error]{color:#fecaca;background:rgba(127,29,29,.25);border-color:#ef4444}.preview-message[data-state=success]{color:#bbf7d0;background:rgba(20,83,45,.22);border-color:#22c55e}
+
+
+/* v0.1.13 - modo ajuda para localizar e aprender com erros */
+.effort-coach {
+  margin: 12px 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(69,212,131,.42);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(24,107,66,.28), rgba(12,24,39,.92));
+}
+.effort-coach h4 { margin: 9px 0 6px; color: #d8ffe8; }
+.effort-coach p { margin: 0; color: #c6d8cf; line-height: 1.58; }
+.error-spotlight {
+  margin: 12px 0;
+  padding: 14px;
+  border: 2px solid rgba(255,189,89,.72);
+  border-radius: 12px;
+  background: rgba(80,48,8,.25);
+  box-shadow: 0 0 0 4px rgba(255,189,89,.07);
+}
+.error-spotlight[hidden] { display: none; }
+.error-spotlight-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.error-spotlight-head > div { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.error-spotlight h4, .error-spotlight h5 { margin: 0; }
+.error-spotlight > p { color: #f8ddb0; line-height: 1.55; }
+.error-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.error-compare-grid > div { min-width: 0; }
+.error-compare-grid h5 { margin-bottom: 6px; color: #f8fafc; }
+.error-compare-grid pre {
+  min-height: 68px;
+  margin: 0;
+  padding: 11px;
+  overflow: auto;
+  border: 1px solid #3c4d67;
+  border-radius: 9px;
+  background: #070d17;
+  color: #f3f6ff;
+  font: 13px/1.55 Consolas, "Cascadia Code", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.error-compare-grid > div:first-child pre { border-color: rgba(255,110,110,.72); background: rgba(75,13,20,.48); }
+.error-compare-grid > div:last-child pre { border-color: rgba(69,212,131,.55); background: rgba(10,51,32,.46); }
+.diagnostic-revalidate { margin: 10px 0; padding: 9px 11px; border-radius: 9px; background: rgba(94,120,255,.13); color: #cbd5ff; }
+.line-numbers div.diagnostic { color: #fff2cf; background: rgba(190,89,21,.72); font-weight: 800; box-shadow: inset -4px 0 #ffbd59; }
+.student-editor[data-help-active="true"] { box-shadow: 0 0 0 2px rgba(255,189,89,.42); }
+@media (max-width: 680px) {
+  .error-compare-grid { grid-template-columns: 1fr; }
+  .error-spotlight-head { flex-direction: column; }
+}
+
+
+/* v0.1.14 - download seguro de trabalho em andamento */
+.work-download-modal { width: min(680px, calc(100vw - 28px)); }
+.work-download-modal h2 { margin: 12px 0 8px; }
+.work-download-modal > p { color: var(--muted); line-height: 1.6; }
+.work-download-status { display: grid; gap: 8px; margin: 16px 0; }
+.work-download-file { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #0b1322; }
+.work-download-file strong { overflow-wrap: anywhere; }
+.work-download-file small { color: var(--muted); display: block; margin-top: 3px; }
+.work-download-actions { display: flex; justify-content: flex-end; gap: 9px; flex-wrap: wrap; margin-top: 18px; }
+#editorStatus[data-state="error"] { color: #fecaca; font-weight: 700; }
+#editorStatus[data-state="saved"] { color: #9ae6b4; }
+@media (max-width: 680px) {
+  .work-download-file { grid-template-columns: 1fr; }
+  .work-download-actions, .work-download-actions button { width: 100%; }
+}
+
+/* v0.1.19 - apoio automático progressivo, execução atual e Modo VS Code */
+.practice-toolbar > div:first-child { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+#executionFreshness { max-width: 310px; white-space: normal; text-align: center; }
+#completeStage:disabled { opacity: .62; cursor: not-allowed; }
+#markUnderstood.success { background: rgba(69,212,131,.2); border-color: rgba(69,212,131,.7); color: #d8ffe8; }
+.autocomplete-modal { width: min(760px, calc(100vw - 28px)); }
+.autocomplete-modal > p { color: var(--muted); line-height: 1.6; }
+.autocomplete-preview { display: grid; gap: 12px; margin: 15px 0; }
+.autocomplete-preview > div { display: grid; gap: 7px; }
+.autocomplete-preview span { color: var(--muted); }
+.autocomplete-preview pre { max-height: 310px; margin: 0; padding: 14px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; background: #07101e; color: #e7edff; font: 13px/1.55 Consolas, "Cascadia Code", monospace; white-space: pre; }
+.autocomplete-confirm { display: flex; align-items: flex-start; gap: 9px; margin: 15px 0; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #101b2e; line-height: 1.5; }
+.autocomplete-confirm input { margin-top: 3px; }
+.vscode-mobile-tabs { display: flex; gap: 7px; margin: 0 0 10px; padding: 8px; border: 1px solid var(--line); border-radius: 10px; background: #080f1b; }
+.vscode-mobile-tabs[hidden] { display: none; }
+.vscode-mobile-tabs button { flex: 1; }
+.vscode-mobile-tabs button.active { background: var(--primary); }
+body.vscode-mode { --header-height: 70px; background: #050910; }
+body.vscode-mode .student-main { width: 100%; max-width: none; padding: 8px; }
+body.vscode-mode .progress-card { padding: 10px 14px; margin-bottom: 7px; }
+body.vscode-mode .student-quick-tools { margin: 7px 0; padding: 7px; }
+body.vscode-mode .practice-toolbar { margin-bottom: 7px; padding: 8px 10px; }
+body.vscode-mode .code-health { margin-bottom: 7px; padding: 9px 12px; }
+body.vscode-mode .lab-grid { grid-template-columns: minmax(280px,.85fr) minmax(390px,1.25fr); grid-template-areas: "ref editor" "preview preview" "behavior behavior" "terminal terminal"; gap: 7px; }
+body.vscode-mode .editor-body { height: clamp(420px, 60vh, 720px); }
+body.vscode-mode .reference-practice .code-lines { max-height: clamp(420px, 60vh, 720px); }
+body.vscode-mode .practice-preview { min-height: 350px; }
+body.vscode-mode .app-header { padding-block: 8px; }
+@media (max-width: 900px) {
+  body.vscode-mode .lab-grid { grid-template-columns: 1fr; grid-template-areas: "ref" "editor" "preview" "behavior" "terminal"; }
+}
+@media (max-width: 680px) {
+  #executionFreshness { width: 100%; max-width: none; }
+  .autocomplete-modal { width: calc(100vw - 18px); }
+  .autocomplete-preview pre { max-height: 260px; font-size: 12px; }
+  body.vscode-mode .progress-card, body.vscode-mode .student-quick-tools, body.vscode-mode .code-health { display: none; }
+  body.vscode-mode .practice-toolbar > div:first-child { display: none; }
+  body.vscode-mode .practice-toolbar > div:last-child { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  body.vscode-mode .practice-toolbar button { width: 100%; font-size: 12px; padding-inline: 7px; }
+  body.vscode-mode .lab-grid { display: block; }
+  body.vscode-mode .lab-grid > * { display: none; }
+  body.vscode-mode .lab-grid[data-vscode-panel="reference"] .reference-practice { display: block; }
+  body.vscode-mode .lab-grid[data-vscode-panel="editor"] .student-editor { display: block; }
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] .practice-preview,
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] .behavior-check { display: block; }
+  body.vscode-mode .lab-grid[data-vscode-panel="terminal"] .python-terminal { display: block; }
+  body.vscode-mode .lab-grid[data-vscode-panel="help"] .student-editor { display: block; }
+  body.vscode-mode .editor-body { height: calc(100vh - 270px); min-height: 360px; }
+  .vscode-mobile-tabs { position: sticky; top: 68px; z-index: 15; }
+}
+
+
+/* v0.1.20 - Fase 4: terminal Python pedagógico e execução comparativa */
+.python-terminal {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #26354b;
+  border-radius: 12px;
+  background: #07101b;
+  color: #dce6ff;
+}
+.python-terminal[hidden] { display: none !important; }
+.python-terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #26354b;
+  background: #101827;
+}
+.python-terminal-header > div,
+.python-terminal-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.16); }
+.python-terminal-output {
+  min-height: 230px;
+  max-height: 430px;
+  overflow: auto;
+  padding: 15px 16px;
+  background: #050a12;
+  color: #d7e3f8;
+  font: 14px/1.55 Consolas, "Cascadia Code", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  scrollbar-gutter: stable;
+}
+.python-terminal-line { display: block; min-height: 1.45em; }
+.python-terminal-line.command { color: #9fd3ff; }
+.python-terminal-line.input { color: #fcd34d; }
+.python-terminal-line.error { color: #fca5a5; }
+.python-terminal-line.success { color: #86efac; }
+.python-terminal-line.muted { color: #8998b2; }
+.python-terminal-input {
+  display: grid;
+  gap: 7px;
+  padding: 12px 14px;
+  border-top: 1px solid #26354b;
+  background: #0b1422;
+}
+.python-terminal-input[hidden] { display: none !important; }
+.python-terminal-input label { color: #c8d7ee; font-weight: 700; }
+.python-terminal-input > div { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 8px; }
+.python-terminal-input input { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #3a4d68; border-radius: 8px; background: #050a12; color: #fff; font: 14px Consolas, "Cascadia Code", monospace; }
+.python-terminal-input button { min-height: 42px; }
+.python-terminal-note { margin: 0; padding: 10px 14px; border-top: 1px solid #26354b; color: #aebdd3; font-size: 12px; line-height: 1.5; }
+#pythonTerminalStatus[data-state="running"] { background: #153a65; }
+#pythonTerminalStatus[data-state="waiting"] { background: #694f13; }
+#pythonTerminalStatus[data-state="success"] { background: #14532d; }
+#pythonTerminalStatus[data-state="error"] { background: #6b1f2b; }
+#pythonTerminalStatus[data-state="stale"] { background: #5a3c13; }
+@media (max-width: 680px) {
+  .python-terminal-header { align-items: flex-start; flex-direction: column; }
+  .python-terminal-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+  .python-terminal-actions button:last-child { grid-column: 1 / -1; }
+  .python-terminal-output { min-height: 300px; max-height: calc(100vh - 330px); font-size: 12px; }
+  .python-terminal-input > div { grid-template-columns: auto minmax(0,1fr); }
+  .python-terminal-input button { grid-column: 1 / -1; width: 100%; }
+}
+@media (max-width: 680px) {
+  .vscode-mobile-tabs { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+  .vscode-mobile-tabs button { min-width: 0; padding: 8px 5px; font-size: 10px; overflow-wrap: anywhere; }
+  .python-terminal, .python-terminal-header, .python-terminal-output, .python-terminal-input { min-width: 0; max-width: 100%; }
+}
+
+
+/* Fase 5 - profundidade pedagógica contextual */
+.pedagogical-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 18px 0;
+}
+.pedagogical-details > div,
+.context-term-panel {
+  padding: 14px;
+  border: 1px solid var(--border, #2b3954);
+  border-radius: 12px;
+  background: rgba(12, 20, 36, .72);
+}
+.pedagogical-details p,
+.context-term-panel p { margin: 6px 0 0; line-height: 1.55; }
+.context-terms { margin: 18px 0; }
+.section-inline-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.section-inline-head h3 { margin:0; }
+.context-term-buttons { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.context-term-panel { margin-top:12px; outline:none; }
+.context-term-panel:focus { box-shadow:0 0 0 3px rgba(56,189,248,.28); }
+.progressive-help { margin:18px 0; padding:14px; border:1px solid var(--border,#2b3954); border-radius:12px; background:rgba(12,20,36,.62); }
+.progressive-help summary { cursor:pointer; font-weight:800; }
+.progressive-help ol { margin:12px 0 0; padding-left:22px; }
+.progressive-help li + li { margin-top:8px; }
+@media (max-width: 720px) { .pedagogical-details { grid-template-columns:1fr; } }
+
+
+/* v0.1.23 - Fase 6: validação comportamental e estados de execução */
+.behavior-check {
+  grid-area: behavior;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #2a3b55;
+  background: linear-gradient(145deg, rgba(12,25,43,.98), rgba(8,16,29,.98));
+}
+.behavior-check[hidden] { display: none !important; }
+.behavior-check-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.behavior-check-head > div { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.behavior-check h3 { margin: 0; }
+.behavior-check > p { color: var(--muted); line-height: 1.55; }
+.behavior-check-list { display: grid; gap: 8px; margin: 14px 0; padding: 0; list-style: none; }
+.behavior-check-list li { display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 9px; align-items: start; padding: 10px 12px; border: 1px solid #2a3a52; border-radius: 10px; background: #091322; line-height: 1.45; }
+.behavior-check-list li::before { content: "○"; display: grid; place-items: center; width: 22px; height: 22px; color: #9aabc4; font-weight: 900; }
+.behavior-check-list li[data-state="passed"] { border-color: rgba(69,212,131,.55); background: rgba(18,91,56,.2); }
+.behavior-check-list li[data-state="passed"]::before { content: "✓"; color: #69e7a0; }
+.behavior-check-list li[data-state="failed"]::before { content: "!"; color: #ffc66d; }
+.behavior-check-feedback { margin: 0 !important; padding: 10px 12px; border-left: 4px solid #5e78ff; border-radius: 8px; background: rgba(94,120,255,.1); }
+.behavior-check-feedback[data-state="success"] { border-left-color: #45d483; color: #c9ffe0; background: rgba(20,83,45,.22); }
+.behavior-check-feedback[data-state="warning"] { border-left-color: #ffb84d; color: #ffe0aa; background: rgba(120,72,12,.2); }
+#refreshPreview[data-busy="true"] { cursor: progress; opacity: .75; }
+@media (max-width: 680px) {
+  .behavior-check { padding: 14px; }
+  .behavior-check-head { flex-direction: column; }
+  .behavior-check-head #behaviorCheckStatus { width: 100%; text-align: center; }
+}
+
+/* v0.1.25 - Etapa 1: editor colorido estilo VS Code + fonte ajustável */
+:root { --student-code-font-size: 15px; }
+.editor-body.cm-enabled { display: block; height: clamp(380px, 56vh, 590px); }
+.editor-body.cm-enabled > .line-numbers { display: none; }
+.editor-body.cm-enabled .editor-stage { height: 100%; }
+.editor-stage .CodeMirror {
+  height: 100%;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font: var(--student-code-font-size)/1.55 Consolas, "Cascadia Code", "Courier New", monospace;
+  text-transform: none;
+  font-variant-caps: normal;
+}
+.editor-stage .CodeMirror-gutters { background: #1e1e1e; border-right: 1px solid #2b2b2b; }
+.editor-stage .CodeMirror-linenumber { color: #858585; padding: 0 10px 0 5px; }
+.editor-stage .CodeMirror-cursor { border-left: 2px solid #aeafad; }
+.editor-stage .CodeMirror-selected { background: #264f78 !important; }
+.editor-stage .CodeMirror-focused .CodeMirror-selected { background: #264f78 !important; }
+.editor-stage .CodeMirror-scroll { scrollbar-gutter: stable; }
+.editor-stage .CodeMirror textarea { text-transform: none !important; font-variant-caps: normal !important; }
+.cm-s-ds-vscode .cm-keyword { color: #569cd6; }
+.cm-s-ds-vscode .cm-atom { color: #569cd6; }
+.cm-s-ds-vscode .cm-number { color: #b5cea8; }
+.cm-s-ds-vscode .cm-def { color: #dcdcaa; }
+.cm-s-ds-vscode .cm-variable { color: #9cdcfe; }
+.cm-s-ds-vscode .cm-variable-2 { color: #4ec9b0; }
+.cm-s-ds-vscode .cm-variable-3,
+.cm-s-ds-vscode .cm-type { color: #4ec9b0; }
+.cm-s-ds-vscode .cm-property { color: #9cdcfe; }
+.cm-s-ds-vscode .cm-operator { color: #d4d4d4; }
+.cm-s-ds-vscode .cm-comment { color: #6a9955; font-style: italic; }
+.cm-s-ds-vscode .cm-string,
+.cm-s-ds-vscode .cm-string-2 { color: #ce9178; }
+.cm-s-ds-vscode .cm-meta { color: #c586c0; }
+.cm-s-ds-vscode .cm-tag { color: #569cd6; }
+.cm-s-ds-vscode .cm-attribute { color: #9cdcfe; }
+.cm-s-ds-vscode .cm-qualifier { color: #d7ba7d; }
+.cm-s-ds-vscode .cm-builtin { color: #4ec9b0; }
+.cm-s-ds-vscode .cm-bracket { color: #ffd700; }
+.cm-s-ds-vscode .cm-error { color: #f44747; text-decoration: underline wavy; }
+.cm-diagnostic-line { background: rgba(190,89,21,.30); box-shadow: inset 4px 0 #ffbd59; }
+.editor-font-controls { display: inline-flex; align-items: center; gap: 3px; padding: 2px; border: 1px solid #34435b; border-radius: 8px; background: rgba(5,10,18,.35); }
+.editor-font-controls button { min-width: 34px; }
+.editor-font-controls .editor-font-value { min-width: 58px; color: #cbd9ee; }
+@media (max-width: 680px) {
+  .editor-body.cm-enabled { height: clamp(350px, 56vh, 470px); }
+  .editor-stage .CodeMirror { font-size: max(13px, var(--student-code-font-size)); }
+  .editor-toolbar { justify-content: flex-start; }
+  .editor-font-controls { order: 2; }
+}
+body.vscode-mode .editor-body.cm-enabled { height: clamp(420px, 60vh, 720px); }
+@media (max-width: 680px) {
+  body.vscode-mode .editor-body.cm-enabled { height: calc(100vh - 270px); min-height: 360px; }
+}
+
+/* v0.1.26 - Etapa 2: gavetas, barra simplificada e Modo Foco */
+.panel-toggle { margin-left: auto; white-space: nowrap; }
+.reference-practice.panel-collapsed .code-lines { display: none !important; }
+.reference-practice.panel-collapsed .code-titlebar { border-bottom: 0; }
+.practice-preview.panel-collapsed .preview-canvas,
+.practice-preview.panel-collapsed .preview-message { display: none !important; }
+.practice-preview.panel-collapsed .preview-toolbar { border-bottom: 0; }
+.behavior-check.panel-collapsed > :not(.behavior-check-head) { display: none !important; }
+.python-terminal.panel-collapsed > :not(.python-terminal-header) { display: none !important; }
+.reference-practice.panel-collapsed,
+.practice-preview.panel-collapsed,
+.behavior-check.panel-collapsed,
+.python-terminal.panel-collapsed { min-height: 0 !important; }
+
+.practice-primary-actions { position: relative; justify-content: flex-end; }
+.practice-primary-actions > button { min-height: 40px; }
+.practice-tools { position: relative; }
+.practice-tools > summary { list-style: none; cursor: pointer; user-select: none; -webkit-user-select: none; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+.practice-tools > summary::-webkit-details-marker { display: none; }
+.practice-tools[open] > summary { background: #263b63; color: #fff; }
+.practice-tools-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 7px);
+  z-index: 45;
+  width: min(330px, calc(100vw - 28px));
+  padding: 9px;
+  display: grid;
+  gap: 6px;
+  border: 1px solid #34445f;
+  border-radius: 12px;
+  background: #0a1323;
+  box-shadow: 0 18px 44px rgba(0,0,0,.42);
+}
+.practice-tools-menu button { width: 100%; justify-content: flex-start; text-align: left; }
+.practice-tools-menu button[hidden] { display: none !important; }
+
+body.focus-mode .progress-card,
+body.focus-mode .student-quick-tools,
+body.focus-mode .code-health { display: none !important; }
+body.focus-mode .student-main { width: 100%; max-width: none; padding-top: 8px; }
+body.focus-mode .practice-toolbar > div:first-child { display: none; }
+body.focus-mode .reference-practice,
+body.focus-mode .behavior-check { display: none !important; }
+body.focus-mode .lab-grid {
+  grid-template-columns: 1fr;
+  grid-template-areas: "editor" "preview" "terminal";
+  gap: 8px;
+}
+body.focus-mode .student-editor { min-width: 0; }
+body.focus-mode .editor-body.cm-enabled { height: clamp(480px, 67vh, 820px); }
+body.focus-mode .practice-preview { min-height: 0; }
+body.focus-mode .app-header { padding-block: 7px; }
+body.focus-mode .version-footer { opacity: .65; }
+
+@media (max-width: 680px) {
+  .practice-primary-actions { width: 100%; display: grid !important; grid-template-columns: 1fr 1fr; gap: 7px !important; }
+  .practice-primary-actions > button { width: 100%; }
+  .practice-tools { grid-column: 1 / -1; width: 100%; }
+  .practice-tools > summary { width: 100%; }
+  .practice-tools-menu { position: static; width: 100%; margin-top: 7px; box-shadow: none; }
+  .panel-toggle { min-width: 72px; }
+  body.focus-mode .editor-body.cm-enabled { height: calc(100vh - 245px); min-height: 390px; }
+}
+
+
+/* v0.1.32 - validação flexível, progresso transparente e apoio de digitação */
+.progress-card { grid-template-areas: "phase progress" "check check"; }
+.progress-card > div:first-child { grid-area: phase; }
+.progress-card > .progress-wrap { grid-area: progress; align-self: center; }
+.completion-checklist { grid-area: check; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); display: grid; gap: 9px; }
+.completion-checklist-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.completion-checklist-head span { color: var(--muted); font-size: 12px; }
+.completion-checklist-items { display: flex; gap: 7px; flex-wrap: wrap; }
+.completion-requirement { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 5px 9px; border: 1px solid #46516a; border-radius: 999px; color: #d5deed; background: rgba(8,14,25,.52); font-size: 12px; }
+.completion-requirement i { width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; background: #39445c; font-style: normal; font-weight: 900; }
+.completion-requirement.ok { border-color: rgba(69,212,131,.6); color: #bdf6d2; background: rgba(32,122,75,.15); }
+.completion-requirement.ok i { background: #238653; color: #fff; }
+.editor-metrics { order: -2; margin-right: auto; padding: 4px 8px; border-radius: 8px; background: rgba(4,9,17,.55); color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+.editor-metrics strong { color: #fff; font-size: 13px; }
+.editor-metrics > span { opacity: .65; margin-inline: 2px; }
+.editor-character-goal { display: inline-flex; padding: 2px 6px; border-radius: 999px; background: rgba(255,184,77,.13); color: #ffd58a; }
+.editor-character-goal.ok { background: rgba(69,212,131,.14); color: #a9efc5; }
+.editor-assist-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 7px 10px; background: #0a1323; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+.symbol-pad { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.symbol-pad button { min-width: 30px; min-height: 30px; padding: 3px 7px; border: 1px solid #42516a; border-radius: 7px; background: #111c2d; color: #f8fafc; font: 700 14px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; cursor: pointer; }
+.symbol-pad button:hover, .symbol-pad button:focus-visible { border-color: #7e97ff; background: #1b2940; }
+#validationMessage { font-weight: 650; }
+.validation-details { border-color: #425674; }
+.practice-toolbar { position: sticky; top: 4px; z-index: 30; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.practice-primary-actions > #runCurrentCode, .practice-primary-actions > #validateFile { font-weight: 850; }
+.practice-primary-actions > #validateFile { min-width: 124px; }
+@media (max-width: 780px) {
+  .progress-card { grid-template-areas: "phase" "progress" "check"; }
+  .completion-checklist-head { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .editor-toolbar { width: 100%; }
+  .editor-metrics { width: 100%; order: -5; margin: 0; }
+  .editor-assist-bar > .muted { width: 100%; }
+  .symbol-pad { flex: 1; }
+  .symbol-pad button { min-width: 34px; min-height: 34px; }
+  .practice-toolbar { position: static; }
+}
+
+/* v0.1.35 — mapa visual e glossário didático de Programação Mobile */
+.visual-lesson{margin:18px 0;padding:18px;border:1px solid rgba(56,189,248,.24);border-radius:16px;background:linear-gradient(145deg,rgba(14,116,144,.08),rgba(15,23,42,.42))}.visual-lesson-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}.visual-lesson-head h3{margin:8px 0 0;font-size:1.08rem}.visual-lesson-question{margin:0 0 8px;color:#e5edf8;font-weight:800;font-size:1.02rem}.visual-lesson-central{margin:0 0 14px;color:#b8c7da;line-height:1.6}.visual-lesson-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.visual-flow-item{display:grid;grid-template-columns:auto 1fr;gap:9px;padding:11px;border:1px solid rgba(148,163,184,.14);border-radius:12px;background:#091522;min-width:0}.visual-flow-item.active{border-color:rgba(56,189,248,.62);background:rgba(14,116,144,.16);box-shadow:inset 0 0 0 1px rgba(56,189,248,.12)}.visual-flow-number{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#10243a;color:#67e8f9;font-weight:900}.visual-flow-item.active .visual-flow-number{background:#38bdf8;color:#04131f}.visual-flow-item strong{display:block;color:#f8fafc;font-size:.9rem}.visual-flow-item p{margin:4px 0 0;color:#9fb0c6;font-size:.84rem;line-height:1.45}.visual-lesson-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin-top:10px}.visual-lesson-compare article{padding:11px 12px;border-radius:12px;background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.12)}.visual-lesson-compare strong{color:#c4b5fd}.visual-lesson-compare p{margin:5px 0 0;color:#aebed0;line-height:1.45;font-size:.86rem}.visual-lesson-callouts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.visual-lesson-callouts article{padding:12px;border-radius:12px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18)}.visual-lesson-callouts article+article{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2)}.visual-lesson-callouts strong{color:#eef4ff}.visual-lesson-callouts p{margin:5px 0 0;color:#b9c7d8;line-height:1.5}.context-term-panel p{line-height:1.55}.context-term-panel p strong{color:#dbeafe}@media(max-width:760px){.visual-lesson-head{display:grid}.visual-lesson-callouts{grid-template-columns:1fr}.visual-lesson-flow{grid-template-columns:1fr}.visual-lesson-compare{grid-template-columns:1fr}}
+.glossary-item-rich{display:grid;gap:7px;align-content:start}.glossary-item-rich p{margin:0;color:#b6c5d7;line-height:1.5}.glossary-item-rich p strong{color:#e5edf8}.glossary-item-rich .glossary-error{padding:8px 10px;border-radius:9px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18)}
+.pedagogical-details .detail-simple{border-color:rgba(56,189,248,.26);background:rgba(14,116,144,.08)}.pedagogical-details .detail-example{border-color:rgba(34,197,94,.22);background:rgba(34,197,94,.06)}.pedagogical-details .detail-simple strong{color:#67e8f9}.pedagogical-details .detail-example strong{color:#86efac}
+
+/* v0.1.37 — Modo VS Code imersivo: Explorer + editor de referência protegido + editor do aluno + velocímetro */
+.vscode-shellbar,
+.vscode-statusbar,
+.vscode-explorer { font-family: "Segoe UI", system-ui, sans-serif; }
+.vscode-shellbar[hidden], .vscode-statusbar[hidden], .vscode-explorer[hidden], .reference-vscode-editor-wrap[hidden] { display: none !important; }
+
+body.vscode-mode { background: #181818; color: #d4d4d4; }
+body.vscode-mode .app-header,
+body.vscode-mode .progress-card,
+body.vscode-mode .student-quick-tools,
+body.vscode-mode .student-file-tabs,
+body.vscode-mode .practice-toolbar,
+body.vscode-mode .code-health,
+body.vscode-mode .version-footer { display: none !important; }
+body.vscode-mode .student-main { width: 100%; max-width: none; padding: 0; margin: 0; }
+body.vscode-mode #practiceView { min-height: 100vh; background: #181818; }
+
+.vscode-shellbar {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(220px, .8fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px 5px 14px;
+  background: #181818;
+  border-bottom: 1px solid #2b2b2b;
+  color: #cccccc;
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.vscode-shellbar-left, .vscode-shellbar-center, .vscode-shellbar-right { display: flex; align-items: center; min-width: 0; }
+.vscode-shellbar-left { gap: 8px; font-size: 12px; }
+.vscode-shellbar-left strong { font-weight: 600; color: #f2f2f2; }
+.vscode-shellbar-left #vscodeWorkspaceTitle { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #aeb2b7; }
+.vscode-app-mark { display: grid; place-items: center; width: 24px; height: 24px; color: #23a8f2; font-size: 22px; font-weight: 900; }
+.vscode-shell-separator { color: #555; }
+.vscode-shellbar-center { justify-content: center; gap: 8px; font-size: 12px; color: #bcbcbc; overflow: hidden; }
+.vscode-shellbar-center > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vscode-readonly-badge { flex: 0 0 auto; padding: 3px 7px; border-radius: 3px; background: #2a2d2e; color: #9cdcfe; border: 1px solid #3c3c3c; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.vscode-shellbar-right { justify-content: flex-end; gap: 10px; }
+.vscode-exit-button { min-height: 34px; padding: 6px 11px; border: 1px solid #4b4b4b; border-radius: 3px; background: #252526; color: #e6e6e6; font-size: 12px; }
+.vscode-exit-button:hover, .vscode-exit-button:focus-visible { background: #37373d; border-color: #6b6b6b; }
+
+.vscode-speedometer { position: relative; width: 174px; height: 62px; overflow: hidden; flex: 0 0 auto; }
+.vscode-speedometer svg { position: absolute; inset: -4px 0 auto; width: 118px; height: 72px; overflow: visible; }
+.vscode-gauge-track, .vscode-gauge-arc { fill: none; stroke-width: 10; stroke-linecap: round; }
+.vscode-gauge-track { stroke: #34373b; }
+.vscode-gauge-arc { stroke: #23c483; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .95s cubic-bezier(.16,.84,.24,1); filter: drop-shadow(0 0 3px rgba(35,196,131,.35)); }
+.vscode-gauge-needle { stroke: #f3f3f3; stroke-width: 3; stroke-linecap: round; transform-origin: 90px 90px; transform: rotate(-90deg); transition: transform .95s cubic-bezier(.16,.84,.24,1); filter: drop-shadow(0 1px 2px #000); }
+.vscode-gauge-hub { fill: #f3f3f3; stroke: #181818; stroke-width: 3; }
+.vscode-gauge-ticks text { fill: #858585; font: 700 9px "Segoe UI", sans-serif; }
+.vscode-gauge-readout { position: absolute; right: 0; top: 12px; width: 64px; display: grid; justify-items: start; }
+.vscode-gauge-readout strong { color: #f5f5f5; font: 800 21px/1 "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+.vscode-gauge-readout span { margin-top: 4px; color: #8b949e; font-size: 8px; line-height: 1.1; font-weight: 800; letter-spacing: .07em; }
+.vscode-speedometer.accelerating .vscode-gauge-arc { stroke: #f5c542; filter: drop-shadow(0 0 6px rgba(245,197,66,.55)); }
+.vscode-speedometer.accelerating .vscode-gauge-readout span { color: #f5c542; animation: vscodePulse .48s ease-in-out infinite alternate; }
+@keyframes vscodePulse { to { opacity: .45; } }
+
+body.vscode-mode .lab-grid {
+  min-height: calc(100vh - 94px);
+  display: grid !important;
+  grid-template-columns: 232px minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:
+    "explorer ref editor"
+    "explorer preview preview"
+    "explorer behavior behavior"
+    "explorer terminal terminal";
+  grid-template-rows: minmax(500px, 60vh) auto auto auto;
+  align-items: stretch;
+  gap: 1px;
+  background: #333333;
+  border: 0;
+}
+body.vscode-mode .reference-practice { grid-area: ref; }
+body.vscode-mode .student-editor { grid-area: editor; }
+body.vscode-mode .practice-preview { grid-area: preview; }
+body.vscode-mode #behaviorCheckPanel { grid-area: behavior; }
+body.vscode-mode #pythonTerminalPanel { grid-area: terminal; }
+body.vscode-mode .code-window,
+body.vscode-mode .preview-shell,
+body.vscode-mode .behavior-check,
+body.vscode-mode .python-terminal { border: 0; border-radius: 0; box-shadow: none; background: #1e1e1e; }
+body.vscode-mode .code-titlebar { min-height: 36px; padding: 0 10px; background: #181818; border-bottom: 1px solid #2b2b2b; }
+body.vscode-mode .code-titlebar .window-dots { display: none; }
+body.vscode-mode .code-titlebar .file-name { min-height: 35px; display: inline-flex; align-items: center; padding: 0 10px; margin-left: -10px; color: #e7e7e7; background: #1e1e1e; border-top: 1px solid #007acc; font-size: 12px; }
+body.vscode-mode .code-titlebar .muted { color: #858585; font-size: 10px; }
+body.vscode-mode .editor-assist-bar { background: #181818; border-color: #2b2b2b; }
+body.vscode-mode .editor-help { display: none; }
+body.vscode-mode #validationMessage { background: #181818; border-color: #2b2b2b; font-size: 12px; }
+body.vscode-mode .editor-body.cm-enabled { height: calc(60vh - 83px); min-height: 390px; background: #1e1e1e; }
+body.vscode-mode .editor-stage,
+body.vscode-mode .CodeMirror { background: #1e1e1e !important; }
+body.vscode-mode .CodeMirror-gutters { background: #1e1e1e !important; border-right: 0 !important; }
+body.vscode-mode .CodeMirror-linenumber { color: #858585 !important; }
+body.vscode-mode .CodeMirror-activeline-background { background: #2a2d2e !important; }
+
+.reference-vscode-editor-wrap { height: calc(60vh - 36px); min-height: 464px; overflow: hidden; background: #1e1e1e; }
+.reference-vscode-editor-wrap .CodeMirror { width: 100%; height: 100%; font-size: var(--student-code-font-size,15px); line-height: 1.55; }
+.reference-vscode-editor-wrap .CodeMirror-cursors { visibility: hidden !important; }
+.reference-vscode-editor-wrap .CodeMirror-selected { background: transparent !important; }
+body.vscode-mode .reference-practice .code-lines { display: none !important; }
+
+.vscode-explorer { grid-area: explorer; min-width: 0; display: grid; grid-template-columns: 48px minmax(0,1fr); background: #181818; color: #cccccc; overflow: hidden; }
+.vscode-activitybar { display: flex; flex-direction: column; align-items: stretch; min-height: 100%; background: #181818; border-right: 1px solid #2b2b2b; }
+.vscode-activitybar button { width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-left: 2px solid transparent; border-radius: 0; background: transparent; color: #858585; font: 22px/1 "Segoe UI Symbol", sans-serif; }
+.vscode-activitybar button.active { color: #f1f1f1; border-left-color: #f1f1f1; }
+.vscode-activitybar button:not(.active) { cursor: default; }
+.vscode-activitybar span { flex: 1; }
+.vscode-sidebar { min-width: 0; overflow: auto; background: #181818; font-size: 11px; }
+.vscode-sidebar-heading { height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 11px 0 18px; color: #bbbbbb; letter-spacing: .04em; }
+.vscode-sidebar-heading button { width: 26px; min-height: 24px; padding: 0; border: 0; border-radius: 3px; background: transparent; color: #cccccc; }
+.vscode-sidebar-heading button:hover { background: #2a2d2e; }
+.vscode-open-editors > strong, .vscode-outline > strong { display: block; padding: 6px 10px; border-top: 1px solid #2b2b2b; border-bottom: 1px solid #2b2b2b; color: #d4d4d4; font-size: 10px; font-weight: 700; }
+.vscode-open-editor, .vscode-file-row { width: 100%; height: 24px; display: grid; grid-template-columns: 25px minmax(0,1fr) 22px; align-items: center; gap: 3px; padding: 0 7px 0 12px; border: 0; border-radius: 0; background: transparent; color: #cccccc; text-align: left; font-size: 12px; }
+.vscode-open-editor.active, .vscode-file-row.active { background: #37373d; color: #ffffff; }
+.vscode-file-row:hover:not(:disabled) { background: #2a2d2e; }
+.vscode-file-row:disabled { opacity: .52; cursor: not-allowed; }
+.vscode-file-row i, .vscode-open-editor i { justify-self: end; color: #8b949e; font-style: normal; font-size: 10px; }
+.vscode-file-row.done i { color: #4ec9b0; font-weight: 900; }
+.vscode-file-icon { display: inline-grid; place-items: center; width: 22px; font: 800 9px/1 Consolas, monospace; }
+.vscode-file-icon.html { color: #e37933; }
+.vscode-file-icon.css { color: #42a5f5; }
+.vscode-file-icon.js { color: #e5d44b; }
+.vscode-file-icon.python { color: #4aa5e5; }
+.vscode-file-icon.markdown { color: #87bfff; }
+.vscode-file-icon.json { color: #e5d44b; }
+.vscode-folder-row { width: 100%; min-height: 25px; display: flex; align-items: center; gap: 4px; padding: 0 7px; border: 0; border-radius: 0; background: #252526; color: #dddddd; text-align: left; font-size: 10px; }
+.vscode-folder-row strong { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.vscode-file-tree { padding: 2px 0 5px; }
+.vscode-file-tree .vscode-file-row { padding-left: 20px; }
+.vscode-outline { margin-top: 6px; }
+.vscode-outline span { display: block; padding: 10px 12px; color: #858585; line-height: 1.4; }
+
+body.vscode-mode .preview-toolbar,
+body.vscode-mode .behavior-check-head,
+body.vscode-mode .python-terminal-header { background: #181818; border-color: #2b2b2b; border-radius: 0; }
+body.vscode-mode .preview-canvas { background: #1e1e1e; }
+body.vscode-mode .practice-preview { min-height: 290px; }
+body.vscode-mode .practice-preview .device-frame iframe { max-height: 420px; }
+body.vscode-mode .python-terminal-output { background: #1e1e1e; }
+
+.vscode-statusbar { min-height: 22px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0 8px; position: sticky; bottom: 0; z-index: 75; background: #007acc; color: #ffffff; font-size: 11px; }
+.vscode-statusbar > div { display: flex; gap: 12px; align-items: center; white-space: nowrap; min-width: 0; }
+.vscode-statusbar span, .vscode-statusbar strong { display: inline-flex; align-items: center; min-height: 22px; }
+.vscode-statusbar .has-problems { color: #fff4bd; font-weight: 700; }
+#vscodeStatusProgress { padding: 0 8px; background: rgba(255,255,255,.14); font-variant-numeric: tabular-nums; }
+
+body.vscode-mode .vscode-mobile-tabs { display: none; }
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  body.vscode-mode .lab-grid { grid-template-columns: 196px minmax(0,1fr) minmax(0,1fr); }
+  .vscode-explorer { grid-template-columns: 42px minmax(0,1fr); }
+  .vscode-activitybar button { width: 42px; }
+  .vscode-shellbar { grid-template-columns: minmax(180px,1fr) minmax(150px,.65fr) auto; }
+  .vscode-readonly-badge { display: none; }
+}
+
+@media (max-width: 900px) {
+  .vscode-shellbar { min-height: 64px; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding: 4px 7px; }
+  .vscode-shellbar-center { display: none; }
+  .vscode-shellbar-left #vscodeWorkspaceTitle { max-width: 40vw; }
+  .vscode-speedometer { width: 145px; }
+  .vscode-speedometer svg { width: 100px; }
+  .vscode-gauge-readout { width: 52px; top: 14px; }
+  .vscode-gauge-readout strong { font-size: 18px; }
+  .vscode-exit-button { padding-inline: 8px; }
+  body.vscode-mode .vscode-mobile-tabs { display: flex; margin: 0; border: 0; border-radius: 0; background: #252526; position: sticky; top: 64px; z-index: 70; overflow-x: auto; }
+  body.vscode-mode .vscode-mobile-tabs button { min-width: 92px; border-radius: 0; background: #252526; color: #bcbcbc; border: 0; border-bottom: 2px solid transparent; }
+  body.vscode-mode .vscode-mobile-tabs button.active { color: #ffffff; border-bottom-color: #007acc; background: #1e1e1e; }
+  body.vscode-mode .lab-grid { display: block !important; min-height: calc(100vh - 108px); background: #1e1e1e; }
+  body.vscode-mode .lab-grid > * { display: none !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="explorer"] .vscode-explorer { display: grid !important; min-height: calc(100vh - 130px); }
+  body.vscode-mode .lab-grid[data-vscode-panel="reference"] .reference-practice { display: block !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="editor"] .student-editor { display: block !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] .practice-preview,
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] #behaviorCheckPanel { display: block !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="terminal"] #pythonTerminalPanel { display: block !important; }
+  body.vscode-mode .reference-vscode-editor-wrap { height: calc(100vh - 160px); min-height: 420px; }
+  body.vscode-mode .editor-body.cm-enabled { height: calc(100vh - 245px); min-height: 400px; }
+  .vscode-statusbar { overflow-x: auto; }
+  .vscode-statusbar > div:first-child { display: none; }
+  .vscode-statusbar > div:last-child { margin-left: auto; }
+}
+
+@media (max-width: 620px) {
+  .vscode-shellbar { grid-template-columns: minmax(0,1fr) auto; min-height: 58px; }
+  .vscode-shellbar-left strong, .vscode-shell-separator, .vscode-shellbar-left #vscodeWorkspaceTitle { display: none; }
+  .vscode-shellbar-right { gap: 5px; }
+  .vscode-speedometer { width: 128px; height: 54px; }
+  .vscode-speedometer svg { width: 88px; height: 62px; }
+  .vscode-gauge-readout { width: 45px; top: 12px; }
+  .vscode-gauge-readout strong { font-size: 16px; }
+  .vscode-gauge-readout span { font-size: 7px; }
+  .vscode-exit-button { min-height: 30px; font-size: 10px; }
+  body.vscode-mode .vscode-mobile-tabs { top: 58px; padding: 0; }
+  .vscode-explorer { grid-template-columns: 42px minmax(0,1fr); }
+  .vscode-activitybar button { width: 42px; height: 44px; }
+  .vscode-statusbar span:nth-child(2), .vscode-statusbar span:nth-child(3) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vscode-gauge-arc, .vscode-gauge-needle { transition-duration: .01ms !important; }
+  .vscode-speedometer.accelerating .vscode-gauge-readout span { animation: none !important; }
+}
+body.vscode-mode .reference-practice [data-panel-toggle="reference"] { display: none !important; }
+#toggleVsCodeMode { font-weight: 800; }
+#toggleVsCodeMode[aria-pressed="false"] { border-color: rgba(35,168,242,.72); color: #dff3ff; box-shadow: inset 0 0 0 1px rgba(35,168,242,.12); }
+#toggleVsCodeMode[aria-pressed="true"] { border-color: #23a8f2; background: #0e639c; color: #fff; }
+.reference-vscode-editor-wrap .CodeMirror-code { user-select: none; -webkit-user-select: none; }
+
+
+/* v0.1.42 — consolidação final de layout, editor e paleta */
+:root {
+  --workspace-bg:#0b1322; --workspace-panel:#111c2f; --workspace-panel-2:#17233a;
+  --workspace-line:#2b3b59; --workspace-muted:#9fb0ca;
+  --vsc-bg:#111827; --vsc-panel:#172033; --vsc-sidebar:#131c2c;
+  --vsc-title:#1a2740; --vsc-status:#174f78; --vsc-border:#2a3852; --vsc-accent:#4da3ff;
+}
+
+/* Ordem fixa da área de progresso */
+.progress-card {
+  grid-template-columns:minmax(0,1fr) minmax(290px,410px);
+  grid-template-areas:"phase progress" "check check" "time finish";
+}
+.progress-card > div:first-child { grid-area:phase; }
+.progress-card > .progress-wrap { grid-area:progress; }
+.progress-card > .completion-checklist { grid-area:check; }
+.progress-card > .active-time-panel { grid-area:time; justify-items:start; min-width:0; }
+.progress-card > #finishExerciseButton { grid-area:finish; justify-self:end; }
+
+/* Editor normal */
+.editor-command-bar {
+  min-height:40px; display:flex; align-items:center; justify-content:flex-end; gap:7px;
+  padding:5px 9px; border-bottom:1px solid var(--workspace-line);
+  background:var(--workspace-panel); overflow-x:auto; overflow-y:hidden; white-space:nowrap;
+}
+.editor-command-label {
+  margin-right:auto; color:var(--workspace-muted); font-size:11px; font-weight:800;
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.student-editor > .code-titlebar .code-view-controls { display:none !important; }
+.editor-body.cm-enabled > .line-numbers,
+.editor-body.cm-enabled #highlightLayer { display:none !important; }
+.editor-body.cm-enabled { display:block; }
+.editor-body.cm-enabled .editor-stage { height:100%; }
+body:not(.vscode-mode) .lab-grid {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:"ref editor" "preview preview" "behavior behavior" "terminal terminal";
+  gap:12px; align-items:stretch;
+}
+body:not(.vscode-mode) .reference-practice,
+body:not(.vscode-mode) .student-editor {
+  min-width:0; display:flex; flex-direction:column; overflow:hidden;
+}
+body:not(.vscode-mode) .reference-practice .code-titlebar,
+body:not(.vscode-mode) .student-editor .code-titlebar { min-height:48px; flex:0 0 auto; }
+body:not(.vscode-mode) .reference-practice .code-lines {
+  height:clamp(470px,54vh,620px); max-height:none; flex:1 1 auto;
+}
+body:not(.vscode-mode) .student-editor .editor-body,
+body:not(.vscode-mode) .student-editor .editor-body.cm-enabled {
+  height:clamp(430px,49vh,560px); min-height:430px;
+}
+.editor-stage, .editor-stage > textarea, .editor-stage .CodeMirror { background:var(--workspace-bg); }
+.editor-stage .CodeMirror-gutters, .line-numbers { background:#0f192b; border-right-color:var(--workspace-line); }
+.code-titlebar, .preview-toolbar, .preview-head { background:var(--workspace-panel); }
+.editor-help { background:#0e192b; }
+
+/* Downloads */
+.practice-primary-actions > #downloadCurrentWork,
+.practice-primary-actions > #downloadProjectWork {
+  display:inline-flex; align-items:center; justify-content:center; min-height:38px; white-space:nowrap;
+}
+.vscode-download-actions { display:inline-flex; align-items:center; gap:5px; }
+.vscode-download-button {
+  min-height:30px; padding:5px 9px; border:1px solid #40516b; border-radius:6px;
+  background:#223149; color:#edf3ff; font:700 10px/1 "Segoe UI",system-ui,sans-serif; white-space:nowrap;
+}
+.vscode-download-button:hover,.vscode-download-button:focus-visible { background:#2c405e; border-color:#5c769b; }
+.vscode-download-zip { background:#4f431e; border-color:#79682b; color:#fff1b8; }
+
+/* Modo VS Code */
+body.vscode-mode { --header-height:0px; background:#0b1220; }
+body.vscode-mode .app-header,
+body.vscode-mode .progress-card,
+body.vscode-mode .student-quick-tools,
+body.vscode-mode .student-file-tabs,
+body.vscode-mode .practice-toolbar,
+body.vscode-mode .code-health,
+body.vscode-mode .version-footer { display:none !important; }
+body.vscode-mode .student-main { width:100%; max-width:none; margin:0; padding:0 0 24px; }
+body.vscode-mode #practiceView { display:block; min-height:100vh; padding:0; }
+
+body.vscode-mode .vscode-shellbar {
+  position:sticky; top:0; z-index:90; min-height:58px; display:grid;
+  grid-template-columns:minmax(220px,1fr) minmax(170px,.65fr) auto;
+  gap:9px; align-items:center; padding:5px 10px; background:var(--vsc-title);
+  border-bottom:1px solid var(--vsc-border); color:#e7edf8;
+}
+body.vscode-mode .vscode-shellbar-left,
+body.vscode-mode .vscode-shellbar-center,
+body.vscode-mode .vscode-shellbar-right { min-width:0; display:flex; align-items:center; }
+body.vscode-mode .vscode-shellbar-left { gap:7px; }
+body.vscode-mode .vscode-shellbar-center { justify-content:center; gap:8px; overflow:hidden; }
+body.vscode-mode .vscode-shellbar-right { justify-content:flex-end; gap:7px; }
+.vscode-app-mark {
+  width:28px; height:28px; display:grid; place-items:center; border:1px solid #416184;
+  border-radius:7px; background:#203654; color:#cfe6ff; font-size:10px; font-weight:900;
+}
+body.vscode-mode .vscode-shellbar-left #vscodeWorkspaceTitle,
+body.vscode-mode .vscode-shellbar-center > span:first-child {
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.vscode-exit-button {
+  min-height:30px; padding:5px 9px; border:1px solid #40516b; border-radius:6px;
+  background:#223149; color:#edf3ff; font:700 10px/1 "Segoe UI",system-ui,sans-serif;
+}
+
+/* Workspace */
+body.vscode-mode .lab-grid {
+  display:grid !important;
+  grid-template-columns:210px minmax(0,1fr) minmax(0,1fr) !important;
+  grid-template-areas:"explorer ref editor" "explorer preview preview" "explorer behavior behavior" "explorer terminal terminal" !important;
+  grid-template-rows:minmax(500px,calc(100vh - 88px)) auto auto auto !important;
+  gap:1px !important; background:var(--vsc-border); align-items:stretch;
+}
+body.vscode-mode .vscode-explorer {
+  grid-area:explorer; display:grid; grid-template-columns:42px minmax(0,1fr);
+  min-width:0; overflow:hidden; border:0; border-radius:0; background:var(--vsc-sidebar);
+}
+body.vscode-mode .reference-practice { grid-area:ref; }
+body.vscode-mode .student-editor { grid-area:editor; }
+body.vscode-mode .practice-preview { grid-area:preview; }
+body.vscode-mode .behavior-check { grid-area:behavior; }
+body.vscode-mode .python-terminal { grid-area:terminal; }
+
+body.vscode-mode .reference-practice,
+body.vscode-mode .student-editor {
+  min-width:0; min-height:0; display:flex; flex-direction:column;
+  border:0 !important; border-radius:0 !important; box-shadow:none; background:var(--vsc-bg);
+}
+body.vscode-mode .reference-practice { border-right:1px solid var(--vsc-border) !important; }
+body.vscode-mode .reference-practice .code-titlebar,
+body.vscode-mode .student-editor .code-titlebar {
+  height:36px; min-height:36px; flex:0 0 36px; padding:4px 8px; flex-wrap:nowrap;
+  border-bottom:1px solid var(--vsc-border); border-radius:0; background:var(--vsc-panel);
+}
+body.vscode-mode .window-dots { display:none; }
+body.vscode-mode .reference-practice .code-view-controls { display:none !important; }
+body.vscode-mode .reference-practice .code-lines { display:none !important; }
+body.vscode-mode .reference-vscode-editor-wrap {
+  display:block; flex:1 1 auto; min-height:0; overflow:hidden; background:var(--vsc-bg);
+}
+body.vscode-mode .student-editor .editor-body,
+body.vscode-mode .student-editor .editor-body.cm-enabled {
+  flex:1 1 auto; height:auto !important; min-height:0 !important;
+}
+body.vscode-mode .reference-vscode-editor-wrap .CodeMirror,
+body.vscode-mode .student-editor .CodeMirror {
+  width:100%; height:100% !important; background:var(--vsc-bg) !important;
+}
+body.vscode-mode .CodeMirror-gutters {
+  background:#101827 !important; border-right:1px solid var(--vsc-border) !important;
+}
+body.vscode-mode .CodeMirror-linenumber { color:#75839a !important; }
+body.vscode-mode .CodeMirror-activeline-background { background:#1c2940 !important; }
+body.vscode-mode .reference-vscode-editor-wrap .CodeMirror-cursors { visibility:hidden !important; }
+body.vscode-mode .reference-vscode-editor-wrap .CodeMirror-selected { background:transparent !important; }
+body.vscode-mode .reference-vscode-editor-wrap .CodeMirror-code { user-select:none; -webkit-user-select:none; }
+
+body.vscode-mode .editor-command-bar {
+  height:34px; min-height:34px; flex:0 0 34px; padding:3px 7px; gap:4px;
+  background:#142036; border-bottom-color:var(--vsc-border);
+}
+body.vscode-mode .editor-command-label,
+body.vscode-mode #selectAllCode,
+body.vscode-mode #copyStudentCode,
+body.vscode-mode #editorStatus { display:none !important; }
+body.vscode-mode .editor-command-bar .editor-font-controls {
+  margin-left:auto; background:#1d2a40; border-color:#41506a;
+}
+body.vscode-mode .editor-assist-bar {
+  height:36px; min-height:36px; flex:0 0 36px; flex-wrap:nowrap;
+  overflow-x:auto; overflow-y:hidden; padding:3px 7px; background:#121d31; border-bottom-color:var(--vsc-border);
+}
+body.vscode-mode .editor-assist-bar > span:first-child,
+body.vscode-mode .editor-assist-bar > .muted { display:none; }
+body.vscode-mode .symbol-pad { flex-wrap:nowrap; gap:3px; }
+body.vscode-mode .symbol-pad button {
+  min-width:27px; min-height:27px; padding:2px 5px; background:#1a2941; border-color:#3d4f69;
+}
+body.vscode-mode .editor-help { display:none; }
+body.vscode-mode #validationMessage {
+  min-height:32px; padding:6px 9px; background:#121c2f; border-color:var(--vsc-border); font-size:11px;
+}
+
+/* Explorer */
+.vscode-activitybar { background:#101827; border-right:1px solid var(--vsc-border); }
+.vscode-activitybar button {
+  width:42px; min-width:42px; height:42px; min-height:42px; padding:0;
+  border:0; border-left:2px solid transparent; border-radius:0;
+  background:transparent; color:#9baac0; font-size:9px; font-weight:900;
+}
+.vscode-activitybar button.active { border-left-color:var(--vsc-accent); color:#fff; background:#17243a; }
+.vscode-sidebar { min-width:0; overflow:auto; background:var(--vsc-sidebar); }
+.vscode-sidebar-heading,
+.vscode-open-editors > strong,
+.vscode-outline > strong {
+  min-height:34px; display:flex; align-items:center; padding:7px 10px;
+  color:#c5d0e0; font-size:10px; letter-spacing:.04em;
+}
+.vscode-sidebar-heading { justify-content:space-between; border-bottom:1px solid var(--vsc-border); }
+.vscode-open-editors,.vscode-project-tree,.vscode-outline { border-bottom:1px solid var(--vsc-border); }
+.vscode-folder-row,.vscode-file-row,.vscode-open-editor {
+  width:100%; min-height:30px; display:grid; grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center; gap:7px; padding:4px 9px; border:0; border-radius:0;
+  background:transparent; color:#ced7e5; text-align:left; font:500 11px/1.25 "Segoe UI",system-ui,sans-serif;
+}
+.vscode-folder-row { grid-template-columns:auto minmax(0,1fr); }
+.vscode-file-row:hover,.vscode-open-editor:hover { background:#1d2a40; }
+.vscode-file-row.active,.vscode-open-editor.active { background:#25344f; color:#fff; }
+.vscode-file-row > span:nth-child(2),.vscode-open-editor > span:nth-child(2) {
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.vscode-file-icon { min-width:22px; font:800 10px/1 ui-monospace,Consolas,monospace; }
+.vscode-outline > span { display:block; padding:0 10px 9px; color:#9daac0; font-size:10px; line-height:1.4; }
+
+/* Preview e terminal */
+body.vscode-mode .practice-preview,
+body.vscode-mode .behavior-check,
+body.vscode-mode .python-terminal { border-radius:0; box-shadow:none; }
+body.vscode-mode .preview-toolbar,
+body.vscode-mode .behavior-check-head,
+body.vscode-mode .python-terminal-header { background:var(--vsc-panel); border-color:var(--vsc-border); }
+body.vscode-mode .preview-canvas { background:#e8edf5; }
+body.vscode-mode .preview-message { background:#121c2f; border-color:var(--vsc-border); }
+
+/* Statusbar */
+body.vscode-mode .vscode-statusbar {
+  position:fixed !important; left:0; right:0; bottom:0; z-index:100; min-height:23px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; padding:3px 9px;
+  background:var(--vsc-status); color:#f1f7ff; font:600 10px/1 "Segoe UI",system-ui,sans-serif;
+}
+.vscode-statusbar > div { display:flex; align-items:center; gap:11px; min-width:0; }
+#vscodeStatusProgress { padding:2px 6px; border-radius:4px; background:rgba(255,255,255,.10); }
+
+/* Breakpoints */
+@media (max-width:1180px) {
+  body:not(.vscode-mode) .lab-grid {
+    grid-template-columns:1fr;
+    grid-template-areas:"ref" "editor" "preview" "behavior" "terminal";
+  }
+  body:not(.vscode-mode) .reference-practice .code-lines { height:auto; max-height:430px; }
+  body:not(.vscode-mode) .student-editor .editor-body,
+  body:not(.vscode-mode) .student-editor .editor-body.cm-enabled { height:500px; min-height:440px; }
+  .practice-toolbar { align-items:flex-start; flex-direction:column; }
+}
+
+@media (max-width:979px) {
+  .progress-card {
+    grid-template-columns:1fr;
+    grid-template-areas:"phase" "progress" "check" "time" "finish";
+  }
+  .progress-card > #finishExerciseButton { justify-self:start; }
+
+  body.vscode-mode .vscode-shellbar {
+    min-height:54px; grid-template-columns:minmax(0,1fr) auto; gap:6px; padding:4px 7px;
+  }
+  body.vscode-mode .vscode-shellbar-center { display:none; }
+  body.vscode-mode .vscode-mobile-tabs {
+    position:sticky; top:54px; z-index:85; display:flex !important; margin:0; padding:0; gap:0;
+    overflow-x:auto; border:0; border-bottom:1px solid var(--vsc-border); border-radius:0; background:var(--vsc-panel);
+  }
+  body.vscode-mode .vscode-mobile-tabs button {
+    flex:1 0 auto; min-width:92px; min-height:38px; padding:6px 9px; border:0;
+    border-bottom:2px solid transparent; border-radius:0; background:var(--vsc-panel); color:#9daac0; font-size:10px;
+  }
+  body.vscode-mode .vscode-mobile-tabs button.active {
+    background:var(--vsc-bg); color:#fff; border-bottom-color:var(--vsc-accent);
+  }
+  body.vscode-mode .lab-grid { display:block !important; min-height:calc(100vh - 115px); background:var(--vsc-bg); }
+  body.vscode-mode .lab-grid > * { display:none !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="explorer"] .vscode-explorer {
+    display:grid !important; min-height:calc(100vh - 115px);
+  }
+  body.vscode-mode .lab-grid[data-vscode-panel="reference"] .reference-practice,
+  body.vscode-mode .lab-grid[data-vscode-panel="editor"] .student-editor {
+    display:flex !important; min-height:calc(100vh - 115px);
+  }
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] .practice-preview,
+  body.vscode-mode .lab-grid[data-vscode-panel="preview"] #behaviorCheckPanel { display:block !important; }
+  body.vscode-mode .lab-grid[data-vscode-panel="terminal"] #pythonTerminalPanel { display:block !important; }
+  body.vscode-mode .reference-vscode-editor-wrap,
+  body.vscode-mode .student-editor .editor-body,
+  body.vscode-mode .student-editor .editor-body.cm-enabled { min-height:calc(100vh - 190px) !important; }
+  body.vscode-mode .vscode-statusbar > div:first-child { display:none; }
+  body.vscode-mode .vscode-statusbar > div:last-child { margin-left:auto; }
+}
+
+@media (max-width:680px) {
+  .student-main { padding:8px; }
+  .student-quick-tools { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .student-quick-tools button { width:100%; }
+  .student-file-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); overflow:visible; }
+  .student-file-tabs button { min-width:0; width:100%; }
+  .practice-primary-actions { width:100%; display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .practice-primary-actions > button,.practice-tools,.practice-tools > summary { width:100%; }
+  .practice-tools { grid-column:1 / -1; }
+  .editor-command-label { display:none; }
+  body:not(.vscode-mode) .student-editor .editor-body,
+  body:not(.vscode-mode) .student-editor .editor-body.cm-enabled { height:430px; min-height:390px; }
+  body.vscode-mode .vscode-shellbar-left strong,
+  body.vscode-mode .vscode-shell-separator,
+  body.vscode-mode .vscode-shellbar-left #vscodeWorkspaceTitle { display:none; }
+  body.vscode-mode .vscode-download-actions { display:none; }
+}
+@media (max-width:430px) {
+  .student-quick-tools,.student-file-tabs,.practice-primary-actions { grid-template-columns:1fr; }
+  .practice-tools { grid-column:1; }
+  .editor-command-bar #copyStudentCode { display:none; }
+}
+

@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "title": "Crystal Cascade 3D",
+  "board": {
+    "columns": 8,
+    "rows": 8,
+    "colors": 6
+  },
+  "levels": [
+    {
+      "id": 1,
+      "name": "Pulso Inicial",
+      "moves": 24,
+      "targetScore": 1800,
+      "collect": {
+        "cyan": 8
+      },
+      "blockers": []
+    },
+    {
+      "id": 2,
+      "name": "Prisma Duplo",
+      "moves": 23,
+      "targetScore": 2400,
+      "collect": {
+        "amber": 10,
+        "violet": 8
+      },
+      "blockers": []
+    },
+    {
+      "id": 3,
+      "name": "Câmara de Eco",
+      "moves": 22,
+      "targetScore": 3000,
+      "collect": {
+        "emerald": 12
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            18,
+            19,
+            20,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Anel Congelado",
+      "moves": 24,
+      "targetScore": 3600,
+      "collect": {},
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            9,
+            10,
+            13,
+            14,
+            17,
+            22,
+            41,
+            46,
+            49,
+            50,
+            53,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Ressonância",
+      "moves": 22,
+      "targetScore": 4300,
+      "collect": {
+        "rose": 12,
+        "cyan": 10
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            27,
+            28,
+            35,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Grade de Pressão",
+      "moves": 25,
+      "targetScore": 5000,
+      "collect": {},
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            8,
+            15,
+            23,
+            24,
+            31,
+            32,
+            39,
+            40,
+            47,
+            55
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Prisma Quebrado",
+      "moves": 24,
+      "targetScore": 5600,
+      "collect": {
+        "amber": 14,
+        "emerald": 12
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            18,
+            21,
+            26,
+            29,
+            34,
+            37,
+            42,
+            45
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Órbita Violeta",
+      "moves": 20,
+      "targetScore": 6200,
+      "collect": {
+        "violet": 18
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            11,
+            12,
+            19,
+            20,
+            27,
+            28,
+            35,
+            36,
+            43,
+            44,
+            51,
+            52
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Cascata Quântica",
+      "moves": 24,
+      "targetScore": 7000,
+      "collect": {
+        "cyan": 12,
+        "rose": 12
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            7,
+            63,
+            27,
+            28,
+            35,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Núcleo Hexa",
+      "moves": 25,
+      "targetScore": 7800,
+      "collect": {
+        "emerald": 14,
+        "amber": 14
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            2,
+            3,
+            4,
+            5,
+            40,
+            47,
+            58,
+            59,
+            60,
+            61
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Tempestade Prismática",
+      "moves": 23,
+      "targetScore": 8600,
+      "collect": {
+        "violet": 14,
+        "rose": 14
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            9,
+            14,
+            18,
+            21,
+            27,
+            28,
+            35,
+            36,
+            42,
+            45,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Coração da Cascata",
+      "moves": 20,
+      "targetScore": 10000,
+      "collect": {
+        "cyan": 10,
+        "amber": 10,
+        "emerald": 10,
+        "violet": 10,
+        "rose": 10
+      },
+      "blockers": [
+        {
+          "type": "ice",
+          "cells": [
+            9,
+            10,
+            13,
+            14,
+            17,
+            22,
+            24,
+            31,
+            32,
+            39,
+            41,
+            46,
+            49,
+            50,
+            53,
+            54
+          ]
+        }
+      ]
+    }
+  ]
+}

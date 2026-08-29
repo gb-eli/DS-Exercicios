@@ -1,0 +1,18 @@
+{
+  "version": "14.10.8.46",
+  "date": "2026-08-28",
+  "title": "Campus DS — Fase D Avatar V2",
+  "changes": [
+    "Novo módulo characters/avatar-system.js centraliza jogador local, usuários remotos, NPCs, patrulhas e grupos sociais",
+    "GLB rigado existente passa a usar variação visual determinística por usuário sem depender de novos dados no banco",
+    "Acessórios ligados aos ossos do rig: cabelo, boné, óculos, headset, mochila e relógio conforme perfil visual determinístico",
+    "Cores de pele, cabelo, calça e tênis variam por seed; a cor da turma permanece como detalhe de identidade",
+    "AnimationMixer existente preservado com clips Idle, Walk, Run, Jump e Wave; ações locais dance, cheer, crouch e sit continuam compatíveis",
+    "Avatar LOD V2 reduz atualização de animação, labels, sombras e acessórios conforme distância",
+    "Módulo rigged-avatar.js e GLB continuam opcionais: falha de asset ativa fallback procedural V2 sem impedir o boot",
+    "Service Worker passa a pré-cachear Avatar System, módulo rigado e modelo GLB local",
+    "Boot valida o novo Avatar System e mantém o rigged-avatar como recurso opcional",
+    "Camera V2, ambiente Fase C, portais, interiores, presença online, fallback 2D e Supabase preservados",
+    "Sem alterações de banco de dados"
+  ]
+}
