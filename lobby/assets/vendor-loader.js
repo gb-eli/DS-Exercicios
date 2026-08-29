@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
 
-  const VERSION='14.10.8.47';
+  const VERSION='14.10.8.48';
   const SDK_VERSION='2.112.3';
   const SOURCES=[
     {src:'vendor/supabase/supabase.js',timeout:1600,kind:'local'},

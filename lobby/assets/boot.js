@@ -1,4 +1,4 @@
-const VERSION='14.10.8.47';
+const VERSION='14.10.8.48';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');
@@ -25,6 +25,7 @@ const ASSET_SIGNATURES={
   'world/campus-manifest.js':['CAMPUS_ZONE_LAYOUT','presenceToWorld','worldToPresence'],
   'world/campus-environment.js':['createCampusEnvironment','createCampusLighting','campus-building'],
   'render/camera-controller.js':['createCameraController','explore','campus'],
+  'render/performance-manager.js':['detectPerformanceProfile','createResizeController','createAdaptiveQualityController'],
   'characters/avatar-system.js':['createAvatarSystem','createAvatarAppearance','rigged-glb-v2'],
   'game/portal-manager.js':['createPortalSystem','PORTAL ABERTO','AGUARDANDO'],
   'rigged-avatar.js':['loadRiggedAvatarAsset','createRiggedAvatar']
@@ -54,7 +55,7 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','render/camera-controller.js','characters/avatar-system.js','game/portal-manager.js'])await probeAsset(asset);
+  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js'])await probeAsset(asset);
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
   const url=new URL(`./lobby.js?v=${VERSION}`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
