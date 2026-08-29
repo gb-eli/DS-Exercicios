@@ -1,42 +1,30 @@
-# v14.10.8.56 — PATCH Vertical & Dynamic World
+# Aplicação segura — v14.10.8.59
 
-Base obrigatória: **v14.10.8.55**.
+Base obrigatória: **v14.10.8.58**
 
-O aplicador faz preflight completo por SHA-256 antes de copiar qualquer arquivo. Se encontrar um arquivo modificado fora da base esperada, interrompe sem sobrescrever.
+## Windows
+1. Extraia todo o ZIP.
+2. Dê dois cliques em `EXECUTAR-PATCH-v14.10.8.59.cmd`.
+3. Informe o caminho do clone `DS-Exercicios`.
+4. O aplicador verifica SHA-256 da base, exige working tree limpa, cria backup, aplica somente overlay e roda o validador.
 
-## Aplicar
+## Segurança
+- novos: 16
+- modificados: 75
+- removidos: 0
+- migrations/schema: 0
+- nenhum delete é executado pelo patch
 
+## Antes do commit
 ```powershell
-Set-ExecutionPolicy -Scope Process Bypass -Force
-& ".\APLICAR-v14.10.8.56.ps1" -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
-& ".\VALIDAR-v14.10.8.56.ps1" -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
-```
-
-Depois revise:
-
-```powershell
-git status
+git status --short
 git diff --name-status
 ```
 
-**Não publique se houver qualquer linha começando com `D`.**
+Não publique se aparecer `D` inesperado.
 
-## Commit sugerido
+## Smoke pós-publicação
+Google OAuth real e WebGL autenticado devem ser testados após o deploy.
 
-```powershell
-git add -A
-git commit -m "feat: Lobby Vertical & Dynamic World v14.10.8.56"
-git push origin main
-```
-
-## Backend
-
-Não existe migration. Para o chat por proximidade e para manter a reunião coletiva autenticada:
-
-```powershell
-supabase functions deploy lobby-presence --project-ref iresvqwyaqotghjssncg
-```
-
-## Rollback
-
-Após publicação, use `ROLLBACK-v14.10.8.56.ps1` para criar um `git revert` seguro.
+## Google
+Rotacione o Client Secret anteriormente exibido em uma captura de tela antes de produção.
