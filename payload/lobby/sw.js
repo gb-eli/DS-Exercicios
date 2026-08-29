@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='14.10.8.59';
+const VERSION='14.10.8.60';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
@@ -10,45 +10,45 @@ const SDK_URLS=new Set([
 const CRITICAL_SHELL=[
   './',
   './index.html',
-  './assets/diagnostics.js?v=14.10.8.59',
-  './assets/sw-register.js?v=14.10.8.59',
-  './assets/vendor-loader.js?v=14.10.8.59',
-  './assets/boot.js?v=14.10.8.59',
-  './assets/supabase.js?v=14.10.8.59',
-  './assets/lobby.js?v=14.10.8.59',
-  './assets/config.js?v=14.10.8.59',
-  './assets/lobby3d.js?v=14.10.8.59',
-  './assets/lobby-lite.js?v=14.10.8.59',
-  './assets/vale-lite.js?v=14.10.8.59',
-  './assets/vale3d.js?v=14.10.8.59',
-  './assets/world/vale-silicio-data.js?v=14.10.8.59',
-  './assets/world/vale-silicio-shared.js?v=14.10.8.59',
-  './data/vale-silicio/runtime-v2.json?v=14.10.8.59',
-  './assets/world/campus-manifest.js?v=14.10.8.59',
-  './assets/world/campus-environment.js?v=14.10.8.59',
-  './assets/world/campus-experiences.js?v=14.10.8.59',
-  './assets/world/campus-destinations.js?v=14.10.8.59',
-  './assets/render/camera-controller.js?v=14.10.8.59',
-  './assets/render/performance-manager.js?v=14.10.8.59',
-  './assets/characters/avatar-system.js?v=14.10.8.59',
-  './assets/game/portal-manager.js?v=14.10.8.59',
-  './assets/game/challenge-manager.js?v=14.10.8.59',
-  './assets/game/ride-manager.js?v=14.10.8.59',
-  './assets/game/train-manager.js?v=14.10.8.59',
-  './assets/world/dynamic-world.js?v=14.10.8.59',
-  './assets/social/proximity-chat.js?v=14.10.8.59',
-  './assets/rigged-avatar.js?v=14.10.8.59',
+  './assets/diagnostics.js?v=14.10.8.60',
+  './assets/sw-register.js?v=14.10.8.60',
+  './assets/vendor-loader.js?v=14.10.8.60',
+  './assets/boot.js?v=14.10.8.60',
+  './assets/supabase.js?v=14.10.8.60',
+  './assets/lobby.js?v=14.10.8.60',
+  './assets/config.js?v=14.10.8.60',
+  './assets/lobby3d.js?v=14.10.8.60',
+  './assets/lobby-lite.js?v=14.10.8.60',
+  './assets/vale-lite.js?v=14.10.8.60',
+  './assets/vale3d.js?v=14.10.8.60',
+  './assets/world/vale-silicio-data.js?v=14.10.8.60',
+  './assets/world/vale-silicio-shared.js?v=14.10.8.60',
+  './data/vale-silicio/runtime-v2.json?v=14.10.8.60',
+  './assets/world/campus-manifest.js?v=14.10.8.60',
+  './assets/world/campus-environment.js?v=14.10.8.60',
+  './assets/world/campus-experiences.js?v=14.10.8.60',
+  './assets/world/campus-destinations.js?v=14.10.8.60',
+  './assets/render/camera-controller.js?v=14.10.8.60',
+  './assets/render/performance-manager.js?v=14.10.8.60',
+  './assets/characters/avatar-system.js?v=14.10.8.60',
+  './assets/game/portal-manager.js?v=14.10.8.60',
+  './assets/game/challenge-manager.js?v=14.10.8.60',
+  './assets/game/ride-manager.js?v=14.10.8.60',
+  './assets/game/train-manager.js?v=14.10.8.60',
+  './assets/world/dynamic-world.js?v=14.10.8.60',
+  './assets/social/proximity-chat.js?v=14.10.8.60',
+  './assets/rigged-avatar.js?v=14.10.8.60',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.59',
+  './assets/lobby.css?v=14.10.8.60',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[
-  './vendor/three/three.module.min.js?v=14.10.8.59',
-  './vendor/three/three.core.min.js?v=14.10.8.59',
-  '../core/session/fullscreen-portal.js?v=14.10.8.59',
-  '../core/session/fullscreen-portal.css?v=14.10.8.59',
-  './data/vale-silicio/runtime-v2.schema.json?v=14.10.8.59',
-  './data/vale-silicio/context.json?v=14.10.8.59'
+  './vendor/three/three.module.min.js?v=14.10.8.60',
+  './vendor/three/three.core.min.js?v=14.10.8.60',
+  '../core/session/fullscreen-portal.js?v=14.10.8.60',
+  '../core/session/fullscreen-portal.css?v=14.10.8.60',
+  './data/vale-silicio/runtime-v2.schema.json?v=14.10.8.60',
+  './data/vale-silicio/context.json?v=14.10.8.60'
 ];
 
 self.addEventListener('install',event=>{

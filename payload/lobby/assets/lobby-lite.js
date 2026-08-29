@@ -1,9 +1,9 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.59';
-import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.59';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.59';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.59';
-import { createTrainManager } from './game/train-manager.js?v=14.10.8.59';
-import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.59';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.60';
+import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.60';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.60';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.60';
+import { createTrainManager } from './game/train-manager.js?v=14.10.8.60';
+import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.60';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -87,7 +87,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
     if(exp.type==='vale-portal'){
-      // v14.10.8.59: entrada monumental e legível já na primeira tela 2D.
+      // v14.10.8.60: entrada monumental e legível já na primeira tela 2D.
       const portalPulse=.55+.45*Math.sin(time*2.4);
       ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
       rr(-3.85*s,-2.45*s,7.7*s,4.85*s,.65*s,'rgba(4,24,24,.88)',hexToRgba(accent,.55),Math.max(1,.12*s));

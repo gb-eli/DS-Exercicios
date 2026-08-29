@@ -1,16 +1,16 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.59';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.59';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.59';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.59';
-import { createValeLite } from './vale-lite.js?v=14.10.8.59';
-import { createVale3D } from './vale3d.js?v=14.10.8.59';
-import { VALE_BOUNDS, VALE_FAST_TRAVEL_STATIC, valePresenceToWorld, valeWorldToPresence } from './world/vale-silicio-shared.js?v=14.10.8.59';
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.59';
-import { worldToPresence, presenceToWorld } from './world/campus-manifest.js?v=14.10.8.59';
-import { CAMPUS_EXPERIENCES } from './world/campus-experiences.js?v=14.10.8.59';
-import { createProximityChat } from './social/proximity-chat.js?v=14.10.8.59';
-import { AVATAR_STYLE_PRESETS } from './characters/avatar-system.js?v=14.10.8.59';
-import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.59';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.60';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.60';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.60';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.60';
+import { createValeLite } from './vale-lite.js?v=14.10.8.60';
+import { createVale3D } from './vale3d.js?v=14.10.8.60';
+import { VALE_BOUNDS, VALE_FAST_TRAVEL_STATIC, valePresenceToWorld, valeWorldToPresence } from './world/vale-silicio-shared.js?v=14.10.8.60';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.60';
+import { worldToPresence, presenceToWorld } from './world/campus-manifest.js?v=14.10.8.60';
+import { CAMPUS_EXPERIENCES } from './world/campus-experiences.js?v=14.10.8.60';
+import { createProximityChat } from './social/proximity-chat.js?v=14.10.8.60';
+import { AVATAR_STYLE_PRESETS } from './characters/avatar-system.js?v=14.10.8.60';
+import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.60';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{
@@ -485,7 +485,7 @@ async function boot(){
   state.stopped=false;if(!await loadIdentity())return;
   await securityTelemetry('session.check','info',{role:state.profile?.role||'unknown',surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});
   await loadActivities();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'activities_loaded'});showLogin(false);state.portalState=portalState;state.emoteRequested=kind=>emote(kind,state.nearStudent?.student_id||null);ensureGatherChannel();ensureProximityChat();
-  // Regra v14.10.8.59: todo acesso começa no 2D; 3D, primeira pessoa e qualidade continuam opcionais.
+  // Regra v14.10.8.60: todo acesso começa no 2D; 3D, primeira pessoa e qualidade continuam opcionais.
   await startLite(lastModeChoice()==='3d'?'default_2d_first_previous_3d':'default_2d_first');
   await presence(true);poll();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_ready'});
 }

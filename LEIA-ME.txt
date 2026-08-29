@@ -1,18 +1,14 @@
-HOTFIX EMERGENCIAL — Lobby dynamic-world.js 404
+PATCH v14.10.8.60
 
-Diagnóstico:
-- boot.js v14.10.8.58 exige lobby/assets/world/dynamic-world.js
-- o GitHub Pages respondeu HTTP 404 para esse arquivo
-- um Service Worker antigo v14.10.8.52 ainda estava controlando a página
+Este pacote corrige o boot do Lobby e inclui explicitamente:
+lobby/assets/world/dynamic-world.js
 
-Como usar:
-1. Extraia todo este ZIP.
-2. Dê dois cliques em CORRIGIR-E-PUBLICAR-LOBBY.cmd
-3. Informe o clone DS-Exercicios se solicitado.
-4. O script exige branch main e working tree limpa.
-5. Ele copia o asset obrigatório e a página de reparo.
-6. Digite PUBLICAR somente quando o script pedir para confirmar commit/push.
-7. Aguarde o GitHub Pages e acesse:
-   https://gb-eli.github.io/DS-Exercicios/repair-lobby.html
+Se você faz upload manual, prefira o ZIP COMPLETO v14.10.8.60.
+Não apague o repositório antes de copiar os arquivos.
+Aplique por sobre a árvore existente.
 
-O hotfix não altera Supabase, login, atividades ou schema.
+Após publicar:
+1. abra /lobby/assets/world/dynamic-world.js
+2. confirme que não há 404
+3. abra /repair-lobby.html
+4. abra /lobby/

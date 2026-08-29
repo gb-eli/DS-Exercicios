@@ -1,4 +1,4 @@
-import { CAMPUS_TOOL_EXPERIENCES } from './campus-destinations.js?v=14.10.8.59';
+import { CAMPUS_TOOL_EXPERIENCES } from './campus-destinations.js?v=14.10.8.60';
 export const CAMPUS_EXPERIENCES=Object.freeze([
   ...CAMPUS_TOOL_EXPERIENCES,
   Object.freeze({id:'vale-portal',type:'vale-portal',name:'Portal Vale do Silício AGV',label:'VALE DO SILÍCIO AGV',subtitle:'27 EMPRESAS • 8 DISTRITOS',x:0,z:-15.4,radius:5.8,accent:'#51e7a3',interaction:'Viajar para o Vale',description:'Empresas e projetos criados pelos alunos. Entrada principal para a cidade tecnológica estudantil.'}),

@@ -1,0 +1,104 @@
+{
+  "release": "14.10.8.60",
+  "base": "14.10.8.59",
+  "purpose": "Cumulative lobby boot fix; dynamic-world.js included explicitly",
+  "files": [
+    {
+      "path": "ATUALIZAR-v14.10.8.60.md",
+      "sha256": "12608689103EA73BEC35EFC4C61AECBDE33B9F8FBB74420463CBA535D971FCE8"
+    },
+    {
+      "path": "lobby/assets/boot.js",
+      "sha256": "79B816EE69C3EBE15E4521400011D7033C3AC5B183BE86281CC2DB6B1951040E"
+    },
+    {
+      "path": "lobby/assets/characters/avatar-system.js",
+      "sha256": "792F9FCE7FB832804D80540549536E8179C0A47B25017D427AC52EB8005A7D8D"
+    },
+    {
+      "path": "lobby/assets/config.js",
+      "sha256": "6344955FE318DECAF5FB06B6646CAEF1E43A61751FBA0494137678485E39CABD"
+    },
+    {
+      "path": "lobby/assets/diagnostics.js",
+      "sha256": "9350D103B6748631EA4523CC94CD79E76AC6E2248AA343E331AAD6DE5667006F"
+    },
+    {
+      "path": "lobby/assets/game/ride-manager.js",
+      "sha256": "75400E05731095316D473A204C0E26301304642D5213C341EFC5486A61B02431"
+    },
+    {
+      "path": "lobby/assets/game/train-manager.js",
+      "sha256": "6A4612423A162637DDACECD63180CED27B9984BD046EE48FB8357087EAF3A240"
+    },
+    {
+      "path": "lobby/assets/lobby-lite.js",
+      "sha256": "8AB7327007D4D70C5A9145A10CC4B23096B9CF8D0A29C25145AEE9F9582A58D7"
+    },
+    {
+      "path": "lobby/assets/lobby.css",
+      "sha256": "7345B193CD0FF049DC17CBD24B140D0F3D271AD6CA2923CBCF04DF882F1D4B22"
+    },
+    {
+      "path": "lobby/assets/lobby.js",
+      "sha256": "6B081B79ECBEE535273CBE653665E517910990A6F6EB9D909FB5FD9667212687"
+    },
+    {
+      "path": "lobby/assets/lobby3d.js",
+      "sha256": "C82D0759A35757B9EF609C1F9ED3C854E887F446DE273D67526D1471E5213C41"
+    },
+    {
+      "path": "lobby/assets/supabase.js",
+      "sha256": "50D587048D26A079A43133A853D5AAAFC8BCC5A12FB7364AF95E54428A239BB3"
+    },
+    {
+      "path": "lobby/assets/sw-register.js",
+      "sha256": "AF95D8912438EF5BF692AA4710109EF050D76E55EC4208601D35590374B604DC"
+    },
+    {
+      "path": "lobby/assets/vale-lite.js",
+      "sha256": "C37A49AC445BBB192576D7EFD37E1A5678BC00874DA66971BF76C08ED67340E8"
+    },
+    {
+      "path": "lobby/assets/vale3d.js",
+      "sha256": "A2CC9427DE8A7814A1D200B8691BF0B082A0C241121667CB379A99E80D61911C"
+    },
+    {
+      "path": "lobby/assets/vendor-loader.js",
+      "sha256": "3F44FEE3EEECBE1B570E7064A490FBB91B21D25C1898987C07DDDA3E6167416C"
+    },
+    {
+      "path": "lobby/assets/world/campus-environment.js",
+      "sha256": "62A4C4E3CC8144083CCA3AB548DB18BC620829E1321E5DBAD847375BF7BAB46A"
+    },
+    {
+      "path": "lobby/assets/world/campus-experiences.js",
+      "sha256": "B5439322DAD505B9FF36F566AD65A0A4F3C3B17EC9BE252DCCB62A33FAC963D7"
+    },
+    {
+      "path": "lobby/assets/world/dynamic-world.js",
+      "sha256": "0FD0BB9ECC92D9976B99135C5C46A5C6917EAB86B63103BF91FBB0D966C758A1"
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-data.js",
+      "sha256": "1F87DA779AAD5DD2B6434FA158B449B3A02DADBA3CEA18BA750AC76F228D716D"
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-shared.js",
+      "sha256": "5D339B9856E131D93A5AB03EF42826CEEBD3EFBA0D0F8B90A00E79766B5ADA57"
+    },
+    {
+      "path": "lobby/index.html",
+      "sha256": "E97EAB27B1E95775BF101A3C54601DB3BF46FB357B0EF22A42D65C35F7308A92"
+    },
+    {
+      "path": "lobby/sw.js",
+      "sha256": "F31FD70EF36DC427B3F951392266474A7484DF981F1D876F51085DA22E8C90D9"
+    },
+    {
+      "path": "repair-lobby.html",
+      "sha256": "0FDD7B2215566568C1671E1E821A227278E1D36555AF780E78E657A798E71B38"
+    }
+  ],
+  "deletions": []
+}
