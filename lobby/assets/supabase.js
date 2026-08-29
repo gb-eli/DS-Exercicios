@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config.js?v=14.10.8.46';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config.js?v=14.10.8.47';
 
 const createClient=globalThis.supabase?.createClient;
 if(typeof createClient!=='function'){
