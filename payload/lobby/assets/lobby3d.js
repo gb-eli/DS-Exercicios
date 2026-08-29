@@ -1,14 +1,14 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.53';
-import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.53';
-import { createCameraController } from './render/camera-controller.js?v=14.10.8.53';
-import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.53';
-import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.53';
-import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.53';
-import { CAMPUS_EXPERIENCES, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, parkourPlatformAt } from './world/campus-experiences.js?v=14.10.8.53';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.53';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.53';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.54';
+import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.54';
+import { createCameraController } from './render/camera-controller.js?v=14.10.8.54';
+import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.54';
+import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.54';
+import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.54';
+import { CAMPUS_EXPERIENCES, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, parkourPlatformAt } from './world/campus-experiences.js?v=14.10.8.54';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.54';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.54';
 
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.53';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.54';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 let THREE=null,LABEL_SCALE=1;
 

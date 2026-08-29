@@ -1,24 +1,21 @@
-# v14.10.8.53 — Vale do Silício AGV + Campus Expansion
+# v14.10.8.54 — Hotfix Portal Monumental do Vale
 
-PATCH incremental **seguro** sobre a árvore completa `v14.10.8.52`.
+Base esperada: **v14.10.8.53**.
 
-## Regra principal
-
-**Não apague o repositório.** O diretório `payload/` contém somente 27 arquivos novos/alterados e nenhuma exclusão.
-
-O manifesto `PATCH_MANIFEST.json` registra SHA-256 da base e do destino. O aplicador interrompe se detectar arquivo-alvo local divergente da `.52`/`.53`, árvore Git incompleta ou qualquer exclusão.
-
-## Aplicação
+Este PATCH não remove arquivos. Ele move o portal do Vale para a área visível principal, aumenta sua presença visual 2D/3D e adiciona acesso permanente no HUD.
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass -Force
-.\APLICAR-v14.10.8.53-VALE-SILICIO.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
-.\VALIDAR-v14.10.8.53.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
-git status
+.\APLICAR-v14.10.8.54-PORTAL-VALE.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
+.\VALIDAR-v14.10.8.54.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
 ```
 
-Se a validação retornar PASS e não houver `deleted:`, faça commit e push normalmente.
+Depois confira `git status`. Não faça commit se aparecer qualquer exclusão inesperada.
 
-## Rollback
+Commit sugerido:
 
-Após publicar a `.53`, use `ROLLBACK-v14.10.8.53.ps1 -Repo <caminho> -CommitHash <hash-do-commit-.53>` ou execute `git revert` manualmente.
+```powershell
+git add -A
+git commit -m "fix: destacar Portal do Vale do Silício v14.10.8.54"
+git push origin main
+```

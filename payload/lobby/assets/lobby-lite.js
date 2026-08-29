@@ -1,7 +1,7 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.53';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.53';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.53';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.53';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.54';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.54';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.54';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.54';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -54,7 +54,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     for(const [x,z] of[[-13,-12],[13,-12],[-13,12],[13,12]]) pathLine([[Math.sign(x)*6,Math.sign(z)*6],[x,z]],w,h,3.3,.85);
     const p=project(0,0,w,h);ctx.save();ctx.shadowColor='rgba(54,210,255,.16)';ctx.shadowBlur=24;ctx.fillStyle='#10252d';ctx.beginPath();ctx.arc(p.x,p.y,10.2*s,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='rgba(95,205,236,.48)';ctx.lineWidth=Math.max(1,1.1);ctx.beginPath();ctx.arc(p.x,p.y,9.6*s,0,Math.PI*2);ctx.stroke();ctx.strokeStyle='rgba(95,205,236,.12)';ctx.beginPath();ctx.arc(p.x,p.y,7.7*s,0,Math.PI*2);ctx.stroke();ctx.restore();
     for(const [x,z,wg,hg] of[[-27,0,8,4],[27,0,8,4],[0,-17,5,5],[0,17,5,5]]){const gp=project(x,z,w,h);rr(gp.x-wg*s/2,gp.y-hg*s/2,wg*s,hg*s,.7*s,'rgba(12,39,31,.72)','rgba(81,231,163,.13)');for(let i=0;i<4;i++){ctx.fillStyle=i%2?'rgba(66,164,112,.28)':'rgba(40,117,83,.34)';ctx.beginPath();ctx.arc(gp.x+(i-1.5)*wg*s*.19,gp.y+Math.sin(i*2.1)*hg*s*.18,Math.max(2,.28*s),0,Math.PI*2);ctx.fill();}}
-    for(const [x,z,label,accent] of[[0,-11,'1DS  ↖   ↗  2DS','#36d2ff'],[0,11,'3DS  ↙   ↘  SUB','#b58cff'],[-15,0,'← TORRE','#ffae63'],[15,0,'TRILHO →','#b58cff']]){const sp=project(x,z,w,h);rr(sp.x-2.3*s,sp.y-.58*s,4.6*s,1.16*s,.32*s,'rgba(3,14,20,.82)',hexToRgba(accent,.28));text(label,sp.x,sp.y,{size:Math.max(7,.48*s),weight:850,color:accent,align:'center'});}
+    for(const [x,z,label,accent] of[[0,-10.3,'🏙 VALE ↑   •   1DS ↖   2DS ↗','#51e7a3'],[0,11,'3DS  ↙   ↘  SUB','#b58cff'],[-15,0,'← TORRE','#ffae63'],[15,0,'TRILHO →','#b58cff']]){const sp=project(x,z,w,h);rr(sp.x-2.3*s,sp.y-.58*s,4.6*s,1.16*s,.32*s,'rgba(3,14,20,.82)',hexToRgba(accent,.28));text(label,sp.x,sp.y,{size:Math.max(7,.48*s),weight:850,color:accent,align:'center'});}
     for(const [x,z] of treeSpots){const p=project(x,z,w,h),r=Math.max(3,.7*s);ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.ellipse(p.x+2,p.y+3,r*1.3,r*.55,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#173b31';ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(81,231,163,.3)';ctx.beginPath();ctx.arc(p.x-r*.25,p.y-r*.3,r*.48,0,Math.PI*2);ctx.fill();}
     for(const [x,z] of lampSpots){const p=project(x,z,w,h),pulse=.45+.25*Math.sin(time*2+x);ctx.fillStyle=`rgba(141,227,255,${pulse})`;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.8,.22*s),0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(150,214,230,.28)';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(4,.7*s),0,Math.PI*2);ctx.stroke();}
     for(const [x,z,rot] of benchSpots){const p=project(x,z,w,h);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(rot);rr(-1.3*s,-.28*s,2.6*s,.56*s,.18*s,'#24343c','rgba(142,194,211,.22)');ctx.restore();}
@@ -64,7 +64,22 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
     if(exp.type==='vale-portal'){
-      ctx.strokeStyle=hexToRgba(accent,.9);ctx.lineWidth=Math.max(2,.2*s);ctx.beginPath();ctx.arc(0,0,2.25*s,Math.PI*.12,Math.PI*1.88);ctx.stroke();ctx.fillStyle=hexToRgba(accent,.11);ctx.beginPath();ctx.arc(0,0,1.9*s,0,Math.PI*2);ctx.fill();for(let i=0;i<3;i++){ctx.strokeStyle=hexToRgba(accent,.18+i*.08);ctx.lineWidth=Math.max(1,.05*s);ctx.beginPath();ctx.arc(0,0,(1.2+i*.32)*s+Math.sin(time*2+i)*.08*s,0,Math.PI*2);ctx.stroke();}
+      // v14.10.8.54: entrada monumental e legível já na primeira tela 2D.
+      const portalPulse=.55+.45*Math.sin(time*2.4);
+      ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
+      rr(-3.85*s,-2.45*s,7.7*s,4.85*s,.65*s,'rgba(4,24,24,.88)',hexToRgba(accent,.55),Math.max(1,.12*s));
+      ctx.shadowBlur=0;
+      // pilares + travessa formam um marco arquitetônico, não apenas um círculo pequeno.
+      rr(-3.25*s,-1.95*s,.48*s,3.85*s,.16*s,'rgba(31,63,62,.96)',hexToRgba(accent,.8));
+      rr(2.77*s,-1.95*s,.48*s,3.85*s,.16*s,'rgba(31,63,62,.96)',hexToRgba(accent,.8));
+      rr(-3.15*s,-2.18*s,6.3*s,.52*s,.18*s,'rgba(20,53,52,.98)',hexToRgba(accent,.9));
+      ctx.strokeStyle=hexToRgba(accent,.98);ctx.lineWidth=Math.max(2,.22*s);ctx.beginPath();ctx.arc(0,.18*s,2.45*s,Math.PI*.08,Math.PI*1.92);ctx.stroke();
+      ctx.fillStyle=hexToRgba(accent,.11+.06*portalPulse);ctx.beginPath();ctx.arc(0,.18*s,2.0*s,0,Math.PI*2);ctx.fill();
+      for(let i=0;i<3;i++){ctx.strokeStyle=hexToRgba(accent,.2+i*.09);ctx.lineWidth=Math.max(1,.055*s);ctx.beginPath();ctx.arc(0,.18*s,(1.15+i*.34)*s+Math.sin(time*2+i)*.09*s,0,Math.PI*2);ctx.stroke();}
+      // faixa de destino: visível mesmo quando o aluno ainda está na praça.
+      rr(-3.1*s,1.55*s,6.2*s,.62*s,.22*s,'rgba(2,16,19,.94)',hexToRgba(accent,.48));
+      text('EMPRESAS DOS ALUNOS',0,1.86*s,{size:Math.max(7,.44*s),weight:900,color:'#caffdf',align:'center'});
+      text('27 empresas • 8 distritos',0,2.35*s,{size:Math.max(6,.34*s),weight:780,color:'#8ff2bd',align:'center'});
     }else if(exp.type==='pool'){
       rr(-3.1*s,-1.9*s,6.2*s,3.8*s,.7*s,'rgba(24,101,137,.58)',hexToRgba(accent,.72),Math.max(1,.12*s));
       for(let i=-2;i<=2;i++){ctx.strokeStyle=`rgba(117,226,255,${.15+.12*pulse})`;ctx.lineWidth=Math.max(1,.08*s);ctx.beginPath();ctx.moveTo(-2.55*s,(i*.55+.12*Math.sin(time*2+i))*s);ctx.quadraticCurveTo(0,(i*.55+.35*Math.sin(time*2.3+i))*s,2.55*s,(i*.55+.12*Math.cos(time*2+i))*s);ctx.stroke();}

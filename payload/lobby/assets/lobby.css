@@ -102,7 +102,7 @@
 @media(max-height:520px) and (orientation:landscape){.waiting-strip{display:none}.world-status #mode-button{display:block!important}}
 @media(prefers-reduced-motion:reduce){.waiting-strip{transition:none}}
 
-/* v14.10.8.53 — Lobby Visual Advanced: HUD de jogo compacto e estados pedagógicos reais */
+/* v14.10.8.54 — Lobby Visual Advanced: HUD de jogo compacto e estados pedagógicos reais */
 :root{--campus-cyan:#59dcff;--campus-green:#65edac;--campus-gold:#ffd166;--campus-panel:rgba(4,16,23,.84)}
 .game-stage[data-runtime-mode="lite"] canvas{image-rendering:auto}.game-stage[data-activity-state="available"] .cinematic-frame{box-shadow:inset 0 0 0 1px rgba(81,231,163,.08),inset 0 0 90px rgba(31,142,91,.045)}
 .activity-button{border-color:rgba(81,231,163,.48)!important;background:linear-gradient(145deg,rgba(22,111,73,.94),rgba(10,64,48,.92))!important;color:#eafff3!important;box-shadow:0 0 0 1px rgba(81,231,163,.08),0 0 24px rgba(81,231,163,.12);white-space:nowrap}
@@ -121,7 +121,7 @@ button:focus-visible,.joystick:focus-visible{outline:2px solid #9cecff;outline-o
 @media(max-height:560px) and (orientation:landscape){.challenge-hud{top:58px;left:8px;width:220px;padding:8px}.challenge-actions{display:none}.challenge-copy small{display:none}.waiting-strip{display:none}}
 @media(prefers-reduced-motion:reduce){.challenge-progress i{transition:none}.activity-button{box-shadow:none}}
 
-/* v14.10.8.53 — Vale do Silício AGV */
+/* v14.10.8.54 — Vale do Silício AGV */
 .vale-drawer{max-width:min(430px,calc(100vw - 24px));}
 .vale-search-label{display:block;margin:10px 0 6px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#91b8c7;}
 .vale-search{width:100%;border:1px solid rgba(111,218,244,.18);border-radius:14px;background:rgba(3,14,20,.72);color:#eefaff;padding:11px 12px;outline:none;}
@@ -141,8 +141,20 @@ body[data-scene="vale"] .waiting-strip strong::after{content:" • Vale do Silí
 body[data-scene="vale"] .campus-drawer:not(.vale-drawer){display:none!important;}
 @media (max-width:720px){.vale-company-content{grid-template-columns:1fr}.vale-destination-list{max-height:45vh}.vale-company-card{max-height:88vh;overflow:auto}}
 
-/* v14.10.8.53 — minimapa contextual do Vale (3D) */
+/* v14.10.8.54 — minimapa contextual do Vale (3D) */
 .vale-minimap{position:absolute;right:18px;top:136px;width:160px;height:160px;border:1px solid rgba(114,230,255,.28);border-radius:18px;background:rgba(3,12,18,.88);box-shadow:0 16px 40px rgba(0,0,0,.28);backdrop-filter:blur(10px);z-index:18;pointer-events:none}
 body[data-scene="vale"][data-lobby-mode="3d"] .vale-minimap:not(.hidden){display:block}
 @media(max-width:780px){.vale-minimap{width:104px;height:104px;right:10px;top:116px;border-radius:14px}}
 @media(max-height:560px) and (orientation:landscape){.vale-minimap{width:92px;height:92px;top:82px}}
+
+/* v14.10.8.54 — Portal monumental do Vale + acesso permanente no HUD */
+.vale-direct-button{border-color:rgba(81,231,163,.48)!important;background:linear-gradient(145deg,rgba(15,82,62,.94),rgba(8,42,42,.92))!important;color:#dfffee!important;box-shadow:0 0 0 1px rgba(81,231,163,.08),0 0 20px rgba(81,231,163,.09);font-weight:900!important;white-space:nowrap}
+.vale-direct-button:hover{border-color:rgba(143,242,189,.78)!important;box-shadow:0 0 26px rgba(81,231,163,.18)}
+body[data-scene="campus"] .vale-direct-button{animation:valeHudPulse 3.2s ease-in-out infinite}
+body[data-scene="vale"] .vale-direct-button{border-color:rgba(114,230,255,.4)!important;background:linear-gradient(145deg,rgba(20,70,84,.92),rgba(8,37,48,.92))!important;color:#dffaff!important;animation:none}
+@keyframes valeHudPulse{0%,100%{box-shadow:0 0 0 1px rgba(81,231,163,.08),0 0 16px rgba(81,231,163,.06)}50%{box-shadow:0 0 0 1px rgba(81,231,163,.2),0 0 28px rgba(81,231,163,.18)}}
+@media(prefers-reduced-motion:reduce){body[data-scene="campus"] .vale-direct-button{animation:none}}
+@media(max-width:900px),(pointer:coarse){.world-status #vale-direct-button{display:block;font-size:.67rem;padding:7px 9px}}
+@media(max-width:620px){.world-status #vale-direct-button{font-size:.62rem;padding:7px 8px;min-height:36px}.world-status{max-width:58vw}.identity-card{max-width:40vw}}
+@media(max-width:430px){.world-status #vale-direct-button{max-width:118px;overflow:hidden;text-overflow:ellipsis}.world-status #mode-button{max-width:94px}}
+

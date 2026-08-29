@@ -1,10 +1,10 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.53';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.53';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.53';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.53';
-import { createValeLite } from './vale-lite.js?v=14.10.8.53';
-import { createVale3D } from './vale3d.js?v=14.10.8.53';
-import { VALE_BOUNDS, valePresenceToWorld } from './world/vale-silicio-shared.js?v=14.10.8.53';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.54';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.54';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.54';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.54';
+import { createValeLite } from './vale-lite.js?v=14.10.8.54';
+import { createVale3D } from './vale3d.js?v=14.10.8.54';
+import { VALE_BOUNDS, valePresenceToWorld } from './world/vale-silicio-shared.js?v=14.10.8.54';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{
@@ -308,6 +308,7 @@ function updateModeUI(mode=state.runtimeMode){
   if(stage)stage.dataset.runtimeMode=mode||'lite';
   if(button)button.textContent=mode==='3d'?'Voltar ao 2D':'Entrar no 3D';
   document.body.dataset.scene=state.scene||'campus';if($('campus-button')){$('campus-button').title=state.scene==='vale'?'Mapa e empresas do Vale':'Campus vivo';$('campus-button').setAttribute('aria-label',state.scene==='vale'?'Abrir mapa do Vale':'Abrir painel do campus');}
+  const valeDirect=$('vale-direct-button');if(valeDirect){const inVale=state.scene==='vale';valeDirect.textContent=inVale?'↩ Campus DS':'🏙 Vale do Silício';valeDirect.title=inVale?'Voltar ao Campus DS':'Viajar para o Vale do Silício AGV • 27 empresas e 8 distritos';valeDirect.setAttribute('aria-label',valeDirect.title);}
   if(advice)advice.textContent=state.scene==='vale'?(mode==='3d'?'Vale • 3D':'Vale • 2D'):(mode==='3d'?'3D imersivo':'2D recomendado');
   updateActivityHUD();if(waiting&&activitySummary().kind==='waiting')waiting.textContent=state.scene==='vale'?(mode==='3d'?'Vale 3D ativo. Explore empresas, ambientes, esportes e mobilidade.':'Explore o Vale em 2D. O modo 3D continua opcional.'):(mode==='3d'?'Modo 3D ativo. Explore o Campus ou volte ao 2D a qualquer momento.':'Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.');
   document.body.dataset.lobbyMode=mode||'lite';renderValeMinimap(true);
@@ -357,14 +358,14 @@ async function boot(){
   state.stopped=false;if(!await loadIdentity())return;
   await securityTelemetry('session.check','info',{role:state.profile?.role||'unknown',surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});
   await loadActivities();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'activities_loaded'});showLogin(false);state.portalState=portalState;state.emoteRequested=kind=>emote(kind,state.nearStudent?.student_id||null);
-  // Regra v14.10.8.53: todo acesso começa no 2D. O aluno decide quando carregar o 3D.
+  // Regra v14.10.8.54: todo acesso começa no 2D. O aluno decide quando carregar o 3D.
   await startLite(lastModeChoice()==='3d'?'default_2d_first_previous_3d':'default_2d_first');
   await presence(true);poll();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_ready'});
 }
 
 $('retry-3d').onclick=()=>retry3D();$('enter-lite').onclick=()=>{saveModeChoice('lite');startLite('manual_recovery').catch(()=>{})};$('mode-button').onclick=()=>toggleRuntimeMode().catch(error=>{console.error(error);toast('Não foi possível alternar o modo agora.');});
 campusLoad();valeLoad();renderCampus();
-$('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('campus-button').onclick=()=>state.scene==='vale'?valeToggle():campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('vale-close').onclick=()=>valeToggle(false);$('vale-search').oninput=()=>renderValeDrawer();$('vale-company-close').onclick=()=>closeModal('vale-company-modal');$('vale-company-enter').onclick=()=>{const id=$('vale-company-enter').dataset.companyId;if(!id)return;closeModal('vale-company-modal');const ok=state.runtime?.enterBuilding?.(id);if(ok){state.valeVisited.add(id);valeSave();renderValeDrawer();toast('Interior carregado sob demanda. Pressione E para sair.');}};$('vale-company-map').onclick=()=>{closeModal('vale-company-modal');valeToggle(true)};$('activity-button').onclick=showActivities;$('activity-close').onclick=()=>closeModal('activity-modal');$('staff-student-close').onclick=()=>closeModal('staff-student-modal');$('staff-moderation-close').onclick=()=>closeModal('staff-moderation-modal');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');$('challenge-restart').onclick=()=>state.runtime?.restartChallenge?.();$('challenge-leave').onclick=()=>{const ended=state.runtime?.cancelChallenge?.()||state.runtime?.cancelExperience?.();if(ended){$('challenge-hud')?.classList.add('hidden');document.querySelector('.game-stage')?.classList.remove('challenge-active');}};document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
+$('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('vale-direct-button').onclick=()=>{const action=state.scene==='vale'?returnToCampus():enterVale();Promise.resolve(action).catch(error=>{console.error(error);toast('Não foi possível viajar agora.');});};$('campus-button').onclick=()=>state.scene==='vale'?valeToggle():campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('vale-close').onclick=()=>valeToggle(false);$('vale-search').oninput=()=>renderValeDrawer();$('vale-company-close').onclick=()=>closeModal('vale-company-modal');$('vale-company-enter').onclick=()=>{const id=$('vale-company-enter').dataset.companyId;if(!id)return;closeModal('vale-company-modal');const ok=state.runtime?.enterBuilding?.(id);if(ok){state.valeVisited.add(id);valeSave();renderValeDrawer();toast('Interior carregado sob demanda. Pressione E para sair.');}};$('vale-company-map').onclick=()=>{closeModal('vale-company-modal');valeToggle(true)};$('activity-button').onclick=showActivities;$('activity-close').onclick=()=>closeModal('activity-modal');$('staff-student-close').onclick=()=>closeModal('staff-student-modal');$('staff-moderation-close').onclick=()=>closeModal('staff-moderation-modal');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');$('challenge-restart').onclick=()=>state.runtime?.restartChallenge?.();$('challenge-leave').onclick=()=>{const ended=state.runtime?.cancelChallenge?.()||state.runtime?.cancelExperience?.();if(ended){$('challenge-hud')?.classList.add('hidden');document.querySelector('.game-stage')?.classList.remove('challenge-active');}};document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
 document.querySelectorAll('[data-target-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.targetEmote,$('staff-student-modal').dataset.student).then(()=>toast('Interação enviada.')));document.querySelectorAll('[data-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.emote));
 $('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadActivities().catch(()=>{})});setInterval(()=>{if(!document.hidden)loadActivities().catch(()=>{})},30000);

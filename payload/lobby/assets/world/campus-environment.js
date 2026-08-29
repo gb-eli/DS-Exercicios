@@ -1,5 +1,5 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.53';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.53';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.54';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.54';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -149,9 +149,22 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
   if(experience.type==='vale-portal'){
-    const arch=new THREE.Mesh(new THREE.TorusGeometry(2.1,.18,10,48,Math.PI*1.78),glow);arch.rotation.z=Math.PI*.11;arch.position.y=2.15;g.add(arch);
-    const core=new THREE.Mesh(new THREE.CircleGeometry(1.82,36),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.1,side:THREE.DoubleSide,depthWrite:false}));core.position.y=2.15;g.add(core);g.userData.portalCore=core;
-    for(let i=0;i<3;i++){const halo=new THREE.Mesh(new THREE.TorusGeometry(1.18+i*.26,.025,6,40),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.18+i*.06}));halo.position.y=2.15;g.add(halo);}
+    // v14.10.8.54: estação/portal monumental do Vale, visível de longe no Campus 3D.
+    const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
+    for(const x of[-3.35,3.35]){
+      g.add(box(THREE,.72,4.9,.82,frame,x,2.55,0));
+      g.add(box(THREE,.22,4.55,.92,glow,x,2.55,.08));
+      const cap=box(THREE,1.05,.34,1.1,frame,x,5.12,0);g.add(cap);
+    }
+    g.add(box(THREE,7.3,.58,.9,frame,0,5.2,0));
+    g.add(box(THREE,6.7,.13,.96,glow,0,4.98,.04));
+    const arch=new THREE.Mesh(new THREE.TorusGeometry(2.45,.22,12,56,Math.PI*1.78),glow);arch.rotation.z=Math.PI*.11;arch.position.y=2.55;g.add(arch);
+    const core=new THREE.Mesh(new THREE.CircleGeometry(2.08,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.13,side:THREE.DoubleSide,depthWrite:false}));core.position.y=2.55;g.add(core);g.userData.portalCore=core;
+    for(let i=0;i<4;i++){const halo=new THREE.Mesh(new THREE.TorusGeometry(1.18+i*.3,.028,6,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.16+i*.055}));halo.position.y=2.55;g.add(halo);}
+    if(spriteLabel){
+      const title=spriteLabel('VALE DO SILÍCIO AGV',experience.accent,5.8,{bg:'rgba(2,18,18,.9)'});title.position.set(0,6.25,.1);g.add(title);
+      const sub=spriteLabel('27 EMPRESAS • 8 DISTRITOS','#caffdf',4.5,{bg:'rgba(2,13,16,.82)'});sub.position.set(0,5.65,.1);g.add(sub);
+    }
   }else if(experience.type==='pool'){
     const rim=new THREE.Mesh(new THREE.BoxGeometry(6.2,.42,4.2),frame);rim.position.y=.35;g.add(rim);
     const water=new THREE.Mesh(new THREE.PlaneGeometry(5.55,3.55),soft);water.rotation.x=-Math.PI/2;water.position.y=.59;g.add(water);g.userData.water=water;
@@ -199,7 +212,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.32,1),glow);beacon.position.set(2.0,4.35,0);g.add(beacon);g.userData.towerBeacon=beacon;
     if(spriteLabel){const height=spriteLabel('MIRANTE • 3 m',experience.accent,2.9,{bg:'rgba(3,12,18,.84)'});height.position.set(2.0,4.9,0);g.add(height);}
   }
-  if(spriteLabel){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
+  if(spriteLabel&&experience.type!=='vale-portal'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
   g.userData.experience=experience;setShadow(g,quality!=='low');return g;
 }
 

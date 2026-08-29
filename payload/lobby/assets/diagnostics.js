@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
 
-  const RELEASE='14.10.8.53';
+  const RELEASE='14.10.8.54';
   const MAX_EVENTS=40;
   const startedAt=Date.now();
   const params=new URLSearchParams(location.search);
