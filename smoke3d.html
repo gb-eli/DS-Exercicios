@@ -1,0 +1,14 @@
+<!doctype html><html><body style='margin:0'><canvas id='game3d' style='width:800px;height:500px;display:block'></canvas><div id='move-joystick'></div><div id='move-stick'></div><button id='jump-button'></button><button id='run-button'></button><pre id='out'>booting</pre><script type='module'>
+import {createLobby3D} from './lobby/assets/lobby3d.js?v=14.10.8.50';
+const zones=[
+{key:'1ds',code:'1DS-A-MANHA',label:'1DS',name:'1ª Série DS',accent:'#36d2ff',portal:{label:'Laboratório 1DS'}},
+{key:'2ds',code:'2DS-A-MANHA',label:'2DS',name:'2ª Série DS',accent:'#51e7a3',portal:{label:'Laboratório 2DS'}},
+{key:'3ds',code:'3DS-C-MANHA',label:'3DS',name:'3ª Série DS',accent:'#b58cff',portal:{label:'Laboratório 3DS'}},
+{key:'sub',code:'DS-SUB-NOITE',label:'SUB',name:'DS Subsequente',accent:'#ffae63',portal:{label:'Laboratório SUB'}}];
+const state={user:{id:'u1'},profile:{role:'teacher',full_name:'Teste'},currentClass:{code:'3DS-C-MANHA'},classes:[],others:[],player:{x:800,y:500}};
+let first=false; window.errors=[]; addEventListener('error',e=>{errors.push('error:'+e.message);document.querySelector('#out').textContent=errors.join('\n')}); addEventListener('unhandledrejection',e=>{errors.push('rej:'+String(e.reason?.stack||e.reason));document.querySelector('#out').textContent=errors.join('\n')});
+try{
+ const rt=await createLobby3D({canvas:document.querySelector('#game3d'),zones,state,isStaff:()=>true,className:()=>'',onPlayerState:()=>{},onQualityChange:()=>{},onPerf:()=>{},onError:m=>errors.push('onError:'+m),onAreaChange:()=>{},onFirstFrame:()=>{first=true;document.querySelector('#out').textContent='FIRST_FRAME'},onInteriorChange:()=>{},onContextLost:()=>{},initialQuality:'low'});
+ window.rt=rt; document.querySelector('#out').textContent='CREATED'; setTimeout(()=>{document.querySelector('#out').textContent=(first?'PASS':'NO_FIRST')+'\n'+errors.join('\n')},2500);
+}catch(e){document.querySelector('#out').textContent='THREW:'+String(e.stack||e)}
+</script></body></html>

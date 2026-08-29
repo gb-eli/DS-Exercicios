@@ -1,4 +1,4 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.49';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.50';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 

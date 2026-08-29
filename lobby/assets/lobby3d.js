@@ -1,11 +1,11 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.49';
-import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.49';
-import { createCameraController } from './render/camera-controller.js?v=14.10.8.49';
-import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.49';
-import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.49';
-import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.49';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.50';
+import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.50';
+import { createCameraController } from './render/camera-controller.js?v=14.10.8.50';
+import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.50';
+import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.50';
+import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.50';
 
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.49';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.50';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 let THREE=null;
 
@@ -154,7 +154,7 @@ export async function createLobby3D({canvas,zones,state,isStaff,className,onInte
   const areaAt=(x,z)=>activeInterior||areaAtWorld(x,z);
   const accentForSelf=()=>state.currentClass?(zones.find(z=>z.code===state.currentClass.code)?.accent||'#36d2ff'):'#ffd166';const selfLabel=(state.profile?.role==='teacher'?'Prof. ':state.profile?.role==='student'?'':'ADM ')+(state.profile?.full_name||'Usuário').split(' ')[0];const self=makeAvatar({accent:accentForSelf(),staff:isStaff(),label:selfLabel,seed:state.user?.id||selfLabel});scene.add(self);const selfWorld=presenceToWorld(state.player.x,state.player.y);self.position.set(selfWorld.x,0,selfWorld.z);
   const cameraController=createCameraController({THREE,camera,canvas,getCollisionRoots:()=>cameraCollisionRoots,initialYaw:Math.PI,initialPitch:.32,initialDistance:6.8});
-  let playerY=0,vertical=0,onGround=true,runHeld=false,localAction=null,seated=null,fps=60;const others=new Map(),keys=new Set(),moveJoy={x:0,y:0};
+  let playerY=0,vertical=0,onGround=true,runHeld=false,localAction=null,seated=null,presentation=null,activeStation=null,fps=60;const others=new Map(),keys=new Set(),moveJoy={x:0,y:0};
   adaptiveController=createAdaptiveQualityController({initialQuality:quality,profile,onSample:info=>{fps=info.fps;onPerf?.({...info,profile:{mobile:profile.mobile,saveData:profile.saveData,hardware:profile.hardware,cores:profile.cores}});},onQualityRequest:q=>applyQuality(q,{manual:false})});
   const keydown=e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','ShiftLeft','ShiftRight','Space','KeyE','Enter','Digit1','Digit2','Digit3','KeyC'].includes(e.code))e.preventDefault();keys.add(e.code);if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)&&localAction){localAction=null;seated=null;self.userData.localAction=null;}if((e.code==='KeyE'||e.code==='Enter')&&!e.repeat)onInteract?.();if(e.code==='Space'&&!e.repeat&&onGround){vertical=7.8;onGround=false;}if(e.code==='Digit1')state.emoteRequested?.('wave');if(e.code==='Digit2')state.emoteRequested?.('like');if(e.code==='Digit3')state.emoteRequested?.('spark');if(e.code==='KeyC'&&!e.repeat)cameraController.toggleMode();};const keyup=e=>keys.delete(e.code);window.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);
   const bindJoystick=()=>{const root=document.getElementById('move-joystick'),stick=document.getElementById('move-stick');if(!root||!stick)return()=>{};let active=null;const update=e=>{const r=root.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,max=r.width*.32,len=Math.hypot(dx,dy)||1,k=Math.min(1,max/len),x=dx*k,y=dy*k;moveJoy.x=x/max;moveJoy.y=y/max;stick.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px))`;};const down=e=>{active=e.pointerId;root.setPointerCapture(active);update(e);};const move=e=>{if(e.pointerId===active)update(e);};const end=e=>{if(e.pointerId!==active)return;active=null;moveJoy.x=moveJoy.y=0;stick.style.transform='translate(-50%,-50%)';};root.addEventListener('pointerdown',down);root.addEventListener('pointermove',move);root.addEventListener('pointerup',end);root.addEventListener('pointercancel',end);return()=>{root.replaceWith(root.cloneNode(true));};};const cleanJoy=bindJoystick();const jumpButton=document.getElementById('jump-button'),runButton=document.getElementById('run-button');const jumpTap=e=>{e.preventDefault();if(onGround){vertical=7.8;onGround=false;}};jumpButton?.addEventListener('pointerdown',jumpTap);const runDown=e=>{e.preventDefault();runHeld=true;},runUp=e=>{e.preventDefault();runHeld=false;};runButton?.addEventListener('pointerdown',runDown);runButton?.addEventListener('pointerup',runUp);runButton?.addEventListener('pointercancel',runUp);
