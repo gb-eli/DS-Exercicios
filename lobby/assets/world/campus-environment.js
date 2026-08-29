@@ -1,5 +1,5 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.51';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.51';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.52';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.52';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -106,8 +106,9 @@ function createCentralHub({THREE,quality,spriteLabel}){
   const rings=[];for(const [r,y,tilt] of[[1.25,3.55,.12],[1.75,4.45,-.2],[2.3,5.0,.34]]){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.052,10,72),cyan);ring.position.y=y;ring.rotation.set(Math.PI/2+tilt,.12,tilt*.4);root.add(ring);rings.push(ring);}
   const crown=new THREE.Mesh(new THREE.TorusGeometry(2.78,.095,10,72),cyan);crown.rotation.x=Math.PI/2;crown.position.y=3.28;root.add(crown);
   const pool=inner;
-  if(spriteLabel){const label=spriteLabel('AGV • CAMPUS DS','#5fe3ff',7.0,{bg:'rgba(2,13,20,.76)'});label.position.set(0,6.45,0);root.add(label);}
-  root.userData={pool,crown,orb,rings,core};setShadow(root,true);pool.castShadow=false;core.castShadow=false;return root;
+  let statusBoard=null;
+  if(spriteLabel){const label=spriteLabel('AGV • CAMPUS DS','#5fe3ff',7.0,{bg:'rgba(2,13,20,.76)'});label.position.set(0,6.45,0);root.add(label);statusBoard=spriteLabel('AGUARDANDO ATIVIDADE','#ffd166',4.2,{bg:'rgba(3,13,18,.88)'});statusBoard.position.set(0,3.15,-4.15);root.add(statusBoard);}
+  root.userData={pool,crown,orb,rings,core,statusBoard};setShadow(root,true);pool.castShadow=false;core.castShadow=false;return root;
 }
 
 function createPlazaCanopy({THREE,quality}){
@@ -151,32 +152,48 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const rim=new THREE.Mesh(new THREE.BoxGeometry(6.2,.42,4.2),frame);rim.position.y=.35;g.add(rim);
     const water=new THREE.Mesh(new THREE.PlaneGeometry(5.55,3.55),soft);water.rotation.x=-Math.PI/2;water.position.y=.59;g.add(water);g.userData.water=water;
     for(const x of[-2.65,2.65])for(const z of[-1.65,1.65])g.add(cylinder(THREE,.07,.7,frame,x,.38,z,10));
+    for(const x of[-3.15,3.15])for(let z=-1.7;z<=1.7;z+=.55)g.add(box(THREE,.48,.08,.38,dark,x,.18,z));
+    const float=new THREE.Mesh(new THREE.TorusGeometry(.46,.13,10,28),glow);float.rotation.x=Math.PI/2;float.position.set(1.25,.72,-.45);g.add(float);g.userData.float=float;
+    for(const z of[-.45,.45]){const rail=new THREE.Mesh(new THREE.TorusGeometry(.42,.045,8,20,Math.PI),frame);rail.rotation.set(0,Math.PI/2,Math.PI/2);rail.position.set(-2.65,1.05,z);g.add(rail);}
   }else if(experience.type==='parkour'){
     for(const [i,platform] of PARKOUR_PLATFORMS.entries()){
       const localX=platform.x-experience.x,localZ=platform.z-experience.z;
       const material=platform.checkpoint?(i===PARKOUR_PLATFORMS.length-1?glow:frame):glow;
       const b=box(THREE,platform.w,platform.h,platform.d,material,localX,platform.h/2,localZ);g.add(b);
-      if(platform.checkpoint){const cap=box(THREE,platform.w*.72,.035,platform.d*.72,glow,localX,platform.h+.025,localZ);g.add(cap);}
+      if(platform.checkpoint){const cap=box(THREE,platform.w*.72,.035,platform.d*.72,glow,localX,platform.h+.025,localZ);g.add(cap);if(spriteLabel){const number=spriteLabel(String(i),experience.accent,1.05,{bg:'rgba(8,10,16,.82)'});number.position.set(localX,platform.h+1.0,localZ);g.add(number);}}
     }
+    const startGate=box(THREE,1.7,.08,.08,glow,-2.65,1.7,-1.6);g.add(startGate,box(THREE,.08,1.7,.08,frame,-3.4,.85,-1.6),box(THREE,.08,1.7,.08,frame,-1.9,.85,-1.6));
+    const balance=box(THREE,2.2,.14,.28,frame,.05,.92,-1.0);balance.rotation.y=-.25;g.add(balance);
   }else if(experience.type==='playground'){
     for(const x of[-1.75,1.75])g.add(box(THREE,.12,2.6,.12,frame,x,1.45,0));
     g.add(box(THREE,3.65,.12,.12,frame,0,2.72,0));
     const swingSeats=[];
     for(const x of[-.75,.75]){g.add(box(THREE,.04,1.4,.04,glow,x,1.9,0));const seat=box(THREE,.65,.08,.38,frame,x,1.18,0);g.add(seat);swingSeats.push(seat);}
     const hoop=new THREE.Mesh(new THREE.TorusGeometry(.8,.08,8,32),glow);hoop.position.set(0,1.35,1.25);hoop.rotation.y=Math.PI/2;g.add(hoop);g.userData.swingSeats=swingSeats;
+    const seesaw=box(THREE,2.65,.14,.42,glow,0,.72,-1.35);g.add(seesaw,cylinder(THREE,.22,.72,frame,0,.36,-1.35,16));g.userData.seesaw=seesaw;
+    const tunnel=new THREE.Mesh(new THREE.TorusGeometry(.66,.13,8,24,Math.PI),frame);tunnel.rotation.z=Math.PI/2;tunnel.position.set(2.0,.75,1.2);g.add(tunnel);
+    for(let i=0;i<4;i++){g.add(box(THREE,.07,1.65,.07,frame,-2.25+i*.48,.85,1.28),box(THREE,.55,.07,.07,glow,-2.01+i*.48,1.62,1.28));}
   }else if(experience.type==='slide'){
     for(let i=0;i<5;i++)g.add(box(THREE,.85,.15,.42,frame,-1.8+i*.42,.35+i*.38,-.9));
     const chute=box(THREE,3.8,.12,1.0,glow,.7,1.15,.45);chute.rotation.z=-.47;g.add(chute);
     for(const x of[-1,1])g.add(box(THREE,.08,2.1,.08,frame,-1.9,1.2,x*.42));
+    const landing=box(THREE,1.5,.18,1.5,frame,-1.65,2.22,-.15);g.add(landing);
+    for(const z of[-.58,.58]){const rail=box(THREE,4.0,.08,.08,frame,.68,1.75,z);rail.rotation.z=-.47;g.add(rail);}
+    g.add(box(THREE,1.15,.08,1.2,soft,2.55,.08,.45));
   }else if(experience.type==='coaster'){
     const track=new THREE.Mesh(new THREE.TorusGeometry(2.45,.11,8,72),frame);track.rotation.x=Math.PI/2;track.position.y=1.1;g.add(track);
-    const rail=new THREE.Mesh(new THREE.TorusGeometry(2.12,.045,8,72),glow);rail.rotation.x=Math.PI/2;rail.position.y=1.12;g.add(rail);
+    const rail=new THREE.Mesh(new THREE.TorusGeometry(2.12,.045,8,72),glow);rail.rotation.x=Math.PI/2;rail.position.y=1.12;g.add(rail);const railOuter=new THREE.Mesh(new THREE.TorusGeometry(2.72,.045,8,72),glow);railOuter.rotation.x=Math.PI/2;railOuter.position.y=1.12;g.add(railOuter);
     for(let i=0;i<8;i++){const a=i*Math.PI/4;g.add(box(THREE,.08,1.0,.08,frame,Math.cos(a)*2.45,.55,Math.sin(a)*2.45));}
     const car=box(THREE,.72,.34,.48,glow,2.45,1.18,0);g.add(car);g.userData.coasterCar=car;
+    g.add(box(THREE,1.55,.24,1.25,dark,-2.95,.3,1.55),box(THREE,1.7,.1,1.35,glow,-2.95,.48,1.55));
+    for(const x of[-3.65,-2.25])g.add(box(THREE,.08,1.75,.08,frame,x,1.05,2.0));g.add(box(THREE,1.5,.08,.08,glow,-2.95,1.88,2.0));
   }else if(experience.type==='tower'){
-    for(let i=0;i<6;i++)g.add(box(THREE,1.3,.16,1.05,i===5?glow:frame,-2+i*.65,.35+i*.42,0));
+    for(let i=0;i<7;i++)g.add(box(THREE,1.15,.16,1.05,i===6?glow:frame,-2.35+i*.62,.28+i*.4,0));
     g.add(box(THREE,2.6,.18,2.3,frame,2.0,2.9,0));
     for(const [x,z] of[[.8,-.9],[.8,.9],[3.2,-.9],[3.2,.9]])g.add(box(THREE,.08,2.9,.08,frame,x,1.55,z));
+    for(const z of[-1.02,1.02])g.add(box(THREE,2.55,.08,.08,glow,2.0,3.75,z));
+    const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.32,1),glow);beacon.position.set(2.0,4.35,0);g.add(beacon);g.userData.towerBeacon=beacon;
+    if(spriteLabel){const height=spriteLabel('MIRANTE • 3 m',experience.accent,2.9,{bg:'rgba(3,12,18,.84)'});height.position.set(2.0,4.9,0);g.add(height);}
   }
   if(spriteLabel){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
   g.userData.experience=experience;setShadow(g,quality!=='low');return g;
