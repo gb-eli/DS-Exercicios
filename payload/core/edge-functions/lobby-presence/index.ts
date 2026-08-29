@@ -4,7 +4,7 @@ import {createClient} from "jsr:@supabase/supabase-js@2.111.0";
 import {consumeRate,ensureAccess,logRisk,requestIp} from "./security.ts";
 const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, x-client-info, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS"};
 const J=(x:unknown,s=200,extra:Record<string,string>={})=>new Response(JSON.stringify(x),{status:s,headers:{...H,...extra,"content-type":"application/json","cache-control":"no-store"}});
-const AREAS=new Set(['central','1ds','2ds','3ds','sub']),EMOTES=new Set(['wave','like','spark']);
+const AREAS=new Set(['central','1ds','2ds','3ds','sub','vale-silicio']),EMOTES=new Set(['wave','like','spark']);
 const STAFF=new Set(['teacher','admin','super_admin']);
 const uuidRx=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const enc=new TextEncoder();
@@ -14,6 +14,9 @@ function fromB64url(value:string){let raw=value.replace(/-/g,'+').replace(/_/g,'
 async function hmacKey(secret:string,usage:KeyUsage[]){return crypto.subtle.importKey('raw',enc.encode(secret),{name:'HMAC',hash:'SHA-256'},false,usage);}
 async function signGather(payload:any,secret:string){const body=b64urlText(JSON.stringify(payload)),key=await hmacKey(secret,['sign']),sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,enc.encode(body)));return `${body}.${b64url(sig)}`;}
 async function verifyGather(token:string,secret:string){try{const parts=String(token||'').split('.');if(parts.length!==2)return null;const [body,sig]=parts,key=await hmacKey(secret,['verify']),ok=await crypto.subtle.verify('HMAC',key,fromB64url(sig),enc.encode(body));if(!ok)return null;const payload=JSON.parse(new TextDecoder().decode(fromB64url(body)));if(!payload?.exp||Date.now()>Number(payload.exp))return null;if(!uuidRx.test(String(payload.issuer||'')))return null;if(!['campus','vale'].includes(String(payload.scene)))return null;return payload;}catch{return null;}}
+async function signChat(payload:any,secret:string){const body=b64urlText(JSON.stringify(payload)),key=await hmacKey(secret,['sign']),sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,enc.encode(body)));return `${body}.${b64url(sig)}`;}
+async function verifyChat(token:string,secret:string){try{const parts=String(token||'').split('.');if(parts.length!==2)return null;const [body,sig]=parts,key=await hmacKey(secret,['verify']),ok=await crypto.subtle.verify('HMAC',key,fromB64url(sig),enc.encode(body));if(!ok)return null;const payload=JSON.parse(new TextDecoder().decode(fromB64url(body)));if(payload?.kind!=='proximity_chat'||!payload?.exp||Date.now()>Number(payload.exp))return null;if(!uuidRx.test(String(payload.sender_id||''))||!uuidRx.test(String(payload.target_id||'')))return null;if(!['campus','vale'].includes(String(payload.scene)))return null;const message=String(payload.message||'');if(!message||message.length>180)return null;return payload;}catch{return null;}}
+function safeChatMessage(value:any){return String(value||'').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,180);}
 function boundedCoord(value:any,max:number){const n=Number(value);return Number.isFinite(n)?Math.max(0,Math.min(max,Math.round(n))):null;}
 function safeInterior(value:any){const text=String(value||'').trim();return text&&/^[a-zA-Z0-9:_-]{1,120}$/.test(text)?text:null;}
 Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{headers:H});if(req.method!=='POST')return J({error:'method_not_allowed'},405);if(Number(req.headers.get('content-length')||0)>32768)return J({error:'payload_too_large'},413);try{
@@ -30,6 +33,16 @@ Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{heade
  if(action==='verify_gather'){
    const payload=await verifyGather(String(body?.token||''),service);if(!payload||!STAFF.has(String(payload.role)))return J({error:'invalid_or_expired_gather'},403);
    return J({ok:true,target:{scene:payload.scene,x:payload.x,y:payload.y,area:payload.area,interior:payload.interior||null,issuer:payload.issuer,expires_at:new Date(payload.exp).toISOString()}});
+ }
+ if(action==='issue_chat'){
+   const targetId=String(body?.target_id||''),message=safeChatMessage(body?.message),scene=String(body?.scene||'campus');if(!uuidRx.test(targetId)||targetId===user.id||!message||!['campus','vale'].includes(scene))return J({error:'invalid_chat'},400);
+   const cutoff=new Date(Date.now()-25000).toISOString();const {data:rows,error:presenceError}=await db.from('lobby_presence').select('student_id,x,y,area,updated_at').in('student_id',[user.id,targetId]).gt('updated_at',cutoff);if(presenceError)throw presenceError;const sender=(rows||[]).find((r:any)=>r.student_id===user.id),target=(rows||[]).find((r:any)=>r.student_id===targetId);if(!sender||!target)return J({error:'participant_not_nearby'},409);
+   const expectedArea=scene==='vale'?'vale-silicio':null;if(expectedArea&&(sender.area!==expectedArea||target.area!==expectedArea))return J({error:'participant_not_nearby'},409);if(!expectedArea&&(sender.area==='vale-silicio'||target.area==='vale-silicio'))return J({error:'participant_not_nearby'},409);
+   const distance=Math.hypot(Number(sender.x)-Number(target.x),Number(sender.y)-Number(target.y));if(!Number.isFinite(distance)||distance>115)return J({error:'participant_not_nearby'},409);
+   const payload={v:1,kind:'proximity_chat',sender_id:user.id,target_id:targetId,scene,message,iat:Date.now(),exp:Date.now()+12000,nonce:crypto.randomUUID()};const token=await signChat(payload,service);return J({ok:true,token,expires_at:new Date(payload.exp).toISOString()});
+ }
+ if(action==='verify_chat'){
+   const payload=await verifyChat(String(body?.token||''),service);if(!payload||payload.target_id!==user.id)return J({error:'invalid_or_expired_chat'},403);return J({ok:true,chat:{sender_id:payload.sender_id,target_id:payload.target_id,scene:payload.scene,message:payload.message,expires_at:new Date(payload.exp).toISOString()}});
  }
  if(action==='leave'){await db.from('lobby_presence').delete().eq('student_id',user.id);return J({ok:true})}
  if(action!=='heartbeat')return J({error:'unknown_action'},400);

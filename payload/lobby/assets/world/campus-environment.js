@@ -1,5 +1,5 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.55';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.55';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.56';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, CAMPUS_RIDES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_VERTICAL_SURFACES } from './campus-experiences.js?v=14.10.8.56';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -53,17 +53,17 @@ function createBuilding({THREE,quality,accent,position,rotation=0,title,subtitle
 
   // Podium and layered massing: the facade is no longer a single box.
   group.add(box(THREE,16.6,.5,9.4,concrete,0,.25,0));
-  group.add(box(THREE,13.8,5.7,7.9,dark,0,3.25,-.28));
-  group.add(box(THREE,3.0,4.45,7.0,concrete2,-7.15,2.5,-.18),box(THREE,3.0,4.45,7.0,concrete2,7.15,2.5,-.18));
-  group.add(box(THREE,14.7,.3,8.5,frame,0,6.2,-.18));
-  const roof=box(THREE,15.9,.18,9.0,accentMat,0,6.46,-.18);roof.rotation.z=variant%2?.012:-.012;group.add(roof);
+  group.add(box(THREE,13.8,10.2,7.9,dark,0,5.5,-.28));
+  group.add(box(THREE,3.0,8.4,7.0,concrete2,-7.15,4.4,-.18),box(THREE,3.0,8.4,7.0,concrete2,7.15,4.4,-.18));
+  group.add(box(THREE,14.7,.3,8.5,frame,0,10.68,-.18));
+  const roof=box(THREE,15.9,.18,9.0,accentMat,0,10.92,-.18);roof.rotation.z=variant%2?.012:-.012;group.add(roof);
 
   // Deep front facade with a central entrance void.
   const frontZ=3.72;
   group.add(box(THREE,4.15,2.7,.22,concrete2,-5.15,1.72,frontZ),box(THREE,4.15,2.7,.22,concrete2,5.15,1.72,frontZ));
   group.add(box(THREE,3.95,.38,.28,frame,0,4.56,frontZ+.02));
   for(const x of[-7.15,-4.45,4.45,7.15])group.add(box(THREE,.2,5.15,.34,frame,x,3.08,frontZ+.04));
-  addFacadeWindowGrid({THREE,group,mat,accent,frontZ:frontZ+.13,width:13.25,y:4.62,rows:2,cols:7});
+  addFacadeWindowGrid({THREE,group,mat,accent,frontZ:frontZ+.13,width:13.25,y:6.5,rows:5,cols:7});
 
   // Glass fins and luminous vertical blades create parallax while walking past the building.
   for(const x of[-5.75,-3.85,-1.95,1.95,3.85,5.75]){
@@ -82,15 +82,15 @@ function createBuilding({THREE,quality,accent,position,rotation=0,title,subtitle
     group.add(box(THREE,2.38,2.35,.11,glass,sx*7.14,2.72,2.72));
     for(const y of[1.65,3.8])group.add(box(THREE,2.46,.055,.14,accentMat,sx*7.14,y,2.82));
   }
-  const crownL=box(THREE,5.0,.17,.36,frame,-4.2,6.95,.2),crownR=box(THREE,5.0,.17,.36,frame,4.2,6.95,.2);crownL.rotation.z=.075;crownR.rotation.z=-.075;group.add(crownL,crownR,box(THREE,2.7,.12,.4,accentMat,0,7.15,.2));
+  const crownL=box(THREE,5.0,.17,.36,frame,-4.2,11.42,.2),crownR=box(THREE,5.0,.17,.36,frame,4.2,11.42,.2);crownL.rotation.z=.075;crownR.rotation.z=-.075;group.add(crownL,crownR,box(THREE,2.7,.12,.4,accentMat,0,11.62,.2));
 
   // Subtle rear wall depth so orbit camera does not reveal an empty box.
-  group.add(box(THREE,13.5,4.1,.18,concrete2,0,2.65,-4.16));
-  for(const x of[-5,-2.5,0,2.5,5])group.add(box(THREE,1.5,1.0,.09,glass,x,3.4,-4.27));
+  group.add(box(THREE,13.5,8.65,.18,concrete2,0,5.05,-4.16));
+  for(const x of[-5,-2.5,0,2.5,5])for(const y of[3.1,5.3,7.5,9.4])group.add(box(THREE,1.5,.9,.09,glass,x,y,-4.27));
 
   if(spriteLabel){
-    const label=spriteLabel(title,new THREE.Color(accent).getStyle(),5.15);label.position.set(0,7.85,2.55);group.add(label);
-    const sub=spriteLabel(subtitle,'#b6dce7',4.2,{bg:'rgba(4,12,18,.72)'});sub.position.set(0,7.18,2.52);group.add(sub);
+    const label=spriteLabel(title,new THREE.Color(accent).getStyle(),5.15);label.position.set(0,12.45,2.55);group.add(label);
+    const sub=spriteLabel(subtitle,'#b6dce7',4.2,{bg:'rgba(4,12,18,.72)'});sub.position.set(0,11.78,2.52);group.add(sub);
   }
   group.userData={kind:'campus-building',accent,frontLocalZ:frontZ};setShadow(group,true);return group;
 }
@@ -149,7 +149,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
   if(experience.type==='vale-portal'){
-    // v14.10.8.55: estação/portal monumental do Vale, visível de longe no Campus 3D.
+    // v14.10.8.56: estação/portal monumental do Vale, visível de longe no Campus 3D.
     const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
     for(const x of[-3.35,3.35]){
       g.add(box(THREE,.72,4.9,.82,frame,x,2.55,0));
@@ -191,31 +191,65 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const tunnel=new THREE.Mesh(new THREE.TorusGeometry(.66,.13,8,24,Math.PI),frame);tunnel.rotation.z=Math.PI/2;tunnel.position.set(2.0,.75,1.2);g.add(tunnel);
     for(let i=0;i<4;i++){g.add(box(THREE,.07,1.65,.07,frame,-2.25+i*.48,.85,1.28),box(THREE,.55,.07,.07,glow,-2.01+i*.48,1.62,1.28));}
   }else if(experience.type==='slide'){
-    for(let i=0;i<5;i++)g.add(box(THREE,.85,.15,.42,frame,-1.8+i*.42,.35+i*.38,-.9));
-    const chute=box(THREE,3.8,.12,1.0,glow,.7,1.15,.45);chute.rotation.z=-.47;g.add(chute);
-    for(const x of[-1,1])g.add(box(THREE,.08,2.1,.08,frame,-1.9,1.2,x*.42));
-    const landing=box(THREE,1.5,.18,1.5,frame,-1.65,2.22,-.15);g.add(landing);
-    for(const z of[-.58,.58]){const rail=box(THREE,4.0,.08,.08,frame,.68,1.75,z);rail.rotation.z=-.47;g.add(rail);}
-    g.add(box(THREE,1.15,.08,1.2,soft,2.55,.08,.45));
+    // Escorregador tubular curvo: a mesma spline é usada pela experiência guiada do jogador.
+    const nodes=CAMPUS_RIDES.slide.nodes.map(n=>new THREE.Vector3(n.x-experience.x,n.y,n.z-experience.z));
+    const curve=new THREE.CatmullRomCurve3(nodes,false,'catmullrom',.42),tube=new THREE.Mesh(new THREE.TubeGeometry(curve,72,.48,12,false),soft);g.add(tube);g.userData.slideCurve=curve;
+    const railMat=frame;for(const side of[-1,1]){const railPoints=nodes.map((n,i)=>{const tangent=curve.getTangent(i/Math.max(1,nodes.length-1)),normal=new THREE.Vector3(-tangent.z,0,tangent.x).normalize();return n.clone().addScaledVector(normal,side*.58).add(new THREE.Vector3(0,.28,0));});const railCurve=new THREE.CatmullRomCurve3(railPoints);g.add(new THREE.Mesh(new THREE.TubeGeometry(railCurve,64,.055,8,false),railMat));}
+    // escada de acesso e plataforma superior
+    for(let i=0;i<8;i++)g.add(box(THREE,.95,.16,.52,frame,-2.15+i*.28,.32+i*.48,-.95));
+    const landing=box(THREE,2.0,.2,1.75,frame,-.95,4.05,-.75);g.add(landing);
+    for(const z of[-1.48,-.02])g.add(box(THREE,2.0,.08,.08,glow,-.95,4.92,z));
+    g.add(box(THREE,1.45,.08,1.35,soft,2.55,.08,.95));
   }else if(experience.type==='coaster'){
-    const track=new THREE.Mesh(new THREE.TorusGeometry(2.45,.11,8,72),frame);track.rotation.x=Math.PI/2;track.position.y=1.1;g.add(track);
-    const rail=new THREE.Mesh(new THREE.TorusGeometry(2.12,.045,8,72),glow);rail.rotation.x=Math.PI/2;rail.position.y=1.12;g.add(rail);const railOuter=new THREE.Mesh(new THREE.TorusGeometry(2.72,.045,8,72),glow);railOuter.rotation.x=Math.PI/2;railOuter.position.y=1.12;g.add(railOuter);
-    for(let i=0;i<8;i++){const a=i*Math.PI/4;g.add(box(THREE,.08,1.0,.08,frame,Math.cos(a)*2.45,.55,Math.sin(a)*2.45));}
-    const car=box(THREE,.72,.34,.48,glow,2.45,1.18,0);g.add(car);g.userData.coasterCar=car;
-    g.add(box(THREE,1.55,.24,1.25,dark,-2.95,.3,1.55),box(THREE,1.7,.1,1.35,glow,-2.95,.48,1.55));
-    for(const x of[-3.65,-2.25])g.add(box(THREE,.08,1.75,.08,frame,x,1.05,2.0));g.add(box(THREE,1.5,.08,.08,glow,-2.95,1.88,2.0));
+    // Estação local do monotrilho; o trilho completo é criado pelo transit network global.
+    const platform=box(THREE,5.6,.34,2.2,dark,0,.22,0);g.add(platform);
+    for(const z of[-.82,.82])g.add(box(THREE,5.4,.055,.08,glow,0,.44,z));
+    const canopy=box(THREE,5.0,.12,1.7,frame,0,2.75,0);g.add(canopy);for(const x of[-2.15,2.15])g.add(box(THREE,.1,2.45,.1,frame,x,1.45,0));
+    if(spriteLabel){const st=spriteLabel('ESTAÇÃO • PRAÇA',experience.accent,3.1,{bg:'rgba(9,5,22,.86)'});st.position.set(0,3.45,0);g.add(st);}
   }else if(experience.type==='tower'){
-    for(let i=0;i<7;i++)g.add(box(THREE,1.15,.16,1.05,i===6?glow:frame,-2.35+i*.62,.28+i*.4,0));
-    g.add(box(THREE,2.6,.18,2.3,frame,2.0,2.9,0));
-    for(const [x,z] of[[.8,-.9],[.8,.9],[3.2,-.9],[3.2,.9]])g.add(box(THREE,.08,2.9,.08,frame,x,1.55,z));
-    for(const z of[-1.02,1.02])g.add(box(THREE,2.55,.08,.08,glow,2.0,3.75,z));
-    const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.32,1),glow);beacon.position.set(2.0,4.35,0);g.add(beacon);g.userData.towerBeacon=beacon;
-    if(spriteLabel){const height=spriteLabel('MIRANTE • 3 m',experience.accent,2.9,{bg:'rgba(3,12,18,.84)'});height.position.set(2.0,4.9,0);g.add(height);}
+    // Torre de controle de 15 m: escada helicoidal simplificada + três decks panorâmicos.
+    const mast=box(THREE,2.3,13.6,2.3,dark,1.1,6.8,0);g.add(mast);
+    for(let level=0;level<3;level++){const y=4.8+level*4.2,deck=box(THREE,5.6,.22,5.0,frame,1.1,y,0);g.add(deck);for(const z of[-2.35,2.35])g.add(box(THREE,5.45,.08,.08,glow,1.1,y+.85,z));for(const x of[-1.55,3.75])g.add(box(THREE,.08,.85,.08,glow,x,y+.45,0));}
+    for(let i=0;i<24;i++){const t=i/23,a=t*Math.PI*3.5,r=2.25,x=1.1+Math.cos(a)*r,z=Math.sin(a)*r,y=.35+t*13.55;const step=box(THREE,1.05,.16,.5,i===23?glow:frame,x,y,z);step.rotation.y=-a;g.add(step);}
+    const cabin=box(THREE,4.3,2.25,3.8,soft,1.1,15.0,0);g.add(cabin);const roof=box(THREE,5.1,.22,4.6,glow,1.1,16.25,0);g.add(roof);
+    const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.42,1),glow);beacon.position.set(1.1,17.0,0);g.add(beacon);g.userData.towerBeacon=beacon;
+    if(spriteLabel){const height=spriteLabel('TORRE DE CONTROLE • 15 m',experience.accent,3.6,{bg:'rgba(3,12,18,.88)'});height.position.set(1.1,17.7,0);g.add(height);}
   }
   if(spriteLabel&&experience.type!=='vale-portal'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
   g.userData.experience=experience;setShadow(g,quality!=='low');return g;
 }
 
+
+function createUrbanLayer({THREE,quality,spriteLabel}){
+  const mat=materialFactory(THREE,quality),root=new THREE.Group();root.name='campus-urban-layer';
+  const road=mat(0x10191e,{roughness:.94}),walk=mat(0x33434a,{roughness:.82}),wall=mat(0x23343b,{roughness:.86}),line=mat(0xe8f4f6,{emissive:0xa8d7df,emissiveIntensity:.12,roughness:.5}),runway=mat(0x0b1115,{roughness:.96});
+  // rua perimetral + eixos de serviço
+  for(const [x,z,w,d] of[[0,-22,72,5.2],[0,22,72,5.2],[-37,0,5.2,42],[37,0,5.2,42]])root.add(box(THREE,w,.035,d,road,x,.025,z));
+  for(const [x,z,w,d] of[[0,-18.7,72,.8],[0,-25.3,72,.8],[0,18.7,72,.8],[0,25.3,72,.8],[-33.9,0,.8,42],[-40.1,0,.8,42],[33.9,0,.8,42],[40.1,0,.8,42]])root.add(box(THREE,w,.07,d,walk,x,.055,z));
+  // muros com quatro aberturas de acesso
+  for(const [x,z,w,d] of[[0,-24.7,27,.32],[-25,-24.7,18,.32],[25,-24.7,18,.32],[0,24.7,27,.32],[-25,24.7,18,.32],[25,24.7,18,.32],[-39.3,-12,.32,18],[-39.3,12,.32,18],[39.3,-12,.32,18],[39.3,12,.32,18]])root.add(box(THREE,w,1.65,d,wall,x,.82,z));
+  // pista de pouso no setor sul, paralela ao eixo leste-oeste
+  root.add(box(THREE,54,.06,4.8,runway,0,.05,22));
+  for(let x=-23;x<=23;x+=5.75)root.add(box(THREE,2.6,.015,.16,line,x,.09,22));
+  for(const z of[20.1,23.9])root.add(box(THREE,54,.02,.08,line,0,.095,z));
+  if(spriteLabel){const sign=spriteLabel('PISTA AGV • 09/27','#dff8ff',4.1,{bg:'rgba(5,10,14,.8)'});sign.position.set(0,2.35,22);root.add(sign);}
+  // escadas externas, pontes para telhados e rampa panorâmica compartilhadas com a física.
+  for(const s of CAMPUS_VERTICAL_SURFACES){if(s.type==='roof')continue;const thickness=s.type==='ramp'?.12:.18,m=box(THREE,s.w,thickness,s.d,s.type==='ramp'?walk:frameMaterial(mat),s.x,Math.max(.06,s.h-thickness/2),s.z);root.add(m);}
+  return root;
+}
+function frameMaterial(mat){return mat(0x314650,{metalness:.48,roughness:.42});}
+
+function createTransitNetwork({THREE,quality,spriteLabel}){
+  const mat=materialFactory(THREE,quality),root=new THREE.Group();root.name='campus-monotrilho';const steel=mat(0x2d3c47,{metalness:.72,roughness:.27}),glow=mat(0xb58cff,{emissive:0x8d5cff,emissiveIntensity:1.1,roughness:.18}),dark=mat(0x10151d,{metalness:.48,roughness:.35}),glass=mat(0x19344b,{emissive:0x7c5cff,emissiveIntensity:.14,transparent:true,opacity:.55,glass:true});
+  const pts=CAMPUS_TRAIN_ROUTE.map(p=>new THREE.Vector3(p.x,1.85,p.z)),curve=new THREE.CatmullRomCurve3(pts,true,'centripetal');
+  root.add(new THREE.Mesh(new THREE.TubeGeometry(curve,180,.13,8,true),steel));
+  const inner=new THREE.Mesh(new THREE.TubeGeometry(curve,180,.035,6,true),glow);root.add(inner);
+  for(let i=0;i<44;i++){const p=curve.getPoint(i/44);root.add(box(THREE,.12,1.75,.12,steel,p.x,.88,p.z));}
+  const stations=[];for(const station of CAMPUS_TRAIN_STATIONS){const platform=box(THREE,4.8,.28,2.0,dark,station.x,.25,station.z);root.add(platform);const stripe=box(THREE,4.6,.04,.12,glow,station.x,.42,station.z+.72);root.add(stripe);if(spriteLabel){const label=spriteLabel(`ESTAÇÃO • ${station.name}`,station.accent||'#b58cff',3.2,{bg:'rgba(7,5,18,.86)'});label.position.set(station.x,2.8,station.z);root.add(label);}stations.push({station,platform});}
+  const train=new THREE.Group();train.name='monotrilho-train';
+  for(let i=0;i<3;i++){const car=new THREE.Group();car.position.z=i*1.55;car.add(box(THREE,1.25,.72,1.4,dark,0,.68,0),box(THREE,1.08,.42,1.1,glass,0,.88,0),box(THREE,1.32,.08,1.42,glow,0,1.08,0));for(const x of[-.42,.42])car.add(cylinder(THREE,.16,.12,steel,x,.25,.42,12),cylinder(THREE,.16,.12,steel,x,.25,-.42,12));train.add(car);}root.add(train);
+  return{root,train,stations,curve};
+}
 export function createCampusLighting({THREE,scene,quality,shadows,shadowSize}){
   const hemi=new THREE.HemisphereLight(0xc8e8ff,0x10231b,1.45);scene.add(hemi);
   const key=new THREE.DirectionalLight(0xdceeff,2.0);key.position.set(-24,34,19);key.castShadow=!!shadows;key.shadow.mapSize.set(shadowSize,shadowSize);key.shadow.camera.left=-44;key.shadow.camera.right=44;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.camera.near=.5;key.shadow.camera.far=95;scene.add(key);
@@ -226,9 +260,10 @@ export function createCampusLighting({THREE,scene,quality,shadows,shadowSize}){
 
 export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel}){
   const floor=createPlazaFloor({THREE,quality});scene.add(floor);
+  const urban=createUrbanLayer({THREE,quality,spriteLabel});scene.add(urban);
   const centralFountain=createCentralHub({THREE,quality,spriteLabel});scene.add(centralFountain);
   const canopy=createPlazaCanopy({THREE,quality});scene.add(canopy);
-  const cameraCollisionRoots=[],buildingRoots=[],experienceRoots=[],experienceRefs=[];
+  const cameraCollisionRoots=[urban],buildingRoots=[],experienceRoots=[],experienceRefs=[];
   let variant=0;
   for(const zone of zones){
     const layout=CAMPUS_ZONE_LAYOUT[zone.key];if(!layout)continue;const accent=new THREE.Color(zone.accent).getHex();
@@ -239,9 +274,10 @@ export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel})
       const light=new THREE.PointLight(accent,quality==='ultra'?7:4.5,10,2);light.position.copy(front);scene.add(light);
     }
   }
+  const transit=createTransitNetwork({THREE,quality,spriteLabel});scene.add(transit.root);cameraCollisionRoots.push(transit.root);
   for(const experience of CAMPUS_EXPERIENCES){
     const root=createExperienceZone({THREE,quality,experience,spriteLabel});scene.add(root);experienceRoots.push(root);
     experienceRefs.push({...experience,radius:experience.radius||3});
   }
-  return {floor,centralFountain,beacon:centralFountain,canopy,cameraCollisionRoots,buildingRoots,experienceRoots,experienceRefs};
+  return {floor,urban,transit,centralFountain,beacon:centralFountain,canopy,cameraCollisionRoots,buildingRoots,experienceRoots,experienceRefs};
 }

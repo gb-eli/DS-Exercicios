@@ -1,0 +1,225 @@
+{
+  "release": "14.10.8.56",
+  "base_release": "14.10.8.55",
+  "generated_for": "AGV Campus DS — Vertical & Dynamic World",
+  "deleted": [],
+  "files": [
+    {
+      "path": "core/edge-functions/lobby-presence/index.ts",
+      "kind": "modified",
+      "base_sha256": "E7F12FFFE847D7F37F15B3569BBDC3C80005F25DEABD3FAEAA3A9E91D1966A34",
+      "final_sha256": "19AE75C9CA8BF5A81DD0552D53870AC9BCCD68E83389EA58218317578CEAAF5F",
+      "size": 9868
+    },
+    {
+      "path": "lobby/assets/boot.js",
+      "kind": "modified",
+      "base_sha256": "91E66F2CF00E4BD14CD0F473F0244876FCC3DFF5C30CA157CD9A4A9B9E99C03C",
+      "final_sha256": "9C1ED2AD6F3887112A41D76A7F9B1CC45D81E527436A591A17D02F9E6F64D457",
+      "size": 5325
+    },
+    {
+      "path": "lobby/assets/characters/avatar-system.js",
+      "kind": "modified",
+      "base_sha256": "495BF5AD68172E978964BBAC8A6786E53A3E550B104DA10279BB66F5B9E75E8B",
+      "final_sha256": "E8518BBCF3B5728AF618A45776D0F1B4515234896AF29A1B87AD244657456243",
+      "size": 16795
+    },
+    {
+      "path": "lobby/assets/config.js",
+      "kind": "modified",
+      "base_sha256": "ECF509D70D1ED0C77162D4ACCA281F702299BE8464BB3522653CB1EC1924A96D",
+      "final_sha256": "283430C06F00588E19B902373BF8F03FF0DE312C0B407FB2DA092898A319046C",
+      "size": 307
+    },
+    {
+      "path": "lobby/assets/diagnostics.js",
+      "kind": "modified",
+      "base_sha256": "FE8650DD3BBEC13951293128D10ED0F65A3D7AF6AE9762B9C7D108EB2CDEB8FF",
+      "final_sha256": "BFEF742A1CCD0AF8A83A852ED0A0C0FABE3476560A13BB31584FC5D94476A898",
+      "size": 8947
+    },
+    {
+      "path": "lobby/assets/game/ride-manager.js",
+      "kind": "modified",
+      "base_sha256": "4069073DCD4A7760E46644B3164AEAAB0FC655F6338951F0DAC5B04BA73037C7",
+      "final_sha256": "6D37B921059093A26773173EC4BA829FCBBCA8EFA4B68B2FA1C56F7B91EFA4D2",
+      "size": 2846
+    },
+    {
+      "path": "lobby/assets/lobby-lite.js",
+      "kind": "modified",
+      "base_sha256": "AAC85867A0C90839E337C676807EAD279365C307E308105745BD1B4BFD57F4A4",
+      "final_sha256": "EC0A3AE13B897ABEBAF811FE765ACDD08518C3E0DAAA2DE269246DCC8AE79E74",
+      "size": 32872
+    },
+    {
+      "path": "lobby/assets/lobby.css",
+      "kind": "modified",
+      "base_sha256": "BCFC8ABD61CCEBFA1A5EE7ADE521C03A9C5E246AE46CBFDC5F8C226DC0A09EDD",
+      "final_sha256": "C2D716B376BBC027C7F452920EDA5EAE57079C5120DD191F8844E9F175CBC022",
+      "size": 51577
+    },
+    {
+      "path": "lobby/assets/lobby.js",
+      "kind": "modified",
+      "base_sha256": "C506F9FF7A44E62D5A511F9D24782F48EA2F5C67777559B049A0BE78A77EE99E",
+      "final_sha256": "88E6C63D92758509A0A062F8FE6CA28AF4EE258A427DB0894F99559C533545A9",
+      "size": 80549
+    },
+    {
+      "path": "lobby/assets/lobby3d.js",
+      "kind": "modified",
+      "base_sha256": "B045048588817545B9833B209ECCD011B0B5894CC3C826FDD86877FB59C1B685",
+      "final_sha256": "78AE4F4F8B63D0462CAA643E259A744846B6AF8D81E0BD1AAB8F60571089B2FF",
+      "size": 53489
+    },
+    {
+      "path": "lobby/assets/render/camera-controller.js",
+      "kind": "modified",
+      "base_sha256": "604C53E839715503B56BDF3AD6FE8A3E8D6D881EBCC381F9C597F91A794BDBA1",
+      "final_sha256": "68460A851413EB915F42A7C3996686E2E5DF38E35326A3D3322E9876F8B210F9",
+      "size": 5969
+    },
+    {
+      "path": "lobby/assets/supabase.js",
+      "kind": "modified",
+      "base_sha256": "D729C1C4FDA67D93A8236DE5296DAAC54588F16DF68BD138C4174E4FBBCC0DF8",
+      "final_sha256": "64F7B1E5E99FAEF4FB6D1AA9F17AA7EC1FFC94AB6F7A914EE9E61B8217A9B30D",
+      "size": 1208
+    },
+    {
+      "path": "lobby/assets/sw-register.js",
+      "kind": "modified",
+      "base_sha256": "CA71F50DA0C341E7E59D0CE9FEC13DE40078910AE2AF6BD4940F19E29D771681",
+      "final_sha256": "F177E7D90F6F6219C986BB4517B31B60E768DEB769654F0785EBFF046DC7979B",
+      "size": 1989
+    },
+    {
+      "path": "lobby/assets/vale-lite.js",
+      "kind": "modified",
+      "base_sha256": "964B3034AAA7DEEA2337E27192518379D8634D6F4FCA8CF30B002718766036E6",
+      "final_sha256": "8F499600EA13E1AF783FA8CC32DFA478932FEEE1029C44B144F0ACA6A2A924DD",
+      "size": 21225
+    },
+    {
+      "path": "lobby/assets/vale3d.js",
+      "kind": "modified",
+      "base_sha256": "6575C535E46A76C64C3C66155E375324301107579D970CEC551C9D637A8A242D",
+      "final_sha256": "2E72927CBE5EF0D324C05A39569A986510A3AAB82CE966FEC545309F72FE0A4C",
+      "size": 28542
+    },
+    {
+      "path": "lobby/assets/vendor-loader.js",
+      "kind": "modified",
+      "base_sha256": "B486287F789B85AF063CF722D81D768EC9B1D07B378386993EB0FA9763931B4F",
+      "final_sha256": "9B437B60156AB6257B789C6EE578C9A22EE90B615568F122655B74D0798DED11",
+      "size": 4292
+    },
+    {
+      "path": "lobby/assets/world/campus-environment.js",
+      "kind": "modified",
+      "base_sha256": "0DEAB31D8792FFA9DCA2F7E78C640CF3C359A0D0949815102683EB3B4D15FCD1",
+      "final_sha256": "7FC1E3DAA6689E4856C94684188D10FAE336B345B6CB2AF5246F314AC34B651D",
+      "size": 26238
+    },
+    {
+      "path": "lobby/assets/world/campus-experiences.js",
+      "kind": "modified",
+      "base_sha256": "854825B5947F126518C3252591A5E16CC418127A551CD5B73CD0A2C7512707C7",
+      "final_sha256": "579BCCC60DAB572F1D6F536D10A0C3B0236EF4734FB5A6F050376959C8BA622E",
+      "size": 7529
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-data.js",
+      "kind": "modified",
+      "base_sha256": "28CCDE2CD97801AE185DAF41CED349BBBF97C6FB3B7E5BAA8E1A4A0955A030B6",
+      "final_sha256": "048A7D6C13CB6F52AEDF15DEA054AA8ACA6EAAF18EE2EF80855FF73D7A65CBB4",
+      "size": 1177
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-shared.js",
+      "kind": "modified",
+      "base_sha256": "2599C307A6956D1B075FF363F68FD5D4B03156DCC0F1538AB6A7681FD0440087",
+      "final_sha256": "F533B7D32D38749CE8C792B13186006AEF5E76ABA86F20EEDFD50B1D8D727C03",
+      "size": 7214
+    },
+    {
+      "path": "lobby/index.html",
+      "kind": "modified",
+      "base_sha256": "D5DF91CA0079F58D3D8B1CE974B40C77983865DB987871FDEEBC61096BB5B2D9",
+      "final_sha256": "E1DBEEEC60E1FBD264215EA85009BA33D6D19A3A7A11A606B9580AEA5D955B96",
+      "size": 21955
+    },
+    {
+      "path": "lobby/sw.js",
+      "kind": "modified",
+      "base_sha256": "D53F1B4766A09B9AB8E27981C6E8B050D153FF2497E99740B9B248F676C46B25",
+      "final_sha256": "C31BE91992A730DE97BF8567EE762D1F275BD316761CE6D9E3DB35646A9F2C6B",
+      "size": 4537
+    },
+    {
+      "path": "smoke2d.html",
+      "kind": "modified",
+      "base_sha256": "C0053E483C8C3F67643DEBAE922BC3EBE6D77B1CC9B9196B2C0D7035BF54B5E8",
+      "final_sha256": "3F1A11E2D2D43343CA432FF8BBB7491EED5721574DD8F6105D9369DBD25777FA",
+      "size": 1786
+    },
+    {
+      "path": "smoke3d.html",
+      "kind": "modified",
+      "base_sha256": "9CEF4BE7163082265D8849258649D5BA3B94B1D905BE90DB1560414E944BB70C",
+      "final_sha256": "5A1193F03159DBA75351EC3D53C3B1050252BD01FE93B02361C73B60487AFC7F",
+      "size": 1999
+    },
+    {
+      "path": "LEIA-ME-v14.10.8.56.txt",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "08D2C0FA8807A1C4246FAC2A7396A8BD5B2102691B102458954B2B4DDD3D844E",
+      "size": 524
+    },
+    {
+      "path": "docs/ATUALIZAR-v14.10.8.56.md",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "9D4517EE6E67E531EF96D8D1AB9C08E30DFB6799D60F6D7A4A5390BB0E6C43E7",
+      "size": 2729
+    },
+    {
+      "path": "docs/DEPLOY-BACKEND-v14.10.8.56.md",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "D7E8DA19623F2BF8D87C8DBD416130193CB90415B6D2956DD749DA052E628806",
+      "size": 846
+    },
+    {
+      "path": "docs/VALIDACAO-v14.10.8.56.md",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "88C58692BA5EA9F75081CDCA017BEC91F74459AA57EBEA6C3DD51E974C8C9263",
+      "size": 3103
+    },
+    {
+      "path": "lobby/assets/game/train-manager.js",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "DD838571F782B6F4A5783813FA4C775694C7DD27987E311FC500E847D673F57C",
+      "size": 4189
+    },
+    {
+      "path": "lobby/assets/social/proximity-chat.js",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "D79D006C920F60C5911BFAFDEBDC5D2309FC1B52A4748BBCDDA022B92C164A5F",
+      "size": 2415
+    },
+    {
+      "path": "lobby/assets/world/dynamic-world.js",
+      "kind": "new",
+      "base_sha256": null,
+      "final_sha256": "0FD0BB9ECC92D9976B99135C5C46A5C6917EAB86B63103BF91FBB0D966C758A1",
+      "size": 1574
+    }
+  ]
+}

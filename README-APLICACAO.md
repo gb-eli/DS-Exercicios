@@ -1,20 +1,42 @@
-# PATCH v14.10.8.55 — Teletransporte Global + Reunião da Turma
+# v14.10.8.56 — PATCH Vertical & Dynamic World
 
-Base esperada: **v14.10.8.54**.
+Base obrigatória: **v14.10.8.55**.
 
-## O que entra
-- botão permanente `⚡ Teletransporte`;
-- Praça, laboratórios, atrações, Vale, 8 distritos e 27 empresas como destinos;
-- botão destacado `Ir para o Vale`;
-- equipe: `Trazer todos até mim`;
-- comando coletivo assinado no servidor e validado antes de ser obedecido;
-- modo 2D/3D de cada usuário é preservado;
-- nenhuma migration/schema.
+O aplicador faz preflight completo por SHA-256 antes de copiar qualquer arquivo. Se encontrar um arquivo modificado fora da base esperada, interrompe sem sobrescrever.
 
-## Aplicação
+## Aplicar
+
 ```powershell
-.\APLICAR-v14.10.8.55-TELETRANSPORTE.ps1 -Repo "C:\caminho\DS-Exercicios"
-.\VALIDAR-v14.10.8.55.ps1 -Repo "C:\caminho\DS-Exercicios"
+Set-ExecutionPolicy -Scope Process Bypass -Force
+& ".\APLICAR-v14.10.8.56.ps1" -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
+& ".\VALIDAR-v14.10.8.56.ps1" -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
 ```
 
-Antes de usar `Trazer todos até mim`, publique a Edge Function `lobby-presence` atualizada. Consulte `payload/docs/DEPLOY-BACKEND-v14.10.8.55.md`.
+Depois revise:
+
+```powershell
+git status
+git diff --name-status
+```
+
+**Não publique se houver qualquer linha começando com `D`.**
+
+## Commit sugerido
+
+```powershell
+git add -A
+git commit -m "feat: Lobby Vertical & Dynamic World v14.10.8.56"
+git push origin main
+```
+
+## Backend
+
+Não existe migration. Para o chat por proximidade e para manter a reunião coletiva autenticada:
+
+```powershell
+supabase functions deploy lobby-presence --project-ref iresvqwyaqotghjssncg
+```
+
+## Rollback
+
+Após publicação, use `ROLLBACK-v14.10.8.56.ps1` para criar um `git revert` seguro.
