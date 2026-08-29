@@ -1,4 +1,6 @@
+import { CAMPUS_TOOL_EXPERIENCES } from './campus-destinations.js?v=14.10.8.59';
 export const CAMPUS_EXPERIENCES=Object.freeze([
+  ...CAMPUS_TOOL_EXPERIENCES,
   Object.freeze({id:'vale-portal',type:'vale-portal',name:'Portal Vale do Silício AGV',label:'VALE DO SILÍCIO AGV',subtitle:'27 EMPRESAS • 8 DISTRITOS',x:0,z:-15.4,radius:5.8,accent:'#51e7a3',interaction:'Viajar para o Vale',description:'Empresas e projetos criados pelos alunos. Entrada principal para a cidade tecnológica estudantil.'}),
   Object.freeze({id:'parkour',type:'parkour',name:'Circuito Parkour',label:'PARKOUR 01—05',x:-10.5,z:18.4,radius:4.4,accent:'#ff6b7a',interaction:'Iniciar circuito',description:'Circuito de plataformas e checkpoints para usar enquanto a atividade não começa.'}),
   Object.freeze({id:'pool',type:'pool',name:'Piscina Neon',label:'PISCINA NEON',x:10.4,z:18.2,radius:3.7,accent:'#43d9ff',interaction:'Relaxar no deck',description:'Área de convivência com água animada e deck iluminado.'}),

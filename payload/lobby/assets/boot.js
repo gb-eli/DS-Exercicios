@@ -1,4 +1,4 @@
-const VERSION='14.10.8.56';
+const VERSION='14.10.8.59';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');

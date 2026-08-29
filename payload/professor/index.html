@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>AGV — Console Professor</title>
+  <link rel="stylesheet" href="assets/professor.css?v=14.10.8.28">
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script></head>
+<body>
+  <main class="shell">
+    <section id="login-view" class="login-card hidden"><p class="eyebrow">SESSÃO ÚNICA</p><h2>Login central do Portal AGV</h2><p>Esta área reutiliza a mesma sessão do Hub. Se necessário, use a tela oficial de autenticação.</p><a class="button primary" href="../auth/?returnTo=professor/">Ir para o login oficial</a><p id="login-message" class="message" aria-live="polite"></p></section>
+
+    <section id="app-view" class="app hidden">
+      <header class="topbar">
+        <div><p class="eyebrow">Modo Professor</p><h1>Acompanhamento + aula guiada</h1><p class="top-subtitle">Turma ao vivo, liberações e referência privada em uma única tela.</p></div>
+        <div class="account"><span id="staff-name"></span><span id="staff-role" class="chip"></span><button id="open-hub" class="ghost" type="button">Hub</button><button id="open-lobby" class="ghost" type="button">Lobby</button><button id="teacher-release-toggle" class="ghost" type="button">Liberações</button><button id="teacher-github-audit-toggle" class="ghost" type="button">Auditoria GitHub</button><button id="teacher-github-simulator-toggle" class="ghost" type="button">Simular baixa</button><button id="teacher-import-toggle" class="ghost hidden" type="button">Importar gabaritos</button><button id="logout" class="ghost" type="button">Sair</button></div>
+      </header>
+
+      <section id="teacher-command-center" class="teacher-command-center panel" aria-labelledby="teacher-command-title">
+        <div class="teacher-command-head"><div><p class="eyebrow">Central do professor</p><h2 id="teacher-command-title">Sua turma em um único painel</h2><p class="muted">Comece pela prioridade do momento e aprofunde somente quando necessário.</p></div><div class="top-actions"><a class="primary teacher-exam-link" href="../recuperacao/admin.html">Recuperação 2DS Sub</a><a class="ghost teacher-exam-link" href="../prova/admin.html">Modo Prova Prática</a></div></div>
+        <div class="teacher-command-kpis"><article><span>Alunos</span><strong id="teacher-kpi-students">0</strong></article><article><span>Ativos agora</span><strong id="teacher-kpi-online">0</strong></article><article><span>Em andamento</span><strong id="teacher-kpi-working">0</strong></article><article><span>Para revisar</span><strong id="teacher-kpi-review">0</strong></article><article><span>Média de acerto</span><strong id="teacher-kpi-score">—</strong></article></div>
+        <nav class="teacher-command-actions" aria-label="Atalhos de gestão"><button type="button" data-teacher-go="live">Acompanhar turma</button><button type="button" data-teacher-go="release">Liberar atividade</button><button type="button" data-teacher-go="students">Alunos e entregas</button><button type="button" data-teacher-go="review">Correção e feedback</button></nav>
+      </section>
+
+      <section id="teacher-release-panel" class="panel release-panel hidden">
+        <div class="release-head"><div><p class="eyebrow">Controle pedagógico</p><h2>Liberação em aula</h2><p class="muted">Libere para a turma inteira ou crie uma exceção individual sem sair do acompanhamento.</p></div><span id="release-state" class="chip">Sem override</span></div>
+        <div class="release-scope" role="group" aria-label="Escopo da liberação"><button id="scope-class" class="scope-button active" type="button">Turma inteira</button><button id="scope-group" class="scope-button" type="button">Vários alunos</button><button id="scope-student" class="scope-button" type="button">Aluno específico</button></div>
+        <div class="release-form-grid"><label>Turma<select id="release-class"></select></label><label id="release-student-wrap" class="hidden">Aluno<select id="release-student"></select></label><label>Atividade<select id="release-exercise"></select></label><label>Abertura<input id="release-at" type="datetime-local"></label><label>Prazo / encerramento<input id="lock-at" type="datetime-local"></label></div><div id="release-group-wrap" class="release-group-wrap hidden"><div class="release-group-head"><strong>Selecione os alunos</strong><div><button id="release-group-all" class="ghost" type="button">Todos</button><button id="release-group-none" class="ghost" type="button">Nenhum</button></div></div><div id="release-group-list" class="release-group-list"></div></div>
+        <div class="release-quick-actions"><button id="release-now" class="primary" type="button">Liberar agora</button><button id="release-block-now" class="ghost danger" type="button">Bloquear agora</button><button id="release-clear-schedule" class="ghost" type="button">Limpar horários</button></div>
+        <div class="release-checks"><label><input id="release-enabled" type="checkbox" checked> Habilitada</label><label><input id="release-html" type="checkbox"> HTML base</label><label><input id="release-css" type="checkbox"> CSS base</label><label><input id="release-js" type="checkbox"> JS base</label><label><input id="release-hints" type="checkbox"> Dicas extras</label><label><input id="release-guided" type="checkbox"> Ajuda guiada</label></div>
+        <div class="release-actions"><button id="release-save" class="primary" type="button">Salvar configuração</button></div><p id="release-message" class="message" aria-live="polite"></p>
+        <section class="release-roster" aria-labelledby="release-roster-title"><div class="release-roster-head"><div><p class="eyebrow">Conferência</p><h3 id="release-roster-title">Quem recebeu esta atividade?</h3></div><div class="release-roster-kpis"><span><b id="release-roster-open">0</b> liberados</span><span><b id="release-roster-scheduled">0</b> programados</span><span><b id="release-roster-blocked">0</b> bloqueados</span><span><b id="release-roster-completed">0</b> concluídos</span></div></div><div id="release-roster-list" class="release-roster-list"><div class="mini-empty">Selecione turma e atividade.</div></div></section>
+      </section>
+
+
+      <section id="teacher-github-audit-panel" class="panel github-audit-panel hidden" aria-labelledby="github-audit-title">
+        <div class="github-audit-head">
+          <div><p class="eyebrow">Auditoria histórica privada</p><h2 id="github-audit-title">Revisão das entregas GitHub</h2><p class="muted">Carregue o JSON privado da auditoria. Os dados permanecem no navegador e nenhuma decisão é enviada ao Supabase nesta versão.</p></div>
+          <div class="github-audit-head-actions"><span id="github-audit-mode" class="chip">Somente leitura</span><button id="github-audit-export" class="ghost" type="button" disabled>Exportar decisões</button></div>
+        </div>
+        <div class="github-audit-import">
+          <label class="audit-file">Relatório privado JSON<input id="github-audit-file" type="file" accept="application/json,.json"></label>
+          <div class="audit-warning"><strong>Privacidade protegida</strong><span>O relatório com nomes e repositórios não faz parte do pacote publicável do site.</span></div>
+        </div>
+        <div id="github-audit-content" class="hidden">
+          <div class="github-audit-kpis">
+            <article><span>Auditadas</span><strong id="ga-kpi-total">0</strong></article><article><span>Avaliáveis</span><strong id="ga-kpi-gradeable">0</strong></article><article><span>Revisão manual</span><strong id="ga-kpi-manual">0</strong></article><article><span>Decisões em rascunho</span><strong id="ga-kpi-decisions">0</strong></article>
+          </div>
+          <div class="github-audit-filters">
+            <label>Aluno<input id="ga-search" type="search" placeholder="Buscar aluno"></label>
+            <label>Turma<select id="ga-class"><option value="all">Todas</option></select></label>
+            <label>Disciplina<select id="ga-subject"><option value="all">Todas</option></select></label>
+            <label>Status<select id="ga-status"><option value="all">Todos</option></select></label>
+            <label>Decisão<select id="ga-decision"><option value="all">Todas</option><option value="none">Sem decisão</option><option value="approved">Aprovado</option><option value="score_adjusted">Nota ajustada</option><option value="request_fix">Solicitar correção</option><option value="review">Revisar vínculo</option><option value="not_corresponding">Não correspondente</option></select></label>
+          </div>
+          <div class="github-audit-layout">
+            <div><div id="ga-list" class="github-audit-list"></div><p id="ga-list-count" class="live-footnote"></p></div>
+            <aside id="ga-detail" class="github-audit-detail"><div class="mini-empty">Selecione uma atividade auditada.</div></aside>
+          </div>
+        </div>
+        <p id="github-audit-message" class="message" aria-live="polite">Nenhum relatório privado carregado.</p>
+      </section>
+
+      <section id="teacher-github-simulator-panel" class="panel github-sim-panel hidden" aria-labelledby="github-sim-title">
+        <div class="github-sim-head">
+          <div><p class="eyebrow">Pré-aplicação auditável</p><h2 id="github-sim-title">Simulador de baixa e nota</h2><p class="muted">Importe o JSON de decisões exportado pelo painel de Auditoria GitHub. O simulador lê o estado atual do Supabase e mostra antes → depois sem gravar nenhuma alteração.</p></div>
+          <div class="github-sim-head-actions"><span class="chip">0 escrita</span><button id="github-sim-export" class="ghost" type="button" disabled>Exportar plano</button></div>
+        </div>
+        <div class="github-sim-import">
+          <label class="audit-file">Decisões do professor JSON<input id="github-sim-decisions-file" type="file" accept="application/json,.json"></label>
+          <button id="github-sim-run" class="primary" type="button" disabled>Simular com estado atual</button>
+          <div class="audit-warning"><strong>Regra de segurança</strong><span>Nota 0–10 é convertida explicitamente para 0–100. Redução de nota existente, origem diferente e vínculo suspeito bloqueiam o plano.</span></div>
+        </div>
+        <div id="github-sim-content" class="hidden">
+          <div class="github-sim-kpis">
+            <article><span>Decisões</span><strong id="gs-kpi-decisions">0</strong></article><article><span>Aplicáveis</span><strong id="gs-kpi-safe">0</strong></article><article><span>Bloqueadas</span><strong id="gs-kpi-blocked">0</strong></article><article><span>Sem alteração</span><strong id="gs-kpi-noop">0</strong></article>
+          </div>
+          <div class="github-sim-filters">
+            <label>Aluno<input id="gs-search" type="search" placeholder="Buscar aluno"></label>
+            <label>Risco<select id="gs-risk"><option value="all">Todos</option><option value="safe">Aplicáveis</option><option value="blocked">Bloqueados</option><option value="noop">Sem alteração</option></select></label>
+            <label>Decisão<select id="gs-decision"><option value="all">Todas</option><option value="approved">Aprovar</option><option value="score_adjusted">Nota ajustada</option><option value="request_fix">Solicitar correção</option><option value="review">Revisar vínculo</option><option value="not_corresponding">Não correspondente</option></select></label>
+          </div>
+          <div class="github-sim-layout">
+            <div><div id="gs-list" class="github-sim-list"></div><p id="gs-list-count" class="live-footnote"></p></div>
+            <aside id="gs-detail" class="github-sim-detail"><div class="mini-empty">Selecione uma decisão simulada.</div></aside>
+          </div>
+        </div>
+        <p id="github-sim-message" class="message" aria-live="polite">Nenhum arquivo de decisões carregado.</p>
+      </section>
+
+      <section id="teacher-live-panel" class="panel live-panel">
+        <div class="live-head">
+          <div><p class="eyebrow">Sala de aula</p><h2>Acompanhamento da turma</h2><p class="muted">Veja quem está trabalhando, o exercício atual e quem precisa de atenção.</p></div>
+          <div class="live-actions"><label class="compact-field">Turma<select id="live-class"><option value="all">Todas</option></select></label><button id="live-refresh" class="ghost" type="button">Atualizar</button></div>
+        </div>
+        <div class="live-kpis" aria-label="Resumo da turma">
+          <article><span>Alunos</span><strong id="live-total">0</strong></article>
+          <article><span>Ativos agora</span><strong id="live-online">0</strong></article>
+          <article><span>Em atividade</span><strong id="live-working">0</strong></article>
+          <article><span>Precisam atenção</span><strong id="live-attention">0</strong></article>
+        </div>
+        <div id="live-list" class="live-list"><div class="mini-empty">Carregando turma…</div></div>
+        <p class="live-footnote">“Ativo agora” usa heartbeat/sessão recente quando disponível; sem telemetria recente, o painel mostra o último progresso conhecido sem afirmar presença.</p>
+      </section>
+
+      <section id="teacher-import-panel" class="panel import-panel hidden">
+        <div><p class="eyebrow">Administração privada</p><h2>Importar gabaritos Professor</h2><p class="muted">Selecione o JSON privado gerado a partir dos pacotes Professor. O arquivo é enviado em lotes autenticados e não é incorporado ao bundle aluno.</p></div>
+        <input id="teacher-import-file" type="file" accept="application/json,.json">
+        <button id="teacher-import-run" class="primary" type="button">Importar arquivo privado</button>
+        <p id="teacher-import-message" class="message" aria-live="polite"></p>
+      </section>
+
+      <div class="workspace">
+        <aside class="sidebar panel">
+          <div class="field"><label for="class-filter">Turma</label><select id="class-filter"><option value="all">Todas as turmas</option></select></div>
+          <div class="field"><label for="student-search">Aluno</label><input id="student-search" type="search" placeholder="Buscar nome ou e-mail"></div>
+          <div id="student-list" class="student-list"></div>
+        </aside>
+
+        <section class="activities panel">
+          <div class="panel-head"><div><p class="eyebrow">Aluno selecionado</p><h2 id="student-title">Selecione um aluno</h2></div><span id="activity-count" class="chip">0 atividades</span></div>
+          <div id="student-meta" class="student-meta muted"></div>
+          <div id="activity-list" class="activity-list empty"><p>As atividades recentes aparecerão aqui.</p></div>
+        </section>
+
+        <section class="reference panel">
+          <div class="panel-head"><div><p class="eyebrow">Referência privada</p><h2 id="reference-title">Gabarito explicado</h2></div><div class="reference-head-actions"><span id="reference-source" class="chip">Protegido</span><button id="guided-open" class="ghost hidden" type="button">Aula guiada</button></div></div>
+          <div id="reference-empty" class="empty-state">
+            <strong>Abra uma atividade</strong>
+            <span>O gabarito só é solicitado ao servidor depois da seleção.</span>
+          </div>
+          <div id="reference-content" class="hidden">
+            <div class="split-summary">
+              <article><span class="label">Estado do aluno</span><strong id="progress-status">—</strong><small id="progress-meta"></small></article>
+              <article><span class="label">Resposta esperada</span><div id="answer-text" class="answer-text"></div></article>
+            </div>
+            <section class="review-box" id="review-box">
+              <div><span class="label">Validação do professor</span><strong id="review-status">—</strong></div>
+              <label for="review-feedback">Feedback para o aluno</label>
+              <textarea id="review-feedback" rows="4" maxlength="2000" placeholder="Explique o que está correto ou o que precisa ser ajustado."></textarea>
+              <div class="review-actions"><button id="request-changes" class="ghost danger" type="button">Solicitar ajustes</button><button id="approve-activity" class="primary" type="button">Aprovar atividade</button></div>
+              <p id="review-message" class="message" aria-live="polite"></p>
+            </section>
+            <section class="reference-section"><h3>Explicação</h3><div id="explanation" class="prose"></div></section>
+            <section id="files-section" class="reference-section hidden"><div class="section-head"><h3>Solução preenchida</h3><div id="file-tabs" class="file-tabs"></div></div><pre id="solution-code" class="code"></pre></section>
+            <section class="reference-grid">
+              <article><h3>Critérios / rubrica</h3><div id="rubric" class="list"></div></article>
+              <article><h3>Intervenção pedagógica</h3><div id="tips" class="list"></div></article>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <section id="guided-modal" class="guided-modal hidden" role="dialog" aria-modal="true" aria-labelledby="guided-title">
+        <div class="guided-shell">
+          <header class="guided-header"><div><p class="eyebrow">Professor guiado</p><h2 id="guided-title">Aula guiada</h2><p id="guided-subtitle" class="muted"></p></div><button id="guided-close" class="ghost" type="button">Fechar</button></header>
+          <div class="guided-toolbar"><label>Arquivo<select id="guided-file"></select></label><span id="guided-step" class="chip">Etapa 0/0</span><button id="guided-prev" class="ghost" type="button">Anterior</button><button id="guided-play" class="ghost" type="button">▶ Reproduzir</button><button id="guided-next" class="primary" type="button">Próximo</button></div>
+          <div class="guided-grid">
+            <section class="guided-code-panel"><div class="guided-panel-title"><span>Código</span><small>Revelação progressiva</small></div><pre id="guided-code" class="guided-code"></pre></section>
+            <section class="guided-explain-panel"><div class="guided-panel-title"><span>Explicação</span><small>Base para condução da aula</small></div><div id="guided-explanation" class="guided-explanation"></div><div id="guided-keypoints" class="guided-keypoints"></div></section>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="assets/config.js?v=14.10.8.18"></script>
+  <script src="../core/session/agv-session.js?v=14.10.8.18"></script>
+  <script src="assets/professor.js?v=14.10.8.28"></script>
+  <script src="assets/legacy-github-review.js?v=14.10.8.18"></script>
+  <script src="assets/legacy-github-apply-simulator.js?v=14.10.8.18"></script>
+</body>
+</html>

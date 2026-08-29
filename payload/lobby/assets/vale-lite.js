@@ -1,5 +1,5 @@
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.56';
-import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.56';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.59';
+import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.59';
 
 const lerp=(a,b,t)=>a+(b-a)*t;
 const rgba=(hex,a=.2)=>{const h=String(hex||'#36d2ff').replace('#','');const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16);return`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;};

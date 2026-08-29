@@ -1,9 +1,9 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.56';
-import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.56';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.56';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.56';
-import { createTrainManager } from './game/train-manager.js?v=14.10.8.56';
-import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.56';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.59';
+import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.59';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.59';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.59';
+import { createTrainManager } from './game/train-manager.js?v=14.10.8.59';
+import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.59';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -87,7 +87,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
     if(exp.type==='vale-portal'){
-      // v14.10.8.56: entrada monumental e legível já na primeira tela 2D.
+      // v14.10.8.59: entrada monumental e legível já na primeira tela 2D.
       const portalPulse=.55+.45*Math.sin(time*2.4);
       ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
       rr(-3.85*s,-2.45*s,7.7*s,4.85*s,.65*s,'rgba(4,24,24,.88)',hexToRgba(accent,.55),Math.max(1,.12*s));
@@ -103,6 +103,13 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
       rr(-3.1*s,1.55*s,6.2*s,.62*s,.22*s,'rgba(2,16,19,.94)',hexToRgba(accent,.48));
       text('EMPRESAS DOS ALUNOS',0,1.86*s,{size:Math.max(7,.44*s),weight:900,color:'#caffdf',align:'center'});
       text('27 empresas • 8 distritos',0,2.35*s,{size:Math.max(6,.34*s),weight:780,color:'#8ff2bd',align:'center'});
+    }else if(exp.type==='tool-building'){
+      rr(-3.15*s,-2.05*s,6.3*s,4.1*s,.48*s,'rgba(7,24,32,.95)',hexToRgba(accent,.72),Math.max(1,.11*s));
+      rr(-2.75*s,-1.65*s,5.5*s,.42*s,.14*s,hexToRgba(accent,.14),hexToRgba(accent,.48));
+      for(const x of[-1.65,0,1.65])for(const y of[-.85,.25])rr((x-.47)*s,(y-.32)*s,.94*s,.64*s,.08*s,hexToRgba(accent,.11),hexToRgba(accent,.35));
+      rr(-.65*s,.65*s,1.3*s,1.38*s,.18*s,hexToRgba(accent,.22),hexToRgba(accent,.78));
+      text(exp.icon||'◆',0,-1.42*s,{size:Math.max(10,.8*s),weight:900,color:accent,align:'center'});
+      if(exp.subtitle)text(exp.subtitle,0,1.82*s,{size:Math.max(6,.34*s),weight:800,color:'#cbe7ef',align:'center'});
     }else if(exp.type==='pool'){
       rr(-3.1*s,-1.9*s,6.2*s,3.8*s,.7*s,'rgba(24,101,137,.58)',hexToRgba(accent,.72),Math.max(1,.12*s));
       for(let i=-2;i<=2;i++){ctx.strokeStyle=`rgba(117,226,255,${.15+.12*pulse})`;ctx.lineWidth=Math.max(1,.08*s);ctx.beginPath();ctx.moveTo(-2.55*s,(i*.55+.12*Math.sin(time*2+i))*s);ctx.quadraticCurveTo(0,(i*.55+.35*Math.sin(time*2.3+i))*s,2.55*s,(i*.55+.12*Math.cos(time*2+i))*s);ctx.stroke();}

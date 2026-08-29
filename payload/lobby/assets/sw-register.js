@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const VERSION='14.10.8.56';
+  const VERSION='14.10.8.59';
   const result={supported:false,registered:false,controlled:false,error:null};
 
   globalThis.__agvLobbySwReady=(async()=>{

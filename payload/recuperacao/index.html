@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071018">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <title>DS — Retomada & Recuperação</title>
+  <link rel="stylesheet" href="assets/recovery.css?v=14.10.8.30">
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script></head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../"><span class="brand-mark">DS</span><span><strong>Retomada & Recuperação DS</strong><small>Treino sincronizado + prova gamificada</small></span></a>
+  <div class="top-actions"><span id="connection-pill" class="pill">Conectando</span><a class="button ghost" href="../">Hub</a><button id="logout" class="ghost hidden" type="button">Sair</button></div>
+</header>
+<main class="shell">
+  <section id="login-view" class="login-layout hidden"><p class="eyebrow">SESSÃO ÚNICA</p><h2>Login central do Portal AGV</h2><p>Esta área reutiliza a mesma sessão do Hub. Se necessário, use a tela oficial de autenticação.</p><a class="button primary" href="../auth/?returnTo=recuperacao/">Ir para o login oficial</a><p id="login-message" class="message" aria-live="polite"></p></section>
+  <section id="app-view" class="app-grid hidden">
+    <section class="panel stage-head"><div><p class="eyebrow">Área do aluno</p><h1 id="student-name">Recuperações</h1><p id="student-subtitle" class="muted">Selecione uma recuperação liberada pelo professor.</p></div><div class="session-meta"><span id="student-xp" class="pill">XP 0</span><span id="student-status" class="pill">Online</span></div></section>
+    <div id="content"></div>
+  </section>
+</main>
+<div id="effect-overlay" class="effect-overlay"></div>
+<div id="chat-root"></div>
+<div id="fullscreen-gate" class="fullscreen-gate hidden"><article class="panel fullscreen-card"><p class="eyebrow">Modo prova</p><h1>Tela cheia obrigatória</h1><p>Esta recuperação é individual e sem consulta. Entradas e saídas da tela cheia e perda de foco podem ser registradas para acompanhamento pedagógico.</p><button id="enter-fullscreen" class="primary" type="button">Entrar em tela cheia</button></article></div>
+<div id="offline" class="offline-banner hidden">Conexão instável. Não avance até a conexão voltar. Respostas ainda não salvas permanecem somente nesta tela.</div>
+<script src="../core/session/agv-session.js?v=14.10.8.19.1"></script>
+<script src="assets/config.js?v=14.10.8.30"></script>
+<script src="assets/catalog.js?v=14.10.8.30"></script>
+<script src="assets/ui.js?v=14.10.8.30"></script>
+<script src="assets/student.js?v=14.10.8.30"></script>
+</body>
+</html>
+
+

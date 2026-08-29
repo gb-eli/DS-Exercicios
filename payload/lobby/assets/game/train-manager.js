@@ -1,4 +1,4 @@
-import { CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE } from '../world/campus-experiences.js?v=14.10.8.56';
+import { CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE } from '../world/campus-experiences.js?v=14.10.8.59';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const smooth=t=>t*t*(3-2*t);
 const dist=(a,b)=>Math.hypot(b.x-a.x,b.z-a.z);

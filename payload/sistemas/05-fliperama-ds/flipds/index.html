@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#070b17" />
+    <meta name="description" content="Fliperama DS — A Evolução dos Jogos: história, programação e laboratórios jogáveis." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/fliperama-ds.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./app.css" />
+    <title>Fliperama DS v0.39.0-hotfix1</title>
+    <script>
+      (() => {
+        if (typeof window.matchMedia !== 'function') {
+          window.matchMedia = function () { return { matches: false, media: '', addListener: function(){}, removeListener: function(){}, addEventListener: function(){}, removeEventListener: function(){}, dispatchEvent: function(){ return false; } }; };
+        }
+        if (typeof window.requestAnimationFrame !== 'function') window.requestAnimationFrame = function (cb) { return setTimeout(function(){ cb(Date.now()); }, 16); };
+        if (typeof window.cancelAnimationFrame !== 'function') window.cancelAnimationFrame = function (id) { clearTimeout(id); };
+        if (typeof Object.fromEntries !== 'function') Object.fromEntries = function (entries) { var out = {}; for (var i = 0; i < entries.length; i++) out[entries[i][0]] = entries[i][1]; return out; };
+        const renderFatal = (title, detail) => {
+          const mount = document.querySelector('#app');
+          if (!mount || !mount.textContent.includes('Carregando Fliperama DS')) return;
+          mount.innerHTML = `
+            <main style="max-width:760px;margin:8vh auto;padding:24px;font:500 1rem/1.55 system-ui;color:#e9f1ff;background:#0b1425;border:1px solid #28466e;border-radius:20px;box-shadow:0 24px 70px #0008">
+              <p style="margin:0 0 8px;color:#7ee7ff;font-weight:800;letter-spacing:.08em">DIAGNÓSTICO DE INICIALIZAÇÃO</p>
+              <h1 style="margin:.2rem 0 1rem;font-size:clamp(1.5rem,4vw,2.25rem)">${title}</h1>
+              <p>${detail}</p>
+              <p>Atualize a página. Se o problema continuar, abra <a style="color:#7ee7ff" href="./diagnostico.html">diagnostico.html</a> para verificar os arquivos e o navegador.</p>
+              <button onclick="location.reload()" style="border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer">Tentar novamente</button>
+            </main>`;
+        };
+        window.__fliperamaFatal = renderFatal;
+        window.addEventListener('error', (event) => {
+          if (event.target && event.target.tagName === 'SCRIPT') {
+            renderFatal('Não foi possível carregar o código principal.', 'O arquivo app.js não foi encontrado, foi bloqueado ou está incompleto.');
+            return;
+          }
+          const message = event && event.message ? event.message : 'Erro de JavaScript durante a inicialização.';
+          console.error('[Fliperama DS] Erro de inicialização:', event.error || event);
+          renderFatal('A plataforma encontrou um erro ao iniciar.', message);
+        }, true);
+        window.addEventListener('unhandledrejection', (event) => {
+          const message = event.reason instanceof Error ? event.reason.message : String(event.reason || 'Erro inesperado');
+          console.error('[Fliperama DS] Promessa não tratada:', event.reason);
+          const mount = document.querySelector('#app');
+          if (mount && mount.textContent.includes('Carregando Fliperama DS')) {
+            renderFatal('A plataforma não concluiu a inicialização.', message);
+          }
+        });
+        window.setTimeout(() => {
+          const mount = document.querySelector('#app');
+          if (mount && mount.textContent.includes('Carregando Fliperama DS')) {
+            renderFatal('O carregamento demorou mais que o esperado.', 'Verifique o pacote, o cache do navegador e a disponibilidade do JavaScript.');
+          }
+        }, 30000);
+      })();
+    </script>
+  <link rel="stylesheet" href="../../../core/session/fullscreen-portal.css?v=14.10.8.18"><script src="../../../core/session/unified-auth-guard.js?v=14.10.8.59"></script></head>
+  <body>
+    <div id="app"><p style="margin:2rem;font:600 1rem system-ui;color:#dce8ff">Carregando Fliperama DS…</p></div>
+    <noscript><p style="margin:2rem;font:600 1rem system-ui;color:#dce8ff">Ative o JavaScript para abrir o Fliperama DS.</p></noscript>
+    <script src="./agv-core-session.js"></script>
+    <script defer src="./app.js"></script>
+  <script src="../../../core/session/fullscreen-portal.js?v=14.10.8.18"></script><script src="../../../core/session/agv-session.js?v=14.10.8.18"></script><script src="../../../core/session/fullscreen-platform-bridge.js?v=14.10.8.18"></script></body>
+</html>

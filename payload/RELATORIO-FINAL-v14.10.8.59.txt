@@ -1,0 +1,23 @@
+RELATÓRIO FINAL — v14.10.8.59 — Unified Auth & Central Hub
+Base: v14.10.8.58
+Data: 2026-08-29
+
+VALIDAÇÃO
+- uma tela oficial de login: /auth/
+- Google + e-mail/senha/CGM + recuperação: integrado
+- superfícies oficiais com guard central: 18/18
+- login por senha paralelo nas superfícies oficiais: 0
+- destinos do Lobby: 10/10
+- migrations/SQL alterados: 0
+- Client Secret Google/sb_secret no frontend: 0
+- arquivos removidos: 0
+- Google OAuth real: SMOKE PÓS-PUBLICAÇÃO PENDENTE
+- WebGL autenticado: SMOKE PÓS-PUBLICAÇÃO PENDENTE
+
+CACHE
+- vendor-loader: v14.10.8.59
+- Vale data/shared: v14.10.8.59
+- Service Worker Lobby: v14.10.8.59
+
+SEGURANÇA
+Rotacionar o Client Secret Google que apareceu anteriormente em captura de tela antes de produção.

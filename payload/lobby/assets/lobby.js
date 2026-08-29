@@ -1,15 +1,16 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.56';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.56';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.56';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.56';
-import { createValeLite } from './vale-lite.js?v=14.10.8.56';
-import { createVale3D } from './vale3d.js?v=14.10.8.56';
-import { VALE_BOUNDS, VALE_FAST_TRAVEL_STATIC, valePresenceToWorld, valeWorldToPresence } from './world/vale-silicio-shared.js?v=14.10.8.56';
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.56';
-import { worldToPresence, presenceToWorld } from './world/campus-manifest.js?v=14.10.8.56';
-import { CAMPUS_EXPERIENCES } from './world/campus-experiences.js?v=14.10.8.56';
-import { createProximityChat } from './social/proximity-chat.js?v=14.10.8.56';
-import { AVATAR_STYLE_PRESETS } from './characters/avatar-system.js?v=14.10.8.56';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.59';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.59';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.59';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.59';
+import { createValeLite } from './vale-lite.js?v=14.10.8.59';
+import { createVale3D } from './vale3d.js?v=14.10.8.59';
+import { VALE_BOUNDS, VALE_FAST_TRAVEL_STATIC, valePresenceToWorld, valeWorldToPresence } from './world/vale-silicio-shared.js?v=14.10.8.59';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.59';
+import { worldToPresence, presenceToWorld } from './world/campus-manifest.js?v=14.10.8.59';
+import { CAMPUS_EXPERIENCES } from './world/campus-experiences.js?v=14.10.8.59';
+import { createProximityChat } from './social/proximity-chat.js?v=14.10.8.59';
+import { AVATAR_STYLE_PRESETS } from './characters/avatar-system.js?v=14.10.8.59';
+import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.59';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{
@@ -358,6 +359,18 @@ function showValeCompany(company){
 }
 function handleWorldObject(obj){
   if(!obj)return false;
+  if(obj.type==='tool-building'){
+    const destination=CAMPUS_DESTINATION_MAP[obj.id]||obj;
+    const role=String(state.profile?.role||'student'),staff=['teacher','admin','super_admin'].includes(role);
+    const route=destination.id==='practical-exam'&&staff?(destination.staffRoute||destination.route):destination.route;
+    if(!route){toast('Destino ainda não possui rota publicada.');return true;}
+    const projectRoot=new URL('../',window.location.href);
+    const target=new URL(route,projectRoot);
+    document.querySelector('.game-stage')?.classList.add('portal-travel');
+    toast(`Abrindo ${destination.name}…`);
+    setTimeout(()=>location.assign(target.href),320);
+    return true;
+  }
   if(obj.type==='vale-portal'){enterVale().catch(error=>{console.error(error);toast('Não foi possível abrir o Vale agora.');});return true}
   if(obj.type==='return-portal'){returnToCampus().catch(error=>{console.error(error);toast('Não foi possível voltar ao Campus agora.');});return true}
   if(obj.type==='vale-company'){showValeCompany(obj.company);return true}
@@ -398,7 +411,7 @@ function renderInteraction(){
   const b=$('interaction');if(state.nearStudent){b.classList.remove('hidden');$('interaction-title').textContent=`${isStaff()&&state.nearStudent.participant_role==='student'?'Interagir':'Conversar'} — ${state.nearStudent.display_name}`;$('interaction-text').textContent=isStaff()&&state.nearStudent.participant_role==='student'?`${className(state.nearStudent.class_id)} • conversar, reações e moderação`:'Aproxime-se e pressione E para abrir o chat local.';$('interaction-button').textContent=isStaff()&&state.nearStudent.participant_role==='student'?'Opções':'Conversar 💬';return}
   if(state.seated){b.classList.remove('hidden');$('interaction-title').textContent='Banco da Praça';$('interaction-text').textContent='Você está sentado. Pressione E para levantar.';$('interaction-button').textContent='Levantar';return}
   if(state.nearSeat){b.classList.remove('hidden');$('interaction-title').textContent='Banco da Praça';$('interaction-text').textContent='Faça uma pausa no campus.';$('interaction-button').textContent='Sentar';return}
-  if(state.nearWorldObject){const o=state.nearWorldObject;b.classList.remove('hidden');$('interaction-title').textContent=o.name||o.label||'Campus';const copy={npc:'Monitor virtual • orientação do campus',meet:'Ponto de encontro da turma',kiosk:'Totem interativo do campus','building-entrance':'Porta automática com sensor • entrar no laboratório','interior-exit':'Porta automática com sensor • voltar à praça','lab-terminal':'Estação interativa • sentar e ligar o monitor',smartboard:'Quadro inteligente • conteúdo contextual','presentation-spot':isStaff()?'Posição de apresentação da equipe':'Área reservada à equipe pedagógica','lab-portal':'Portal pedagógico interno',parkour:'Circuito de saltos e checkpoints • treino local sem nota',pool:'Piscina Neon • área de convivência',playground:'Parquinho DS • balanço e gangorra',slide:'Escorregador Turbo • acesso e descida',coaster:'Monotrilho AGV • escolher estação e viajar',tower:'Torre de Controle AGV • mirante panorâmico','train-station':'Estação do Monotrilho AGV • escolher destino','vale-portal':'Portal para a cidade tecnológica dos projetos dos alunos','return-portal':'Retornar ao Campus DS','vale-company':'Empresa/projeto estudantil • conhecer equipe e entrar no prédio','vale-company-exit':'Sair do prédio e voltar às ruas do Vale','vale-npc':'NPC institucional • orientação e acolhimento','vale-environment':'Ambiente institucional do Campus AGV','vale-sport':'Complexo esportivo • preparado para futuros minijogos','vale-hangar':'Hangar e mobilidade do Campus','vale-racetrack':'Pista de corrida e exploração','vale-vehicle':'Veículo de ambientação e mobilidade'};$('interaction-text').textContent=copy[o.type]||o.description||'Objeto interativo';$('interaction-button').textContent=o.type==='npc'?'Conversar':o.type==='building-entrance'?'Entrar':o.type==='interior-exit'?'Sair':o.type==='lab-terminal'?'Usar estação':o.type==='smartboard'?'Exibir':o.type==='presentation-spot'?(isStaff()?'Apresentar':'Reservado'):o.type==='lab-portal'?'Abrir portal':o.interaction||(o.type==='parkour'?'Iniciar circuito':'Explorar');return}
+  if(state.nearWorldObject){const o=state.nearWorldObject;b.classList.remove('hidden');$('interaction-title').textContent=o.name||o.label||'Campus';const copy={npc:'Monitor virtual • orientação do campus',meet:'Ponto de encontro da turma',kiosk:'Totem interativo do campus','building-entrance':'Porta automática com sensor • entrar no laboratório','interior-exit':'Porta automática com sensor • voltar à praça','lab-terminal':'Estação interativa • sentar e ligar o monitor',smartboard:'Quadro inteligente • conteúdo contextual','presentation-spot':isStaff()?'Posição de apresentação da equipe':'Área reservada à equipe pedagógica','lab-portal':'Portal pedagógico interno',parkour:'Circuito de saltos e checkpoints • treino local sem nota',pool:'Piscina Neon • área de convivência',playground:'Parquinho DS • balanço e gangorra',slide:'Escorregador Turbo • acesso e descida',coaster:'Monotrilho AGV • escolher estação e viajar',tower:'Torre de Controle AGV • mirante panorâmico','train-station':'Estação do Monotrilho AGV • escolher destino','vale-portal':'Portal para a cidade tecnológica dos projetos dos alunos','return-portal':'Retornar ao Campus DS','vale-company':'Empresa/projeto estudantil • conhecer equipe e entrar no prédio','vale-company-exit':'Sair do prédio e voltar às ruas do Vale','vale-npc':'NPC institucional • orientação e acolhimento','vale-environment':'Ambiente institucional do Campus AGV','vale-sport':'Complexo esportivo • preparado para futuros minijogos','vale-hangar':'Hangar e mobilidade do Campus','vale-racetrack':'Pista de corrida e exploração','vale-vehicle':'Veículo de ambientação e mobilidade','tool-building':'Prédio conectado ao ecossistema AGV • entrar usando a mesma sessão'};$('interaction-text').textContent=copy[o.type]||o.description||'Objeto interativo';$('interaction-button').textContent=o.type==='npc'?'Conversar':o.type==='building-entrance'?'Entrar':o.type==='interior-exit'?'Sair':o.type==='lab-terminal'?'Usar estação':o.type==='smartboard'?'Exibir':o.type==='presentation-spot'?(isStaff()?'Apresentar':'Reservado'):o.type==='lab-portal'?'Abrir portal':o.interaction||(o.type==='parkour'?'Iniciar circuito':'Explorar');return}
   if(!state.nearPortal){b.classList.add('hidden');return}const z=state.nearPortal,ps=portalState(z);b.classList.remove('hidden');$('interaction-title').textContent=`${z.portal.label} — ${z.label}`;$('interaction-text').textContent=ps.text;$('interaction-button').textContent=ps.open?'Abrir portal':'Ver estado';
 }
 function areaText(key){if(key==='vale-silicio')return'Vale do Silício AGV';const z=zones.find(x=>x.key===key);return z?`Área ${z.label} — ${z.name}`:'Praça Central'}
@@ -472,7 +485,7 @@ async function boot(){
   state.stopped=false;if(!await loadIdentity())return;
   await securityTelemetry('session.check','info',{role:state.profile?.role||'unknown',surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});
   await loadActivities();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'activities_loaded'});showLogin(false);state.portalState=portalState;state.emoteRequested=kind=>emote(kind,state.nearStudent?.student_id||null);ensureGatherChannel();ensureProximityChat();
-  // Regra v14.10.8.56: todo acesso começa no 2D; 3D, primeira pessoa e qualidade continuam opcionais.
+  // Regra v14.10.8.59: todo acesso começa no 2D; 3D, primeira pessoa e qualidade continuam opcionais.
   await startLite(lastModeChoice()==='3d'?'default_2d_first_previous_3d':'default_2d_first');
   await presence(true);poll();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_ready'});
 }
@@ -484,28 +497,9 @@ $('train-close').onclick=()=>closeModal('train-modal');$('chat-close').onclick=(
 
 $('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('teleport-button').onclick=openTeleportModal;$('teleport-close').onclick=()=>closeModal('teleport-modal');$('teleport-search').oninput=()=>renderTeleportModal();$('teleport-scene-filter').onchange=()=>renderTeleportModal();$('teleport-vale-now').onclick=()=>{closeModal('teleport-modal');teleportToDestination({id:'vale:featured',scene:'vale',name:'Vale do Silício AGV — Praça Central',x:0,z:-30,kind:'landmark'}).catch(error=>{console.error(error);toast('Não foi possível abrir o Vale agora.');});};$('staff-bring-all').onclick=bringAllStudentsToMe;$('vale-direct-button').onclick=()=>{const action=state.scene==='vale'?returnToCampus():enterVale();Promise.resolve(action).catch(error=>{console.error(error);toast('Não foi possível viajar agora.');});};$('campus-button').onclick=()=>state.scene==='vale'?valeToggle():campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('vale-close').onclick=()=>valeToggle(false);$('vale-search').oninput=()=>renderValeDrawer();$('vale-company-close').onclick=()=>closeModal('vale-company-modal');$('vale-company-enter').onclick=()=>{const id=$('vale-company-enter').dataset.companyId;if(!id)return;closeModal('vale-company-modal');const ok=state.runtime?.enterBuilding?.(id);if(ok){state.valeVisited.add(id);valeSave();renderValeDrawer();toast('Interior carregado sob demanda. Pressione E para sair.');}};$('vale-company-map').onclick=()=>{closeModal('vale-company-modal');valeToggle(true)};$('activity-button').onclick=showActivities;$('activity-close').onclick=()=>closeModal('activity-modal');$('staff-student-close').onclick=()=>closeModal('staff-student-modal');$('staff-moderation-close').onclick=()=>closeModal('staff-moderation-modal');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');$('challenge-restart').onclick=()=>state.runtime?.restartChallenge?.();$('challenge-leave').onclick=()=>{const ended=state.runtime?.cancelChallenge?.()||state.runtime?.cancelExperience?.();if(ended){$('challenge-hud')?.classList.add('hidden');document.querySelector('.game-stage')?.classList.remove('challenge-active');}};document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
 document.querySelectorAll('[data-target-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.targetEmote,$('staff-student-modal').dataset.student).then(()=>toast('Interação enviada.')));document.querySelectorAll('[data-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.emote));
-$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;if(gatherChannel){try{await supabase.removeChannel(gatherChannel)}catch(_){}gatherChannel=null;gatherReadyPromise=null;}await proximityChat?.stop?.();proximityChat=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
+$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;if(gatherChannel){try{await supabase.removeChannel(gatherChannel)}catch(_){}gatherChannel=null;gatherReadyPromise=null;}await proximityChat?.stop?.();proximityChat=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.replace('../auth/?returnTo=lobby/')};$('kicked-check').onclick=()=>location.reload();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadActivities().catch(()=>{})});setInterval(()=>{if(!document.hidden)loadActivities().catch(()=>{})},30000);
 const recoveryDialog=$('recovery-dialog');
-$('forgot-password-btn')?.addEventListener('click',()=>{const email=String($('email')?.value||'').trim().toLowerCase();$('recovery-email').value=email;$('recovery-cgm').value='';$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
-$('recovery-close-btn')?.addEventListener('click',()=>recoveryDialog?.close());
-$('recovery-form')?.addEventListener('submit',async event=>{
-  event.preventDefault();
-  const email=String($('recovery-email').value||'').trim().toLowerCase(),cgm=String($('recovery-cgm').value||'').replace(/\D/g,''),msg=$('recovery-message'),submit=event.submitter;
-  msg.textContent='';msg.classList.remove('error');
-  if(!email.endsWith('@escola.pr.gov.br')){msg.textContent='Use seu e-mail institucional @escola.pr.gov.br.';msg.classList.add('error');return;}
-  if(!/^\d{6,12}$/.test(cgm)){msg.textContent='Informe um CGM válido, usando somente números.';msg.classList.add('error');return;}
-  submit.disabled=true;submit.textContent='Redefinindo…';
-  try{
-    const {data,error}=await withTimeout(supabase.functions.invoke('temporary-cgm-password-reset',{body:{email,cgm}}),AUTH_TIMEOUT_MS,'auth_cgm_recovery_timeout');
-    if(error)throw error;
-    msg.textContent=data?.message||'Se os dados informados estiverem corretos, a senha foi redefinida para o CGM. No próximo acesso, crie uma nova senha pessoal.';
-  }catch(error){console.error(error);msg.textContent='Não foi possível concluir a redefinição agora. Se houve muitas tentativas, aguarde alguns minutos e tente novamente.';msg.classList.add('error');}
-  finally{submit.disabled=false;submit.textContent='Redefinir senha para CGM';}
-});
-
-let controlsHintTimer=null;function wakeControlsHint(){if(COARSE_POINTER)return;const hint=document.querySelector('.desktop-controls');if(!hint)return;hint.classList.remove('controls-idle');clearTimeout(controlsHintTimer);controlsHintTimer=setTimeout(()=>hint.classList.add('controls-idle'),7500)}window.addEventListener('keydown',wakeControlsHint);window.addEventListener('pointerdown',wakeControlsHint,{passive:true});wakeControlsHint();
-
-$('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;msg('Entrando no Campus DS…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});await boot();msg()}catch(err){console.error(err);globalThis.__agvLobbyDiag?.exposeError?.('login_or_boot_failed',String(err?.message||err||'unknown'));msg(lobbyErrorMessage(err),true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
-(async()=>{try{const {data:{session}}=await withTimeout(supabase.auth.getSession(),SESSION_TIMEOUT_MS,'auth_session_timeout');if(session){await boot();return}}catch(e){console.warn(e);globalThis.__agvLobbyDiag?.exposeError?.('session_restore_failed',String(e?.message||e||'unknown'));msg(lobbyErrorMessage(e),true)}showLogin(true)})();
-console.info(`AGV Lobby DS ${LOBBY_VERSION} • Vertical & Dynamic World v56 • Fase H 2D-first • rede ${NETWORK_TIMEOUT_MS}ms • presença protegida por Edge Function`);
+function redirectToUnifiedLogin(message=''){try{if(message)sessionStorage.setItem('agv-auth-message',message)}catch{}location.replace('../auth/?returnTo=lobby/');}
+(async()=>{try{const {data:{session}}=await withTimeout(supabase.auth.getSession(),SESSION_TIMEOUT_MS,'auth_session_timeout');if(session){await boot();return}}catch(e){console.warn(e);globalThis.__agvLobbyDiag?.exposeError?.('session_restore_failed',String(e?.message||e||'unknown'));}redirectToUnifiedLogin();})();;
+console.info(`AGV Lobby DS ${LOBBY_VERSION} • OAuth Front v58 • Vertical & Dynamic World • Fase H 2D-first • rede ${NETWORK_TIMEOUT_MS}ms • presença protegida por Edge Function`);
