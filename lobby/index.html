@@ -6,8 +6,8 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS 3D</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.40">
-  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.40">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.46">
+  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.46">
 </head>
 <body>
   <section id="login" class="login-shell">
@@ -37,8 +37,8 @@
         <strong id="loading3d-title">Entrando no Campus DS</strong>
         <small id="loading3d-status">Carregando motor gráfico…</small>
         <div id="loading3d-recovery" class="loading-recovery hidden">
-          <button id="retry-3d" class="primary" type="button">Tentar 3D novamente</button>
-          <button id="enter-lite" type="button">Entrar no modo leve</button>
+          <button id="enter-lite" class="primary" type="button">Continuar no mapa 2D</button>
+          <button id="retry-3d" type="button">Tentar ambiente 3D novamente</button>
         </div>
       </div>
       <div id="zone-banner" class="zone-banner hidden" aria-live="polite"><span>Você entrou em</span><strong id="zone-banner-title">Praça Central</strong></div>
@@ -47,10 +47,10 @@
       <header class="hud-top">
         <div class="identity-card glass">
           <div class="avatar-dot" aria-hidden="true"></div>
-          <div class="identity-copy"><p class="eyebrow">Lobby Geral • 3D</p><strong id="player-name">Usuário</strong><div class="identity-meta"><span id="player-class" class="chip">—</span><span id="staff-mode" class="chip staff-chip hidden">Modo equipe</span></div></div>
+          <div class="identity-copy"><p class="eyebrow">Campus DS • Presença</p><strong id="player-name">Usuário</strong><div class="identity-meta"><span id="player-class" class="chip">—</span><span id="staff-mode" class="chip staff-chip hidden">Modo equipe</span></div></div>
         </div>
         <div class="world-status glass">
-          <span id="area-label">Praça Central</span><span id="online-count" class="chip">1 online</span>
+          <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
           <button id="camera-button" class="hud-button" type="button" title="Alternar câmera">Câmera</button>
           <button id="quality-button" class="hud-button" type="button" title="Alternar qualidade gráfica">Médio</button>
           <button id="logout" class="hud-button" type="button">Sair</button>
@@ -79,8 +79,8 @@
 
 
       <aside id="campus-drawer" class="campus-drawer glass hidden" aria-label="Campus vivo">
-        <div class="campus-drawer-head"><div><span class="eyebrow">P5.8 • LABORATÓRIOS INTERATIVOS</span><strong>Exploração do Campus</strong></div><button id="campus-close" type="button" aria-label="Fechar">×</button></div>
-        <p id="campus-message" class="campus-message">Explore a praça e entre fisicamente nos laboratórios de 1DS, 2DS, 3DS e SUB.</p>
+        <div class="campus-drawer-head"><div><span class="eyebrow">Campus DS • Exploração</span><strong>Áreas e laboratórios</strong></div><button id="campus-close" type="button" aria-label="Fechar">×</button></div>
+        <p id="campus-message" class="campus-message">Explore a praça, encontre colegas online e acesse os laboratórios de 1DS, 2DS, 3DS e SUB.</p>
         <div class="campus-progress"><span>Exploração local</span><strong id="campus-progress-text">0/7</strong><div><i id="campus-progress-bar"></i></div></div>
         <div id="campus-checklist" class="campus-checklist"></div>
         <small class="campus-disclaimer">Esta exploração não concede moedas, XP ou libera atividades. Benefícios reais continuam validados somente pelo servidor.</small>
@@ -120,9 +120,9 @@
   </main>
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
-  <script src="../core/session/fullscreen-portal.js?v=14.10.8.40"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.40"></script>
-  <script src="assets/sw-register.js?v=14.10.8.40" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.40" defer></script>
+  <script src="../core/session/fullscreen-portal.js?v=14.10.8.46"></script>
+  <script src="assets/diagnostics.js?v=14.10.8.46"></script>
+  <script src="assets/sw-register.js?v=14.10.8.46" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.46" defer></script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{
+  "version": "14.10.8.45",
+  "date": "2026-08-28",
+  "title": "Campus DS — Fase C Arquitetura e Ambiente",
+  "changes": [
+    "Praça central reconstruída com anéis concêntricos, trilhas radiais e núcleo holográfico",
+    "Prédios com volumetria em camadas, alas laterais, fachada profunda, marquise e cobertura",
+    "Fachadas de 3DS e SUB agora orientadas corretamente para a praça central",
+    "Materiais físicos de vidro habilitados nas qualidades High e Ultra com fallback leve",
+    "Iluminação do Campus isolada em módulo próprio e fachadas com iluminação arquitetônica adaptativa",
+    "Novo módulo world/campus-environment.js separado do motor principal",
+    "Contrato preparado para futuros modelos GLB/glTF 2.0, Meshopt, KTX2 e LODs",
+    "Camera V2, portais, interiores, presença online, fallback 2D e Supabase preservados",
+    "Sem alterações de banco de dados"
+  ]
+}

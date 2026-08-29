@@ -1,7 +1,7 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.40';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.40';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.40';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.40';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.46';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.46';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.46';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.46';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{
@@ -22,10 +22,10 @@ const state={
   portalState:null,emoteRequested:null,campusVisited:new Set(['central']),campusFlags:{greet:false,sit:false,action:false,monitor:false},localAction:null,runtimeMode:null,bootingRuntime:false
 };
 const zones=[
-  {key:'1ds',code:'1DS-A-MANHA',label:'1DS',name:'1ª Série DS',accent:'#36d2ff',portal:{label:'Porta Neon'}},
-  {key:'2ds',code:'2DS-A-MANHA',label:'2DS',name:'2ª Série DS',accent:'#51e7a3',portal:{label:'Cano Tech'}},
-  {key:'3ds',code:'3DS-C-MANHA',label:'3DS',name:'3ª Série DS',accent:'#b58cff',portal:{label:'Portal Quantum'}},
-  {key:'sub',code:'DS-SUB-NOITE',label:'SUB',name:'DS Subsequente',accent:'#ffae63',portal:{label:'Arcade Gate'}}
+  {key:'1ds',code:'1DS-A-MANHA',label:'1DS',name:'1ª Série DS',accent:'#36d2ff',portal:{label:'Laboratório 1DS'}},
+  {key:'2ds',code:'2DS-A-MANHA',label:'2DS',name:'2ª Série DS',accent:'#51e7a3',portal:{label:'Laboratório 2DS'}},
+  {key:'3ds',code:'3DS-C-MANHA',label:'3DS',name:'3ª Série DS',accent:'#b58cff',portal:{label:'Laboratório 3DS'}},
+  {key:'sub',code:'DS-SUB-NOITE',label:'SUB',name:'DS Subsequente',accent:'#ffae63',portal:{label:'Laboratório SUB'}}
 ];
 const isStaff=()=>['teacher','admin','super_admin'].includes(state.profile?.role);
 const roleLabel=r=>r==='teacher'?'Professor':r==='super_admin'?'Super Admin':r==='admin'?'Administrador':'Aluno';
@@ -230,7 +230,7 @@ function areaText(key){const z=zones.find(x=>x.key===key);return z?`Área ${z.la
 function showZoneBanner(key){campusMark('area',key);const title=areaText(key),wrap=$('zone-banner');$('zone-banner-title').textContent=title;wrap.classList.remove('hidden');clearTimeout(state.zoneTimer);state.zoneTimer=setTimeout(()=>wrap.classList.add('hidden'),2100)}
 function localAction(kind){if(!state.runtime)return;if(kind!=='clear')campusMark('action');state.localAction=kind==='clear'?null:kind;state.runtime.setLocalAction?.(state.localAction);$('action-menu')?.classList.add('hidden');if(kind!=='clear')toast(kind==='dance'?'Dança iniciada 🕺':kind==='cheer'?'Comemoração 🎉':'Agachado. Movimente-se para cancelar.')}
 function cycleQuality(){if(state.runtimeMode==='lite'){retry3D().catch(()=>{});return}const current=state.runtime?.getQuality?.()||'medium',order=['low','medium','high','ultra'],next=order[(order.indexOf(current)+1)%order.length];state.runtime?.setQuality?.(next)}
-function toggleCamera(){if(state.runtimeMode!=='3d')return toast('A câmera avançada está disponível no modo 3D.');const mode=state.runtime?.toggleCamera?.()||'shoulder';$('camera-button').textContent=mode==='wide'?'Câmera ampla':'Câmera ombro';toast(mode==='wide'?'Câmera ampla ativada.':'Câmera de ombro ativada.')}
+function toggleCamera(){if(state.runtimeMode!=='3d')return toast('No mapa 2D, use o scroll para aproximar ou afastar.');const mode=state.runtime?.toggleCamera?.()||'explore';const labels={explore:'Exploração',wide:'Câmera ampla',campus:'Visão campus'};$('camera-button').textContent=labels[mode]||'Câmera';toast(mode==='campus'?'Visão elevada do campus. Arraste para girar 360° e use o scroll para zoom.':mode==='wide'?'Câmera ampla ativada. Arraste para olhar ao redor.':'Câmera de exploração ativada. Ela aproxima automaticamente ao encontrar paredes e obstáculos.')}
 function perfUpdate(info={}){globalThis.__agvLobbyDiag?.update?.({runtime:{fps:Number(info.fps||0)||null,quality:String(info.quality||'')||null,avatar:state.runtime?.getAvatarMode?.()||null}});const el=$('perf-badge');if(!el)return;const fps=Number(info.fps||0);const avatar=state.runtime?.getAvatarMode?.()==='rigged-glb'?'GLB':'PROC';el.textContent=`${fps||'—'} FPS • ${String(info.quality||'').toUpperCase()} • ${avatar}`;el.classList.remove('hidden','warn','bad');if(fps&&fps<28)el.classList.add('bad');else if(fps&&fps<42)el.classList.add('warn');}
 
 function setLoading(text,title='Entrando no Campus DS',failed=false){
@@ -239,29 +239,30 @@ function setLoading(text,title='Entrando no Campus DS',failed=false){
   if(status)status.textContent=text;if(heading)heading.textContent=title;
 }
 function finishLoading(){const overlay=$('loading3d');overlay?.classList.remove('failed');overlay?.classList.add('ready');$('loading3d-recovery')?.classList.add('hidden')}
-function showLiteBadge(on=true){let badge=$('lite-mode-badge');if(on&&!badge){badge=document.createElement('div');badge.id='lite-mode-badge';badge.className='lite-mode-badge';badge.textContent='MODO LEVE • toque em “Leve” para tentar 3D';$('game-shell')?.appendChild(badge)}else if(!on&&badge)badge.remove()}
+function showLiteBadge(on=true){let badge=$('lite-mode-badge');if(on&&!badge){badge=document.createElement('div');badge.id='lite-mode-badge';badge.className='lite-mode-badge';badge.textContent='Mapa 2D ativo • clique em “3D” para voltar ao ambiente imersivo';$('game-shell')?.appendChild(badge)}else if(!on&&badge)badge.remove()}
+function setModeTransition(active,label=''){const stage=document.querySelector('.game-stage');if(!stage)return;stage.classList.toggle('mode-switching',!!active);if(active)stage.dataset.modeLabel=label||'Atualizando ambiente';else delete stage.dataset.modeLabel;}
 function freshCanvas(){const old=$('game3d');if(!old)return null;const next=old.cloneNode(false);old.replaceWith(next);return next}
 function runtimeHooks(){return{canvas:$('game3d'),zones,state,isStaff,className,onInteract:interact,onQualityChange:q=>{globalThis.__agvLobbyDiag?.update?.({runtime:{quality:q}});$('quality-button').textContent=state.runtimeMode==='lite'?'Leve':q==='ultra'?'Ultra':q==='high'?'Alto':q==='low'?'Eco':'Médio'},onPerf:perfUpdate,onError:m=>toast(m),onAreaChange:showZoneBanner,onInteriorChange:e=>{state.interior=e.inside?e.key:null;showZoneBanner(e.inside?e.key:'central');toast(e.inside?`Laboratório ${String(e.label||e.key).toUpperCase()} • ambiente interno`:'Praça Central • ambiente externo');},onPlayerState:p=>{state.player.x=p.x;state.player.y=p.y;state.player.area=p.area;state.interior=p.interior||null;state.nearPortal=p.nearPortal;state.nearStudent=p.nearStudent;state.nearSeat=p.nearSeat||null;state.nearWorldObject=p.nearWorldObject||null;state.seated=!!p.seated;$('area-label').textContent=p.interior?`Laboratório ${String(p.interior).toUpperCase()}`:areaText(p.area);renderInteraction();presence();}}}
 async function startLite(reason='fallback'){
   globalThis.__agvLobbyDiag?.record?.('runtime_lite',{reason});globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'lite',quality:'lite',firstFrame:true}});
-  state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='lite';showLiteBadge(true);setLoading('Abrindo versão leve do campus…','Modo leve');
-  state.runtime=createLobbyLite(runtimeHooks());$('quality-button').textContent='Leve';$('camera-button').textContent='Câmera';$('perf-badge')?.classList.add('hidden');
-  await securityTelemetry('client.lobby_lite_mode','info',{reason,surface:'lobby-3d'});requestAnimationFrame(()=>setTimeout(finishLoading,180));showZoneBanner(state.player.area);return state.runtime;
+  setModeTransition(true,'Abrindo mapa 2D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='lite';showLiteBadge(true);setLoading('Preparando o mapa interativo com presença em tempo real…','Mapa 2D do Campus');
+  state.runtime=createLobbyLite(runtimeHooks());$('quality-button').textContent='3D';$('camera-button').textContent='Mapa';$('perf-badge')?.classList.add('hidden');
+  await securityTelemetry('client.lobby_lite_mode','info',{reason,surface:'lobby-3d'});requestAnimationFrame(()=>setTimeout(()=>{finishLoading();setModeTransition(false)},180));showZoneBanner(state.player.area);return state.runtime;
 }
 async function start3D({allowFallback=true}={}){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'runtime_3d_loading'});globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'3d',firstFrame:false}});
-  if(state.bootingRuntime)return state.runtime;state.bootingRuntime=true;state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='3d';showLiteBadge(false);setLoading('Carregando motor 3D…');
+  if(state.bootingRuntime)return state.runtime;state.bootingRuntime=true;setModeTransition(true,'Entrando no ambiente 3D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='3d';showLiteBadge(false);setLoading('Montando praça, edifícios, personagens e presença online…','Entrando no Campus DS 3D');
   const controller=new AbortController();let timer=null,firstFrameResolve;const firstFrame=new Promise(resolve=>{firstFrameResolve=resolve});
   try{
     const create=createLobby3D({...runtimeHooks(),signal:controller.signal,onFirstFrame:()=>firstFrameResolve?.()});
-    const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(new Error('lobby_3d_boot_timeout'))},8500)});
-    state.runtime=await Promise.race([create,timeout]);clearTimeout(timer);setLoading('Renderizando primeiro quadro…');
-    await Promise.race([firstFrame,new Promise((_,reject)=>setTimeout(()=>reject(new Error('lobby_3d_first_frame_timeout')),4000))]);
-    state.runtimeMode='3d';globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'3d',quality:state.runtime?.getQuality?.()||null,firstFrame:true}});globalThis.__agvLobbyDiag?.record?.('stage',{stage:'runtime_3d_ready'});$('quality-button').textContent=state.runtime?.getQuality?.()==='high'?'Alto':state.runtime?.getQuality?.()==='low'?'Eco':'Médio';finishLoading();showZoneBanner(state.player.area);return state.runtime;
+    const timeoutMs=COARSE_POINTER?11500:13500;const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(new Error('lobby_3d_boot_timeout'))},timeoutMs)});
+    state.runtime=await Promise.race([create,timeout]);clearTimeout(timer);setLoading('Sincronizando câmera 360° e personagens…','Campus quase pronto');
+    await Promise.race([firstFrame,new Promise((_,reject)=>setTimeout(()=>reject(new Error('lobby_3d_first_frame_timeout')),5500))]);
+    state.runtimeMode='3d';globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'3d',quality:state.runtime?.getQuality?.()||null,firstFrame:true}});globalThis.__agvLobbyDiag?.record?.('stage',{stage:'runtime_3d_ready'});$('quality-button').textContent=state.runtime?.getQuality?.()==='high'?'Alto':state.runtime?.getQuality?.()==='low'?'Eco':'Médio';finishLoading();setModeTransition(false);showZoneBanner(state.player.area);return state.runtime;
   }catch(error){
     clearTimeout(timer);controller.abort();state.runtime?.stop?.();state.runtime=null;globalThis.__agvLobbyDiag?.record?.('runtime_3d_failed',{message:String(error?.message||error).slice(0,160)});console.error('Falha no boot 3D:',error);await securityTelemetry('client.webgl_init_failed','warning',{message:String(error?.message||error),mobile:matchMedia('(pointer:coarse)').matches});
-    setLoading('O 3D demorou demais neste aparelho. Entrando automaticamente no modo leve…','Recuperando o Lobby',true);
-    if(allowFallback){await new Promise(r=>setTimeout(r,650));return startLite(String(error?.message||'3d_failed'))}throw error;
+    setLoading('O ambiente 3D não ficou pronto a tempo. Seus dados estão seguros; você pode continuar no mapa 2D e tentar o 3D novamente quando quiser.','Continuar no Campus',true);
+    if(allowFallback){await new Promise(r=>setTimeout(r,650));return startLite(String(error?.message||'3d_failed'))}setModeTransition(false);throw error;
   }finally{state.bootingRuntime=false}
 }
 async function retry3D(){if(state.bootingRuntime)return;toast('Tentando iniciar o modo 3D…');try{await start3D({allowFallback:true})}catch(_){}}

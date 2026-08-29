@@ -14,12 +14,12 @@ function readAccessor(asset,index){
   if(stride===n*info.bytes)return new info.Ctor(asset.bin,byteOffset,count*n);
   const out=new info.Ctor(count*n),src=new DataView(asset.bin);for(let i=0;i<count;i++)for(let j=0;j<n;j++){const p=byteOffset+i*stride+j*info.bytes;out[i*n+j]=a.componentType===5126?src.getFloat32(p,true):a.componentType===5125?src.getUint32(p,true):a.componentType===5123?src.getUint16(p,true):src.getUint8(p);}return out;
 }
-function materialColor(THREE,kind,accent,staff,seed){
-  const skinPalette=[0xf0c09c,0xd99b72,0xb97753,0x8e5b42,0x6d4330];let h=2166136261;for(const c of String(seed)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}const skin=skinPalette[(h>>>0)%skinPalette.length];
-  if(kind==='Skin')return new THREE.MeshStandardMaterial({color:skin,roughness:.75});
-  if(kind==='Shirt'){const m=new THREE.MeshStandardMaterial({color:accent,roughness:.5,metalness:.06});if(staff){m.emissive=new THREE.Color(accent);m.emissiveIntensity=.12;}return m;}
-  if(kind==='Pants')return new THREE.MeshStandardMaterial({color:0x18212b,roughness:.78});
-  return new THREE.MeshStandardMaterial({color:0x080c10,roughness:.5});
+function materialColor(THREE,kind,accent,staff,seed,appearance=null){
+  const skinPalette=[0xf0c09c,0xd99b72,0xb97753,0x8e5b42,0x6d4330];let h=2166136261;for(const c of String(seed)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}const skin=appearance?.skin??skinPalette[(h>>>0)%skinPalette.length];
+  if(kind==='Skin')return new THREE.MeshStandardMaterial({color:skin,roughness:.72});
+  if(kind==='Shirt'){const m=new THREE.MeshStandardMaterial({color:appearance?.accent??accent,roughness:.48,metalness:.07});if(staff){m.emissive=new THREE.Color(appearance?.accent??accent);m.emissiveIntensity=.12;}return m;}
+  if(kind==='Pants')return new THREE.MeshStandardMaterial({color:appearance?.pants??0x18212b,roughness:.78});
+  return new THREE.MeshStandardMaterial({color:appearance?.shoes??0x080c10,roughness:.5});
 }
 function makeGeometry(THREE,asset,primitive){
   const g=new THREE.BufferGeometry();for(const [semantic,idx] of Object.entries(primitive.attributes||{})){const a=asset.json.accessors[idx],arr=readAccessor(asset,idx);if(semantic==='POSITION')g.setAttribute('position',new THREE.BufferAttribute(arr,3));else if(semantic==='NORMAL')g.setAttribute('normal',new THREE.BufferAttribute(arr,3));else if(semantic==='JOINTS_0')g.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(arr,4));else if(semantic==='WEIGHTS_0')g.setAttribute('skinWeight',new THREE.Float32BufferAttribute(arr,4));}
@@ -35,11 +35,11 @@ function clipsFromAsset(THREE,asset){
 export async function loadRiggedAvatarAsset(THREE,{timeout=3500}={}){
   if(cachePromise)return cachePromise;cachePromise=(async()=>{const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),timeout);try{const res=await fetch(MODEL_URL,{cache:'force-cache',signal:ctl.signal});if(!res.ok)throw new Error(`GLB HTTP ${res.status}`);const parsed=parseGLB(await res.arrayBuffer());parsed.clips=clipsFromAsset(THREE,parsed);return parsed;}finally{clearTimeout(timer);}})().catch(e=>{cachePromise=null;throw e;});return cachePromise;
 }
-export function createRiggedAvatar(THREE,asset,{accent='#36d2ff',staff=false,seed='agv'}={}){
+export function createRiggedAvatar(THREE,asset,{accent='#36d2ff',staff=false,seed='agv',appearance=null}={}){
   const root=new THREE.Group();root.name=`RiggedAvatar-${String(seed).slice(0,8)}`;const bones=buildBones(THREE,asset.json),jointNodes=asset.json.skins[0].joints,rootJointIndex=jointNodes.indexOf(asset.json.skins[0].skeleton??jointNodes[0]);root.add(bones[rootJointIndex<0?0:rootJointIndex]);
   const invRaw=readAccessor(asset,asset.json.skins[0].inverseBindMatrices),inverses=[];for(let i=0;i<jointNodes.length;i++){const m=new THREE.Matrix4();m.fromArray(invRaw,i*16);inverses.push(m);}const skeleton=new THREE.Skeleton(bones,inverses),meshDef=asset.json.meshes[0],meshes=[];
-  for(const primitive of meshDef.primitives){const matName=asset.json.materials?.[primitive.material]?.name||'Shirt',g=makeGeometry(THREE,asset,primitive),m=materialColor(THREE,matName,accent,staff,seed),sk=new THREE.SkinnedMesh(g,m);sk.name=`AGV-${matName}`;sk.castShadow=true;sk.receiveShadow=true;sk.bind(skeleton,new THREE.Matrix4());root.add(sk);meshes.push(sk);}root.scale.setScalar(.92);
-  const mixer=new THREE.AnimationMixer(root),actions={};for(const clip of asset.clips){const action=mixer.clipAction(clip);action.enabled=true;if(clip.name==='Jump'||clip.name==='Wave'){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}actions[clip.name]=action;}actions.Idle?.play();root.userData.rig={mixer,actions,current:'Idle',oneshot:null,meshes,bones};return root;
+  for(const primitive of meshDef.primitives){const matName=asset.json.materials?.[primitive.material]?.name||'Shirt',g=makeGeometry(THREE,asset,primitive),m=materialColor(THREE,matName,accent,staff,seed,appearance),sk=new THREE.SkinnedMesh(g,m);sk.name=`AGV-${matName}`;sk.castShadow=true;sk.receiveShadow=true;sk.bind(skeleton,new THREE.Matrix4());root.add(sk);meshes.push(sk);}root.scale.setScalar(.92);
+  const mixer=new THREE.AnimationMixer(root),actions={};for(const clip of asset.clips){const action=mixer.clipAction(clip);action.enabled=true;if(clip.name==='Jump'||clip.name==='Wave'){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}actions[clip.name]=action;}actions.Idle?.play();root.userData.rig={mixer,actions,current:'Idle',oneshot:null,meshes,bones,appearance};return root;
 }
 function crossFade(rig,next,fade=.14){if(!rig.actions[next]||rig.current===next)return;const prev=rig.actions[rig.current],n=rig.actions[next];n.reset().setEffectiveTimeScale(1).setEffectiveWeight(1).play();prev?.crossFadeTo(n,fade,true);rig.current=next;}
 export function updateRiggedAvatar(avatar,{speed=0,jump=0,dt=.016,emoteKind=null,emoteActive=false,localAction=null,time=0}={}){
