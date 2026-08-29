@@ -1,4 +1,5 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.50';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.51';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.51';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -139,6 +140,48 @@ function createPlazaFloor({THREE,quality}){
   root.userData={ground,plaza};return root;
 }
 
+
+function createExperienceZone({THREE,quality,experience,spriteLabel}){
+  const mat=materialFactory(THREE,quality),g=new THREE.Group(),accent=new THREE.Color(experience.accent).getHex();
+  const frame=mat(0x253a44,{metalness:.62,roughness:.3}),dark=mat(0x0a171d,{roughness:.75}),glow=mat(accent,{emissive:accent,emissiveIntensity:1.0,roughness:.22}),soft=mat(accent,{emissive:accent,emissiveIntensity:.2,transparent:true,opacity:.3,roughness:.22,glass:HIGH_QUALITY.has(quality)});
+  g.name=`campus-experience-${experience.id}`;g.position.set(experience.x,0,experience.z);
+  const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
+  if(experience.type==='pool'){
+    const rim=new THREE.Mesh(new THREE.BoxGeometry(6.2,.42,4.2),frame);rim.position.y=.35;g.add(rim);
+    const water=new THREE.Mesh(new THREE.PlaneGeometry(5.55,3.55),soft);water.rotation.x=-Math.PI/2;water.position.y=.59;g.add(water);g.userData.water=water;
+    for(const x of[-2.65,2.65])for(const z of[-1.65,1.65])g.add(cylinder(THREE,.07,.7,frame,x,.38,z,10));
+  }else if(experience.type==='parkour'){
+    for(const [i,platform] of PARKOUR_PLATFORMS.entries()){
+      const localX=platform.x-experience.x,localZ=platform.z-experience.z;
+      const material=platform.checkpoint?(i===PARKOUR_PLATFORMS.length-1?glow:frame):glow;
+      const b=box(THREE,platform.w,platform.h,platform.d,material,localX,platform.h/2,localZ);g.add(b);
+      if(platform.checkpoint){const cap=box(THREE,platform.w*.72,.035,platform.d*.72,glow,localX,platform.h+.025,localZ);g.add(cap);}
+    }
+  }else if(experience.type==='playground'){
+    for(const x of[-1.75,1.75])g.add(box(THREE,.12,2.6,.12,frame,x,1.45,0));
+    g.add(box(THREE,3.65,.12,.12,frame,0,2.72,0));
+    const swingSeats=[];
+    for(const x of[-.75,.75]){g.add(box(THREE,.04,1.4,.04,glow,x,1.9,0));const seat=box(THREE,.65,.08,.38,frame,x,1.18,0);g.add(seat);swingSeats.push(seat);}
+    const hoop=new THREE.Mesh(new THREE.TorusGeometry(.8,.08,8,32),glow);hoop.position.set(0,1.35,1.25);hoop.rotation.y=Math.PI/2;g.add(hoop);g.userData.swingSeats=swingSeats;
+  }else if(experience.type==='slide'){
+    for(let i=0;i<5;i++)g.add(box(THREE,.85,.15,.42,frame,-1.8+i*.42,.35+i*.38,-.9));
+    const chute=box(THREE,3.8,.12,1.0,glow,.7,1.15,.45);chute.rotation.z=-.47;g.add(chute);
+    for(const x of[-1,1])g.add(box(THREE,.08,2.1,.08,frame,-1.9,1.2,x*.42));
+  }else if(experience.type==='coaster'){
+    const track=new THREE.Mesh(new THREE.TorusGeometry(2.45,.11,8,72),frame);track.rotation.x=Math.PI/2;track.position.y=1.1;g.add(track);
+    const rail=new THREE.Mesh(new THREE.TorusGeometry(2.12,.045,8,72),glow);rail.rotation.x=Math.PI/2;rail.position.y=1.12;g.add(rail);
+    for(let i=0;i<8;i++){const a=i*Math.PI/4;g.add(box(THREE,.08,1.0,.08,frame,Math.cos(a)*2.45,.55,Math.sin(a)*2.45));}
+    const car=box(THREE,.72,.34,.48,glow,2.45,1.18,0);g.add(car);g.userData.coasterCar=car;
+  }else if(experience.type==='tower'){
+    for(let i=0;i<6;i++)g.add(box(THREE,1.3,.16,1.05,i===5?glow:frame,-2+i*.65,.35+i*.42,0));
+    g.add(box(THREE,2.6,.18,2.3,frame,2.0,2.9,0));
+    for(const [x,z] of[[.8,-.9],[.8,.9],[3.2,-.9],[3.2,.9]])g.add(box(THREE,.08,2.9,.08,frame,x,1.55,z));
+  }
+  if(spriteLabel){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
+  g.userData.experience=experience;setShadow(g,quality!=='low');return g;
+}
+
 export function createCampusLighting({THREE,scene,quality,shadows,shadowSize}){
   const hemi=new THREE.HemisphereLight(0xc8e8ff,0x10231b,1.45);scene.add(hemi);
   const key=new THREE.DirectionalLight(0xdceeff,2.0);key.position.set(-24,34,19);key.castShadow=!!shadows;key.shadow.mapSize.set(shadowSize,shadowSize);key.shadow.camera.left=-44;key.shadow.camera.right=44;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.camera.near=.5;key.shadow.camera.far=95;scene.add(key);
@@ -151,7 +194,7 @@ export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel})
   const floor=createPlazaFloor({THREE,quality});scene.add(floor);
   const centralFountain=createCentralHub({THREE,quality,spriteLabel});scene.add(centralFountain);
   const canopy=createPlazaCanopy({THREE,quality});scene.add(canopy);
-  const cameraCollisionRoots=[],buildingRoots=[];
+  const cameraCollisionRoots=[],buildingRoots=[],experienceRoots=[],experienceRefs=[];
   let variant=0;
   for(const zone of zones){
     const layout=CAMPUS_ZONE_LAYOUT[zone.key];if(!layout)continue;const accent=new THREE.Color(zone.accent).getHex();
@@ -162,5 +205,9 @@ export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel})
       const light=new THREE.PointLight(accent,quality==='ultra'?7:4.5,10,2);light.position.copy(front);scene.add(light);
     }
   }
-  return {floor,centralFountain,beacon:centralFountain,canopy,cameraCollisionRoots,buildingRoots};
+  for(const experience of CAMPUS_EXPERIENCES){
+    const root=createExperienceZone({THREE,quality,experience,spriteLabel});scene.add(root);experienceRoots.push(root);
+    experienceRefs.push({...experience,radius:experience.radius||3});
+  }
+  return {floor,centralFountain,beacon:centralFountain,canopy,cameraCollisionRoots,buildingRoots,experienceRoots,experienceRefs};
 }

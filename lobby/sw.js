@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='14.10.8.50';
+const VERSION='14.10.8.51';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
@@ -10,31 +10,32 @@ const SDK_URLS=new Set([
 const CRITICAL_SHELL=[
   './',
   './index.html',
-  './assets/diagnostics.js?v=14.10.8.50',
-  './assets/sw-register.js?v=14.10.8.50',
-  './assets/vendor-loader.js?v=14.10.8.50',
-  './assets/boot.js?v=14.10.8.50',
-  './assets/supabase.js?v=14.10.8.50',
-  './assets/lobby.js?v=14.10.8.50',
-  './assets/config.js?v=14.10.8.50',
-  './assets/lobby3d.js?v=14.10.8.50',
-  './assets/lobby-lite.js?v=14.10.8.50',
-  './assets/world/campus-manifest.js?v=14.10.8.50',
-  './assets/world/campus-environment.js?v=14.10.8.50',
-  './assets/render/camera-controller.js?v=14.10.8.50',
-  './assets/render/performance-manager.js?v=14.10.8.50',
-  './assets/characters/avatar-system.js?v=14.10.8.50',
-  './assets/game/portal-manager.js?v=14.10.8.50',
-  './assets/rigged-avatar.js?v=14.10.8.50',
+  './assets/diagnostics.js?v=14.10.8.51',
+  './assets/sw-register.js?v=14.10.8.51',
+  './assets/vendor-loader.js?v=14.10.8.51',
+  './assets/boot.js?v=14.10.8.51',
+  './assets/supabase.js?v=14.10.8.51',
+  './assets/lobby.js?v=14.10.8.51',
+  './assets/config.js?v=14.10.8.51',
+  './assets/lobby3d.js?v=14.10.8.51',
+  './assets/lobby-lite.js?v=14.10.8.51',
+  './assets/world/campus-manifest.js?v=14.10.8.51',
+  './assets/world/campus-environment.js?v=14.10.8.51',
+  './assets/world/campus-experiences.js?v=14.10.8.51',
+  './assets/render/camera-controller.js?v=14.10.8.51',
+  './assets/render/performance-manager.js?v=14.10.8.51',
+  './assets/characters/avatar-system.js?v=14.10.8.51',
+  './assets/game/portal-manager.js?v=14.10.8.51',
+  './assets/rigged-avatar.js?v=14.10.8.51',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.50',
+  './assets/lobby.css?v=14.10.8.51',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[
-  './vendor/three/three.module.min.js?v=14.10.8.50',
-  './vendor/three/three.core.min.js?v=14.10.8.50',
-  '../core/session/fullscreen-portal.js?v=14.10.8.50',
-  '../core/session/fullscreen-portal.css?v=14.10.8.50'
+  './vendor/three/three.module.min.js?v=14.10.8.51',
+  './vendor/three/three.core.min.js?v=14.10.8.51',
+  '../core/session/fullscreen-portal.js?v=14.10.8.51',
+  '../core/session/fullscreen-portal.css?v=14.10.8.51'
 ];
 
 self.addEventListener('install',event=>{

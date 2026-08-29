@@ -1,0 +1,19 @@
+AGV CAMPUS DS v14.10.8.51 — FASE H
+
+IMPORTANTE: ESTE ZIP E UM PATCH INCREMENTAL.
+NAO LIMPE O REPOSITORIO.
+
+Base esperada: main completa v14.10.8.50.
+
+Fluxo seguro no VS Code / PowerShell:
+1) git switch main
+2) git pull --ff-only origin main
+3) extrair este ZIP em uma pasta temporaria
+4) executar APLICAR-v14.10.8.51-FASE-H.ps1 apontando para o repo
+5) executar VALIDAR-v14.10.8.51.ps1 apontando para o repo
+6) conferir git status
+7) git add -A
+8) git commit -m "feat: Lobby 2D-first e Campus de espera v14.10.8.51"
+9) git push origin main
+
+O GitHub Pages permanece no mesmo repositorio e no mesmo link.
