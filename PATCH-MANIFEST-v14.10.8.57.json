@@ -1,0 +1,58 @@
+{
+  "release": "14.10.8.57",
+  "base": "14.10.8.56",
+  "title": "Login com Google no Hub AGV",
+  "modified_count": 4,
+  "added_count": 4,
+  "removed_count": 0,
+  "files": [
+    {
+      "path": "ATUALIZAR-v14.10.8.57.md",
+      "status": "added",
+      "base_sha256": null,
+      "new_sha256": "7C349371003237F51A2A413371BE987FADC0FB439B656C1CDEA37AD28AA4C384"
+    },
+    {
+      "path": "VALIDACAO-v14.10.8.57.md",
+      "status": "added",
+      "base_sha256": null,
+      "new_sha256": "0736BFC0CC0E813C404F2C0888C95AF3FE2A77E563424FE949AAA52C97BEB09E"
+    },
+    {
+      "path": "assets/hub.css",
+      "status": "modified",
+      "base_sha256": "750640BD143F48377534BC09658B195B50A58BDD10F53231B52BEA7F6D1A40A8",
+      "new_sha256": "812D3054E1045EF639766E8F429A1935B3CF806E8D61DEF9655379C642C9CAB7"
+    },
+    {
+      "path": "assets/hub.js",
+      "status": "modified",
+      "base_sha256": "5C8B449C4DA1E22942DDE33E64F8DFA0F32E8D37D1EFAEB759A589BEC74BB527",
+      "new_sha256": "18039BB6F531A6E1DD026DC82A1E6B406E3213FBF58FA97F8FE93060B997E78F"
+    },
+    {
+      "path": "core/session/agv-session.js",
+      "status": "modified",
+      "base_sha256": "235EBECE3F841E56EED3A4D3A9D88BC8F15A67E46C587EA2D552D902CE7F572D",
+      "new_sha256": "711D03125843C075918ADCB57D6B47C325DCD1AB0561845E1B18A3A9B1CCEC27"
+    },
+    {
+      "path": "core/tests/p10921-google-oauth-login-v14.10.8.57.test.mjs",
+      "status": "added",
+      "base_sha256": null,
+      "new_sha256": "3D611DE77A91308245D31593DECC1AA83D4CBFEB6824C315A21FAC2ACAE6AC29"
+    },
+    {
+      "path": "index.html",
+      "status": "modified",
+      "base_sha256": "D56209566CB8D32E2E6FD7FC9BA14FFF06CCB4264C127721201895EE28045E67",
+      "new_sha256": "355E6762773C9411B7A0AEB3FFE12484BA44B0B66CACD53960F40966689485A7"
+    },
+    {
+      "path": "release-v14.10.8.57.json",
+      "status": "added",
+      "base_sha256": null,
+      "new_sha256": "5C13CD01FEE3400A97752D1950344199FD405EA5258EB2ADE534E46FD24EE9AA"
+    }
+  ]
+}
