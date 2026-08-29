@@ -1,4 +1,0 @@
-AGV Education Core — v14.10.8.36
-Incidente: Campus DS 3D ainda reportando release 14.10.8.18 / boot Invalid or unexpected token.
-Correção: reparador fora do escopo do SW + preflight de módulos + ZIP root-ready + release-current sincronizado.
-Nenhuma alteração destrutiva de dados faz parte deste hotfix.
