@@ -8,3 +8,7 @@
 
 /* v14.10.8.21 — Modo Prova Prática */
 .exam-card{border-color:#385a6a}.exam-card.exam-hot{border-color:#d44f5c;background:linear-gradient(150deg,#241116,#0c1c24);box-shadow:0 0 0 1px #ff6f7b22,0 16px 45px #0005}.exam-card.exam-hot .go,.exam-card.exam-hot strong{color:#ffc0c5}.exam-card.exam-hot .icon{filter:saturate(1.2)}
+
+
+/* v14.10.8.57 — Login social Google */
+.auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0 10px;color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.12em}.auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:var(--line)}.auth-divider span{padding:0 2px}.google-auth-btn{width:100%;background:#fff;color:#1f1f1f;border:1px solid #dadce0;box-shadow:none}.google-auth-btn:hover{background:#f8f9fa;border-color:#c8cdd2}.google-auth-btn:disabled{opacity:.65;cursor:wait;transform:none}.google-mark{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;font-weight:900;font-size:.9rem;color:#4285f4;background:conic-gradient(from 30deg,#4285f4 0 25%,#34a853 0 50%,#fbbc05 0 75%,#ea4335 0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.oauth-note{margin:8px 0 0;color:var(--muted);font-size:.76rem;line-height:1.4}.oauth-note.error{color:var(--danger)}@media(max-width:560px){.google-auth-btn{min-height:46px}}

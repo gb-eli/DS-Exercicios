@@ -3,11 +3,12 @@
   const cfg={supabaseUrl:'https://iresvqwyaqotghjssncg.supabase.co',publishableKey:'sb_publishable_9yUn07uD4XYySt1ynzZu-A_v8HSoSDO'};
   const auth=window.AGVSession.create(cfg),$=id=>document.getElementById(id);
   const school='@escola.pr.gov.br';
-  const LOBBY_URL='lobby/?v=14.10.8.38';
+  const LOBBY_URL='lobby/?v=14.10.8.56';
   document.querySelectorAll('a[href^="lobby/"]').forEach(link=>link.setAttribute('href',LOBBY_URL));
   let profile=null;
+  const oauthRedirectUrl=()=>new URL('./',location.href).href;
   const setMsg=(t='',error=false)=>{const e=$('login-message');e.textContent=t;e.classList.toggle('error',error)};
-  async function loadProfile(){const user=await auth.getUser();const rows=await auth.request(`/rest/v1/profiles?select=id,full_name,email,role,active,must_change_password&id=eq.${encodeURIComponent(user.id)}&limit=1`);const p=Array.isArray(rows)?rows[0]:null;if(!p?.active)throw new Error('Acesso inativo.');profile=p;if(p.must_change_password){location.replace('atividades/');return {redirected:true,profile:p};}return {redirected:false,profile:p};}
+  async function loadProfile(){const user=await auth.getUser();const rows=await auth.request(`/rest/v1/profiles?select=id,full_name,email,role,active,must_change_password&id=eq.${encodeURIComponent(user.id)}&limit=1`);const p=Array.isArray(rows)?rows[0]:null;if(!p)throw new Error('Esta conta foi autenticada, mas ainda não está cadastrada no AGV.');if(!p.active)throw new Error('Acesso inativo.');profile=p;if(p.must_change_password){location.replace('atividades/');return {redirected:true,profile:p};}return {redirected:false,profile:p};}
   function syncFullscreen(){window.AGVFullscreen?.require(profile?.role==='student');}
   function renderSigned(){const role=profile?.role||'student';syncFullscreen();$('login-card').classList.add('hidden');$('signed').classList.remove('hidden');$('user-name').textContent=profile?.full_name||profile?.email||'Usuário';$('user-role').textContent=role==='student'?'Aluno':role==='teacher'?'Professor':role==='admin'?'Administrador':'Super Admin';document.querySelectorAll('[data-role]').forEach(el=>{const allowed=el.dataset.role.split(',').includes(role);el.classList.toggle('hidden',!allowed)});renderPracticalExam().catch(()=>{});}
 
@@ -24,7 +25,7 @@
 
   async function renderPlatforms(){const host=$('hub-platform-grid');if(!host)return;try{const r=await fetch('core/catalog/platform-integration-v14.0.json',{cache:'no-store'});if(!r.ok)throw new Error('catalog');const data=await r.json();const items=(data.platforms||[]).filter(x=>x.readyForUnifiedHub).slice(0,10);host.replaceChildren();for(const item of items){const a=document.createElement('a');a.className='platform-mini';a.href=item.route;a.innerHTML=`<span>${item.icon||'🧩'}</span><div><strong>${item.name}</strong><small>${item.category||'Plataforma integrada'}</small></div><b>→</b>`;host.appendChild(a)}}catch(_){host.textContent='O catálogo de plataformas está temporariamente indisponível.'}}
   function renderGuest(){window.AGVFullscreen?.require(false);$('signed').classList.add('hidden');$('login-card').classList.remove('hidden');}
-  async function restore(){const s=await auth.getSession();if(!s)return renderGuest();try{const result=await loadProfile();if(result?.redirected)return;renderSigned();}catch{await auth.signOut();renderGuest();}}
+  async function restore({fromOAuth=false}={}){const session=await auth.getSession();if(!session)return renderGuest();try{const result=await loadProfile();if(result?.redirected)return;renderSigned();if(fromOAuth&&profile?.role==='student'){location.replace('atividades/');return;}}catch(err){console.error(err);await auth.signOut();profile=null;renderGuest();if(fromOAuth)setMsg(err?.message||'Não foi possível validar esta conta Google no AGV.',true);}}
   const recoveryDialog=$('recovery-dialog');
   $('forgot-password-btn')?.addEventListener('click',()=>{const email=$('email').value.trim().toLowerCase();$('recovery-email').value=email;$('recovery-cgm').value='';$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
   $('recovery-close-btn')?.addEventListener('click',()=>recoveryDialog?.close());
@@ -44,7 +45,26 @@
       msg.classList.add('error');
     }finally{btn.disabled=false;btn.textContent='Redefinir senha para CGM';}
   });
+  $('google-login-btn')?.addEventListener('click',()=>{
+    const btn=$('google-login-btn');
+    btn.disabled=true;
+    setMsg('Abrindo o Google para autenticação…');
+    try{auth.signInWithOAuth('google',oauthRedirectUrl());}
+    catch(err){console.error(err);btn.disabled=false;setMsg('Não foi possível iniciar o login com Google agora.',true);}
+  });
   $('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,email=$('email').value.trim().toLowerCase(),password=$('password').value;if(!email.endsWith(school))return setMsg(`Use seu e-mail institucional ${school}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;setMsg('Entrando…');try{try{await auth.signIn(email,password);}catch(first){if(!/^\d{6,12}$/.test(password))throw first;setMsg('Validando primeiro acesso…');const out=await auth.signUpStudent(email,password,location.href);if(!out?.access_token)await auth.signIn(email,password);}const result=await loadProfile();if(result?.redirected)return;renderSigned();setMsg();if(profile?.role==='student'){location.href='atividades/';return;}}catch(err){console.error(err);await auth.signOut();setMsg('Não foi possível entrar. Aluno no primeiro acesso: use o CGM. Equipe: use sua senha individual.',true);}finally{btn.disabled=false;}});
   $('logout').addEventListener('click',async()=>{await auth.signOut();profile=null;await window.AGVFullscreen?.release?.();renderGuest();});
-  auth.onStorage(()=>restore());renderPlatforms();restore();
+  auth.onStorage(()=>restore());
+  async function bootstrap(){
+    const oauth=auth.consumeAuthRedirect();
+    renderPlatforms();
+    if(oauth?.handled&&oauth.error){
+      renderGuest();
+      setMsg(`Login com Google não concluído: ${oauth.error}`,true);
+      return;
+    }
+    if(oauth?.handled&&oauth.session)setMsg('Google autenticado. Validando seu acesso no AGV…');
+    await restore({fromOAuth:Boolean(oauth?.handled&&oauth.session)});
+  }
+  bootstrap();
 })();

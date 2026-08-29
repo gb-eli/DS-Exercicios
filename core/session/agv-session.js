@@ -102,6 +102,47 @@
     async function requireSession(){const s=await getSession();if(!s)throw new Error('Sessão expirada. Entre novamente.');return s;}
     async function getUser(){await requireSession();try{return await request('/auth/v1/user');}catch(e){if(e.status===401){const s=await refresh();if(s)return request('/auth/v1/user');}throw e;}}
     async function signIn(email,password){const s=await request('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password},token:null});return save(s);}
+    function signInWithOAuth(provider,redirectTo){
+      const chosen=String(provider||'').trim().toLowerCase();
+      if(!/^[a-z0-9_-]+$/.test(chosen))throw new Error('Provedor OAuth inválido.');
+      const params=new URLSearchParams({provider:chosen});
+      if(redirectTo)params.set('redirect_to',String(redirectTo));
+      global.location.assign(`${supabaseUrl}/auth/v1/authorize?${params.toString()}`);
+    }
+    function consumeAuthRedirect(){
+      const loc=global.location;
+      if(!loc)return {handled:false,error:null,session:null};
+      const hashParams=new URLSearchParams(String(loc.hash||'').replace(/^#/,''));
+      const queryParams=new URLSearchParams(String(loc.search||'').replace(/^\?/,''));
+      const error=hashParams.get('error_description')||queryParams.get('error_description')||hashParams.get('error')||queryParams.get('error');
+      const accessToken=hashParams.get('access_token');
+      const refreshToken=hashParams.get('refresh_token');
+      const expiresIn=Number(hashParams.get('expires_in')||0);
+      const tokenType=hashParams.get('token_type')||'bearer';
+      const oauthKeys=['access_token','refresh_token','expires_in','expires_at','token_type','type','provider_token','provider_refresh_token','error','error_code','error_description'];
+      const hasOAuthPayload=Boolean(accessToken||error||oauthKeys.some(key=>hashParams.has(key)||queryParams.has(key)));
+      if(!hasOAuthPayload)return {handled:false,error:null,session:null};
+      try{
+        const clean=new URL(loc.href);
+        clean.hash='';
+        oauthKeys.forEach(key=>clean.searchParams.delete(key));
+        global.history?.replaceState?.(null,'',`${clean.pathname}${clean.search}${clean.hash}`);
+      }catch{}
+      if(error)return {handled:true,error:String(error),session:null};
+      if(!accessToken)return {handled:true,error:'O provedor não retornou uma sessão válida.',session:null};
+      const next={
+        access_token:accessToken,
+        refresh_token:refreshToken||'',
+        expires_in:expiresIn||undefined,
+        expires_at:expiresIn>0?Math.floor(Date.now()/1000)+expiresIn:undefined,
+        token_type:tokenType
+      };
+      const providerToken=hashParams.get('provider_token');
+      const providerRefreshToken=hashParams.get('provider_refresh_token');
+      if(providerToken)next.provider_token=providerToken;
+      if(providerRefreshToken)next.provider_refresh_token=providerRefreshToken;
+      return {handled:true,error:null,session:save(next)};
+    }
     async function signUpStudent(email,cgm,redirectTo){
       const path=redirectTo?`/auth/v1/signup?redirect_to=${encodeURIComponent(redirectTo)}`:'/auth/v1/signup';
       const data=await request(path,{method:'POST',body:{email,password:cgm,data:{cgm}},token:null});
@@ -132,7 +173,7 @@
     global.document?.addEventListener?.('visibilitychange',lifecycleCheck);
     function destroy(){destroyed=true;clearTimeout(lifecycleTimer);lifecycleEvents.forEach(type=>global.removeEventListener?.(type,lifecycleCheck));global.document?.removeEventListener?.('visibilitychange',lifecycleCheck);}
     read();
-    return {storageKey,read,save,clear,valid,getSession,requireSession,refresh,getUser,signIn,signUpStudent,resetPasswordForEmail,temporaryCgmPasswordReset,signOut,request:authorizedFetch,rawRequest:request,onStorage,destroy,get session(){return session;}};
+    return {storageKey,read,save,clear,valid,getSession,requireSession,refresh,getUser,signIn,signInWithOAuth,consumeAuthRedirect,signUpStudent,resetPasswordForEmail,temporaryCgmPasswordReset,signOut,request:authorizedFetch,rawRequest:request,onStorage,destroy,get session(){return session;}};
   }
   global.AGVSession={create};
 })(window);

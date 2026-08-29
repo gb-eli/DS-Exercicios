@@ -1,0 +1,16 @@
+AGV v14.10.8.58 — OAuth Google visível no Front
+
+Este patch é cumulativo e aceita como base a v14.10.8.56 ou a v14.10.8.57.
+Ele NÃO remove arquivos.
+
+Resultado visual esperado:
+- Hub: botão branco "Continuar com Google" abaixo do botão "Entrar no AGV".
+- Lobby: botão branco "Continuar com Google" abaixo do botão "Entrar no Campus DS".
+- E-mail/senha/CGM e recuperação continuam disponíveis.
+
+Aplicação:
+  Set-ExecutionPolicy -Scope Process Bypass -Force
+  .\APLICAR-v14.10.8.58.ps1 -RepoPath "C:\caminho\DS-Exercicios"
+  .\VALIDAR-v14.10.8.58.ps1 -RepoPath "C:\caminho\DS-Exercicios"
+
+Depois confira git diff --name-status e publique a main.

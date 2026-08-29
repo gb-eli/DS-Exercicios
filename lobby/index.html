@@ -6,8 +6,8 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.52">
-  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.52">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.58">
+  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.58">
 </head>
 <body>
   <section id="login" class="login-shell">
@@ -20,6 +20,9 @@
         <label>E-mail institucional<input id="email" type="email" autocomplete="username" required placeholder="aluno@escola.pr.gov.br"></label>
         <label>Senha <small>no primeiro acesso do aluno, use o CGM</small><input id="password" type="password" autocomplete="current-password" required></label>
         <button class="primary" type="submit">Entrar no Campus DS</button>
+        <div class="auth-divider" aria-hidden="true"><span>ou</span></div>
+        <button id="google-login-btn" class="google-auth-btn" type="button"><span class="google-mark" aria-hidden="true">G</span><span>Continuar com Google</span></button>
+        <p class="oauth-note">Use a conta Google vinculada ao mesmo e-mail cadastrado no AGV.</p>
         <button id="forgot-password-btn" class="login-link" type="button">Esqueci minha senha</button>
       </form>
       <p id="login-message" class="message" aria-live="polite"></p>
@@ -51,8 +54,10 @@
         </div>
         <div class="world-status glass">
           <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
-          <span id="mode-advice" class="chip mode-advice">2D recomendado</span>
+          <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
           <button id="activity-button" class="hud-button activity-button hidden" type="button">Atividade</button>
+          <button id="teleport-button" class="hud-button teleport-button" type="button" title="Abrir teletransporte do Campus">⚡ Teletransporte</button>
+          <button id="vale-direct-button" class="hud-button vale-direct-button" type="button" title="Ir para o Vale do Silício AGV">🏙 Vale do Silício</button>
           <button id="mode-button" class="hud-button mode-button" type="button" title="Alternar entre mapa 2D e ambiente 3D">Entrar no 3D</button>
           <button id="camera-button" class="hud-button" type="button" title="Alternar câmera">Câmera</button>
           <button id="quality-button" class="hud-button" type="button" title="Alternar qualidade gráfica">Médio</button>
@@ -62,6 +67,7 @@
 
       <aside class="desktop-controls glass" aria-label="Controles de teclado"><strong>Explorar</strong><span>WASD</span><span>Shift correr</span><span>Espaço pular</span><span>E interagir</span><span class="control-3d">Mouse 360°</span><span class="control-3d">C câmera</span><span>R ações</span></aside>
       <div id="perf-badge" class="perf-badge hidden" aria-live="polite">— FPS</div>
+      <canvas id="vale-minimap" class="vale-minimap hidden" width="160" height="160" aria-label="Minimapa do Vale do Silício AGV"></canvas>
       <div id="waiting-strip" class="waiting-strip glass" aria-live="polite"><span class="waiting-dot"></span><div><strong>Lobby de espera</strong><small id="waiting-strip-text">Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.</small></div></div>
       <aside id="challenge-hud" class="challenge-hud glass hidden" aria-live="polite">
         <div class="challenge-copy"><span id="challenge-kicker">Desafio local</span><strong id="challenge-title">Circuito Parkour</strong><small id="challenge-detail">Checkpoint 0/5</small></div>
@@ -83,7 +89,7 @@
       </div>
 
       <div class="quick-actions glass" aria-label="Ações rápidas">
-        <button data-emote="wave" type="button" title="Acenar">👋</button><button data-emote="like" type="button" title="Positivo">👍</button><button data-emote="spark" type="button" title="Destacar">✨</button><button id="action-menu-button" type="button" title="Ações do avatar" aria-label="Abrir ações do avatar">🎭</button><button id="campus-button" type="button" title="Campus vivo" aria-label="Abrir painel do campus">🧭</button><button id="staff-moderation" class="staff-moderation-btn hidden" type="button" title="Moderação do Lobby" aria-label="Abrir moderação do Lobby">🛡️</button>
+        <button data-emote="wave" type="button" title="Acenar">👋</button><button data-emote="like" type="button" title="Positivo">👍</button><button data-emote="spark" type="button" title="Destacar">✨</button><button id="action-menu-button" type="button" title="Ações do avatar" aria-label="Abrir ações do avatar">🎭</button><button id="campus-button" type="button" title="Campus vivo" aria-label="Abrir painel do campus">🧭</button><button id="world-settings-button" type="button" title="Mundo, câmera e avatar" aria-label="Abrir configurações do mundo e avatar">⚙️</button><button id="staff-moderation" class="staff-moderation-btn hidden" type="button" title="Moderação do Lobby" aria-label="Abrir moderação do Lobby">🛡️</button>
       </div>
 
 
@@ -95,6 +101,79 @@
         <div id="campus-checklist" class="campus-checklist"></div>
         <small class="campus-disclaimer">Esta exploração não concede moedas, XP ou libera atividades. Benefícios reais continuam validados somente pelo servidor.</small>
       </aside>
+
+      <aside id="vale-drawer" class="campus-drawer vale-drawer glass hidden" aria-label="Mapa do Vale do Silício AGV">
+        <div class="campus-drawer-head"><div><span class="eyebrow">Vale do Silício AGV</span><strong>Mapa, empresas e destinos</strong></div><button id="vale-close" type="button" aria-label="Fechar">×</button></div>
+        <label class="vale-search-label" for="vale-search">Pesquisar empresa ou distrito</label>
+        <input id="vale-search" class="vale-search" type="search" placeholder="Ex.: AGV School, Games, Robótica" autocomplete="off">
+        <div class="vale-filter-row" id="vale-filter-row"></div>
+        <div id="vale-destination-list" class="vale-destination-list"></div>
+        <small class="campus-disclaimer">Fast travel é liberado para empresas já visitadas. Destinos institucionais permanecem sempre disponíveis.</small>
+      </aside>
+
+
+      <div id="teleport-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="teleport-title">
+        <div class="modal-card teleport-card">
+          <button id="teleport-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Mobilidade instantânea</p>
+          <h2 id="teleport-title">⚡ Teletransporte</h2>
+          <p class="muted">Escolha um ponto do Campus ou do Vale do Silício AGV. O modo 2D/3D atual é preservado.</p>
+          <div class="teleport-feature"><span>🏙</span><div><strong>Vale do Silício AGV</strong><small>Empresas dos alunos, distritos, esportes, hangar e ambientes.</small></div><button id="teleport-vale-now" class="primary" type="button">Ir para o Vale</button></div>
+          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, 2DS, piscina, empresa…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Campus + Vale</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option></select></label></div>
+          <div id="staff-teleport-panel" class="staff-teleport-panel hidden"><div><strong>📍 Controle da turma</strong><small>Leva todos os alunos online para o ponto em que você está agora. O comando é validado pelo servidor.</small></div><button id="staff-bring-all" class="primary" type="button">Trazer todos até mim</button></div>
+          <div id="teleport-list" class="teleport-list"><p class="muted">Carregando destinos…</p></div>
+          <small class="campus-disclaimer">Teletransporte não altera atividade, nota, progresso ou matrícula. É apenas mobilidade dentro do Lobby.</small>
+        </div>
+      </div>
+
+
+      <div id="train-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="train-title">
+        <div class="modal-card train-card">
+          <button id="train-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Monotrilho AGV</p>
+          <h2 id="train-title">🚆 Escolher estação</h2>
+          <p class="muted">O trem acelera entre os setores e faz uma parada em cada estação. Para o Vale, desembarque no Portal do Vale e continue pela passagem.</p>
+          <div id="train-station-list" class="train-station-list"></div>
+        </div>
+      </div>
+
+      <div id="chat-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="chat-title">
+        <div class="modal-card proximity-chat-card">
+          <button id="chat-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Chat por proximidade</p>
+          <h2 id="chat-title">💬 Conversar</h2>
+          <p id="chat-target-label" class="muted">Participante próximo</p>
+          <div id="chat-log" class="chat-log" aria-live="polite"></div>
+          <form id="chat-form" class="chat-form"><input id="chat-input" maxlength="180" autocomplete="off" placeholder="Digite uma mensagem curta…" required><button class="primary" type="submit">Enviar</button></form>
+          <small class="campus-disclaimer">O chat funciona somente entre participantes próximos e a mensagem some do balão após alguns segundos.</small>
+        </div>
+      </div>
+
+      <div id="world-settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="world-settings-title">
+        <div class="modal-card world-settings-card">
+          <button id="world-settings-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Lobby Vertical & Dynamic World</p>
+          <h2 id="world-settings-title">⚙️ Mundo, câmera e personagem</h2>
+          <div class="settings-grid">
+            <section class="settings-section"><h3>Atmosfera</h3><label>Modo do céu<select id="world-time-mode"><option value="auto">Automático / relógio local</option><option value="day">Dia</option><option value="night">Noite</option></select></label><label>Limite de FPS<select id="fps-cap"><option value="30">30 FPS</option><option value="45">45 FPS</option><option value="60">60 FPS</option></select></label><label class="check-row"><input id="show-perf" type="checkbox"> Mostrar indicador de FPS</label></section>
+            <section class="settings-section"><h3>Câmera 3D</h3><label>FOV <output id="fov-value">65°</output><input id="fov-range" type="range" min="45" max="95" step="1" value="65"></label><div class="camera-mode-grid"><button data-camera-mode="explore" type="button">3ª pessoa</button><button data-camera-mode="firstperson" type="button">1ª pessoa</button><button data-camera-mode="wide" type="button">Ampla</button><button data-camera-mode="campus" type="button">Campus</button></div><small class="muted">FOV e primeira pessoa se aplicam ao modo 3D.</small></section>
+            <section class="settings-section avatar-settings"><h3>Avatar V2</h3><div class="avatar-preset-grid"><button data-avatar-preset="casual" type="button">Casual</button><button data-avatar-preset="sport" type="button">Esportivo</button><button data-avatar-preset="institutional" type="button">Institucional</button><button data-avatar-preset="tech" type="button">Tecnológico</button></div><div class="color-grid"><label>Cor principal<input id="avatar-accent" type="color" value="#36d2ff"></label><label>Pele<input id="avatar-skin" type="color" value="#d99b72"></label><label>Cabelo<input id="avatar-hair" type="color" value="#171719"></label><label>Calça<input id="avatar-pants" type="color" value="#202731"></label><label>Tênis<input id="avatar-shoes" type="color" value="#e8ecef"></label></div><div class="accessory-grid"><label><input id="avatar-backpack" type="checkbox"> Mochila</label><label><input id="avatar-glasses" type="checkbox"> Óculos</label><label><input id="avatar-headset" type="checkbox"> Headset</label><label><input id="avatar-wrist" type="checkbox"> Relógio</label></div><label>Estilo do cabelo<select id="avatar-hair-style"><option value="soft">Suave</option><option value="short">Curto</option><option value="cap">Boné</option></select></label></section>
+          </div>
+          <div class="settings-actions"><button id="world-settings-apply" class="primary" type="button">Aplicar</button><button id="world-settings-reset" type="button">Restaurar padrão</button></div>
+        </div>
+      </div>
+
+      <div id="vale-company-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="vale-company-title">
+        <div class="modal-card vale-company-card">
+          <button id="vale-company-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Vale do Silício AGV • Projeto estudantil</p>
+          <h2 id="vale-company-title">Empresa / Projeto</h2>
+          <p id="vale-company-subtitle" class="muted"></p>
+          <div id="vale-company-content" class="vale-company-content"></div>
+          <div class="vale-company-actions"><button id="vale-company-enter" class="primary" type="button">Entrar no prédio</button><button id="vale-company-map" type="button">Localizar no mapa</button></div>
+        </div>
+      </div>
+
       <div id="action-menu" class="action-menu glass hidden" role="menu" aria-label="Ações do avatar">
         <button data-local-action="dance" type="button" role="menuitem"><span>🕺</span><small>Dançar</small></button>
         <button data-local-action="cheer" type="button" role="menuitem"><span>🎉</span><small>Comemorar</small></button>
@@ -106,7 +185,7 @@
         <div class="modal-card staff-action-card">
           <button id="staff-student-close" class="modal-close" type="button" aria-label="Fechar">×</button>
           <p class="eyebrow">Interação da equipe</p><h2 id="student-name">Aluno</h2><p id="student-context" class="muted"></p>
-          <div class="staff-reactions"><button data-target-emote="wave" type="button">👋 Acenar</button><button data-target-emote="like" type="button">👍 Positivo</button><button data-target-emote="spark" type="button">✨ Destacar</button></div>
+          <div class="staff-reactions"><button id="staff-chat-target" type="button">💬 Conversar</button><button data-target-emote="wave" type="button">👋 Acenar</button><button data-target-emote="like" type="button">👍 Positivo</button><button data-target-emote="spark" type="button">✨ Destacar</button></div>
           <div class="moderation-box"><strong>Moderação do Lobby</strong><p class="muted">Professor só pode remover alunos das turmas sob sua responsabilidade. Administradores têm escopo global.</p><label>Motivo<input id="kick-reason" maxlength="300" placeholder="Ex.: comportamento inadequado no Lobby"></label><label>Tempo fora<select id="kick-duration"><option value="5">5 minutos</option><option value="15" selected>15 minutos</option><option value="30">30 minutos</option><option value="60">1 hora</option><option value="120">2 horas</option></select></label><button id="kick-student" class="danger" type="button">Expulsar do Lobby</button></div>
         </div>
       </div>
@@ -130,9 +209,9 @@
   </main>
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
-  <script src="../core/session/fullscreen-portal.js?v=14.10.8.52"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.52"></script>
-  <script src="assets/sw-register.js?v=14.10.8.52" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.52" defer></script>
+  <script src="../core/session/fullscreen-portal.js?v=14.10.8.58"></script>
+  <script src="assets/diagnostics.js?v=14.10.8.58"></script>
+  <script src="assets/sw-register.js?v=14.10.8.58" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.58" defer></script>
 </body>
 </html>

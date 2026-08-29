@@ -1,0 +1,256 @@
+{
+  "version": "14.10.8.58",
+  "accepted_bases": [
+    "14.10.8.56",
+    "14.10.8.57"
+  ],
+  "files": [
+    {
+      "path": "ATUALIZAR-v14.10.8.57.md",
+      "sha256": "7C349371003237F51A2A413371BE987FADC0FB439B656C1CDEA37AD28AA4C384",
+      "accepted_before": [
+        "7C349371003237F51A2A413371BE987FADC0FB439B656C1CDEA37AD28AA4C384"
+      ],
+      "allow_missing": true
+    },
+    {
+      "path": "ATUALIZAR-v14.10.8.58.md",
+      "sha256": "4074149A141736467DD7DED1B576C6B6E8674C88CEC5E1123FC4A85FB4A3D549",
+      "accepted_before": [],
+      "allow_missing": true
+    },
+    {
+      "path": "VALIDACAO-v14.10.8.57.md",
+      "sha256": "0736BFC0CC0E813C404F2C0888C95AF3FE2A77E563424FE949AAA52C97BEB09E",
+      "accepted_before": [
+        "0736BFC0CC0E813C404F2C0888C95AF3FE2A77E563424FE949AAA52C97BEB09E"
+      ],
+      "allow_missing": true
+    },
+    {
+      "path": "VALIDACAO-v14.10.8.58.md",
+      "sha256": "A00E4865F163E9F50E5F50E35B44E3CD3BF259A5F8BC6B6C0A890D07CEF5FECC",
+      "accepted_before": [],
+      "allow_missing": true
+    },
+    {
+      "path": "assets/hub.css",
+      "sha256": "812D3054E1045EF639766E8F429A1935B3CF806E8D61DEF9655379C642C9CAB7",
+      "accepted_before": [
+        "750640BD143F48377534BC09658B195B50A58BDD10F53231B52BEA7F6D1A40A8",
+        "812D3054E1045EF639766E8F429A1935B3CF806E8D61DEF9655379C642C9CAB7"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "assets/hub.js",
+      "sha256": "18039BB6F531A6E1DD026DC82A1E6B406E3213FBF58FA97F8FE93060B997E78F",
+      "accepted_before": [
+        "5C8B449C4DA1E22942DDE33E64F8DFA0F32E8D37D1EFAEB759A589BEC74BB527",
+        "18039BB6F531A6E1DD026DC82A1E6B406E3213FBF58FA97F8FE93060B997E78F"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "core/session/agv-session.js",
+      "sha256": "711D03125843C075918ADCB57D6B47C325DCD1AB0561845E1B18A3A9B1CCEC27",
+      "accepted_before": [
+        "235EBECE3F841E56EED3A4D3A9D88BC8F15A67E46C587EA2D552D902CE7F572D",
+        "711D03125843C075918ADCB57D6B47C325DCD1AB0561845E1B18A3A9B1CCEC27"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "core/tests/p10921-google-oauth-login-v14.10.8.57.test.mjs",
+      "sha256": "3D611DE77A91308245D31593DECC1AA83D4CBFEB6824C315A21FAC2ACAE6AC29",
+      "accepted_before": [
+        "3D611DE77A91308245D31593DECC1AA83D4CBFEB6824C315A21FAC2ACAE6AC29"
+      ],
+      "allow_missing": true
+    },
+    {
+      "path": "index.html",
+      "sha256": "3CA7E48201C616C60305355F6F7A86451C2784E3C8E9EFFF5ACEB86379E93BF0",
+      "accepted_before": [
+        "D56209566CB8D32E2E6FD7FC9BA14FFF06CCB4264C127721201895EE28045E67",
+        "355E6762773C9411B7A0AEB3FFE12484BA44B0B66CACD53960F40966689485A7"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/boot.js",
+      "sha256": "189C67A3D65C9623BDD637D7051D902C49A944B91804DE6ABD2C04DA4057E10D",
+      "accepted_before": [
+        "9C1ED2AD6F3887112A41D76A7F9B1CC45D81E527436A591A17D02F9E6F64D457"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/characters/avatar-system.js",
+      "sha256": "7E9B0F7F0A4771946951AABFBE869A4B1CD9793AF1E37F34A25A64C74A2229D6",
+      "accepted_before": [
+        "E8518BBCF3B5728AF618A45776D0F1B4515234896AF29A1B87AD244657456243"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/config.js",
+      "sha256": "078CECF04A4A4215F63F1C2AF2F8404F3608ACE26204484C8E197645326B4E0D",
+      "accepted_before": [
+        "283430C06F00588E19B902373BF8F03FF0DE312C0B407FB2DA092898A319046C"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/diagnostics.js",
+      "sha256": "F90E03CE3EB49E9ABE4659145EA850F683F02A433D401BF78E003BB3DAA93134",
+      "accepted_before": [
+        "BFEF742A1CCD0AF8A83A852ED0A0C0FABE3476560A13BB31584FC5D94476A898"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/game/ride-manager.js",
+      "sha256": "9CCB7BEED9BFCA3BEEFDA72949DAC58C949BA42C99E856E3E396382910F4CD76",
+      "accepted_before": [
+        "6D37B921059093A26773173EC4BA829FCBBCA8EFA4B68B2FA1C56F7B91EFA4D2"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/game/train-manager.js",
+      "sha256": "7AB61357890EA911DFE28CEEE5CC40EB4A9D2E79D1B63FAD7EBD330F6AC1A020",
+      "accepted_before": [
+        "DD838571F782B6F4A5783813FA4C775694C7DD27987E311FC500E847D673F57C"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/lobby-lite.js",
+      "sha256": "3459FB5519733C1B62604A5E960171CCE8DB31CEE9FE12CD670C4C586DAEB44F",
+      "accepted_before": [
+        "EC0A3AE13B897ABEBAF811FE765ACDD08518C3E0DAAA2DE269246DCC8AE79E74"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/lobby.css",
+      "sha256": "7EA52CC29C191EE3DFAB6E9E2147FC7672630F17722F54A0BFE815671BFB2A25",
+      "accepted_before": [
+        "C2D716B376BBC027C7F452920EDA5EAE57079C5120DD191F8844E9F175CBC022"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/lobby.js",
+      "sha256": "AAA670919F3581E6662288AE9E70EA8CA137CC4BD67760C78B1975ED7B8247E9",
+      "accepted_before": [
+        "88E6C63D92758509A0A062F8FE6CA28AF4EE258A427DB0894F99559C533545A9"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/lobby3d.js",
+      "sha256": "259AFC3D29BFECF3BD4B78C66D15B65095029D52E977A701E602DFAC20963F67",
+      "accepted_before": [
+        "78AE4F4F8B63D0462CAA643E259A744846B6AF8D81E0BD1AAB8F60571089B2FF"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/supabase.js",
+      "sha256": "E7731A5831C16AC7941B097008931D47D16E88B3225AE7659DBF6A7F8EEA4DB3",
+      "accepted_before": [
+        "64F7B1E5E99FAEF4FB6D1AA9F17AA7EC1FFC94AB6F7A914EE9E61B8217A9B30D"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/sw-register.js",
+      "sha256": "1C8BA379A1620F5829006F23A36C2D03B0FF888B2441FC1D3A08E90A393A0C96",
+      "accepted_before": [
+        "F177E7D90F6F6219C986BB4517B31B60E768DEB769654F0785EBFF046DC7979B"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/vale-lite.js",
+      "sha256": "00597689FBBD80716E8DE25D6D72049C747B5FAE7A428F5C374483F79E14B52E",
+      "accepted_before": [
+        "8F499600EA13E1AF783FA8CC32DFA478932FEEE1029C44B144F0ACA6A2A924DD"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/vale3d.js",
+      "sha256": "E8FDABC52112736A2BCA10AD8AE368290FAE8C7EFAF19097F09FF38A54D9B234",
+      "accepted_before": [
+        "2E72927CBE5EF0D324C05A39569A986510A3AAB82CE966FEC545309F72FE0A4C"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/vendor-loader.js",
+      "sha256": "60F1A121410F474E3BE908F95028FB61E4AB5058682D231FABF1D27A3B10DCBC",
+      "accepted_before": [
+        "9B437B60156AB6257B789C6EE578C9A22EE90B615568F122655B74D0798DED11"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/world/campus-environment.js",
+      "sha256": "1A3866D6734DF0E39003778CC35615189F0C63A198A9EA4C0840893BCBDC63EE",
+      "accepted_before": [
+        "7FC1E3DAA6689E4856C94684188D10FAE336B345B6CB2AF5246F314AC34B651D"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-data.js",
+      "sha256": "F2B9DA515339211CB0AED853B36BEB57E9DEB59DC24120F28A7A35817DEC9C30",
+      "accepted_before": [
+        "048A7D6C13CB6F52AEDF15DEA054AA8ACA6EAAF18EE2EF80855FF73D7A65CBB4"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-shared.js",
+      "sha256": "D340145F270A8EFEF63219BC46BBA9BB8BA805B59FBF30247A78DD09477E48F0",
+      "accepted_before": [
+        "F533B7D32D38749CE8C792B13186006AEF5E76ABA86F20EEDFD50B1D8D727C03"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/index.html",
+      "sha256": "70C83AE103F90573A2CD16D6C48633E242B23585FB8C42FA3266C827690EB907",
+      "accepted_before": [
+        "E1DBEEEC60E1FBD264215EA85009BA33D6D19A3A7A11A606B9580AEA5D955B96"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "lobby/sw.js",
+      "sha256": "5B39C67F3FFE8A81C3AECB9B94C400CD421E01F694C6D3654E12384C12BE3ED6",
+      "accepted_before": [
+        "C31BE91992A730DE97BF8567EE762D1F275BD316761CE6D9E3DB35646A9F2C6B"
+      ],
+      "allow_missing": false
+    },
+    {
+      "path": "release-v14.10.8.57.json",
+      "sha256": "5C13CD01FEE3400A97752D1950344199FD405EA5258EB2ADE534E46FD24EE9AA",
+      "accepted_before": [
+        "5C13CD01FEE3400A97752D1950344199FD405EA5258EB2ADE534E46FD24EE9AA"
+      ],
+      "allow_missing": true
+    },
+    {
+      "path": "release-v14.10.8.58.json",
+      "sha256": "31694C46AE9176B38B8CD53264555AECC0FBD71B6A65086067C391D50672208D",
+      "accepted_before": [],
+      "allow_missing": true
+    }
+  ],
+  "removed": []
+}

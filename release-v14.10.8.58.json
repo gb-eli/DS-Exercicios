@@ -1,0 +1,17 @@
+{
+  "version": "14.10.8.58",
+  "channel": "hotfix",
+  "title": "OAuth Google visível no front — Hub + Lobby",
+  "base": [
+    "14.10.8.56",
+    "14.10.8.57"
+  ],
+  "date": "2026-08-29",
+  "changes": [
+    "Exibe Continuar com Google no login principal do Hub.",
+    "Exibe Continuar com Google também no login direto do Campus DS Lobby.",
+    "Mantém e-mail/senha/CGM e recuperação de senha.",
+    "Usa o provider Google habilitado no Supabase sem expor Client Secret no frontend.",
+    "Atualiza cache-busting do Lobby para 14.10.8.58 e preserva 2D-first/3D opcional."
+  ]
+}

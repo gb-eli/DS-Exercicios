@@ -1,0 +1,15 @@
+{
+  "version": "14.10.8.57",
+  "channel": "feature",
+  "title": "Login com Google no Hub AGV",
+  "base": "14.10.8.56",
+  "date": "2026-08-29",
+  "changes": [
+    "Adiciona botão Entrar com Google ao login principal do Hub sem remover e-mail/senha.",
+    "Integra OAuth Google ao gerenciador de sessão AGV usando o mesmo storage/sessão de Hub, Lobby, Atividades, Professor e Admin.",
+    "Consome o retorno OAuth no GitHub Pages, salva a sessão Supabase e remove tokens da URL imediatamente.",
+    "Mantém autorização baseada no perfil existente: autenticação Google não cria papel nem libera usuário não cadastrado.",
+    "Mantém Skip nonce checks e usuários sem e-mail fora do frontend; nenhuma credencial secreta Google é incluída no repositório.",
+    "Alinha os links do Lobby no Hub à base v14.10.8.56 para evitar cache antigo."
+  ]
+}

@@ -7,6 +7,15 @@ const HAIRS=[0x171719,0x3a251d,0x5c3a27,0x111b27,0x4b2421,0x2b1712];
 const PANTS=[0x16202a,0x202731,0x17222d,0x293039];
 const SHOES=[0x080c10,0xe8ecef,0x20242a,0x121b25];
 
+export const AVATAR_STYLE_PRESETS=Object.freeze({
+  casual:Object.freeze({accentCss:'#36d2ff',pants:0x202731,shoes:0xe8ecef,backpack:true,glasses:false,headset:false,wrist:true,hairStyle:'soft'}),
+  sport:Object.freeze({accentCss:'#ff6b7a',pants:0x16202a,shoes:0xe8ecef,backpack:false,glasses:false,headset:true,wrist:true,hairStyle:'short'}),
+  institutional:Object.freeze({accentCss:'#ffd166',pants:0x17222d,shoes:0x080c10,backpack:false,glasses:true,headset:false,wrist:true,hairStyle:'short'}),
+  tech:Object.freeze({accentCss:'#b58cff',pants:0x293039,shoes:0x121b25,backpack:true,glasses:true,headset:true,wrist:true,hairStyle:'cap'})
+});
+function normalizeColor(value,fallback){if(typeof value==='number'&&Number.isFinite(value))return value>>>0;try{const text=String(value||'').replace('#','');if(/^[0-9a-f]{6}$/i.test(text))return parseInt(text,16);}catch{}return fallback;}
+function mergeAppearance(base,override={}){const out={...base};if(!override||typeof override!=='object')return out;for(const key of['skin','hair','pants','shoes'])if(override[key]!=null)out[key]=normalizeColor(override[key],out[key]);for(const key of['backpack','glasses','headset','wrist'])if(typeof override[key]==='boolean')out[key]=override[key];if(['cap','short','soft'].includes(override.hairStyle))out.hairStyle=override.hairStyle;if(typeof override.accentCss==='string'&&/^#[0-9a-f]{6}$/i.test(override.accentCss))out.accentCss=override.accentCss;return out;}
+
 export function createAvatarAppearance({seed='agv',accent='#36d2ff',staff=false}={}){
   const rnd=mulberry32(hashSeed(seed));
   const hairRoll=rnd();
@@ -93,12 +102,12 @@ export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='mediu
   const mode=()=>rigAsset?'rigged-glb-v2':'procedural-v2';
   async function init(){
     if(!rigEligible)return mode();
-    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.52');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
+    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.58');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
     catch(error){rigAsset=null;rigApi=null;diagnostics?.record?.('avatar_system_fallback',{mode:'procedural-v2',message:String(error?.message||error).slice(0,180)});console.warn('Avatar rigado indisponível; Avatar V2 usando fallback procedural.',error);}
     return mode();
   }
-  function createAvatar({accent='#36d2ff',staff=false,label='Aluno',seed='agv'}={}){
-    const appearance=createAvatarAppearance({seed,accent,staff});appearance.accent=new THREE.Color(accent).getHex();
+  function createAvatar({accent='#36d2ff',staff=false,label='Aluno',seed='agv',appearanceOverride=null}={}){
+    const base=createAvatarAppearance({seed,accent,staff});const appearance=mergeAppearance(base,appearanceOverride);accent=appearance.accentCss||accent;appearance.accentCss=accent;appearance.accent=new THREE.Color(accent).getHex();
     const root=new THREE.Group();root.name=`AGVAvatarV2-${String(seed).slice(0,12)}`;
     if(rigAsset){const model=rigApi?.createRiggedAvatar?.(THREE,rigAsset,{accent,staff,seed,appearance});if(model){addRigAccessories(THREE,model,appearance);root.add(model);root.userData.rig=model.userData.rig;root.userData.rigModel=model;}}
     if(!root.userData.rig){const body=proceduralBody(THREE,{accent,staff,seed,appearance});root.add(body);Object.assign(root.userData,body.userData);root.userData.proceduralModel=body;}

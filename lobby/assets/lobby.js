@@ -1,7 +1,15 @@
-import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.52';
-import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.52';
-import { createLobby3D } from './lobby3d.js?v=14.10.8.52';
-import { createLobbyLite } from './lobby-lite.js?v=14.10.8.52';
+import { supabase, NETWORK_TIMEOUT_MS } from './supabase.js?v=14.10.8.58';
+import { SCHOOL_EMAIL_DOMAIN, ACTIVITY_URL, LOBBY_VERSION } from './config.js?v=14.10.8.58';
+import { createLobby3D } from './lobby3d.js?v=14.10.8.58';
+import { createLobbyLite } from './lobby-lite.js?v=14.10.8.58';
+import { createValeLite } from './vale-lite.js?v=14.10.8.58';
+import { createVale3D } from './vale3d.js?v=14.10.8.58';
+import { VALE_BOUNDS, VALE_FAST_TRAVEL_STATIC, valePresenceToWorld, valeWorldToPresence } from './world/vale-silicio-shared.js?v=14.10.8.58';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.58';
+import { worldToPresence, presenceToWorld } from './world/campus-manifest.js?v=14.10.8.58';
+import { CAMPUS_EXPERIENCES } from './world/campus-experiences.js?v=14.10.8.58';
+import { createProximityChat } from './social/proximity-chat.js?v=14.10.8.58';
+import { AVATAR_STYLE_PRESETS } from './characters/avatar-system.js?v=14.10.8.58';
 
 const $=id=>document.getElementById(id);
 const withTimeout=(promise,ms,code)=>{
@@ -19,12 +27,22 @@ const POLL_INTERVAL_MS=COARSE_POINTER?9000:7000;
 const state={
   user:null,profile:null,currentClass:null,classes:[],exercises:[],studentReleases:[],classReleases:[],progress:[],others:[],available:[],scheduled:[],
   player:{x:800,y:500,area:'central'},nearPortal:null,nearStudent:null,nearSeat:null,nearWorldObject:null,seated:false,interior:null,lastPresence:0,toastTimer:null,zoneTimer:null,stopped:false,lastTargetSignal:'',runtime:null,
-  portalState:null,emoteRequested:null,campusVisited:new Set(['central']),campusFlags:{greet:false,sit:false,action:false,monitor:false},localAction:null,runtimeMode:null,bootingRuntime:false
+  portalState:null,emoteRequested:null,campusVisited:new Set(['central']),campusFlags:{greet:false,sit:false,action:false,monitor:false},localAction:null,runtimeMode:null,bootingRuntime:false,
+  scene:'campus',savedCampusPlayer:null,valeVisited:new Set(),valeRuntime:null,selectedValeCompany:null,lastGatherToken:null,teleportDestinations:[],chatTarget:null,
+  graphics:{fov:65,fpsCap:60,worldTimeMode:'auto',showPerf:false},avatarStyle:{...AVATAR_STYLE_PRESETS.casual}
 };
 const MODE_STORAGE_KEY='agv:lobby:mode-choice';
 let challengeStatusTimer=null;
 const saveModeChoice=mode=>{try{localStorage.setItem(MODE_STORAGE_KEY,mode)}catch(_){}};
 const lastModeChoice=()=>{try{return localStorage.getItem(MODE_STORAGE_KEY)||'lite'}catch(_){return'lite'}};
+const GRAPHICS_STORAGE_KEY='agv:lobby:graphics-v56',AVATAR_STORAGE_KEY='agv:lobby:avatar-v56';
+const hexColor=(value,fallback='#36d2ff')=>/^#[0-9a-f]{6}$/i.test(String(value||''))?String(value):fallback;
+function loadPersonalization(){try{const g=JSON.parse(localStorage.getItem(GRAPHICS_STORAGE_KEY)||'{}');state.graphics={...state.graphics,...g,fov:Math.max(45,Math.min(95,Number(g.fov)||65)),fpsCap:[30,45,60].includes(Number(g.fpsCap))?Number(g.fpsCap):60,worldTimeMode:['auto','day','night'].includes(g.worldTimeMode)?g.worldTimeMode:'auto',showPerf:!!g.showPerf};}catch(_){}try{const a=JSON.parse(localStorage.getItem(AVATAR_STORAGE_KEY)||'{}');state.avatarStyle={...state.avatarStyle,...a,accentCss:hexColor(a.accentCss,state.avatarStyle.accentCss)};}catch(_){}}
+function savePersonalization(){try{localStorage.setItem(GRAPHICS_STORAGE_KEY,JSON.stringify(state.graphics));localStorage.setItem(AVATAR_STORAGE_KEY,JSON.stringify(state.avatarStyle));}catch(_){}}
+loadPersonalization();
+const VALE_VISITED_KEY='agv:lobby:vale-visited';
+const valeLoad=()=>{try{const raw=JSON.parse(localStorage.getItem(VALE_VISITED_KEY)||'[]');state.valeVisited=new Set(Array.isArray(raw)?raw:[])}catch(_){state.valeVisited=new Set()}};
+const valeSave=()=>{try{localStorage.setItem(VALE_VISITED_KEY,JSON.stringify([...state.valeVisited]))}catch(_){}};
 
 const zones=[
   {key:'1ds',code:'1DS-A-MANHA',label:'1DS',name:'1ª Série DS',accent:'#36d2ff',portal:{label:'Laboratório 1DS'}},
@@ -65,7 +83,7 @@ document.addEventListener('keydown',event=>{
   const modal=currentModal();
   if(event.key==='Escape'){
     if(modal){event.preventDefault();closeModal(modal.id);return;}
-    $('action-menu')?.classList.add('hidden');campusToggle?.(false);
+    $('action-menu')?.classList.add('hidden');campusToggle?.(false);valeToggle?.(false);
     return;
   }
   if(event.key!=='Tab'||!modal)return;
@@ -200,6 +218,106 @@ async function loadModeration(){
 }
 async function unblockStudent(id,name){if(!confirm(`Readmitir ${name} no Lobby agora?`))return;try{const {data,error}=await supabase.functions.invoke('lobby-moderation',{body:{action:'unblock',student_id:id}});if(error||data?.error)throw new Error(data?.error||error?.message);toast('Aluno readmitido no Lobby.');await loadModeration()}catch(e){toast(e.message==='student_out_of_scope'?'Aluno fora do seu escopo.':'Não foi possível readmitir o aluno.')}}
 
+
+
+let proximityChat=null;
+function appendChatLine(kind,name,message){const log=$('chat-log');if(!log)return;const row=document.createElement('div');row.className=`chat-line ${kind}`;const who=document.createElement('strong'),text=document.createElement('span');who.textContent=name;text.textContent=message;row.append(who,text);log.append(row);while(log.children.length>12)log.firstElementChild?.remove();log.scrollTop=log.scrollHeight;}
+function ensureProximityChat(){if(proximityChat)return proximityChat;proximityChat=createProximityChat({supabase,state,onMessage:chat=>{state.runtime?.showChatMessage?.(chat.sender_id,chat.message);const name=chat.sender?.display_name||'Participante';if(state.chatTarget?.student_id===chat.sender_id)appendChatLine('remote',name,chat.message);else toast(`💬 ${name}: ${chat.message}`);},onError:error=>console.warn('Chat por proximidade:',error)});proximityChat.ensure().catch(()=>{});return proximityChat;}
+function openChatWith(person){if(!person?.student_id)return;state.chatTarget=person;$('chat-target-label').textContent=`Conversando com ${person.display_name||'participante'} • permaneçam próximos`;$('chat-log').replaceChildren();appendChatLine('system','Campus DS','Chat local aberto. Mensagens são curtas e temporárias.');openModal('chat-modal');ensureProximityChat();queueMicrotask(()=>$('chat-input')?.focus());}
+async function sendProximityChat(){const input=$('chat-input'),target=state.chatTarget,text=String(input?.value||'').trim();if(!target?.student_id||!text)return;const button=$('chat-form')?.querySelector('button[type="submit"]');if(button)button.disabled=true;try{await presence(true);const result=await ensureProximityChat().send(text,target.student_id);state.runtime?.showChatMessage?.(state.user.id,result.text);appendChatLine('local','Você',result.text);input.value='';campusMark('greet');}catch(error){console.error(error);toast(String(error?.message||'').includes('participant_not_nearby')?'Chegue mais perto para conversar.':'Não foi possível enviar a mensagem agora.');}finally{if(button)button.disabled=false;}}
+
+const CAMPUS_TELEPORTS=Object.freeze([
+  {id:'campus:central',scene:'campus',name:'Praça Central',x:0,z:0,kind:'landmark',district:'Campus DS'},
+  {id:'campus:vale',scene:'campus',name:'Portal do Vale do Silício AGV',x:0,z:-10.5,kind:'portal',district:'Campus DS'},
+  {id:'campus:1ds',scene:'campus',name:'1DS — Laboratório',x:-22.5,z:-10.2,kind:'laboratory',district:'Campus DS'},
+  {id:'campus:2ds',scene:'campus',name:'2DS — Laboratório',x:22.5,z:-10.2,kind:'laboratory',district:'Campus DS'},
+  {id:'campus:3ds',scene:'campus',name:'3DS — Laboratório',x:-22.5,z:10.2,kind:'laboratory',district:'Campus DS'},
+  {id:'campus:sub',scene:'campus',name:'SUB — Laboratório',x:22.5,z:10.2,kind:'laboratory',district:'Campus DS'},
+  ...CAMPUS_EXPERIENCES.filter(item=>item.type!=='vale-portal').map(item=>({id:`campus:${item.id}`,scene:'campus',name:item.name,x:item.x,z:item.z,kind:item.type,district:'Campus DS'}))
+]);
+function companyTeleportPoint(c){const pos=c?.lot?.world_position||{x:0,z:0},fp=c?.building?.footprint||{},width=Number(fp.width||24),depth=Number(fp.depth||20),rot=Number(c?.lot?.rotation_y_deg||0)*Math.PI/180,dist=(Math.abs(Math.sin(rot))*width+Math.abs(Math.cos(rot))*depth)/2+6;return{x:Number(pos.x||0)+Math.sin(rot)*dist,z:Number(pos.z||0)+Math.cos(rot)*dist};}
+async function getTeleportDestinations(){
+  const list=[...CAMPUS_TELEPORTS];
+  try{
+    const runtime=await loadValeRuntime();
+    list.push(...VALE_FAST_TRAVEL_STATIC.map(d=>({...d,id:`vale:${d.id}`,scene:'vale',district:'Vale do Silício AGV'})));
+    for(const d of runtime.world?.districts||[])list.push({id:`vale:district:${d.id}`,scene:'vale',name:d.name,x:Number(d.center?.x||0),z:Number(d.center?.z||0),kind:'district',district:'Vale do Silício AGV'});
+    for(const c of runtime.companies||[]){const e=companyTeleportPoint(c);list.push({id:`vale:company:${c.id}`,scene:'vale',name:c.display_name||c.company_name||c.project_name,x:e.x,z:e.z,kind:'company',district:c.zone||'Empresa estudantil',companyId:c.id});}
+  }catch(error){console.warn('Destinos completos do Vale indisponíveis:',error);list.push({id:'vale:praca-fallback',scene:'vale',name:'Vale do Silício AGV — Praça Central',x:0,z:-30,kind:'landmark',district:'Vale do Silício AGV'});}
+  state.teleportDestinations=list;return list;
+}
+function teleportSceneLabel(scene){return scene==='vale'?'Vale do Silício AGV':'Campus DS';}
+async function teleportToDestination(destination,{fromGather=false}={}){
+  if(!destination||state.bootingRuntime)return false;
+  const scene=destination.scene==='vale'?'vale':'campus',world={x:Number(destination.x)||0,z:Number(destination.z)||0};
+  const mode=state.runtimeMode||'lite';
+  const stage=document.querySelector('.game-stage');stage?.classList.add('teleport-travel');setTimeout(()=>stage?.classList.remove('teleport-travel'),620);
+  if(scene!==state.scene){
+    if(scene==='vale'&&state.scene==='campus')state.savedCampusPlayer={...state.player};
+    if(scene==='campus')state.savedCampusPlayer=null;
+    state.scene=scene;state.interior=null;state.nearPortal=null;state.nearStudent=null;state.nearWorldObject=null;
+    const pp=scene==='vale'?valeWorldToPresence(world.x,world.z):worldToPresence(world.x,world.z);
+    state.player={...state.player,x:pp.x,y:pp.y,area:scene==='vale'?'vale-silicio':'central'};document.body.dataset.scene=scene;
+    if(mode==='3d')await start3D({allowFallback:true});else await startLite(fromGather?'staff_gather_scene_switch':'teleport_scene_switch');
+  }else{
+    const pp=scene==='vale'?valeWorldToPresence(world.x,world.z):worldToPresence(world.x,world.z);state.player.x=pp.x;state.player.y=pp.y;state.player.area=scene==='vale'?'vale-silicio':(destination.area||state.player.area||'central');
+    if(!state.runtime?.teleportTo?.({...destination,...world})){
+      if(mode==='3d')await start3D({allowFallback:true});else await startLite('teleport_runtime_refresh');
+    }
+  }
+  await new Promise(resolve=>requestAnimationFrame(()=>resolve()));await presence(true);showZoneBanner(scene==='vale'?'vale-silicio':(destination.area||state.player.area||'central'));
+  if(!fromGather)toast(`⚡ Teletransporte: ${destination.name}`);
+  return true;
+}
+function userScatterOffset(scene){const id=String(state.user?.id||'0');let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;const angle=(h%360)*Math.PI/180,dist=scene==='vale'?4.2:1.35;return{x:Math.cos(angle)*dist,z:Math.sin(angle)*dist};}
+async function teleportToGatherTarget(target){
+  if(!target)return false;const scene=target.scene==='vale'?'vale':'campus',base=scene==='vale'?valePresenceToWorld(target.x,target.y):presenceToWorld(target.x,target.y),offset=userScatterOffset(scene),destination={id:'staff-gather',scene,name:'Ponto do professor',x:base.x+offset.x,z:base.z+offset.z,kind:'staff'};
+  await teleportToDestination(destination,{fromGather:true});
+  if(target.interior){const entered=scene==='vale'?state.runtime?.enterBuilding?.(target.interior):state.runtime?.enterInterior?.(target.interior);if(entered)state.interior=target.interior;}
+  await presence(true);toast('📍 A equipe reuniu a turma neste ponto.');return true;
+}
+let gatherChannel=null,gatherReadyPromise=null;
+function ensureGatherChannel(){
+  if(gatherReadyPromise)return gatherReadyPromise;
+  gatherReadyPromise=new Promise(resolve=>{
+    try{
+      gatherChannel=supabase.channel('agv-lobby-staff-gather-v1').on('broadcast',{event:'staff-gather'},async message=>{
+        if(state.profile?.role!=='student'||state.stopped)return;const token=String(message?.payload?.token||'');if(!token||token===state.lastGatherToken)return;
+        try{const {data,error}=await supabase.functions.invoke('lobby-presence',{body:{action:'verify_gather',token}});if(error||!data?.ok||!data?.target)return;state.lastGatherToken=token;await teleportToGatherTarget(data.target);}catch(error){console.warn('Comando de reunião inválido/expirado:',error);}
+      }).subscribe(status=>{globalThis.__agvLobbyDiag?.record?.('staff_gather_channel',{status});if(status==='SUBSCRIBED')resolve(true);else if(['CHANNEL_ERROR','TIMED_OUT','CLOSED'].includes(status))resolve(false);});
+      setTimeout(()=>resolve(false),4500);
+    }catch(error){console.warn('Canal de reunião indisponível:',error);resolve(false);}
+  });return gatherReadyPromise;
+}
+async function bringAllStudentsToMe(){
+  if(!isStaff())return;const button=$('staff-bring-all');if(button)button.disabled=true;
+  try{
+    const ready=await ensureGatherChannel();if(!ready||!gatherChannel)throw new Error('gather_channel_unavailable');await presence(true);
+    const {data,error}=await supabase.functions.invoke('lobby-presence',{body:{action:'issue_gather',scene:state.scene,x:Math.round(state.player.x),y:Math.round(state.player.y),area:state.player.area,interior:state.interior||null}});if(error||!data?.token)throw new Error(data?.error||error?.message||'gather_token_failed');
+    const sent=await gatherChannel.send({type:'broadcast',event:'staff-gather',payload:{token:data.token}});if(sent!=='ok'&&sent!==undefined)throw new Error(`gather_broadcast_${sent}`);
+    const count=state.others.filter(o=>o.participant_role==='student').length;toast(`📍 Chamado enviado para ${count} aluno${count===1?'':'s'} online. Eles serão trazidos até você.`);closeModal('teleport-modal');
+  }catch(error){console.error(error);toast('Não foi possível reunir a turma agora. Verifique a conexão e tente novamente.');}finally{if(button)button.disabled=false;}
+}
+function teleportFilterLabel(kind){return({landmark:'Ponto importante',portal:'Portal',laboratory:'Laboratório',parkour:'Parkour',pool:'Piscina',playground:'Parquinho',slide:'Escorregador',coaster:'Trilho',tower:'Mirante',environment:'Ambiente',sport:'Esporte',mobility:'Mobilidade',district:'Distrito',company:'Empresa'}[kind]||kind||'Destino');}
+async function renderTeleportModal(){
+  const list=$('teleport-list'),search=$('teleport-search'),sceneFilter=$('teleport-scene-filter');if(!list)return;list.innerHTML='<p class="muted">Carregando destinos…</p>';
+  const destinations=state.teleportDestinations.length?state.teleportDestinations:await getTeleportDestinations(),query=String(search?.value||'').trim().toLowerCase(),filter=sceneFilter?.value||'all';
+  const rows=destinations.filter(d=>(filter==='all'||d.scene===filter)&&(!query||`${d.name} ${d.district||''} ${teleportFilterLabel(d.kind)}`.toLowerCase().includes(query)));list.replaceChildren();
+  if(!rows.length){list.innerHTML='<p class="muted">Nenhum destino encontrado.</p>';return;}
+  for(const d of rows){const row=document.createElement('button');row.type='button';row.className='teleport-destination';const icon=document.createElement('span');icon.className='teleport-icon';icon.textContent=d.scene==='vale'?'🏙':'⚡';const copy=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small'),go=document.createElement('b');title.textContent=d.name;meta.textContent=`${teleportSceneLabel(d.scene)} • ${teleportFilterLabel(d.kind)}${d.district?` • ${d.district}`:''}`;go.textContent='IR';copy.append(title,meta);row.append(icon,copy,go);row.onclick=async()=>{row.disabled=true;try{closeModal('teleport-modal');await teleportToDestination(d);}finally{row.disabled=false;}};list.append(row);}
+}
+function openTeleportModal(){const panel=$('staff-teleport-panel');panel?.classList.toggle('hidden',!isStaff());openModal('teleport-modal');renderTeleportModal().catch(error=>{console.error(error);$('teleport-list').innerHTML='<p class="muted">Não foi possível carregar os destinos agora.</p>';});}
+
+
+function renderTrainStations(){const list=$('train-station-list');if(!list)return;const stations=state.runtime?.getTrainStations?.()||[];list.replaceChildren();if(!stations.length){list.innerHTML='<p class="muted">O monotrilho está disponível no Campus DS.</p>';return;}for(const station of stations){const row=document.createElement('button');row.type='button';row.className='train-station';row.innerHTML=`<span>🚉</span><div><strong>${esc(station.name)}</strong><small>${station.id==='vale'?'Conexão direta com o Portal do Vale':'Estação do Campus DS'}</small></div><b>EMBARCAR</b>`;row.onclick=()=>{const ok=state.runtime?.startTrainTo?.(station.id);if(ok){closeModal('train-modal');toast(`🚆 Monotrilho para ${station.name}.`);}else toast('Não foi possível iniciar esta viagem.');};list.append(row);}}
+function openTrainModal(){if(state.scene!=='campus')return toast('O Monotrilho AGV opera no Campus DS. Use o teletransporte para voltar ao Campus.');openModal('train-modal');renderTrainStations();}
+function syncWorldSettingsForm(){const g=state.graphics,a=state.avatarStyle;$('world-time-mode').value=g.worldTimeMode;$('fps-cap').value=String(g.fpsCap);$('show-perf').checked=!!g.showPerf;$('fov-range').value=String(g.fov);$('fov-value').textContent=`${g.fov}°`;$('avatar-accent').value=hexColor(a.accentCss,'#36d2ff');for(const [id,key,fallback] of[['avatar-skin','skin','#d99b72'],['avatar-hair','hair','#171719'],['avatar-pants','pants','#202731'],['avatar-shoes','shoes','#e8ecef']]){const value=a[key];$(id).value=typeof value==='number'?`#${value.toString(16).padStart(6,'0').slice(-6)}`:hexColor(value,fallback);}for(const key of['backpack','glasses','headset','wrist'])$(`avatar-${key}`).checked=!!a[key];$('avatar-hair-style').value=a.hairStyle||'soft';}
+function openWorldSettings(){syncWorldSettingsForm();openModal('world-settings-modal');}
+function colorNumber(value,fallback){const text=String(value||'').replace('#','');return /^[0-9a-f]{6}$/i.test(text)?parseInt(text,16):fallback;}
+async function applyWorldSettings(){const oldAvatar=JSON.stringify(state.avatarStyle);state.graphics={fov:Number($('fov-range').value)||65,fpsCap:Number($('fps-cap').value)||60,worldTimeMode:$('world-time-mode').value,showPerf:$('show-perf').checked};state.avatarStyle={...state.avatarStyle,accentCss:hexColor($('avatar-accent').value),skin:colorNumber($('avatar-skin').value,0xd99b72),hair:colorNumber($('avatar-hair').value,0x171719),pants:colorNumber($('avatar-pants').value,0x202731),shoes:colorNumber($('avatar-shoes').value,0xe8ecef),backpack:$('avatar-backpack').checked,glasses:$('avatar-glasses').checked,headset:$('avatar-headset').checked,wrist:$('avatar-wrist').checked,hairStyle:$('avatar-hair-style').value};savePersonalization();state.runtime?.setWorldTimeMode?.(state.graphics.worldTimeMode);state.runtime?.setFPSCap?.(state.graphics.fpsCap);state.runtime?.setFov?.(state.graphics.fov);$('perf-badge')?.classList.toggle('hidden',!state.graphics.showPerf);closeModal('world-settings-modal');if(state.runtimeMode==='3d'&&oldAvatar!==JSON.stringify(state.avatarStyle)){toast('Aplicando visual do personagem…');await start3D({allowFallback:true});}else toast('Configurações aplicadas.');}
+function applyAvatarPreset(name){const preset=AVATAR_STYLE_PRESETS[name];if(!preset)return;state.avatarStyle={...state.avatarStyle,...preset};syncWorldSettingsForm();}
+function updateWorldClock(info={}){const el=$('world-clock');if(!el)return;const icon=info.phase==='night'?'🌙':info.phase==='dusk'?'🌇':'☀️';el.textContent=`${icon} ${info.clock||'--:--'}`;el.title=`Campus • ${info.label||'Atmosfera'} • ${state.graphics.worldTimeMode==='auto'?'automático':state.graphics.worldTimeMode}`;}
+
 const CAMPUS_TASKS=[
   {id:'area1',title:'Visitar 1DS',desc:'Passe pela área da 1ª Série DS.',done:()=>state.campusVisited.has('1ds')},
   {id:'area2',title:'Visitar 2DS',desc:'Passe pela área da 2ª Série DS.',done:()=>state.campusVisited.has('2ds')},
@@ -214,8 +332,41 @@ function campusLoad(){try{const x=JSON.parse(localStorage.getItem('agv:p55:campu
 function renderCampus(){const list=$('campus-checklist');if(!list)return;list.replaceChildren();let done=0;for(const t of CAMPUS_TASKS){const ok=!!t.done();if(ok)done++;const row=document.createElement('div');row.className='campus-task'+(ok?' done':'');const badge=document.createElement('b');badge.textContent=ok?'✓':'•';const info=document.createElement('div');const title=document.createElement('strong');title.textContent=t.title;const desc=document.createElement('small');desc.textContent=t.desc;info.append(title,desc);row.append(badge,info);list.append(row);}const pct=Math.round(done/CAMPUS_TASKS.length*100);$('campus-progress-text').textContent=`${done}/${CAMPUS_TASKS.length}`;$('campus-progress-bar').style.width=`${pct}%`;if(done===CAMPUS_TASKS.length)$('campus-message').textContent='Campus explorado! Esta conquista é apenas local e não concede benefícios automáticos.';}
 function campusMark(type,value=true){if(type==='area'){state.campusVisited.add(value)}else if(type in state.campusFlags){state.campusFlags[type]=value}campusSave();renderCampus()}
 function campusToggle(force){const d=$('campus-drawer');if(!d)return;const open=force??d.classList.contains('hidden');d.classList.toggle('hidden',!open);if(open){$('action-menu')?.classList.add('hidden');renderCampus()}}
+function valeToggle(force){const d=$('vale-drawer');if(!d)return;const open=force??d.classList.contains('hidden');d.classList.toggle('hidden',!open);if(open){$('action-menu')?.classList.add('hidden');renderValeDrawer();}}
+let valeMiniLast=0;
+function renderValeMinimap(force=false){
+  const canvas=$('vale-minimap');if(!canvas)return;const visible=state.scene==='vale'&&state.runtimeMode==='3d'&&!state.interior;canvas.classList.toggle('hidden',!visible);if(!visible)return;const now=performance.now();if(!force&&now-valeMiniLast<120)return;valeMiniLast=now;const rect=canvas.getBoundingClientRect(),w=Math.max(120,Math.floor(rect.width||160)),h=Math.max(120,Math.floor(rect.height||160)),dpr=Math.min(devicePixelRatio||1,1.5);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}const c=canvas.getContext('2d');if(!c)return;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);c.fillStyle='rgba(3,12,18,.88)';c.fillRect(0,0,w,h);const pad=10,map=(x,z)=>({x:pad+(Number(x)-VALE_BOUNDS.minX)/(VALE_BOUNDS.maxX-VALE_BOUNDS.minX)*(w-pad*2),y:pad+(Number(z)-VALE_BOUNDS.minZ)/(VALE_BOUNDS.maxZ-VALE_BOUNDS.minZ)*(h-pad*2)});c.strokeStyle='rgba(114,230,255,.18)';c.lineWidth=1;c.beginPath();c.moveTo(w/2,pad);c.lineTo(w/2,h-pad);c.moveTo(pad,h/2);c.lineTo(w-pad,h/2);c.stroke();for(const d of valeDestinations()){if(d.kind==='company'&&!state.valeVisited.has(d.companyId))continue;const q=map(d.x,d.z);c.fillStyle=d.kind==='company'?'rgba(81,231,163,.75)':d.kind==='district'?'rgba(114,230,255,.52)':d.kind==='sport'?'rgba(52,211,153,.7)':'rgba(251,191,36,.7)';c.fillRect(q.x-1.5,q.y-1.5,3,3);}for(const o of state.others||[]){if(o.area!=='vale-silicio')continue;const wp=valePresenceToWorld(o.x,o.y),q=map(wp.x,wp.z);c.fillStyle='#ffd166';c.beginPath();c.arc(q.x,q.y,2.1,0,Math.PI*2);c.fill();}const wp=valePresenceToWorld(state.player.x,state.player.y),q=map(wp.x,wp.z);c.fillStyle='#36d2ff';c.beginPath();c.arc(q.x,q.y,4,0,Math.PI*2);c.fill();c.strokeStyle='rgba(54,210,255,.55)';c.beginPath();c.arc(q.x,q.y,7,0,Math.PI*2);c.stroke();c.fillStyle='rgba(231,250,255,.88)';c.font='800 9px Inter,system-ui,sans-serif';c.textAlign='left';c.fillText('VALE',8,11);}
+function valeDestinations(){return state.runtime?.getDestinations?.()||[];}
+function renderValeDrawer(){
+  const list=$('vale-destination-list'),filters=$('vale-filter-row'),search=$('vale-search');if(!list||!filters)return;
+  const destinations=valeDestinations(),query=String(search?.value||'').trim().toLowerCase(),kinds=[...new Set(destinations.map(x=>x.kind||'outro'))];
+  const active=filters.dataset.active||'all';filters.replaceChildren();
+  const mk=(id,label)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.classList.toggle('active',active===id);b.onclick=()=>{filters.dataset.active=id;renderValeDrawer()};filters.append(b);};
+  mk('all','Todos');for(const kind of kinds)mk(kind,kind==='company'?'Empresas':kind==='environment'?'Ambientes':kind==='sport'?'Esportes':kind==='mobility'?'Mobilidade':kind==='portal'?'Portais':kind);
+  const filtered=destinations.filter(d=>(active==='all'||d.kind===active)&&(!query||`${d.name||''} ${d.district||''}`.toLowerCase().includes(query)));list.replaceChildren();
+  if(!filtered.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Nenhum destino encontrado.';list.append(empty);return;}
+  for(const d of filtered){const visited=d.kind!=='company'||state.valeVisited.has(d.companyId);const row=document.createElement('button');row.type='button';row.className='vale-destination';const info=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small'),travel=document.createElement('span');title.textContent=d.name;meta.textContent=d.district||({landmark:'Ponto importante',environment:'Ambiente',sport:'Complexo esportivo',mobility:'Mobilidade',portal:'Portal'}[d.kind]||d.kind||'Destino');travel.className='travel';travel.textContent=visited?'IR':'VISITAR';info.append(title,meta);row.append(info,travel);row.onclick=()=>{if(!visited){toast('Visite esta empresa caminhando pelo Vale para liberar o fast travel.');return;}state.runtime?.teleportTo?.(d);valeToggle(false);toast(`Destino: ${d.name}`);};list.append(row);}
+}
+function showValeCompany(company){
+  if(!company)return;state.selectedValeCompany=company;state.valeVisited.add(company.id);valeSave();
+  const data=company.data_bindings||{},teams=data.teams||[],leaders=data.leaders||[],roles=teams.flatMap(t=>(t.members||[]).map(m=>`${m.name} — ${m.role||'Função ainda não cadastrada'}`));
+  $('vale-company-title').textContent=company.display_name||company.company_name||company.project_name;$('vale-company-subtitle').textContent=`${company.project_name||'Projeto estudantil'} • ${(data.turmas||[]).join(', ')||'Turma a validar'} • ${Number(data.member_count||0)} integrante(s)`;
+  const content=$('vale-company-content');content.replaceChildren();
+  const section=(title,lines)=>{const card=document.createElement('section');card.className='vale-company-section';const h=document.createElement('h3');h.textContent=title;card.append(h);const ul=document.createElement('ul');for(const line of lines.filter(Boolean)){const li=document.createElement('li');li.textContent=line;ul.append(li);}if(!ul.children.length){const p=document.createElement('p');p.textContent='A validar';card.append(p);}else card.append(ul);content.append(card);};
+  section('Projeto',[data.description||company.building?.theme_description||company.project_name,...(company.interior?.focus_areas||[])]);section('Equipe',[`Liderança: ${leaders.join(', ')||'A validar'}`,...roles.slice(0,18)]);section('Prédio',[`Distrito: ${company.zone||'A validar'}`,`Arquétipo: ${company.building?.archetype||'generic_tech'}`,`Interior: ${company.building?.interior_template||'interior_generic'}`]);
+  $('vale-company-enter').dataset.companyId=company.id;openModal('vale-company-modal');renderValeDrawer();
+}
 function handleWorldObject(obj){
   if(!obj)return false;
+  if(obj.type==='vale-portal'){enterVale().catch(error=>{console.error(error);toast('Não foi possível abrir o Vale agora.');});return true}
+  if(obj.type==='return-portal'){returnToCampus().catch(error=>{console.error(error);toast('Não foi possível voltar ao Campus agora.');});return true}
+  if(obj.type==='vale-company'){showValeCompany(obj.company);return true}
+  if(obj.type==='vale-company-exit'){const ok=state.runtime?.exitBuilding?.();if(ok)toast('Voltando para as ruas do Vale…');return true}
+  if(obj.type==='vale-npc'){state.runtime?.setLocalAction?.('wave');toast(`${obj.name} • ${obj.role}: ${obj.message}`);return true}
+  if(obj.type==='vale-environment'){toast(`${obj.name}: ${obj.description||'Ambiente do Campus AGV.'}`);return true}
+  if(obj.type==='vale-sport'){toast(`${obj.name}: área preparada para futuros minijogos e desafios.`);return true}
+  if(obj.type==='vale-hangar'||obj.type==='vale-racetrack'){toast(`${obj.name}: ${obj.description||'Área de exploração do Vale.'}`);return true}
+  if(obj.type==='vale-vehicle'){toast(`${obj.name}: ${obj.state==='INTERACTIVE_READY'?'preparado para futura interação':'veículo de ambientação do Vale'}.`);return true}
   if(obj.type==='building-entrance'){const ok=state.runtime?.enterInterior?.(obj.zoneKey);if(ok)toast(`Entrando no laboratório ${obj.zoneKey.toUpperCase()}…`);return !!ok}
   if(obj.type==='interior-exit'){const ok=state.runtime?.exitInterior?.();if(ok)toast('Voltando para a Praça Central…');return !!ok}
   if(obj.type==='lab-terminal'){const sat=state.runtime?.toggleStation?.(obj);if(sat){state.localAction='sit';toast(`${obj.name}: monitor ligado. Você está sentado na estação. Pressione E para levantar.`)}else toast(`${obj.name}: estação liberada.`);return true}
@@ -226,35 +377,36 @@ function handleWorldObject(obj){
   if(obj.type==='meet'){state.runtime?.setLocalAction?.('cheer');toast(`${obj.label} • ponto de encontro da turma.`);return true}
   if(obj.type==='kiosk'){campusToggle(true);$('campus-message').textContent='Totem do Campus: acompanhe sua exploração local. Nenhum benefício é concedido por esta tela.';return true}
   if(obj.type==='parkour'){const started=state.runtime?.startChallenge?.('parkour');if(started)toast('Circuito Parkour iniciado. Passe pelos checkpoints na ordem.');return true}
-  if(['pool','playground','slide','coaster','tower'].includes(obj.type)){
-    const started=state.runtime?.startExperience?.(obj.type),messages={pool:'Pausa no deck da Piscina Neon.',playground:'Balanço do Parquinho DS ativado.',slide:'Subindo para uma descida curta no Escorregador Turbo.',coaster:'Embarque confirmado no Trilho Panorâmico.',tower:'Subida guiada para o mirante iniciada.'};toast(started?(messages[obj.type]||obj.description||obj.name):'Esta atração está indisponível neste modo agora.');return true;
+  if(obj.type==='train-station'||obj.type==='coaster'){openTrainModal();return true;}
+  if(['pool','playground','slide','tower'].includes(obj.type)){
+    const started=state.runtime?.startExperience?.(obj.type),messages={pool:'Pausa no deck da Piscina Neon.',playground:'Balanço do Parquinho DS ativado.',slide:'Descida física do Escorregador Turbo iniciada.',tower:'Subida guiada para a Torre de Controle AGV iniciada.'};toast(started?(messages[obj.type]||obj.description||obj.name):'Esta atração está indisponível neste modo agora.');return true;
   }
   return false;
 }
 function interact(){
   if(state.nearStudent){
     if(isStaff()&&state.nearStudent.participant_role==='student')return openStaffTarget(state.nearStudent);
-    campusMark('greet');emote('wave',isStaff()?state.nearStudent.student_id:null).then(()=>toast(`Você cumprimentou ${state.nearStudent?.display_name||'o participante'} 👋`));return;
+    openChatWith(state.nearStudent);return;
   }
   if(state.seated){const left=state.runtime?.toggleSeat?.(state.nearSeat);toast('Você se levantou do banco.');return;}
   if(state.nearSeat){const sat=state.runtime?.toggleSeat?.(state.nearSeat);if(sat){state.localAction='sit';campusMark('sit');toast('Sentado. Pressione E para levantar.');}return;}
   if(state.nearWorldObject&&handleWorldObject(state.nearWorldObject))return;
   if(!state.nearPortal)return;const z=state.nearPortal,ps=portalState(z);
-  if(isStaff())return toast(ps.text);if(z.code!==state.currentClass?.code)return toast(`Você pode visitar ${z.label}, mas as atividades pertencem àquela turma.`);if(ps.open){$('game-stage')?.classList.add('portal-travel');setTimeout(()=>{$('game-stage')?.classList.remove('portal-travel');showActivities()},430)}else toast(ps.text);
+  if(isStaff())return toast(ps.text);if(z.code!==state.currentClass?.code)return toast(`Você pode visitar ${z.label}, mas as atividades pertencem àquela turma.`);if(ps.open){document.querySelector('.game-stage')?.classList.add('portal-travel');setTimeout(()=>{document.querySelector('.game-stage')?.classList.remove('portal-travel');showActivities()},430)}else toast(ps.text);
 }
 function renderInteraction(){
-  const b=$('interaction');if(state.nearStudent){b.classList.remove('hidden');$('interaction-title').textContent=`${isStaff()&&state.nearStudent.participant_role==='student'?'Interagir':'Cumprimentar'} — ${state.nearStudent.display_name}`;$('interaction-text').textContent=isStaff()&&state.nearStudent.participant_role==='student'?`${className(state.nearStudent.class_id)} • reações e moderação`:'Aproxime-se e pressione E para acenar.';$('interaction-button').textContent=isStaff()&&state.nearStudent.participant_role==='student'?'Opções':'Acenar 👋';return}
+  const b=$('interaction');if(state.nearStudent){b.classList.remove('hidden');$('interaction-title').textContent=`${isStaff()&&state.nearStudent.participant_role==='student'?'Interagir':'Conversar'} — ${state.nearStudent.display_name}`;$('interaction-text').textContent=isStaff()&&state.nearStudent.participant_role==='student'?`${className(state.nearStudent.class_id)} • conversar, reações e moderação`:'Aproxime-se e pressione E para abrir o chat local.';$('interaction-button').textContent=isStaff()&&state.nearStudent.participant_role==='student'?'Opções':'Conversar 💬';return}
   if(state.seated){b.classList.remove('hidden');$('interaction-title').textContent='Banco da Praça';$('interaction-text').textContent='Você está sentado. Pressione E para levantar.';$('interaction-button').textContent='Levantar';return}
   if(state.nearSeat){b.classList.remove('hidden');$('interaction-title').textContent='Banco da Praça';$('interaction-text').textContent='Faça uma pausa no campus.';$('interaction-button').textContent='Sentar';return}
-  if(state.nearWorldObject){const o=state.nearWorldObject;b.classList.remove('hidden');$('interaction-title').textContent=o.name||o.label||'Campus';const copy={npc:'Monitor virtual • orientação do campus',meet:'Ponto de encontro da turma',kiosk:'Totem interativo do campus','building-entrance':'Porta automática com sensor • entrar no laboratório','interior-exit':'Porta automática com sensor • voltar à praça','lab-terminal':'Estação interativa • sentar e ligar o monitor',smartboard:'Quadro inteligente • conteúdo contextual','presentation-spot':isStaff()?'Posição de apresentação da equipe':'Área reservada à equipe pedagógica','lab-portal':'Portal pedagógico interno',parkour:'Circuito de saltos e checkpoints • treino local sem nota',pool:'Piscina Neon • área de convivência',playground:'Parquinho DS • balanço e gangorra',slide:'Escorregador Turbo • acesso e descida',coaster:'Trilho Panorâmico • passeio automático curto',tower:'Torre de Escadas • subida ao mirante'};$('interaction-text').textContent=copy[o.type]||o.description||'Objeto interativo';$('interaction-button').textContent=o.type==='npc'?'Conversar':o.type==='building-entrance'?'Entrar':o.type==='interior-exit'?'Sair':o.type==='lab-terminal'?'Usar estação':o.type==='smartboard'?'Exibir':o.type==='presentation-spot'?(isStaff()?'Apresentar':'Reservado'):o.type==='lab-portal'?'Abrir portal':o.interaction||(o.type==='parkour'?'Iniciar circuito':'Explorar');return}
+  if(state.nearWorldObject){const o=state.nearWorldObject;b.classList.remove('hidden');$('interaction-title').textContent=o.name||o.label||'Campus';const copy={npc:'Monitor virtual • orientação do campus',meet:'Ponto de encontro da turma',kiosk:'Totem interativo do campus','building-entrance':'Porta automática com sensor • entrar no laboratório','interior-exit':'Porta automática com sensor • voltar à praça','lab-terminal':'Estação interativa • sentar e ligar o monitor',smartboard:'Quadro inteligente • conteúdo contextual','presentation-spot':isStaff()?'Posição de apresentação da equipe':'Área reservada à equipe pedagógica','lab-portal':'Portal pedagógico interno',parkour:'Circuito de saltos e checkpoints • treino local sem nota',pool:'Piscina Neon • área de convivência',playground:'Parquinho DS • balanço e gangorra',slide:'Escorregador Turbo • acesso e descida',coaster:'Monotrilho AGV • escolher estação e viajar',tower:'Torre de Controle AGV • mirante panorâmico','train-station':'Estação do Monotrilho AGV • escolher destino','vale-portal':'Portal para a cidade tecnológica dos projetos dos alunos','return-portal':'Retornar ao Campus DS','vale-company':'Empresa/projeto estudantil • conhecer equipe e entrar no prédio','vale-company-exit':'Sair do prédio e voltar às ruas do Vale','vale-npc':'NPC institucional • orientação e acolhimento','vale-environment':'Ambiente institucional do Campus AGV','vale-sport':'Complexo esportivo • preparado para futuros minijogos','vale-hangar':'Hangar e mobilidade do Campus','vale-racetrack':'Pista de corrida e exploração','vale-vehicle':'Veículo de ambientação e mobilidade'};$('interaction-text').textContent=copy[o.type]||o.description||'Objeto interativo';$('interaction-button').textContent=o.type==='npc'?'Conversar':o.type==='building-entrance'?'Entrar':o.type==='interior-exit'?'Sair':o.type==='lab-terminal'?'Usar estação':o.type==='smartboard'?'Exibir':o.type==='presentation-spot'?(isStaff()?'Apresentar':'Reservado'):o.type==='lab-portal'?'Abrir portal':o.interaction||(o.type==='parkour'?'Iniciar circuito':'Explorar');return}
   if(!state.nearPortal){b.classList.add('hidden');return}const z=state.nearPortal,ps=portalState(z);b.classList.remove('hidden');$('interaction-title').textContent=`${z.portal.label} — ${z.label}`;$('interaction-text').textContent=ps.text;$('interaction-button').textContent=ps.open?'Abrir portal':'Ver estado';
 }
-function areaText(key){const z=zones.find(x=>x.key===key);return z?`Área ${z.label} — ${z.name}`:'Praça Central'}
+function areaText(key){if(key==='vale-silicio')return'Vale do Silício AGV';const z=zones.find(x=>x.key===key);return z?`Área ${z.label} — ${z.name}`:'Praça Central'}
 function showZoneBanner(key){campusMark('area',key);const title=areaText(key),wrap=$('zone-banner');$('zone-banner-title').textContent=title;wrap.classList.remove('hidden');clearTimeout(state.zoneTimer);state.zoneTimer=setTimeout(()=>wrap.classList.add('hidden'),2100)}
 function localAction(kind){if(!state.runtime)return;if(kind!=='clear')campusMark('action');state.localAction=kind==='clear'?null:kind;state.runtime.setLocalAction?.(state.localAction);$('action-menu')?.classList.add('hidden');if(kind!=='clear')toast(kind==='dance'?'Dança iniciada 🕺':kind==='cheer'?'Comemoração 🎉':'Agachado. Movimente-se para cancelar.')}
 function cycleQuality(){if(state.runtimeMode==='lite'){toast('O mapa 2D usa qualidade automática e leve. Use “Entrar no 3D” para a experiência imersiva.');return}const current=state.runtime?.getQuality?.()||'medium',order=['low','medium','high','ultra'],next=order[(order.indexOf(current)+1)%order.length];try{localStorage.setItem('agv:lobby:quality',next)}catch(_){}state.runtime?.setQuality?.(next)}
-function toggleCamera(){if(state.runtimeMode!=='3d')return toast('No mapa 2D, use o scroll para aproximar ou afastar.');const mode=state.runtime?.toggleCamera?.()||'explore';const labels={explore:'Exploração',wide:'Câmera ampla',campus:'Visão campus'};$('camera-button').textContent=labels[mode]||'Câmera';toast(mode==='campus'?'Visão elevada do campus. Arraste para girar 360° e use o scroll para zoom.':mode==='wide'?'Câmera ampla ativada. Arraste para olhar ao redor.':'Câmera de exploração ativada. Ela aproxima automaticamente ao encontrar paredes e obstáculos.')}
-function perfUpdate(info={}){globalThis.__agvLobbyDiag?.update?.({runtime:{fps:Number(info.fps||0)||null,quality:String(info.quality||'')||null,avatar:state.runtime?.getAvatarMode?.()||null,profile:info.profile||null}});const el=$('perf-badge');if(!el)return;const fps=Number(info.fps||0),show=!!fps&&fps<42;const avatar=state.runtime?.getAvatarMode?.()==='rigged-glb'?'GLB':'PROC';el.textContent=`${fps||'—'} FPS • ${String(info.quality||'').toUpperCase()} • ${avatar}`;el.classList.toggle('hidden',!show);el.classList.remove('warn','bad');if(fps&&fps<28)el.classList.add('bad');else if(fps&&fps<42)el.classList.add('warn');}
+function toggleCamera(){if(state.runtimeMode!=='3d')return toast('No mapa 2D, use o scroll para aproximar ou afastar.');const mode=state.runtime?.toggleCamera?.()||'explore';const labels={explore:'3ª pessoa',firstperson:'1ª pessoa',wide:'Ampla',campus:'Campus'};$('camera-button').textContent=labels[mode]||'Câmera';toast(mode==='firstperson'?'Visão em primeira pessoa ativada. Use o mouse para olhar ao redor.':mode==='campus'?'Visão elevada do campus. Arraste para girar 360° e use o scroll para zoom.':mode==='wide'?'Câmera ampla ativada. Arraste para olhar ao redor.':'Câmera em terceira pessoa ativada.')}
+function perfUpdate(info={}){globalThis.__agvLobbyDiag?.update?.({runtime:{fps:Number(info.fps||0)||null,quality:String(info.quality||'')||null,avatar:state.runtime?.getAvatarMode?.()||null,profile:info.profile||null}});const el=$('perf-badge');if(!el)return;const fps=Number(info.fps||0),show=!!fps&&(state.graphics.showPerf||fps<42);const avatar=state.runtime?.getAvatarMode?.()==='rigged-glb'?'GLB':'PROC';el.textContent=`${fps||'—'} FPS • ${String(info.quality||'').toUpperCase()} • ${avatar}`;el.classList.toggle('hidden',!show);el.classList.remove('warn','bad');if(fps&&fps<28)el.classList.add('bad');else if(fps&&fps<42)el.classList.add('warn');}
 
 function setLoading(text,title='Entrando no Campus DS',failed=false){
   const overlay=$('loading3d'),status=$('loading3d-status'),heading=$('loading3d-title'),recovery=$('loading3d-recovery');
@@ -267,33 +419,37 @@ function updateModeUI(mode=state.runtimeMode){
   const stage=document.querySelector('.game-stage'),button=$('mode-button'),advice=$('mode-advice'),waiting=$('waiting-strip-text');
   if(stage)stage.dataset.runtimeMode=mode||'lite';
   if(button)button.textContent=mode==='3d'?'Voltar ao 2D':'Entrar no 3D';
-  if(advice)advice.textContent=mode==='3d'?'3D imersivo':'2D recomendado';
-  updateActivityHUD();if(waiting&&activitySummary().kind==='waiting')waiting.textContent=mode==='3d'?'Modo 3D ativo. Explore o Campus ou volte ao 2D a qualquer momento.':'Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.';
-  document.body.dataset.lobbyMode=mode||'lite';
+  document.body.dataset.scene=state.scene||'campus';if($('campus-button')){$('campus-button').title=state.scene==='vale'?'Mapa e empresas do Vale':'Campus vivo';$('campus-button').setAttribute('aria-label',state.scene==='vale'?'Abrir mapa do Vale':'Abrir painel do campus');}
+  const valeDirect=$('vale-direct-button');if(valeDirect){const inVale=state.scene==='vale';valeDirect.textContent=inVale?'↩ Campus DS':'🏙 Vale do Silício';valeDirect.title=inVale?'Voltar ao Campus DS':'Viajar para o Vale do Silício AGV • 27 empresas e 8 distritos';valeDirect.setAttribute('aria-label',valeDirect.title);}
+  if(advice)advice.textContent=state.scene==='vale'?(mode==='3d'?'Vale • 3D':'Vale • 2D'):(mode==='3d'?'3D imersivo':'2D recomendado');
+  updateActivityHUD();if(waiting&&activitySummary().kind==='waiting')waiting.textContent=state.scene==='vale'?(mode==='3d'?'Vale 3D ativo. Explore empresas, ambientes, esportes e mobilidade.':'Explore o Vale em 2D. O modo 3D continua opcional.'):(mode==='3d'?'Modo 3D ativo. Explore o Campus ou volte ao 2D a qualquer momento.':'Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.');
+  document.body.dataset.lobbyMode=mode||'lite';renderValeMinimap(true);
 }
 function setModeTransition(active,label=''){const stage=document.querySelector('.game-stage');if(!stage)return;stage.classList.toggle('mode-switching',!!active);if(active)stage.dataset.modeLabel=label||'Atualizando ambiente';else delete stage.dataset.modeLabel;}
 function freshCanvas(){const old=$('game3d');if(!old)return null;const next=old.cloneNode(false);old.replaceWith(next);return next}
 function formatChallengeTime(seconds=0){const value=Math.max(0,Number(seconds)||0),minutes=Math.floor(value/60),rest=value-minutes*60;return`${String(minutes).padStart(2,'0')}:${rest.toFixed(1).padStart(4,'0')}`;}
 function challengeEvent(event={}){const hud=$('challenge-hud'),stage=document.querySelector('.game-stage'),restart=$('challenge-restart'),kicker=$('challenge-kicker'),title=$('challenge-title'),detail=$('challenge-detail'),time=$('challenge-time'),bar=$('challenge-progress-bar');if(!hud)return;clearTimeout(challengeStatusTimer);const ride=String(event.type||'').startsWith('experience-');if(event.message&&event.type!=='tick'&&event.type!=='experience-tick')toast(event.message);if(event.type==='start'||event.type==='restart'||event.type==='checkpoint'||event.type==='tick'||event.type==='respawn'){hud.classList.remove('hidden');stage?.classList.add('challenge-active');restart?.classList.remove('hidden');if(kicker)kicker.textContent='Desafio local • sem nota';if(title)title.textContent=event.title||'Circuito Parkour';if(detail)detail.textContent=event.type==='respawn'?'Recuperação segura':`Checkpoint ${Math.min(event.index||0,event.total||5)}/${event.total||5}`;if(time)time.textContent=formatChallengeTime(event.elapsed);if(bar)bar.style.width=`${Math.round(Math.min(1,(event.index||0)/Math.max(1,event.total||5))*100)}%`;}
   if(ride){const activeRide=event.type==='experience-start'||event.type==='experience-tick';hud.classList.toggle('hidden',!activeRide);stage?.classList.toggle('challenge-active',activeRide);restart?.classList.add('hidden');if(kicker)kicker.textContent='Atração local';if(title&&event.title)title.textContent=event.title;if(detail)detail.textContent=event.type==='experience-tick'?`${Math.round((event.progress||0)*100)}% do passeio`:'Experiência recreativa';if(time&&event.type==='experience-tick')time.textContent=formatChallengeTime((event.progress||0)*(event.duration||0));if(bar&&event.type==='experience-tick')bar.style.width=`${Math.round((event.progress||0)*100)}%`;}
+  if(String(event.type||'').startsWith('train-')&&event.type==='train-complete'&&event.destination?.id==='vale')setTimeout(()=>enterVale().catch(error=>console.error(error)),350);
   const finished=['complete','cancel','experience-complete','experience-cancel'].includes(event.type);if(finished){challengeStatusTimer=setTimeout(()=>{hud.classList.add('hidden');stage?.classList.remove('challenge-active');updateModeUI(state.runtimeMode)},3200);}}
-function runtimeHooks(){return{canvas:$('game3d'),zones,state,isStaff,className,onInteract:interact,onQualityChange:q=>{globalThis.__agvLobbyDiag?.update?.({runtime:{quality:q}});$('quality-button').textContent=state.runtimeMode==='lite'?'Leve':q==='ultra'?'Ultra':q==='high'?'Alto':q==='low'?'Eco':'Médio'},onPerf:perfUpdate,onError:m=>toast(m),onContextLost:()=>{if(state.runtimeMode==='3d'&&!state.bootingRuntime)startLite('webgl_context_lost').catch(()=>{})},onChallengeEvent:challengeEvent,onAreaChange:showZoneBanner,onInteriorChange:e=>{state.interior=e.inside?e.key:null;showZoneBanner(e.inside?e.key:'central');toast(e.inside?`Laboratório ${String(e.label||e.key).toUpperCase()} • ambiente interno`:'Praça Central • ambiente externo');},onPlayerState:p=>{state.player.x=p.x;state.player.y=p.y;state.player.area=p.area;state.interior=p.interior||null;state.nearPortal=p.nearPortal;state.nearStudent=p.nearStudent;state.nearSeat=p.nearSeat||null;state.nearWorldObject=p.nearWorldObject||null;state.seated=!!p.seated;$('area-label').textContent=p.interior?`Laboratório ${String(p.interior).toUpperCase()}`:areaText(p.area);renderInteraction();presence();}}}
+function runtimeHooks(){return{canvas:$('game3d'),zones,state,isStaff,className,onInteract:interact,onQualityChange:q=>{globalThis.__agvLobbyDiag?.update?.({runtime:{quality:q}});$('quality-button').textContent=state.runtimeMode==='lite'?'Leve':q==='ultra'?'Ultra':q==='high'?'Alto':q==='low'?'Eco':'Médio'},onPerf:perfUpdate,onError:m=>toast(m),onContextLost:()=>{if(state.runtimeMode==='3d'&&!state.bootingRuntime)startLite('webgl_context_lost').catch(()=>{})},onChallengeEvent:challengeEvent,onWorldTime:updateWorldClock,onAreaChange:showZoneBanner,onInteriorChange:e=>{state.interior=e.inside?e.key:null;showZoneBanner(e.inside?e.key:(state.scene==='vale'?'vale-silicio':'central'));toast(e.inside?`${String(e.label||e.key).toUpperCase()} • ambiente interno`:(state.scene==='vale'?'Vale do Silício AGV • ambiente externo':'Praça Central • ambiente externo'));},onPlayerState:p=>{state.player.x=p.x;state.player.y=p.y;state.player.area=p.area;state.interior=p.interior||null;state.nearPortal=p.nearPortal;state.nearStudent=p.nearStudent;state.nearSeat=p.nearSeat||null;state.nearWorldObject=p.nearWorldObject||null;state.seated=!!p.seated;$('area-label').textContent=p.interior?(state.scene==='vale'?`Prédio • ${state.selectedValeCompany?.display_name||String(p.interior)}`:`Laboratório ${String(p.interior).toUpperCase()}`):areaText(p.area);renderInteraction();renderValeMinimap();presence();}}}
 async function startLite(reason='fallback'){
   globalThis.__agvLobbyDiag?.record?.('runtime_lite',{reason});globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'lite',quality:'lite',firstFrame:true}});
-  setModeTransition(true,'Abrindo mapa 2D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='lite';showLiteBadge(true);setLoading('Preparando o mapa interativo com presença em tempo real…','Mapa 2D do Campus');
-  state.runtime=createLobbyLite(runtimeHooks());$('quality-button').textContent='Leve';$('camera-button').textContent='Mapa';$('perf-badge')?.classList.add('hidden');updateModeUI('lite');
-  await securityTelemetry('client.lobby_lite_mode','info',{reason,surface:'lobby-3d'});requestAnimationFrame(()=>setTimeout(()=>{finishLoading();setModeTransition(false)},180));showZoneBanner(state.player.area);return state.runtime;
+  setModeTransition(true,'Abrindo mapa 2D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='lite';showLiteBadge(true);setLoading(state.scene==='vale'?'Gerando distritos, empresas, ruas e atrações do Vale…':'Preparando o mapa interativo com presença em tempo real…',state.scene==='vale'?'Mapa 2D do Vale do Silício AGV':'Mapa 2D do Campus');
+  state.runtime=state.scene==='vale'?await createValeLite({...runtimeHooks(),signal:null}):createLobbyLite(runtimeHooks());state.runtime?.setWorldTimeMode?.(state.graphics.worldTimeMode);state.runtime?.setFPSCap?.(state.graphics.fpsCap);$('quality-button').textContent='Leve';$('camera-button').textContent='Mapa';$('perf-badge')?.classList.add('hidden');updateModeUI('lite');
+  await securityTelemetry('client.lobby_lite_mode','info',{reason,surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});requestAnimationFrame(()=>setTimeout(()=>{finishLoading();setModeTransition(false)},180));showZoneBanner(state.scene==='vale'?'vale-silicio':state.player.area);if(state.scene==='vale')renderValeDrawer();return state.runtime;
 }
 async function start3D({allowFallback=true}={}){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'runtime_3d_loading'});globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'3d',firstFrame:false}});
-  if(state.bootingRuntime)return state.runtime;state.bootingRuntime=true;setModeTransition(true,'Entrando no ambiente 3D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='3d';showLiteBadge(false);setLoading('Montando praça, edifícios, personagens e presença online…','Entrando no Campus DS 3D');
+  if(state.bootingRuntime)return state.runtime;state.bootingRuntime=true;setModeTransition(true,'Entrando no ambiente 3D');state.runtime?.stop?.();state.runtime=null;freshCanvas();state.runtimeMode='3d';showLiteBadge(false);setLoading(state.scene==='vale'?'Gerando cidade tecnológica, prédios, NPCs e mobilidade…':'Montando praça, edifícios, personagens e presença online…',state.scene==='vale'?'Entrando no Vale do Silício AGV 3D':'Entrando no Campus DS 3D');
   const controller=new AbortController();let timer=null,firstFrameResolve;const firstFrame=new Promise(resolve=>{firstFrameResolve=resolve});
   try{
     const savedQuality=(()=>{try{const q=localStorage.getItem('agv:lobby:quality');return ['low','medium','high','ultra'].includes(q)?q:null}catch(_){return null}})();
-    const create=createLobby3D({...runtimeHooks(),signal:controller.signal,initialQuality:savedQuality,onFirstFrame:()=>firstFrameResolve?.()});
+    const factory=state.scene==='vale'?createVale3D:createLobby3D;const create=factory({...runtimeHooks(),signal:controller.signal,initialQuality:savedQuality,onFirstFrame:()=>firstFrameResolve?.()});
     const timeoutMs=COARSE_POINTER?11500:13500;const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(new Error('lobby_3d_boot_timeout'))},timeoutMs)});
-    state.runtime=await Promise.race([create,timeout]);clearTimeout(timer);setLoading('Sincronizando câmera 360° e personagens…','Campus quase pronto');
+    state.runtime=await Promise.race([create,timeout]);clearTimeout(timer);setLoading('Sincronizando câmera 360° e personagens…',state.scene==='vale'?'Vale quase pronto':'Campus quase pronto');
     await Promise.race([firstFrame,new Promise((_,reject)=>setTimeout(()=>reject(new Error('lobby_3d_first_frame_timeout')),5500))]);
+    state.runtime?.setWorldTimeMode?.(state.graphics.worldTimeMode);state.runtime?.setFPSCap?.(state.graphics.fpsCap);state.runtime?.setFov?.(state.graphics.fov);
     state.runtimeMode='3d';updateModeUI('3d');globalThis.__agvLobbyDiag?.update?.({runtime:{mode:'3d',quality:state.runtime?.getQuality?.()||null,firstFrame:true}});globalThis.__agvLobbyDiag?.record?.('stage',{stage:'runtime_3d_ready'});{const q=state.runtime?.getQuality?.();$('quality-button').textContent=q==='ultra'?'Ultra':q==='high'?'Alto':q==='low'?'Eco':'Médio';}finishLoading();setModeTransition(false);showZoneBanner(state.player.area);return state.runtime;
   }catch(error){
     clearTimeout(timer);controller.abort();state.runtime?.stop?.();state.runtime=null;globalThis.__agvLobbyDiag?.record?.('runtime_3d_failed',{message:String(error?.message||error).slice(0,160)});console.error('Falha no boot 3D:',error);await securityTelemetry('client.webgl_init_failed','warning',{message:String(error?.message||error),mobile:matchMedia('(pointer:coarse)').matches});
@@ -301,6 +457,10 @@ async function start3D({allowFallback=true}={}){
     if(allowFallback){await new Promise(r=>setTimeout(r,650));return startLite(String(error?.message||'3d_failed'))}setModeTransition(false);throw error;
   }finally{state.bootingRuntime=false}
 }
+async function enterVale(){
+  if(state.scene==='vale'||state.bootingRuntime)return;state.savedCampusPlayer={...state.player};state.scene='vale';state.interior=null;state.nearPortal=null;state.nearStudent=null;state.nearWorldObject=null;const spawn={x:800,y:453,area:'vale-silicio'};state.player={...state.player,...spawn};document.body.dataset.scene='vale';campusToggle(false);toast('Entrando no Vale do Silício AGV…');if(state.runtimeMode==='3d')await start3D({allowFallback:true});else await startLite('enter_vale');renderValeDrawer();showZoneBanner('vale-silicio');}
+async function returnToCampus(){
+  if(state.scene!=='vale'||state.bootingRuntime)return;state.scene='campus';state.interior=null;state.nearWorldObject=null;state.player=state.savedCampusPlayer?{...state.savedCampusPlayer}:{...state.player,x:800,y:500,area:'central'};state.savedCampusPlayer=null;document.body.dataset.scene='campus';valeToggle(false);toast('Voltando ao Campus DS…');if(state.runtimeMode==='3d')await start3D({allowFallback:true});else await startLite('return_from_vale');showZoneBanner(state.player.area||'central');}
 async function retry3D(){if(state.bootingRuntime)return;toast('Tentando iniciar o modo 3D…');try{saveModeChoice('3d');await start3D({allowFallback:true})}catch(_){}}
 async function toggleRuntimeMode(){
   if(state.bootingRuntime)return;
@@ -310,20 +470,34 @@ async function toggleRuntimeMode(){
 async function boot(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_boot'});
   state.stopped=false;if(!await loadIdentity())return;
-  await securityTelemetry('session.check','info',{role:state.profile?.role||'unknown',surface:'lobby-3d'});
-  await loadActivities();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'activities_loaded'});showLogin(false);state.portalState=portalState;state.emoteRequested=kind=>emote(kind,state.nearStudent?.student_id||null);
-  // Regra v14.10.8.52: todo acesso começa no 2D. O aluno decide quando carregar o 3D.
+  await securityTelemetry('session.check','info',{role:state.profile?.role||'unknown',surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});
+  await loadActivities();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'activities_loaded'});showLogin(false);state.portalState=portalState;state.emoteRequested=kind=>emote(kind,state.nearStudent?.student_id||null);ensureGatherChannel();ensureProximityChat();
+  // Regra v14.10.8.58: todo acesso começa no 2D; 3D, primeira pessoa e qualidade continuam opcionais.
   await startLite(lastModeChoice()==='3d'?'default_2d_first_previous_3d':'default_2d_first');
   await presence(true);poll();globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_ready'});
 }
 
 $('retry-3d').onclick=()=>retry3D();$('enter-lite').onclick=()=>{saveModeChoice('lite');startLite('manual_recovery').catch(()=>{})};$('mode-button').onclick=()=>toggleRuntimeMode().catch(error=>{console.error(error);toast('Não foi possível alternar o modo agora.');});
-campusLoad();renderCampus();
-$('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('campus-button').onclick=()=>campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('activity-button').onclick=showActivities;$('activity-close').onclick=()=>closeModal('activity-modal');$('staff-student-close').onclick=()=>closeModal('staff-student-modal');$('staff-moderation-close').onclick=()=>closeModal('staff-moderation-modal');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');$('challenge-restart').onclick=()=>state.runtime?.restartChallenge?.();$('challenge-leave').onclick=()=>{const ended=state.runtime?.cancelChallenge?.()||state.runtime?.cancelExperience?.();if(ended){$('challenge-hud')?.classList.add('hidden');document.querySelector('.game-stage')?.classList.remove('challenge-active');}};document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
+campusLoad();valeLoad();renderCampus();
+
+$('train-close').onclick=()=>closeModal('train-modal');$('chat-close').onclick=()=>closeModal('chat-modal');$('chat-form').onsubmit=e=>{e.preventDefault();sendProximityChat();};$('world-settings-button').onclick=openWorldSettings;$('world-settings-close').onclick=()=>closeModal('world-settings-modal');$('world-settings-apply').onclick=()=>applyWorldSettings().catch(error=>{console.error(error);toast('Não foi possível aplicar as configurações.');});$('world-settings-reset').onclick=()=>{state.graphics={fov:65,fpsCap:60,worldTimeMode:'auto',showPerf:false};state.avatarStyle={...AVATAR_STYLE_PRESETS.casual};syncWorldSettingsForm();};$('fov-range').oninput=()=>{$('fov-value').textContent=`${$('fov-range').value}°`;};document.querySelectorAll('[data-camera-mode]').forEach(button=>button.onclick=()=>{if(state.runtimeMode!=='3d')return toast('Entre no modo 3D para trocar a câmera.');const mode=state.runtime?.setCameraMode?.(button.dataset.cameraMode);if(mode){$('camera-button').textContent={explore:'3ª pessoa',firstperson:'1ª pessoa',wide:'Ampla',campus:'Campus'}[mode]||'Câmera';toast(`Câmera: ${button.textContent}`);}});document.querySelectorAll('[data-avatar-preset]').forEach(button=>button.onclick=()=>applyAvatarPreset(button.dataset.avatarPreset));$('staff-chat-target')?.addEventListener('click',()=>{const id=$('staff-student-modal').dataset.student,person=state.others.find(o=>o.student_id===id);if(person){closeModal('staff-student-modal');openChatWith(person);}});
+
+$('interaction-button').onclick=interact;$('touch-action').onclick=interact;$('teleport-button').onclick=openTeleportModal;$('teleport-close').onclick=()=>closeModal('teleport-modal');$('teleport-search').oninput=()=>renderTeleportModal();$('teleport-scene-filter').onchange=()=>renderTeleportModal();$('teleport-vale-now').onclick=()=>{closeModal('teleport-modal');teleportToDestination({id:'vale:featured',scene:'vale',name:'Vale do Silício AGV — Praça Central',x:0,z:-30,kind:'landmark'}).catch(error=>{console.error(error);toast('Não foi possível abrir o Vale agora.');});};$('staff-bring-all').onclick=bringAllStudentsToMe;$('vale-direct-button').onclick=()=>{const action=state.scene==='vale'?returnToCampus():enterVale();Promise.resolve(action).catch(error=>{console.error(error);toast('Não foi possível viajar agora.');});};$('campus-button').onclick=()=>state.scene==='vale'?valeToggle():campusToggle();$('campus-close').onclick=()=>campusToggle(false);$('vale-close').onclick=()=>valeToggle(false);$('vale-search').oninput=()=>renderValeDrawer();$('vale-company-close').onclick=()=>closeModal('vale-company-modal');$('vale-company-enter').onclick=()=>{const id=$('vale-company-enter').dataset.companyId;if(!id)return;closeModal('vale-company-modal');const ok=state.runtime?.enterBuilding?.(id);if(ok){state.valeVisited.add(id);valeSave();renderValeDrawer();toast('Interior carregado sob demanda. Pressione E para sair.');}};$('vale-company-map').onclick=()=>{closeModal('vale-company-modal');valeToggle(true)};$('activity-button').onclick=showActivities;$('activity-close').onclick=()=>closeModal('activity-modal');$('staff-student-close').onclick=()=>closeModal('staff-student-modal');$('staff-moderation-close').onclick=()=>closeModal('staff-moderation-modal');$('staff-moderation').onclick=loadModeration;$('kick-student').onclick=kickStudent;$('quality-button').onclick=cycleQuality;$('action-menu-button').onclick=()=>$('action-menu').classList.toggle('hidden');$('challenge-restart').onclick=()=>state.runtime?.restartChallenge?.();$('challenge-leave').onclick=()=>{const ended=state.runtime?.cancelChallenge?.()||state.runtime?.cancelExperience?.();if(ended){$('challenge-hud')?.classList.add('hidden');document.querySelector('.game-stage')?.classList.remove('challenge-active');}};document.querySelectorAll('[data-local-action]').forEach(b=>b.onclick=()=>localAction(b.dataset.localAction));$('camera-button').onclick=toggleCamera;
 document.querySelectorAll('[data-target-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.targetEmote,$('staff-student-modal').dataset.student).then(()=>toast('Interação enviada.')));document.querySelectorAll('[data-emote]').forEach(b=>b.onclick=()=>emote(b.dataset.emote));
-$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
+$('logout').onclick=async()=>{state.runtime?.stop?.();state.runtime=null;if(gatherChannel){try{await supabase.removeChannel(gatherChannel)}catch(_){}gatherChannel=null;gatherReadyPromise=null;}await proximityChat?.stop?.();proximityChat=null;try{await supabase.functions.invoke('lobby-presence',{body:{action:'leave'}})}catch(_){}await supabase.auth.signOut();await window.AGVFullscreen?.release?.();location.reload()};$('kicked-check').onclick=()=>location.reload();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadActivities().catch(()=>{})});setInterval(()=>{if(!document.hidden)loadActivities().catch(()=>{})},30000);
 const recoveryDialog=$('recovery-dialog');
+$('google-login-btn')?.addEventListener('click',async()=>{
+  const btn=$('google-login-btn');
+  btn.disabled=true;msg('Abrindo o Google para autenticação…');
+  try{
+    const redirect=new URL('./',location.href);redirect.search='';redirect.hash='';
+    const {data,error}=await withTimeout(supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:redirect.href}}),AUTH_TIMEOUT_MS,'auth_google_oauth_timeout');
+    if(error)throw error;
+    if(data?.url){location.assign(data.url);return;}
+    throw new Error('auth_google_redirect_missing');
+  }catch(error){console.error(error);msg('Não foi possível iniciar o login com Google agora.',true);btn.disabled=false;}
+});
 $('forgot-password-btn')?.addEventListener('click',()=>{const email=String($('email')?.value||'').trim().toLowerCase();$('recovery-email').value=email;$('recovery-cgm').value='';$('recovery-message').textContent='';$('recovery-message').classList.remove('error');recoveryDialog?.showModal();});
 $('recovery-close-btn')?.addEventListener('click',()=>recoveryDialog?.close());
 $('recovery-form')?.addEventListener('submit',async event=>{
@@ -343,6 +517,6 @@ $('recovery-form')?.addEventListener('submit',async event=>{
 
 let controlsHintTimer=null;function wakeControlsHint(){if(COARSE_POINTER)return;const hint=document.querySelector('.desktop-controls');if(!hint)return;hint.classList.remove('controls-idle');clearTimeout(controlsHintTimer);controlsHintTimer=setTimeout(()=>hint.classList.add('controls-idle'),7500)}window.addEventListener('keydown',wakeControlsHint);window.addEventListener('pointerdown',wakeControlsHint,{passive:true});wakeControlsHint();
 
-$('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;msg('Entrando no Campus DS…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:'lobby-3d'});await boot();msg()}catch(err){console.error(err);globalThis.__agvLobbyDiag?.exposeError?.('login_or_boot_failed',String(err?.message||err||'unknown'));msg(lobbyErrorMessage(err),true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
+$('login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,mail=email($('email').value),password=$('password').value;if(!mail.endsWith(SCHOOL_EMAIL_DOMAIN))return msg(`Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`,true);await window.AGVFullscreen?.request({silent:true});btn.disabled=true;msg('Entrando no Campus DS…');try{await signIn(mail,password);await securityTelemetry('auth.login_success','info',{surface:state.scene==='vale'?'vale-silicio':'lobby-3d'});await boot();msg()}catch(err){console.error(err);globalThis.__agvLobbyDiag?.exposeError?.('login_or_boot_failed',String(err?.message||err||'unknown'));msg(lobbyErrorMessage(err),true);try{await supabase.auth.signOut()}catch(_){}}finally{btn.disabled=false}});
 (async()=>{try{const {data:{session}}=await withTimeout(supabase.auth.getSession(),SESSION_TIMEOUT_MS,'auth_session_timeout');if(session){await boot();return}}catch(e){console.warn(e);globalThis.__agvLobbyDiag?.exposeError?.('session_restore_failed',String(e?.message||e||'unknown'));msg(lobbyErrorMessage(e),true)}showLogin(true)})();
-console.info(`AGV Lobby DS ${LOBBY_VERSION} • Fase H 2D-first • rede ${NETWORK_TIMEOUT_MS}ms • presença protegida por Edge Function`);
+console.info(`AGV Lobby DS ${LOBBY_VERSION} • OAuth Front v58 • Vertical & Dynamic World • Fase H 2D-first • rede ${NETWORK_TIMEOUT_MS}ms • presença protegida por Edge Function`);
