@@ -1,0 +1,19 @@
+DS-EXERCICIOS v14.10.8.49 — PATCH CUMULATIVO E+F+G
+
+IMPORTANTE:
+- Este NÃO é um ZIP completo do repositório.
+- Aplicar SOMENTE por cima da árvore completa recuperada (>= 3000 arquivos rastreados).
+- NUNCA apagar/limpar a raiz do repositório antes da aplicação.
+- O mesmo repositório, a mesma branch main e a mesma URL do GitHub Pages são preservados.
+
+Fluxo seguro:
+1) Extrair este ZIP em uma pasta temporária.
+2) Abrir PowerShell nessa pasta.
+3) Executar:
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   .\APLICAR-v14.10.8.49-CUMULATIVO-E-F-G.ps1
+4) Revisar git status.
+5) Publicar com:
+   .\PUBLICAR-v14.10.8.49.ps1
+
+O publicador cria uma branch remota de backup antes de alterar main.

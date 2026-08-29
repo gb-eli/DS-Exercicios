@@ -1,11 +1,11 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.48';
-import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.48';
-import { createCameraController } from './render/camera-controller.js?v=14.10.8.48';
-import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.48';
-import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.48';
-import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.48';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, EXTERIOR_BUILDING_COLLIDERS, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.49';
+import { createCampusEnvironment, createCampusLighting } from './world/campus-environment.js?v=14.10.8.49';
+import { createCameraController } from './render/camera-controller.js?v=14.10.8.49';
+import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.49';
+import { createPortalSystem } from './game/portal-manager.js?v=14.10.8.49';
+import { detectPerformanceProfile, chooseInitialQuality, createResizeController, createAdaptiveQualityController } from './render/performance-manager.js?v=14.10.8.49';
 
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.48';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.49';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 let THREE=null;
 

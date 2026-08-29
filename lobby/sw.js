@@ -1,38 +1,50 @@
 'use strict';
 
-const VERSION='14.10.8.48';
+const VERSION='14.10.8.49';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
   'https://unpkg.com/@supabase/supabase-js@2.112.3/dist/umd/supabase.js'
 ]);
-const LOCAL_SHELL=[
+const CRITICAL_SHELL=[
   './',
   './index.html',
-  './assets/vendor-loader.js?v=14.10.8.48',
-  './assets/boot.js?v=14.10.8.48',
-  './assets/supabase.js?v=14.10.8.48',
-  './assets/lobby.js?v=14.10.8.48',
-  './assets/config.js?v=14.10.8.48',
-  './assets/lobby3d.js?v=14.10.8.48',
-  './assets/lobby-lite.js?v=14.10.8.48',
-  './assets/world/campus-manifest.js?v=14.10.8.48',
-  './assets/world/campus-environment.js?v=14.10.8.48',
-  './assets/render/camera-controller.js?v=14.10.8.48',
-  './assets/render/performance-manager.js?v=14.10.8.48',
-  './assets/characters/avatar-system.js?v=14.10.8.48',
-  './assets/game/portal-manager.js?v=14.10.8.48',
-  './assets/rigged-avatar.js?v=14.10.8.48',
+  './assets/diagnostics.js?v=14.10.8.49',
+  './assets/sw-register.js?v=14.10.8.49',
+  './assets/vendor-loader.js?v=14.10.8.49',
+  './assets/boot.js?v=14.10.8.49',
+  './assets/supabase.js?v=14.10.8.49',
+  './assets/lobby.js?v=14.10.8.49',
+  './assets/config.js?v=14.10.8.49',
+  './assets/lobby3d.js?v=14.10.8.49',
+  './assets/lobby-lite.js?v=14.10.8.49',
+  './assets/world/campus-manifest.js?v=14.10.8.49',
+  './assets/world/campus-environment.js?v=14.10.8.49',
+  './assets/render/camera-controller.js?v=14.10.8.49',
+  './assets/render/performance-manager.js?v=14.10.8.49',
+  './assets/characters/avatar-system.js?v=14.10.8.49',
+  './assets/game/portal-manager.js?v=14.10.8.49',
+  './assets/rigged-avatar.js?v=14.10.8.49',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.48'
+  './assets/lobby.css?v=14.10.8.49',
+  './vendor/supabase/supabase.js'
+];
+const OPTIONAL_SHELL=[
+  './vendor/three/three.module.min.js?v=14.10.8.49',
+  './vendor/three/three.core.min.js?v=14.10.8.49',
+  '../core/session/fullscreen-portal.js?v=14.10.8.49',
+  '../core/session/fullscreen-portal.css?v=14.10.8.49'
 ];
 
 self.addEventListener('install',event=>{
-  self.skipWaiting();
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE_NAME);
-    await Promise.allSettled(LOCAL_SHELL.map(url=>cache.add(url)));
+    // Release gate: the new worker only installs if every critical Lobby asset
+    // is available. This prevents a partially cached release from taking over.
+    await cache.addAll(CRITICAL_SHELL);
+    await Promise.allSettled(OPTIONAL_SHELL.map(url=>cache.add(url)));
+    await self.skipWaiting();
   })());
 });
 

@@ -85,7 +85,7 @@
 @media(prefers-reduced-motion:reduce){.game-stage.portal-travel::before{display:none}}
 
 
-/* v14.10.8.48 — Fase F: produção, HUD baixo ruído e mobile/performance */
+/* v14.10.8.49 — Fase F: produção, HUD baixo ruído e mobile/performance */
 .desktop-controls{transition:opacity .28s ease,transform .28s ease}.desktop-controls.controls-idle{opacity:.28;transform:translateY(3px)}.desktop-controls.controls-idle:hover,.desktop-controls:focus-within{opacity:.96;transform:none}
 .perf-badge:not(.hidden){animation:perf-alert-in .18s ease-out}@keyframes perf-alert-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .game-stage.runtime-paused::before{background:rgba(2,8,12,.28)}
