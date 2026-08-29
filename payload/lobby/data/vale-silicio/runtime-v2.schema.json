@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agv.local/schemas/vale-silicio-agv-runtime-v2.schema.json",
+  "title": "Vale do Silício AGV Runtime Specification",
+  "type": "object",
+  "required": [
+    "spec",
+    "integration",
+    "world",
+    "procedural_generation",
+    "companies"
+  ],
+  "properties": {
+    "spec": {
+      "type": "object"
+    },
+    "integration": {
+      "type": "object"
+    },
+    "world": {
+      "type": "object"
+    },
+    "procedural_generation": {
+      "type": "object"
+    },
+    "rendering_profiles": {
+      "type": "object"
+    },
+    "ui": {
+      "type": "object"
+    },
+    "companies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "enabled",
+          "company_name",
+          "category",
+          "zone",
+          "lot",
+          "building",
+          "signage",
+          "interaction",
+          "interior",
+          "data_bindings",
+          "render_modes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "zone": {
+            "type": "string"
+          },
+          "lot": {
+            "type": "object"
+          },
+          "building": {
+            "type": "object"
+          },
+          "signage": {
+            "type": "object"
+          },
+          "interaction": {
+            "type": "object"
+          },
+          "interior": {
+            "type": "object"
+          },
+          "data_bindings": {
+            "type": "object"
+          },
+          "render_modes": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "administrative_data": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

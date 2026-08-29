@@ -1,0 +1,40 @@
+# Arquivos alterados — v14.10.8.53
+
+Comparação exata contra a árvore completa `v14.10.8.52` usada como base.
+
+## Arquivos existentes alterados (16)
+
+- `lobby/assets/boot.js`
+- `lobby/assets/characters/avatar-system.js`
+- `lobby/assets/config.js`
+- `lobby/assets/diagnostics.js`
+- `lobby/assets/game/ride-manager.js`
+- `lobby/assets/lobby-lite.js`
+- `lobby/assets/lobby.css`
+- `lobby/assets/lobby.js`
+- `lobby/assets/lobby3d.js`
+- `lobby/assets/supabase.js`
+- `lobby/assets/sw-register.js`
+- `lobby/assets/vendor-loader.js`
+- `lobby/assets/world/campus-environment.js`
+- `lobby/assets/world/campus-experiences.js`
+- `lobby/index.html`
+- `lobby/sw.js`
+
+## Arquivos novos (11)
+
+- `LEIA-ME-v14.10.8.53.txt`
+- `docs/ARQUIVOS-ALTERADOS-v14.10.8.53.txt`
+- `docs/ATUALIZAR-v14.10.8.53.md`
+- `docs/VALIDACAO-v14.10.8.53.md`
+- `lobby/assets/vale-lite.js`
+- `lobby/assets/vale3d.js`
+- `lobby/assets/world/vale-silicio-data.js`
+- `lobby/assets/world/vale-silicio-shared.js`
+- `lobby/data/vale-silicio/context.json`
+- `lobby/data/vale-silicio/runtime-v2.json`
+- `lobby/data/vale-silicio/runtime-v2.schema.json`
+
+## Arquivos removidos
+
+- **Nenhum.**

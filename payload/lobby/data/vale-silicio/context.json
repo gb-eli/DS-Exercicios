@@ -1,0 +1,2637 @@
+{
+  "context_version": "1.0",
+  "generated_at": "2026-08-29T13:22:43",
+  "language": "pt-BR",
+  "source_files": [
+    "/mnt/data/Gestão dos Projetos.xlsx",
+    "/mnt/data/vale_silicio_agv_empresas_equipes.xlsx"
+  ],
+  "project_context": {
+    "project_name": "Mundo Virtual AGV",
+    "feature_name": "Vale do Silício AGV",
+    "goal": "Adicionar ao lobby virtual já existente uma nova área chamada Vale do Silício AGV, representando os projetos dos alunos como empresas/startups estudantis em prédios próprios.",
+    "integration_mode": "append_to_existing_lobby",
+    "preserve_existing_lobby": true,
+    "do_not_replace_existing_content": true,
+    "supports_modes": [
+      "2D",
+      "3D"
+    ],
+    "design_principle": "No modo 2D, foco em navegação leve e visual claro. No modo 3D, foco em imersão, interiores, animações, placas e exploração detalhada.",
+    "important_note": "Os nomes enviados são projetos dos alunos. Na maior parte dos casos, a planilha não informa um nome empresarial formal separado; por isso, o nome do projeto deve ser usado como nome provisório da empresa/prédio no Vale."
+  },
+  "existing_lobby_integration": {
+    "new_entry_point": {
+      "type": "portal",
+      "name": "Portal Vale do Silício AGV",
+      "location_inside_lobby": "área central ou praça principal do lobby existente",
+      "purpose": "transportar o usuário do lobby atual para o novo mapa do Vale do Silício AGV",
+      "visual_direction": "portal futurista, chamativo, com letreiro luminoso e identidade escolar/tecnológica",
+      "interaction": [
+        "aproximar para abrir painel",
+        "botão Entrar no Vale",
+        "teleporte para o spawn principal do Vale"
+      ]
+    },
+    "navigation_requirements": [
+      "manter o lobby existente intacto",
+      "acrescentar novos ambientes, não substituir os antigos",
+      "criar caminho de ida e volta entre lobby e Vale",
+      "suportar teleporte rápido e retorno ao lobby",
+      "usar este JSON como fonte de dados para geração dinâmica dos prédios e painéis"
+    ]
+  },
+  "new_environments": [
+    {
+      "id": "vale-do-silicio-agv",
+      "name": "Vale do Silício AGV",
+      "type": "cidade tecnológica estudantil",
+      "spawn_area": "Praça Central da Inovação",
+      "visual_identity": "mistura de campus tecnológico, cidade futurista estudantil e polo de startups",
+      "core_spaces": [
+        {
+          "name": "Praça Central da Inovação",
+          "purpose": "spawn principal, encontro e distribuição para os distritos"
+        },
+        {
+          "name": "Avenida da Inovação",
+          "purpose": "eixo principal conectando os prédios"
+        },
+        {
+          "name": "Hall da Inovação AGV",
+          "purpose": "museu/histórico dos projetos e espaço de destaque"
+        },
+        {
+          "name": "Praça das Startups",
+          "purpose": "área dedicada às mini startups e projetos incubados"
+        },
+        {
+          "name": "Portal de Retorno ao Lobby",
+          "purpose": "volta rápida ao lobby existente"
+        }
+      ],
+      "districts": [
+        {
+          "name": "Distrito Educação & Conhecimento",
+          "company_ids": [
+            "agv-school",
+            "master-code",
+            "plataforma-de-preparatorio-enem",
+            "portal-unificado",
+            "portal-unificado-gremio-estudantil",
+            "portal-escolar-controle-de-pais",
+            "projeto-torre-de-babel-site-educacional",
+            "simulador-virtual-de-quimica-fisica-e-biologia",
+            "sistema-competitivo-quizziz"
+          ]
+        },
+        {
+          "name": "Distrito Games & eSports",
+          "company_ids": [
+            "campeonato-de-jogos-eletronicos",
+            "the-last-quest"
+          ]
+        },
+        {
+          "name": "Distrito Maker & Robótica",
+          "company_ids": [
+            "clube-robotica"
+          ]
+        },
+        {
+          "name": "Distrito Mídia & Comunicação",
+          "company_ids": [
+            "clube-da-radio-agv",
+            "radio-agv-site"
+          ]
+        },
+        {
+          "name": "Distrito Dados & Sistemas",
+          "company_ids": [
+            "dashboard-s-para-analise-de-dados",
+            "planilha-de-automacao-com-recibo",
+            "sistema-de-inventario-geral",
+            "site-de-vendas-geral"
+          ]
+        },
+        {
+          "name": "Distrito Esportes & Eventos",
+          "company_ids": [
+            "gestao-interclasses-gestao-de-dados",
+            "gestao-interclasses-organizacao-geral-do-campeonato",
+            "gestao-interclasses-transmissao-e-narracao",
+            "site-sobre-futebol",
+            "time-para-o-escolares"
+          ]
+        },
+        {
+          "name": "Praça das Startups",
+          "company_ids": [
+            "gitdash",
+            "rede-agv",
+            "trampo-certo"
+          ]
+        },
+        {
+          "name": "Distrito Imersivo & Virtual",
+          "company_ids": [
+            "museu-virtual-agv-mundo-virtual-agv"
+          ]
+        }
+      ],
+      "ambient_elements": [
+        "ruas, calçadas, árvores e paisagismo tecnológico",
+        "placas dos prédios e totens informativos",
+        "NPCs/alunos circulando",
+        "telões e painéis digitais",
+        "áreas de convivência, bancos, cafeteria e espaços de exposição",
+        "elementos de parkour e exploração opcionais sem bloquear o fluxo principal"
+      ]
+    }
+  ],
+  "interaction_templates": {
+    "building_panel_on_approach": {
+      "fields_to_show": [
+        "nome da empresa",
+        "projeto",
+        "turma(s)",
+        "líder(es)",
+        "quantidade de integrantes",
+        "descrição curta",
+        "botão Entrar",
+        "botão Ver Equipe"
+      ],
+      "example_buttons": [
+        "Conhecer projeto",
+        "Entrar no prédio",
+        "Ver equipe"
+      ]
+    },
+    "interior_panel": {
+      "fields_to_show": [
+        "integrantes",
+        "função de cada um",
+        "andamento",
+        "responsabilidades",
+        "observações"
+      ],
+      "recommended_sections": [
+        "Recepção",
+        "Equipe",
+        "Protótipo/Demo",
+        "Painel do projeto"
+      ]
+    }
+  },
+  "implementation_guidelines": {
+    "data_loading": "Os prédios e painéis devem ser gerados a partir do array student_companies, evitando hardcode sempre que possível.",
+    "2d_mode": [
+      "usar prédios simplificados, placas legíveis e colisões leves",
+      "mostrar interiores por telas/painéis ou salas compactas",
+      "priorizar desempenho em máquinas mais fracas"
+    ],
+    "3d_mode": [
+      "usar fachadas e interiores mais detalhados",
+      "incluir hologramas, props e elementos interativos",
+      "preservar a mesma organização espacial do modo 2D"
+    ],
+    "building_generation_rules": [
+      "criar 1 prédio por empresa/projeto ativo, exceto alunos sem projeto",
+      "projetos com nome repetido devem ser consolidados em um único prédio com múltiplas equipes/turmas",
+      "GitDash, Trampo Certo e Rede AGV podem ser prédios próprios na Praça das Startups ou salas de um hub compartilhado",
+      "SEM PROJETO não gera prédio, apenas lista de pendências administrativas"
+    ]
+  },
+  "summary": {
+    "active_student_companies": 27,
+    "students_in_active_companies": 126,
+    "students_without_project": 3,
+    "pending_role_registrations": 17,
+    "data_divergence_notes_count": 31,
+    "observations": [
+      "20 funções ainda não estavam registradas na consolidação anterior.",
+      "Há divergências entre a aba geral Projetos e as abas DS1/DS2/DS3; elas foram mantidas como alerta e não devem ser apagadas sem validação manual.",
+      "A empresa/projeto Museu Virtual AGV / Mundo Virtual AGV possui nome divergente entre abas."
+    ]
+  },
+  "student_companies": [
+    {
+      "id": "dashboard-s-para-analise-de-dados",
+      "company_name": "Dashboard's para análise de dados",
+      "project_name": "Dashboard's para análise de dados",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "data_systems",
+      "zone": "Distrito Dados & Sistemas",
+      "building_theme": "torre de analytics com dashboards gigantes, telões de BI e centro de dados",
+      "interior_focus": [
+        "dashboards interativos",
+        "sala de indicadores",
+        "laboratório de análise"
+      ],
+      "company_type": "analytics e BI",
+      "incubation_program": null,
+      "source_project_names": [
+        "Dashboard's para análise de dados"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 4,
+      "building_size": "medium",
+      "description": null,
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "LUIZ FERNANDO TIBILETE NETO",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            },
+            {
+              "name": "MARELIS CRISTINE RODRIGUES DE OLIVEIRA",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            },
+            {
+              "name": "Mariana",
+              "role": "Não informada na planilha",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+            },
+            {
+              "name": "Yago",
+              "role": "Não informada na planilha",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Função pendente",
+        "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "planilha-de-automacao-com-recibo",
+      "company_name": "Planilha de automação com recibo",
+      "project_name": "Planilha de automação com recibo",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "business_tools",
+      "zone": "Distrito Dados & Sistemas",
+      "building_theme": "escritório de automação financeira com balcão digital e fluxo de documentos",
+      "interior_focus": [
+        "automação de planilhas",
+        "emissão de recibos",
+        "painel de processos"
+      ],
+      "company_type": "automação de processos",
+      "incubation_program": null,
+      "source_project_names": [
+        "Planilha de automação com recibo"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 1,
+      "building_size": "small",
+      "description": "Já desenvolveu parcialmente, automação junto ao google planilha para gerar recibo de forma automatizada. Estudante irá verificar expansão desse mesmo projeto, ou aplicação em outra situação que possa ser replicada na clínica da sua esposa.",
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "MARIO SERGIO LOPES LOBO",
+              "role": "Automação em Google Planilhas para geração de recibos e estudo de expansão do uso",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "sistema-de-inventario-geral",
+      "company_name": "Sistema de inventário geral",
+      "project_name": "Sistema de inventário geral",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "business_system",
+      "zone": "Distrito Dados & Sistemas",
+      "building_theme": "centro logístico com estoque inteligente, etiquetas e terminais de inventário",
+      "interior_focus": [
+        "armazém inteligente",
+        "controle de estoque",
+        "painéis de inventário"
+      ],
+      "company_type": "sistema empresarial",
+      "incubation_program": null,
+      "source_project_names": [
+        "Sistema de inventário geral"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 2,
+      "building_size": "small",
+      "description": null,
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "Maria Eduarda",
+              "role": "Não informada na planilha",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+            },
+            {
+              "name": "Mateus Arionso",
+              "role": "Não informada na planilha",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "site-de-vendas-geral",
+      "company_name": "Site de vendas geral",
+      "project_name": "Site de vendas geral",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "business_system",
+      "zone": "Distrito Dados & Sistemas",
+      "building_theme": "showroom digital de e-commerce com vitrines interativas e checkout virtual",
+      "interior_focus": [
+        "catálogo de produtos",
+        "carrinho e vendas",
+        "painel comercial"
+      ],
+      "company_type": "comércio eletrônico",
+      "incubation_program": null,
+      "source_project_names": [
+        "Site de vendas geral"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 1,
+      "building_size": "small",
+      "description": null,
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "DIEGO FREITAS DOS SANTOS",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Função pendente"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "agv-school",
+      "company_name": "AGV School",
+      "project_name": "AGV School",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "campus edtech futurista com telas interativas e salas digitais",
+      "interior_focus": [
+        "painéis do sistema escolar",
+        "salas temáticas",
+        "telas com protótipos"
+      ],
+      "company_type": "plataforma educacional",
+      "incubation_program": null,
+      "source_project_names": [
+        "AGV School"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "PEDRO DAVI DOMINGUES DE SOUZA"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "O jogo será em layout estilo pokemon, onde haverá um mundo semi aberto baseado no ambiente do colégio AGV, onde dentro do jogo serão realizadas missões, tendo um tom de mistério.",
+      "progress_notes": "Os estudantes estão planejando o layout do jogo e como será o modo história.",
+      "responsibility_notes": "David fica responsável pelo layout\nPedro ficará responsável pelo planejamento do jogo\nGabriel, Rychard e Pedro David com back end.",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "PEDRO DAVI DOMINGUES DE SOUZA"
+          ],
+          "members": [
+            {
+              "name": "DAVIH MARTINS BARROS",
+              "role": "Construção dos desenhos e rascunhos",
+              "status": "OK"
+            },
+            {
+              "name": "GABRIEL DA COSTA BARBOSA",
+              "role": "Conversão dos desenhos do modo físico para digital",
+              "status": "OK"
+            },
+            {
+              "name": "PEDRO DAVI DOMINGUES DE SOUZA",
+              "role": "Roteirista e efeitos sonoros + musicais",
+              "status": "OK"
+            },
+            {
+              "name": "PEDRO HENRIQUE SANTOS DE SOUSA",
+              "role": "Construção geral dos comandos",
+              "status": "OK"
+            },
+            {
+              "name": "RYCHARD LUIZ DE SOUZA",
+              "role": "Construção geral dos comandos",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "master-code",
+      "company_name": "Master Code",
+      "project_name": "Master Code",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "software_learning",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "software house educacional com tema de programação e painéis de código",
+      "interior_focus": [
+        "estações de programação",
+        "painel de lógica",
+        "laboratório de desenvolvimento"
+      ],
+      "company_type": "aprendizagem e desenvolvimento de software",
+      "incubation_program": null,
+      "source_project_names": [
+        "Master Code"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "CARLOS HENRIQUE ALVES DOS SANTOS"
+      ],
+      "member_count": 2,
+      "building_size": "small",
+      "description": "Jogo de batalha de programação para ensino de comandos.\nA ser integrado com Portal Unificado futuramente.",
+      "progress_notes": "\nProtótipo de baixa fidelidade já apresentado e validado. Estudante está planejando interface e layout para visualização da ideia do jogo.",
+      "responsibility_notes": "Estudante está construindo o protótipo de baixa fidelidade e planejando layout.",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "CARLOS HENRIQUE ALVES DOS SANTOS"
+          ],
+          "members": [
+            {
+              "name": "CARLOS HENRIQUE ALVES DOS SANTOS",
+              "role": "Construindo boa parte do trabalho e conduzindo planejamento geral",
+              "status": "OK"
+            },
+            {
+              "name": "ROGERSON LUIZ DOS SANTOS",
+              "role": "A se avaliar, pois parece estar ajudando. Melhor ficar atento",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "plataforma-de-preparatorio-enem",
+      "company_name": "Plataforma de Preparatório ENEM",
+      "project_name": "Plataforma de Preparatório ENEM",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "centro de estudos e simulados com biblioteca digital e painéis de questões",
+      "interior_focus": [
+        "simulados",
+        "disciplinas",
+        "área de redação"
+      ],
+      "company_type": "preparatório educacional",
+      "incubation_program": null,
+      "source_project_names": [
+        "Plataforma de Preparatório ENEM"
+      ],
+      "turmas": [
+        "DS3"
+      ],
+      "leaders": [
+        "JÚLIA DA SILVA VIEIRA"
+      ],
+      "member_count": 2,
+      "building_size": "small",
+      "description": "Criação de plataforma para estudos, voltado para o ENEM e Vestibulares.",
+      "progress_notes": "Estudantes já criaram a interface completa do projeto, sendo assim, o protótipo de funcionamento está coeso e muito bem estruturado.",
+      "responsibility_notes": "Davi está responsável pelo Back-end e Julia está no planejamentos em geral, reunindo informações e apresentação geral do projeto",
+      "teams": [
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "JÚLIA DA SILVA VIEIRA"
+          ],
+          "members": [
+            {
+              "name": "DAVI SOUZA DO CARMO",
+              "role": "Back-end",
+              "status": "OK"
+            },
+            {
+              "name": "JÚLIA DA SILVA VIEIRA",
+              "role": "Planejamento do projeto e informações associadas a faculdades e conteúdos",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "portal-unificado",
+      "company_name": "Portal Unificado",
+      "project_name": "Portal Unificado",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "edtech_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "hub digital escolar com portal central, totens e serviços integrados",
+      "interior_focus": [
+        "portal de serviços",
+        "avisos e cronograma",
+        "biblioteca digital"
+      ],
+      "company_type": "portal escolar",
+      "incubation_program": null,
+      "source_project_names": [
+        "Portal Unificado"
+      ],
+      "turmas": [
+        "DS2"
+      ],
+      "leaders": [
+        "FELIPE FELIX MENDES"
+      ],
+      "member_count": 8,
+      "building_size": "large",
+      "description": "Portal Unificado onde os estudantes possam acessar o ambiente virtual. O portal irá conter:\nAvisos, Cronograma Escolar, Gestão de Biblioteca",
+      "progress_notes": "Definido as equipes e atribuído funções a cada um.\nTrabalho apresentado para a direção e validado.\nIdentificado gargalos na estrutura da equipe e realizado alterações.",
+      "responsibility_notes": "Back end (Felipe, João, Nathan)\nFront End (Victoria, Teodoro e Jonas)\nIdeias (Renato e Rubia)",
+      "teams": [
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [
+            "FELIPE FELIX MENDES"
+          ],
+          "members": [
+            {
+              "name": "FELIPE FELIX MENDES",
+              "role": "Back-end",
+              "status": "OK"
+            },
+            {
+              "name": "JONAS AUGUSTO TREFELES DOS SANTOS",
+              "role": "Front-end",
+              "status": "OK"
+            },
+            {
+              "name": "JOÃO HENRIQUE BARÃO NASCIMENTO",
+              "role": "Back-end",
+              "status": "OK"
+            },
+            {
+              "name": "NATHAN CEZAR ALVES SANCHES",
+              "role": "Back-end",
+              "status": "OK"
+            },
+            {
+              "name": "RENATO YUDY AGOSTINHO DE ANDRADE",
+              "role": "Ideias e planejamento",
+              "status": "OK"
+            },
+            {
+              "name": "RUBYA VITORIA GONCALVES",
+              "role": "Ideias e planejamento",
+              "status": "OK"
+            },
+            {
+              "name": "TEODORO KREMER SERAFIM",
+              "role": "Front-end",
+              "status": "OK"
+            },
+            {
+              "name": "VICTÓRIA CRISTINE DOS SANTOS",
+              "role": "Front-end",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "portal-unificado-gremio-estudantil",
+      "company_name": "Portal Unificado (Grêmio Estudantil)",
+      "project_name": "Portal Unificado (Grêmio Estudantil)",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "student_civic_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "centro cívico estudantil com painéis eleitorais, votações e mural do grêmio",
+      "interior_focus": [
+        "chapas e votações",
+        "mural do grêmio",
+        "espaço de participação estudantil"
+      ],
+      "company_type": "portal do grêmio",
+      "incubation_program": null,
+      "source_project_names": [
+        "Portal Unificado (Grêmio Estudantil)"
+      ],
+      "turmas": [
+        "DS2"
+      ],
+      "leaders": [
+        "RAFAEL NASCIMENTO SILVA"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "Estudantes estão planejando um sistema web do Grêmio Estudantil, onde estarão informações das chapas, sistema de votação e demais itens associados ao Grêmio Estudantil do AGV",
+      "progress_notes": "Front-end completo. \nEstudantes ainda estão trabalhando no sistema de login",
+      "responsibility_notes": "Maria F.\n- Ideias e palpites;\n\nMirela\n- Front End (interface da página)\n\nRafael\n- Estilização do site\n- Verificação de Palpites\n\nMiguel\n- Back End Geral do sites\n\nAnna Biatrice\n- Layout desenvolvido",
+      "teams": [
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [
+            "RAFAEL NASCIMENTO SILVA"
+          ],
+          "members": [
+            {
+              "name": "ANNA BIATRICE PONTES SPANIER POLI",
+              "role": "Está responsável pelas ilustrações e sugestão em geral do layout",
+              "status": "OK"
+            },
+            {
+              "name": "MARIA FERNANDA DE GOIS FERREIRA FONTES",
+              "role": "Apresentação de ideias e sugestões e levantamento de informações",
+              "status": "OK"
+            },
+            {
+              "name": "MIGUEL NASCIMENTO SILVA",
+              "role": "Back end em geral e estrutura de apresentação",
+              "status": "OK"
+            },
+            {
+              "name": "MIRELLA FERNANDA BUENO SIQUEIRA",
+              "role": "Front-end em geral do site",
+              "status": "OK"
+            },
+            {
+              "name": "RAFAEL NASCIMENTO SILVA",
+              "role": "Back end em geral, login e estrutura de apresentação",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "portal-escolar-controle-de-pais",
+      "company_name": "Portal escolar - Controle de Pais",
+      "project_name": "Portal escolar - Controle de Pais",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "edtech_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "escritório de relacionamento escola-família com telas de acompanhamento",
+      "interior_focus": [
+        "painel dos pais",
+        "comunicação família-escola",
+        "controle e relatórios"
+      ],
+      "company_type": "portal para responsáveis",
+      "incubation_program": null,
+      "source_project_names": [
+        "Portal escolar - Controle de Pais"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 3,
+      "building_size": "small",
+      "description": "Site para controle de faltas, ocorrências e notas dos estudantes, integrado a um sistema de notificações para visualização dos pais e controle tanto docente como pedagógico",
+      "progress_notes": "Os estudantes já definiram o Front-End do projeto, estando salvo já no Git Hub e com layout completo. O que falta pro momento, é integração com a base de dados do RCO Paraná",
+      "responsibility_notes": "Sem necessidade de apontar responsabilidades",
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "GUSTAVO CHAPAVAL ALVES",
+              "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+              "status": "OK"
+            },
+            {
+              "name": "GUSTAVO FURTADO PEDROSO",
+              "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+              "status": "OK"
+            },
+            {
+              "name": "Helena",
+              "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Nome abreviado ou não localizado na lista Téc. DS — validar"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "projeto-torre-de-babel-site-educacional",
+      "company_name": "Projeto Torre de Babel (Site Educacional)",
+      "project_name": "Projeto Torre de Babel (Site Educacional)",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "edtech_languages",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "centro de idiomas com globo, símbolos linguísticos e salas culturais",
+      "interior_focus": [
+        "módulos de idiomas",
+        "conteúdo educacional",
+        "painéis multilíngues"
+      ],
+      "company_type": "plataforma educacional de idiomas",
+      "incubation_program": null,
+      "source_project_names": [
+        "Projeto Torre de Babel (Site Educacional)"
+      ],
+      "turmas": [
+        "DS3"
+      ],
+      "leaders": [
+        "GIOVANNY DA SILVA CABRAL"
+      ],
+      "member_count": 4,
+      "building_size": "medium",
+      "description": "Desenvolvimento de um site de simulação para códigos de programação, para aprendizado.",
+      "progress_notes": "Giovani já desenvolveu boa parte da estrutura de login da home (tanto o front como o back end), além de estar planejando a tela inicial.",
+      "responsibility_notes": "Giovani irá estruturar toda a parte do back end, enquanto Steffani e Daniel irão planejar a interface",
+      "teams": [
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "GIOVANNY DA SILVA CABRAL"
+          ],
+          "members": [
+            {
+              "name": "DANIEL ARAUJO DOS SANTOS",
+              "role": "Desenvolveu boa parte da interface e demais itens da plataforma com uso de IA, projeto está bem construído",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "DANIEL AUGUSTO MACHADO MARTINS",
+              "role": "Planejamento da interface / front-end",
+              "status": "OK"
+            },
+            {
+              "name": "GIOVANNY DA SILVA CABRAL",
+              "role": "Coordenador geral do grupo e responsável pela programação back-end",
+              "status": "OK"
+            },
+            {
+              "name": "STEFFANY ELOISE DE SOUZA DIAS",
+              "role": "Planejamento da interface / front-end",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "simulador-virtual-de-quimica-fisica-e-biologia",
+      "company_name": "Simulador virtual de Química, Física e Biologia",
+      "project_name": "Simulador virtual de Química, Física e Biologia",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "science_edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "complexo científico com laboratórios virtuais de química, física e biologia",
+      "interior_focus": [
+        "laboratório de química",
+        "laboratório de física",
+        "laboratório de biologia"
+      ],
+      "company_type": "simulador educacional",
+      "incubation_program": null,
+      "source_project_names": [
+        "Simulador virtual de Química, Física e Biologia"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "BERNARDO CARVALHO BUSQUETE SENIUK"
+      ],
+      "member_count": 3,
+      "building_size": "small",
+      "description": "Um simulador virtual de elementos de aula da disciplina de Física, Química e Biologia",
+      "progress_notes": "Até o momento, estudantes desenvolveram toda a organização de informações sobre a tabela periódica. O objetivo é criar um sistema de tabela periódica interativa e se possível, gerar pequenas combinações",
+      "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "BERNARDO CARVALHO BUSQUETE SENIUK"
+          ],
+          "members": [
+            {
+              "name": "BERNARDO CARVALHO BUSQUETE SENIUK",
+              "role": "Grupo todo está empenhado na construção do projeto",
+              "status": "OK"
+            },
+            {
+              "name": "MAURICIO MARISTANY JUNIOR",
+              "role": "Grupo todo está empenhado na construção do projeto",
+              "status": "OK"
+            },
+            {
+              "name": "PEDRO IZIDORO NETO",
+              "role": "Grupo todo está empenhado na construção do projeto",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "sistema-competitivo-quizziz",
+      "company_name": "Sistema Competitivo Quizziz",
+      "project_name": "Sistema Competitivo Quizziz",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "gamified_learning",
+      "zone": "Distrito Educação & Conhecimento",
+      "building_theme": "arena de quiz gamificado com placares, luzes e pods de desafio",
+      "interior_focus": [
+        "arena de quiz",
+        "placar competitivo",
+        "salas de desafio"
+      ],
+      "company_type": "gamificação educacional",
+      "incubation_program": null,
+      "source_project_names": [
+        "Sistema Competitivo Quizziz"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "PITTER VERDIANO DIAS"
+      ],
+      "member_count": 6,
+      "building_size": "medium",
+      "description": "O objetivo é criar um ambiente competitivo dentro do Quizziz, expandindo, dentro das possibilidades, a nível inter-escolar, com placares e metas para alunos e colégios.",
+      "progress_notes": "Grupo está planejando a interface visual dessa plataforma de dash's",
+      "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "PITTER VERDIANO DIAS"
+          ],
+          "members": [
+            {
+              "name": "JOAQUIM LABORNE PEDRO",
+              "role": "Planejamento geral e controle do projeto",
+              "status": "OK"
+            },
+            {
+              "name": "LAVINIA HELENA DANA SILVA ALVES",
+              "role": "Construção dos slides e apresentação",
+              "status": "OK"
+            },
+            {
+              "name": "PITTER VERDIANO DIAS",
+              "role": "Planejamento geral e controle do projeto",
+              "status": "OK"
+            },
+            {
+              "name": "RAFAEL KISS FORTUNATO",
+              "role": "Integração de dados e back-end",
+              "status": "OK"
+            },
+            {
+              "name": "RODRIGO NERIS CAVALCANTI FILHO",
+              "role": "Construção dos slides e apresentação",
+              "status": "OK"
+            },
+            {
+              "name": "VICTOR OTAVIO VICTAL BORBA",
+              "role": "Integração de dados e back-end",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "gestao-interclasses-gestao-de-dados",
+      "company_name": "Gestão Interclasses (Gestão de dados)",
+      "project_name": "Gestão Interclasses (Gestão de dados)",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "sports_data",
+      "zone": "Distrito Esportes & Eventos",
+      "building_theme": "centro analítico esportivo com telões estatísticos e sala de controle de partidas",
+      "interior_focus": [
+        "painel sofascore escolar",
+        "sala de métricas",
+        "estações de coleta de dados"
+      ],
+      "company_type": "análise de dados esportivos",
+      "incubation_program": null,
+      "source_project_names": [
+        "Gestão Interclasses (Gestão de dados)"
+      ],
+      "turmas": [
+        "DS1",
+        "DS2",
+        "DS3"
+      ],
+      "leaders": [
+        "AILTON CORADASSI VIEIRA",
+        "GUILHERME ALEXANDRE BONAFINI PEREIRA"
+      ],
+      "member_count": 12,
+      "building_size": "flagship",
+      "description": "Desenvolver métrica de avaliação dos jogadores, afim de gerar um sistema de análise estatística dos jogadores, tal como uma espécie de Sofascore\n\n- Desenvolver métrica de pontuação dos jogadores\n- Coleta de dados dos jogos\n- Desenvolvimento do app de análise",
+      "progress_notes": "Equipe já desenvolveu sistema parcial de notas, porém, não foi viabilizado, visto que o processo de coleta dos dados estava complexo. Estudantes estão revisando os itens afim de encontrar melhor forma de definir métrica de notas",
+      "responsibility_notes": "Redefinidas as responsabilidades dos estudantes, visto que o projeto se encontra em atraso",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "ARTHUR RIBEIRO HAILLER",
+              "role": "Não informada na planilha",
+              "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+            },
+            {
+              "name": "HELAMÃ FIRMO DA SILVA MOREIRA",
+              "role": "Não informada na planilha",
+              "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+            },
+            {
+              "name": "JOÃO GABRIEL NASCIMENTO SOUZA",
+              "role": "Não informada na planilha",
+              "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+            },
+            {
+              "name": "TALES YAN SIQUEIRA POLIDORO",
+              "role": "Não informada na planilha",
+              "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [
+            "AILTON CORADASSI VIEIRA"
+          ],
+          "members": [
+            {
+              "name": "AILTON CORADASSI VIEIRA",
+              "role": "Porta-voz da equipe do DS2, em todos os âmbitos do interclasses",
+              "status": "OK"
+            },
+            {
+              "name": "HENRY MATSUDA",
+              "role": "Coleta de dados dos jogos ao longo da semana para montagem da estatística",
+              "status": "OK"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "GUILHERME ALEXANDRE BONAFINI PEREIRA"
+          ],
+          "members": [
+            {
+              "name": "DÂMARIS MODESTO RIBEIRO",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "DÉRICK RODOLFO LAGOS TORRES",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "OK"
+            },
+            {
+              "name": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "OK"
+            },
+            {
+              "name": "HENZO HENRIQUE SANTOS PINTO",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "OK"
+            },
+            {
+              "name": "LUAN GABRIEL DE LIMA BORGES",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "OK"
+            },
+            {
+              "name": "LUCAS MATEUS DOMINICO",
+              "role": "Realizar análise de dados individual dos jogadores",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "Integrante não aparece na equipe da aba Projetos"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "gestao-interclasses-organizacao-geral-do-campeonato",
+      "company_name": "Gestão Interclasses (Organização geral do campeonato)",
+      "project_name": "Gestão Interclasses (Organização geral do campeonato)",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "sports_operations",
+      "zone": "Distrito Esportes & Eventos",
+      "building_theme": "quartel-general do campeonato com mapas, tabelas, agenda e sala de coordenação",
+      "interior_focus": [
+        "central de organização",
+        "cronograma dos jogos",
+        "mural de equipes"
+      ],
+      "company_type": "gestão de eventos esportivos",
+      "incubation_program": null,
+      "source_project_names": [
+        "Gestão Interclasses (Organização geral do campeonato)"
+      ],
+      "turmas": [
+        "DS2",
+        "DS3"
+      ],
+      "leaders": [
+        "MURILO LUCAS ROCHA DO ROSÁRIO",
+        "MELANY NICOLE COSTA"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "- Organização dos times\n- Organização dos jogos\n- Estrutura geral do campeonato",
+      "progress_notes": "Grupo do DS3 já criou a ideia da página do site.",
+      "responsibility_notes": "Redefinidas as responsabilidades dos estudantes, visto que o projeto se encontra em atraso",
+      "teams": [
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [
+            "MURILO LUCAS ROCHA DO ROSÁRIO"
+          ],
+          "members": [
+            {
+              "name": "DÃ GABRIEL SILVA VIDAL",
+              "role": "Construção do site de gestão dos jogos",
+              "status": "OK"
+            },
+            {
+              "name": "LUCAS PAREDES DE CAMPOS",
+              "role": "Organização de esportes individuais, tais como xadrez, tênis de mesa e artes marciais",
+              "status": "OK"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "MELANY NICOLE COSTA"
+          ],
+          "members": [
+            {
+              "name": "JOÃO PEDRO HENRIQUE BERNARDO",
+              "role": "Construção do site de gestão dos jogos",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "MELANY NICOLE COSTA",
+              "role": "Porta-voz da equipe do DS3, em todos os âmbitos do interclasses",
+              "status": "OK"
+            },
+            {
+              "name": "NÍVEA SUZANA DE VRIJ XAVIER",
+              "role": "Construção do site de gestão dos jogos",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "gestao-interclasses-transmissao-e-narracao",
+      "company_name": "Gestão Interclasses (Transmissão e Narração)",
+      "project_name": "Gestão Interclasses (Transmissão e Narração)",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "sports_media",
+      "zone": "Distrito Esportes & Eventos",
+      "building_theme": "centro de transmissão esportiva com cabine de narração, switcher e estúdio de OBS",
+      "interior_focus": [
+        "cabine de narração",
+        "controle de câmeras",
+        "sala de transmissão"
+      ],
+      "company_type": "mídia esportiva",
+      "incubation_program": null,
+      "source_project_names": [
+        "Gestão Interclasses (Transmissão e Narração)"
+      ],
+      "turmas": [
+        "DS2",
+        "DS3"
+      ],
+      "leaders": [
+        "NYCOLAS ANDRÉ MENDES SANTANA",
+        "JHONNY LEENDER GONCALVES ALVES"
+      ],
+      "member_count": 10,
+      "building_size": "flagship",
+      "description": "Jogos transmitidos pelo Youtube, com narração e transmissão. \n\nSerá um campeonato realizado no colégio (ou, caso possível, nos ginásios municipais Albertina ou Tramujas) e que será trasmitido online através do youtube, supervisionado pelos professores e pela escola.\nOs estudantes serão responsáveis pela organização do sistema de transmissão e comentários dos jogos.",
+      "progress_notes": "Grupo está encabido de realizar testes para validar qualidade da transmissão e gestão dos vídeos\n\nOrganizando as equipes e meio de transmissão ",
+      "responsibility_notes": "Planejamento da transmissão e recursos físicos: Ana Beatriz e Nycolas\nPlanejamento da transmissão (recursos tecnológicos): Maria Eduarda e Jean\n\n- Transmissão \n- Organização integral \n- Agendamento com o local de jogos\n\nAinda não definido responsáveis de forma individual",
+      "teams": [
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [
+            "NYCOLAS ANDRÉ MENDES SANTANA"
+          ],
+          "members": [
+            {
+              "name": "ANA BEATRIZ PINTO MOREIRA",
+              "role": "Edição dos vídeos e gestão de recursos de mídia. Focando em criar material de documentário. Responsável pela narração dos jgos também",
+              "status": "OK"
+            },
+            {
+              "name": "JEAN VICTOR LAGOS MARCIO",
+              "role": "Edição dos vídeos e gestão de recursos de mídia. Focando em criar material de highlights e atuações individuais",
+              "status": "OK"
+            },
+            {
+              "name": "KAUA HENRIQUE FOSSILE RAMOS",
+              "role": "Narração e comentários dos jogos",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "MARIA EDUARDA RODRIGUES COSTA",
+              "role": "Controle de transmissão dos jogos",
+              "status": "OK"
+            },
+            {
+              "name": "MIGUEL DO CARMO LUZ",
+              "role": "Controle de transmissão dos jogos",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "MURILO LUCAS ROCHA DO ROSÁRIO",
+              "role": "Repórter e comentarista dos jogos",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "NYCOLAS ANDRÉ MENDES SANTANA",
+              "role": "Controle de transmissão dos jogos",
+              "status": "OK"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "JHONNY LEENDER GONCALVES ALVES"
+          ],
+          "members": [
+            {
+              "name": "JHONNY LEENDER GONCALVES ALVES",
+              "role": "Responsável pela transmissão dos jogos",
+              "status": "OK"
+            },
+            {
+              "name": "JÔNATAS SOUZA DA SILVA PEREIRA",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            },
+            {
+              "name": "LUKAS EDUARDO ZEMZISKY SIMPLICIO DA SILVA",
+              "role": "Repórter e comentarista dos jogos",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos",
+        "Função pendente"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "site-sobre-futebol",
+      "company_name": "Site sobre futebol",
+      "project_name": "Site sobre futebol",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "sports_media",
+      "zone": "Distrito Esportes & Eventos",
+      "building_theme": "redação esportiva com mural tático, notícias e vitrine de clubes",
+      "interior_focus": [
+        "notícias de futebol",
+        "estatísticas",
+        "cobertura esportiva"
+      ],
+      "company_type": "portal esportivo",
+      "incubation_program": null,
+      "source_project_names": [
+        "Site sobre futebol"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 1,
+      "building_size": "small",
+      "description": "Gestão interna de amistosos na região de PAranaguá",
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "ANDRE LUIS DA VEIGA SILVA",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Função pendente"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "time-para-o-escolares",
+      "company_name": "Time para o Escolares",
+      "project_name": "Time para o Escolares",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "sports_operations",
+      "zone": "Distrito Esportes & Eventos",
+      "building_theme": "centro de gestão esportiva escolar com cronogramas, vestiário conceitual e painéis de equipes",
+      "interior_focus": [
+        "gestão de equipes",
+        "modalidades escolares",
+        "agenda esportiva"
+      ],
+      "company_type": "gestão esportiva escolar",
+      "incubation_program": null,
+      "source_project_names": [
+        "Time para o Escolares"
+      ],
+      "turmas": [
+        "DS1",
+        "DS2"
+      ],
+      "leaders": [
+        "PAULO KALED FERNANDES VIDAL"
+      ],
+      "member_count": 4,
+      "building_size": "medium",
+      "description": "Os estudantes irão planejar processo seletivo para o time de futebol, cronogramas de treinamento e demais itens associados para uso do docente que controla time dos escolares.",
+      "progress_notes": "Sem interesse dos estudantes, não apresentaram nada de planejamento.",
+      "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "PAULO KALED FERNANDES VIDAL"
+          ],
+          "members": [
+            {
+              "name": "NATHAN HENRIQUE SILVA CORREA",
+              "role": "Não informada na planilha",
+              "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+            },
+            {
+              "name": "PAULO KALED FERNANDES VIDAL",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS2",
+          "turma": "DS2",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "ANDRE PYETRO GOMES BATISTA",
+              "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "ELCIO CRUZ DA VEIGA",
+              "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "Função pendente",
+        "Integrante não aparece na equipe da aba Projetos"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "campeonato-de-jogos-eletronicos",
+      "company_name": "Campeonato de Jogos Eletrônicos",
+      "project_name": "Campeonato de Jogos Eletrônicos",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "games_esports",
+      "zone": "Distrito Games & eSports",
+      "building_theme": "arena de eSports com telões, iluminação neon e lounge gamer",
+      "interior_focus": [
+        "arena competitiva",
+        "discord hub",
+        "painéis de chaves e campeonatos"
+      ],
+      "company_type": "evento e organização de eSports",
+      "incubation_program": null,
+      "source_project_names": [
+        "Campeonato de Jogos Eletrônicos"
+      ],
+      "turmas": [
+        "DS3"
+      ],
+      "leaders": [
+        "ADRIAN KURTS PEREIRA DE OLIVEIRA"
+      ],
+      "member_count": 6,
+      "building_size": "medium",
+      "description": "Campeonato terá sistema de organização com equipe de 5 integrantes e a partir da quantidade de pessoas interessadas, será estruturado o campeonato em si e a premiação",
+      "progress_notes": "Equipe já construiu formulário e coleta de dados está finalizada.\nPlanejamento final agora será do cronograma, dependente da montagem das equipes a ser finalizada.\nAinda é preciso também, verificar a transmissão.",
+      "responsibility_notes": "Adrian - Organização e gestão;\nDaniel - Analista de partida Free Fire;\nTiago - Transmissão e Narração;\nJhonatan - Programação dos Bot's Discord e Analista Clash Royale;\nPierre - Analista de partida de CS;\nLucas M. - Comentarista em geral; Analista de Fortnite;\nEduardo - Analista de Clash Royale.",
+      "teams": [
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "ADRIAN KURTS PEREIRA DE OLIVEIRA"
+          ],
+          "members": [
+            {
+              "name": "ADRIAN KURTS PEREIRA DE OLIVEIRA",
+              "role": "Organização em geral, gestão dos grupos do discord e contato direto da equipe",
+              "status": "OK"
+            },
+            {
+              "name": "EDUARDO SZCREPANSKI DE ALMEIDA NIZ",
+              "role": "Organização em geral do formulário e apresentação de ideias",
+              "status": "OK"
+            },
+            {
+              "name": "JHONATAN ALVES BRONDANI",
+              "role": "Auxilio no discord e preparação nos jogos eletrônicos",
+              "status": "OK"
+            },
+            {
+              "name": "LUCAS MARINHO DE FREITAS",
+              "role": "Auxílio na divulgação da mídia e suporte em geral",
+              "status": "OK"
+            },
+            {
+              "name": "PIERRE PEREIRA WAZONKOSKI DELPHIM",
+              "role": "Suporte em geral e auxílio na disponibilização de recursos",
+              "status": "OK"
+            },
+            {
+              "name": "TIAGO MAHMOUD SAID",
+              "role": "Responsável pela transmissão e gestão geral dessa função",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "the-last-quest",
+      "company_name": "The Last Quest",
+      "project_name": "The Last Quest",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "games",
+      "zone": "Distrito Games & eSports",
+      "building_theme": "estúdio de games com estética de fantasia e tecnologia, torres e runas digitais",
+      "interior_focus": [
+        "game studio",
+        "galeria de personagens",
+        "área de playtest"
+      ],
+      "company_type": "jogo digital",
+      "incubation_program": null,
+      "source_project_names": [
+        "The Last Quest"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "MATHEUS SCOMAÇÃO CAMPREGHER"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "Parecido com o grupo anterior que sugeriu jogo, porém, a interação com o cenaŕio se dará em salas com sistema de \"Quizzes\"",
+      "progress_notes": "Grupo já está desenhando o protótipo de baixa fidelidade, para apresentar o planejamento geral do jogo.",
+      "responsibility_notes": "Estudantes devem apresentar protótipo de baixa fidelidade.",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "MATHEUS SCOMAÇÃO CAMPREGHER"
+          ],
+          "members": [
+            {
+              "name": "CAUA DO ROSARIO SIQUEIRA XAVIER",
+              "role": "Programação e designer",
+              "status": "OK"
+            },
+            {
+              "name": "GUSTAVO HENRIQUE DOS SANTOS ALVES",
+              "role": "Efeitos sonoros e musicais",
+              "status": "OK"
+            },
+            {
+              "name": "JEAN CARLOS RODRIGUES DOS SANTOS FILHO",
+              "role": "Programação e efeitos sonoros",
+              "status": "OK"
+            },
+            {
+              "name": "LUCAS GUSTAVO RAMOS AMORIM",
+              "role": "Designer",
+              "status": "OK"
+            },
+            {
+              "name": "MATHEUS SCOMAÇÃO CAMPREGHER",
+              "role": "Programação e roteiro",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "museu-virtual-agv-mundo-virtual-agv",
+      "company_name": "Museu Virtual AGV / Mundo Virtual AGV",
+      "project_name": "Mundo Virtual AGV",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [
+        "Museu Virtual AGV",
+        "Mundo Virtual AGV"
+      ],
+      "category": "immersive_virtual",
+      "zone": "Distrito Imersivo & Virtual",
+      "building_theme": "domo futurista imersivo com hologramas, VR e galeria virtual",
+      "interior_focus": [
+        "museu virtual",
+        "experiências VR",
+        "mapa 3D do AGV"
+      ],
+      "company_type": "experiência imersiva",
+      "incubation_program": null,
+      "source_project_names": [
+        "Mundo Virtual AGV"
+      ],
+      "turmas": [
+        "DS1"
+      ],
+      "leaders": [
+        "ANA CLARA SORIANI NUNES"
+      ],
+      "member_count": 3,
+      "building_size": "small",
+      "description": "Com uso de óculos RA/RV, criar um mundo virtual que permita explicar conceitos ou uma história, com base na interação entre usuário e mundo digital.",
+      "progress_notes": "Os estudantes irão planejar qual conteúdo que gostarão de trabalhar como personagens virtuais.",
+      "responsibility_notes": "Não atrubuído responsabilidades ainda, visto que ainda está em fase de planejamento.",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "ANA CLARA SORIANI NUNES"
+          ],
+          "members": [
+            {
+              "name": "ANA CLARA SORIANI NUNES",
+              "role": "Pesquisa e planejamento (projeto ainda na casca)",
+              "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+            },
+            {
+              "name": "HEITOR BARROS MARCOS",
+              "role": "Pesquisa e planejamento (projeto ainda na casca)",
+              "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+            },
+            {
+              "name": "HELOISA EURICH DE SOUZA IZAIAS",
+              "role": "Pesquisa e planejamento (projeto ainda na casca)",
+              "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "clube-robotica",
+      "company_name": "Clube Robótica",
+      "project_name": "Clube Robótica",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "robotics_maker",
+      "zone": "Distrito Maker & Robótica",
+      "building_theme": "laboratório maker com braços robóticos, kits, bancada eletrônica e impressora 3D",
+      "interior_focus": [
+        "oficina maker",
+        "área de testes",
+        "exposição de protótipos"
+      ],
+      "company_type": "maker e robótica",
+      "incubation_program": null,
+      "source_project_names": [
+        "Clube Robótica"
+      ],
+      "turmas": [
+        "DS1",
+        "DS3"
+      ],
+      "leaders": [
+        "MELISSA BEATRIZ DEZIDERIO",
+        "DANIELY FERNANDES TIXILISKI"
+      ],
+      "member_count": 11,
+      "building_size": "flagship",
+      "description": "Parte 1 - Inventário dos materiais e equipamentos junto ao DS3;\nParte 2 - Teste de qualidade;\nParte 3 - Aulas iniciais de robótica\nParte 4 - Início da coleta de ideias",
+      "progress_notes": "Equipe ainda não participou do inventário, visto que escolheram recentemente esse projeto. Apenas alguns conheceram parcialmente os equipamentos, enquanto a turma do DS2, estava realizando o inventário inicial dos equipamentos.",
+      "responsibility_notes": "Não atrubuído responsabilidades ainda, visto que devem participar do inventário e testes para conhecer equipamentos.",
+      "teams": [
+        {
+          "team_name": "Equipe DS1",
+          "turma": "DS1",
+          "leader_names": [
+            "MELISSA BEATRIZ DEZIDERIO"
+          ],
+          "members": [
+            {
+              "name": "ALANA ARAUJO SANTOS DIAS",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            },
+            {
+              "name": "GABRIELA CORREIA SILVEIRA",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            },
+            {
+              "name": "HIGOR DO ESPIRITO SANTO PEREIRA",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            },
+            {
+              "name": "JOAO VICTOR CARDOSO BORBA",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            },
+            {
+              "name": "RYAN CORREA BARBOZA",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            },
+            {
+              "name": "SERGIO KUBA NETO",
+              "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+              "status": "OK"
+            }
+          ]
+        },
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "DANIELY FERNANDES TIXILISKI"
+          ],
+          "members": [
+            {
+              "name": "DANIELY FERNANDES TIXILISKI",
+              "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+              "status": "OK"
+            },
+            {
+              "name": "ENZO DOS SANTOS SERAFIM",
+              "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+              "status": "OK"
+            },
+            {
+              "name": "LETICIA CANDIDO MENDES",
+              "role": "Inventário geral dos equipamentos, desde organização nas caixas e contabilização dos mesmos",
+              "status": "OK"
+            },
+            {
+              "name": "LUAN FELIPE RUSSI MACHADO",
+              "role": "Inventário geral dos equipamentos, estando inicialmente responsável pela gestão de dados",
+              "status": "OK"
+            },
+            {
+              "name": "PAULO AFONSO NEUMANN BAPTISTEL ALVES",
+              "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "clube-da-radio-agv",
+      "company_name": "Clube da Rádio AGV",
+      "project_name": "Clube da Rádio AGV",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "media_communication",
+      "zone": "Distrito Mídia & Comunicação",
+      "building_theme": "estúdio de rádio e podcast com cabine acústica, mesas de som e newsroom",
+      "interior_focus": [
+        "estúdio de gravação",
+        "sala de edição",
+        "mural de notícias"
+      ],
+      "company_type": "mídia escolar",
+      "incubation_program": null,
+      "source_project_names": [
+        "Clube da Rádio AGV"
+      ],
+      "turmas": [
+        "DS3"
+      ],
+      "leaders": [
+        "JULIA ARTIGAS DE CASTRO"
+      ],
+      "member_count": 7,
+      "building_size": "large",
+      "description": "Estudantes irão criar um clube de rádio para transmissão interna, bem como, externa.\nSerá definido cronograma de transmissões de notícias, informes.",
+      "progress_notes": "Estudantes já definiram parte da estrutura e a rádio AGV já está criada",
+      "responsibility_notes": "Roteiristas: Daniel e Artigas\n\nMídia: Karina e Larissa\n\nOratória: Felipe, Carla e Lara",
+      "teams": [
+        {
+          "team_name": "Equipe DS3",
+          "turma": "DS3",
+          "leader_names": [
+            "JULIA ARTIGAS DE CASTRO"
+          ],
+          "members": [
+            {
+              "name": "CARLA KATHIELY DOS SANTOS SOUZA",
+              "role": "Entrevistadora e organizadora de manchetes.\nResponsável pela pesquisa de notícias e acontecimentos, preparação de perguntas para as entrevistas e apresentação dos conteúdos",
+              "status": "OK"
+            },
+            {
+              "name": "DANIEL CARVALHO DE PAULO",
+              "role": "Roteiro",
+              "status": "OK"
+            },
+            {
+              "name": "FELIPE MENDES ALVES",
+              "role": "Oratória",
+              "status": "OK"
+            },
+            {
+              "name": "JULIA ARTIGAS DE CASTRO",
+              "role": "Criação de roteiro, além de estar na oratória e no comando do grupo",
+              "status": "OK"
+            },
+            {
+              "name": "KARINE RODRIGUES DE OLIVEIRA",
+              "role": "Mídia",
+              "status": "OK"
+            },
+            {
+              "name": "LARA AMANDA LOPES DO ROSARIO",
+              "role": "Oratória",
+              "status": "OK"
+            },
+            {
+              "name": "LARISSA NAGEL ALVES",
+              "role": "Gestão de recursos e informações, além de também fazer parte da oratória",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "radio-agv-site",
+      "company_name": "Rádio AGV +Site",
+      "project_name": "Rádio AGV +Site",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "media_communication",
+      "zone": "Distrito Mídia & Comunicação",
+      "building_theme": "estúdio multiplataforma de rádio + portal web com newsroom digital",
+      "interior_focus": [
+        "estúdio ao vivo",
+        "site da rádio",
+        "central de conteúdo"
+      ],
+      "company_type": "mídia e portal",
+      "incubation_program": null,
+      "source_project_names": [
+        "Rádio AGV +Site"
+      ],
+      "turmas": [
+        "Téc. DS"
+      ],
+      "leaders": [],
+      "member_count": 2,
+      "building_size": "small",
+      "description": null,
+      "progress_notes": null,
+      "responsibility_notes": null,
+      "teams": [
+        {
+          "team_name": "Equipe Téc. DS",
+          "turma": "Téc. DS",
+          "leader_names": [],
+          "members": [
+            {
+              "name": "EDUARDA DIAS MENNA",
+              "role": "Não informada na planilha",
+              "status": "Função pendente"
+            },
+            {
+              "name": "Matheus",
+              "role": "Não informada na planilha",
+              "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Função pendente",
+        "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+      ],
+      "source_notes": [
+        "Aba Projetos + Téc. DS"
+      ]
+    },
+    {
+      "id": "gitdash",
+      "company_name": "GitDash",
+      "project_name": "Mini Startup's",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "startup_software",
+      "zone": "Praça das Startups",
+      "building_theme": "startup de desenvolvimento com estética clean, monitores com Git/commits e parede de post-its",
+      "interior_focus": [
+        "squad room",
+        "painel de commits",
+        "laboratório de IA para revisão de código"
+      ],
+      "company_type": "mini startup de software",
+      "incubation_program": "Mini Startup's",
+      "source_project_names": [
+        "Mini Startup's"
+      ],
+      "turmas": [
+        "DS2"
+      ],
+      "leaders": [
+        "THOMAS FELIPE OLIVEIRA THOME"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+      "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+      "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+      "teams": [
+        {
+          "team_name": "GitDash",
+          "turma": "DS2",
+          "leader_names": [
+            "THOMAS FELIPE OLIVEIRA THOME"
+          ],
+          "members": [
+            {
+              "name": "BENICIO DOS SANTOS DA SILVA",
+              "role": "GitDash. Back End. Buscar uma forma de integrar uma IA para validar a diferença entre commit's e concluir o trecho de validação dos commit's que estava planejado.",
+              "status": "OK"
+            },
+            {
+              "name": "GABRIEL GIACOMIN SALVADOR",
+              "role": "GitDash. Front-end. Está dependendo do Luan, portanto, ainda não produziu nada. Alternativa sugerida, validar o layout e o sistea de interação da plataforma.",
+              "status": "OK"
+            },
+            {
+              "name": "LUAN RAFAEL SOUZA DE PAULA",
+              "role": "GitDash\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+              "status": "OK"
+            },
+            {
+              "name": "RUAN PHELIPE BARCELOS ELESIS",
+              "role": "GitDash",
+              "status": "OK"
+            },
+            {
+              "name": "VINICIUS SANTANA DOS SANTOS",
+              "role": "GitDash. Vinícius não produz e não possui interesse segundo a equipe, portanto, deve ser avaliado a parte quando vier, pois está ausente da aula.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "rede-agv",
+      "company_name": "Rede AGV",
+      "project_name": "Mini Startup's",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "startup_social",
+      "zone": "Praça das Startups",
+      "building_theme": "startup de rede social com feed holográfico, mural comunitário e hub social",
+      "interior_focus": [
+        "feed social",
+        "perfis e comunidades",
+        "sala de design social"
+      ],
+      "company_type": "mini startup de rede social",
+      "incubation_program": "Mini Startup's",
+      "source_project_names": [
+        "Mini Startup's"
+      ],
+      "turmas": [
+        "DS2"
+      ],
+      "leaders": [
+        "THOMAS FELIPE OLIVEIRA THOME"
+      ],
+      "member_count": 5,
+      "building_size": "medium",
+      "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+      "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+      "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+      "teams": [
+        {
+          "team_name": "Rede AGV",
+          "turma": "DS2",
+          "leader_names": [
+            "THOMAS FELIPE OLIVEIRA THOME"
+          ],
+          "members": [
+            {
+              "name": "ANDRIELLYN MARTINS OLIVEIRA DOS SANTOS",
+              "role": "Rede Social AGV - Responsável pelo Front End. Depende de Giovana, que não está participando no envio das ideias e layout.\nSegundo equipe, está bem organizada, e não prejudica o andamento.",
+              "status": "OK"
+            },
+            {
+              "name": "ENTHONY GABRIEL ALVES DOS SANTOS",
+              "role": "Rede Social AGV - Apresentação e Experiência do Usuário. Após conversa, ficou definido como líder da equipe, para não depender demais das atividades dos demais colegas, pois não se torna possível avaliação do app se não está funcional.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+              "status": "OK"
+            },
+            {
+              "name": "GIOVANA JASCESKI CAVALHEIRO",
+              "role": "Rede Social AGV - Fica em aberto, está responsável pelos layout's, porém, falta demais e portanto, não entrega. Quando está em casa, não produz, segundo colegas, produz melhor quando está no colégio.",
+              "status": "OK"
+            },
+            {
+              "name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+              "role": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+              "status": "Integrante não aparece na equipe da aba Projetos"
+            },
+            {
+              "name": "MICKAEL VIANA DE CASTRO",
+              "role": "Rede Social AGV - Banco de dados. Sem particpação no momento.\nTeste de Firebase e SQLite, inserindo nome dos estudantes e criando tabela lá",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [
+        "Integrante não aparece na equipe da aba Projetos"
+      ],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    },
+    {
+      "id": "trampo-certo",
+      "company_name": "Trampo Certo",
+      "project_name": "Mini Startup's",
+      "name_status": "project_name_used_as_company_name",
+      "formal_company_name": null,
+      "aliases": [],
+      "category": "startup_jobs",
+      "zone": "Praça das Startups",
+      "building_theme": "startup de empregos e oportunidades com mural de vagas e sala de carreira",
+      "interior_focus": [
+        "mural de vagas",
+        "matching de perfis",
+        "sala de carreira"
+      ],
+      "company_type": "mini startup de empregabilidade",
+      "incubation_program": "Mini Startup's",
+      "source_project_names": [
+        "Mini Startup's"
+      ],
+      "turmas": [
+        "DS2"
+      ],
+      "leaders": [
+        "THOMAS FELIPE OLIVEIRA THOME"
+      ],
+      "member_count": 4,
+      "building_size": "medium",
+      "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+      "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+      "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+      "teams": [
+        {
+          "team_name": "Trampo Certo",
+          "turma": "DS2",
+          "leader_names": [
+            "THOMAS FELIPE OLIVEIRA THOME"
+          ],
+          "members": [
+            {
+              "name": "ALESSANDRO SANTIAGO DOS SANTOS SILVA JUNIOR",
+              "role": "A princípio, responsável pelas apresentações. Mas será remanejado para o grupo Trampo certo.",
+              "status": "OK"
+            },
+            {
+              "name": "ARTHUR FERNANDES RAMOS",
+              "role": "Trampo Certo",
+              "status": "OK"
+            },
+            {
+              "name": "PAULO CESAR AMORIM FILHO",
+              "role": "Trampo Certo.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+              "status": "OK"
+            },
+            {
+              "name": "THOMAS FELIPE OLIVEIRA THOME",
+              "role": "Trampo Certo. Líder da equipe no geral, está envolvido em todos os projetos e está sendo paticipativo principalmente no projeto do TRampo certo, embora os demais, também sejam de sua autoria.",
+              "status": "OK"
+            }
+          ]
+        }
+      ],
+      "alerts": [],
+      "source_notes": [
+        "Abas DS1/DS2/DS3; complementado por Projetos"
+      ]
+    }
+  ],
+  "students_without_project": [
+    {
+      "company_or_project": "SEM PROJETO",
+      "turma": "DS3",
+      "student_name": "ANDRE ROBERTO MARQUES GUIMARAES JUNIOR",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Sem projeto definido; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "SEM PROJETO",
+      "turma": "DS2",
+      "student_name": "LUIZA MARTINS OLIVEIRA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Sem projeto definido; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "SEM PROJETO",
+      "turma": "DS3",
+      "student_name": "NATHAN RAMOS PINHEIRO DA SILVA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Sem projeto definido; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    }
+  ],
+  "pending_roles_and_alerts": [
+    {
+      "company_or_project": "Dashboard's para análise de dados",
+      "turma": "Téc. DS",
+      "student_name": "LUIZ FERNANDO TIBILETE NETO",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Dashboard's para análise de dados",
+      "turma": "Téc. DS",
+      "student_name": "MARELIS CRISTINE RODRIGUES DE OLIVEIRA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+      "turma": "DS3",
+      "student_name": "JÔNATAS SOUZA DA SILVA PEREIRA",
+      "role": "Não informada na planilha",
+      "leader": "JHONNY LEENDER GONCALVES ALVES",
+      "alert": "Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Rádio AGV +Site",
+      "turma": "Téc. DS",
+      "student_name": "EDUARDA DIAS MENNA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Site de vendas geral",
+      "turma": "Téc. DS",
+      "student_name": "DIEGO FREITAS DOS SANTOS",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Site sobre futebol",
+      "turma": "Téc. DS",
+      "student_name": "ANDRE LUIS DA VEIGA SILVA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Time para o Escolares",
+      "turma": "DS1",
+      "student_name": "PAULO KALED FERNANDES VIDAL",
+      "role": "Não informada na planilha",
+      "leader": "PAULO KALED FERNANDES VIDAL",
+      "alert": "Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS3",
+      "student_name": "DÂMARIS MODESTO RIBEIRO",
+      "role": "Realizar análise de dados individual dos jogadores",
+      "leader": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS3",
+      "student_name": "LUCAS MATEUS DOMINICO",
+      "role": "Realizar análise de dados individual dos jogadores",
+      "leader": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Organização geral do campeonato)",
+      "turma": "DS3",
+      "student_name": "JOÃO PEDRO HENRIQUE BERNARDO",
+      "role": "Construção do site de gestão dos jogos",
+      "leader": "MELANY NICOLE COSTA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+      "turma": "DS2",
+      "student_name": "KAUA HENRIQUE FOSSILE RAMOS",
+      "role": "Narração e comentários dos jogos",
+      "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+      "turma": "DS2",
+      "student_name": "MIGUEL DO CARMO LUZ",
+      "role": "Controle de transmissão dos jogos",
+      "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+      "turma": "DS2",
+      "student_name": "MURILO LUCAS ROCHA DO ROSÁRIO",
+      "role": "Repórter e comentarista dos jogos",
+      "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Projeto Torre de Babel (Site Educacional)",
+      "turma": "DS3",
+      "student_name": "DANIEL ARAUJO DOS SANTOS",
+      "role": "Desenvolveu boa parte da interface e demais itens da plataforma com uso de IA, projeto está bem construído",
+      "leader": "GIOVANNY DA SILVA CABRAL",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+      "role": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+      "leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Time para o Escolares",
+      "turma": "DS2",
+      "student_name": "ANDRE PYETRO GOMES BATISTA",
+      "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Time para o Escolares",
+      "turma": "DS2",
+      "student_name": "ELCIO CRUZ DA VEIGA",
+      "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS1",
+      "student_name": "ARTHUR RIBEIRO HAILLER",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS1",
+      "student_name": "HELAMÃ FIRMO DA SILVA MOREIRA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS1",
+      "student_name": "JOÃO GABRIEL NASCIMENTO SOUZA",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Gestão Interclasses (Gestão de dados)",
+      "turma": "DS1",
+      "student_name": "TALES YAN SIQUEIRA POLIDORO",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Time para o Escolares",
+      "turma": "DS1",
+      "student_name": "NATHAN HENRIQUE SILVA CORREA",
+      "role": "Não informada na planilha",
+      "leader": "PAULO KALED FERNANDES VIDAL",
+      "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Portal escolar - Controle de Pais",
+      "turma": "Téc. DS",
+      "student_name": "Helena",
+      "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Dashboard's para análise de dados",
+      "turma": "Téc. DS",
+      "student_name": "Mariana",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Dashboard's para análise de dados",
+      "turma": "Téc. DS",
+      "student_name": "Yago",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Rádio AGV +Site",
+      "turma": "Téc. DS",
+      "student_name": "Matheus",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Sistema de inventário geral",
+      "turma": "Téc. DS",
+      "student_name": "Maria Eduarda",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Sistema de inventário geral",
+      "turma": "Téc. DS",
+      "student_name": "Mateus Arionso",
+      "role": "Não informada na planilha",
+      "leader": "Não informado/validar",
+      "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+      "source": "Aba Projetos + Téc. DS"
+    },
+    {
+      "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+      "turma": "DS1",
+      "student_name": "ANA CLARA SORIANI NUNES",
+      "role": "Pesquisa e planejamento (projeto ainda na casca)",
+      "leader": "ANA CLARA SORIANI NUNES",
+      "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+      "turma": "DS1",
+      "student_name": "HEITOR BARROS MARCOS",
+      "role": "Pesquisa e planejamento (projeto ainda na casca)",
+      "leader": "ANA CLARA SORIANI NUNES",
+      "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+      "turma": "DS1",
+      "student_name": "HELOISA EURICH DE SOUZA IZAIAS",
+      "role": "Pesquisa e planejamento (projeto ainda na casca)",
+      "leader": "ANA CLARA SORIANI NUNES",
+      "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    }
+  ],
+  "mini_startups_details": [
+    {
+      "startup_name": "GitDash",
+      "turma": "DS2",
+      "student_name": "BENICIO DOS SANTOS DA SILVA",
+      "participation": "GitDash. Back End. Buscar uma forma de integrar uma IA para validar a diferença entre commit's e concluir o trecho de validação dos commit's que estava planejado.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "GitDash",
+      "turma": "DS2",
+      "student_name": "GABRIEL GIACOMIN SALVADOR",
+      "participation": "GitDash. Front-end. Está dependendo do Luan, portanto, ainda não produziu nada. Alternativa sugerida, validar o layout e o sistea de interação da plataforma.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "GitDash",
+      "turma": "DS2",
+      "student_name": "LUAN RAFAEL SOUZA DE PAULA",
+      "participation": "GitDash\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "GitDash",
+      "turma": "DS2",
+      "student_name": "RUAN PHELIPE BARCELOS ELESIS",
+      "participation": "GitDash",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "GitDash",
+      "turma": "DS2",
+      "student_name": "VINICIUS SANTANA DOS SANTOS",
+      "participation": "GitDash. Vinícius não produz e não possui interesse segundo a equipe, portanto, deve ser avaliado a parte quando vier, pois está ausente da aula.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "ANDRIELLYN MARTINS OLIVEIRA DOS SANTOS",
+      "participation": "Rede Social AGV - Responsável pelo Front End. Depende de Giovana, que não está participando no envio das ideias e layout.\nSegundo equipe, está bem organizada, e não prejudica o andamento.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "ENTHONY GABRIEL ALVES DOS SANTOS",
+      "participation": "Rede Social AGV - Apresentação e Experiência do Usuário. Após conversa, ficou definido como líder da equipe, para não depender demais das atividades dos demais colegas, pois não se torna possível avaliação do app se não está funcional.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "GIOVANA JASCESKI CAVALHEIRO",
+      "participation": "Rede Social AGV - Fica em aberto, está responsável pelos layout's, porém, falta demais e portanto, não entrega. Quando está em casa, não produz, segundo colegas, produz melhor quando está no colégio.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+      "participation": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "Integrante não aparece na equipe da aba Projetos",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Rede AGV",
+      "turma": "DS2",
+      "student_name": "MICKAEL VIANA DE CASTRO",
+      "participation": "Rede Social AGV - Banco de dados. Sem particpação no momento.\nTeste de Firebase e SQLite, inserindo nome dos estudantes e criando tabela lá",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Trampo Certo",
+      "turma": "DS2",
+      "student_name": "ALESSANDRO SANTIAGO DOS SANTOS SILVA JUNIOR",
+      "participation": "A princípio, responsável pelas apresentações. Mas será remanejado para o grupo Trampo certo.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Trampo Certo",
+      "turma": "DS2",
+      "student_name": "ARTHUR FERNANDES RAMOS",
+      "participation": "Trampo Certo",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Trampo Certo",
+      "turma": "DS2",
+      "student_name": "PAULO CESAR AMORIM FILHO",
+      "participation": "Trampo Certo.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    },
+    {
+      "startup_name": "Trampo Certo",
+      "turma": "DS2",
+      "student_name": "THOMAS FELIPE OLIVEIRA THOME",
+      "participation": "Trampo Certo. Líder da equipe no geral, está envolvido em todos os projetos e está sendo paticipativo principalmente no projeto do TRampo certo, embora os demais, também sejam de sua autoria.",
+      "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+      "status": "OK",
+      "umbrella_project": "Mini Startup's",
+      "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+    }
+  ]
+}
