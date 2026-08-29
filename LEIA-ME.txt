@@ -1,18 +1,18 @@
-AGV v14.10.8.57 — LOGIN COM GOOGLE
+HOTFIX EMERGENCIAL — Lobby dynamic-world.js 404
 
-Base: v14.10.8.56
-Arquivos modificados: 4
-Arquivos novos: 4
-Arquivos removidos: 0
+Diagnóstico:
+- boot.js v14.10.8.58 exige lobby/assets/world/dynamic-world.js
+- o GitHub Pages respondeu HTTP 404 para esse arquivo
+- um Service Worker antigo v14.10.8.52 ainda estava controlando a página
 
-Uso seguro:
-1. Extraia este ZIP fora do repositório.
-2. Deixe o clone na branch main e com `git status` limpo.
-3. No PowerShell, execute:
-   Set-ExecutionPolicy -Scope Process Bypass -Force
-   .\APLICAR-v14.10.8.57.ps1 -RepoPath "C:\caminho\para\DS-Exercicios"
-4. Revise `git diff --name-status`.
-5. Rode VALIDAR-v14.10.8.57.ps1.
-6. Teste local/publicado antes do commit.
+Como usar:
+1. Extraia todo este ZIP.
+2. Dê dois cliques em CORRIGIR-E-PUBLICAR-LOBBY.cmd
+3. Informe o clone DS-Exercicios se solicitado.
+4. O script exige branch main e working tree limpa.
+5. Ele copia o asset obrigatório e a página de reparo.
+6. Digite PUBLICAR somente quando o script pedir para confirmar commit/push.
+7. Aguarde o GitHub Pages e acesse:
+   https://gb-eli.github.io/DS-Exercicios/repair-lobby.html
 
-O script NUNCA faz commit ou push automaticamente.
+O hotfix não altera Supabase, login, atividades ou schema.

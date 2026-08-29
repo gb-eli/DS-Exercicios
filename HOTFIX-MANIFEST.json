@@ -1,0 +1,14 @@
+{
+  "hotfix": "lobby-dynamic-world-404",
+  "target_release": "14.10.8.58",
+  "files": [
+    {
+      "path": "lobby/assets/world/dynamic-world.js",
+      "sha256": "0FD0BB9ECC92D9976B99135C5C46A5C6917EAB86B63103BF91FBB0D966C758A1"
+    },
+    {
+      "path": "repair-lobby.html",
+      "sha256": "271A0DA1FEB1013F4FC991001D4346E6C1649609A54E74A44C32EA793DD32A4D"
+    }
+  ]
+}
