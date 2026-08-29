@@ -1,7 +1,7 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.54';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.54';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.54';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.54';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.55';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.55';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.55';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.55';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -20,6 +20,16 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   const campusBuildings=Object.fromEntries(Object.entries(CAMPUS_ZONE_LAYOUT).map(([key,layout])=>[key,layout.liteBuilding]));
   const treeSpots=CAMPUS_DECOR.trees,lampSpots=CAMPUS_DECOR.lamps,benchSpots=CAMPUS_DECOR.benches;
   const areaAt=areaAtWorld,toPresence=worldToPresence,toWorld=presenceToWorld;
+  const teleportDestinations=[
+    {id:'central',name:'Praça Central',x:0,z:0,kind:'landmark'},
+    {id:'vale-portal',name:'Portal do Vale do Silício AGV',x:0,z:-10.5,kind:'portal'},
+    {id:'1ds',name:'1DS — Laboratório',x:-22.5,z:-10.2,kind:'laboratory'},
+    {id:'2ds',name:'2DS — Laboratório',x:22.5,z:-10.2,kind:'laboratory'},
+    {id:'3ds',name:'3DS — Laboratório',x:-22.5,z:10.2,kind:'laboratory'},
+    {id:'sub',name:'SUB — Laboratório',x:22.5,z:10.2,kind:'laboratory'},
+    ...CAMPUS_EXPERIENCES.filter(item=>item.type!=='vale-portal').map(item=>({id:item.id,name:item.name,x:item.x,z:item.z,kind:item.type}))
+  ];
+
   const requestSize=()=>{sizeDirty=true;};
   const resizeObserver=typeof ResizeObserver!=='undefined'?new ResizeObserver(requestSize):null;resizeObserver?.observe(canvas);window.addEventListener('resize',requestSize,{passive:true});window.visualViewport?.addEventListener?.('resize',requestSize,{passive:true});
   const resize=()=>{if(!sizeDirty)return viewport;sizeDirty=false;const r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,saveData?1:1.35),w=Math.max(1,Math.floor(r.width)),h=Math.max(1,Math.floor(r.height)),portrait=w<640&&h>w*1.15;viewport={w,h,dpr};if(portrait!==portraitMode){portraitMode=portrait;zoomTarget=portrait?1.32:1;if(reducedMotion)zoom=zoomTarget;}if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}return viewport;};
@@ -64,7 +74,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
     if(exp.type==='vale-portal'){
-      // v14.10.8.54: entrada monumental e legível já na primeira tela 2D.
+      // v14.10.8.55: entrada monumental e legível já na primeira tela 2D.
       const portalPulse=.55+.45*Math.sin(time*2.4);
       ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
       rr(-3.85*s,-2.45*s,7.7*s,4.85*s,.65*s,'rgba(4,24,24,.88)',hexToRgba(accent,.55),Math.max(1,.12*s));
@@ -153,5 +163,5 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   const cleanJoy=bindJoystick(),jumpButton=document.getElementById('jump-button'),runButton=document.getElementById('run-button');const jumpTap=e=>{e.preventDefault();if(jump<=.01)jumpV=5.6;},runDown=e=>{e.preventDefault();running=true;},runUp=e=>{e.preventDefault();running=false;};jumpButton?.addEventListener('pointerdown',jumpTap);runButton?.addEventListener('pointerdown',runDown);runButton?.addEventListener('pointerup',runUp);runButton?.addEventListener('pointercancel',runUp);
   function frame(now){if(stopped)return;raf=requestAnimationFrame(frame);if(document.hidden){last=now;return;}const dt=Math.min(.05,(now-last)/1000||.016);last=now;let ix=((keys.has('KeyD')||keys.has('ArrowRight'))?1:0)-((keys.has('KeyA')||keys.has('ArrowLeft'))?1:0)+joy.x,iz=((keys.has('KeyS')||keys.has('ArrowDown'))?1:0)-((keys.has('KeyW')||keys.has('ArrowUp'))?1:0)+joy.y;const l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l;}const ride=rides.tick(now);if(ride){player.x=ride.x;player.z=ride.z;player.dir=ride.heading||player.dir;jump=Math.max(0,ride.y||0);jumpV=0;ix=iz=0;}else{const speed=running?8:4.8;player.x=clamp(player.x+ix*speed*dt,-WORLD_X+1,WORLD_X-1);player.z=clamp(player.z+iz*speed*dt,-WORLD_Z+1,WORLD_Z-1);if(Math.hypot(ix,iz)>.02)player.dir=Math.atan2(ix,-iz);jumpV-=14*dt;jump+=jumpV*dt;if(jump<0){jump=0;jumpV=0;}}const area=areaAt(player.x,player.z);if(area!==lastArea){lastArea=area;onAreaChange?.(area);}if(zoomTarget>1.12){panTargetX=player.x*.5;panTargetZ=player.z*.5}else{panTargetX=0;panTargetZ=0;}let nearPortal=null,bestP=3.8;for(const z of zones){const p=portalPos[z.key],d=Math.hypot(player.x-p[0],player.z-p[1]);if(d<bestP){bestP=d;nearPortal=z;}}let nearStudent=null,bestS=3.2;for(const o of state.others||[]){const p=toWorld(o.x,o.y),d=Math.hypot(player.x-p.x,player.z-p.z);if(d<bestS){bestS=d;nearStudent=o;}}const exp=nearestExperience(player.x,player.z,3.7),nearWorldObject=!rides.isActive()&&exp?attractionRef(exp):null;challenge.tick(player,now);const pp=toPresence(player.x,player.z);onPlayerState?.({x:pp.x,y:pp.y,area,nearPortal,nearStudent,nearWorldObject,moving:Math.hypot(ix,iz),running,onGround:jump<=.01});draw(now);}
   onQualityChange?.('low');raf=requestAnimationFrame(frame);
-  return{ready:Promise.resolve(),setQuality:()=>onQualityChange?.('low'),getQuality:()=> 'low',startChallenge,restartChallenge,cancelChallenge,startExperience,cancelExperience:()=>rides.cancel(),jump:()=>{if(jump<=.01&&!rides.isActive())jumpV=5.6;},setRun:v=>{running=!!v;},setLocalEmote(kind){emote=kind;emoteUntil=Date.now()+4500;},stop(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('resize',requestSize);window.visualViewport?.removeEventListener?.('resize',requestSize);resizeObserver?.disconnect();canvas.removeEventListener('wheel',wheel);jumpButton?.removeEventListener('pointerdown',jumpTap);runButton?.removeEventListener('pointerdown',runDown);runButton?.removeEventListener('pointerup',runUp);runButton?.removeEventListener('pointercancel',runUp);cleanJoy?.();}};
+  return{ready:Promise.resolve(),setQuality:()=>onQualityChange?.('low'),getQuality:()=> 'low',teleportTo(target){if(!target)return false;rides.cancel({silent:true});challenge.cancel();player.x=clamp(Number(target.x)||0,-WORLD_X+1,WORLD_X-1);player.z=clamp(Number(target.z)||0,-WORLD_Z+1,WORLD_Z-1);jump=0;jumpV=0;return true;},getDestinations:()=>teleportDestinations.map(item=>({...item})),startChallenge,restartChallenge,cancelChallenge,startExperience,cancelExperience:()=>rides.cancel(),jump:()=>{if(jump<=.01&&!rides.isActive())jumpV=5.6;},setRun:v=>{running=!!v;},setLocalEmote(kind){emote=kind;emoteUntil=Date.now()+4500;},stop(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('resize',requestSize);window.visualViewport?.removeEventListener?.('resize',requestSize);resizeObserver?.disconnect();canvas.removeEventListener('wheel',wheel);jumpButton?.removeEventListener('pointerdown',jumpTap);runButton?.removeEventListener('pointerdown',runDown);runButton?.removeEventListener('pointerup',runUp);runButton?.removeEventListener('pointercancel',runUp);cleanJoy?.();}};
 }

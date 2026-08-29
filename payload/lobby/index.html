@@ -6,8 +6,8 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.54">
-  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.54">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.55">
+  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.55">
 </head>
 <body>
   <section id="login" class="login-shell">
@@ -53,6 +53,7 @@
           <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
           <span id="mode-advice" class="chip mode-advice">2D recomendado</span>
           <button id="activity-button" class="hud-button activity-button hidden" type="button">Atividade</button>
+          <button id="teleport-button" class="hud-button teleport-button" type="button" title="Abrir teletransporte do Campus">⚡ Teletransporte</button>
           <button id="vale-direct-button" class="hud-button vale-direct-button" type="button" title="Ir para o Vale do Silício AGV">🏙 Vale do Silício</button>
           <button id="mode-button" class="hud-button mode-button" type="button" title="Alternar entre mapa 2D e ambiente 3D">Entrar no 3D</button>
           <button id="camera-button" class="hud-button" type="button" title="Alternar câmera">Câmera</button>
@@ -107,6 +108,21 @@
         <small class="campus-disclaimer">Fast travel é liberado para empresas já visitadas. Destinos institucionais permanecem sempre disponíveis.</small>
       </aside>
 
+
+      <div id="teleport-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="teleport-title">
+        <div class="modal-card teleport-card">
+          <button id="teleport-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Mobilidade instantânea</p>
+          <h2 id="teleport-title">⚡ Teletransporte</h2>
+          <p class="muted">Escolha um ponto do Campus ou do Vale do Silício AGV. O modo 2D/3D atual é preservado.</p>
+          <div class="teleport-feature"><span>🏙</span><div><strong>Vale do Silício AGV</strong><small>Empresas dos alunos, distritos, esportes, hangar e ambientes.</small></div><button id="teleport-vale-now" class="primary" type="button">Ir para o Vale</button></div>
+          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, 2DS, piscina, empresa…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Campus + Vale</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option></select></label></div>
+          <div id="staff-teleport-panel" class="staff-teleport-panel hidden"><div><strong>📍 Controle da turma</strong><small>Leva todos os alunos online para o ponto em que você está agora. O comando é validado pelo servidor.</small></div><button id="staff-bring-all" class="primary" type="button">Trazer todos até mim</button></div>
+          <div id="teleport-list" class="teleport-list"><p class="muted">Carregando destinos…</p></div>
+          <small class="campus-disclaimer">Teletransporte não altera atividade, nota, progresso ou matrícula. É apenas mobilidade dentro do Lobby.</small>
+        </div>
+      </div>
+
       <div id="vale-company-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="vale-company-title">
         <div class="modal-card vale-company-card">
           <button id="vale-company-close" class="modal-close" type="button" aria-label="Fechar">×</button>
@@ -153,9 +169,9 @@
   </main>
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
-  <script src="../core/session/fullscreen-portal.js?v=14.10.8.54"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.54"></script>
-  <script src="assets/sw-register.js?v=14.10.8.54" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.54" defer></script>
+  <script src="../core/session/fullscreen-portal.js?v=14.10.8.55"></script>
+  <script src="assets/diagnostics.js?v=14.10.8.55"></script>
+  <script src="assets/sw-register.js?v=14.10.8.55" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.55" defer></script>
 </body>
 </html>

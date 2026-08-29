@@ -1,0 +1,1 @@
+v14.10.8.55 — Teletransporte global + Professor: Trazer todos até mim. Base: v14.10.8.54. Sem exclusões e sem migração de schema. Deploy da Edge Function lobby-presence requerido para reunião coletiva.

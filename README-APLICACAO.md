@@ -1,21 +1,20 @@
-# v14.10.8.54 — Hotfix Portal Monumental do Vale
+# PATCH v14.10.8.55 — Teletransporte Global + Reunião da Turma
 
-Base esperada: **v14.10.8.53**.
+Base esperada: **v14.10.8.54**.
 
-Este PATCH não remove arquivos. Ele move o portal do Vale para a área visível principal, aumenta sua presença visual 2D/3D e adiciona acesso permanente no HUD.
+## O que entra
+- botão permanente `⚡ Teletransporte`;
+- Praça, laboratórios, atrações, Vale, 8 distritos e 27 empresas como destinos;
+- botão destacado `Ir para o Vale`;
+- equipe: `Trazer todos até mim`;
+- comando coletivo assinado no servidor e validado antes de ser obedecido;
+- modo 2D/3D de cada usuário é preservado;
+- nenhuma migration/schema.
 
+## Aplicação
 ```powershell
-Set-ExecutionPolicy -Scope Process Bypass -Force
-.\APLICAR-v14.10.8.54-PORTAL-VALE.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
-.\VALIDAR-v14.10.8.54.ps1 -Repo "C:\Users\Administrador\Documents\GitHub\DS-Exercicios-RECUPERADO"
+.\APLICAR-v14.10.8.55-TELETRANSPORTE.ps1 -Repo "C:\caminho\DS-Exercicios"
+.\VALIDAR-v14.10.8.55.ps1 -Repo "C:\caminho\DS-Exercicios"
 ```
 
-Depois confira `git status`. Não faça commit se aparecer qualquer exclusão inesperada.
-
-Commit sugerido:
-
-```powershell
-git add -A
-git commit -m "fix: destacar Portal do Vale do Silício v14.10.8.54"
-git push origin main
-```
+Antes de usar `Trazer todos até mim`, publique a Edge Function `lobby-presence` atualizada. Consulte `payload/docs/DEPLOY-BACKEND-v14.10.8.55.md`.

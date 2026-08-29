@@ -1,5 +1,5 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.54';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.54';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.55';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS } from './campus-experiences.js?v=14.10.8.55';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -149,7 +149,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
   if(experience.type==='vale-portal'){
-    // v14.10.8.54: estação/portal monumental do Vale, visível de longe no Campus 3D.
+    // v14.10.8.55: estação/portal monumental do Vale, visível de longe no Campus 3D.
     const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
     for(const x of[-3.35,3.35]){
       g.add(box(THREE,.72,4.9,.82,frame,x,2.55,0));

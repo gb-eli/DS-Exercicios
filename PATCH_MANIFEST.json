@@ -1,172 +1,151 @@
 {
-  "release": "14.10.8.54",
-  "name": "Hotfix Portal Monumental do Vale",
-  "baseRelease": "14.10.8.53",
-  "changedFiles": 20,
-  "newFiles": 3,
-  "deletedFiles": 0,
-  "totalPayloadFiles": 23,
+  "release": "14.10.8.55",
+  "base": "14.10.8.54",
+  "title": "Teletransporte global + Professor: Trazer todos até mim",
+  "totalPayloadFiles": 24,
+  "modified": 20,
+  "new": 4,
+  "deleted": 0,
   "files": [
-    {
-      "path": "LEIA-ME-v14.10.8.54.txt",
-      "status": "new",
-      "baseSha256": null,
-      "targetSha256": "516CE4B73053011687465E80FDED4DC20928B8B4836E9F1B9D8070B18D28CB89",
-      "size": 202
-    },
-    {
-      "path": "docs/ATUALIZAR-v14.10.8.54.md",
-      "status": "new",
-      "baseSha256": null,
-      "targetSha256": "47BBFC8A5AC65F6E7A2EBF0FD1C5E97B50F18907545D2ECD72515A8CAD4195E9",
-      "size": 1166
-    },
-    {
-      "path": "docs/VALIDACAO-v14.10.8.54.md",
-      "status": "new",
-      "baseSha256": null,
-      "targetSha256": "D6711A5E73E116067F111F2F65DD5A481484A1442AE99830CDEE970D7028004C",
-      "size": 483
-    },
-    {
-      "path": "lobby/assets/boot.js",
-      "status": "modified",
-      "baseSha256": "0A12C02797BFD063B4445A5DDD9184CFD499060185A093C74341FB644EC7FAA2",
-      "targetSha256": "4647BAC256FC607E591DC3387BCDA4E6FCFD9AB6C0A35F94040CDA45F3BDE141",
-      "size": 5010
-    },
-    {
-      "path": "lobby/assets/characters/avatar-system.js",
-      "status": "modified",
-      "baseSha256": "ECB97CD2902BD073629CB68E406B1807A4C51DC7F2238A982E16F2567EB4F146",
-      "targetSha256": "A68C59B172A26068DFC4F63B9DBCEC067926ECF09DC9AEF236867ED094B89761",
-      "size": 15203
-    },
-    {
-      "path": "lobby/assets/config.js",
-      "status": "modified",
-      "baseSha256": "AB6CB60DD42E5ECD3C0674E0FCE2DECB3035B41EFD7872784FC22A8099CAFEC3",
-      "targetSha256": "AB4F541DB6F7D0492D685146E609BA564DD3E593CF5108C0C830DA1849A4FCF1",
-      "size": 307
-    },
-    {
-      "path": "lobby/assets/diagnostics.js",
-      "status": "modified",
-      "baseSha256": "8562E1102EEEC3A009E16451318F8CB2BC40C632E96E69B7EF42438CA22B4003",
-      "targetSha256": "78A1FBB1BE25C262AAECB5958A0155F38946D598477DABCAF15471354333033B",
-      "size": 8947
-    },
-    {
-      "path": "lobby/assets/game/ride-manager.js",
-      "status": "modified",
-      "baseSha256": "471BFCF7E4FDA81811D2DC43011A880F0E40E055DA72C8D360CB8DFB4FBFED68",
-      "targetSha256": "7C192142CCD252C38B73122BF028CDA4CBC6B1529BDE17D35E44806A5EE338AA",
-      "size": 2846
-    },
-    {
-      "path": "lobby/assets/lobby-lite.js",
-      "status": "modified",
-      "baseSha256": "C2C011F4E5AB7A2DC508A6D74B23D7295EF9AA3F1805DE9B8DA2081E35434884",
-      "targetSha256": "8932DD6465AA38297F095D9363CAB884CE4843E33502BF5C14E1959436F03B16",
-      "size": 27159
-    },
-    {
-      "path": "lobby/assets/lobby.css",
-      "status": "modified",
-      "baseSha256": "0BE411A87DC26CE6CD5933E29B1A0BEC367735F21F4864A25E01E02332D384B8",
-      "targetSha256": "BFA5E4047913E45BF2F2AFE933BCE52A56135D4B1C4D81C3468FFF87FBFB7ADB",
-      "size": 42790
-    },
-    {
-      "path": "lobby/assets/lobby.js",
-      "status": "modified",
-      "baseSha256": "676A6A53607093662176802DBC4BA6946F7532423A34772BA9D1FB377E997D6C",
-      "targetSha256": "A5D742B3D482A6860EFA871CAA37FAE483329D86EF5F62010CB634484F21DAB0",
-      "size": 60604
-    },
-    {
-      "path": "lobby/assets/lobby3d.js",
-      "status": "modified",
-      "baseSha256": "5319878DBBD833C3B3A3F2726022DD210EFB316EFC0017F3488DFE7C7A8A0789",
-      "targetSha256": "F3DD323611A7E653A5F7D50D86B4C420C3DE36129ECC610F94F119F28778D46B",
-      "size": 48727
-    },
-    {
-      "path": "lobby/assets/supabase.js",
-      "status": "modified",
-      "baseSha256": "AEEA48FD67C000C69B119EDB9DDD513A2838135CD6DC589C8BB096D28FEE1F7C",
-      "targetSha256": "E9AD17064FE869805DBB2F6B18342D21238A0CB1714566BD32AA62F5CA0D7B08",
-      "size": 1208
-    },
-    {
-      "path": "lobby/assets/sw-register.js",
-      "status": "modified",
-      "baseSha256": "D142861015270164CF65BAA6914E95645C06FDE52DE1064E857EC442A8C40475",
-      "targetSha256": "4F2A04A3B24403A580074C768ADB32B7214AB6C1FA7A8ADA94AC87FC877278DC",
-      "size": 1989
-    },
-    {
-      "path": "lobby/assets/vale-lite.js",
-      "status": "modified",
-      "baseSha256": "83E6625323EE74222E71432037624AA17F12A646AAE7FC63BC8BE589A6BD5AA1",
-      "targetSha256": "CACB731F59DE3092F2D565600CB91F20AB75419C59642A4C7C12B1BDAA2992D9",
-      "size": 20031
-    },
-    {
-      "path": "lobby/assets/vale3d.js",
-      "status": "modified",
-      "baseSha256": "81ACC1A907D8A3EDC1AD5E5697C73020904ADE8F05F7DDD79F2E5CD4C02E12CD",
-      "targetSha256": "66A2783CC3EB49D1747A7EE3C1981A1B79A1C58C7DA597C2BA5092B447BBEA69",
-      "size": 27201
-    },
-    {
-      "path": "lobby/assets/vendor-loader.js",
-      "status": "modified",
-      "baseSha256": "2785C43A0E4089474775BC47DD8F79937BA857D7E30FFCDB244FDA0506B43589",
-      "targetSha256": "FFA7B9FB810B1AE023626E41B4644C707FEC7261E3662DF8DC277C34F59825CD",
-      "size": 4292
-    },
-    {
-      "path": "lobby/assets/world/campus-environment.js",
-      "status": "modified",
-      "baseSha256": "E0CD6DF7BADA3E544025968561C196D5F31E4BD8EFEF67B6042CC9B3066260C3",
-      "targetSha256": "4A8EC505532B6A1D2F63DA29D69C4BFA7C478DDA851AC14315A7D3040ABDFC72",
-      "size": 21493
-    },
-    {
-      "path": "lobby/assets/world/campus-experiences.js",
-      "status": "modified",
-      "baseSha256": "66880F42BFBC72947A216DB87652483B90F4B9C0123DCE6AA51CF6198A9F5E5B",
-      "targetSha256": "854825B5947F126518C3252591A5E16CC418127A551CD5B73CD0A2C7512707C7",
-      "size": 4723
-    },
-    {
-      "path": "lobby/assets/world/vale-silicio-data.js",
-      "status": "modified",
-      "baseSha256": "AE19C29AD6BB34BD06BED1E766A9E96D2F5E24014C05D3323EAB085ABF8D5AB6",
-      "targetSha256": "AEB397240C2D7F83E9EFCD79E29A8234332F1F556A6B891EC918C8AEAB2352F8",
-      "size": 1177
-    },
-    {
-      "path": "lobby/assets/world/vale-silicio-shared.js",
-      "status": "modified",
-      "baseSha256": "845AC8D46BA371C8836091222BB0E6C8955F1C6D4CC4EC2781E71AAD4DCB3BBE",
-      "targetSha256": "004792915606B913714494486282C29E653471C750BD091D28ED4D9876730746",
-      "size": 7214
-    },
     {
       "path": "lobby/index.html",
       "status": "modified",
-      "baseSha256": "3FB5E2004CB7FAB42DF3F1B1F7CF9241EFEE38A6AD1C6AF6C9521B782C79C0C6",
-      "targetSha256": "0358A11367638E81724C1C076FC038A161CE927A4ACAB3D1187AEB9757C0665E",
-      "size": 14986
+      "targetSha256": "D5DF91CA0079F58D3D8B1CE974B40C77983865DB987871FDEEBC61096BB5B2D9",
+      "baseSha256": "0358A11367638E81724C1C076FC038A161CE927A4ACAB3D1187AEB9757C0665E"
     },
     {
       "path": "lobby/sw.js",
       "status": "modified",
-      "baseSha256": "A32A6E4539D03283F1F6C2FF68D29C318EC51B156A8787ACCDD0A483FEDEE8F8",
-      "targetSha256": "22F2243DFA27D30E7A0475D9B48BF4A97FBB31FFF13466CCCC7D089D7AF93C10",
-      "size": 4386
+      "targetSha256": "D53F1B4766A09B9AB8E27981C6E8B050D153FF2497E99740B9B248F676C46B25",
+      "baseSha256": "22F2243DFA27D30E7A0475D9B48BF4A97FBB31FFF13466CCCC7D089D7AF93C10"
+    },
+    {
+      "path": "lobby/assets/sw-register.js",
+      "status": "modified",
+      "targetSha256": "CA71F50DA0C341E7E59D0CE9FEC13DE40078910AE2AF6BD4940F19E29D771681",
+      "baseSha256": "4F2A04A3B24403A580074C768ADB32B7214AB6C1FA7A8ADA94AC87FC877278DC"
+    },
+    {
+      "path": "lobby/assets/vendor-loader.js",
+      "status": "modified",
+      "targetSha256": "B486287F789B85AF063CF722D81D768EC9B1D07B378386993EB0FA9763931B4F",
+      "baseSha256": "FFA7B9FB810B1AE023626E41B4644C707FEC7261E3662DF8DC277C34F59825CD"
+    },
+    {
+      "path": "lobby/assets/lobby-lite.js",
+      "status": "modified",
+      "targetSha256": "AAC85867A0C90839E337C676807EAD279365C307E308105745BD1B4BFD57F4A4",
+      "baseSha256": "8932DD6465AA38297F095D9363CAB884CE4843E33502BF5C14E1959436F03B16"
+    },
+    {
+      "path": "lobby/assets/vale3d.js",
+      "status": "modified",
+      "targetSha256": "6575C535E46A76C64C3C66155E375324301107579D970CEC551C9D637A8A242D",
+      "baseSha256": "66A2783CC3EB49D1747A7EE3C1981A1B79A1C58C7DA597C2BA5092B447BBEA69"
+    },
+    {
+      "path": "lobby/assets/lobby3d.js",
+      "status": "modified",
+      "targetSha256": "B045048588817545B9833B209ECCD011B0B5894CC3C826FDD86877FB59C1B685",
+      "baseSha256": "F3DD323611A7E653A5F7D50D86B4C420C3DE36129ECC610F94F119F28778D46B"
+    },
+    {
+      "path": "lobby/assets/diagnostics.js",
+      "status": "modified",
+      "targetSha256": "FE8650DD3BBEC13951293128D10ED0F65A3D7AF6AE9762B9C7D108EB2CDEB8FF",
+      "baseSha256": "78A1FBB1BE25C262AAECB5958A0155F38946D598477DABCAF15471354333033B"
+    },
+    {
+      "path": "lobby/assets/boot.js",
+      "status": "modified",
+      "targetSha256": "91E66F2CF00E4BD14CD0F473F0244876FCC3DFF5C30CA157CD9A4A9B9E99C03C",
+      "baseSha256": "4647BAC256FC607E591DC3387BCDA4E6FCFD9AB6C0A35F94040CDA45F3BDE141"
+    },
+    {
+      "path": "lobby/assets/lobby.js",
+      "status": "modified",
+      "targetSha256": "C506F9FF7A44E62D5A511F9D24782F48EA2F5C67777559B049A0BE78A77EE99E",
+      "baseSha256": "A5D742B3D482A6860EFA871CAA37FAE483329D86EF5F62010CB634484F21DAB0"
+    },
+    {
+      "path": "lobby/assets/supabase.js",
+      "status": "modified",
+      "targetSha256": "D729C1C4FDA67D93A8236DE5296DAAC54588F16DF68BD138C4174E4FBBCC0DF8",
+      "baseSha256": "E9AD17064FE869805DBB2F6B18342D21238A0CB1714566BD32AA62F5CA0D7B08"
+    },
+    {
+      "path": "lobby/assets/lobby.css",
+      "status": "modified",
+      "targetSha256": "BCFC8ABD61CCEBFA1A5EE7ADE521C03A9C5E246AE46CBFDC5F8C226DC0A09EDD",
+      "baseSha256": "BFA5E4047913E45BF2F2AFE933BCE52A56135D4B1C4D81C3468FFF87FBFB7ADB"
+    },
+    {
+      "path": "lobby/assets/config.js",
+      "status": "modified",
+      "targetSha256": "ECF509D70D1ED0C77162D4ACCA281F702299BE8464BB3522653CB1EC1924A96D",
+      "baseSha256": "AB4F541DB6F7D0492D685146E609BA564DD3E593CF5108C0C830DA1849A4FCF1"
+    },
+    {
+      "path": "lobby/assets/vale-lite.js",
+      "status": "modified",
+      "targetSha256": "964B3034AAA7DEEA2337E27192518379D8634D6F4FCA8CF30B002718766036E6",
+      "baseSha256": "CACB731F59DE3092F2D565600CB91F20AB75419C59642A4C7C12B1BDAA2992D9"
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-shared.js",
+      "status": "modified",
+      "targetSha256": "2599C307A6956D1B075FF363F68FD5D4B03156DCC0F1538AB6A7681FD0440087",
+      "baseSha256": "004792915606B913714494486282C29E653471C750BD091D28ED4D9876730746"
+    },
+    {
+      "path": "lobby/assets/world/campus-environment.js",
+      "status": "modified",
+      "targetSha256": "0DEAB31D8792FFA9DCA2F7E78C640CF3C359A0D0949815102683EB3B4D15FCD1",
+      "baseSha256": "4A8EC505532B6A1D2F63DA29D69C4BFA7C478DDA851AC14315A7D3040ABDFC72"
+    },
+    {
+      "path": "lobby/assets/world/vale-silicio-data.js",
+      "status": "modified",
+      "targetSha256": "28CCDE2CD97801AE185DAF41CED349BBBF97C6FB3B7E5BAA8E1A4A0955A030B6",
+      "baseSha256": "AEB397240C2D7F83E9EFCD79E29A8234332F1F556A6B891EC918C8AEAB2352F8"
+    },
+    {
+      "path": "lobby/assets/characters/avatar-system.js",
+      "status": "modified",
+      "targetSha256": "495BF5AD68172E978964BBAC8A6786E53A3E550B104DA10279BB66F5B9E75E8B",
+      "baseSha256": "A68C59B172A26068DFC4F63B9DBCEC067926ECF09DC9AEF236867ED094B89761"
+    },
+    {
+      "path": "lobby/assets/game/ride-manager.js",
+      "status": "modified",
+      "targetSha256": "4069073DCD4A7760E46644B3164AEAAB0FC655F6338951F0DAC5B04BA73037C7",
+      "baseSha256": "7C192142CCD252C38B73122BF028CDA4CBC6B1529BDE17D35E44806A5EE338AA"
+    },
+    {
+      "path": "core/edge-functions/lobby-presence/index.ts",
+      "status": "modified",
+      "targetSha256": "E7F12FFFE847D7F37F15B3569BBDC3C80005F25DEABD3FAEAA3A9E91D1966A34",
+      "baseSha256": "C6012249B60BB6B500A520A129502C3D55A943E73588A7F7B2AAFAFE0F372740"
+    },
+    {
+      "path": "LEIA-ME-v14.10.8.55.txt",
+      "status": "new",
+      "targetSha256": "370E08A51F1F2E60EC43B29238D9ED42FA1EC4D18B4423217C15D7EBB74F8B40"
+    },
+    {
+      "path": "docs/VALIDACAO-v14.10.8.55.md",
+      "status": "new",
+      "targetSha256": "CEF4F021F1DCAD85382B8341C730764EAD5E3CC22B727AF2C3AF4C5E46D80130"
+    },
+    {
+      "path": "docs/ATUALIZAR-v14.10.8.55.md",
+      "status": "new",
+      "targetSha256": "F764CA41BFCE1376D4BAE3A9310C446E28C878F1D9EFB45FD422143BD7419D69"
+    },
+    {
+      "path": "docs/DEPLOY-BACKEND-v14.10.8.55.md",
+      "status": "new",
+      "targetSha256": "5F5C19A1177739C171A9B2817E923D34AE81941EDD132A11052C7959C18348AB"
     }
   ]
 }

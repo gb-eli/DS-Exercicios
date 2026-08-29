@@ -1,9 +1,9 @@
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.54';
-import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.54';
-import { createCameraController } from './render/camera-controller.js?v=14.10.8.54';
-import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.54';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.55';
+import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.55';
+import { createCameraController } from './render/camera-controller.js?v=14.10.8.55';
+import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.55';
 
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.54';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.55';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const categoryColor=category=>({edtech:'#36d2ff',education:'#36d2ff',data_systems:'#51e7a3',business_tools:'#51e7a3',business_system:'#51e7a3',games:'#b58cff',esports:'#ff6b7a',robotics:'#ffae63',maker:'#ffae63',media:'#f472b6',immersive:'#8b5cf6',sports:'#34d399'}[category]||'#7dd3fc');
 function disposeRoot(root){root?.traverse?.(o=>{o.geometry?.dispose?.();if(o.material){for(const m of(Array.isArray(o.material)?o.material:[o.material])){m.map?.dispose?.();m.dispose?.();}}});}
