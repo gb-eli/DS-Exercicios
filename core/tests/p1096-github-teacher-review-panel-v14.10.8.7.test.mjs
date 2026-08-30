@@ -20,5 +20,5 @@ test('migration 046 é somente infraestrutura de revisão e não baixa aluno',()
  assert.match(sql,/review_score/);assert.match(sql,/teacher_feedback/);assert.match(sql,/reviewed_at/);
 });
 test('release .7 mantém gate de produção fechado',()=>{
- const d=JSON.parse(read('release-current.json'));assert.equal(d.version,'14.10.8.18');assert.equal(d.productionWriteApproved,false);assert.equal(d.liveDeployApplied,false);assert.equal(d.backupConfirmed,false);
+ const d=JSON.parse(read('release-current.json'));assert.equal(d.version,'14.10.8.65');assert.equal(d.productionWriteApproved,false);assert.equal(d.liveDeployApplied,false);assert.equal(d.backupConfirmed,false);
 });

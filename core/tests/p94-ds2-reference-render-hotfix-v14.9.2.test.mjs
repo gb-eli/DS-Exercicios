@@ -24,7 +24,7 @@ test('P9.2 reference colors are isolated from transparent editor text',()=>{
 });
 
 test('P9.2 activities cache bust uses the hotfix version',()=>{
-  assert.equal(release.version,'14.10.8.18');
+  assert.equal(release.version,'14.10.8.65');
   assert.match(html,/app\.css\?v=14\.10\.8/);
   assert.match(html,/app\.js\?v=14\.10\.8/);
 });

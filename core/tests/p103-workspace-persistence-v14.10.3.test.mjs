@@ -54,9 +54,9 @@ test('P10.3 preview and downloads always consume current editor content',()=>{
 });
 
 test('P10.3 release, UI and cache busting are aligned',()=>{
-  assert.equal(release.version,'14.10.8.18');
-  assert.equal(version.version,'0.22.8.14');
-  assert.equal(version.release,'v14.10.8.18');
+  assert.equal(release.version,'14.10.8.65');
+  assert.equal(version.version,'0.22.8.19');
+  assert.equal(version.release,'v14.10.8.65');
   assert.match(html,/app\.js\?v=14\.10\.8/);
   assert.match(ws,/draft-recovery\.js\?v=14\.10\.8/);
   assert.match(app,/workspace\.js\?v=14\.10\.8/);

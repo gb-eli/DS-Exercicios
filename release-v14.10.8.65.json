@@ -16,7 +16,28 @@
   "maintenance_patches": [
     "Etapa 1: sincronização de cache-bust e documentação",
     "Etapa 2: recuperação temporária centralizada por e-mail + CGM",
-    "Etapa 2: migration 063 para finalizar troca obrigatória de senha"
+    "Etapa 2: migration 063 para finalizar troca obrigatória de senha",
+    "Etapa 3: retorno seguro pós-troca de senha e contrato de Login Único",
+    "Etapa 4: compatibilidade de navegação administrativa",
+    "Etapa 5: logout/troca de conta do CTF alinhados à sessão unificada",
+    "Etapa 6: metadados, UI version e cache-bust público consolidados"
   ],
-  "schema_note": "A release base v14.10.8.65 não alterava schema; o pacote corrigido inclui a migration server-side 063 da Etapa 2."
+  "schema_note": "A release base v14.10.8.65 não alterava schema; o pacote corrigido inclui a migration server-side 063 da Etapa 2.",
+  "date": "2026-08-30",
+  "phase": "maintenance-etapa-6-release-metadata",
+  "baseVersion": "14.10.8.64",
+  "uiVersion": "0.22.8.19",
+  "runtimeCacheVersion": "14.10.8.65",
+  "lobbyCacheVersion": "14.10.8.65",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": false,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Aplicar a migration 063_p10920_password_change_finalize.sql no Supabase de produção antes de considerar a Etapa 2 totalmente implantada."
+  ]
 }

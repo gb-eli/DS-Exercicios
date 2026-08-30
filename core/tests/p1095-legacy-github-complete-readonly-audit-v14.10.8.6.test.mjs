@@ -17,5 +17,5 @@ test('SUB fecha 14 claims com dois não funcionais e um parcial',()=>{
  const d=aggregate().blocks.remaining;assert.equal(d.sub_claims,14);assert.deepEqual(d.sub_status_counts,{correct:11,partial:1,nonfunctional:2});
 });
 test('release .7 não finge deploy nem libera escrita',()=>{
- const d=read('release-current.json');assert.equal(d.version,'14.10.8.18');assert.equal(d.phase,'P10.9.17-academic-exercise-points');assert.equal(d.runtimeCacheVersion,'14.10.8.18');assert.equal(d.productionWriteApproved,false);assert.equal(d.liveDeployApplied,false);
+ const d=read('release-current.json');assert.equal(d.version,'14.10.8.65');assert.equal(d.phase,'maintenance-etapa-6-release-metadata');assert.equal(d.runtimeCacheVersion,'14.10.8.65');assert.equal(d.productionWriteApproved,false);assert.equal(d.liveDeployApplied,false);
 });

@@ -36,13 +36,13 @@ test('P10.2 controles de fonte e abas de saída continuam utilizáveis em tela e
 });
 
 test('P10.2 metadata e cache representam a mesma release',()=>{
-  assert.equal(release.version,'14.10.8.18');
-  assert.equal(release.baseVersion,'14.10.8.17');
+  assert.equal(release.version,'14.10.8.65');
+  assert.equal(release.baseVersion,'14.10.8.64');
   assert.equal(release.liveDeployApplied,false);
-  assert.equal(version.version,'0.22.8.14');
-  assert.equal(version.release,'v14.10.8.18');
-  assert.equal(deploy.release,'v14.10.8.18');
-  assert.equal(deploy.ui,'0.22.8.14');
+  assert.equal(version.version,'0.22.8.19');
+  assert.equal(version.release,'v14.10.8.65');
+  assert.equal(deploy.release,'v14.10.8.65');
+  assert.equal(deploy.ui,'0.22.8.19');
   assert.match(html,/app\.css\?v=14\.10\.8/);
   assert.match(html,/app\.js\?v=14\.10\.8/);
 });

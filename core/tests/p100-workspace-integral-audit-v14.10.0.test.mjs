@@ -114,7 +114,7 @@ test('P10 referência Markdown/Kotlin e arquivos do aluno usam aliases compatív
 });
 
 test('P10 release, UI e autocorreção server-side estão alinhados',()=>{
- assert.equal(release.version,'14.10.8.18');assert.equal(version.version,'0.22.8.14');assert.equal(version.release,'v14.10.8.18');
+ assert.equal(release.version,'14.10.8.65');assert.equal(version.version,'0.22.8.19');assert.equal(version.release,'v14.10.8.65');
  assert.match(html,/app\.js\?v=14\.10\.8/);assert.match(app,/workspace\.js\?v=14\.10\.8/);
  assert.match(grade,/version:'autograde-v8-reference-history'/);assert.match(grade,/required_files_incomplete/);assert.match(grade,/submitted_score:officialScore/);
 });

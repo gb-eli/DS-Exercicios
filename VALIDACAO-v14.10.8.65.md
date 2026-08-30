@@ -83,3 +83,50 @@ Não foi executado smoke visual real em Chrome/WebGL ou Android durante este emp
 - suíte geral após Etapa 5: 309/368 PASS; 59 falhas remanescentes.
 
 Correção funcional relevante: os controles de troca de conta e saída do Perfil do CTF deixaram de chamar funções inexistentes e agora encerram corretamente a sessão central antes do redirecionamento para o Login Único.
+
+## Etapa 6 — Release metadata / cache / publicação
+
+- metadados canônicos: `release-current.json` = `14.10.8.65`;
+- UI canônica de Atividades: `0.22.8.19`;
+- `version.json` e `atividades/version.json` sincronizados com `v14.10.8.65`;
+- `PUBLIC-DEPLOY.json` sincronizado com `v14.10.8.65` e com `core/session/` explicitamente público;
+- superfícies públicas executáveis sem cache-bust antigo detectado na varredura da Etapa 6;
+- contratos focados de versão/cache: 94/94 PASS;
+- reparo de publicação do Lobby: 5/5 PASS;
+- `validate-campus-city-v62.mjs`: PASS;
+- `validate-campus-interiors-v63.mjs`: PASS;
+- `validate-campus-live-v64.mjs`: PASS;
+- `validate-campus-mobility-v65.mjs`: PASS;
+- `validate-unified-auth-v59.mjs`: PASS;
+- suíte geral após Etapa 6: 342/368 PASS; 26 falhas remanescentes.
+
+Observação: `validate-lobby-v61.mjs` é um validador histórico fixado na release 14.10.8.61 e, por definição, não deve ser usado como gate da release 14.10.8.65. O gate atual do Lobby é coberto pelos validadores v62-v65, testes de publicação/reparo e autenticação unificada.
+
+## Etapa 7 — Lobby/Campus P5
+
+- contratos P5 históricos reconciliados com a arquitetura modular da v14.10.8.65;
+- versão do Lobby validada contra `release-current.json`, sem aceitar uma versão histórica fixa como release ativa;
+- câmera 360/cinematográfica validada em `render/camera-controller.js`;
+- qualidade adaptativa e perfil Eco/mobile validados em `render/performance-manager.js`;
+- avatar procedural + GLB e emotes validados em `characters/avatar-system.js` e `rigged-avatar.js`;
+- portais energizados validados em `game/portal-manager.js`;
+- ambiente/praça central validados em `world/campus-environment.js`;
+- interiores continuam ocultando coordenadas internas na presença pública;
+- fallback 2D e recuperação de boot mobile preservados;
+- presença e moderação continuam server-side;
+- P5 focado: 11/11 PASS;
+- validadores oficiais v62, v63, v64, v65 e autenticação unificada: 150 checks PASS / 0 FAIL;
+- suíte geral após Etapa 7: 353/368 PASS; 15 falhas remanescentes fora deste escopo.
+
+## Etapa 8 — Fullscreen Global do aluno
+
+- `p92-autograde-fullscreen-symbols-v14.9.0.test.mjs` + `p93-fullscreen-integrated-platforms-v14.9.1.test.mjs`: 14/14 PASS;
+- tentativa silenciosa best-effort restaurada sem remover a exigência de gesto imposta pela API Fullscreen;
+- overlay/trava permanece como fallback quando a navegação entre documentos perde fullscreen;
+- rotas legadas que apenas redirecionam para `atividades/` não carregam runtime de fullscreen desnecessariamente;
+- `validate-campus-city-v62.mjs`: PASS;
+- `validate-campus-interiors-v63.mjs`: PASS;
+- `validate-campus-live-v64.mjs`: PASS;
+- `validate-campus-mobility-v65.mjs`: PASS;
+- `validate-unified-auth-v59.mjs`: PASS;
+- suíte geral após Etapa 8: 355/368 PASS; 13 falhas remanescentes.

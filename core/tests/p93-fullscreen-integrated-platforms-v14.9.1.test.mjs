@@ -10,17 +10,22 @@ const legacy=read('validacao-antiga/index.html');
 const release=JSON.parse(read('release-current.json'));
 const cacheVersion=(release.runtimeCacheVersion||release.version).replace(/\./g,'\\.');
 
-test('P9.1 all integrated platform routes inherit global student fullscreen',()=>{
+test('P9.1 active integrated routes inherit global student fullscreen and legacy routes redirect safely',()=>{
   assert.equal(catalog.platforms.length,10);
   for(const item of catalog.platforms){
     const html=read(item.route);
+    if(item.legacy && item.replacementRoute){
+      assert.match(html,/unified-auth-guard\.js/);
+      assert.match(html,/location\.replace/);
+      assert.match(html,new RegExp(item.replacementRoute.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+      continue;
+    }
     assert.match(html,new RegExp(`fullscreen-portal\\.css\\?v=${cacheVersion}`));
     assert.match(html,new RegExp(`fullscreen-portal\\.js\\?v=${cacheVersion}`));
     assert.match(html,new RegExp(`agv-session\\.js\\?v=${cacheVersion}`));
     assert.match(html,new RegExp(`fullscreen-platform-bridge\\.js\\?v=${cacheVersion}`));
   }
 });
-
 test('P9.1 shared bridge scopes fullscreen to authenticated students and fails closed on profile lookup',()=>{
   assert.match(bridge,/profile\?\.role\|\|'student'/);
   assert.match(bridge,/===\s*'student'/);

@@ -13,17 +13,17 @@ test('root repair page can unregister lobby service worker and delete lobby cach
   assert.match(s,/14\.10\.8\.(?:3[6-9]|[4-9]\d|\d{3,})/);
   assert.match(s,/getRegistrations/);
   assert.match(s,/reg\.unregister/);
-  assert.match(s,/agv-lobby-runtime-/);
+  assert.match(s,/agv-lobby-/);
   assert.match(s,/caches\.delete/);
   assert.match(s,/repairRelease/);
-  assert.match(s,/não foi publicada corretamente|NÃO está publicada corretamente/i);
+  assert.match(s,/arquivo obrigatório ausente\/incorreto|Publicação íntegra/i);
 });
 
 test('repair page verifies the critical public asset chain before redirect',()=>{
   const s=read('repair-lobby.html');
-  for(const token of ['lobby/index.html','lobby/assets/diagnostics.js','lobby/assets/vendor-loader.js','lobby/assets/boot.js','lobby/assets/lobby.js','lobby/sw.js']) assert.match(s,new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
-  assert.match(s,/failed\.length/);
-  assert.match(s,/location\.assign/);
+  for(const token of ['lobby/assets/boot.js','lobby/assets/lobby.js','lobby/assets/world/campus-destinations.js','lobby/assets/world/campus-city-network.js','lobby/assets/world/campus-interiors.js','lobby/assets/world/campus-live-systems.js','lobby/assets/world/campus-mobility-systems.js','lobby/assets/world/campus-connections.js','lobby/assets/world/dynamic-world.js']) assert.match(s,new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  assert.match(s,/bad\.length/);
+  assert.match(s,/openEl\.href=/);
 });
 
 test('boot preflights modules and exposes repair route',()=>{

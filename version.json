@@ -1,7 +1,7 @@
 {
   "name": "Exercícios Práticos DS",
   "version": "0.22.8.19",
-  "date": "2026-08-27",
+  "date": "2026-08-30",
   "features": [
     "v14.10.8.24: Modo Prova Prática passa a oferecer 8 áreas exclusivas para equipes de 2 a 6 integrantes.",
     "v14.10.8.24: prova usa 15 min de pré-lobby + 50 min de tempo ativo, com pausa entre aulas e retomada do saldo.",
@@ -221,6 +221,7 @@
     "v14.10.8.17: Lobby ganha diagnóstico técnico sem dados pessoais para identificar boot, SDK, Service Worker, rede, viewport e modo 3D/leve em aparelhos reais."
   ],
   "notes": [
+    "v14.10.8.65 Etapa 6: release metadata, UI version and public cache-bust synchronized to the active release.",
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
     "Equipe não usa senha compartilhada: contas novas são provisionadas administrativamente com senha temporária individual.",
     "IP completo e feed de segurança ficam restritos a admin/super_admin; professores não recebem o feed global de IP.",
@@ -240,8 +241,8 @@
     "O grid técnico discreto de fundo, blur funcional da topbar, chips de status e sombras de dialogs foram preservados por terem função/identidade justificável.",
     "v14.10.8.19.1: contingência de recuperação de senha exige e-mail institucional + CGM; reset administrativo ocorre somente na Edge Function temporary-cgm-password-reset."
   ],
-  "phase": "P10.9.19-pedagogical-extra-help-r4-audited",
-  "release": "v14.10.8.23",
+  "phase": "maintenance-etapa-6-release-metadata",
+  "release": "v14.10.8.65",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",

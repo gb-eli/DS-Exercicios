@@ -50,8 +50,8 @@ test('anti-AI styling removes universal glow/gradient from the primary Prova sur
 
 test('release metadata is synchronized',()=>{
   const rel=JSON.parse(read('release-current.json'));
-  assert.equal(rel.version,'14.10.8.39');
-  assert.match(read('lobby/assets/boot.js'),/14\.10\.8\.39/);
-  assert.match(read('prova/admin.html'),/14\.10\.8\.39/);
-  assert.match(read('prova/index.html'),/14\.10\.8\.39/);
+  assert.equal(rel.version,'14.10.8.65');
+  assert.match(read('lobby/assets/boot.js'),/14\.10\.8\.65/);
+  assert.match(read('prova/admin.html'),/14\.10\.8\.65/);
+  assert.match(read('prova/index.html'),/14\.10\.8\.65/);
 });

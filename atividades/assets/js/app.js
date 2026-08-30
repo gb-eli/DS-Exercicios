@@ -279,7 +279,8 @@ async function routeAuthenticatedUser() {
     }
     const requireStudentFullscreen=identity.profile.role==='student'&&!currentStaffAccess&&!homeStudyAuthorized;
     setPortalFullscreenRequired(requireStudentFullscreen);
-    if(!requireStudentFullscreen&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+    if(requireStudentFullscreen) await requestPortalFullscreen({silent:true});
+    else if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
 
     if (passwordRecoveryMode) {
       $('password-description').textContent = 'Crie uma nova senha para recuperar seu acesso. Use pelo menos 8 caracteres, com letra e número.';

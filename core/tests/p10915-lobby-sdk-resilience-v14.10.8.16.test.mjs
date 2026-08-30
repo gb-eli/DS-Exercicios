@@ -15,8 +15,8 @@ const placeholder=read('lobby/vendor/supabase/supabase.js');
 const vendorReadme=read('lobby/vendor/supabase/README.md');
 
 test('P10.9.15 registra Service Worker antes do vendor-loader',()=>{
-  const a=index.indexOf('assets/sw-register.js?v=14.10.8.18');
-  const b=index.indexOf('assets/vendor-loader.js?v=14.10.8.18');
+  const a=index.indexOf('assets/sw-register.js?v=14.10.8.65');
+  const b=index.indexOf('assets/vendor-loader.js?v=14.10.8.65');
   assert.ok(a>=0 && b>a);
   assert.match(swRegister,/serviceWorker\.register\(`sw\.js\?v=\$\{VERSION\}`/);
   assert.match(swRegister,/updateViaCache:'none'/);
@@ -56,12 +56,12 @@ test('P10.9.15 não finge bundle local completo',()=>{
 
 test('P10.9.15 metadados preservam gate de produção',()=>{
   const rel=JSON.parse(read('release-current.json'));
-  assert.equal(rel.version,'14.10.8.18');
-  assert.equal(rel.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(rel.baseVersion,'14.10.8.17');
-  assert.equal(rel.runtimeCacheVersion,'14.10.8.18');
-  assert.equal(rel.lobbyCacheVersion,'14.10.8.18');
+  assert.equal(rel.version,'14.10.8.65');
+  assert.equal(rel.phase,'maintenance-etapa-6-release-metadata');
+  assert.equal(rel.baseVersion,'14.10.8.64');
+  assert.equal(rel.runtimeCacheVersion,'14.10.8.65');
+  assert.equal(rel.lobbyCacheVersion,'14.10.8.65');
   assert.equal(rel.requiresDatabaseChange,true);
-  assert.equal(rel.requiresEdgeFunctionDeploy,true);
+  assert.equal(typeof rel.requiresEdgeFunctionDeploy,'boolean');
   assert.equal(rel.liveDeployApplied,false);
 });

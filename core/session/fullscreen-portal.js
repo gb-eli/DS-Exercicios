@@ -14,7 +14,7 @@
   function render(){if(state.exempt)return;const host=overlay(),block=state.required&&supported()&&!document.fullscreenElement;host.classList.toggle('hidden',!block);document.documentElement.classList.toggle('agv-global-fullscreen-required',block)}
   function bind(){if(state.bound)return;state.bound=true;state.exempt=document.documentElement.dataset.fullscreenExempt==='true'||document.body?.dataset.fullscreenExempt==='true';if(state.exempt)return;document.addEventListener('fullscreenchange',render);window.addEventListener('pageshow',render)}
   async function request({silent=false}={}){bind();if(state.exempt||!supported())return true;try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen({navigationUI:'hide'});render();return true}catch(_){if(!silent)render();return false}}
-  function require(value=true){bind();state.required=Boolean(value)&&!state.exempt;render()}
+  function require(value=true){bind();state.required=Boolean(value)&&!state.exempt;render();if(state.required&&!document.fullscreenElement)void request({silent:true})}
   function active(){return state.exempt||!supported()||Boolean(document.fullscreenElement)}
   async function release(){state.required=false;render();if(document.fullscreenElement){try{await document.exitFullscreen()}catch(_){}}}
   window.AGVFullscreen={request,require,active,release,render};

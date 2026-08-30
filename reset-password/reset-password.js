@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../lobby/assets/config.js?v=14.10.8.59';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../lobby/assets/config.js?v=14.10.8.65';
 
 const createClient=globalThis.supabase?.createClient;
 const $=id=>document.getElementById(id);

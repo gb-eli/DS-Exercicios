@@ -11,7 +11,7 @@ assert.match(vendor,/@supabase\/supabase-js@2\.112\.3\/dist\/umd\/supabase\.js/)
 assert.doesNotMatch(`${vendor}\n${supa}`,/\+esm/);
 assert.match(vendor,/dataset\.agvSupabaseSource/);
 assert.match(supa,/globalThis\.supabase\?\.createClient/);
-assert.match(boot,/import\('\.\/lobby\.js\?v=14\.10\.8\.18'\)/);
+assert.match(boot,/new URL\(`\.\/lobby\.js\?v=\$\{VERSION\}`/);assert.match(boot,/await import\(url\.href\)/);
 assert.match(boot,/\.catch\(showFatal\)/);
 assert.match(boot,/Não foi possível carregar o Lobby/);
 assert.match(cfg,/LOBBY_VERSION=/);

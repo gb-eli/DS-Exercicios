@@ -57,3 +57,21 @@ Concluída a compatibilidade do painel Admin. Os fluxos atuais de sessão, AAL2,
 ## Correção incremental — Etapa 5
 
 Concluída a correção isolada do CTF DS / bridge Core. A migração para Login Único foi mantida: não foi reintroduzido login por senha dentro do CTF. Foram corrigidos handlers reais de `Trocar de conta` e `Sair`, que referenciavam funções inexistentes e podiam gerar `ReferenceError`; os controles agora encerram a sessão institucional compartilhada, preservam/checkpointam o cache local e retornam ao `/auth/`. O contrato P6.7 e o teste piloto do CTF foram reconciliados com a arquitetura atual. Testes focados do CTF/Core: PASS; cinco validadores oficiais: PASS; suíte geral: 309/368 PASS, com 59 falhas remanescentes fora deste escopo.
+
+## Correção incremental — Etapa 6
+
+Concluída a consolidação de release metadata, cache-bust e manifesto de publicação. `release-current.json`, `release-v14.10.8.65.json`, `version.json`, `atividades/version.json`, a versão visual de Atividades e `PUBLIC-DEPLOY.json` agora apontam de forma coerente para a release ativa. Foram removidos cache-busts antigos das superfícies públicas restantes (`recuperacao`, `reset-password` e smokes 2D/3D), e o manifesto de publicação passou a reconhecer `core/session/` como runtime público necessário, mantendo banco, Edge Functions, testes e ferramentas fora da superfície estática. Contratos históricos que tratavam releases antigas como permanentemente atuais foram reconciliados sem remover verificações funcionais. Suíte geral após Etapa 6: 342/368 PASS; 26 falhas remanescentes fora deste escopo.
+
+## Correção incremental — Etapa 7
+
+Concluída a reconciliação dos contratos históricos P5 do Lobby/Campus com a arquitetura modular atual da v14.10.8.65. Os testes antigos ainda procuravam versões internas `0.x/1.0.1` e implementações monolíticas de câmera, avatar, qualidade adaptativa, portais, interiores e ambiente. Os contratos foram atualizados para validar a release corrente e os módulos atuais (`camera-controller`, `performance-manager`, `avatar-system`, `portal-manager`, `campus-environment` e mobilidade), preservando as verificações de segurança, presença server-side, fallback 2D, privacidade de coordenadas internas e ausência de autoridade Supabase no renderer 3D. Testes P5: 11/11 PASS; cinco validadores oficiais: PASS; suíte geral: 353/368 PASS, com 15 falhas remanescentes fora deste escopo.
+
+## Etapa 8 — Fullscreen Global do aluno
+
+- tentativa silenciosa de fullscreen restaurada na Plataforma Unificada após resolver perfil/acomodação;
+- `AGVFullscreen.require(true)` centraliza a retomada best-effort nas superfícies globais;
+- fallback visual continua obrigatório quando o navegador exige gesto do usuário;
+- rotas legadas redirecionadoras deixam de ser tratadas como runtimes completos;
+- testes focados: 14/14 PASS;
+- suíte geral: 355/368 PASS; 13 falhas remanescentes fora deste escopo;
+- sem migration ou Edge Function nova.

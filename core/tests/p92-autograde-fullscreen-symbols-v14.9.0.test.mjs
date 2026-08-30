@@ -70,11 +70,12 @@ test('P9 fullscreen is portal-level for students and not restarted per exercise'
   assert.match(app,/setPortalFullscreenRequired\(requireStudentFullscreen\)/);
   assert.match(sup,/export async function stopSupervision\([^)]*exitFullscreen=false/);
   assert.match(sup,/if\(needsFullscreen&&!document\.fullscreenElement\)[\s\S]*waitingForFullscreen=true[\s\S]*else await armCurrentSession\(\)/);
-  assert.match(hub,/AGVFullscreen\?\.request\(\{silent:true\}\)/);
-  assert.match(lobby,/AGVFullscreen\?\.request\(\{silent:true\}\)/);
+  assert.match(hub,/AGVFullscreen\?\.require\(role==='student'\)/);
+  assert.match(lobby,/AGVFullscreen\?\.require\(p\.role==='student'\)/);
   assert.match(hubHtml,/fullscreen-portal\.js\?v=14\.(?:9\.[0-9]+|10\.\d+)/);
   assert.match(lobbyHtml,/fullscreen-portal\.js\?v=14\.(?:9\.[0-9]+|10\.\d+)/);
   assert.match(fullscreen,/Tela cheia obrigatória/);
+  assert.match(fullscreen,/state\.required&&!document\.fullscreenElement\)void request\(\{silent:true\}\)/);
 });
 
 test('P9 old-platform validator is the explicit fullscreen exception and supports batch selection',()=>{

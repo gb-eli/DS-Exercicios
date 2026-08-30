@@ -50,10 +50,11 @@ test('P8.11 release, UI and cache remain synchronized in later candidates',()=>{
 
 test('P8.11 critical JS CSS Worker and Preview imports use the current cache bust',()=>{
   const escaped=(release.runtimeCacheVersion||release.version).replace(/\./g,'\\.');
-  for(const token of ['config.js','workspace.js','supabase.js']){
+  for(const token of ['workspace.js','supabase.js']){
     const tokenRx=token.replace(/\./g,'\\.');
     assert.match(app,new RegExp(`${tokenRx}\\?v=${escaped}`));
   }
+  assert.match(supabaseJs,new RegExp(`config\\.js\\?v=${escaped}`));
   assert.match(workspace,new RegExp(`python-runtime\\.js\\?v=${escaped}`));
   assert.match(workspace,new RegExp(`validation\\.js\\?v=${escaped}`));
   assert.match(py,new RegExp(`python-worker\\.js\\?v=${escaped}`));

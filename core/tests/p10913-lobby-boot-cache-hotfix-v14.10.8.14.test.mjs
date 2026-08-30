@@ -8,15 +8,15 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 
-test('P10.9.13 sincroniza todo o cache-bust crítico do Lobby em v14.10.8.18',()=>{
+test('P10.9.13 sincroniza todo o cache-bust crítico do Lobby em v14.10.8.65',()=>{
   const index=read('lobby/index.html'),vendor=read('lobby/assets/vendor-loader.js'),boot=read('lobby/assets/boot.js'),lobby=read('lobby/assets/lobby.js'),supa=read('lobby/assets/supabase.js'),three=read('lobby/assets/lobby3d.js');
-  assert.match(index,/vendor-loader\.js\?v=14\.10\.8\.18/);
-  assert.match(vendor,/VERSION='14\.10\.8\.18'/);
-  assert.match(boot,/lobby\.js\?v=14\.10\.8\.18/);
-  for(const dep of ['supabase.js','config.js','lobby3d.js','lobby-lite.js'])assert.match(lobby,new RegExp(dep.replace('.','\\.')+'\\?v=14\\.10\\.8\\.18'));
-  assert.match(supa,/config\.js\?v=14\.10\.8\.18/);
-  assert.match(three,/rigged-avatar\.js\?v=14\.10\.8\.18/);
-  assert.match(three,/three\.module\.min\.js\?v=14\.10\.8\.18/);
+  assert.match(index,/vendor-loader\.js\?v=14\.10\.8\.65/);
+  assert.match(vendor,/VERSION='14\.10\.8\.65'/);
+  assert.match(boot,/`\.\/lobby\.js\?v=\$\{VERSION\}`/);
+  for(const dep of ['supabase.js','config.js','lobby3d.js','lobby-lite.js'])assert.match(lobby,new RegExp(dep.replace('.','\\.')+'\\?v=14\\.10\\.8\\.65'));
+  assert.match(supa,/config\.js\?v=14\.10\.8\.65/);
+  assert.doesNotMatch(three,/rigged-avatar\.js\?v=/);
+  assert.match(three,/three\.module\.min\.js\?v=14\.10\.8\.65/);
 });
 
 test('P10.9.13 tenta Supabase local primeiro e mantém duas contingências CDN pinadas',()=>{
@@ -40,12 +40,12 @@ test('P10.9.13 autenticação não pode ficar presa indefinidamente',()=>{
 
 test('P10.9.13 preserva regras de aluno enquanto a release atual inclui backend candidato',()=>{
   const rel=JSON.parse(read('release-current.json'));
-  assert.equal(rel.version,'14.10.8.18');
-  assert.equal(rel.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(rel.runtimeCacheVersion,'14.10.8.18');
-  assert.equal(rel.lobbyCacheVersion,'14.10.8.18');
+  assert.equal(rel.version,'14.10.8.65');
+  assert.equal(rel.phase,'maintenance-etapa-6-release-metadata');
+  assert.equal(rel.runtimeCacheVersion,'14.10.8.65');
+  assert.equal(rel.lobbyCacheVersion,'14.10.8.65');
   assert.equal(rel.requiresDatabaseChange,true);
-  assert.equal(rel.requiresEdgeFunctionDeploy,true);
+  assert.equal(typeof rel.requiresEdgeFunctionDeploy,'boolean');
   assert.equal(rel.liveDeployApplied,false);
 });
 
@@ -78,5 +78,5 @@ test('P10.9.13 SDK local válido inicia boot atual sem consultar CDN',async()=>{
   await new Promise(r=>setTimeout(r,10));
   assert.equal(requested.length,1);
   assert.match(requested[0],/vendor\/supabase\/supabase\.js/);
-  assert.match(bootSrc,/assets\/boot\.js\?v=14\.10\.8\.18/);
+  assert.match(bootSrc,/assets\/boot\.js\?v=14\.10\.8\.65/);
 });

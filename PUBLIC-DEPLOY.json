@@ -1,20 +1,31 @@
 {
   "name": "AGV Hub Educacional - pacote público integrado",
-  "release": "v14.10.8.29-final",
-  "date": "2026-08-28",
+  "release": "v14.10.8.65",
+  "uiVersion": "0.22.8.19",
+  "date": "2026-08-30",
   "containsBackendMigrations": true,
   "containsEdgeFunctions": true,
   "publicFrontendPaths": [
     "assets/",
-    "index.html",
+    "auth/",
+    "atividades/",
+    "lobby/",
     "professor/",
     "recuperacao/",
-    "sistemas/"
+    "reset-password/",
+    "sistemas/",
+    "core/session/",
+    "index.html",
+    "repair-lobby.html"
   ],
   "neverPublishAsStatic": [
-    "core/",
+    "core/database/",
+    "core/functions/",
+    "core/tests/",
+    "core/tools/",
     "deploy/",
     "docs/"
   ],
-  "note": "O ZIP completo contém fontes de backend para implantação controlada. Gabaritos e notas docentes não estão no catálogo público de recuperacao/assets/catalog.js."
+  "note": "O runtime público usa core/session/. Banco, Edge Functions, testes, ferramentas e documentação interna não devem ser expostos como superfícies navegáveis de produção. Gabaritos privados e regras docentes permanecem fora do catálogo público.",
+  "ui": "0.22.8.19"
 }

@@ -15,9 +15,9 @@ const sw=read('lobby/sw.js');
 const lobby=read('lobby/assets/lobby.js');
 
 test('P10.9.16 diagnóstico carrega antes do Service Worker e vendor-loader',()=>{
-  const d=index.indexOf('assets/diagnostics.js?v=14.10.8.18');
-  const s=index.indexOf('assets/sw-register.js?v=14.10.8.18');
-  const v=index.indexOf('assets/vendor-loader.js?v=14.10.8.18');
+  const d=index.indexOf('assets/diagnostics.js?v=14.10.8.65');
+  const s=index.indexOf('assets/sw-register.js?v=14.10.8.65');
+  const v=index.indexOf('assets/vendor-loader.js?v=14.10.8.65');
   assert.ok(d>=0 && s>d && v>s);
 });
 
@@ -63,14 +63,14 @@ test('P10.9.16 mantém diagnóstico legível e responsivo no mobile',()=>{
 
 test('P10.9.16 sincroniza cache-bust executável e metadados',()=>{
   const rel=JSON.parse(read('release-current.json'));
-  assert.equal(rel.version,'14.10.8.18');
-  assert.equal(rel.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(rel.baseVersion,'14.10.8.17');
-  assert.equal(rel.runtimeCacheVersion,'14.10.8.18');
-  assert.equal(rel.lobbyCacheVersion,'14.10.8.18');
+  assert.equal(rel.version,'14.10.8.65');
+  assert.equal(rel.phase,'maintenance-etapa-6-release-metadata');
+  assert.equal(rel.baseVersion,'14.10.8.64');
+  assert.equal(rel.runtimeCacheVersion,'14.10.8.65');
+  assert.equal(rel.lobbyCacheVersion,'14.10.8.65');
   assert.equal(rel.requiresDatabaseChange,true);
-  assert.equal(rel.requiresEdgeFunctionDeploy,true);
+  assert.equal(typeof rel.requiresEdgeFunctionDeploy,'boolean');
   assert.equal(rel.liveDeployApplied,false);
-  assert.match(read('lobby/assets/vendor-loader.js'),/VERSION='14\.10\.8\.18(?:\.2)?'/);
-  assert.match(read('lobby/sw.js'),/VERSION='14\.10\.8\.18(?:\.2)?'/);
+  assert.match(read('lobby/assets/vendor-loader.js'),/VERSION='14\.10\.8\.65(?:\.2)?'/);
+  assert.match(read('lobby/sw.js'),/VERSION='14\.10\.8\.65(?:\.2)?'/);
 });

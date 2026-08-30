@@ -1,7 +1,7 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.22.8.16",
-  "date": "2026-08-26",
+  "version": "0.22.8.19",
+  "date": "2026-08-30",
   "features": [
     "v14.10.8.20: experiências personalizadas passam a coexistir com o modo convencional sem sobrescrever códigos, notas, arquivos ou progresso anterior.",
     "v14.10.8.20: aluno pode alternar entre modos e registrar preferências de nível, tipo de ajuda e estilo de explicação.",
@@ -202,6 +202,7 @@
     "v14.10.8.18.2: recuperação de senha por e-mail redireciona para página pública dedicada, valida o contexto recovery e exige nova autenticação após a troca."
   ],
   "notes": [
+    "v14.10.8.65 Etapa 6: release metadata, UI version and public cache-bust synchronized to the active release.",
     "P4.1: autoridade pedagógica permanece server-side; caminhos legado, supervisão e arquivos reutilizam o mesmo gate de liberação.",
     "Equipe não usa senha compartilhada: contas novas são provisionadas administrativamente com senha temporária individual.",
     "IP completo e feed de segurança ficam restritos a admin/super_admin; professores não recebem o feed global de IP.",
@@ -221,8 +222,8 @@
     "O grid técnico discreto de fundo, blur funcional da topbar, chips de status e sombras de dialogs foram preservados por terem função/identidade justificável.",
     "v14.10.8.19.1: recuperação temporária de senha usa e-mail institucional + CGM e Edge Function server-side; o fluxo por link fica reservado para retorno do Resend."
   ],
-  "phase": "P10.9.19-pedagogical-extra-help-r4-audited",
-  "release": "v14.10.8.20",
+  "phase": "maintenance-etapa-6-release-metadata",
+  "release": "v14.10.8.65",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",

@@ -16,13 +16,13 @@ test('P10.8 referência sincronizada vence fallback local inclusive por alias',(
 });
 
 test('P10.8 metadados, UI e deploy representam a mesma release',()=>{
-  assert.equal(version.release,'v14.10.8.18');
-  assert.equal(version.version,'0.22.8.14');
-  assert.equal(version.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(release.version,'14.10.8.18');
-  assert.equal(release.phase,'P10.9.17-academic-exercise-points');
-  assert.equal(deploy.release,'v14.10.8.18');
-  assert.equal(deploy.ui,'0.22.8.14');
+  assert.equal(version.release,'v14.10.8.65');
+  assert.equal(version.version,'0.22.8.19');
+  assert.equal(version.phase,'maintenance-etapa-6-release-metadata');
+  assert.equal(release.version,'14.10.8.65');
+  assert.equal(release.phase,'maintenance-etapa-6-release-metadata');
+  assert.equal(deploy.release,'v14.10.8.65');
+  assert.equal(deploy.ui,'0.22.8.19');
 });
 
 test('P10.8 grafo público usa cache bust da release atual',()=>{
