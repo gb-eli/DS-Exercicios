@@ -1,8 +1,8 @@
 
-import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.38';
-import { normalizeWeekendVoucherCode, formatWeekendVoucherDate } from './weekend-voucher.js?v=14.10.8.38';
-import { openExperienceCenter } from './admin-experiences.js?v=14.10.8.20';
-import { openSupportCenter } from './admin-support.js?v=14.10.8.38';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.65';
+import { normalizeWeekendVoucherCode, formatWeekendVoucherDate } from './weekend-voucher.js?v=14.10.8.65';
+import { openExperienceCenter } from './admin-experiences.js?v=14.10.8.65';
+import { openSupportCenter } from './admin-support.js?v=14.10.8.65';
 
 let payload=null, currentClass='all', pollTimer=null, liveCtx=null, detailCtx=null, rosterCtx=null, teamData=[], teamClasses=[], teamAssignments=[], teamClassCtx=null, staffRole='teacher', supervisionTimer=null, securityWatchTimer=null, lastSecurityEventId=0, releaseCtx=null, releaseSubjectId='', weekendVoucherCtx=null;
 const $=id=>document.getElementById(id);

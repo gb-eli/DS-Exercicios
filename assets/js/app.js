@@ -1,11 +1,11 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.38';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.38.1';
-import { callActivityProgress } from './supervision.js?v=14.10.8.38';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.38';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.38';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.38';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.65';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.65';
+import { callActivityProgress } from './supervision.js?v=14.10.8.65';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.65';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.65';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.65';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'exercise-view', 'staff-view'];
@@ -177,7 +177,7 @@ async function routeAuthenticatedUser() {
     securitySessionOnce(currentStaffAccess || isStaff(identity.profile) ? 'atividades-staff' : 'atividades-student');
 
     if (identity.profile.must_change_password) {
-      $('password-description').textContent = currentStaffAccess
+      $('password-description').textContent = (currentStaffAccess || isStaff(identity.profile))
         ? 'Seu acesso de professor/admin foi validado. Crie sua senha pessoal para concluir o primeiro acesso.'
         : 'Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.';
       showView('password-view');
@@ -338,7 +338,7 @@ $('password-form').addEventListener('submit', async (event) => {
 
 
 $('hub-btn')?.addEventListener('click', () => { window.location.href = '../'; });
-$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.38'; });
+$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.65'; });
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();

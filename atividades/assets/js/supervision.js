@@ -1,4 +1,4 @@
-import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.38';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.65';
 
 const $ = (id) => document.getElementById(id);
 const state = {

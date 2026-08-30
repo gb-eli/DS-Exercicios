@@ -1,13 +1,12 @@
-import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.20';
-import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.20';
-import { callActivityProgress } from './supervision.js?v=14.10.8.20';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.59';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.59';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.59';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.59';
-import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.59';
-import { loadPersonalizedExperienceContext, renderPersonalizedExperienceDashboard, renderPersonalizedAssignment, clearPersonalizedTheme } from './personalized-experience.js?v=14.10.8.20';
-import { initializeStudentSupportHub, destroyStudentSupportHub } from './support-hub.js?v=14.10.8.59';
+import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.65';
+import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.65';
+import { callActivityProgress } from './supervision.js?v=14.10.8.65';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.65';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.65';
+import { loadPersonalizedExperienceContext, renderPersonalizedExperienceDashboard, renderPersonalizedAssignment, clearPersonalizedTheme } from './personalized-experience.js?v=14.10.8.65';
+import { initializeStudentSupportHub, destroyStudentSupportHub } from './support-hub.js?v=14.10.8.65';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'personalized-experience-view', 'exercise-view', 'staff-view'];
@@ -29,6 +28,41 @@ let personalizedExperienceContext = null;
 let learningCenterTab = 'pending';
 let learningCenterModel = null;
 let pendingNoticeSnapshot = null;
+
+const POST_PASSWORD_RETURN_KEY = 'agv-auth-return-to';
+
+function consumePostPasswordReturn() {
+  let raw = '';
+  try { raw = String(sessionStorage.getItem(POST_PASSWORD_RETURN_KEY) || '').trim(); } catch (_) { return false; }
+  if (!raw) return false;
+  try {
+    const root = new URL('../', window.location.href);
+    if (raw.startsWith('//') || /^[a-z][a-z0-9+.-]*:/i.test(raw)) throw new Error('unsafe_return');
+    const target = new URL(raw, root);
+    if (target.origin !== root.origin || !target.pathname.startsWith(root.pathname)) throw new Error('outside_project');
+    const relative = `${target.pathname.slice(root.pathname.length)}${target.search}${target.hash}`;
+    if (/^(auth\/|reset-password\/)/.test(relative)) throw new Error('auth_loop');
+    sessionStorage.removeItem(POST_PASSWORD_RETURN_KEY);
+    window.location.replace(target.href);
+    return true;
+  } catch (_) {
+    try { sessionStorage.removeItem(POST_PASSWORD_RETURN_KEY); } catch (_) {}
+    return false;
+  }
+}
+
+async function passwordChangeFinalized() {
+  const id = currentProfile?.id;
+  if (!id) return false;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      const { data, error } = await supabase.from('profiles').select('must_change_password').eq('id', id).single();
+      if (!error && data?.must_change_password === false) return true;
+    } catch (_) {}
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  return false;
+}
 
 const CRITICAL_REQUEST_TIMEOUT_MS = 10000;
 const OPTIONAL_REQUEST_TIMEOUT_MS = 4500;
@@ -135,10 +169,6 @@ function exerciseManifest(exercise) {
 function exerciseDisplayTitle(exercise) {
   const title=String(exerciseManifest(exercise)?.titulo||exercise?.title||'Exercício');
   return title.replace(/^Exercício\s+\d+\s*[—-]\s*/i,'').trim();
-}
-
-function normalizeEmail(value) {
-  return String(value || '').trim().toLowerCase();
 }
 
 async function securityTelemetry(action='session.check', payload={}) {
@@ -266,7 +296,7 @@ async function routeAuthenticatedUser() {
     securitySessionOnce(currentStaffAccess || isStaff(identity.profile) ? 'atividades-staff' : 'atividades-student');
 
     if (identity.profile.must_change_password) {
-      $('password-description').textContent = currentStaffAccess
+      $('password-description').textContent = (currentStaffAccess || isStaff(identity.profile))
         ? 'Seu acesso de professor/admin foi validado. Crie sua senha pessoal para concluir o primeiro acesso.'
         : 'Por segurança, o CGM é apenas uma senha temporária. Defina uma nova senha para liberar os exercícios.';
       showView('password-view');
@@ -354,7 +384,9 @@ $('password-form').addEventListener('submit', async (event) => {
     if (error) throw error;
     passwordRecoveryMode = false;
     // O trigger no banco atualiza must_change_password=false e remove o CGM do perfil.
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    // Antes de sair desta tela, confirmamos a finalização para não criar loop de primeira senha.
+    const finalized = await passwordChangeFinalized();
+    if (finalized && consumePostPasswordReturn()) return;
     await routeAuthenticatedUser();
   } catch (error) {
     console.error(error);
@@ -368,7 +400,7 @@ $('password-form').addEventListener('submit', async (event) => {
 
 
 $('hub-btn')?.addEventListener('click', () => { window.location.href = '../'; });
-$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.59'; });
+$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.65'; });
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
@@ -961,49 +993,4 @@ if (SUPABASE_SDK_AVAILABLE) {
 document.getElementById('staff-btn')?.addEventListener('click', openStaffPanel);
 
 
-const recoveryDialog = $('recovery-dialog');
-$('forgot-password-btn')?.addEventListener('click', () => {
-  const email = normalizeEmail($('email')?.value || '');
-  $('recovery-email').value = email;
-  $('recovery-cgm').value = '';
-  $('recovery-message').classList.add('hidden');
-  $('recovery-message').classList.remove('ok');
-  recoveryDialog?.showModal();
-});
-$('recovery-close-btn')?.addEventListener('click', () => recoveryDialog?.close());
-$('recovery-form')?.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const email = normalizeEmail($('recovery-email').value);
-  const cgm = String($('recovery-cgm').value || '').replace(/\D/g, '');
-  const msg = $('recovery-message');
-  msg.classList.add('hidden');
-  msg.classList.remove('ok');
-  if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
-    msg.textContent = `Use o e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`;
-    msg.classList.remove('hidden');
-    return;
-  }
-  if (!/^\d{6,12}$/.test(cgm)) {
-    msg.textContent = 'Informe um CGM válido, usando somente números.';
-    msg.classList.remove('hidden');
-    return;
-  }
-  const submit = event.submitter;
-  submit.disabled = true;
-  submit.textContent = 'Redefinindo...';
-  try {
-    const { data, error } = await supabase.functions.invoke('temporary-cgm-password-reset', { body: { email, cgm } });
-    if (error) throw error;
-    msg.textContent = data?.message || 'Se os dados informados estiverem corretos, a senha foi redefinida para o CGM. No próximo acesso, crie uma nova senha pessoal.';
-    msg.classList.remove('hidden');
-    msg.classList.add('ok');
-  } catch (error) {
-    console.error(error);
-    msg.textContent = 'Não foi possível concluir a redefinição agora. Se houve muitas tentativas, aguarde alguns minutos e tente novamente.';
-    msg.classList.remove('hidden');
-    msg.classList.remove('ok');
-  } finally {
-    submit.disabled = false;
-    submit.textContent = 'Redefinir senha para CGM';
-  }
-});
+

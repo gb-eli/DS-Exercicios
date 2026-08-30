@@ -1314,6 +1314,12 @@ const lockAndShowAuth = async (message = 'Sessão encerrada.') => {
   unifiedAuthRedirect();
 };
 
+// Controles do Perfil usam exclusivamente a sessão institucional compartilhada.
+// Antes da Etapa 5 os handlers chamavam funções inexistentes (switchAccount/logout),
+// gerando ReferenceError ao tentar trocar de conta ou sair do CTF.
+const switchAccount = async () => lockAndShowAuth('Conta desconectada. Entre com outra conta institucional.');
+const logout = async () => lockAndShowAuth('Sessão encerrada e bloqueada neste dispositivo.');
+
 
 const appendTerminal = (text, type = '') => {
   const line = document.createElement('div');

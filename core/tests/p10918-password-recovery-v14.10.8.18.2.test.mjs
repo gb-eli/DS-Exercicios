@@ -12,9 +12,11 @@ test('Página dedicada de recuperação por link permanece pronta para retorno d
 });
 
 test('Fluxo antigo por e-mail não é acionado pelas superfícies públicas durante contingência',async()=>{
+  const auth=await read('auth/auth.js');
   const hub=await read('assets/hub.js');
   const activities=await read('atividades/assets/js/app.js');
   const lobby=await read('lobby/assets/lobby.js');
+  assert.doesNotMatch(auth,/resetPasswordForEmail\(/);
   assert.doesNotMatch(hub,/resetPasswordForEmail\(/);
   assert.doesNotMatch(activities,/resetPasswordForEmail\(/);
   assert.doesNotMatch(lobby,/resetPasswordForEmail\(/);

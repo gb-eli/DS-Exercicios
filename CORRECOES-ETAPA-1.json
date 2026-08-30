@@ -1,0 +1,186 @@
+[
+  {
+    "file": "index.html",
+    "replacements": 8
+  },
+  {
+    "file": "assets/js/workspace.js",
+    "replacements": 17
+  },
+  {
+    "file": "assets/js/app.js",
+    "replacements": 8
+  },
+  {
+    "file": "professor/index.html",
+    "replacements": 7
+  },
+  {
+    "file": "professor/assets/professor.js",
+    "replacements": 1
+  },
+  {
+    "file": "admin/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "atividades/index.html",
+    "replacements": 6
+  },
+  {
+    "file": "atividades/preview/index.html",
+    "replacements": 2
+  },
+  {
+    "file": "atividades/assets/js/workspace.js",
+    "replacements": 19
+  },
+  {
+    "file": "atividades/assets/js/python-runtime.js",
+    "replacements": 1
+  },
+  {
+    "file": "atividades/assets/js/app.js",
+    "replacements": 11
+  },
+  {
+    "file": "atividades/assets/js/weekend-voucher.js",
+    "replacements": 1
+  },
+  {
+    "file": "atividades/assets/js/supervision.js",
+    "replacements": 1
+  },
+  {
+    "file": "atividades/assets/js/admin.js",
+    "replacements": 4
+  },
+  {
+    "file": "atividades/assets/js/supabase.js",
+    "replacements": 1
+  },
+  {
+    "file": "prova/index.html",
+    "replacements": 7
+  },
+  {
+    "file": "prova/simulador.html",
+    "replacements": 6
+  },
+  {
+    "file": "prova/admin.html",
+    "replacements": 5
+  },
+  {
+    "file": "economia/index.html",
+    "replacements": 4
+  },
+  {
+    "file": "sistemas/09-lab-exercicios-ds2/modo-aluno/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/09-lab-exercicios-ds2/modo-aluno/frontend/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/09-lab-exercicios-ds2/modo-aluno/inovacao/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/06-game-informatica/desafio-informatica-v2.2.0/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-v26.0/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-github-pages-v18.1-final/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-v25.0-publicar-github/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-v19.0-publicar-github/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio 33/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-v32.0/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/04-desafio-ds/desafio-ds-v31.0 up/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/02-ctf-ds/ctfds-cyber-security-github-pages-v2.1.0/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/02-ctf-ds/ctfds-cyber-security-github-pages-v2.2.0/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/02-ctf-ds/ctf/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/02-ctf-ds/CTF 2.3.0/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/10-lab-exercicios-ds3/modo-aluno/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/01-lab-virtual/LABDS/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/01-lab-virtual/LABDS/lab/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/08-lab-exercicios-ds1/modo-aluno/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/08-lab-exercicios-ds1/modo-aluno/disciplinas/analise-metodos/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/08-lab-exercicios-ds1/modo-aluno/disciplinas/introducao-programacao/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/03-planetario-ds/universo-ds/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/03-planetario-ds/universods/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/07-lab-exercicios-sub/versao-aluno/index.html",
+    "replacements": 1
+  },
+  {
+    "file": "sistemas/05-fliperama-ds/flipds/index.html",
+    "replacements": 5
+  },
+  {
+    "file": "sistemas/05-fliperama-ds/fliperama-ds-v0.21.0/index.html",
+    "replacements": 1
+  }
+]

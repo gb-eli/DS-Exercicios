@@ -1,37 +1,28 @@
-# IMPORTANTE — v14.10.8.38
+# IMPORTANTE — v14.10.8.65
 
-Foi removida uma duplicação estrutural grave: a aplicação pública existia simultaneamente na raiz e dentro de `core/`, inclusive como `core/core/`. Não recrie esses espelhos.
+Este pacote é a versão cumulativa **v14.10.8.65 — Cidade Viva Avançada**, construída sobre a v14.10.8.64.
 
-Ao atualizar um repositório que já tinha versões anteriores, execute `LIMPAR-DUPLICIDADES-v14.10.8.38.ps1` após copiar os arquivos novos.
+## Estado da release
 
-A raiz do repositório é a única fonte das telas públicas. `core/` fica reservado a backend e componentes compartilhados.
-
----
-
-# v14.10.8.18 — Pontuação acadêmica por exercício
-
-Esta release é cumulativa sobre a `v14.10.8.17`.
-
-## Mudança principal
-
-O sistema passa a separar claramente:
-
-- **autocorreção técnica**: percentual 0–100;
-- **valor máximo da atividade**: 0,75 / 0,20 / 0,50 conforme o exercício confirmado;
-- **nota acadêmica obtida**: valor máximo × `submitted_score`.
-
-Não existe valor genérico aplicado a toda disciplina.
-
-## Valores confirmados
-
-- 1DS Introdução à Programação, Ex01–06: **0,75** cada;
-- 2DS Programação Front-End, Ex01–20: **0,20** cada;
-- 3DS Programação no Desenvolvimento de Sistemas, Ex01–08: **0,50** cada.
-
-1DS Ex07+ e demais atividades sem evidência específica continuam **sem valor automático**.
+- entrada oficial do Lobby em **2D**;
+- modo **3D opcional**;
+- tráfego urbano dinâmico, veículos utilizáveis, NPCs e eventos;
+- interiores identitários e elevador 3D;
+- login unificado preservado;
+- sem nova migration SQL ou alteração de schema Supabase nesta release;
+- mesmo repositório e mesmo GitHub Pages permanecem válidos.
 
 ## Antes de publicar
 
-Leia `ATUALIZAR.md`, `AUDITORIA-PONTUACAO-ACADEMICA-v14.10.8.18.md` e `VALIDACAO-DO-PACOTE.md`.
+1. Leia `ATUALIZAR-v14.10.8.65.md`.
+2. Leia `VALIDACAO-v14.10.8.65.md`.
+3. Publique por **sobreposição** sobre a versão anterior; não apague a árvore existente sem necessidade.
+4. Após o deploy, execute smoke real em navegador/Android, principalmente Lobby 2D/3D, login e navegação entre plataformas.
 
-A migration e a Edge Function estão incluídas como candidatas; este pacote não realizou escrita/deploy ao vivo.
+## Estrutura do repositório
+
+A aplicação pública deve permanecer na raiz. Não recrie espelhos públicos dentro de `core/`; essa pasta é reservada a backend, componentes compartilhados, ferramentas e testes.
+
+## Nota histórica
+
+As auditorias, releases e instruções de versões anteriores continuam no pacote apenas como histórico. Elas não substituem as instruções desta v14.10.8.65.

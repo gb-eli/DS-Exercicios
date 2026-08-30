@@ -7,11 +7,16 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 
-test('Hub preserva sessão ao encaminhar primeiro acesso para troca de senha',()=>{
+test('Hub preserva sessão e destino ao encaminhar primeiro acesso para troca de senha',()=>{
   const hub=read('assets/hub.js');
-  assert.match(hub,/must_change_password\)\{location\.replace\('atividades\/'\);return \{redirected:true/);
-  assert.match(hub,/if\(result\?\.redirected\)return;renderSigned\(\)/);
-  assert.doesNotMatch(hub,/must_change_password[\s\S]{0,120}signOut/);
+  const app=read('atividades/assets/js/app.js');
+  assert.match(hub,/must_change_password\)\{try\{sessionStorage\.setItem\('agv-auth-return-to','index\.html'\)/);
+  assert.match(hub,/location\.replace\('atividades\/'\);return null/);
+  assert.doesNotMatch(hub,/must_change_password[\s\S]{0,180}signOut/);
+  assert.match(app,/const POST_PASSWORD_RETURN_KEY = 'agv-auth-return-to'/);
+  assert.match(app,/passwordChangeFinalized\(\)/);
+  assert.match(app,/finalized && consumePostPasswordReturn\(\)/);
+  assert.match(app,/target\.origin !== root\.origin/);
 });
 
 test('Lobby e Atividades usam explicitamente a sessão Supabase canônica',()=>{

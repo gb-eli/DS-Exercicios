@@ -1,25 +1,25 @@
-import { runPython } from './python-runtime.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.38';
-import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.10.8.38';
-import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.10.8.38';
-import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.10.8.38';
-import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.10.8.38';
-import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.10.8.38';
-import { EXERCISE_REFERENCE_CATALOG_CURRENT } from '../data/exercise-reference-catalog-current.js?v=14.10.8.38';
-import { validateExercise, renderValidation } from './validation.js?v=14.10.8.38';
+import { runPython } from './python-runtime.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.65';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.65';
+import { EXERCISE_REFERENCES } from '../data/exercise-reference.js?v=14.10.8.65';
+import { EXERCISE_REFERENCE_EXTRAS } from '../data/exercise-reference-extra.js?v=14.10.8.65';
+import { EXERCISE_REFERENCE_SYNCED } from '../data/exercise-reference-synced.js?v=14.10.8.65';
+import { EXERCISE_REFERENCE_3DS_RESTORED } from '../data/exercise-reference-3ds-restored.js?v=14.10.8.65';
+import { EXERCISE_REFERENCE_DS2_CORRECTED } from '../data/exercise-reference-ds2-corrected.js?v=14.10.8.65';
+import { EXERCISE_REFERENCE_CATALOG_CURRENT } from '../data/exercise-reference-catalog-current.js?v=14.10.8.65';
+import { validateExercise, renderValidation } from './validation.js?v=14.10.8.65';
 import {
   prepareSupervision, stopSupervision, handleBeforeInput, handlePaste, handleDrop, handleEditorInput,
   sendEditorSnapshot, sendCursor, inspectCode, getSupervisionSessionId, markTrustedEditorInsertion,
   callActivityProgress
-} from './supervision.js?v=14.10.8.38';
+} from './supervision.js?v=14.10.8.65';
 
-import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.38';
-import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.8.38';
-import { buildHtmlPreview } from './preview-builder.js?v=14.10.8.38';
-import { shouldRecoverCachedDraft } from './draft-recovery.js?v=14.10.8.38';
-import { getWeekendWindow, formatWeekendCountdown, buildWeekendDiagnostics, WEEKEND_SUPPORT_TIME_ZONE } from './weekend-support.js?v=14.10.8.38';
-import { callWeekendVoucher, copyWeekendVoucherCode } from './weekend-voucher.js?v=14.10.8.38';
+import { supabase, handleSessionInvalid } from './supabase.js?v=14.10.8.65';
+import { createStoreZip, downloadBlob, downloadTextFile } from './downloads.js?v=14.10.8.65';
+import { buildHtmlPreview } from './preview-builder.js?v=14.10.8.65';
+import { shouldRecoverCachedDraft } from './draft-recovery.js?v=14.10.8.65';
+import { getWeekendWindow, formatWeekendCountdown, buildWeekendDiagnostics, WEEKEND_SUPPORT_TIME_ZONE } from './weekend-support.js?v=14.10.8.65';
+import { callWeekendVoucher, copyWeekendVoucherCode } from './weekend-voucher.js?v=14.10.8.65';
 
 let state = {
   profile:null,

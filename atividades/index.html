@@ -6,10 +6,10 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co https://cdn.jsdelivr.net https://viacep.com.br; style-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self'; media-src 'none'; object-src 'none'; manifest-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
 
   <meta name="color-scheme" content="dark" />
-  <script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script><title>Exercícios Práticos DS • Engine</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.38" />
-  <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.38" />
-  <link rel="stylesheet" href="assets/css/support-hub.css?v=14.10.8.38" />
+  <script src="../core/session/unified-auth-guard.js?v=14.10.8.65"></script><title>Exercícios Práticos DS • Engine</title>
+  <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.65" />
+  <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.65" />
+  <link rel="stylesheet" href="assets/css/support-hub.css?v=14.10.8.65" />
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -385,7 +385,7 @@
               <p id="reference-note" class="reference-note">Observe o código e digite manualmente no editor. Copiar e colar a referência estão desativados.</p>
               <pre id="reference-code" class="reference-code no-select" tabindex="0" aria-label="Código de referência. Digite manualmente no editor ao lado."></pre>
             </section>
-            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.10.8.38"></iframe>
+            <iframe id="preview-frame" class="preview-frame hidden" title="Pré-visualização do exercício" sandbox="allow-scripts" referrerpolicy="no-referrer" src="preview/index.html?v=14.10.8.65"></iframe>
             <div id="terminal-pane" class="terminal-pane hidden">
               <pre id="terminal-output" class="terminal-output">A saída do exercício aparecerá aqui.</pre>
               <form id="terminal-input-form" class="terminal-input-row hidden">
@@ -412,7 +412,7 @@
     <footer class="footer">Exercícios Práticos DS • progresso salvo com Supabase</footer>
   </div>
 
-  <script type="module" src="assets/js/app.js?v=14.10.8.38"></script>
+  <script type="module" src="assets/js/app.js?v=14.10.8.65"></script>
 
 
     <dialog id="personalized-onboarding-dialog" class="history-dialog personalized-onboarding-dialog">
@@ -522,28 +522,7 @@
       </div>
     </dialog>
 
-    <dialog id="recovery-dialog" class="history-dialog auth-dialog">
-      <form id="recovery-form" class="history-card panel form-stack">
-        <div class="history-head">
-          <div>
-            <p class="eyebrow">Recuperar acesso</p>
-            <h3>Redefinir senha</h3>
-            <p class="muted">Recuperação temporária: confirme e-mail institucional e CGM. Se os dados conferirem, sua senha volta ao CGM e você deverá criar uma senha pessoal no próximo acesso.</p>
-          </div>
-          <button id="recovery-close-btn" class="button button-ghost button-small" type="button">Fechar</button>
-        </div>
-        <label>
-          <span>E-mail institucional</span>
-          <input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required>
-        </label>
-        <label>
-          <span>CGM</span>
-          <input id="recovery-cgm" type="text" inputmode="numeric" autocomplete="off" maxlength="12" pattern="[0-9]{6,12}" placeholder="Digite seu CGM" required>
-        </label>
-        <p id="recovery-message" class="form-message hidden"></p>
-        <button class="button button-primary" type="submit">Redefinir senha para CGM</button>
-      </form>
-    </dialog>
+
 
 </body>
 </html>

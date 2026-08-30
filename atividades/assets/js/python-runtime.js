@@ -14,7 +14,7 @@ function showInput(show,prompt=''){
 }
 export function runPython(code,fileName='main.py'){
   if(worker) worker.terminate();
-  worker=new Worker('./assets/js/python-worker.js?v=14.10.8.38');
+  worker=new Worker('./assets/js/python-worker.js?v=14.10.8.65');
   out('', 'clear'); out('Python: iniciando execução...');
   showInput(false);
   worker.onmessage=e=>{
