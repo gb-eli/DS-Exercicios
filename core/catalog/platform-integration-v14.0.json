@@ -1,7 +1,7 @@
 {
   "schema": "agv-platform-integration-catalog",
   "schemaVersion": 2,
-  "version": "14.0.0",
+  "version": "14.10.8.59",
   "generatedAt": "2026-08-15",
   "phase": "P7.1-production-cleanup",
   "platforms": [
@@ -196,12 +196,12 @@
       "name": "Plataforma 2DS Sub — Aluno",
       "version": "0.1.42",
       "route": "sistemas/07-lab-exercicios-sub/versao-aluno/index.html",
-      "integrationStatus": "integrated-wave1",
+      "integrationStatus": "legacy-hidden-unified-platform",
       "authAuthority": "agv-core",
       "progressAuthority": "lab-exercises-core",
       "localStateRole": "cache/offline/preferences",
       "economy": "none",
-      "readyForUnifiedHub": true,
+      "readyForUnifiedHub": false,
       "notes": "Official rewards remain server-side; local state is not authoritative.",
       "category": "Minha turma",
       "icon": "🌙",
@@ -220,19 +220,21 @@
           "active_days"
         ],
         "timeMetric": "only_when_session_evidence_exists"
-      }
+      },
+      "legacy": true,
+      "replacementRoute": "atividades/"
     },
     {
       "id": "lab-ds1",
       "name": "Plataforma 1DS — Central de Disciplinas",
       "version": "1.12.0",
       "route": "sistemas/08-lab-exercicios-ds1/modo-aluno/index.html",
-      "integrationStatus": "integrated-wave1",
+      "integrationStatus": "legacy-hidden-unified-platform",
       "authAuthority": "agv-core",
       "progressAuthority": "lab-exercises-core",
       "localStateRole": "cache/offline/preferences",
       "economy": "none",
-      "readyForUnifiedHub": true,
+      "readyForUnifiedHub": false,
       "notes": "Official rewards remain server-side; local state is not authoritative.",
       "category": "Minha turma",
       "icon": "1️⃣",
@@ -251,19 +253,21 @@
           "active_days"
         ],
         "timeMetric": "only_when_session_evidence_exists"
-      }
+      },
+      "legacy": true,
+      "replacementRoute": "atividades/"
     },
     {
       "id": "lab-ds2",
       "name": "Plataforma 2DS — Duas Disciplinas",
       "version": "0.7.1",
       "route": "sistemas/09-lab-exercicios-ds2/modo-aluno/index.html",
-      "integrationStatus": "integrated-wave1",
+      "integrationStatus": "legacy-hidden-unified-platform",
       "authAuthority": "agv-core",
       "progressAuthority": "lab-exercises-core",
       "localStateRole": "cache/offline/preferences",
       "economy": "none",
-      "readyForUnifiedHub": true,
+      "readyForUnifiedHub": false,
       "notes": "Official rewards remain server-side; local state is not authoritative.",
       "category": "Minha turma",
       "icon": "2️⃣",
@@ -282,19 +286,21 @@
           "active_days"
         ],
         "timeMetric": "only_when_session_evidence_exists"
-      }
+      },
+      "legacy": true,
+      "replacementRoute": "atividades/"
     },
     {
       "id": "lab-ds3",
       "name": "Plataforma 3DS — Aluno",
       "version": "0.11.9",
       "route": "sistemas/10-lab-exercicios-ds3/modo-aluno/index.html",
-      "integrationStatus": "integrated-wave1",
+      "integrationStatus": "legacy-hidden-unified-platform",
       "authAuthority": "agv-core",
       "progressAuthority": "lab-exercises-core",
       "localStateRole": "cache/offline/preferences",
       "economy": "none",
-      "readyForUnifiedHub": true,
+      "readyForUnifiedHub": false,
       "notes": "Official rewards remain server-side; local state is not authoritative.",
       "category": "Minha turma",
       "icon": "3️⃣",
@@ -313,7 +319,9 @@
           "active_days"
         ],
         "timeMetric": "only_when_session_evidence_exists"
-      }
+      },
+      "legacy": true,
+      "replacementRoute": "atividades/"
     }
   ],
   "sharedServices": [
@@ -338,5 +346,7 @@
       ]
     }
   ],
-  "legacyRouteCatalog": "core/catalog/legacy-routes-v14.0.json"
+  "legacyRouteCatalog": "core/catalog/legacy-routes-v14.0.json",
+  "unifiedAuth": "auth/",
+  "unifiedAcademicPlatform": "atividades/"
 }

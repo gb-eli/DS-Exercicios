@@ -1,0 +1,18 @@
+{
+  "version": "14.10.8.59",
+  "channel": "feature",
+  "title": "Unified Auth & Central Hub",
+  "base": [
+    "14.10.8.58"
+  ],
+  "date": "2026-08-29",
+  "changes": [
+    "Uma única tela oficial de login em /auth/ com e-mail/senha/CGM, Google e recuperação por e-mail.",
+    "Auth guard compartilhado redireciona superfícies protegidas para o login único e preserva returnTo interno.",
+    "Hub e Lobby deixam de ser superfícies de login e reutilizam a mesma sessão Supabase.",
+    "Plataformas antigas por turma são retiradas do catálogo visível e seus entrypoints redirecionam para Atividades Unificadas.",
+    "Lobby recebe manifesto central de destinos e prédios conectados às ferramentas, Banco, Loja e Centro de Provas.",
+    "Banco/Loja consultam wallet, ledger, store_items e inventory_instances reais sem schema novo.",
+    "Zero migrations e zero remoções de arquivos."
+  ]
+}

@@ -1,13 +1,13 @@
 import { openStaffPanel, isStaff } from './admin.js?v=14.10.8.20';
 import { mountWorkspace, unmountWorkspace } from './workspace.js?v=14.10.8.20';
 import { callActivityProgress } from './supervision.js?v=14.10.8.20';
-import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.38';
-import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.38';
-import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.38';
-import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.38';
+import { requestPortalFullscreen, setPortalFullscreenRequired } from './fullscreen.js?v=14.10.8.59';
+import { supabase, SUPABASE_SDK_AVAILABLE, SUPABASE_SDK_ERROR } from './supabase.js?v=14.10.8.59';
+import { SCHOOL_EMAIL_DOMAIN } from './config.js?v=14.10.8.59';
+import { EXERCISE_MANIFEST } from '../data/exercise-manifest.js?v=14.10.8.59';
+import { EXERCISE_MANIFEST_CURRENT } from '../data/exercise-manifest-current.js?v=14.10.8.59';
 import { loadPersonalizedExperienceContext, renderPersonalizedExperienceDashboard, renderPersonalizedAssignment, clearPersonalizedTheme } from './personalized-experience.js?v=14.10.8.20';
-import { initializeStudentSupportHub, destroyStudentSupportHub } from './support-hub.js?v=14.10.8.38';
+import { initializeStudentSupportHub, destroyStudentSupportHub } from './support-hub.js?v=14.10.8.59';
 
 const $ = (id) => document.getElementById(id);
 const views = ['loading-view', 'login-view', 'password-view', 'dashboard-view', 'personalized-experience-view', 'exercise-view', 'staff-view'];
@@ -210,6 +210,14 @@ async function loadIdentity() {
   return { user, profile, class: currentClass };
 }
 
+function unifiedLogin(message='') {
+  try { if (message) sessionStorage.setItem('agv-auth-message', String(message).slice(0,240)); } catch (_) {}
+  const root = new URL('../', window.location.href);
+  const u = new URL('auth/', root);
+  u.searchParams.set('returnTo', 'atividades/');
+  window.location.replace(u.href);
+}
+
 async function routeAuthenticatedUser() {
   const runId = ++portalBootRun;
   showView('loading-view');
@@ -222,7 +230,7 @@ async function routeAuthenticatedUser() {
       currentProfile = null;
       currentClass = null;
       setSessionHeader(false);
-      showView('login-view');
+      unifiedLogin();
       return;
     }
 
@@ -251,8 +259,7 @@ async function routeAuthenticatedUser() {
 
     if (!identity.profile.active) {
       await withTimeout(supabase.auth.signOut(), OPTIONAL_REQUEST_TIMEOUT_MS, 'auth.signOut').catch(()=>{});
-      setLoginError('Seu acesso está inativo. Procure o professor responsável.');
-      showView('login-view');
+      unifiedLogin('Seu acesso está inativo. Procure o professor responsável.');
       return;
     }
 
@@ -299,7 +306,7 @@ async function forceSessionExit(message='Sua sessão foi encerrada. Entre novame
   currentProfile=null;currentClass=null;currentSubjects=[];currentExercises=[];currentProgress=[];currentStudentReleases=[];currentClassReleases=[];currentLegacyClaims=[];currentStaffAccess=false;lastDashboardSnapshot=null;passwordRecoveryMode=false;
   setPortalFullscreenRequired(false);
   if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
-  setSessionHeader(false);setLoginError(message||'');showView('login-view');
+  setSessionHeader(false);unifiedLogin(message||'');
   setTimeout(()=>{forcedSessionExitRunning=false;},600);
 }
 window.addEventListener('agv:session-invalid',event=>{const code=String(event?.detail?.code||'');forceSessionExit(code==='session_claim_missing'?'Sua sessão precisa ser renovada. Entre novamente para continuar.':'Sua sessão foi encerrada pelo sistema. Entre novamente para continuar.');});
@@ -313,77 +320,6 @@ function setPasswordError(message = '') {
   $('password-error').textContent = message;
   $('password-error').classList.toggle('hidden', !message);
 }
-
-$('login-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  setLoginError();
-  const email = normalizeEmail($('email').value);
-  const password = $('password').value;
-
-  if (!email.endsWith(SCHOOL_EMAIL_DOMAIN)) {
-    setLoginError(`Use seu e-mail institucional ${SCHOOL_EMAIL_DOMAIN}.`);
-    return;
-  }
-  if (!password) {
-    setLoginError('Informe sua senha. No primeiro acesso do aluno, use o CGM.');
-    return;
-  }
-
-  await requestPortalFullscreen({silent:true});
-
-  const submit = event.submitter;
-  submit.disabled = true;
-  submit.textContent = 'Entrando...';
-  try {
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (!signInError) {
-      securityTelemetry('auth.login_success', { source: 'atividades' });
-      await routeAuthenticatedUser();
-      return;
-    }
-
-    // Primeiro acesso do aluno: senha numérica = CGM; o banco valida
-    // e-mail + CGM + matrícula. Professor/Admin é provisionado pelo administrador
-    // com credencial temporária individual e NÃO pode se autocadastrar.
-    const looksLikeCgm = /^\d{6,12}$/.test(password);
-    if (!looksLikeCgm) throw signInError;
-
-    submit.textContent = 'Validando primeiro acesso...';
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { cgm: password },
-        emailRedirectTo: `${window.location.origin}${window.location.pathname}`,
-      },
-    });
-
-    if (signUpError) throw signUpError;
-
-    if (signUpData?.session) {
-      securityTelemetry('auth.login_success', { source: 'atividades-first-access' });
-      await routeAuthenticatedUser();
-      return;
-    }
-
-    // O trigger confirma automaticamente cadastros validados. Caso o SDK não
-    // devolva sessão na mesma resposta, tentamos autenticar novamente.
-    const { error: firstSignInError } = await supabase.auth.signInWithPassword({ email, password });
-    if (!firstSignInError) {
-      securityTelemetry('auth.login_success', { source: 'atividades-first-access' });
-      await routeAuthenticatedUser();
-      return;
-    }
-    throw firstSignInError;
-  } catch (error) {
-    console.error(error);
-    setLoginError('E-mail ou senha inválidos. Aluno no primeiro acesso: use o CGM. Professor/Admin: use a credencial temporária individual fornecida pelo administrador.');
-  } finally {
-    submit.disabled = false;
-    submit.textContent = 'Entrar';
-  }
-});
 
 function passwordValid(value) {
   return value.length >= 8 && /[A-Za-zÀ-ÿ]/.test(value) && /\d/.test(value);
@@ -432,7 +368,7 @@ $('password-form').addEventListener('submit', async (event) => {
 
 
 $('hub-btn')?.addEventListener('click', () => { window.location.href = '../'; });
-$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.38'; });
+$('lobby-btn')?.addEventListener('click', () => { window.location.href = '../lobby/?v=14.10.8.59'; });
 
 $('logout-btn').addEventListener('click', async () => {
   await supabase.auth.signOut();
@@ -451,8 +387,7 @@ $('logout-btn').addEventListener('click', async () => {
   clearPersonalizedTheme();
   passwordRecoveryMode = false;
   setSessionHeader(false);
-  $('password').value = '';
-  showView('login-view');
+  unifiedLogin();
 });
 
 async function loadDashboardData() {
@@ -972,8 +907,7 @@ if (SUPABASE_SDK_AVAILABLE) supabase.auth.onAuthStateChange((event) => {
         showView('password-view');
       } catch (error) {
         console.error(error);
-        setLoginError('O link de recuperação não pôde ser validado. Solicite um novo link.');
-        showView('login-view');
+        unifiedLogin('O link de recuperação não pôde ser validado. Solicite um novo link.');
       }
     }, 0);
   }
@@ -1012,7 +946,7 @@ $('renew-session-btn')?.addEventListener('click', async () => {
   setPortalFullscreenRequired(false);
   setSessionHeader(false);
   setLoginError('Sessão renovada. Entre novamente para continuar.');
-  showView('login-view');
+  unifiedLogin();
   if (button) { button.disabled = false; button.textContent = 'Renovar sessão'; }
 });
 
@@ -1021,7 +955,7 @@ if (SUPABASE_SDK_AVAILABLE) {
 } else {
   setSessionHeader(false);
   setLoginError(SUPABASE_SDK_ERROR?.message || 'Não foi possível carregar o serviço de autenticação. Verifique a conexão e tente novamente.');
-  showView('login-view');
+  unifiedLogin();
 }
 
 document.getElementById('staff-btn')?.addEventListener('click', openStaffPanel);

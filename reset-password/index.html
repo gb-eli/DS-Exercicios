@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#071018">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Redefinir senha</title>
-  <link rel="stylesheet" href="reset-password.css?v=14.10.8.18.2">
+  <link rel="stylesheet" href="reset-password.css?v=14.10.8.59">
 </head>
 <body>
   <main class="reset-shell">
@@ -23,7 +23,7 @@
         <span class="state-icon" aria-hidden="true">!</span>
         <h1>Link inválido ou expirado</h1>
         <p id="invalid-message">Solicite um novo link de recuperação na tela de entrada.</p>
-        <a class="button" href="../">Voltar ao login</a>
+        <a class="button" href="../auth/">Voltar ao login</a>
       </div>
       <form id="password-form" class="state-view hidden" novalidate>
         <span class="eyebrow">Link confirmado</span>
@@ -39,11 +39,11 @@
         <span class="state-icon success" aria-hidden="true">✓</span>
         <h1>Senha alterada</h1>
         <p>Sua senha foi atualizada. Por segurança, entre novamente usando a nova senha.</p>
-        <a class="button primary" href="../">Ir para o login</a>
+        <a class="button primary" href="../auth/">Ir para o login</a>
       </div>
     </section>
   </main>
   <script src="../lobby/vendor/supabase/supabase.js"></script>
-  <script type="module" src="reset-password.js?v=14.10.8.18.2"></script>
+  <script type="module" src="reset-password.js?v=14.10.8.59"></script>
 </body>
 </html>

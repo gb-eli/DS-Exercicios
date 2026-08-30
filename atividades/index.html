@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co https://cdn.jsdelivr.net https://viacep.com.br; style-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self'; media-src 'none'; object-src 'none'; manifest-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
 
   <meta name="color-scheme" content="dark" />
-  <title>Exercícios Práticos DS • Engine</title>
+  <script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script><title>Exercícios Práticos DS • Engine</title>
   <link rel="stylesheet" href="assets/css/app.css?v=14.10.8.38" />
   <link rel="stylesheet" href="assets/css/admin.css?v=14.10.8.38" />
   <link rel="stylesheet" href="assets/css/support-hub.css?v=14.10.8.38" />
@@ -45,40 +45,7 @@
         </div>
       </section>
 
-      <section id="login-view" class="auth-layout hidden" aria-labelledby="login-title">
-        <article class="panel auth-card">
-          <p class="eyebrow">Acesso ao sistema</p>
-          <h2 id="login-title">Entre para continuar</h2>
-          <p class="muted auth-lead">Um único acesso para alunos, professores e administradores. O sistema identifica seu perfil automaticamente.</p>
-          <div class="login-help">
-            <span><strong>Aluno</strong> primeiro acesso: e-mail + CGM</span>
-            <span><strong>Equipe</strong> primeiro acesso: e-mail + senha temporária</span>
-          </div>
-          <form id="login-form" class="form-stack" novalidate>
-            <label>
-              <span>E-mail institucional</span>
-              <input id="email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="nome@escola.pr.gov.br" required />
-            </label>
-            <label>
-              <span>Senha</span>
-              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Senha ou CGM no primeiro acesso" required />
-            </label>
-            <p id="login-error" class="form-error hidden" role="alert"></p>
-            <button class="button button-primary" type="submit">Entrar</button>
-            <button id="forgot-password-btn" class="auth-link-button" type="button">Esqueci minha senha</button>
-          </form>
-        </article>
-        <aside class="panel info-card">
-          <p class="eyebrow">Como funciona</p>
-          <h2>Um login para todos</h2>
-          <p>O sistema identifica automaticamente se você é aluno, professor ou administrador. Cada perfil abre somente a área autorizada.</p>
-          <div class="steps">
-            <div><span>1</span><p><strong>Aluno</strong><br>E-mail @escola + CGM no primeiro acesso.</p></div>
-            <div><span>2</span><p><strong>Professor/Admin</strong><br>E-mail autorizado + senha temporária.</p></div>
-            <div><span>3</span><p><strong>Senha pessoal</strong><br>Depois do primeiro acesso, cada usuário cria a própria senha.</p></div>
-          </div>
-        </aside>
-      </section>
+      <section id="login-view" class="panel centered hidden" aria-live="polite"><p class="eyebrow">SESSÃO ÚNICA</p><h2>Redirecionando para o login oficial…</h2><p id="login-error" class="form-error hidden" role="alert"></p><a class="button button-primary" href="../auth/?returnTo=atividades/">Ir para o login</a></section>
 
       <section id="password-view" class="auth-layout hidden" aria-labelledby="password-title">
         <article class="panel auth-card">

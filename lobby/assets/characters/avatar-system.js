@@ -102,7 +102,7 @@ export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='mediu
   const mode=()=>rigAsset?'rigged-glb-v2':'procedural-v2';
   async function init(){
     if(!rigEligible)return mode();
-    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.58');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
+    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.65');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
     catch(error){rigAsset=null;rigApi=null;diagnostics?.record?.('avatar_system_fallback',{mode:'procedural-v2',message:String(error?.message||error).slice(0,180)});console.warn('Avatar rigado indisponível; Avatar V2 usando fallback procedural.',error);}
     return mode();
   }

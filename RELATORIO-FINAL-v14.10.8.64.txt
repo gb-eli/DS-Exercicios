@@ -1,0 +1,29 @@
+AGV Education Core
+Release: v14.10.8.64
+Fase: 62C — Cidade Viva e Integração Sistêmica
+Base: v14.10.8.63
+
+ENTREGAS
+- 10 prédios com interiores especializados
+- recepcionistas/NPCs contextuais por prédio
+- mapas internos por pavimento
+- rotas guiadas 2D/3D
+- ambientes especializados interativos
+- elevadores com feedback/animação local
+- frota leve em 3 garagens
+- conectores físicos estação ↔ distrito
+- Portal Metropolitano Campus ↔ Vale
+- UI sob demanda para navegação interna
+- sessão AGV preservada
+
+VALIDAÇÕES
+- validate-campus-city-v62.mjs: PASS
+- validate-campus-interiors-v63.mjs: PASS
+- validate-campus-live-v64.mjs: PASS
+- validate-unified-auth-v59.mjs: PASS
+- 36 arquivos JS/MJS do Lobby: node --check PASS
+- 63 imports locais: PASS
+- schema Supabase: sem alterações
+
+LIMITAÇÃO
+- teste visual/WebGL real permanece para pós-publicação.

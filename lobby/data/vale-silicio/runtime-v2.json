@@ -1,0 +1,6089 @@
+{
+  "spec": {
+    "name": "Vale do Silício AGV Runtime Specification",
+    "version": "2.0.0",
+    "format": "procedural-world-config",
+    "language": "pt-BR",
+    "purpose": "Gerar automaticamente prédios, lotes, interiores, placas e interações do Vale do Silício AGV dentro do lobby virtual existente."
+  },
+  "integration": {
+    "mode": "append_to_existing_lobby",
+    "preserve_existing_lobby": true,
+    "existing_scene_id": "lobby_main",
+    "new_scene_id": "vale_silicio_agv",
+    "entry_portal": {
+      "id": "portal_vale_silicio_agv",
+      "source_scene": "lobby_main",
+      "target_scene": "vale_silicio_agv",
+      "label": "VALE DO SILÍCIO AGV",
+      "subtitle": "Empresas e projetos criados pelos alunos",
+      "spawn_target": "spawn_praca_inovacao",
+      "return_portal_id": "portal_retorno_lobby"
+    }
+  },
+  "world": {
+    "coordinate_system": "Y_UP",
+    "unit": "meter",
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "world_bounds": {
+      "min_x": -320,
+      "max_x": 320,
+      "min_z": -320,
+      "max_z": 320
+    },
+    "main_spawn": {
+      "id": "spawn_praca_inovacao",
+      "position": {
+        "x": 0,
+        "y": 0.2,
+        "z": -30
+      },
+      "rotation_y_deg": 0
+    },
+    "core_landmarks": [
+      {
+        "id": "praca_inovacao",
+        "name": "Praça Central da Inovação",
+        "type": "plaza",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "size": {
+          "width": 70,
+          "depth": 70
+        }
+      },
+      {
+        "id": "hall_inovacao_agv",
+        "name": "Hall da Inovação AGV",
+        "type": "museum_hall",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 70
+        },
+        "size": {
+          "width": 48,
+          "depth": 30
+        }
+      },
+      {
+        "id": "portal_retorno_lobby",
+        "name": "Portal de Retorno ao Lobby",
+        "type": "portal",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": -85
+        },
+        "target_scene": "lobby_main",
+        "target_spawn": "lobby_spawn"
+      }
+    ],
+    "roads": {
+      "generator": "radial_district_roads",
+      "main_road_width": 10,
+      "secondary_road_width": 7,
+      "sidewalk_width": 2.5,
+      "crosswalks": true,
+      "street_lights": true,
+      "road_markings": true
+    },
+    "districts": [
+      {
+        "id": "praca-das-startups",
+        "name": "Praça das Startups",
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "company_ids": [
+          "gitdash",
+          "rede-agv",
+          "trampo-certo"
+        ]
+      },
+      {
+        "id": "distrito-educacao-e-conhecimento",
+        "name": "Distrito Educação & Conhecimento",
+        "center": {
+          "x": 160,
+          "y": 0,
+          "z": 0
+        },
+        "company_ids": [
+          "agv-school",
+          "master-code",
+          "plataforma-de-preparatorio-enem",
+          "portal-unificado",
+          "portal-unificado-gremio-estudantil",
+          "portal-escolar-controle-de-pais",
+          "projeto-torre-de-babel-site-educacional",
+          "simulador-virtual-de-quimica-fisica-e-biologia",
+          "sistema-competitivo-quizziz"
+        ]
+      },
+      {
+        "id": "distrito-dados-e-sistemas",
+        "name": "Distrito Dados & Sistemas",
+        "center": {
+          "x": -160,
+          "y": 0,
+          "z": 0
+        },
+        "company_ids": [
+          "dashboard-s-para-analise-de-dados",
+          "planilha-de-automacao-com-recibo",
+          "sistema-de-inventario-geral",
+          "site-de-vendas-geral"
+        ]
+      },
+      {
+        "id": "distrito-esportes-e-eventos",
+        "name": "Distrito Esportes & Eventos",
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": 160
+        },
+        "company_ids": [
+          "gestao-interclasses-gestao-de-dados",
+          "gestao-interclasses-organizacao-geral-do-campeonato",
+          "gestao-interclasses-transmissao-e-narracao",
+          "site-sobre-futebol",
+          "time-para-o-escolares"
+        ]
+      },
+      {
+        "id": "distrito-games-e-esports",
+        "name": "Distrito Games & eSports",
+        "center": {
+          "x": 160,
+          "y": 0,
+          "z": 160
+        },
+        "company_ids": [
+          "campeonato-de-jogos-eletronicos",
+          "the-last-quest"
+        ]
+      },
+      {
+        "id": "distrito-maker-e-robotica",
+        "name": "Distrito Maker & Robótica",
+        "center": {
+          "x": -160,
+          "y": 0,
+          "z": 160
+        },
+        "company_ids": [
+          "clube-robotica"
+        ]
+      },
+      {
+        "id": "distrito-midia-e-comunicacao",
+        "name": "Distrito Mídia & Comunicação",
+        "center": {
+          "x": 0,
+          "y": 0,
+          "z": -160
+        },
+        "company_ids": [
+          "clube-da-radio-agv",
+          "radio-agv-site"
+        ]
+      },
+      {
+        "id": "distrito-imersivo-e-virtual",
+        "name": "Distrito Imersivo & Virtual",
+        "center": {
+          "x": 160,
+          "y": 0,
+          "z": -160
+        },
+        "company_ids": [
+          "museu-virtual-agv-mundo-virtual-agv"
+        ]
+      }
+    ]
+  },
+  "procedural_generation": {
+    "seed": 20260829,
+    "deterministic": true,
+    "generation_order": [
+      "terrain",
+      "roads",
+      "districts",
+      "lots",
+      "buildings",
+      "signage",
+      "interiors",
+      "props",
+      "npc_routes",
+      "navigation_mesh",
+      "interaction_triggers"
+    ],
+    "lot_rules": {
+      "minimum_spacing_between_buildings": 10,
+      "front_setback": 6,
+      "rear_setback": 4,
+      "keep_clear_for_sidewalk": 3
+    },
+    "fallbacks": {
+      "missing_asset": "bldg_generic_tech",
+      "missing_sprite": "sprite_generic_project",
+      "missing_role_text": "Função ainda não cadastrada",
+      "missing_description": "Projeto estudantil em desenvolvimento."
+    }
+  },
+  "rendering_profiles": {
+    "2D_LOW": {
+      "mode": "2D",
+      "target": "máquinas de baixo desempenho",
+      "building_representation": "sprites_or_tile_buildings",
+      "interior_representation": "separate_room_scene_or_modal",
+      "dynamic_lights": false,
+      "ambient_npcs_max": 12,
+      "particles": "low",
+      "shadows": "off"
+    },
+    "3D_BALANCED": {
+      "mode": "3D",
+      "target": "máquinas intermediárias",
+      "building_representation": "low_poly_3d",
+      "dynamic_lights": true,
+      "ambient_npcs_max": 24,
+      "particles": "medium",
+      "shadows": "medium"
+    },
+    "3D_ULTRA": {
+      "mode": "3D",
+      "target": "máquinas de alto desempenho",
+      "building_representation": "full_3d",
+      "dynamic_lights": true,
+      "ambient_npcs_max": 45,
+      "particles": "high",
+      "shadows": "high",
+      "reflections": true
+    }
+  },
+  "ui": {
+    "map_enabled": true,
+    "minimap_enabled": true,
+    "district_filter_enabled": true,
+    "company_search_enabled": true,
+    "fast_travel_enabled": true,
+    "building_panel_fields": [
+      "display_name",
+      "project_name",
+      "data_bindings.turmas",
+      "data_bindings.leaders",
+      "data_bindings.member_count",
+      "data_bindings.description"
+    ]
+  },
+  "companies": [
+    {
+      "id": "dashboard-s-para-analise-de-dados",
+      "enabled": true,
+      "company_name": "Dashboard's para análise de dados",
+      "display_name": "Dashboard's para análise de dados",
+      "project_name": "Dashboard's para análise de dados",
+      "aliases": [],
+      "category": "data_systems",
+      "zone": "Distrito Dados & Sistemas",
+      "lot": {
+        "lot_id": "LOT-001",
+        "world_position": {
+          "x": -160.0,
+          "y": 0,
+          "z": -48.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 42.0,
+          "depth": 38.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_dashboard-s-para-analise-de-dados"
+      },
+      "building": {
+        "archetype": "bldg_data_tower",
+        "asset_key": "bldg_data_tower",
+        "scale": 1.0,
+        "footprint": {
+          "width": 28.0,
+          "depth": 24.0
+        },
+        "floors": 4,
+        "roof_style": "flat",
+        "facade_style": "glass_grid",
+        "interior_template": "interior_analytics",
+        "theme_description": "torre de analytics com dashboards gigantes, telões de BI e centro de dados",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Dashboard's para análise de dados",
+          "subtext": "analytics e BI",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "dashboards interativos",
+          "sala de indicadores",
+          "laboratório de análise"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 4,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "LUIZ FERNANDO TIBILETE NETO",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              },
+              {
+                "name": "MARELIS CRISTINE RODRIGUES DE OLIVEIRA",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              },
+              {
+                "name": "Mariana",
+                "role": "Não informada na planilha",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+              },
+              {
+                "name": "Yago",
+                "role": "Não informada na planilha",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+              }
+            ]
+          }
+        ],
+        "description": null,
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": [
+          "Função pendente",
+          "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_data-systems",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_data_tower",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "planilha-de-automacao-com-recibo",
+      "enabled": true,
+      "company_name": "Planilha de automação com recibo",
+      "display_name": "Planilha de automação com recibo",
+      "project_name": "Planilha de automação com recibo",
+      "aliases": [],
+      "category": "business_tools",
+      "zone": "Distrito Dados & Sistemas",
+      "lot": {
+        "lot_id": "LOT-002",
+        "world_position": {
+          "x": -102.0,
+          "y": 0,
+          "z": 0.0
+        },
+        "rotation_y_deg": 270.0,
+        "size": {
+          "width": 38,
+          "depth": 34
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_planilha-de-automacao-com-recibo"
+      },
+      "building": {
+        "archetype": "bldg_business_automation",
+        "asset_key": "bldg_business_automation",
+        "scale": 0.9,
+        "footprint": {
+          "width": 23.4,
+          "depth": 19.8
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "office_modern",
+        "interior_template": "interior_business_tools",
+        "theme_description": "escritório de automação financeira com balcão digital e fluxo de documentos",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Planilha de automação com recibo",
+          "subtext": "automação de processos",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "automação de planilhas",
+          "emissão de recibos",
+          "painel de processos"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 1,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "MARIO SERGIO LOPES LOBO",
+                "role": "Automação em Google Planilhas para geração de recibos e estudo de expansão do uso",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Já desenvolveu parcialmente, automação junto ao google planilha para gerar recibo de forma automatizada. Estudante irá verificar expansão desse mesmo projeto, ou aplicação em outra situação que possa ser replicada na clínica da sua esposa.",
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_business-tools",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_business_automation",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "sistema-de-inventario-geral",
+      "enabled": true,
+      "company_name": "Sistema de inventário geral",
+      "display_name": "Sistema de inventário geral",
+      "project_name": "Sistema de inventário geral",
+      "aliases": [],
+      "category": "business_system",
+      "zone": "Distrito Dados & Sistemas",
+      "lot": {
+        "lot_id": "LOT-003",
+        "world_position": {
+          "x": -160.0,
+          "y": 0,
+          "z": 48.0
+        },
+        "rotation_y_deg": 180.0,
+        "size": {
+          "width": 39.2,
+          "depth": 34
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_sistema-de-inventario-geral"
+      },
+      "building": {
+        "archetype": "bldg_business_tech",
+        "asset_key": "bldg_business_tech",
+        "scale": 0.9,
+        "footprint": {
+          "width": 25.2,
+          "depth": 19.8
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "office_glass",
+        "interior_template": "interior_business_system",
+        "theme_description": "centro logístico com estoque inteligente, etiquetas e terminais de inventário",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Sistema de inventário geral",
+          "subtext": "sistema empresarial",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "armazém inteligente",
+          "controle de estoque",
+          "painéis de inventário"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 2,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "Maria Eduarda",
+                "role": "Não informada na planilha",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+              },
+              {
+                "name": "Mateus Arionso",
+                "role": "Não informada na planilha",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+              }
+            ]
+          }
+        ],
+        "description": null,
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": [
+          "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_business-system",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_business_tech",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "site-de-vendas-geral",
+      "enabled": true,
+      "company_name": "Site de vendas geral",
+      "display_name": "Site de vendas geral",
+      "project_name": "Site de vendas geral",
+      "aliases": [],
+      "category": "business_system",
+      "zone": "Distrito Dados & Sistemas",
+      "lot": {
+        "lot_id": "LOT-004",
+        "world_position": {
+          "x": -218.0,
+          "y": 0,
+          "z": 0.0
+        },
+        "rotation_y_deg": 90.0,
+        "size": {
+          "width": 39.2,
+          "depth": 34
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_site-de-vendas-geral"
+      },
+      "building": {
+        "archetype": "bldg_business_tech",
+        "asset_key": "bldg_business_tech",
+        "scale": 0.9,
+        "footprint": {
+          "width": 25.2,
+          "depth": 19.8
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "office_glass",
+        "interior_template": "interior_business_system",
+        "theme_description": "showroom digital de e-commerce com vitrines interativas e checkout virtual",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Site de vendas geral",
+          "subtext": "comércio eletrônico",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "catálogo de produtos",
+          "carrinho e vendas",
+          "painel comercial"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 1,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "DIEGO FREITAS DOS SANTOS",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              }
+            ]
+          }
+        ],
+        "description": null,
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": [
+          "Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_business-system",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_business_tech",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "agv-school",
+      "enabled": true,
+      "company_name": "AGV School",
+      "display_name": "AGV School",
+      "project_name": "AGV School",
+      "aliases": [],
+      "category": "edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-005",
+        "world_position": {
+          "x": 160.0,
+          "y": 0,
+          "z": -108.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 42.0,
+          "depth": 36.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_agv-school"
+      },
+      "building": {
+        "archetype": "bldg_edtech_campus",
+        "asset_key": "bldg_edtech_campus",
+        "scale": 1.0,
+        "footprint": {
+          "width": 28.0,
+          "depth": 22.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "glass_panels",
+        "interior_template": "interior_edtech",
+        "theme_description": "campus edtech futurista com telas interativas e salas digitais",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "AGV School",
+          "subtext": "plataforma educacional",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "painéis do sistema escolar",
+          "salas temáticas",
+          "telas com protótipos"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "PEDRO DAVI DOMINGUES DE SOUZA"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "PEDRO DAVI DOMINGUES DE SOUZA"
+            ],
+            "members": [
+              {
+                "name": "DAVIH MARTINS BARROS",
+                "role": "Construção dos desenhos e rascunhos",
+                "status": "OK"
+              },
+              {
+                "name": "GABRIEL DA COSTA BARBOSA",
+                "role": "Conversão dos desenhos do modo físico para digital",
+                "status": "OK"
+              },
+              {
+                "name": "PEDRO DAVI DOMINGUES DE SOUZA",
+                "role": "Roteirista e efeitos sonoros + musicais",
+                "status": "OK"
+              },
+              {
+                "name": "PEDRO HENRIQUE SANTOS DE SOUSA",
+                "role": "Construção geral dos comandos",
+                "status": "OK"
+              },
+              {
+                "name": "RYCHARD LUIZ DE SOUZA",
+                "role": "Construção geral dos comandos",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "O jogo será em layout estilo pokemon, onde haverá um mundo semi aberto baseado no ambiente do colégio AGV, onde dentro do jogo serão realizadas missões, tendo um tom de mistério.",
+        "progress_notes": "Os estudantes estão planejando o layout do jogo e como será o modo história.",
+        "responsibility_notes": "David fica responsável pelo layout\nPedro ficará responsável pelo planejamento do jogo\nGabriel, Rychard e Pedro David com back end.",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_edtech",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_edtech_campus",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "master-code",
+      "enabled": true,
+      "company_name": "Master Code",
+      "display_name": "Master Code",
+      "project_name": "Master Code",
+      "aliases": [],
+      "category": "software_learning",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-006",
+        "world_position": {
+          "x": 235.85,
+          "y": 0,
+          "z": -90.39
+        },
+        "rotation_y_deg": 320.0,
+        "size": {
+          "width": 39.2,
+          "depth": 34
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_master-code"
+      },
+      "building": {
+        "archetype": "bldg_code_academy",
+        "asset_key": "bldg_code_academy",
+        "scale": 0.9,
+        "footprint": {
+          "width": 25.2,
+          "depth": 19.8
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "code_led",
+        "interior_template": "interior_code_lab",
+        "theme_description": "software house educacional com tema de programação e painéis de código",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Master Code",
+          "subtext": "aprendizagem e desenvolvimento de software",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "estações de programação",
+          "painel de lógica",
+          "laboratório de desenvolvimento"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "CARLOS HENRIQUE ALVES DOS SANTOS"
+        ],
+        "member_count": 2,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "CARLOS HENRIQUE ALVES DOS SANTOS"
+            ],
+            "members": [
+              {
+                "name": "CARLOS HENRIQUE ALVES DOS SANTOS",
+                "role": "Construindo boa parte do trabalho e conduzindo planejamento geral",
+                "status": "OK"
+              },
+              {
+                "name": "ROGERSON LUIZ DOS SANTOS",
+                "role": "A se avaliar, pois parece estar ajudando. Melhor ficar atento",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Jogo de batalha de programação para ensino de comandos.\nA ser integrado com Portal Unificado futuramente.",
+        "progress_notes": "\nProtótipo de baixa fidelidade já apresentado e validado. Estudante está planejando interface e layout para visualização da ideia do jogo.",
+        "responsibility_notes": "Estudante está construindo o protótipo de baixa fidelidade e planejando layout.",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_software-learning",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_code_academy",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "plataforma-de-preparatorio-enem",
+      "enabled": true,
+      "company_name": "Plataforma de Preparatório ENEM",
+      "display_name": "Plataforma de Preparatório ENEM",
+      "project_name": "Plataforma de Preparatório ENEM",
+      "aliases": [],
+      "category": "edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-007",
+        "world_position": {
+          "x": 266.36,
+          "y": 0,
+          "z": -18.75
+        },
+        "rotation_y_deg": 280.0,
+        "size": {
+          "width": 39.2,
+          "depth": 34
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_plataforma-de-preparatorio-enem"
+      },
+      "building": {
+        "archetype": "bldg_edtech_campus",
+        "asset_key": "bldg_edtech_campus",
+        "scale": 0.9,
+        "footprint": {
+          "width": 25.2,
+          "depth": 19.8
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "glass_panels",
+        "interior_template": "interior_edtech",
+        "theme_description": "centro de estudos e simulados com biblioteca digital e painéis de questões",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Plataforma de Preparatório ENEM",
+          "subtext": "preparatório educacional",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "simulados",
+          "disciplinas",
+          "área de redação"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS3"
+        ],
+        "leaders": [
+          "JÚLIA DA SILVA VIEIRA"
+        ],
+        "member_count": 2,
+        "teams": [
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "JÚLIA DA SILVA VIEIRA"
+            ],
+            "members": [
+              {
+                "name": "DAVI SOUZA DO CARMO",
+                "role": "Back-end",
+                "status": "OK"
+              },
+              {
+                "name": "JÚLIA DA SILVA VIEIRA",
+                "role": "Planejamento do projeto e informações associadas a faculdades e conteúdos",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Criação de plataforma para estudos, voltado para o ENEM e Vestibulares.",
+        "progress_notes": "Estudantes já criaram a interface completa do projeto, sendo assim, o protótipo de funcionamento está coeso e muito bem estruturado.",
+        "responsibility_notes": "Davi está responsável pelo Back-end e Julia está no planejamentos em geral, reunindo informações e apresentação geral do projeto",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_edtech",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_edtech_campus",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "portal-unificado",
+      "enabled": true,
+      "company_name": "Portal Unificado",
+      "display_name": "Portal Unificado",
+      "project_name": "Portal Unificado",
+      "aliases": [],
+      "category": "edtech_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-008",
+        "world_position": {
+          "x": 262.19,
+          "y": 0,
+          "z": 59.0
+        },
+        "rotation_y_deg": 240.0,
+        "size": {
+          "width": 47.6,
+          "depth": 40.88
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_portal-unificado"
+      },
+      "building": {
+        "archetype": "bldg_digital_hub",
+        "asset_key": "bldg_digital_hub",
+        "scale": 1.12,
+        "footprint": {
+          "width": 33.6,
+          "depth": 26.88
+        },
+        "floors": 3,
+        "roof_style": "flat",
+        "facade_style": "glass_led",
+        "interior_template": "interior_portal_hub",
+        "theme_description": "hub digital escolar com portal central, totens e serviços integrados",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Portal Unificado",
+          "subtext": "portal escolar",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "portal de serviços",
+          "avisos e cronograma",
+          "biblioteca digital"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2"
+        ],
+        "leaders": [
+          "FELIPE FELIX MENDES"
+        ],
+        "member_count": 8,
+        "teams": [
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [
+              "FELIPE FELIX MENDES"
+            ],
+            "members": [
+              {
+                "name": "FELIPE FELIX MENDES",
+                "role": "Back-end",
+                "status": "OK"
+              },
+              {
+                "name": "JONAS AUGUSTO TREFELES DOS SANTOS",
+                "role": "Front-end",
+                "status": "OK"
+              },
+              {
+                "name": "JOÃO HENRIQUE BARÃO NASCIMENTO",
+                "role": "Back-end",
+                "status": "OK"
+              },
+              {
+                "name": "NATHAN CEZAR ALVES SANCHES",
+                "role": "Back-end",
+                "status": "OK"
+              },
+              {
+                "name": "RENATO YUDY AGOSTINHO DE ANDRADE",
+                "role": "Ideias e planejamento",
+                "status": "OK"
+              },
+              {
+                "name": "RUBYA VITORIA GONCALVES",
+                "role": "Ideias e planejamento",
+                "status": "OK"
+              },
+              {
+                "name": "TEODORO KREMER SERAFIM",
+                "role": "Front-end",
+                "status": "OK"
+              },
+              {
+                "name": "VICTÓRIA CRISTINE DOS SANTOS",
+                "role": "Front-end",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Portal Unificado onde os estudantes possam acessar o ambiente virtual. O portal irá conter:\nAvisos, Cronograma Escolar, Gestão de Biblioteca",
+        "progress_notes": "Definido as equipes e atribuído funções a cada um.\nTrabalho apresentado para a direção e validado.\nIdentificado gargalos na estrutura da equipe e realizado alterações.",
+        "responsibility_notes": "Back end (Felipe, João, Nathan)\nFront End (Victoria, Teodoro e Jonas)\nIdeias (Renato e Rubia)",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_edtech-platform",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_digital_hub",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "portal-unificado-gremio-estudantil",
+      "enabled": true,
+      "company_name": "Portal Unificado (Grêmio Estudantil)",
+      "display_name": "Portal Unificado (Grêmio Estudantil)",
+      "project_name": "Portal Unificado (Grêmio Estudantil)",
+      "aliases": [],
+      "category": "student_civic_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-009",
+        "world_position": {
+          "x": 196.94,
+          "y": 0,
+          "z": 101.49
+        },
+        "rotation_y_deg": 200.0,
+        "size": {
+          "width": 42.0,
+          "depth": 36.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_portal-unificado-gremio-estudantil"
+      },
+      "building": {
+        "archetype": "bldg_civic_hub",
+        "asset_key": "bldg_civic_hub",
+        "scale": 1.0,
+        "footprint": {
+          "width": 28.0,
+          "depth": 22.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "civic_glass",
+        "interior_template": "interior_civic_hub",
+        "theme_description": "centro cívico estudantil com painéis eleitorais, votações e mural do grêmio",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Portal Unificado (Grêmio Estudantil)",
+          "subtext": "portal do grêmio",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "chapas e votações",
+          "mural do grêmio",
+          "espaço de participação estudantil"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2"
+        ],
+        "leaders": [
+          "RAFAEL NASCIMENTO SILVA"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [
+              "RAFAEL NASCIMENTO SILVA"
+            ],
+            "members": [
+              {
+                "name": "ANNA BIATRICE PONTES SPANIER POLI",
+                "role": "Está responsável pelas ilustrações e sugestão em geral do layout",
+                "status": "OK"
+              },
+              {
+                "name": "MARIA FERNANDA DE GOIS FERREIRA FONTES",
+                "role": "Apresentação de ideias e sugestões e levantamento de informações",
+                "status": "OK"
+              },
+              {
+                "name": "MIGUEL NASCIMENTO SILVA",
+                "role": "Back end em geral e estrutura de apresentação",
+                "status": "OK"
+              },
+              {
+                "name": "MIRELLA FERNANDA BUENO SIQUEIRA",
+                "role": "Front-end em geral do site",
+                "status": "OK"
+              },
+              {
+                "name": "RAFAEL NASCIMENTO SILVA",
+                "role": "Back end em geral, login e estrutura de apresentação",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Estudantes estão planejando um sistema web do Grêmio Estudantil, onde estarão informações das chapas, sistema de votação e demais itens associados ao Grêmio Estudantil do AGV",
+        "progress_notes": "Front-end completo. \nEstudantes ainda estão trabalhando no sistema de login",
+        "responsibility_notes": "Maria F.\n- Ideias e palpites;\n\nMirela\n- Front End (interface da página)\n\nRafael\n- Estilização do site\n- Verificação de Palpites\n\nMiguel\n- Back End Geral do sites\n\nAnna Biatrice\n- Layout desenvolvido",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_student-civic-platform",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_civic_hub",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "portal-escolar-controle-de-pais",
+      "enabled": true,
+      "company_name": "Portal escolar - Controle de Pais",
+      "display_name": "Portal escolar - Controle de Pais",
+      "project_name": "Portal escolar - Controle de Pais",
+      "aliases": [],
+      "category": "edtech_platform",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-010",
+        "world_position": {
+          "x": 119.64,
+          "y": 0,
+          "z": 110.88
+        },
+        "rotation_y_deg": 160.0,
+        "size": {
+          "width": 41.0,
+          "depth": 35.6
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_portal-escolar-controle-de-pais"
+      },
+      "building": {
+        "archetype": "bldg_digital_hub",
+        "asset_key": "bldg_digital_hub",
+        "scale": 0.9,
+        "footprint": {
+          "width": 27.0,
+          "depth": 21.6
+        },
+        "floors": 3,
+        "roof_style": "flat",
+        "facade_style": "glass_led",
+        "interior_template": "interior_portal_hub",
+        "theme_description": "escritório de relacionamento escola-família com telas de acompanhamento",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Portal escolar - Controle de Pais",
+          "subtext": "portal para responsáveis",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "painel dos pais",
+          "comunicação família-escola",
+          "controle e relatórios"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 3,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "GUSTAVO CHAPAVAL ALVES",
+                "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+                "status": "OK"
+              },
+              {
+                "name": "GUSTAVO FURTADO PEDROSO",
+                "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+                "status": "OK"
+              },
+              {
+                "name": "Helena",
+                "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar"
+              }
+            ]
+          }
+        ],
+        "description": "Site para controle de faltas, ocorrências e notas dos estudantes, integrado a um sistema de notificações para visualização dos pais e controle tanto docente como pedagógico",
+        "progress_notes": "Os estudantes já definiram o Front-End do projeto, estando salvo já no Git Hub e com layout completo. O que falta pro momento, é integração com a base de dados do RCO Paraná",
+        "responsibility_notes": "Sem necessidade de apontar responsabilidades",
+        "alerts": [
+          "Nome abreviado ou não localizado na lista Téc. DS — validar"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_edtech-platform",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_digital_hub",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "projeto-torre-de-babel-site-educacional",
+      "enabled": true,
+      "company_name": "Projeto Torre de Babel (Site Educacional)",
+      "display_name": "Projeto Torre de Babel (Site Educacional)",
+      "project_name": "Projeto Torre de Babel (Site Educacional)",
+      "aliases": [],
+      "category": "edtech_languages",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-011",
+        "world_position": {
+          "x": 66.47,
+          "y": 0,
+          "z": 54.0
+        },
+        "rotation_y_deg": 120.0,
+        "size": {
+          "width": 40.0,
+          "depth": 36.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_projeto-torre-de-babel-site-educacional"
+      },
+      "building": {
+        "archetype": "bldg_language_center",
+        "asset_key": "bldg_language_center",
+        "scale": 1.0,
+        "footprint": {
+          "width": 26.0,
+          "depth": 22.0
+        },
+        "floors": 2,
+        "roof_style": "dome",
+        "facade_style": "stone_glass",
+        "interior_template": "interior_language_center",
+        "theme_description": "centro de idiomas com globo, símbolos linguísticos e salas culturais",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Projeto Torre de Babel (Site Educacional)",
+          "subtext": "plataforma educacional de idiomas",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "módulos de idiomas",
+          "conteúdo educacional",
+          "painéis multilíngues"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS3"
+        ],
+        "leaders": [
+          "GIOVANNY DA SILVA CABRAL"
+        ],
+        "member_count": 4,
+        "teams": [
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "GIOVANNY DA SILVA CABRAL"
+            ],
+            "members": [
+              {
+                "name": "DANIEL ARAUJO DOS SANTOS",
+                "role": "Desenvolveu boa parte da interface e demais itens da plataforma com uso de IA, projeto está bem construído",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "DANIEL AUGUSTO MACHADO MARTINS",
+                "role": "Planejamento da interface / front-end",
+                "status": "OK"
+              },
+              {
+                "name": "GIOVANNY DA SILVA CABRAL",
+                "role": "Coordenador geral do grupo e responsável pela programação back-end",
+                "status": "OK"
+              },
+              {
+                "name": "STEFFANY ELOISE DE SOUZA DIAS",
+                "role": "Planejamento da interface / front-end",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Desenvolvimento de um site de simulação para códigos de programação, para aprendizado.",
+        "progress_notes": "Giovani já desenvolveu boa parte da estrutura de login da home (tanto o front como o back end), além de estar planejando a tela inicial.",
+        "responsibility_notes": "Giovani irá estruturar toda a parte do back end, enquanto Steffani e Daniel irão planejar a interface",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_edtech-languages",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_language_center",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "simulador-virtual-de-quimica-fisica-e-biologia",
+      "enabled": true,
+      "company_name": "Simulador virtual de Química, Física e Biologia",
+      "display_name": "Simulador virtual de Química, Física e Biologia",
+      "project_name": "Simulador virtual de Química, Física e Biologia",
+      "aliases": [],
+      "category": "science_edtech",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-012",
+        "world_position": {
+          "x": 43.79,
+          "y": 0,
+          "z": -20.49
+        },
+        "rotation_y_deg": 80.0,
+        "size": {
+          "width": 44.6,
+          "depth": 37.4
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_simulador-virtual-de-quimica-fisica-e-biologia"
+      },
+      "building": {
+        "archetype": "bldg_science_lab",
+        "asset_key": "bldg_science_lab",
+        "scale": 0.9,
+        "footprint": {
+          "width": 30.6,
+          "depth": 23.4
+        },
+        "floors": 2,
+        "roof_style": "glass_dome",
+        "facade_style": "lab_glass",
+        "interior_template": "interior_science_lab",
+        "theme_description": "complexo científico com laboratórios virtuais de química, física e biologia",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Simulador virtual de Química, Física e Biologia",
+          "subtext": "simulador educacional",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "laboratório de química",
+          "laboratório de física",
+          "laboratório de biologia"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "BERNARDO CARVALHO BUSQUETE SENIUK"
+        ],
+        "member_count": 3,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "BERNARDO CARVALHO BUSQUETE SENIUK"
+            ],
+            "members": [
+              {
+                "name": "BERNARDO CARVALHO BUSQUETE SENIUK",
+                "role": "Grupo todo está empenhado na construção do projeto",
+                "status": "OK"
+              },
+              {
+                "name": "MAURICIO MARISTANY JUNIOR",
+                "role": "Grupo todo está empenhado na construção do projeto",
+                "status": "OK"
+              },
+              {
+                "name": "PEDRO IZIDORO NETO",
+                "role": "Grupo todo está empenhado na construção do projeto",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Um simulador virtual de elementos de aula da disciplina de Física, Química e Biologia",
+        "progress_notes": "Até o momento, estudantes desenvolveram toda a organização de informações sobre a tabela periódica. O objetivo é criar um sistema de tabela periódica interativa e se possível, gerar pequenas combinações",
+        "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_science-edtech",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_science_lab",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "sistema-competitivo-quizziz",
+      "enabled": true,
+      "company_name": "Sistema Competitivo Quizziz",
+      "display_name": "Sistema Competitivo Quizziz",
+      "project_name": "Sistema Competitivo Quizziz",
+      "aliases": [],
+      "category": "gamified_learning",
+      "zone": "Distrito Educação & Conhecimento",
+      "lot": {
+        "lot_id": "LOT-013",
+        "world_position": {
+          "x": 90.58,
+          "y": 0,
+          "z": -82.73
+        },
+        "rotation_y_deg": 40.0,
+        "size": {
+          "width": 46.0,
+          "depth": 40.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_sistema-competitivo-quizziz"
+      },
+      "building": {
+        "archetype": "bldg_quiz_arena",
+        "asset_key": "bldg_quiz_arena",
+        "scale": 1.0,
+        "footprint": {
+          "width": 32.0,
+          "depth": 26.0
+        },
+        "floors": 2,
+        "roof_style": "arena",
+        "facade_style": "led_panels",
+        "interior_template": "interior_quiz_arena",
+        "theme_description": "arena de quiz gamificado com placares, luzes e pods de desafio",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Sistema Competitivo Quizziz",
+          "subtext": "gamificação educacional",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "arena de quiz",
+          "placar competitivo",
+          "salas de desafio"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "PITTER VERDIANO DIAS"
+        ],
+        "member_count": 6,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "PITTER VERDIANO DIAS"
+            ],
+            "members": [
+              {
+                "name": "JOAQUIM LABORNE PEDRO",
+                "role": "Planejamento geral e controle do projeto",
+                "status": "OK"
+              },
+              {
+                "name": "LAVINIA HELENA DANA SILVA ALVES",
+                "role": "Construção dos slides e apresentação",
+                "status": "OK"
+              },
+              {
+                "name": "PITTER VERDIANO DIAS",
+                "role": "Planejamento geral e controle do projeto",
+                "status": "OK"
+              },
+              {
+                "name": "RAFAEL KISS FORTUNATO",
+                "role": "Integração de dados e back-end",
+                "status": "OK"
+              },
+              {
+                "name": "RODRIGO NERIS CAVALCANTI FILHO",
+                "role": "Construção dos slides e apresentação",
+                "status": "OK"
+              },
+              {
+                "name": "VICTOR OTAVIO VICTAL BORBA",
+                "role": "Integração de dados e back-end",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "O objetivo é criar um ambiente competitivo dentro do Quizziz, expandindo, dentro das possibilidades, a nível inter-escolar, com placares e metas para alunos e colégios.",
+        "progress_notes": "Grupo está planejando a interface visual dessa plataforma de dash's",
+        "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_gamified-learning",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_quiz_arena",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "gestao-interclasses-gestao-de-dados",
+      "enabled": true,
+      "company_name": "Gestão Interclasses (Gestão de dados)",
+      "display_name": "Gestão Interclasses (Gestão de dados)",
+      "project_name": "Gestão Interclasses (Gestão de dados)",
+      "aliases": [],
+      "category": "sports_data",
+      "zone": "Distrito Esportes & Eventos",
+      "lot": {
+        "lot_id": "LOT-014",
+        "world_position": {
+          "x": 0.0,
+          "y": 0,
+          "z": 100.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 54.0,
+          "depth": 44.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_gestao-interclasses-gestao-de-dados"
+      },
+      "building": {
+        "archetype": "bldg_sports_analytics",
+        "asset_key": "bldg_sports_analytics",
+        "scale": 1.25,
+        "footprint": {
+          "width": 40.0,
+          "depth": 30.0
+        },
+        "floors": 3,
+        "roof_style": "flat",
+        "facade_style": "data_glass",
+        "interior_template": "interior_analytics",
+        "theme_description": "centro analítico esportivo com telões estatísticos e sala de controle de partidas",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Gestão Interclasses (Gestão de dados)",
+          "subtext": "análise de dados esportivos",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "painel sofascore escolar",
+          "sala de métricas",
+          "estações de coleta de dados"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1",
+          "DS2",
+          "DS3"
+        ],
+        "leaders": [
+          "AILTON CORADASSI VIEIRA",
+          "GUILHERME ALEXANDRE BONAFINI PEREIRA"
+        ],
+        "member_count": 12,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "ARTHUR RIBEIRO HAILLER",
+                "role": "Não informada na planilha",
+                "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+              },
+              {
+                "name": "HELAMÃ FIRMO DA SILVA MOREIRA",
+                "role": "Não informada na planilha",
+                "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+              },
+              {
+                "name": "JOÃO GABRIEL NASCIMENTO SOUZA",
+                "role": "Não informada na planilha",
+                "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+              },
+              {
+                "name": "TALES YAN SIQUEIRA POLIDORO",
+                "role": "Não informada na planilha",
+                "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [
+              "AILTON CORADASSI VIEIRA"
+            ],
+            "members": [
+              {
+                "name": "AILTON CORADASSI VIEIRA",
+                "role": "Porta-voz da equipe do DS2, em todos os âmbitos do interclasses",
+                "status": "OK"
+              },
+              {
+                "name": "HENRY MATSUDA",
+                "role": "Coleta de dados dos jogos ao longo da semana para montagem da estatística",
+                "status": "OK"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "GUILHERME ALEXANDRE BONAFINI PEREIRA"
+            ],
+            "members": [
+              {
+                "name": "DÂMARIS MODESTO RIBEIRO",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "DÉRICK RODOLFO LAGOS TORRES",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "OK"
+              },
+              {
+                "name": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "OK"
+              },
+              {
+                "name": "HENZO HENRIQUE SANTOS PINTO",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "OK"
+              },
+              {
+                "name": "LUAN GABRIEL DE LIMA BORGES",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "OK"
+              },
+              {
+                "name": "LUCAS MATEUS DOMINICO",
+                "role": "Realizar análise de dados individual dos jogadores",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              }
+            ]
+          }
+        ],
+        "description": "Desenvolver métrica de avaliação dos jogadores, afim de gerar um sistema de análise estatística dos jogadores, tal como uma espécie de Sofascore\n\n- Desenvolver métrica de pontuação dos jogadores\n- Coleta de dados dos jogos\n- Desenvolvimento do app de análise",
+        "progress_notes": "Equipe já desenvolveu sistema parcial de notas, porém, não foi viabilizado, visto que o processo de coleta dos dados estava complexo. Estudantes estão revisando os itens afim de encontrar melhor forma de definir métrica de notas",
+        "responsibility_notes": "Redefinidas as responsabilidades dos estudantes, visto que o projeto se encontra em atraso",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos; Função pendente",
+          "Integrante não aparece na equipe da aba Projetos"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_sports-data",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_sports_analytics",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "gestao-interclasses-organizacao-geral-do-campeonato",
+      "enabled": true,
+      "company_name": "Gestão Interclasses (Organização geral do campeonato)",
+      "display_name": "Gestão Interclasses (Organização geral do campeonato)",
+      "project_name": "Gestão Interclasses (Organização geral do campeonato)",
+      "aliases": [],
+      "category": "sports_operations",
+      "zone": "Distrito Esportes & Eventos",
+      "lot": {
+        "lot_id": "LOT-015",
+        "world_position": {
+          "x": 66.57,
+          "y": 0,
+          "z": 138.37
+        },
+        "rotation_y_deg": 288.0,
+        "size": {
+          "width": 44.0,
+          "depth": 38.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_gestao-interclasses-organizacao-geral-do-campeonato"
+      },
+      "building": {
+        "archetype": "bldg_sports_ops",
+        "asset_key": "bldg_sports_ops",
+        "scale": 1.0,
+        "footprint": {
+          "width": 30.0,
+          "depth": 24.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "sport_modern",
+        "interior_template": "interior_sports_ops",
+        "theme_description": "quartel-general do campeonato com mapas, tabelas, agenda e sala de coordenação",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Gestão Interclasses (Organização geral do campeonato)",
+          "subtext": "gestão de eventos esportivos",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "central de organização",
+          "cronograma dos jogos",
+          "mural de equipes"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2",
+          "DS3"
+        ],
+        "leaders": [
+          "MURILO LUCAS ROCHA DO ROSÁRIO",
+          "MELANY NICOLE COSTA"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [
+              "MURILO LUCAS ROCHA DO ROSÁRIO"
+            ],
+            "members": [
+              {
+                "name": "DÃ GABRIEL SILVA VIDAL",
+                "role": "Construção do site de gestão dos jogos",
+                "status": "OK"
+              },
+              {
+                "name": "LUCAS PAREDES DE CAMPOS",
+                "role": "Organização de esportes individuais, tais como xadrez, tênis de mesa e artes marciais",
+                "status": "OK"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "MELANY NICOLE COSTA"
+            ],
+            "members": [
+              {
+                "name": "JOÃO PEDRO HENRIQUE BERNARDO",
+                "role": "Construção do site de gestão dos jogos",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "MELANY NICOLE COSTA",
+                "role": "Porta-voz da equipe do DS3, em todos os âmbitos do interclasses",
+                "status": "OK"
+              },
+              {
+                "name": "NÍVEA SUZANA DE VRIJ XAVIER",
+                "role": "Construção do site de gestão dos jogos",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "- Organização dos times\n- Organização dos jogos\n- Estrutura geral do campeonato",
+        "progress_notes": "Grupo do DS3 já criou a ideia da página do site.",
+        "responsibility_notes": "Redefinidas as responsabilidades dos estudantes, visto que o projeto se encontra em atraso",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_sports-operations",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_sports_ops",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "gestao-interclasses-transmissao-e-narracao",
+      "enabled": true,
+      "company_name": "Gestão Interclasses (Transmissão e Narração)",
+      "display_name": "Gestão Interclasses (Transmissão e Narração)",
+      "project_name": "Gestão Interclasses (Transmissão e Narração)",
+      "aliases": [],
+      "category": "sports_media",
+      "zone": "Distrito Esportes & Eventos",
+      "lot": {
+        "lot_id": "LOT-016",
+        "world_position": {
+          "x": 35.27,
+          "y": 0,
+          "z": 208.54
+        },
+        "rotation_y_deg": 216.0,
+        "size": {
+          "width": 54.0,
+          "depth": 44.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_gestao-interclasses-transmissao-e-narracao"
+      },
+      "building": {
+        "archetype": "bldg_broadcast_center",
+        "asset_key": "bldg_broadcast_center",
+        "scale": 1.25,
+        "footprint": {
+          "width": 40.0,
+          "depth": 30.0
+        },
+        "floors": 2,
+        "roof_style": "flat_antenna",
+        "facade_style": "broadcast_glass",
+        "interior_template": "interior_broadcast_center",
+        "theme_description": "centro de transmissão esportiva com cabine de narração, switcher e estúdio de OBS",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Gestão Interclasses (Transmissão e Narração)",
+          "subtext": "mídia esportiva",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "cabine de narração",
+          "controle de câmeras",
+          "sala de transmissão"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2",
+          "DS3"
+        ],
+        "leaders": [
+          "NYCOLAS ANDRÉ MENDES SANTANA",
+          "JHONNY LEENDER GONCALVES ALVES"
+        ],
+        "member_count": 10,
+        "teams": [
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [
+              "NYCOLAS ANDRÉ MENDES SANTANA"
+            ],
+            "members": [
+              {
+                "name": "ANA BEATRIZ PINTO MOREIRA",
+                "role": "Edição dos vídeos e gestão de recursos de mídia. Focando em criar material de documentário. Responsável pela narração dos jgos também",
+                "status": "OK"
+              },
+              {
+                "name": "JEAN VICTOR LAGOS MARCIO",
+                "role": "Edição dos vídeos e gestão de recursos de mídia. Focando em criar material de highlights e atuações individuais",
+                "status": "OK"
+              },
+              {
+                "name": "KAUA HENRIQUE FOSSILE RAMOS",
+                "role": "Narração e comentários dos jogos",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "MARIA EDUARDA RODRIGUES COSTA",
+                "role": "Controle de transmissão dos jogos",
+                "status": "OK"
+              },
+              {
+                "name": "MIGUEL DO CARMO LUZ",
+                "role": "Controle de transmissão dos jogos",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "MURILO LUCAS ROCHA DO ROSÁRIO",
+                "role": "Repórter e comentarista dos jogos",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "NYCOLAS ANDRÉ MENDES SANTANA",
+                "role": "Controle de transmissão dos jogos",
+                "status": "OK"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "JHONNY LEENDER GONCALVES ALVES"
+            ],
+            "members": [
+              {
+                "name": "JHONNY LEENDER GONCALVES ALVES",
+                "role": "Responsável pela transmissão dos jogos",
+                "status": "OK"
+              },
+              {
+                "name": "JÔNATAS SOUZA DA SILVA PEREIRA",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              },
+              {
+                "name": "LUKAS EDUARDO ZEMZISKY SIMPLICIO DA SILVA",
+                "role": "Repórter e comentarista dos jogos",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Jogos transmitidos pelo Youtube, com narração e transmissão. \n\nSerá um campeonato realizado no colégio (ou, caso possível, nos ginásios municipais Albertina ou Tramujas) e que será trasmitido online através do youtube, supervisionado pelos professores e pela escola.\nOs estudantes serão responsáveis pela organização do sistema de transmissão e comentários dos jogos.",
+        "progress_notes": "Grupo está encabido de realizar testes para validar qualidade da transmissão e gestão dos vídeos\n\nOrganizando as equipes e meio de transmissão ",
+        "responsibility_notes": "Planejamento da transmissão e recursos físicos: Ana Beatriz e Nycolas\nPlanejamento da transmissão (recursos tecnológicos): Maria Eduarda e Jean\n\n- Transmissão \n- Organização integral \n- Agendamento com o local de jogos\n\nAinda não definido responsáveis de forma individual",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos",
+          "Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_sports-media",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_broadcast_center",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "site-sobre-futebol",
+      "enabled": true,
+      "company_name": "Site sobre futebol",
+      "display_name": "Site sobre futebol",
+      "project_name": "Site sobre futebol",
+      "aliases": [],
+      "category": "sports_media",
+      "zone": "Distrito Esportes & Eventos",
+      "lot": {
+        "lot_id": "LOT-017",
+        "world_position": {
+          "x": -41.14,
+          "y": 0,
+          "z": 216.63
+        },
+        "rotation_y_deg": 144.0,
+        "size": {
+          "width": 42.8,
+          "depth": 35.6
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_site-sobre-futebol"
+      },
+      "building": {
+        "archetype": "bldg_broadcast_center",
+        "asset_key": "bldg_broadcast_center",
+        "scale": 0.9,
+        "footprint": {
+          "width": 28.8,
+          "depth": 21.6
+        },
+        "floors": 2,
+        "roof_style": "flat_antenna",
+        "facade_style": "broadcast_glass",
+        "interior_template": "interior_broadcast_center",
+        "theme_description": "redação esportiva com mural tático, notícias e vitrine de clubes",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Site sobre futebol",
+          "subtext": "portal esportivo",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "notícias de futebol",
+          "estatísticas",
+          "cobertura esportiva"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 1,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "ANDRE LUIS DA VEIGA SILVA",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              }
+            ]
+          }
+        ],
+        "description": "Gestão interna de amistosos na região de PAranaguá",
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": [
+          "Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_sports-media",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_broadcast_center",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "time-para-o-escolares",
+      "enabled": true,
+      "company_name": "Time para o Escolares",
+      "display_name": "Time para o Escolares",
+      "project_name": "Time para o Escolares",
+      "aliases": [],
+      "category": "sports_operations",
+      "zone": "Distrito Esportes & Eventos",
+      "lot": {
+        "lot_id": "LOT-018",
+        "world_position": {
+          "x": -57.06,
+          "y": 0,
+          "z": 141.46
+        },
+        "rotation_y_deg": 72.0,
+        "size": {
+          "width": 44.0,
+          "depth": 38.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_time-para-o-escolares"
+      },
+      "building": {
+        "archetype": "bldg_sports_ops",
+        "asset_key": "bldg_sports_ops",
+        "scale": 1.0,
+        "footprint": {
+          "width": 30.0,
+          "depth": 24.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "sport_modern",
+        "interior_template": "interior_sports_ops",
+        "theme_description": "centro de gestão esportiva escolar com cronogramas, vestiário conceitual e painéis de equipes",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Time para o Escolares",
+          "subtext": "gestão esportiva escolar",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "gestão de equipes",
+          "modalidades escolares",
+          "agenda esportiva"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1",
+          "DS2"
+        ],
+        "leaders": [
+          "PAULO KALED FERNANDES VIDAL"
+        ],
+        "member_count": 4,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "PAULO KALED FERNANDES VIDAL"
+            ],
+            "members": [
+              {
+                "name": "NATHAN HENRIQUE SILVA CORREA",
+                "role": "Não informada na planilha",
+                "status": "Integrante não aparece na equipe da aba Projetos; Função pendente"
+              },
+              {
+                "name": "PAULO KALED FERNANDES VIDAL",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS2",
+            "turma": "DS2",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "ANDRE PYETRO GOMES BATISTA",
+                "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "ELCIO CRUZ DA VEIGA",
+                "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              }
+            ]
+          }
+        ],
+        "description": "Os estudantes irão planejar processo seletivo para o time de futebol, cronogramas de treinamento e demais itens associados para uso do docente que controla time dos escolares.",
+        "progress_notes": "Sem interesse dos estudantes, não apresentaram nada de planejamento.",
+        "responsibility_notes": "Ainda não definidas responsabilidades individuais",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos; Função pendente",
+          "Função pendente",
+          "Integrante não aparece na equipe da aba Projetos"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_sports-operations",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_sports_ops",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "campeonato-de-jogos-eletronicos",
+      "enabled": true,
+      "company_name": "Campeonato de Jogos Eletrônicos",
+      "display_name": "Campeonato de Jogos Eletrônicos",
+      "project_name": "Campeonato de Jogos Eletrônicos",
+      "aliases": [],
+      "category": "games_esports",
+      "zone": "Distrito Games & eSports",
+      "lot": {
+        "lot_id": "LOT-019",
+        "world_position": {
+          "x": 160.0,
+          "y": 0,
+          "z": 112.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 52.0,
+          "depth": 46.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_campeonato-de-jogos-eletronicos"
+      },
+      "building": {
+        "archetype": "bldg_esports_arena",
+        "asset_key": "bldg_esports_arena",
+        "scale": 1.0,
+        "footprint": {
+          "width": 38.0,
+          "depth": 32.0
+        },
+        "floors": 2,
+        "roof_style": "arena",
+        "facade_style": "neon_led",
+        "interior_template": "interior_esports_arena",
+        "theme_description": "arena de eSports com telões, iluminação neon e lounge gamer",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Campeonato de Jogos Eletrônicos",
+          "subtext": "evento e organização de eSports",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "arena competitiva",
+          "discord hub",
+          "painéis de chaves e campeonatos"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS3"
+        ],
+        "leaders": [
+          "ADRIAN KURTS PEREIRA DE OLIVEIRA"
+        ],
+        "member_count": 6,
+        "teams": [
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "ADRIAN KURTS PEREIRA DE OLIVEIRA"
+            ],
+            "members": [
+              {
+                "name": "ADRIAN KURTS PEREIRA DE OLIVEIRA",
+                "role": "Organização em geral, gestão dos grupos do discord e contato direto da equipe",
+                "status": "OK"
+              },
+              {
+                "name": "EDUARDO SZCREPANSKI DE ALMEIDA NIZ",
+                "role": "Organização em geral do formulário e apresentação de ideias",
+                "status": "OK"
+              },
+              {
+                "name": "JHONATAN ALVES BRONDANI",
+                "role": "Auxilio no discord e preparação nos jogos eletrônicos",
+                "status": "OK"
+              },
+              {
+                "name": "LUCAS MARINHO DE FREITAS",
+                "role": "Auxílio na divulgação da mídia e suporte em geral",
+                "status": "OK"
+              },
+              {
+                "name": "PIERRE PEREIRA WAZONKOSKI DELPHIM",
+                "role": "Suporte em geral e auxílio na disponibilização de recursos",
+                "status": "OK"
+              },
+              {
+                "name": "TIAGO MAHMOUD SAID",
+                "role": "Responsável pela transmissão e gestão geral dessa função",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Campeonato terá sistema de organização com equipe de 5 integrantes e a partir da quantidade de pessoas interessadas, será estruturado o campeonato em si e a premiação",
+        "progress_notes": "Equipe já construiu formulário e coleta de dados está finalizada.\nPlanejamento final agora será do cronograma, dependente da montagem das equipes a ser finalizada.\nAinda é preciso também, verificar a transmissão.",
+        "responsibility_notes": "Adrian - Organização e gestão;\nDaniel - Analista de partida Free Fire;\nTiago - Transmissão e Narração;\nJhonatan - Programação dos Bot's Discord e Analista Clash Royale;\nPierre - Analista de partida de CS;\nLucas M. - Comentarista em geral; Analista de Fortnite;\nEduardo - Analista de Clash Royale.",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_games-esports",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_esports_arena",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "the-last-quest",
+      "enabled": true,
+      "company_name": "The Last Quest",
+      "display_name": "The Last Quest",
+      "project_name": "The Last Quest",
+      "aliases": [],
+      "category": "games",
+      "zone": "Distrito Games & eSports",
+      "lot": {
+        "lot_id": "LOT-020",
+        "world_position": {
+          "x": 160.0,
+          "y": 0,
+          "z": 218.0
+        },
+        "rotation_y_deg": 180.0,
+        "size": {
+          "width": 44.0,
+          "depth": 38.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_the-last-quest"
+      },
+      "building": {
+        "archetype": "bldg_game_studio",
+        "asset_key": "bldg_game_studio",
+        "scale": 1.0,
+        "footprint": {
+          "width": 30.0,
+          "depth": 24.0
+        },
+        "floors": 3,
+        "roof_style": "angular",
+        "facade_style": "dark_glass_neon",
+        "interior_template": "interior_game_studio",
+        "theme_description": "estúdio de games com estética de fantasia e tecnologia, torres e runas digitais",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "The Last Quest",
+          "subtext": "jogo digital",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "game studio",
+          "galeria de personagens",
+          "área de playtest"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "MATHEUS SCOMAÇÃO CAMPREGHER"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "MATHEUS SCOMAÇÃO CAMPREGHER"
+            ],
+            "members": [
+              {
+                "name": "CAUA DO ROSARIO SIQUEIRA XAVIER",
+                "role": "Programação e designer",
+                "status": "OK"
+              },
+              {
+                "name": "GUSTAVO HENRIQUE DOS SANTOS ALVES",
+                "role": "Efeitos sonoros e musicais",
+                "status": "OK"
+              },
+              {
+                "name": "JEAN CARLOS RODRIGUES DOS SANTOS FILHO",
+                "role": "Programação e efeitos sonoros",
+                "status": "OK"
+              },
+              {
+                "name": "LUCAS GUSTAVO RAMOS AMORIM",
+                "role": "Designer",
+                "status": "OK"
+              },
+              {
+                "name": "MATHEUS SCOMAÇÃO CAMPREGHER",
+                "role": "Programação e roteiro",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Parecido com o grupo anterior que sugeriu jogo, porém, a interação com o cenaŕio se dará em salas com sistema de \"Quizzes\"",
+        "progress_notes": "Grupo já está desenhando o protótipo de baixa fidelidade, para apresentar o planejamento geral do jogo.",
+        "responsibility_notes": "Estudantes devem apresentar protótipo de baixa fidelidade.",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_games",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_game_studio",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "museu-virtual-agv-mundo-virtual-agv",
+      "enabled": true,
+      "company_name": "Museu Virtual AGV / Mundo Virtual AGV",
+      "display_name": "Museu Virtual AGV / Mundo Virtual AGV",
+      "project_name": "Mundo Virtual AGV",
+      "aliases": [
+        "Museu Virtual AGV",
+        "Mundo Virtual AGV"
+      ],
+      "category": "immersive_virtual",
+      "zone": "Distrito Imersivo & Virtual",
+      "lot": {
+        "lot_id": "LOT-021",
+        "world_position": {
+          "x": 160,
+          "y": 0,
+          "z": -160
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 48.2,
+          "depth": 48.2
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_museu-virtual-agv-mundo-virtual-agv"
+      },
+      "building": {
+        "archetype": "bldg_immersive_dome",
+        "asset_key": "bldg_immersive_dome",
+        "scale": 0.9,
+        "footprint": {
+          "width": 34.2,
+          "depth": 34.2
+        },
+        "floors": 2,
+        "roof_style": "dome",
+        "facade_style": "holographic_glass",
+        "interior_template": "interior_immersive",
+        "theme_description": "domo futurista imersivo com hologramas, VR e galeria virtual",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Museu Virtual AGV / Mundo Virtual AGV",
+          "subtext": "experiência imersiva",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "museu virtual",
+          "experiências VR",
+          "mapa 3D do AGV"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1"
+        ],
+        "leaders": [
+          "ANA CLARA SORIANI NUNES"
+        ],
+        "member_count": 3,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "ANA CLARA SORIANI NUNES"
+            ],
+            "members": [
+              {
+                "name": "ANA CLARA SORIANI NUNES",
+                "role": "Pesquisa e planejamento (projeto ainda na casca)",
+                "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+              },
+              {
+                "name": "HEITOR BARROS MARCOS",
+                "role": "Pesquisa e planejamento (projeto ainda na casca)",
+                "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+              },
+              {
+                "name": "HELOISA EURICH DE SOUZA IZAIAS",
+                "role": "Pesquisa e planejamento (projeto ainda na casca)",
+                "status": "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+              }
+            ]
+          }
+        ],
+        "description": "Com uso de óculos RA/RV, criar um mundo virtual que permita explicar conceitos ou uma história, com base na interação entre usuário e mundo digital.",
+        "progress_notes": "Os estudantes irão planejar qual conteúdo que gostarão de trabalhar como personagens virtuais.",
+        "responsibility_notes": "Não atrubuído responsabilidades ainda, visto que ainda está em fase de planejamento.",
+        "alerts": [
+          "Nome divergente: aba Projetos usa “Museu Virtual AGV”"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_immersive-virtual",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_immersive_dome",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "clube-robotica",
+      "enabled": true,
+      "company_name": "Clube Robótica",
+      "display_name": "Clube Robótica",
+      "project_name": "Clube Robótica",
+      "aliases": [],
+      "category": "robotics_maker",
+      "zone": "Distrito Maker & Robótica",
+      "lot": {
+        "lot_id": "LOT-022",
+        "world_position": {
+          "x": -160,
+          "y": 0,
+          "z": 160
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 59.0,
+          "depth": 49.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_clube-robotica"
+      },
+      "building": {
+        "archetype": "bldg_maker_lab",
+        "asset_key": "bldg_maker_lab",
+        "scale": 1.25,
+        "footprint": {
+          "width": 45.0,
+          "depth": 35.0
+        },
+        "floors": 2,
+        "roof_style": "industrial",
+        "facade_style": "metal_glass",
+        "interior_template": "interior_maker_lab",
+        "theme_description": "laboratório maker com braços robóticos, kits, bancada eletrônica e impressora 3D",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Clube Robótica",
+          "subtext": "maker e robótica",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "oficina maker",
+          "área de testes",
+          "exposição de protótipos"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS1",
+          "DS3"
+        ],
+        "leaders": [
+          "MELISSA BEATRIZ DEZIDERIO",
+          "DANIELY FERNANDES TIXILISKI"
+        ],
+        "member_count": 11,
+        "teams": [
+          {
+            "team_name": "Equipe DS1",
+            "turma": "DS1",
+            "leader_names": [
+              "MELISSA BEATRIZ DEZIDERIO"
+            ],
+            "members": [
+              {
+                "name": "ALANA ARAUJO SANTOS DIAS",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              },
+              {
+                "name": "GABRIELA CORREIA SILVEIRA",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              },
+              {
+                "name": "HIGOR DO ESPIRITO SANTO PEREIRA",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              },
+              {
+                "name": "JOAO VICTOR CARDOSO BORBA",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              },
+              {
+                "name": "RYAN CORREA BARBOZA",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              },
+              {
+                "name": "SERGIO KUBA NETO",
+                "role": "Participando no inventário de robótica e seguindo orientações corretas junto a equipe do 3º DS",
+                "status": "OK"
+              }
+            ]
+          },
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "DANIELY FERNANDES TIXILISKI"
+            ],
+            "members": [
+              {
+                "name": "DANIELY FERNANDES TIXILISKI",
+                "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+                "status": "OK"
+              },
+              {
+                "name": "ENZO DOS SANTOS SERAFIM",
+                "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+                "status": "OK"
+              },
+              {
+                "name": "LETICIA CANDIDO MENDES",
+                "role": "Inventário geral dos equipamentos, desde organização nas caixas e contabilização dos mesmos",
+                "status": "OK"
+              },
+              {
+                "name": "LUAN FELIPE RUSSI MACHADO",
+                "role": "Inventário geral dos equipamentos, estando inicialmente responsável pela gestão de dados",
+                "status": "OK"
+              },
+              {
+                "name": "PAULO AFONSO NEUMANN BAPTISTEL ALVES",
+                "role": "Inventário, testes de equipamentos e operação/planejamento da impressora 3D",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Parte 1 - Inventário dos materiais e equipamentos junto ao DS3;\nParte 2 - Teste de qualidade;\nParte 3 - Aulas iniciais de robótica\nParte 4 - Início da coleta de ideias",
+        "progress_notes": "Equipe ainda não participou do inventário, visto que escolheram recentemente esse projeto. Apenas alguns conheceram parcialmente os equipamentos, enquanto a turma do DS2, estava realizando o inventário inicial dos equipamentos.",
+        "responsibility_notes": "Não atrubuído responsabilidades ainda, visto que devem participar do inventário e testes para conhecer equipamentos.",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_robotics-maker",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_maker_lab",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "clube-da-radio-agv",
+      "enabled": true,
+      "company_name": "Clube da Rádio AGV",
+      "display_name": "Clube da Rádio AGV",
+      "project_name": "Clube da Rádio AGV",
+      "aliases": [],
+      "category": "media_communication",
+      "zone": "Distrito Mídia & Comunicação",
+      "lot": {
+        "lot_id": "LOT-023",
+        "world_position": {
+          "x": 0.0,
+          "y": 0,
+          "z": -208.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 47.6,
+          "depth": 40.88
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_clube-da-radio-agv"
+      },
+      "building": {
+        "archetype": "bldg_media_studio",
+        "asset_key": "bldg_media_studio",
+        "scale": 1.12,
+        "footprint": {
+          "width": 33.6,
+          "depth": 26.88
+        },
+        "floors": 2,
+        "roof_style": "flat_antenna",
+        "facade_style": "studio_glass",
+        "interior_template": "interior_media_studio",
+        "theme_description": "estúdio de rádio e podcast com cabine acústica, mesas de som e newsroom",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Clube da Rádio AGV",
+          "subtext": "mídia escolar",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "estúdio de gravação",
+          "sala de edição",
+          "mural de notícias"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS3"
+        ],
+        "leaders": [
+          "JULIA ARTIGAS DE CASTRO"
+        ],
+        "member_count": 7,
+        "teams": [
+          {
+            "team_name": "Equipe DS3",
+            "turma": "DS3",
+            "leader_names": [
+              "JULIA ARTIGAS DE CASTRO"
+            ],
+            "members": [
+              {
+                "name": "CARLA KATHIELY DOS SANTOS SOUZA",
+                "role": "Entrevistadora e organizadora de manchetes.\nResponsável pela pesquisa de notícias e acontecimentos, preparação de perguntas para as entrevistas e apresentação dos conteúdos",
+                "status": "OK"
+              },
+              {
+                "name": "DANIEL CARVALHO DE PAULO",
+                "role": "Roteiro",
+                "status": "OK"
+              },
+              {
+                "name": "FELIPE MENDES ALVES",
+                "role": "Oratória",
+                "status": "OK"
+              },
+              {
+                "name": "JULIA ARTIGAS DE CASTRO",
+                "role": "Criação de roteiro, além de estar na oratória e no comando do grupo",
+                "status": "OK"
+              },
+              {
+                "name": "KARINE RODRIGUES DE OLIVEIRA",
+                "role": "Mídia",
+                "status": "OK"
+              },
+              {
+                "name": "LARA AMANDA LOPES DO ROSARIO",
+                "role": "Oratória",
+                "status": "OK"
+              },
+              {
+                "name": "LARISSA NAGEL ALVES",
+                "role": "Gestão de recursos e informações, além de também fazer parte da oratória",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Estudantes irão criar um clube de rádio para transmissão interna, bem como, externa.\nSerá definido cronograma de transmissões de notícias, informes.",
+        "progress_notes": "Estudantes já definiram parte da estrutura e a rádio AGV já está criada",
+        "responsibility_notes": "Roteiristas: Daniel e Artigas\n\nMídia: Karina e Larissa\n\nOratória: Felipe, Carla e Lara",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_media-communication",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_media_studio",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "radio-agv-site",
+      "enabled": true,
+      "company_name": "Rádio AGV +Site",
+      "display_name": "Rádio AGV +Site",
+      "project_name": "Rádio AGV +Site",
+      "aliases": [],
+      "category": "media_communication",
+      "zone": "Distrito Mídia & Comunicação",
+      "lot": {
+        "lot_id": "LOT-024",
+        "world_position": {
+          "x": 0.0,
+          "y": 0,
+          "z": -102.0
+        },
+        "rotation_y_deg": 180.0,
+        "size": {
+          "width": 41.0,
+          "depth": 35.6
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_radio-agv-site"
+      },
+      "building": {
+        "archetype": "bldg_media_studio",
+        "asset_key": "bldg_media_studio",
+        "scale": 0.9,
+        "footprint": {
+          "width": 27.0,
+          "depth": 21.6
+        },
+        "floors": 2,
+        "roof_style": "flat_antenna",
+        "facade_style": "studio_glass",
+        "interior_template": "interior_media_studio",
+        "theme_description": "estúdio multiplataforma de rádio + portal web com newsroom digital",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Rádio AGV +Site",
+          "subtext": "mídia e portal",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "estúdio ao vivo",
+          "site da rádio",
+          "central de conteúdo"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "Téc. DS"
+        ],
+        "leaders": [],
+        "member_count": 2,
+        "teams": [
+          {
+            "team_name": "Equipe Téc. DS",
+            "turma": "Téc. DS",
+            "leader_names": [],
+            "members": [
+              {
+                "name": "EDUARDA DIAS MENNA",
+                "role": "Não informada na planilha",
+                "status": "Função pendente"
+              },
+              {
+                "name": "Matheus",
+                "role": "Não informada na planilha",
+                "status": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+              }
+            ]
+          }
+        ],
+        "description": null,
+        "progress_notes": null,
+        "responsibility_notes": null,
+        "alerts": [
+          "Função pendente",
+          "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_media-communication",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_media_studio",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "gitdash",
+      "enabled": true,
+      "company_name": "GitDash",
+      "display_name": "GitDash",
+      "project_name": "Mini Startup's",
+      "aliases": [],
+      "category": "startup_software",
+      "zone": "Praça das Startups",
+      "lot": {
+        "lot_id": "LOT-025",
+        "world_position": {
+          "x": 0.0,
+          "y": 0,
+          "z": -48.0
+        },
+        "rotation_y_deg": 0.0,
+        "size": {
+          "width": 38.0,
+          "depth": 34.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_gitdash"
+      },
+      "building": {
+        "archetype": "bldg_startup_software",
+        "asset_key": "bldg_startup_software",
+        "scale": 1.0,
+        "footprint": {
+          "width": 24.0,
+          "depth": 20.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "startup_glass",
+        "interior_template": "interior_startup",
+        "theme_description": "startup de desenvolvimento com estética clean, monitores com Git/commits e parede de post-its",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "GitDash",
+          "subtext": "mini startup de software",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "squad room",
+          "painel de commits",
+          "laboratório de IA para revisão de código"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2"
+        ],
+        "leaders": [
+          "THOMAS FELIPE OLIVEIRA THOME"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "GitDash",
+            "turma": "DS2",
+            "leader_names": [
+              "THOMAS FELIPE OLIVEIRA THOME"
+            ],
+            "members": [
+              {
+                "name": "BENICIO DOS SANTOS DA SILVA",
+                "role": "GitDash. Back End. Buscar uma forma de integrar uma IA para validar a diferença entre commit's e concluir o trecho de validação dos commit's que estava planejado.",
+                "status": "OK"
+              },
+              {
+                "name": "GABRIEL GIACOMIN SALVADOR",
+                "role": "GitDash. Front-end. Está dependendo do Luan, portanto, ainda não produziu nada. Alternativa sugerida, validar o layout e o sistea de interação da plataforma.",
+                "status": "OK"
+              },
+              {
+                "name": "LUAN RAFAEL SOUZA DE PAULA",
+                "role": "GitDash\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+                "status": "OK"
+              },
+              {
+                "name": "RUAN PHELIPE BARCELOS ELESIS",
+                "role": "GitDash",
+                "status": "OK"
+              },
+              {
+                "name": "VINICIUS SANTANA DOS SANTOS",
+                "role": "GitDash. Vinícius não produz e não possui interesse segundo a equipe, portanto, deve ser avaliado a parte quando vier, pois está ausente da aula.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+        "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+        "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_startup-software",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_startup_software",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "rede-agv",
+      "enabled": true,
+      "company_name": "Rede AGV",
+      "display_name": "Rede AGV",
+      "project_name": "Mini Startup's",
+      "aliases": [],
+      "category": "startup_social",
+      "zone": "Praça das Startups",
+      "lot": {
+        "lot_id": "LOT-026",
+        "world_position": {
+          "x": 50.23,
+          "y": 0,
+          "z": 29.0
+        },
+        "rotation_y_deg": 240.0,
+        "size": {
+          "width": 38.0,
+          "depth": 34.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_rede-agv"
+      },
+      "building": {
+        "archetype": "bldg_startup_social",
+        "asset_key": "bldg_startup_social",
+        "scale": 1.0,
+        "footprint": {
+          "width": 24.0,
+          "depth": 20.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "social_led",
+        "interior_template": "interior_startup",
+        "theme_description": "startup de rede social com feed holográfico, mural comunitário e hub social",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Rede AGV",
+          "subtext": "mini startup de rede social",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "feed social",
+          "perfis e comunidades",
+          "sala de design social"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2"
+        ],
+        "leaders": [
+          "THOMAS FELIPE OLIVEIRA THOME"
+        ],
+        "member_count": 5,
+        "teams": [
+          {
+            "team_name": "Rede AGV",
+            "turma": "DS2",
+            "leader_names": [
+              "THOMAS FELIPE OLIVEIRA THOME"
+            ],
+            "members": [
+              {
+                "name": "ANDRIELLYN MARTINS OLIVEIRA DOS SANTOS",
+                "role": "Rede Social AGV - Responsável pelo Front End. Depende de Giovana, que não está participando no envio das ideias e layout.\nSegundo equipe, está bem organizada, e não prejudica o andamento.",
+                "status": "OK"
+              },
+              {
+                "name": "ENTHONY GABRIEL ALVES DOS SANTOS",
+                "role": "Rede Social AGV - Apresentação e Experiência do Usuário. Após conversa, ficou definido como líder da equipe, para não depender demais das atividades dos demais colegas, pois não se torna possível avaliação do app se não está funcional.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+                "status": "OK"
+              },
+              {
+                "name": "GIOVANA JASCESKI CAVALHEIRO",
+                "role": "Rede Social AGV - Fica em aberto, está responsável pelos layout's, porém, falta demais e portanto, não entrega. Quando está em casa, não produz, segundo colegas, produz melhor quando está no colégio.",
+                "status": "OK"
+              },
+              {
+                "name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+                "role": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+                "status": "Integrante não aparece na equipe da aba Projetos"
+              },
+              {
+                "name": "MICKAEL VIANA DE CASTRO",
+                "role": "Rede Social AGV - Banco de dados. Sem particpação no momento.\nTeste de Firebase e SQLite, inserindo nome dos estudantes e criando tabela lá",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+        "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+        "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+        "alerts": [
+          "Integrante não aparece na equipe da aba Projetos"
+        ]
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_startup-social",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_startup_social",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    },
+    {
+      "id": "trampo-certo",
+      "enabled": true,
+      "company_name": "Trampo Certo",
+      "display_name": "Trampo Certo",
+      "project_name": "Mini Startup's",
+      "aliases": [],
+      "category": "startup_jobs",
+      "zone": "Praça das Startups",
+      "lot": {
+        "lot_id": "LOT-027",
+        "world_position": {
+          "x": -41.57,
+          "y": 0,
+          "z": 24.0
+        },
+        "rotation_y_deg": 120.0,
+        "size": {
+          "width": 38.0,
+          "depth": 34.0
+        },
+        "road_connection": true,
+        "sidewalk_connection": true,
+        "landscape_preset": "tech_campus_default",
+        "spawn_anchor": "spawn_trampo-certo"
+      },
+      "building": {
+        "archetype": "bldg_startup_jobs",
+        "asset_key": "bldg_startup_jobs",
+        "scale": 1.0,
+        "footprint": {
+          "width": 24.0,
+          "depth": 20.0
+        },
+        "floors": 2,
+        "roof_style": "flat",
+        "facade_style": "startup_glass",
+        "interior_template": "interior_startup",
+        "theme_description": "startup de empregos e oportunidades com mural de vagas e sala de carreira",
+        "lod": {
+          "lod0_distance": 35,
+          "lod1_distance": 75,
+          "lod2_distance": 140,
+          "billboard_distance": 220,
+          "disable_interior_distance": 55
+        },
+        "collision": {
+          "enabled": true,
+          "type": "compound_boxes",
+          "walkable_entry": true,
+          "stairs_have_collision": true
+        },
+        "navigation": {
+          "navmesh_enabled": true,
+          "entrance_nav_link": true,
+          "npc_walkable": true
+        }
+      },
+      "signage": {
+        "front_sign": {
+          "text": "Trampo Certo",
+          "subtext": "mini startup de empregabilidade",
+          "visible_distance": 95,
+          "billboard_to_camera": false
+        },
+        "lot_totem": {
+          "enabled": true,
+          "fields": [
+            "company_name",
+            "project_name",
+            "turmas",
+            "leaders",
+            "member_count"
+          ]
+        },
+        "team_wall_inside": true
+      },
+      "interaction": {
+        "trigger_radius": 5.5,
+        "on_approach_panel": true,
+        "enter_building": true,
+        "show_team": true,
+        "show_project": true,
+        "fast_travel_unlock_on_visit": true,
+        "buttons": [
+          "Conhecer projeto",
+          "Entrar no prédio",
+          "Ver equipe"
+        ]
+      },
+      "interior": {
+        "enabled": true,
+        "stream_on_enter": true,
+        "unload_on_exit": true,
+        "rooms": [
+          {
+            "id": "reception",
+            "type": "reception",
+            "title": "Recepção",
+            "content_bindings": [
+              "company_name",
+              "project_name",
+              "description"
+            ]
+          },
+          {
+            "id": "team-room",
+            "type": "team_gallery",
+            "title": "Equipe",
+            "content_bindings": [
+              "teams",
+              "leaders",
+              "turmas"
+            ]
+          },
+          {
+            "id": "project-lab",
+            "type": "project_showcase",
+            "title": "Projeto / Protótipo",
+            "content_bindings": [
+              "progress_notes",
+              "responsibility_notes",
+              "interior_focus"
+            ]
+          }
+        ],
+        "focus_areas": [
+          "mural de vagas",
+          "matching de perfis",
+          "sala de carreira"
+        ]
+      },
+      "data_bindings": {
+        "turmas": [
+          "DS2"
+        ],
+        "leaders": [
+          "THOMAS FELIPE OLIVEIRA THOME"
+        ],
+        "member_count": 4,
+        "teams": [
+          {
+            "team_name": "Trampo Certo",
+            "turma": "DS2",
+            "leader_names": [
+              "THOMAS FELIPE OLIVEIRA THOME"
+            ],
+            "members": [
+              {
+                "name": "ALESSANDRO SANTIAGO DOS SANTOS SILVA JUNIOR",
+                "role": "A princípio, responsável pelas apresentações. Mas será remanejado para o grupo Trampo certo.",
+                "status": "OK"
+              },
+              {
+                "name": "ARTHUR FERNANDES RAMOS",
+                "role": "Trampo Certo",
+                "status": "OK"
+              },
+              {
+                "name": "PAULO CESAR AMORIM FILHO",
+                "role": "Trampo Certo.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+                "status": "OK"
+              },
+              {
+                "name": "THOMAS FELIPE OLIVEIRA THOME",
+                "role": "Trampo Certo. Líder da equipe no geral, está envolvido em todos os projetos e está sendo paticipativo principalmente no projeto do TRampo certo, embora os demais, também sejam de sua autoria.",
+                "status": "OK"
+              }
+            ]
+          }
+        ],
+        "description": "Em resumo, os estudantes estão trabalhando na construção de um portifólio geral de projetos a serem validados e posteriormente construídos, tais como web sites ou aplicativos, afim de atender uma demanda de mercado ou apresentar uma simplificação ou solução para dado problema",
+        "progress_notes": "Equipe 1 - Trampo certo\nThomas, Benício, João P. e Mickael\n\n\nEquipe 2 - Git Dash\nGabriel, Ruan, Vinícius e Arthur\n\nEquipe 3 - Rede AGV\nAndriellen, Gyovana, Enthony, Paulo e Luan\n\nAlessandro (Slides em geral)",
+        "responsibility_notes": "Definido responsabilidades em acordo com os grupos definidos, como descritos na coluna anterior. ",
+        "alerts": []
+      },
+      "render_modes": {
+        "2D": {
+          "enabled": true,
+          "sprite_key": "sprite_startup-jobs",
+          "use_simplified_collision": true,
+          "interior_mode": "panel_or_room_scene",
+          "max_dynamic_props": 10
+        },
+        "3D": {
+          "enabled": true,
+          "model_key": "bldg_startup_jobs",
+          "interior_mode": "streamed_3d",
+          "max_dynamic_props": 35
+        }
+      }
+    }
+  ],
+  "administrative_data": {
+    "students_without_project": [
+      {
+        "company_or_project": "SEM PROJETO",
+        "turma": "DS3",
+        "student_name": "ANDRE ROBERTO MARQUES GUIMARAES JUNIOR",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Sem projeto definido; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "SEM PROJETO",
+        "turma": "DS2",
+        "student_name": "LUIZA MARTINS OLIVEIRA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Sem projeto definido; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "SEM PROJETO",
+        "turma": "DS3",
+        "student_name": "NATHAN RAMOS PINHEIRO DA SILVA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Sem projeto definido; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      }
+    ],
+    "pending_roles_and_alerts": [
+      {
+        "company_or_project": "Dashboard's para análise de dados",
+        "turma": "Téc. DS",
+        "student_name": "LUIZ FERNANDO TIBILETE NETO",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Dashboard's para análise de dados",
+        "turma": "Téc. DS",
+        "student_name": "MARELIS CRISTINE RODRIGUES DE OLIVEIRA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+        "turma": "DS3",
+        "student_name": "JÔNATAS SOUZA DA SILVA PEREIRA",
+        "role": "Não informada na planilha",
+        "leader": "JHONNY LEENDER GONCALVES ALVES",
+        "alert": "Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Rádio AGV +Site",
+        "turma": "Téc. DS",
+        "student_name": "EDUARDA DIAS MENNA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Site de vendas geral",
+        "turma": "Téc. DS",
+        "student_name": "DIEGO FREITAS DOS SANTOS",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Site sobre futebol",
+        "turma": "Téc. DS",
+        "student_name": "ANDRE LUIS DA VEIGA SILVA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Time para o Escolares",
+        "turma": "DS1",
+        "student_name": "PAULO KALED FERNANDES VIDAL",
+        "role": "Não informada na planilha",
+        "leader": "PAULO KALED FERNANDES VIDAL",
+        "alert": "Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS3",
+        "student_name": "DÂMARIS MODESTO RIBEIRO",
+        "role": "Realizar análise de dados individual dos jogadores",
+        "leader": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS3",
+        "student_name": "LUCAS MATEUS DOMINICO",
+        "role": "Realizar análise de dados individual dos jogadores",
+        "leader": "GUILHERME ALEXANDRE BONAFINI PEREIRA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Organização geral do campeonato)",
+        "turma": "DS3",
+        "student_name": "JOÃO PEDRO HENRIQUE BERNARDO",
+        "role": "Construção do site de gestão dos jogos",
+        "leader": "MELANY NICOLE COSTA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+        "turma": "DS2",
+        "student_name": "KAUA HENRIQUE FOSSILE RAMOS",
+        "role": "Narração e comentários dos jogos",
+        "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+        "turma": "DS2",
+        "student_name": "MIGUEL DO CARMO LUZ",
+        "role": "Controle de transmissão dos jogos",
+        "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Transmissão e Narração)",
+        "turma": "DS2",
+        "student_name": "MURILO LUCAS ROCHA DO ROSÁRIO",
+        "role": "Repórter e comentarista dos jogos",
+        "leader": "NYCOLAS ANDRÉ MENDES SANTANA",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Projeto Torre de Babel (Site Educacional)",
+        "turma": "DS3",
+        "student_name": "DANIEL ARAUJO DOS SANTOS",
+        "role": "Desenvolveu boa parte da interface e demais itens da plataforma com uso de IA, projeto está bem construído",
+        "leader": "GIOVANNY DA SILVA CABRAL",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+        "role": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+        "leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Time para o Escolares",
+        "turma": "DS2",
+        "student_name": "ANDRE PYETRO GOMES BATISTA",
+        "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Time para o Escolares",
+        "turma": "DS2",
+        "student_name": "ELCIO CRUZ DA VEIGA",
+        "role": "Gestão da equipe do DS1 e construção de sistema de gestão para os professores gerirem jogos escolares",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS1",
+        "student_name": "ARTHUR RIBEIRO HAILLER",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS1",
+        "student_name": "HELAMÃ FIRMO DA SILVA MOREIRA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS1",
+        "student_name": "JOÃO GABRIEL NASCIMENTO SOUZA",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Gestão Interclasses (Gestão de dados)",
+        "turma": "DS1",
+        "student_name": "TALES YAN SIQUEIRA POLIDORO",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Time para o Escolares",
+        "turma": "DS1",
+        "student_name": "NATHAN HENRIQUE SILVA CORREA",
+        "role": "Não informada na planilha",
+        "leader": "PAULO KALED FERNANDES VIDAL",
+        "alert": "Integrante não aparece na equipe da aba Projetos; Função pendente",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Portal escolar - Controle de Pais",
+        "turma": "Téc. DS",
+        "student_name": "Helena",
+        "role": "Responsabilidade individual não definida; projeto tratado como trabalho em equipe",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Dashboard's para análise de dados",
+        "turma": "Téc. DS",
+        "student_name": "Mariana",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Dashboard's para análise de dados",
+        "turma": "Téc. DS",
+        "student_name": "Yago",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Rádio AGV +Site",
+        "turma": "Téc. DS",
+        "student_name": "Matheus",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Sistema de inventário geral",
+        "turma": "Téc. DS",
+        "student_name": "Maria Eduarda",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Sistema de inventário geral",
+        "turma": "Téc. DS",
+        "student_name": "Mateus Arionso",
+        "role": "Não informada na planilha",
+        "leader": "Não informado/validar",
+        "alert": "Nome abreviado ou não localizado na lista Téc. DS — validar; Função pendente",
+        "source": "Aba Projetos + Téc. DS"
+      },
+      {
+        "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+        "turma": "DS1",
+        "student_name": "ANA CLARA SORIANI NUNES",
+        "role": "Pesquisa e planejamento (projeto ainda na casca)",
+        "leader": "ANA CLARA SORIANI NUNES",
+        "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+        "turma": "DS1",
+        "student_name": "HEITOR BARROS MARCOS",
+        "role": "Pesquisa e planejamento (projeto ainda na casca)",
+        "leader": "ANA CLARA SORIANI NUNES",
+        "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "company_or_project": "Museu Virtual AGV / Mundo Virtual AGV",
+        "turma": "DS1",
+        "student_name": "HELOISA EURICH DE SOUZA IZAIAS",
+        "role": "Pesquisa e planejamento (projeto ainda na casca)",
+        "leader": "ANA CLARA SORIANI NUNES",
+        "alert": "Nome divergente: aba Projetos usa “Museu Virtual AGV”",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      }
+    ],
+    "mini_startups_details": [
+      {
+        "startup_name": "GitDash",
+        "turma": "DS2",
+        "student_name": "BENICIO DOS SANTOS DA SILVA",
+        "participation": "GitDash. Back End. Buscar uma forma de integrar uma IA para validar a diferença entre commit's e concluir o trecho de validação dos commit's que estava planejado.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "GitDash",
+        "turma": "DS2",
+        "student_name": "GABRIEL GIACOMIN SALVADOR",
+        "participation": "GitDash. Front-end. Está dependendo do Luan, portanto, ainda não produziu nada. Alternativa sugerida, validar o layout e o sistea de interação da plataforma.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "GitDash",
+        "turma": "DS2",
+        "student_name": "LUAN RAFAEL SOUZA DE PAULA",
+        "participation": "GitDash\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "GitDash",
+        "turma": "DS2",
+        "student_name": "RUAN PHELIPE BARCELOS ELESIS",
+        "participation": "GitDash",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "GitDash",
+        "turma": "DS2",
+        "student_name": "VINICIUS SANTANA DOS SANTOS",
+        "participation": "GitDash. Vinícius não produz e não possui interesse segundo a equipe, portanto, deve ser avaliado a parte quando vier, pois está ausente da aula.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "ANDRIELLYN MARTINS OLIVEIRA DOS SANTOS",
+        "participation": "Rede Social AGV - Responsável pelo Front End. Depende de Giovana, que não está participando no envio das ideias e layout.\nSegundo equipe, está bem organizada, e não prejudica o andamento.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "ENTHONY GABRIEL ALVES DOS SANTOS",
+        "participation": "Rede Social AGV - Apresentação e Experiência do Usuário. Após conversa, ficou definido como líder da equipe, para não depender demais das atividades dos demais colegas, pois não se torna possível avaliação do app se não está funcional.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "GIOVANA JASCESKI CAVALHEIRO",
+        "participation": "Rede Social AGV - Fica em aberto, está responsável pelos layout's, porém, falta demais e portanto, não entrega. Quando está em casa, não produz, segundo colegas, produz melhor quando está no colégio.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "JOAO PEDRO SANTOS PADILHA DE ANDRADE",
+        "participation": "Rede Social AGV - Back end, responsável pela rede AGV. Por enquanto, sem atividades descritas. NEcessário que o estudante faça atividades de testes de logins e acessos. Passado como responsabilidade, acesso ao JWT",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "Integrante não aparece na equipe da aba Projetos",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Rede AGV",
+        "turma": "DS2",
+        "student_name": "MICKAEL VIANA DE CASTRO",
+        "participation": "Rede Social AGV - Banco de dados. Sem particpação no momento.\nTeste de Firebase e SQLite, inserindo nome dos estudantes e criando tabela lá",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Trampo Certo",
+        "turma": "DS2",
+        "student_name": "ALESSANDRO SANTIAGO DOS SANTOS SILVA JUNIOR",
+        "participation": "A princípio, responsável pelas apresentações. Mas será remanejado para o grupo Trampo certo.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Trampo Certo",
+        "turma": "DS2",
+        "student_name": "ARTHUR FERNANDES RAMOS",
+        "participation": "Trampo Certo",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Trampo Certo",
+        "turma": "DS2",
+        "student_name": "PAULO CESAR AMORIM FILHO",
+        "participation": "Trampo Certo.\nApós conversa com um dos grupos em separado, disse que o mesmo não está participando ou de fato interessado no projeto.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      },
+      {
+        "startup_name": "Trampo Certo",
+        "turma": "DS2",
+        "student_name": "THOMAS FELIPE OLIVEIRA THOME",
+        "participation": "Trampo Certo. Líder da equipe no geral, está envolvido em todos os projetos e está sendo paticipativo principalmente no projeto do TRampo certo, embora os demais, também sejam de sua autoria.",
+        "umbrella_leader": "THOMAS FELIPE OLIVEIRA THOME",
+        "status": "OK",
+        "umbrella_project": "Mini Startup's",
+        "source": "Abas DS1/DS2/DS3; complementado por Projetos"
+      }
+    ],
+    "data_quality_note": "Não inventar funções, líderes ou nomes empresariais ausentes. Exibir pendências como 'a validar'."
+  }
+}

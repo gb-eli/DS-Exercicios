@@ -1,4 +1,4 @@
-import { VALE_VERSION } from './vale-silicio-shared.js?v=14.10.8.58';
+import { VALE_VERSION } from './vale-silicio-shared.js?v=14.10.8.65';
 
 const RUNTIME_URL=new URL(`../../data/vale-silicio/runtime-v2.json?v=${VALE_VERSION}`,import.meta.url).href;
 let cached=null;

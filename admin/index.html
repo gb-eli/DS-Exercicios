@@ -7,19 +7,9 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>DS Exercícios — Administração</title>
   <link rel="stylesheet" href="assets/admin.css?v=14.10.8.38">
-</head>
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script></head>
 <body>
-  <section id="login-view" class="login-shell">
-    <form id="login-form" class="login-card">
-      <p class="eyebrow">DS Exercícios · AGV Education Core</p>
-      <h1>Administração</h1>
-      <p class="muted">Gestão pedagógica, usuários, progresso e segurança.</p>
-      <label><span>E-mail institucional</span><input id="email" type="email" autocomplete="username" required></label>
-      <label><span>Senha</span><input id="password" type="password" autocomplete="current-password" required></label>
-      <button class="primary" type="submit">Entrar</button>
-      <p id="login-message" class="message" aria-live="polite"></p>
-    </form>
-  </section>
+  <section id="login-view" class="login-shell hidden"><p class="eyebrow">SESSÃO ÚNICA</p><h2>Login central do Portal AGV</h2><p>Esta área reutiliza a mesma sessão do Hub. Se necessário, use a tela oficial de autenticação.</p><a class="button primary" href="../auth/?returnTo=admin/">Ir para o login oficial</a><p id="login-message" class="message" aria-live="polite"></p></section>
 
   <div id="app-view" class="admin-app hidden">
     <aside class="nav">

@@ -1,0 +1,17 @@
+{
+  "version": "14.10.8.62",
+  "channel": "feature",
+  "title": "Campus City — Urban Core & Silicon Link",
+  "base": "14.10.8.61",
+  "changes": [
+    "Malha urbana hierarquizada com avenidas arteriais, coletores e vias de serviço",
+    "Cinco praças temáticas integradas em 2D e 3D",
+    "Garagens externas e sinalização urbana",
+    "Faixas de pedestres e duas passarelas elevadas transitáveis com rampas",
+    "Estações do Monotrilho AGV evoluídas para estruturas próprias com códigos e distrito",
+    "Eixo monumental físico e visual Campus ↔ Vale do Silício AGV",
+    "Novos destinos urbanos no teletransporte",
+    "Boot e Service Worker validam campus-city-network.js",
+    "Sem alterações de Supabase/schema; 2D-first e 3D opcional preservados"
+  ]
+}

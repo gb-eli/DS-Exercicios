@@ -1,0 +1,34 @@
+AGV EDUCATION CORE — RELATÓRIO FINAL
+Release: v14.10.8.63
+Fase: 62B — Connected Interiors
+Base: v14.10.8.62
+
+ENTREGAS
+- 10 prédios funcionais com interior explorável
+- 20 pavimentos lógicos (térreo + 1º pavimento)
+- 10 recepções
+- 10 elevadores funcionais
+- 10 escadas internas funcionais
+- 10 portais internos para as ferramentas reais
+- 4 conexões internas de garagem para o sistema viário
+- 74 pontos internos de interação
+- suporte equivalente no 2D e 3D
+- restauração de interior ao alternar 2D/3D
+- suporte ao gather em interiores de ferramentas
+- presença pública ancorada na entrada externa do prédio
+
+ARQUIVO NOVO PRINCIPAL
+lobby/assets/world/campus-interiors.js
+
+VALIDAÇÕES
+- JS/MJS: PASS
+- imports locais: PASS
+- recursos críticos do Service Worker: PASS
+- Campus City v62: PASS
+- Connected Interiors v63: PASS
+- Unified Auth: PASS
+- remoções previstas: 0
+- migrations: 0
+
+LIMITAÇÃO
+Teste visual WebGL real e teste físico em Android devem ser feitos após publicação.

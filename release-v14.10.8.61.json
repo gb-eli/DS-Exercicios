@@ -1,0 +1,15 @@
+{
+  "version": "14.10.8.61",
+  "channel": "feature",
+  "title": "Campus Connected Architecture",
+  "base": "14.10.8.60",
+  "changes": [
+    "Arquitetura própria para os 10 prédios conectados do Campus DS",
+    "Entradas reais, footprints, rotação arquitetônica e colisões 3D",
+    "Nova malha de promenades, boulevards e conexões entre prédios",
+    "Portais de distrito, wayfinding e skybridges do Centro Cívico",
+    "Diretório de prédios no painel do Campus com teletransporte para as entradas",
+    "Boot, Service Worker e reparo passam a verificar destinations e connections",
+    "Sem alteração de Supabase/schema; 2D-first e 3D opcional preservados"
+  ]
+}

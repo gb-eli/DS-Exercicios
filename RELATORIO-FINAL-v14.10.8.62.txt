@@ -1,0 +1,42 @@
+AGV Education Core — Campus City
+Release: v14.10.8.62
+Fase: 62A — Arquitetura Urbana
+Base: v14.10.8.61
+
+IMPLEMENTADO
+- 10 rotas de vias urbanas hierarquizadas
+- 5 praças temáticas
+- 3 garagens externas
+- 5 conjuntos de travessia
+- 2 passarelas elevadas transitáveis
+- 34 superfícies físicas para decks/rampas
+- 8 estações do monotrilho com perfis/códigos/distritos
+- Eixo monumental Campus ↔ Vale do Silício AGV
+- Skyline de aproximação do Vale
+- Destinos urbanos no teletransporte 2D/3D
+- Novo módulo: lobby/assets/world/campus-city-network.js
+- Boot, reparo e Service Worker atualizados
+
+PRESERVADO
+- 2D-first
+- 3D opcional
+- autenticação unificada
+- Portal/Avatar/Camera/Performance Manager
+- Vale do Silício já existente
+- atividades e provas
+- schema Supabase sem alterações
+
+VALIDAÇÕES
+- 34 arquivos JS/MJS do Lobby: node --check PASS
+- imports locais do Lobby: 55 verificados / 0 ausentes
+- validate-campus-city-v62.mjs: PASS
+- validate-unified-auth-v59.mjs: PASS
+- smoke semântico urbano: PASS
+- arquivos removidos: 0
+
+LIMITAÇÃO
+- Teste visual real WebGL em navegador ainda precisa ser feito pós-publicação.
+
+PRÓXIMA FASE
+62B — Interiores conectados, recepções, elevadores, escadas internas,
+garagens acessíveis, lobbies institucionais e portais internos.

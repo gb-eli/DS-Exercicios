@@ -1,0 +1,35 @@
+AGV Education Core
+Release: v14.10.8.65
+Título: Cidade Viva Avançada — Mobilidade, NPCs e Eventos
+Base: v14.10.8.64
+
+ENTREGAS
+- 5 rotas de tráfego urbano
+- 6 veículos de ambientação em movimento
+- 4 veículos utilizáveis com passeio guiado e cancelamento por E
+- 5 NPCs urbanos circulantes
+- 5 painéis de sinalização dinâmica
+- 5 eventos urbanos rotativos nas praças
+- cabine física e sequência de elevador no 3D
+- 10 assinaturas visuais de interiores
+- paridade funcional 2D/3D
+- HUD de veículo ativo
+- boot/SW/reparo atualizados para o novo módulo
+
+ARQUITETURA
+Novo módulo:
+  lobby/assets/world/campus-mobility-systems.js
+
+VALIDAÇÕES
+- validate-campus-city-v62.mjs: PASS
+- validate-campus-interiors-v63.mjs: PASS
+- validate-campus-live-v64.mjs: PASS
+- validate-campus-mobility-v65.mjs: PASS
+- validate-unified-auth-v59.mjs: PASS
+- 34 JS/MJS do Lobby: node --check PASS
+- 65 imports locais: PASS
+- 0 imports ausentes
+- 0 migrations Supabase
+
+LIMITAÇÃO
+Teste visual WebGL/Android real permanece obrigatório depois da publicação.

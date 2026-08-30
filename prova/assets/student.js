@@ -296,8 +296,8 @@
   });
 
   async function signedIn(){const p=await loadProfile();if(!p)return;if(p.role!=='student'){location.replace('admin.html');return;}$('login-view').classList.add('hidden');$('app-view').classList.remove('hidden');$('logout').classList.remove('hidden');renderHeader();await loadSessions();}
-  async function restore(){const s=await auth.getSession();if(!s){setConnection('Sem sessão');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();setConnection('Sessão encerrada','danger');}}
-  $('login-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.submitter,email=$('email').value.trim().toLowerCase(),password=$('password').value;b.disabled=true;msg('Entrando…');try{await auth.signIn(email,password);await signedIn();msg();}catch(err){console.error(err);msg('Não foi possível entrar. Confira e-mail e senha.',true);}finally{b.disabled=false;}});
-  $('logout').addEventListener('click',async()=>{stopLive();await auth.signOut();location.reload();});
+  async function restore(){const s=await auth.getSession();if(!s){location.replace('../auth/?returnTo=prova/');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();location.replace('../auth/?returnTo=prova/');}}
+  $('login-form')?.addEventListener('submit',e=>{e.preventDefault();location.replace('../auth/?returnTo=prova/')});
+  $('logout').addEventListener('click',async()=>{stopLive();await auth.signOut();location.replace('../auth/?returnTo=prova/');});
   auth.onStorage(()=>restore());restore();
 })();

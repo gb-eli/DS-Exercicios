@@ -162,9 +162,9 @@
     if(state.classId&&state.catalogMode==='server'){const d=await api('staff_simulator_catalog',{class_id:state.classId});state.catalog=d;state.roster=d.roster||[];}
     await syncSessionPreview();state.leaderId=teamMembers().find(x=>x.isLeader)?.id||state.roster[0]?.id||null;state.roomName=guildInfo(1).name;fillControls();$('login-view').classList.add('hidden');$('app-view').classList.remove('hidden');$('logout').classList.remove('hidden');render();
   }
-  async function restore(){const s=await auth.getSession();if(!s){setConnection('Sem sessão');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();setConnection('Acesso negado','danger');}}
-  $('login-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;msg('Entrando…');try{await auth.signIn($('email').value.trim().toLowerCase(),$('password').value);await signedIn();msg();}catch(err){console.error(err);msg('Conta sem permissão para o simulador.',true);}finally{b.disabled=false;}});
-  $('logout').addEventListener('click',async()=>{await auth.signOut();location.reload();});
+  async function restore(){const s=await auth.getSession();if(!s){location.replace('../auth/?returnTo=prova/simulador.html');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();setConnection('Acesso negado','danger');}}
+  $('login-form')?.addEventListener('submit',e=>{e.preventDefault();location.replace('../auth/?returnTo=prova/simulador.html')});
+  $('logout').addEventListener('click',async()=>{await auth.signOut();location.replace('../auth/?returnTo=prova/simulador.html');});
   $('sim-class').addEventListener('change',async e=>{state.classId=e.target.value;if(state.catalogMode!=='server'){state.roster=[];state.leaderId='mock0';render();return;}try{const d=await api('staff_simulator_catalog',{class_id:state.classId});state.catalog=d;state.roster=d.roster||[];state.joinedRoom=1;await syncSessionPreview();state.leaderId=teamMembers().find(x=>x.isLeader)?.id||state.roster[0]?.id||null;state.roomName=guildInfo(1).name;fillControls();render();}catch(err){console.error(err);state.roster=[];render();}});
   $('sim-template').addEventListener('change',e=>{state.templateKey=e.target.value;state.challengeIndex=0;state.answers={};state.xp={};render();});
   $('sim-view').addEventListener('change',e=>{state.view=e.target.value;render();});

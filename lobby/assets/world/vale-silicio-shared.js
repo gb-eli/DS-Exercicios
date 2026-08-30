@@ -1,4 +1,4 @@
-export const VALE_VERSION='14.10.8.58';
+export const VALE_VERSION='14.10.8.65';
 export const VALE_BOUNDS=Object.freeze({minX:-320,maxX:320,minZ:-320,maxZ:320});
 export const VALE_SPAWN=Object.freeze({x:0,y:.2,z:-30});
 export const VALE_RETURN_PORTAL=Object.freeze({id:'portal_retorno_lobby',type:'return-portal',name:'Portal de Retorno ao Lobby',label:'VOLTAR AO CAMPUS DS',x:0,z:-85,radius:7,interaction:'Voltar ao Lobby'});

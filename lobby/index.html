@@ -6,30 +6,11 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.58">
-  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.58">
-</head>
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.65">
+  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.65">
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.65"></script></head>
 <body>
-  <section id="login" class="login-shell">
-    <article class="login-card">
-      <div class="login-mark" aria-hidden="true"><span></span><span></span><span></span></div>
-      <p class="eyebrow">AGV Education Core</p>
-      <h1>Campus DS <em>Lobby</em></h1>
-      <p class="muted">Entre primeiro pelo mapa 2D e escolha quando quiser acessar o ambiente 3D. As atividades continuam protegidas pelas liberações da sua turma.</p>
-      <form id="login-form" class="stack">
-        <label>E-mail institucional<input id="email" type="email" autocomplete="username" required placeholder="aluno@escola.pr.gov.br"></label>
-        <label>Senha <small>no primeiro acesso do aluno, use o CGM</small><input id="password" type="password" autocomplete="current-password" required></label>
-        <button class="primary" type="submit">Entrar no Campus DS</button>
-        <div class="auth-divider" aria-hidden="true"><span>ou</span></div>
-        <button id="google-login-btn" class="google-auth-btn" type="button"><span class="google-mark" aria-hidden="true">G</span><span>Continuar com Google</span></button>
-        <p class="oauth-note">Use a conta Google vinculada ao mesmo e-mail cadastrado no AGV.</p>
-        <button id="forgot-password-btn" class="login-link" type="button">Esqueci minha senha</button>
-      </form>
-      <p id="login-message" class="message" aria-live="polite"></p>
-    </article>
-  </section>
-
-  <dialog id="recovery-dialog" class="recovery-dialog"><form id="recovery-form" class="recovery-card" method="dialog"><div class="recovery-head"><div><p class="eyebrow">Recuperar acesso</p><h2>Redefinir senha</h2></div><button id="recovery-close-btn" class="hud-button" type="button">Fechar</button></div><p class="muted">Recuperação temporária: confirme seu e-mail institucional e CGM. Se os dados conferirem, sua senha voltará ao CGM e você deverá criar uma senha pessoal no próximo acesso.</p><label>E-mail institucional<input id="recovery-email" type="email" autocomplete="email" placeholder="nome@escola.pr.gov.br" required></label><label>CGM<input id="recovery-cgm" type="text" inputmode="numeric" autocomplete="off" maxlength="12" pattern="[0-9]{6,12}" placeholder="Digite seu CGM" required></label><p id="recovery-message" class="message" aria-live="polite"></p><button class="primary" type="submit">Redefinir senha para CGM</button></form></dialog>
+  <section id="login" class="login-shell hidden" aria-hidden="true"><p>Redirecionando para o login único…</p></section>
 
   <main id="game-shell" class="game-shell hidden">
     <section class="game-stage" data-runtime-mode="lite" aria-label="Lobby virtual do Campus DS">
@@ -54,9 +35,10 @@
         </div>
         <div class="world-status glass">
           <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
-          <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
+          <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="vehicle-status" class="chip vehicle-status hidden" aria-live="polite">🚗 Veículo • E sair</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
           <button id="activity-button" class="hud-button activity-button hidden" type="button">Atividade</button>
           <button id="teleport-button" class="hud-button teleport-button" type="button" title="Abrir teletransporte do Campus">⚡ Teletransporte</button>
+          <button id="interior-map-button" class="hud-button interior-map-button hidden" type="button" title="Mapa interno e rotas do prédio">🗺 Interior</button>
           <button id="vale-direct-button" class="hud-button vale-direct-button" type="button" title="Ir para o Vale do Silício AGV">🏙 Vale do Silício</button>
           <button id="mode-button" class="hud-button mode-button" type="button" title="Alternar entre mapa 2D e ambiente 3D">Entrar no 3D</button>
           <button id="camera-button" class="hud-button" type="button" title="Alternar câmera">Câmera</button>
@@ -99,6 +81,11 @@
         <p id="campus-message" class="campus-message">Explore a praça, encontre colegas online e acesse os laboratórios de 1DS, 2DS, 3DS e SUB.</p>
         <div class="campus-progress"><span>Exploração local</span><strong id="campus-progress-text">0/7</strong><div><i id="campus-progress-bar"></i></div></div>
         <div id="campus-checklist" class="campus-checklist"></div>
+        <section class="campus-directory" aria-labelledby="campus-directory-title">
+          <div class="campus-directory-head"><span class="eyebrow">Conexões do Campus</span><strong id="campus-directory-title">Prédios e acessos</strong></div>
+          <p class="campus-directory-copy">Use as passarelas no mapa ou vá direto à entrada de um prédio. O acesso reutiliza a mesma sessão AGV.</p>
+          <div id="campus-destination-list" class="campus-destination-list"></div>
+        </section>
         <small class="campus-disclaimer">Esta exploração não concede moedas, XP ou libera atividades. Benefícios reais continuam validados somente pelo servidor.</small>
       </aside>
 
@@ -126,6 +113,19 @@
         </div>
       </div>
 
+
+      <div id="interior-map-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="interior-map-title">
+        <div class="modal-card interior-map-card">
+          <button id="interior-map-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Navegação interna</p>
+          <h2 id="interior-map-title">🗺 Mapa do prédio</h2>
+          <p id="interior-map-subtitle" class="muted">Pavimento atual</p>
+          <div id="interior-map-rooms" class="interior-map-rooms"></div>
+          <div class="interior-guide-head"><strong>Rotas guiadas</strong><small>O traçado aparece dentro do mapa 2D e do ambiente 3D.</small></div>
+          <div id="interior-guide-list" class="interior-guide-list"></div>
+          <small class="campus-disclaimer">A navegação interna é local ao Lobby. Não altera nota, atividade, saldo ou progresso acadêmico.</small>
+        </div>
+      </div>
 
       <div id="train-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="train-title">
         <div class="modal-card train-card">
@@ -209,9 +209,9 @@
   </main>
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
-  <script src="../core/session/fullscreen-portal.js?v=14.10.8.58"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.58"></script>
-  <script src="assets/sw-register.js?v=14.10.8.58" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.58" defer></script>
+  <script src="../core/session/fullscreen-portal.js?v=14.10.8.65"></script>
+  <script src="assets/diagnostics.js?v=14.10.8.65"></script>
+  <script src="assets/sw-register.js?v=14.10.8.65" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.65" defer></script>
 </body>
 </html>

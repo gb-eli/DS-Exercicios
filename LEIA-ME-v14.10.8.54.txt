@@ -1,0 +1,4 @@
+AGV Campus DS v14.10.8.54 — Hotfix Portal Monumental do Vale
+Base: v14.10.8.53
+Acesso ao Vale agora é visível no mapa e permanente no HUD.
+Nenhuma alteração de Supabase/schema. Nenhuma exclusão.

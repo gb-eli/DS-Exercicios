@@ -206,8 +206,8 @@
   $('back-sessions').addEventListener('click',()=>{st.sessionId=null;load();});
   $('refresh').addEventListener('click',load);
   async function signedIn(){const p=await loadProfile();if(!p)return;$('login-view').classList.add('hidden');$('app-view').classList.remove('hidden');$('logout').classList.remove('hidden');await load();clearInterval(st.poll);st.poll=setInterval(()=>{if(!document.hidden)load().catch(()=>{});},5000);}
-  async function restore(){const s=await auth.getSession();if(!s){setConnection('Sem sessão');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();setConnection('Acesso negado','danger');}}
-  $('login-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;msg('Entrando…');try{await auth.signIn($('email').value.trim().toLowerCase(),$('password').value);await signedIn();msg();}catch(err){console.error(err);msg('Não foi possível entrar ou sua conta não possui permissão.',true);}finally{b.disabled=false;}});
-  $('logout').addEventListener('click',async()=>{clearInterval(st.poll);await auth.signOut();location.reload();});
+  async function restore(){const s=await auth.getSession();if(!s){location.replace('../auth/?returnTo=prova/admin.html');return;}try{await signedIn();}catch(e){console.error(e);await auth.signOut();location.replace('../auth/?returnTo=prova/admin.html');}}
+  $('login-form')?.addEventListener('submit',e=>{e.preventDefault();location.replace('../auth/?returnTo=prova/admin.html')});
+  $('logout').addEventListener('click',async()=>{clearInterval(st.poll);await auth.signOut();location.replace('../auth/?returnTo=prova/admin.html');});
   auth.onStorage(()=>restore());restore();
 })();

@@ -7,20 +7,10 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Console Professor</title>
   <link rel="stylesheet" href="assets/professor.css?v=14.10.8.28">
-</head>
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script></head>
 <body>
   <main class="shell">
-    <section id="login-view" class="login-card">
-      <p class="eyebrow">AGV Education Core</p>
-      <h1>Console Professor</h1>
-      <p class="muted">Entre com sua conta institucional. Gabaritos são carregados somente depois da autorização no servidor.</p>
-      <form id="login-form" class="form-stack">
-        <label><span>E-mail institucional</span><input id="email" type="email" autocomplete="username" required placeholder="professor@escola.pr.gov.br"></label>
-        <label><span>Senha</span><input id="password" type="password" autocomplete="current-password" required></label>
-        <button class="primary" type="submit">Entrar</button>
-        <p id="login-message" class="message" aria-live="polite"></p>
-      </form>
-    </section>
+    <section id="login-view" class="login-card hidden"><p class="eyebrow">SESSÃO ÚNICA</p><h2>Login central do Portal AGV</h2><p>Esta área reutiliza a mesma sessão do Hub. Se necessário, use a tela oficial de autenticação.</p><a class="button primary" href="../auth/?returnTo=professor/">Ir para o login oficial</a><p id="login-message" class="message" aria-live="polite"></p></section>
 
     <section id="app-view" class="app hidden">
       <header class="topbar">

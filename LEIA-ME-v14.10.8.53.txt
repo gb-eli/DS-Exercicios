@@ -1,0 +1,14 @@
+AGV Campus DS — v14.10.8.53
+Vale do Silício AGV + Campus Expansion
+
+Base: v14.10.8.52
+Entrada: 2D por padrão
+3D: opcional
+Supabase schema: sem alterações
+GitHub Pages: mesmo repositório/mesma rota
+
+Documentação:
+- docs/ATUALIZAR-v14.10.8.53.md
+- docs/VALIDACAO-v14.10.8.53.md
+
+IMPORTANTE: em atualizações incrementais, nunca apague a árvore completa antes de copiar o PATCH.

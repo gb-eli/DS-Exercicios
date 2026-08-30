@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#071018">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>DS Exercícios — Prévia da Experiência do Aluno</title>
+  <script src="../core/session/unified-auth-guard.js?v=14.10.8.59"></script>
   <link rel="stylesheet" href="assets/prova.css?v=14.10.8.39">
 </head>
 <body>
@@ -16,10 +17,7 @@
       <div class="top-actions"><span class="pill warn">PRÉVIA</span><span id="connection-pill" class="pill">Conectando</span><a class="button ghost" href="admin.html">← Gestão da prova</a><button id="logout" class="button ghost hidden" type="button">Sair</button></div>
     </header>
 
-    <section id="login-view" class="login-layout compact-login">
-      <article class="hero-panel"><p class="eyebrow">Prévia docente</p><h1>Confira a experiência<br>antes de liberar.</h1><p>Visualize lobby, equipe, cargos, atividades e ranking sem alterar a sessão, os alunos ou as notas.</p></article>
-      <form id="login-form" class="panel login-card"><p class="eyebrow">Equipe autorizada</p><h2>Entrar</h2><label>E-mail institucional<input id="email" type="email" autocomplete="username" required></label><label>Senha<input id="password" type="password" autocomplete="current-password" required></label><button class="button primary" type="submit">Abrir simulador</button><p id="login-message" class="message" aria-live="polite"></p></form>
-    </section>
+    <section id="login-view" class="login-layout compact-login hidden"><article class="hero-panel"><p class="eyebrow">SESSÃO ÚNICA</p><h1>Prévia docente</h1><p>Esta área usa a mesma sessão autenticada do Portal AGV.</p><a class="button primary" href="../auth/?returnTo=prova/simulador.html">Ir para o login oficial</a><p id="login-message" class="message" aria-live="polite"></p></article></section>
 
     <section id="app-view" class="hidden">
       <section class="simulator-commandbar">

@@ -4,13 +4,46 @@ import {createClient} from "jsr:@supabase/supabase-js@2.111.0";
 import {consumeRate,ensureAccess,logRisk,requestIp} from "./security.ts";
 const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, x-client-info, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS"};
 const J=(x:unknown,s=200,extra:Record<string,string>={})=>new Response(JSON.stringify(x),{status:s,headers:{...H,...extra,"content-type":"application/json","cache-control":"no-store"}});
-const AREAS=new Set(['central','1ds','2ds','3ds','sub']),EMOTES=new Set(['wave','like','spark']);
+const AREAS=new Set(['central','1ds','2ds','3ds','sub','vale-silicio']),EMOTES=new Set(['wave','like','spark']);
+const STAFF=new Set(['teacher','admin','super_admin']);
 const uuidRx=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const enc=new TextEncoder();
+function b64url(bytes:Uint8Array){let raw='';for(const b of bytes)raw+=String.fromCharCode(b);return btoa(raw).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64urlText(value:string){return b64url(enc.encode(value));}
+function fromB64url(value:string){let raw=value.replace(/-/g,'+').replace(/_/g,'/');while(raw.length%4)raw+='=';const decoded=atob(raw),out=new Uint8Array(decoded.length);for(let i=0;i<decoded.length;i++)out[i]=decoded.charCodeAt(i);return out;}
+async function hmacKey(secret:string,usage:KeyUsage[]){return crypto.subtle.importKey('raw',enc.encode(secret),{name:'HMAC',hash:'SHA-256'},false,usage);}
+async function signGather(payload:any,secret:string){const body=b64urlText(JSON.stringify(payload)),key=await hmacKey(secret,['sign']),sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,enc.encode(body)));return `${body}.${b64url(sig)}`;}
+async function verifyGather(token:string,secret:string){try{const parts=String(token||'').split('.');if(parts.length!==2)return null;const [body,sig]=parts,key=await hmacKey(secret,['verify']),ok=await crypto.subtle.verify('HMAC',key,fromB64url(sig),enc.encode(body));if(!ok)return null;const payload=JSON.parse(new TextDecoder().decode(fromB64url(body)));if(!payload?.exp||Date.now()>Number(payload.exp))return null;if(!uuidRx.test(String(payload.issuer||'')))return null;if(!['campus','vale'].includes(String(payload.scene)))return null;return payload;}catch{return null;}}
+async function signChat(payload:any,secret:string){const body=b64urlText(JSON.stringify(payload)),key=await hmacKey(secret,['sign']),sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,enc.encode(body)));return `${body}.${b64url(sig)}`;}
+async function verifyChat(token:string,secret:string){try{const parts=String(token||'').split('.');if(parts.length!==2)return null;const [body,sig]=parts,key=await hmacKey(secret,['verify']),ok=await crypto.subtle.verify('HMAC',key,fromB64url(sig),enc.encode(body));if(!ok)return null;const payload=JSON.parse(new TextDecoder().decode(fromB64url(body)));if(payload?.kind!=='proximity_chat'||!payload?.exp||Date.now()>Number(payload.exp))return null;if(!uuidRx.test(String(payload.sender_id||''))||!uuidRx.test(String(payload.target_id||'')))return null;if(!['campus','vale'].includes(String(payload.scene)))return null;const message=String(payload.message||'');if(!message||message.length>180)return null;return payload;}catch{return null;}}
+function safeChatMessage(value:any){return String(value||'').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,180);}
+function boundedCoord(value:any,max:number){const n=Number(value);return Number.isFinite(n)?Math.max(0,Math.min(max,Math.round(n))):null;}
+function safeInterior(value:any){const text=String(value||'').trim();return text&&/^[a-zA-Z0-9:_-]{1,120}$/.test(text)?text:null;}
 Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{headers:H});if(req.method!=='POST')return J({error:'method_not_allowed'},405);if(Number(req.headers.get('content-length')||0)>32768)return J({error:'payload_too_large'},413);try{
  const url=Deno.env.get('SUPABASE_URL')!,anon=Deno.env.get('SUPABASE_ANON_KEY')!,service=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,auth=req.headers.get('Authorization')||'';
  const uc=createClient(url,anon,{global:{headers:{Authorization:auth}}}),db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}}),{data:{user}}=await uc.auth.getUser();if(!user)return J({error:'unauthorized'},401);const live=await requireLiveAuthSession(db,auth,user.id);if(!live.ok)return J({error:live.error,detail:live.detail||null},live.status);
  const {data:p}=await db.from('profiles').select('role,active,must_change_password').eq('id',user.id).maybeSingle();if(!p?.active||p.must_change_password||!['student','teacher','admin','super_admin'].includes(String(p.role)))return J({error:'profile_not_ready'},403);
  await ensureAccess(db,user,req,'lobby-presence');const body=await req.json().catch(()=>({})),action=String(body?.action||'heartbeat');const rl=await consumeRate(db,`lobby-presence:${user.id}:${requestIp(req)||'noip'}`,40,60,120);if(rl.allowed===false){await logRisk(db,user,req,'rate_limit','high',{source:'lobby-presence',action,count:rl.count});return J({error:'rate_limited',retry_after:rl.retry_after||120},429,{'Retry-After':String(rl.retry_after||120)})}
+ if(action==='issue_gather'){
+   if(!STAFF.has(String(p.role)))return J({error:'staff_required'},403);
+   const x=boundedCoord(body?.x,1600),y=boundedCoord(body?.y,1000),scene=String(body?.scene||'campus');if(x===null||y===null||!['campus','vale'].includes(scene))return J({error:'invalid_gather_target'},400);
+   const payload={v:1,issuer:user.id,role:String(p.role),scene,x,y,area:String(body?.area||'central').slice(0,40),interior:safeInterior(body?.interior),iat:Date.now(),exp:Date.now()+20000,nonce:crypto.randomUUID()};
+   const token=await signGather(payload,service);await logRisk(db,user,req,'lobby_staff_gather','info',{source:'lobby-presence',scene,x,y});return J({ok:true,token,expires_at:new Date(payload.exp).toISOString()});
+ }
+ if(action==='verify_gather'){
+   const payload=await verifyGather(String(body?.token||''),service);if(!payload||!STAFF.has(String(payload.role)))return J({error:'invalid_or_expired_gather'},403);
+   return J({ok:true,target:{scene:payload.scene,x:payload.x,y:payload.y,area:payload.area,interior:payload.interior||null,issuer:payload.issuer,expires_at:new Date(payload.exp).toISOString()}});
+ }
+ if(action==='issue_chat'){
+   const targetId=String(body?.target_id||''),message=safeChatMessage(body?.message),scene=String(body?.scene||'campus');if(!uuidRx.test(targetId)||targetId===user.id||!message||!['campus','vale'].includes(scene))return J({error:'invalid_chat'},400);
+   const cutoff=new Date(Date.now()-25000).toISOString();const {data:rows,error:presenceError}=await db.from('lobby_presence').select('student_id,x,y,area,updated_at').in('student_id',[user.id,targetId]).gt('updated_at',cutoff);if(presenceError)throw presenceError;const sender=(rows||[]).find((r:any)=>r.student_id===user.id),target=(rows||[]).find((r:any)=>r.student_id===targetId);if(!sender||!target)return J({error:'participant_not_nearby'},409);
+   const expectedArea=scene==='vale'?'vale-silicio':null;if(expectedArea&&(sender.area!==expectedArea||target.area!==expectedArea))return J({error:'participant_not_nearby'},409);if(!expectedArea&&(sender.area==='vale-silicio'||target.area==='vale-silicio'))return J({error:'participant_not_nearby'},409);
+   const distance=Math.hypot(Number(sender.x)-Number(target.x),Number(sender.y)-Number(target.y));if(!Number.isFinite(distance)||distance>115)return J({error:'participant_not_nearby'},409);
+   const payload={v:1,kind:'proximity_chat',sender_id:user.id,target_id:targetId,scene,message,iat:Date.now(),exp:Date.now()+12000,nonce:crypto.randomUUID()};const token=await signChat(payload,service);return J({ok:true,token,expires_at:new Date(payload.exp).toISOString()});
+ }
+ if(action==='verify_chat'){
+   const payload=await verifyChat(String(body?.token||''),service);if(!payload||payload.target_id!==user.id)return J({error:'invalid_or_expired_chat'},403);return J({ok:true,chat:{sender_id:payload.sender_id,target_id:payload.target_id,scene:payload.scene,message:payload.message,expires_at:new Date(payload.exp).toISOString()}});
+ }
  if(action==='leave'){await db.from('lobby_presence').delete().eq('student_id',user.id);return J({ok:true})}
  if(action!=='heartbeat')return J({error:'unknown_action'},400);
  if(p.role==='student'){const {data:b}=await db.from('lobby_blocks').select('blocked_until,reason').eq('student_id',user.id).gt('blocked_until',new Date().toISOString()).maybeSingle();if(b)return J({error:'lobby_access_blocked',blocked_until:b.blocked_until,reason:b.reason||null},423)}

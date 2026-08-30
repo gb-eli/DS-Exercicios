@@ -1,4 +1,4 @@
-const VERSION='14.10.8.58';
+const VERSION='14.10.8.65';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');
@@ -25,6 +25,12 @@ const ASSET_SIGNATURES={
   'world/campus-manifest.js':['CAMPUS_ZONE_LAYOUT','presenceToWorld','worldToPresence'],
   'world/campus-environment.js':['createCampusEnvironment','createCampusLighting','campus-building'],
   'world/campus-experiences.js':['CAMPUS_EXPERIENCES','PARKOUR_PLATFORMS','nearestExperience'],
+  'world/campus-destinations.js':['CAMPUS_DESTINATIONS','CAMPUS_TOOL_EXPERIENCES','CAMPUS_TOOL_BUILDING_COLLIDERS'],
+  'world/campus-connections.js':['CAMPUS_CONNECTIONS','CAMPUS_DISTRICT_GATES','CAMPUS_SKYBRIDGES'],
+  'world/campus-city-network.js':['CAMPUS_ROAD_HIERARCHY','CAMPUS_THEME_PLAZAS','CAMPUS_VALE_MONUMENTAL_LINK'],
+  'world/campus-interiors.js':['CAMPUS_INTERIOR_PROFILES','CAMPUS_INTERIOR_MAP','CAMPUS_INTERIOR_INTERACTIONS'],
+  'world/campus-live-systems.js':['CAMPUS_INTERIOR_LIVE_BLUEPRINTS','CAMPUS_GARAGE_FLEET','CAMPUS_STATION_LINKS','CAMPUS_VALE_CEREMONIAL_GATE'],
+  'world/campus-mobility-systems.js':['CAMPUS_TRAFFIC_ROUTES','CAMPUS_DRIVABLE_VEHICLES','CAMPUS_NPC_PATROLS','CAMPUS_DYNAMIC_SIGNS','CAMPUS_CITY_EVENTS'],
   'render/camera-controller.js':['createCameraController','explore','campus'],
   'render/performance-manager.js':['detectPerformanceProfile','createResizeController','createAdaptiveQualityController'],
   'characters/avatar-system.js':['createAvatarSystem','createAvatarAppearance','rigged-glb-v2'],
@@ -59,7 +65,7 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/dynamic-world.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
+  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/dynamic-world.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
   const url=new URL(`./lobby.js?v=${VERSION}`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});

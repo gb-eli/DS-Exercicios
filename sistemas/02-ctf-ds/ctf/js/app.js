@@ -5,7 +5,7 @@ import {
   loadProfile, saveProfile, removeProfile, listLocalProfiles, exportLocalData, importLocalData, changeStudentPassword,
   requestPersistentStorage, getStorageStatus, changeProfileIdentity, getRecoveryStatus, createTeacherRecoveryKit, installRecoveryPublicKey, recoverStudentPassword, verifyAuditChain,
 } from './core/storage.js';
-import { centralSignIn, changeCentralPassword, centralSignOut, loadCoreCTFState, isCoreChallengeProvisioned, completeCoreChallenge, startCoreLesson, completeCoreLesson, recordCoreToolUse, syncCoreDaily, purchaseCoreHint, purchaseCoreStoreItem, hasCentralSession, AGV_CORE_INFO } from './core/agv-core-bridge.js';
+import { centralSignOut, loadCoreCTFState, isCoreChallengeProvisioned, completeCoreChallenge, startCoreLesson, completeCoreLesson, recordCoreToolUse, syncCoreDaily, purchaseCoreHint, purchaseCoreStoreItem, hasCentralSession, AGV_CORE_INFO } from './core/agv-core-bridge.js';
 import { downloadJson, downloadText, sanitizeFilename, escapeHtml, safeExternalUrl, sanitizePlainText, uid } from './core/utils.js';
 import { awardToProfile, spendXp, grantBadge, purchaseStoreItem, getWalletSummary, reconcileProfileState } from './core/wallet.js';
 import { hasRequiredAcceptances, registerTermsAcceptance, TERMS_FULL_TEXT, TERMS_VERSION } from './data/terms.js';
@@ -1099,12 +1099,29 @@ const clearSavedProfileSelection = () => {
   void refreshSavedProfiles();
 };
 
+const unifiedAuthRedirect = () => {
+  const root = new URL('../../../', window.location.href);
+  const u = new URL('auth/', root);
+  u.searchParams.set('returnTo', 'sistemas/02-ctf-ds/ctf/index.html');
+  window.location.replace(u.href);
+};
+const unifiedCachePassword = (identity) => `AGV-CACHE-${String(identity?.user?.id||'').replace(/-/g,'').slice(0,20)}-59`;
 const initializeSession = async () => {
   releaseProfileTabLock();
   clearSession();
-  await refreshSavedProfiles();
-  elements.authModal.classList.remove('hidden');
-  setTimeout(() => elements.authStudentName.focus(), 0);
+  const central = hasCentralSession();
+  if (!central) { unifiedAuthRedirect(); return; }
+  elements.authModal.classList.add('hidden');
+  try {
+    const coreState = await loadCoreCTFState();
+    const identity = coreState?.identity;
+    if (!identity?.profile?.active) throw new Error('Perfil institucional inválido ou inativo.');
+    if (identity.profile.must_change_password) { location.replace('../../../atividades/'); return; }
+    await openCoreIdentity(identity, unifiedCachePassword(identity));
+  } catch (error) {
+    console.error('[CTF DS unified auth]', error);
+    unifiedAuthRedirect();
+  }
 };
 
 const renderOnboarding = (profile) => `<div class="modal-layer onboarding-layer" role="presentation">
@@ -1166,7 +1183,7 @@ const resetIdleTimer = () => {
   if (!getState().profile || getState().profile._ephemeral) return;
   touchSession();
   clearTimeout(idleTimer);
-  idleTimer = setTimeout(() => lockAndShowAuth('Sessão bloqueada após inatividade. Digite sua senha para continuar.'), IDLE_LOCK_MS);
+  idleTimer = setTimeout(() => unifiedAuthRedirect(), IDLE_LOCK_MS);
 };
 
 const enterApp = (profile) => {
@@ -1280,308 +1297,23 @@ const openCoreIdentity = async (identity, cachePassword) => {
 
 const handleAuth = async (event) => {
   event.preventDefault();
-  elements.authError.textContent = '';
-  try {
-    if (pendingCentralIdentity) {
-      const next = elements.authNewPassword.value;
-      const confirm = elements.authNewPasswordConfirm.value;
-      if (next !== confirm) throw new Error('As novas senhas não coincidem.');
-      elements.authLabel.textContent = 'ATUALIZANDO SENHA...';
-      const identity = await changeCentralPassword(next);
-      await openCoreIdentity(identity, next);
-      return;
-    }
-    const email = elements.authEmail.value.trim().toLowerCase();
-    const password = elements.authPassword.value;
-    if (!email || !password) throw new Error('Informe e-mail institucional e senha. No primeiro acesso, use o CGM como senha temporária.');
-    elements.authLabel.textContent = 'VALIDANDO NO CORE...';
-    const identity = await centralSignIn(email, password);
-    if (identity.profile.must_change_password) {
-      pendingCentralIdentity = identity;
-      pendingCentralLoginPassword = password;
-      elements.authNewPasswordWrap.classList.remove('hidden');
-      elements.authLabel.textContent = 'CRIAR SENHA PESSOAL';
-      elements.authError.textContent = 'Primeiro acesso validado. Crie sua senha pessoal para continuar.';
-      elements.authNewPassword.focus();
-      return;
-    }
-    await openCoreIdentity(identity, password);
-  } catch (error) {
-    elements.authError.textContent = error.message || 'Não foi possível autenticar no AGV Education Core.';
-  } finally {
-    if (!getState().profile) elements.authLabel.textContent = pendingCentralIdentity ? 'CRIAR SENHA PESSOAL' : 'ENTRAR NO CORE';
-  }
+  unifiedAuthRedirect();
 };
 
-const lockAndShowAuth = async (message = 'Sessão bloqueada. Entre novamente para continuar.') => {
+const lockAndShowAuth = async (message = 'Sessão encerrada.') => {
   const profile = getState().profile;
-  if (profile?.core?.authority === 'agv-core' || hasCentralSession()) await centralSignOut();
-  pendingCentralIdentity = null; pendingCentralLoginPassword = '';
-  elements.authNewPasswordWrap?.classList.add('hidden');
+  if (profile && !profile._ephemeral) {
+    try { await saveProfile(profile, 'session_locked', { authority: 'agv-core' }); } catch {}
+  }
   releaseProfileTabLock();
   clearTimeout(idleTimer);
-  if (profile && !profile._ephemeral) {
-    try { await saveProfile(profile, 'session_locked', {}); } catch {}
-    lockProfile(profile.accountId);
-  } else clearSession();
   closeModal();
-  elements.app.classList.add('hidden');
-  elements.terminalToggle.classList.add('hidden');
-  elements.toolsDrawerToggle.classList.add('hidden');
-  elements.scheduleChip?.classList.add('hidden');
-  closeToolsDrawer();
-  elements.terminalDrawer.classList.remove('open');
-  elements.authModal.classList.remove('hidden');
-  elements.authPassword.value = '';
-  if (elements.authEmail) elements.authEmail.value = profile?.core?.authority === 'agv-core' ? '' : elements.authEmail.value;
-  selectedSavedAccountId = profile?._ephemeral ? '' : profile?.accountId || '';
-  await refreshSavedProfiles();
-  if (profile && !profile._ephemeral) {
-    elements.authStudentName.value = profile.studentName;
-    elements.authClassName.value = profile.className;
-    elements.authStudentName.readOnly = true;
-    elements.authClassName.readOnly = true;
-  } else {
-    elements.authForm.reset();
-    elements.authStudentName.readOnly = false;
-    elements.authClassName.readOnly = false;
-  }
-  setState({ profile: null, view: 'dashboard' });
-  elements.authError.textContent = message;
-  (elements.authEmail || elements.authPassword).focus();
-};
-
-const logout = () => lockAndShowAuth('Sessão encerrada com segurança. Seu progresso oficial permanece no AGV Education Core.');
-const switchAccount = () => lockAndShowAuth('Conta bloqueada. Entre com outra conta institucional.');
-
-const clearCurrentMissionDraft = (missionId) => {
-  const challenge = getChallenge(missionId);
-  if (!challenge) return;
-  if (!confirm('Limpar somente o rascunho desta missão? Missões já concluídas e recompensas serão preservadas.')) return;
-  persistProfile((draft) => { clearMissionDraft(draft, missionId); return draft; }, { rerender: false, eventType: 'mission_draft_cleared', details: { challengeId: missionId } });
-  activeChallengeUI.session = { openedAt: Date.now(), toolRuns: 0, localTests: 0, evidenceClicks: 0, submissions: 0 };
-  openChallenge(missionId, null, false, activeChallengeUI.tutorialVisible, { suppressAutoTutorial: true });
-  showToast('RASCUNHO LIMPO', 'A conclusão e as recompensas anteriores foram preservadas.');
-};
-
-const clearMissionDraftHistory = () => {
-  if (!confirm('Limpar respostas em elaboração, seleções e retomadas das missões não concluídas?')) return;
-  persistProfile((draft) => { clearAllMissionDrafts(draft, { keepCompleted: true }); return draft; }, { eventType: 'mission_drafts_cleared', details: { completedPreserved: true } });
-  showToast('RASCUNHOS REMOVIDOS', 'Missões concluídas, recompensas, aulas e identidade foram preservadas.');
-};
-
-const clearApplicationCache = async () => {
-  if (!confirm('Limpar somente os arquivos temporários da interface? O perfil criptografado e o progresso não serão apagados. A página será recarregada.')) return;
-  checkpointActiveMission({ immediate: true });
-  try {
-    const removed = await updateManager.clearInterfaceCaches();
-    showToast('CACHE DA INTERFACE LIMPO', `${removed} conjunto(s) temporário(s) removido(s). O perfil e o progresso continuam no armazenamento protegido.`);
-    setTimeout(() => location.reload(), 500);
-  } catch (error) { showToast('CACHE NÃO LIMPO', error.message || 'O navegador não permitiu limpar os arquivos temporários.', 'attention'); }
-};
-
-const resetProgress = async ({ authorized = false } = {}) => {
-  const profile = getState().profile;
-  if (!authorized && !profile?._ephemeral) {
-    await openEduAuthAuthorization('progress-reset', `profile:${profile.accountId}`, () => resetProgress({ authorized: true }));
-    return;
-  }
-  if (!confirm('Zerar XP, missões, moedas, itens e aulas deste perfil? A identidade, a proteção e o histórico de segurança serão preservados.')) return;
-  const fresh = createDefaultProfile(profile.accountId, profile.studentName, profile.className);
-  if (profile._ephemeral) fresh._ephemeral = true;
-  fresh.createdAt = profile.createdAt;
-  fresh.audit = profile.audit;
-  fresh.exportHistory = profile.exportHistory || [];
-  fresh.importHistory = profile.importHistory || [];
-  fresh.migrationHistory = profile.migrationHistory || [];
-  fresh.settings = { ...fresh.settings, ...profile.settings };
-  fresh.acceptances = [...(profile.acceptances || [])];
-  fresh.activityAcceptances = [...(profile.activityAcceptances || [])];
-  fresh.permissionAcceptances = [...(profile.permissionAcceptances || [])];
-  fresh.releaseHistory = { ...(profile.releaseHistory || {}) };
-  reconcileProfileState(fresh);
-  setState({ profile: fresh });
-  if (!fresh._ephemeral) await saveProfile(fresh, 'progress_reset', { identityPreserved: true, authorization: authorized ? 'eduauth' : 'temporary-session' });
-  applyTheme(fresh);
-  renderProfileChip(fresh);
-  navigate('dashboard');
-  showToast('PROGRESSO REINICIADO', 'A identidade e o perfil protegido foram mantidos.');
-};
-
-const exportProgress = async () => {
-  const profile = getState().profile;
-  if (profile._ephemeral) {
-    showToast('SESSÃO TEMPORÁRIA', 'Crie um perfil protegido para exportar um backup criptografado.', 'attention');
-    return;
-  }
-  const event = { id: uid(), at: new Date().toISOString(), platform: 'ctfds', version: platformConfig.version };
-  profile.exportHistory = [...(profile.exportHistory || []), event].slice(-100);
-  await saveProfile(profile, 'profile_exported', { exportId: event.id });
-  const payload = await exportLocalData(profile.accountId);
-  downloadJson(`perfil-educacional-${new Date().getFullYear()}.edu-profile`, payload);
-  showToast('BACKUP CRIPTOGRAFADO GERADO', 'Guarde o arquivo e sua senha em locais separados.');
-  renderCurrentView();
-};
-
-const importProgress = async (file, { fromAuth = false } = {}) => {
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { const message = 'O backup excede o limite de 5 MB.'; if (fromAuth) elements.authError.textContent = message; else showToast('ARQUIVO MUITO GRANDE', message, 'attention'); return; }
-  try {
-    const payload = JSON.parse(await file.text());
-    let replace = false;
-    try {
-      await importLocalData(payload, { replace: false });
-    } catch (error) {
-      if (!/Já existe/.test(error.message) || !confirm(`${error.message}\n\nSubstituir o pacote local pelo backup selecionado?`)) throw error;
-      replace = true;
-      await importLocalData(payload, { replace: true });
-    }
-    await refreshSavedProfiles();
-    if (fromAuth) {
-      elements.authError.textContent = 'Perfil importado. Selecione-o na lista e digite a senha do backup.';
-    } else {
-      showToast('BACKUP IMPORTADO', replace ? 'O perfil local foi substituído após confirmação.' : 'O perfil foi adicionado ao dispositivo. Desbloqueie-o com a senha do backup.');
-    }
-  } catch (error) {
-    const message = error.message || 'Arquivo inválido.';
-    if (fromAuth) elements.authError.textContent = message;
-    else showToast('IMPORTAÇÃO RECUSADA', message, 'attention');
-  }
-};
-
-
-const generateEvidence = async () => {
-  const profile = getState().profile;
-  if (!hasRequiredAcceptances(profile)) { openTermsGate(); return; }
-  const wallet = getWalletSummary(profile);
-  if (!wallet.valid) { showToast('EVIDÊNCIA BLOQUEADA', 'A carteira ou o inventário apresentam inconsistência. Exporte o backup e procure o professor.', 'important'); return; }
-  const html = buildEvidenceHtml(profile);
-  const filename = `evidencia-ctfds-${sanitizeFilename(profile.className || 'turma')}.html`;
-  downloadText(filename, html, 'text/html;charset=utf-8');
-  profile.delivery ||= { checks: {}, receipts: [] };
-  profile.delivery.evidenceGeneratedAt = Date.now();
-  profile.delivery.receipts = [...(profile.delivery.receipts || []), { id: uid(), type: 'evidence_html', fileName: filename, at: new Date().toISOString() }].slice(-50);
-  if (!profile._ephemeral) await saveProfile(profile, 'result_exported', { fileName: filename, type: 'evidence_html' });
-  renderCurrentView();
-  showToast('EVIDÊNCIA GERADA', `${filename} foi preparado na pasta de downloads.`);
-};
-
-const openClassroom = async () => {
-  const integration = platformConfig.integrations.classroom;
-  const url = integration.assignmentUrl || integration.courseUrl;
-  if (!integration.enabled || !/^https:\/\//.test(url)) {
-    showToast('CLASSROOM NÃO CONFIGURADO', 'O professor precisa preencher um link válido no arquivo de configuração.', 'attention');
-    return;
-  }
-  const profile = getState().profile;
-  profile.delivery ||= { checks: {}, receipts: [] };
-  profile.delivery.classroomOpenedAt = Date.now();
-  if (!profile._ephemeral) await saveProfile(profile, 'classroom_opened', { urlType: integration.assignmentUrl ? 'assignment' : 'course' });
-  window.open(safeExternalUrl(url), '_blank', 'noopener,noreferrer');
-  showToast('CLASSROOM ABERTO', 'Confira a conta escolar, anexe o arquivo e confirme o status de entrega.');
-};
-
-const openScheduleDetails = () => {
-  const profile = getState().profile;
-  scheduleStatus = detectCurrentPeriod(profile?.className || '');
-  elements.modalRoot.innerHTML = `<div class="modal-layer" role="presentation"><section class="panel profile-actions-modal" role="dialog" aria-modal="true" aria-labelledby="schedule-title"><header style="display:flex;justify-content:space-between;gap:12px"><div><p class="eyebrow">CONTEXTO ESCOLAR</p><h2 id="schedule-title">Horário da turma</h2></div><button class="icon-button" data-close-modal aria-label="Fechar">×</button></header>${renderScheduleDetails(scheduleStatus)}<button class="secondary-button" data-view="delivery">ABRIR CONCLUSÃO E ENTREGA</button></section></div>`;
-};
-
-const openBugReport = () => {
-  elements.modalRoot.innerHTML = `<div class="modal-layer" role="presentation"><section class="panel profile-actions-modal" role="dialog" aria-modal="true" aria-labelledby="bug-report-title"><header style="display:flex;justify-content:space-between;gap:12px"><div><p class="eyebrow">FEEDBACK RESPONSÁVEL</p><h2 id="bug-report-title">Relatar problema</h2></div><button class="icon-button" data-close-modal aria-label="Fechar">×</button></header><p>O arquivo será gerado somente neste dispositivo. Não inclua senha, flag, resposta, documento ou dado pessoal desnecessário.</p><form data-bug-report-form><label>Módulo<select name="module" required><option value="">Selecione</option><option>Login e perfil</option><option>Missões CTF</option><option>Tutorial</option><option>Ferramentas</option><option>Loja e carteira</option><option>Exportação e entrega</option><option>EduAuth</option><option>Acessibilidade</option><option>Outro</option></select></label><label>O que aconteceu?<textarea name="description" minlength="10" maxlength="1200" required placeholder="Descreva o comportamento observado."></textarea></label><label>Passos para reproduzir<textarea name="steps" minlength="5" maxlength="1600" required placeholder="1. Abri... 2. Toquei... 3. O sistema..."></textarea></label><label>O que você esperava?<textarea name="expected" maxlength="800" placeholder="Resultado esperado."></textarea></label><label class="terms-check"><input type="checkbox" name="includeClass"> <span>Incluir somente a turma no relatório para ajudar a reproduzir o contexto.</span></label><button class="primary-button" type="submit">EXPORTAR RELATO JSON</button></form></section></div>`;
-};
-
-const openChangePassword = () => {
-  elements.modalRoot.innerHTML = `<div class="modal-layer" role="presentation"><section class="panel password-modal" role="dialog" aria-modal="true" aria-labelledby="change-password-title"><header style="display:flex;justify-content:space-between"><div><p class="eyebrow">SEGURANÇA LOCAL</p><h2 id="change-password-title">Alterar senha</h2></div><button class="icon-button" data-close-modal aria-label="Fechar">×</button></header><p>A alteração protege novamente a chave do perfil. O progresso e a identidade são preservados.</p><form data-change-password-form><label>Senha atual<input name="currentPassword" type="password" minlength="6" required autocomplete="current-password"></label><label>Nova senha<input name="newPassword" type="password" minlength="6" required autocomplete="new-password"></label><label>Confirmar nova senha<input name="newPasswordConfirm" type="password" minlength="6" required autocomplete="new-password"></label><button class="primary-button" type="submit">ATUALIZAR SENHA</button></form></section></div>`;
-};
-
-const openChangeIdentity = () => {
-  const profile = getState().profile;
-  elements.modalRoot.innerHTML = `<div class="modal-layer" role="presentation"><section class="panel password-modal" role="dialog" aria-modal="true" aria-labelledby="change-identity-title"><header style="display:flex;justify-content:space-between"><div><p class="eyebrow">CORREÇÃO DE IDENTIDADE</p><h2 id="change-identity-title">Corrigir nome ou turma</h2></div><button class="icon-button" data-close-modal aria-label="Fechar">×</button></header><p>O identificador interno permanece o mesmo. O valor anterior e o motivo ficam registrados no histórico protegido.</p><form data-change-identity-form><label>Nome completo<input name="studentName" value="${escapeHtml(profile.studentName)}" minlength="5" maxlength="80" required></label><label>Turma<input name="className" value="${escapeHtml(profile.className)}" minlength="2" maxlength="40" required></label><label>Motivo da correção<textarea name="reason" minlength="4" maxlength="300" required placeholder="ex.: correção de turma ou grafia do nome"></textarea></label><label>Senha local<input name="password" type="password" minlength="6" required autocomplete="current-password"></label><button class="primary-button" type="submit">CONFIRMAR CORREÇÃO</button></form></section></div>`;
-};
-
-const deleteCurrentProfile = async ({ authorized = false } = {}) => {
-  const profile = getState().profile;
-  if (profile._ephemeral) return lockAndShowAuth('Sessão temporária encerrada. Nenhum dado permanente foi mantido.');
-  if (!authorized) {
-    await openEduAuthAuthorization('profile-delete', `profile:${profile.accountId}`, () => deleteCurrentProfile({ authorized: true }));
-    return;
-  }
-  if (!confirm(`Excluir o perfil de ${profile.studentName} deste computador? Faça um backup antes se desejar continuar em outro equipamento.`)) return;
-  await recordEduAuthEvent({ platform: 'ctfds', mode: eduauthIsProductionProvisioned() ? 'SIGNED_GRANT' : 'DEVELOPMENT_BYPASS', risk: 'CRITICAL', actionId: 'profile-delete', result: 'applied', resourceId: `profile:${profile.accountId}` });
-  await removeProfile(profile.accountId);
+  try { await centralSignOut(); } catch {}
   clearSession();
-  await lockAndShowAuth('Perfil removido deste computador.');
+  showToast('SESSÃO ÚNICA', message, 'attention');
+  unifiedAuthRedirect();
 };
 
-const openTeacherMode = async () => {
-  const [status, profiles] = await Promise.all([getRecoveryStatus(), listLocalProfiles()]);
-  elements.modalRoot.innerHTML = renderTeacherRecovery(status, profiles);
-};
-
-
-const stopEduAuthCountdown = () => {
-  if (eduauthCountdownTimer) clearInterval(eduauthCountdownTimer);
-  eduauthCountdownTimer = null;
-};
-
-const updateEduAuthCountdown = () => {
-  const target = $('[data-eduauth-countdown]', elements.modalRoot);
-  if (!target) return stopEduAuthCountdown();
-  const expiresAt = Number(target.dataset.expiresAt || 0);
-  const remaining = Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000));
-  target.textContent = `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
-  if (!remaining) { target.classList.add('expired'); stopEduAuthCountdown(); }
-};
-
-const openEduAuthAuthorization = async (actionId, resourceId = '', callback = null, { modeOverride = '' } = {}) => {
-  const profile = getState().profile;
-  const built = await buildEduAuthRequest({ actionId, profile, resourceId, modeOverride });
-  const action = modeOverride ? { ...built.action, preferredMode: modeOverride } : built.action;
-  const request = built.request;
-  pendingEduAuth = { action, request, actionId, resourceId, callback, modeOverride };
-  elements.modalRoot.innerHTML = renderAuthorizationModal({
-    action, request, profile, resourceId,
-    allowDevelopmentBypass: !eduauthIsProductionProvisioned(),
-  });
-  stopEduAuthCountdown();
-  updateEduAuthCountdown();
-  eduauthCountdownTimer = setInterval(updateEduAuthCountdown, 1000);
-  $('[name="pin"]', elements.modalRoot)?.focus();
-  $('[name="token"]', elements.modalRoot)?.focus();
-};
-
-const completeEduAuthAuthorization = async (details = {}) => {
-  const current = pendingEduAuth;
-  pendingEduAuth = null;
-  stopEduAuthCountdown();
-  closeModal();
-  if (typeof current?.callback === 'function') await current.callback(details);
-  else showToast('AUTORIZAÇÃO VALIDADA', 'O teste do protocolo foi concluído com sucesso.');
-};
-
-const renewPendingEduAuthRequest = async () => {
-  if (!pendingEduAuth) return;
-  const current = pendingEduAuth;
-  await openEduAuthAuthorization(current.actionId, current.resourceId, current.callback, { modeOverride: current.modeOverride });
-};
-
-const downloadRecoveryKit = (kit) => downloadJson(`chave-recuperacao-ctfds-${kit.keyId}.ctfds-admin-key`, kit);
-
-const readJsonFile = async (file) => {
-  if (!file) throw new Error('Selecione um arquivo.');
-  try { return JSON.parse(await file.text()); } catch { throw new Error('O arquivo selecionado não contém JSON válido.'); }
-};
-
-const useTemporarySession = () => {
-  const enteredName = elements.authStudentName.value.trim();
-  const enteredClass = elements.authClassName.value.trim();
-  const profile = createDefaultProfile(`temporary_${uid()}`, enteredName.length >= 2 ? enteredName : 'Aluno temporário', enteredClass || 'Turma não informada');
-  profile._ephemeral = true;
-  profile.onboardingCompleted = false;
-  enterApp(profile);
-  showToast('DEMONSTRAÇÃO LOCAL', 'Este modo não grava progresso, XP ou moedas no AGV Education Core. Use o login institucional para atividades oficiais.', 'attention');
-};
 
 const appendTerminal = (text, type = '') => {
   const line = document.createElement('div');
@@ -1619,7 +1351,7 @@ document.addEventListener('click', async (event) => {
     elements.authEmail?.focus();
     return;
   }
-  if (event.target.closest('#temporary-session')) { useTemporarySession(); return; }
+  if (event.target.closest('#temporary-session')) { unifiedAuthRedirect(); return; }
   if (event.target.closest('#teacher-mode') || event.target.closest('[data-open-teacher-mode]') || event.target.closest('[data-open-eduauth-center]')) { openTeacherMode(); return; }
   const eduauthDemo = event.target.closest('[data-eduauth-demo-action]');
   if (eduauthDemo) { openEduAuthAuthorization(eduauthDemo.dataset.eduauthDemoAction, 'demonstracao-protocolo'); return; }

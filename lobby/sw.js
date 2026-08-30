@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION='14.10.8.58';
+const VERSION='14.10.8.65';
 const CACHE_NAME=`agv-lobby-runtime-${VERSION}`;
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
@@ -10,44 +10,50 @@ const SDK_URLS=new Set([
 const CRITICAL_SHELL=[
   './',
   './index.html',
-  './assets/diagnostics.js?v=14.10.8.58',
-  './assets/sw-register.js?v=14.10.8.58',
-  './assets/vendor-loader.js?v=14.10.8.58',
-  './assets/boot.js?v=14.10.8.58',
-  './assets/supabase.js?v=14.10.8.58',
-  './assets/lobby.js?v=14.10.8.58',
-  './assets/config.js?v=14.10.8.58',
-  './assets/lobby3d.js?v=14.10.8.58',
-  './assets/lobby-lite.js?v=14.10.8.58',
-  './assets/vale-lite.js?v=14.10.8.58',
-  './assets/vale3d.js?v=14.10.8.58',
-  './assets/world/vale-silicio-data.js?v=14.10.8.58',
-  './assets/world/vale-silicio-shared.js?v=14.10.8.58',
-  './data/vale-silicio/runtime-v2.json?v=14.10.8.58',
-  './assets/world/campus-manifest.js?v=14.10.8.58',
-  './assets/world/campus-environment.js?v=14.10.8.58',
-  './assets/world/campus-experiences.js?v=14.10.8.58',
-  './assets/render/camera-controller.js?v=14.10.8.58',
-  './assets/render/performance-manager.js?v=14.10.8.58',
-  './assets/characters/avatar-system.js?v=14.10.8.58',
-  './assets/game/portal-manager.js?v=14.10.8.58',
-  './assets/game/challenge-manager.js?v=14.10.8.58',
-  './assets/game/ride-manager.js?v=14.10.8.58',
-  './assets/game/train-manager.js?v=14.10.8.58',
-  './assets/world/dynamic-world.js?v=14.10.8.58',
-  './assets/social/proximity-chat.js?v=14.10.8.58',
-  './assets/rigged-avatar.js?v=14.10.8.58',
+  './assets/diagnostics.js?v=14.10.8.65',
+  './assets/sw-register.js?v=14.10.8.65',
+  './assets/vendor-loader.js?v=14.10.8.65',
+  './assets/boot.js?v=14.10.8.65',
+  './assets/supabase.js?v=14.10.8.65',
+  './assets/lobby.js?v=14.10.8.65',
+  './assets/config.js?v=14.10.8.65',
+  './assets/lobby3d.js?v=14.10.8.65',
+  './assets/lobby-lite.js?v=14.10.8.65',
+  './assets/vale-lite.js?v=14.10.8.65',
+  './assets/vale3d.js?v=14.10.8.65',
+  './assets/world/vale-silicio-data.js?v=14.10.8.65',
+  './assets/world/vale-silicio-shared.js?v=14.10.8.65',
+  './data/vale-silicio/runtime-v2.json?v=14.10.8.65',
+  './assets/world/campus-manifest.js?v=14.10.8.65',
+  './assets/world/campus-environment.js?v=14.10.8.65',
+  './assets/world/campus-experiences.js?v=14.10.8.65',
+  './assets/world/campus-destinations.js?v=14.10.8.65',
+  './assets/world/campus-connections.js?v=14.10.8.65',
+  './assets/world/campus-city-network.js?v=14.10.8.65',
+  './assets/world/campus-interiors.js?v=14.10.8.65',
+  './assets/world/campus-live-systems.js?v=14.10.8.65',
+  './assets/world/campus-mobility-systems.js?v=14.10.8.65',
+  './assets/render/camera-controller.js?v=14.10.8.65',
+  './assets/render/performance-manager.js?v=14.10.8.65',
+  './assets/characters/avatar-system.js?v=14.10.8.65',
+  './assets/game/portal-manager.js?v=14.10.8.65',
+  './assets/game/challenge-manager.js?v=14.10.8.65',
+  './assets/game/ride-manager.js?v=14.10.8.65',
+  './assets/game/train-manager.js?v=14.10.8.65',
+  './assets/world/dynamic-world.js?v=14.10.8.65',
+  './assets/social/proximity-chat.js?v=14.10.8.65',
+  './assets/rigged-avatar.js?v=14.10.8.65',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.58',
+  './assets/lobby.css?v=14.10.8.65',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[
-  './vendor/three/three.module.min.js?v=14.10.8.58',
-  './vendor/three/three.core.min.js?v=14.10.8.58',
-  '../core/session/fullscreen-portal.js?v=14.10.8.58',
-  '../core/session/fullscreen-portal.css?v=14.10.8.58',
-  './data/vale-silicio/runtime-v2.schema.json?v=14.10.8.58',
-  './data/vale-silicio/context.json?v=14.10.8.58'
+  './vendor/three/three.module.min.js?v=14.10.8.65',
+  './vendor/three/three.core.min.js?v=14.10.8.65',
+  '../core/session/fullscreen-portal.js?v=14.10.8.65',
+  '../core/session/fullscreen-portal.css?v=14.10.8.65',
+  './data/vale-silicio/runtime-v2.schema.json?v=14.10.8.65',
+  './data/vale-silicio/context.json?v=14.10.8.65'
 ];
 
 self.addEventListener('install',event=>{

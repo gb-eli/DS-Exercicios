@@ -1,14 +1,17 @@
 {
-  "version": "14.10.8.51",
+  "version": "14.10.8.65",
   "channel": "feature",
-  "title": "Fase H — Lobby 2D-first e Campus de espera",
+  "title": "Cidade Viva Avançada — Mobilidade, NPCs e Eventos",
+  "base": "14.10.8.64",
   "changes": [
-    "Todo acesso ao Lobby inicia pelo mapa 2D oficial; o ambiente 3D passa a ser opcional e pode ser ativado pelo aluno",
-    "Adiciona botão explícito para alternar 2D/3D e preserva a escolha local sem iniciar automaticamente o 3D no próximo acesso",
-    "Eleva o mapa 2D com áreas recreativas, sinalização, animações e seis pontos de experiência: parkour, piscina, parquinho, escorregador, trilho e torre",
-    "Expande o 3D com as mesmas áreas do mapa 2D, animações ambientais e primeiro circuito de parkour com plataformas físicas e checkpoints",
-    "Mantém a v14.10.8.50 como base, incluindo o hotfix presentation/activeStation, Portal V2, Avatar V2, performance adaptativa e release gate",
-    "Não altera Supabase, schema, URLs pedagógicas ou o endereço do GitHub Pages"
-  ],
-  "base": "14.10.8.50"
+    "Tráfego urbano dinâmico em rotas próprias no 2D e 3D",
+    "Quatro veículos do Campus utilizáveis em passeios guiados",
+    "NPCs circulando entre distritos com orientação contextual",
+    "Sinalização dinâmica ligada ao horário e ao evento urbano ativo",
+    "Eventos rotativos em praças temáticas sem alterar estado acadêmico",
+    "Elevadores 3D com cabine física e sequência de viagem antes da troca de pavimento",
+    "Interiores com assinaturas visuais diferentes para Banco, Loja, CTF, COSMOS, Fliperama, Lab e demais prédios",
+    "HUD mostra veículo ativo e permite encerrar com E",
+    "Sem alterações de schema Supabase; 2D-first e 3D opcional preservados"
+  ]
 }

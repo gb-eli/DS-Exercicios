@@ -1,0 +1,5 @@
+v14.10.8.56 — Lobby Vertical & Dynamic World
+Base: v14.10.8.55.
+2D-first preservado; 3D opcional; Vale, teletransporte e atividades preservados.
+Inclui verticalidade/telhados/escadas, Torre de Controle, monotrilho com 8 estações, escorregador guiado, dia/noite, relógio, sol/lua/céu, ruas/calçadas/muros/vegetação/pista, primeira pessoa, FOV/FPS, chat por proximidade e personalização do Avatar V2.
+Sem migration/schema Supabase. Para chat e reunião coletiva, publique a Edge Function lobby-presence atualizada.
