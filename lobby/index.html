@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.70-stage39-traffic">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.79-stage48-solar-system">
   <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.66">
 <script src="../core/session/unified-auth-guard.js?v=14.10.8.66"></script><script src="../core/session/avatar-context.js?v=14.10.8.66-stage34"></script></head>
 <body>
@@ -23,6 +23,18 @@
         <div id="loading3d-recovery" class="loading-recovery hidden">
           <button id="enter-lite" class="primary" type="button">Continuar no mapa 2D</button>
           <button id="retry-3d" type="button">Tentar ambiente 3D novamente</button>
+        </div>
+      </div>
+      <div id="interplanetary-travel" class="interplanetary-travel hidden" role="status" aria-live="polite" aria-label="Viagem interplanetária em andamento">
+        <div class="interplanetary-travel-stars" aria-hidden="true"></div>
+        <div class="interplanetary-travel-core">
+          <span id="interplanetary-travel-icon" class="interplanetary-travel-icon">🚀</span>
+          <p class="eyebrow">Estação Orbital AGV • Transferência</p>
+          <h2 id="interplanetary-travel-title">Preparando viagem</h2>
+          <p id="interplanetary-travel-status" class="muted">Calculando trajetória…</p>
+          <div class="interplanetary-progress" aria-hidden="true"><i id="interplanetary-progress-bar"></i></div>
+          <small id="interplanetary-travel-distance">Escala visual comprimida para fins educacionais.</small>
+          <button id="interplanetary-travel-skip" type="button">Pular animação</button>
         </div>
       </div>
       <div id="zone-banner" class="zone-banner hidden" aria-live="polite"><span>Você entrou em</span><strong id="zone-banner-title">Praça Central</strong></div>
@@ -52,7 +64,26 @@
       <canvas id="vale-minimap" class="vale-minimap hidden" width="160" height="160" aria-label="Minimapa do Lobby AGV"></canvas>
       <aside id="vehicle-dashboard" class="vehicle-dashboard glass hidden" aria-live="polite">
         <div class="vehicle-dashboard-speed"><strong id="vehicle-speed">0</strong><span>km/h</span></div>
-        <div class="vehicle-dashboard-info"><b id="vehicle-gear">N</b><span id="vehicle-drive-mode">Motorista</span><small id="vehicle-controls-hint">W/S acelerar e frear • A/D virar • Espaço freio de mão • E sair</small><div class="vehicle-road-status"><span>Limite <strong id="vehicle-limit">40</strong></span><span id="vehicle-signal" data-signal="green">● Livre</span></div></div>
+        <div class="vehicle-dashboard-info"><b id="vehicle-gear">N</b><span id="vehicle-drive-mode">Motorista</span><small id="vehicle-controls-hint">W/S acelerar e frear • A/D virar • Espaço freio de mão • E sair</small><div class="vehicle-road-status"><span>Limite <strong id="vehicle-limit">40</strong></span><span id="vehicle-signal" data-signal="green">● Livre</span></div><div class="vehicle-air-status hidden"><span>Altitude <strong id="vehicle-altitude">0</strong> m</span><span>Teto <strong id="vehicle-max-altitude">0</strong> m</span><span id="vehicle-flight-state">● Pousado</span></div></div>
+      </aside>
+      <aside id="security-camera-panel" class="security-camera-panel hidden" role="dialog" aria-modal="false" aria-labelledby="security-camera-title">
+        <div class="security-camera-console glass">
+          <header class="security-camera-head"><div><p class="eyebrow">Central de Segurança AGV</p><h2 id="security-camera-title">📹 Matriz CCTV</h2><p id="security-camera-status" class="muted">Câmera pública do Campus</p></div><button id="security-camera-close" type="button" aria-label="Fechar matriz de câmeras">×</button></header>
+          <div class="security-camera-layout" aria-label="Modo de visualização"><button class="active" data-security-layout="single" type="button">▣ 1 câmera</button><button data-security-layout="grid" type="button">▦ 4 câmeras</button></div>
+          <div id="security-camera-list" class="security-camera-list" aria-label="Câmeras disponíveis"></div>
+          <div id="security-camera-grid-legend" class="security-camera-grid-legend hidden" aria-label="Câmeras do mosaico"></div>
+          <label class="security-camera-zoom" for="security-camera-zoom"><span>Zoom óptico virtual <output id="security-camera-zoom-value">1×</output></span><input id="security-camera-zoom" type="range" min="1" max="4" step="0.25" value="1"></label>
+          <p class="security-camera-privacy"><strong>Privacidade operacional</strong><span>Somente áreas públicas externas do Campus. O sistema não mostra interiores, provas, atividades ou dados acadêmicos.</span></p>
+        </div>
+      </aside>
+      <aside id="viewpoint-panel" class="viewpoint-panel hidden" role="dialog" aria-modal="false" aria-labelledby="viewpoint-title">
+        <div class="viewpoint-console glass">
+          <header class="viewpoint-head"><div><p class="eyebrow">Campus DS • Observação panorâmica</p><h2 id="viewpoint-title">🔭 Mirante AGV</h2><p id="viewpoint-status" class="muted">Visão panorâmica do Campus</p></div><button id="viewpoint-close" type="button" aria-label="Sair do binóculo">×</button></header>
+          <button id="viewpoint-panorama" class="viewpoint-panorama active" type="button"><span>◉</span><div><strong>Panorama geral</strong><small>Voltar à visão ampla do mirante</small></div></button>
+          <div id="viewpoint-landmark-list" class="viewpoint-landmark-list" aria-label="Pontos identificados no Campus"></div>
+          <label class="viewpoint-zoom" for="viewpoint-zoom"><span>Zoom do binóculo <output id="viewpoint-zoom-value">1×</output></span><input id="viewpoint-zoom" type="range" min="1" max="6" step="0.25" value="1"></label>
+          <p class="viewpoint-help"><strong>Identificação assistida</strong><span>Escolha um marco para apontar automaticamente o binóculo. Pressione E ou × para voltar ao personagem.</span></p>
+        </div>
       </aside>
       <div id="waiting-strip" class="waiting-strip glass" aria-live="polite"><span class="waiting-dot"></span><div><strong>Lobby de espera</strong><small id="waiting-strip-text">Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.</small></div></div>
       <aside id="challenge-hud" class="challenge-hud glass hidden" aria-live="polite">
@@ -108,15 +139,47 @@
           <button id="teleport-close" class="modal-close" type="button" aria-label="Fechar">×</button>
           <p class="eyebrow">Campus DS • Mobilidade instantânea</p>
           <h2 id="teleport-title">⚡ Teletransporte</h2>
-          <p class="muted">Escolha um ponto do Campus ou do Vale do Silício AGV. O modo 2D/3D atual é preservado.</p>
+          <p class="muted">Escolha um destino entre Campus, Vale, Rural, Base, Órbita, Lua ou Marte. O modo 2D/3D atual é preservado.</p>
           <div class="teleport-feature"><span>🏙</span><div><strong>Vale do Silício AGV</strong><small>Empresas dos alunos, distritos, esportes, hangar e ambientes.</small></div><button id="teleport-vale-now" class="primary" type="button">Ir para o Vale</button></div>
-          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, 2DS, piscina, empresa…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Campus + Vale</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option></select></label></div>
+          <div class="teleport-feature"><span>🌾</span><div><strong>Mundo Rural AGV</strong><small>Fazenda, campos, animais, rio, ponte e pomar • carregado sob demanda.</small></div><button id="teleport-rural-now" class="primary" type="button">Ir para o Rural</button></div>
+          <div class="teleport-feature"><span>🛠️</span><div><strong>Base de Operações AGV</strong><small>Logística, engenharia, resgate, hangares, pista e treinamento • carregada sob demanda.</small></div><button id="teleport-military-now" class="primary" type="button">Ir para a Base</button></div>
+          <div class="teleport-feature"><span>🚀</span><div><strong>Estação Orbital AGV</strong><small>Centro espacial, doca, módulos científicos, cúpula, Terra e Sol • carregada sob demanda.</small></div><button id="teleport-space-now" class="primary" type="button">Ir para a Órbita</button></div>
+          <div class="teleport-feature"><span>🌕</span><div><strong>Lua AGV</strong><small>Base lunar, crateras, rover, baixa gravidade e Terra no horizonte • carregada sob demanda.</small></div><button id="teleport-moon-now" class="primary" type="button">Ir para a Lua</button></div>
+          <div class="teleport-feature"><span>🔴</span><div><strong>Marte AGV</strong><small>Base científica, cânions, crateras, rover, gravidade marciana e tempestades de poeira • carregado sob demanda.</small></div><button id="teleport-mars-now" class="primary" type="button">Ir para Marte</button></div>
+          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, Rural, Base, Órbita, Lua, Marte, 2DS, laboratórios…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Todos os mapas</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option><option value="rural">Mundo Rural AGV</option><option value="military">Base de Operações AGV</option><option value="space">Estação Orbital AGV</option><option value="moon">Lua AGV</option><option value="mars">Marte AGV</option></select></label></div>
           <div id="staff-teleport-panel" class="staff-teleport-panel hidden"><div><strong>📍 Controle da turma</strong><small>Leva todos os alunos online para o ponto em que você está agora. O comando é validado pelo servidor.</small></div><button id="staff-bring-all" class="primary" type="button">Trazer todos até mim</button></div>
           <div id="teleport-list" class="teleport-list"><p class="muted">Carregando destinos…</p></div>
           <small class="campus-disclaimer">Teletransporte não altera atividade, nota, progresso ou matrícula. É apenas mobilidade dentro do Lobby.</small>
         </div>
       </div>
 
+
+
+      <div id="solar-system-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="solar-system-title">
+        <div class="modal-card solar-system-card">
+          <button id="solar-system-close" class="modal-close" type="button" aria-label="Fechar Central Interplanetária">×</button>
+          <p class="eyebrow">Estação Orbital AGV • Navegação interplanetária</p>
+          <h2 id="solar-system-title">🪐 Central Interplanetária</h2>
+          <p class="muted">Mapa didático do Sistema Solar. Distâncias e tamanhos visuais são comprimidos; Lua e Marte são os destinos ativos nesta etapa.</p>
+          <div class="solar-system-layout">
+            <section class="solar-orbit-panel" aria-label="Mapa visual do Sistema Solar">
+              <div id="solar-system-orbits" class="solar-system-orbits"></div>
+              <small>Órbitas ilustrativas • não representam escala real.</small>
+            </section>
+            <section class="solar-mission-panel">
+              <div id="solar-destination-list" class="solar-destination-list"></div>
+              <article class="solar-selected-mission">
+                <span id="solar-selected-icon">🌕</span>
+                <div><strong id="solar-selected-name">Lua AGV</strong><small id="solar-selected-distance">≈ 384.400 km da Terra</small></div>
+              </article>
+              <p id="solar-selected-summary" class="solar-selected-summary">Escolha um destino para ver o plano de transferência.</p>
+              <ul id="solar-selected-facts" class="solar-selected-facts"></ul>
+              <div class="solar-actions"><button id="solar-travel-start" class="primary" type="button">🚀 Iniciar viagem</button><button id="solar-travel-cancel" type="button">Continuar na estação</button></div>
+              <small class="campus-disclaimer">A animação comprime uma viagem espacial real para poucos segundos. O Lobby não simula tempos astronômicos reais.</small>
+            </section>
+          </div>
+        </div>
+      </div>
 
       <div id="interior-map-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="interior-map-title">
         <div class="modal-card interior-map-card">
@@ -190,7 +253,7 @@
               </div>
             </section>
           </div>
-          <div class="vehicle-help"><strong>Como funciona</strong><span>No modo Motorista você controla aceleração, freio, ré e direção. Outros participantes podem embarcar nos lugares disponíveis enquanto você dirige. O modo Carona deste menu continua oferecendo um passeio automático individual.</span></div>
+          <div class="vehicle-help"><strong>Como funciona</strong><span id="vehicle-help-copy">No modo Motorista você controla aceleração, freio, ré e direção. Outros participantes podem embarcar nos lugares disponíveis enquanto você dirige. O modo Carona deste menu continua oferecendo um passeio automático individual.</span></div>
           <div class="cinema-staff-actions"><button id="vehicle-start" class="primary" type="button">Iniciar passeio</button><button id="vehicle-close-secondary" type="button">Cancelar</button></div>
         </div>
       </div>
@@ -227,7 +290,7 @@
           <div class="settings-grid">
             <section class="settings-section"><h3>Atmosfera</h3><label>Modo do céu<select id="world-time-mode"><option value="cycle">Ciclo AGV • 24h em 24min</option><option value="day">Dia fixo • visual local</option><option value="night">Noite fixa • visual local</option></select></label><label>Limite de FPS<select id="fps-cap"><option value="30">30 FPS</option><option value="45">45 FPS</option><option value="60">60 FPS</option></select></label><label class="check-row"><input id="show-perf" type="checkbox"> Mostrar indicador de FPS</label></section>
             <section id="staff-world-time-control" class="settings-section hidden"><h3>Controle global do horário</h3><label>Modo da sessão<select id="staff-world-time-mode"><option value="cycle">Ciclo AGV • 24h em 24min</option><option value="fixed">Fixar horário</option></select></label><label id="staff-world-time-hour-row">Hora fixa<input id="staff-world-time-hour" type="time" step="60" value="12:00"></label><button id="staff-world-time-apply" class="primary" type="button">Aplicar aos usuários online</button><small class="muted">Controle temporário para os usuários online. Novos acessos voltam ao ciclo AGV até a equipe enviar outro comando.</small></section><section id="staff-world-weather-control" class="settings-section hidden"><h3>Controle global do clima</h3><label>Clima<select id="staff-world-weather-type"><option value="clear">☀️ Limpo</option><option value="rain">🌧️ Chuva</option><option value="snow">🌨️ Neve</option><option value="storm">⛈️ Tempestade</option></select></label><label>Intensidade<select id="staff-world-weather-intensity"><option value="light">Leve</option><option value="normal" selected>Normal</option><option value="strong">Forte</option></select></label><button id="staff-world-weather-apply" class="primary" type="button">Aplicar clima aos usuários online</button><small class="muted">O clima é temporário para a sessão online. Efeitos são reduzidos automaticamente em dispositivos Eco/Low.</small></section>
-            <section class="settings-section"><h3>Câmera 3D</h3><label>FOV <output id="fov-value">65°</output><input id="fov-range" type="range" min="45" max="95" step="1" value="65"></label><div class="camera-mode-grid"><button data-camera-mode="explore" type="button">3ª pessoa</button><button data-camera-mode="firstperson" type="button">1ª pessoa</button><button data-camera-mode="wide" type="button">Ampla</button><button data-camera-mode="campus" type="button">Campus</button></div><small class="muted">FOV e primeira pessoa se aplicam ao modo 3D.</small></section>
+            <section class="settings-section"><h3>Câmera 3D</h3><label>FOV <output id="fov-value">65°</output><input id="fov-range" type="range" min="45" max="95" step="1" value="65"></label><div class="camera-mode-grid"><button data-camera-mode="explore" type="button">3ª pessoa</button><button data-camera-mode="firstperson" type="button">1ª pessoa</button><button data-camera-mode="wide" type="button">Ampla</button><button data-camera-mode="campus" type="button">Campus</button><button data-camera-mode="aerial" type="button">Aérea</button></div><small class="muted">FOV e primeira pessoa se aplicam ao modo 3D.</small></section>
             <section class="settings-section avatar-settings"><h3>Avatar V2</h3><div class="avatar-preset-grid"><button data-avatar-preset="casual" type="button">Casual</button><button data-avatar-preset="sport" type="button">Esportivo</button><button data-avatar-preset="institutional" type="button">Institucional</button><button data-avatar-preset="tech" type="button">Tecnológico</button></div><div class="color-grid"><label>Cor principal<input id="avatar-accent" type="color" value="#36d2ff"></label><label>Pele<input id="avatar-skin" type="color" value="#d99b72"></label><label>Cabelo<input id="avatar-hair" type="color" value="#171719"></label><label>Calça<input id="avatar-pants" type="color" value="#202731"></label><label>Tênis<input id="avatar-shoes" type="color" value="#e8ecef"></label></div><div class="accessory-grid"><label><input id="avatar-backpack" type="checkbox"> Mochila</label><label><input id="avatar-glasses" type="checkbox"> Óculos</label><label><input id="avatar-headset" type="checkbox"> Headset</label><label><input id="avatar-wrist" type="checkbox"> Relógio</label></div><label>Estilo do cabelo<select id="avatar-hair-style"><option value="soft">Suave</option><option value="short">Curto</option><option value="cap">Boné</option></select></label></section>
           </div>
           <div class="settings-actions"><button id="world-settings-apply" class="primary" type="button">Aplicar</button><button id="world-settings-reset" type="button">Restaurar padrão</button></div>
@@ -282,7 +345,7 @@
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
   <script src="../core/session/fullscreen-portal.js?v=14.10.8.66"></script>
   <script src="assets/diagnostics.js?v=14.10.8.66"></script>
-  <script src="assets/sw-register.js?v=14.10.8.70-stage39-traffic" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.70-stage39-traffic" defer></script>
+  <script src="assets/sw-register.js?v=14.10.8.79-stage48-solar-system" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.79-stage48-solar-system" defer></script>
 </body>
 </html>

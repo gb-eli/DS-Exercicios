@@ -7,7 +7,7 @@ const SESSION_FIELDS=Object.freeze([
 
 const WORLD_FIELDS=Object.freeze([
   'worldId','scene','runtimeMode','runtimeStatus','runtimeRevision','player','nearPortal','nearStudent','nearSeat','nearWorldObject',
-  'seated','interior','interiorFloor','savedCampusPlayer','campusVisited','campusFlags','localAction','valeVisited','valeRuntime',
+  'seated','interior','interiorFloor','savedCampusPlayer','savedSpacePlayer','campusVisited','campusFlags','localAction','valeVisited','valeRuntime',
   'selectedValeCompany'
 ]);
 
@@ -28,7 +28,7 @@ function createWorldDefaults(){
   return{
     worldId:'campus-ds',scene:'campus',runtimeMode:null,runtimeStatus:'idle',runtimeRevision:0,
     player:{x:800,y:500,area:'central'},nearPortal:null,nearStudent:null,nearSeat:null,nearWorldObject:null,seated:false,interior:null,interiorFloor:null,
-    savedCampusPlayer:null,campusVisited:new Set(['central']),campusFlags:{greet:false,sit:false,action:false,monitor:false},localAction:null,
+    savedCampusPlayer:null,savedSpacePlayer:null,campusVisited:new Set(['central']),campusFlags:{greet:false,sit:false,action:false,monitor:false},localAction:null,
     valeVisited:new Set(),valeRuntime:null,selectedValeCompany:null
   };
 }
@@ -59,7 +59,8 @@ export function snapshotWorldState(worldState={}){
     interior:worldState.interior||null,
     interiorFloor:Number.isFinite(worldState.interiorFloor)?worldState.interiorFloor:null,
     seated:!!worldState.seated,
-    savedCampusPlayer:worldState.savedCampusPlayer?{...worldState.savedCampusPlayer}:null
+    savedCampusPlayer:worldState.savedCampusPlayer?{...worldState.savedCampusPlayer}:null,
+    savedSpacePlayer:worldState.savedSpacePlayer?{...worldState.savedSpacePlayer}:null
   };
 }
 

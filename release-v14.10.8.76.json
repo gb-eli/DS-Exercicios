@@ -1,0 +1,72 @@
+{
+  "version": "14.10.8.76",
+  "channel": "feature",
+  "title": "Estação Orbital AGV — Centro Espacial, streaming orbital, Terra/Sol e presença isolada",
+  "base": "14.10.8.75",
+  "changes": [
+    "Novo Centro Espacial AGV no Campus com embarque para a Estação Orbital AGV",
+    "Novo mundo orbital 2D e 3D com coordenadas independentes e runtime carregado sob demanda",
+    "space-lite e space3d são importados dinamicamente somente quando o aluno viaja para a órbita",
+    "Estação inclui doca, Controle de Missão, laboratório científico, habitat, robótica, cúpula panorâmica e painéis solares",
+    "Runtime 3D inclui campo de estrelas, Terra procedural em grande escala e Sol com iluminação direcional",
+    "Minimapa e teleporte global reconhecem os destinos orbitais e o transporte de retorno ao Campus",
+    "Presença, chat de proximidade e reunião assinada reconhecem a cena space e a área space-agv",
+    "Usuários em órbita ficam isolados dos runtimes do Campus, Rural e Base de Operações",
+    "Veículos terrestres multiplayer permanecem restritos ao Campus",
+    "Ao sair da órbita, renderer, cena, geometrias, materiais, avatares e listeners são descartados"
+  ],
+  "maintenance_patches": [
+    "Testes F72/F73 atualizados para aceitar a nova área space-agv e releases posteriores sem enfraquecer as garantias históricas",
+    "Ações de interação do Centro Espacial e transporte orbital ganharam rótulos explícitos Embarcar/Retornar"
+  ],
+  "schema_note": "A F74 exige migration 069 para ampliar lobby_presence.area com space-agv e exige republicar a Edge Function lobby-presence. A migration 069 já recria o constraint contendo também rural-agv e military-agv.",
+  "date": "2026-08-31",
+  "phase": "world-f74-space-station-streaming",
+  "baseVersion": "14.10.8.75",
+  "uiVersion": "0.22.8.27",
+  "runtimeCacheVersion": "14.10.8.76",
+  "lobbyCacheVersion": "14.10.8.76",
+  "worldArchitecturePhase": "74",
+  "worldArchitectureBuild": "14.10.8.76-stage45-space",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": true,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": true,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Terra e Sol são representações 3D procedurais/estilizadas; a F74 não usa textura fotográfica de satélite.",
+    "A movimentação na estação usa piso com gravidade simulada; caminhada espacial em gravidade zero/EVA não faz parte desta fase.",
+    "A estação não possui veículo espacial multiplayer nesta fase.",
+    "Lua e Marte permanecem no roadmap como mundos independentes carregados sob demanda.",
+    "Migration 066 continua necessária caso o multiplayer terrestre F67 ainda não esteja implantado.",
+    "Migration 065 do Cinema continua necessária caso a programação persistente do Cinema ainda não esteja implantada."
+  ],
+  "safety": {
+    "academic_data_writes": false,
+    "space_runtime_lazy_loaded": true,
+    "space_runtime_disposed_on_exit": true,
+    "external_scene_coordinate_isolation": true,
+    "ground_vehicle_network_disabled_outside_campus": true,
+    "private_student_data_added": false
+  },
+  "validation": {
+    "cumulativeRegression": "74/74 PASS",
+    "f74": "9/9 PASS",
+    "interiorRuntime": "18/18 PASS",
+    "tracksRails": "20/20 PASS",
+    "mobility": "PASS",
+    "masterplan": "PASS",
+    "worldTime": "16/16 PASS",
+    "worldWeather": "20/20 PASS",
+    "interiorPersonality": "PASS",
+    "worldFoundation": "6/6 PASS",
+    "javascriptSyntax": "53 lobby JS files + Service Worker PASS",
+    "edgeFunctionTypeScript": "PASS",
+    "htmlIds": "213/213 unique",
+    "httpSmoke": "8/8 HTTP 200",
+    "browserVisualE2E": "not_run"
+  }
+}

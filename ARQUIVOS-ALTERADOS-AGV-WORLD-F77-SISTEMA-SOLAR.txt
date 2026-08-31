@@ -1,0 +1,29 @@
+AGV WORLD F77 — ARQUIVOS ALTERADOS
+Versão: 14.10.8.79-stage48-solar-system
+Data: 2026-08-31
+
+NOVO        ARQUIVOS-ALTERADOS-AGV-WORLD-F77-SISTEMA-SOLAR.txt
+NOVO        RELEASE-SISTEMA-SOLAR-v14.10.8.79.md
+MODIFICADO  core/tests/f72-rural-streaming-v14.10.8.74.test.mjs
+MODIFICADO  core/tests/f73-military-streaming-v14.10.8.75.test.mjs
+MODIFICADO  core/tests/f74-space-station-v14.10.8.76.test.mjs
+MODIFICADO  core/tests/f76-mars-world-v14.10.8.78.test.mjs
+NOVO        core/tests/f77-solar-system-v14.10.8.79.test.mjs
+MODIFICADO  lobby/assets/boot.js
+MODIFICADO  lobby/assets/config.js
+MODIFICADO  lobby/assets/core/world-adapter.js
+MODIFICADO  lobby/assets/core/world-manager.js
+MODIFICADO  lobby/assets/lobby.css
+MODIFICADO  lobby/assets/lobby.js
+MODIFICADO  lobby/assets/space-lite.js
+MODIFICADO  lobby/assets/space3d.js
+MODIFICADO  lobby/assets/sw-register.js
+MODIFICADO  lobby/assets/vendor-loader.js
+NOVO        lobby/assets/world/solar-system.js
+MODIFICADO  lobby/assets/world/space-world.js
+MODIFICADO  lobby/index.html
+MODIFICADO  lobby/sw.js
+NOVO        release-agv-world-f77.json
+MODIFICADO  release-current.json
+NOVO        release-v14.10.8.79.json
+MODIFICADO  repair-lobby.html

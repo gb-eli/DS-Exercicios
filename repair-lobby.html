@@ -24,21 +24,21 @@ button,a{border:1px solid #245266;border-radius:12px;background:#0c1a24;color:#e
 <main class="card">
 <header class="head">
 <h1>Reparar Campus DS</h1>
-<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.70 antes de abrir o Campus.</p>
+<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.79 antes de abrir o Campus.</p>
 </header>
 <section class="body">
 <div id="status" class="status"></div>
 <pre id="log" aria-live="polite">Preparando…</pre>
 <div class="actions">
 <button id="retry">Executar novamente</button>
-<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.70">Abrir Campus limpo</a>
+<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.79">Abrir Campus limpo</a>
 </div>
 </section>
 </main>
 <script>
 (()=>{
 'use strict';
-const RELEASE='14.10.8.70';
+const RELEASE='14.10.8.79';
 const logEl=document.getElementById('log'),statusEl=document.getElementById('status'),openEl=document.getElementById('open');
 const logs=[];
 const log=m=>{logs.push(`[${new Date().toLocaleTimeString()}] ${m}`);logEl.textContent=logs.join('\n')};
@@ -76,18 +76,35 @@ async function run(){
    const c=await clearLobby();
    log(`Service Workers removidos: ${c.sw}; caches removidos: ${c.cache}.`);
    const targets=[
-     ['lobby/index.html',['14.10.8.70']],
-     ['lobby/assets/boot.js',['14.10.8.70','world/dynamic-world.js']],
-     ['lobby/assets/lobby.js',['14.10.8.70']],
+     ['lobby/index.html',['14.10.8.79','solar-system-modal','interplanetary-travel']],
+     ['lobby/assets/boot.js',['14.10.8.79','world/dynamic-world.js']],
+     ['lobby/assets/lobby.js',['14.10.8.79','RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','INTERPLANETARY_CONSOLE','playInterplanetaryTravel','moon-agv','mars-agv']],
+     ['lobby/assets/core/world-adapter.js',['RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','moon-lite.js?v=14.10.8.79-stage47-mars','moon3d.js?v=14.10.8.79-stage47-mars','mars-lite.js?v=14.10.8.79-stage47-mars','mars3d.js?v=14.10.8.79-stage47-mars']],
+     ['lobby/assets/world/rural-world.js',['RURAL_BOUNDS','RURAL_FAST_TRAVEL','RURAL_ANIMALS','rural-agv']],
+     ['lobby/assets/rural-lite.js',['createRuralLite','rural-agv','RURAL_FAST_TRAVEL']],
+     ['lobby/assets/rural3d.js',['createRural3D','rural-world-streamed-f72','renderer.dispose']],
+     ['lobby/assets/world/space-world.js',['SPACE_BOUNDS','SPACE_FAST_TRAVEL','SPACE_MODULES','INTERPLANETARY_CONSOLE','space-agv']],
+     ['lobby/assets/space-lite.js',['createSpaceLite','space-agv','SPACE_FAST_TRAVEL','INTERPLANETARY_CONSOLE','setInputLocked']],
+     ['lobby/assets/space3d.js',['createSpace3D','space-world-streamed-f77','renderer.dispose','Earth','INTERPLANETARY_CONSOLE','setInputLocked']],
+     ['lobby/assets/world/solar-system.js',['SOLAR_SYSTEM_BODIES','SOLAR_DESTINATIONS','ASTEROID_BELT','SOLAR_TRAVEL_PHASES']],
+     ['lobby/assets/world/moon-world.js',['MOON_GRAVITY','MOON_ROVER','MOON_FAST_TRAVEL']],
+     ['lobby/assets/moon-lite.js',['createMoonLite','moon-agv','MOON_FAST_TRAVEL']],
+     ['lobby/assets/moon3d.js',['createMoon3D','moon-world-streamed-f75','renderer.dispose','MOON_GRAVITY']],
+     ['lobby/assets/world/mars-world.js',['MARS_GRAVITY','MARS_ROVER','MARS_CANYONS','MARS_FAST_TRAVEL']],
+     ['lobby/assets/mars-lite.js',['createMarsLite','mars-agv','MARS_FAST_TRAVEL']],
+     ['lobby/assets/mars3d.js',['createMars3D','mars-world-streamed-f76','renderer.dispose','MARS_GRAVITY','marsDustStorm']],
      ['lobby/assets/world/campus-destinations.js',['CAMPUS_DESTINATIONS','CAMPUS_TOOL_BUILDING_COLLIDERS']],
      ['lobby/assets/world/campus-city-network.js',['CAMPUS_ROAD_HIERARCHY','CAMPUS_THEME_PLAZAS','CAMPUS_VALE_MONUMENTAL_LINK']],
      ['lobby/assets/world/campus-interiors.js',['CAMPUS_INTERIOR_PROFILES','CAMPUS_INTERIOR_MAP','CAMPUS_INTERIOR_INTERACTIONS']],
      ['lobby/assets/world/campus-live-systems.js',['CAMPUS_INTERIOR_LIVE_BLUEPRINTS','CAMPUS_GARAGE_FLEET','CAMPUS_STATION_LINKS','CAMPUS_VALE_CEREMONIAL_GATE']],
      ['lobby/assets/world/campus-mobility-systems.js',['CAMPUS_TRAFFIC_ROUTES','CAMPUS_DRIVABLE_VEHICLES','CAMPUS_TRAFFIC_SIGNALS','CAMPUS_SPEED_ZONES','resolveTrafficSignalState']],
      ['lobby/assets/world/cinema-media.js',['EMPTY_CINEMA_MEDIA','classifyCinemaSource','normalizeCinemaMedia','cinemaSourceLabel']],
+     ['lobby/assets/world/security-cameras.js',['CAMPUS_SECURITY_CAMERAS','CAMPUS_SECURITY_CAMERA_MAP','securityCameraZoomFov']],
+     ['lobby/assets/world/aerial-mobility.js',['CAMPUS_HELIPADS','CAMPUS_AERIAL_VEHICLES','aerialSpeedKmh']],
+     ['lobby/assets/world/campus-viewpoints.js',['CAMPUS_VIEWPOINTS','CAMPUS_VIEWPOINT_LANDMARKS','viewpointZoomFov']],
      ['lobby/assets/world/campus-connections.js',['CAMPUS_CONNECTIONS','CAMPUS_SKYBRIDGES']],
      ['lobby/assets/world/dynamic-world.js',['resolveWorldTime','WORLD_TIME_MODES','skyPalette']],
-     ['lobby/sw.js',['14.10.8.70']]
+     ['lobby/sw.js',['14.10.8.79','stage48-solar-system']]
    ];
    const rs=[];
    for(const [p,sigs] of targets){log(`Verificando ${p}…`);rs.push(await probe(p,sigs));}

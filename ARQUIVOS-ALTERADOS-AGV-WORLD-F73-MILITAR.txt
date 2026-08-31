@@ -1,0 +1,32 @@
+AGV WORLD F73 — Base de Operações AGV
+Versão 14.10.8.75
+
+Arquivos novos/alterados: 25
+
+RELEASE-MUNDO-MILITAR-v14.10.8.75.md
+core/database/068_lobby_military_world.sql
+core/edge-functions/lobby-presence/index.ts
+core/tests/f72-rural-streaming-v14.10.8.74.test.mjs
+core/tests/f73-military-streaming-v14.10.8.75.test.mjs
+core/tools/validate-stage33-interior-personality.mjs
+lobby/assets/boot.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/lobby-lite.js
+lobby/assets/lobby.js
+lobby/assets/lobby3d.js
+lobby/assets/military-lite.js
+lobby/assets/military3d.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/campus-environment.js
+lobby/assets/world/campus-experiences.js
+lobby/assets/world/military-world.js
+lobby/index.html
+lobby/sw.js
+release-agv-world-f73.json
+release-current.json
+release-v14.10.8.75.json
+repair-lobby.html
+
+Arquivos removidos: 0

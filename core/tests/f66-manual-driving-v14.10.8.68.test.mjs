@@ -12,7 +12,8 @@ test('F66 oferece motorista manual e carona automática sem misturar os dois flu
   assert.match(runtime,/const nx=self\.position\.x\+Math\.sin\(vehicleHeading\)\*vehicleSpeed\*dt/);
   assert.match(runtime,/canVehicleStand\(nx,nz,activeCampusVehicle\.kind\)/);
   assert.match(runtime,/activeCampusVehicle&&!manualDriving/);
-  assert.match(runtime,/gear:activeCampusVehicle\.seatMode==='driver'/);
+  assert.match(runtime,/driver=activeCampusVehicle\.seatMode==='driver'/);
+  assert.match(runtime,/let gear=.*driver\?/);
 });
 
 test('F66 publica velocímetro e comandos de condução na UI',()=>{

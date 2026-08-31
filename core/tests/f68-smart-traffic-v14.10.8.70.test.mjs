@@ -58,9 +58,10 @@ test('F68 HUD mostra limite e estado do semáforo sem handler inline',()=>{
   assert.doesNotMatch(html,/onclick=/);
 });
 
-test('F68 release usa 14.10.8.70',()=>{
+test('F68 permanece incluída em releases 14.10.8.70 ou posteriores',()=>{
   const config=read('lobby/assets/config.js'),boot=read('lobby/assets/boot.js'),sw=read('lobby/sw.js');
-  assert.match(config,/LOBBY_VERSION='14\.10\.8\.70'/);
-  assert.match(boot,/VERSION='14\.10\.8\.70'/);
-  assert.match(sw,/VERSION='14\.10\.8\.70'/);
+  const patch=text=>Number(text.match(/14\.10\.8\.(\d+)/)?.[1]||0);
+  assert.ok(patch(config)>=70);
+  assert.ok(patch(boot)>=70);
+  assert.ok(patch(sw)>=70);
 });

@@ -1,5 +1,5 @@
 import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.66';
-import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_RIDES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.66-stage28';
+import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_RIDES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.76-stage45-space';
 import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.66';
 import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './world/campus-connections.js?v=14.10.8.66';
 import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK, CAMPUS_CITY_LANDMARKS } from './world/campus-city-network.js?v=14.10.8.66';
@@ -51,7 +51,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   const rr=(x,y,w,h,r,fill,stroke,lw=1)=>{ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}};
   const text=(value,x,y,{size=12,weight=600,color='#eaf7ff',align='left',alpha=1}={})=>{ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=color;ctx.font=`${weight} ${size}px Inter,system-ui,sans-serif`;ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillText(String(value),x,y);ctx.restore();};
   const zoneForOther=o=>zones.find(z=>state.classes?.find(c=>c.id===o.class_id)?.code===z.code);
-  const zoneCounts=()=>{const out={central:0,'1ds':0,'2ds':0,'3ds':0,sub:0};for(const o of state.others||[]){if(o.area==='vale-silicio')continue;const z=zoneForOther(o);out[z?.key||'central']=(out[z?.key||'central']||0)+1;}out[areaAt(player.x,player.z)]=(out[areaAt(player.x,player.z)]||0)+1;return out;};
+  const zoneCounts=()=>{const out={central:0,'1ds':0,'2ds':0,'3ds':0,sub:0};for(const o of state.others||[]){if(o.area==='vale-silicio'||o.area==='rural-agv'||o.area==='military-agv'||o.area==='space-agv'||o.area==='moon-agv'||o.area==='mars-agv')continue;const z=zoneForOther(o);out[z?.key||'central']=(out[z?.key||'central']||0)+1;}out[areaAt(player.x,player.z)]=(out[areaAt(player.x,player.z)]||0)+1;return out;};
 
   const attractionRef=experience=>{const point=experience.type==='tool-building'&&experience.entrance?experience.entrance:experience;return {...experience,x:point.x,z:point.z,type:experience.type,name:experience.name,label:experience.label,radius:experience.radius||3};};
   const challenge=createCheckpointChallenge({id:'parkour',title:'Circuito Parkour 2D',checkpoints:LITE_PARKOUR_CHECKPOINTS,start:PARKOUR_START,onEvent:onChallengeEvent});
@@ -121,7 +121,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   function drawExperience(exp,w,h,time){
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
-    if(exp.type==='vale-portal'){
+    if(exp.type==='vale-portal'||exp.type==='rural-portal'||exp.type==='military-portal'||exp.type==='space-portal'){
       // v14.10.8.66: entrada monumental e legível já na primeira tela 2D.
       const portalPulse=.55+.45*Math.sin(time*2.4);
       ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
@@ -136,8 +136,9 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
       for(let i=0;i<3;i++){ctx.strokeStyle=hexToRgba(accent,.2+i*.09);ctx.lineWidth=Math.max(1,.055*s);ctx.beginPath();ctx.arc(0,.18*s,(1.15+i*.34)*s+Math.sin(time*2+i)*.09*s,0,Math.PI*2);ctx.stroke();}
       // faixa de destino: visível mesmo quando o aluno ainda está na praça.
       rr(-3.1*s,1.55*s,6.2*s,.62*s,.22*s,'rgba(2,16,19,.94)',hexToRgba(accent,.48));
-      text('EMPRESAS DOS ALUNOS',0,1.86*s,{size:Math.max(7,.44*s),weight:900,color:'#caffdf',align:'center'});
-      text('27 empresas • 8 distritos',0,2.35*s,{size:Math.max(6,.34*s),weight:780,color:'#8ff2bd',align:'center'});
+      const portalMain=exp.type==='rural-portal'?'FAZENDA PEDAGÓGICA':exp.type==='military-portal'?'BASE DE OPERAÇÕES':exp.type==='space-portal'?'CENTRO ESPACIAL AGV':'EMPRESAS DOS ALUNOS',portalSub=exp.type==='rural-portal'?'rio • ponte • animais':exp.type==='military-portal'?'logística • engenharia • resgate':exp.type==='space-portal'?'lançamento • Terra • ciência':'27 empresas • 8 distritos',portalColor=exp.type==='rural-portal'?'#e7ffd8':exp.type==='military-portal'?'#eef5db':exp.type==='space-portal'?'#dff6ff':'#caffdf',portalSubColor=exp.type==='rural-portal'?'#b9f6a6':exp.type==='military-portal'?'#cdddab':exp.type==='space-portal'?'#9ee7ff':'#8ff2bd';
+      text(portalMain,0,1.86*s,{size:Math.max(7,.44*s),weight:900,color:portalColor,align:'center'});
+      text(portalSub,0,2.35*s,{size:Math.max(6,.34*s),weight:780,color:portalSubColor,align:'center'});
     }else if(exp.type==='tool-building'){
       const arch=exp.architecture||'campus-hall',fp=exp.footprint||{width:7.2,depth:5.2,height:6.4};
       const bw=Math.max(5.2,Math.min(7.5,fp.width*.82))*s,bh=Math.max(3.5,Math.min(5.0,fp.depth*.8))*s;
@@ -193,7 +194,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
       ctx.strokeStyle=hexToRgba(accent,.68);ctx.lineWidth=Math.max(1.2,.09*s);ctx.strokeRect(-2.55*s,-1.8*s,5.1*s,3.6*s);
       text('15 m',2.05*s,-1.42*s,{size:Math.max(7,.4*s),weight:900,color:accent,align:'center'});for(let i=0;i<7;i++){ctx.strokeStyle=hexToRgba(accent,.28+.05*i);ctx.beginPath();ctx.arc(0,0,(.55+i*.27)*s,-.8,1.1);ctx.stroke();}
     }
-    const labelDistance=Math.hypot(player.x-exp.x,player.z-exp.z),labelLimit=exp.type==='tool-building'?18:24,showLabel=exp.type==='vale-portal'||labelDistance<=labelLimit;
+    const labelDistance=Math.hypot(player.x-exp.x,player.z-exp.z),labelLimit=exp.type==='tool-building'?18:24,showLabel=exp.type==='vale-portal'||exp.type==='rural-portal'||exp.type==='military-portal'||exp.type==='space-portal'||labelDistance<=labelLimit;
     if(showLabel){ctx.globalAlpha=.92;rr(-2.55*s,2.3*s,5.1*s,.72*s,.32*s,'rgba(3,14,20,.72)',hexToRgba(accent,.26));text(exp.label,0,2.66*s,{size:Math.max(7,.54*s),weight:820,color:accent,align:'center'});}
     else{ctx.globalAlpha=.74;ctx.fillStyle=hexToRgba(accent,.72);ctx.beginPath();ctx.arc(0,2.52*s,Math.max(2.5,.16*s),0,Math.PI*2);ctx.fill();}
     ctx.restore();
@@ -262,7 +263,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const {w,h}=resize(),time=reducedMotion?0:now/1000;zoom=lerp(zoom,zoomTarget,reducedMotion?1:.12);panX=lerp(panX,panTargetX,reducedMotion?1:.1);panZ=lerp(panZ,panTargetZ,reducedMotion?1:.1);drawBackground(w,h,time);
     if(activeToolInterior){drawToolInterior(w,h,time);}else{
       drawLandscape(w,h,time);for(const exp of CAMPUS_EXPERIENCES)drawExperience(exp,w,h,time);drawChallenge(w,h,time);const counts=zoneCounts();for(const zone of zones)drawBuilding(zone,w,h,counts[zone.key]||0,time);drawCenter(w,h,time,counts);
-      for(const o of state.others||[]){if(o.area==='vale-silicio')continue;const wp=toWorld(o.x,o.y),zone=zoneForOther(o),color=['teacher','admin','super_admin'].includes(o.participant_role)?'#ffd166':zone?.accent||'#68b7d0',dist=Math.hypot(player.x-wp.x,player.z-wp.z),staff=['teacher','admin','super_admin'].includes(o.participant_role),showLabel=staff||dist<(viewport.w<640?10:15)||(zoom>1.28&&viewport.w>=640);drawAvatar(wp.x,wp.z,(o.display_name||'Aluno').split(' ')[0],color,false,o.participant_role,Number(o.heading||0),time,showLabel,w,h);const bubble=chatBubbles.get(o.student_id);if(bubble&&bubble.until>Date.now())drawChatBubble(wp.x,wp.z,bubble.message,w,h);}
+      for(const o of state.others||[]){if(o.area==='vale-silicio'||o.area==='rural-agv'||o.area==='military-agv'||o.area==='space-agv'||o.area==='moon-agv'||o.area==='mars-agv')continue;const wp=toWorld(o.x,o.y),zone=zoneForOther(o),color=['teacher','admin','super_admin'].includes(o.participant_role)?'#ffd166':zone?.accent||'#68b7d0',dist=Math.hypot(player.x-wp.x,player.z-wp.z),staff=['teacher','admin','super_admin'].includes(o.participant_role),showLabel=staff||dist<(viewport.w<640?10:15)||(zoom>1.28&&viewport.w>=640);drawAvatar(wp.x,wp.z,(o.display_name||'Aluno').split(' ')[0],color,false,o.participant_role,Number(o.heading||0),time,showLabel,w,h);const bubble=chatBubbles.get(o.student_id);if(bubble&&bubble.until>Date.now())drawChatBubble(wp.x,wp.z,bubble.message,w,h);}
     }
     const selfColor=state.avatarStyle?.accentCss||(isStaff()?'#ffd166':'#36d2ff');if(activeCampusVehicle){const q=project(player.x,player.z,w,h),ms=metric(w,h);ctx.save();ctx.translate(q.x,q.y);ctx.rotate(-player.dir);rr(-.7*ms,-.36*ms,1.4*ms,.72*ms,.2*ms,hexToRgba(activeCampusVehicle.accent||'#ffae63',.96),'rgba(245,253,255,.7)');text(activeCampusVehicle.kind==='bike'?'◉':activeCampusVehicle.kind==='bus'?'▰':'◆',0,0,{size:Math.max(6,.34*ms),weight:950,color:'#f6feff',align:'center'});ctx.restore();}else drawAvatar(player.x,player.z,(state.profile?.full_name||'Usuário').split(' ')[0],selfColor,true,state.profile?.role||'student',player.dir,time,true,w,h,state.avatarStyle||null);drawContextBadge(w,h);const ownBubble=chatBubbles.get(state.user?.id);if(ownBubble&&ownBubble.until>Date.now())drawChatBubble(player.x,player.z,ownBubble.message,w,h);drawFooter(w,h);if(!activeToolInterior)drawWorldWeather2D(ctx,w,h,currentWeather,time,{quality:'lite',reducedMotion,saveData});
   };

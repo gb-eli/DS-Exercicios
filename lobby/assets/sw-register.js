@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const VERSION='14.10.8.70-stage39-traffic';
+  const VERSION='14.10.8.79-stage48-solar-system';
   const result={supported:false,registered:false,controlled:false,error:null};
 
   globalThis.__agvLobbySwReady=(async()=>{

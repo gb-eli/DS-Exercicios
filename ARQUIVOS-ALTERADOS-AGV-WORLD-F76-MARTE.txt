@@ -1,0 +1,45 @@
+AGV WORLD F76 — MARTE — v14.10.8.78
+Build: 14.10.8.78-stage47-mars
+Data: 2026-08-31
+
+NOVOS
+- core/database/071_lobby_mars_world.sql
+- core/tests/f76-mars-world-v14.10.8.78.test.mjs
+- lobby/assets/world/mars-world.js
+- lobby/assets/mars-lite.js
+- lobby/assets/mars3d.js
+- RELEASE-MARTE-v14.10.8.78.md
+- release-v14.10.8.78.json
+- release-agv-world-f76.json
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F76-MARTE.txt
+
+ALTERADOS — RUNTIME / UI
+- lobby/assets/lobby.js
+- lobby/assets/lobby3d.js
+- lobby/assets/lobby-lite.js
+- lobby/assets/core/world-adapter.js
+- lobby/assets/core/world-manager.js
+- lobby/assets/world/space-world.js
+- lobby/assets/space3d.js
+- lobby/assets/space-lite.js
+- lobby/assets/moon3d.js
+- lobby/assets/moon-lite.js
+- lobby/index.html
+
+ALTERADOS — PRESENÇA / BACKEND
+- core/edge-functions/lobby-presence/index.ts
+
+ALTERADOS — VERSÃO / CACHE / RECUPERAÇÃO
+- lobby/assets/config.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/sw.js
+- repair-lobby.html
+- PUBLIC-DEPLOY.json
+- release-current.json
+
+MANUTENÇÃO DE REGRESSÃO
+- core/tests/f74-space-station-v14.10.8.76.test.mjs
+- core/tests/f75-moon-world-v14.10.8.77.test.mjs
+  Ajustados apenas para aceitar cenas/cache-bust de releases posteriores, preservando as verificações históricas.

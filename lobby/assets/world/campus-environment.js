@@ -1,10 +1,10 @@
 import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.66';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, CAMPUS_RIDES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_VERTICAL_SURFACES } from './campus-experiences.js?v=14.10.8.66-stage28';
-import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, CAMPUS_RIDES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_VERTICAL_SURFACES } from './campus-experiences.js?v=14.10.8.76-stage45-space';
+import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.71-stage40-security';
 import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './campus-connections.js?v=14.10.8.66';
 import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_PEDESTRIAN_SURFACES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK } from './campus-city-network.js?v=14.10.8.66';
-import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './campus-live-systems.js?v=14.10.8.66';
-import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_MOBILITY_TRACKS } from './campus-mobility-systems.js?v=14.10.8.66-stage28';
+import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './campus-live-systems.js?v=14.10.8.71-stage40-security';
+import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_MOBILITY_TRACKS } from './campus-mobility-systems.js?v=14.10.8.71-stage40-security';
 import { campusSpaceIdentity } from './space-identities.js?v=14.10.8.66-stage29';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
@@ -99,6 +99,18 @@ function createToolBuilding({THREE,quality,experience,spriteLabel}){
       for(const x of[-w*.29,0,w*.29]){root.add(box(THREE,w*.18,1.55,.10,glass,x,1.42,front+.10));root.add(box(THREE,w*.19,.06,.13,glow,x,2.22,front+.12));}
       const canopy=box(THREE,w*.72,.24,1.35,facade2,0,2.65,d*.46);root.add(canopy);for(const x of[-w*.28,0,w*.28])root.add(cylinder(THREE,.07,1.55,steel,x,1.78,d*.76,12));
       doorway(1.9,2.35);entryPad();break;
+    }
+    case 'security-center':{
+      root.add(box(THREE,w*.92,h*.72,d*.9,facade,0,h*.36+.25,0));
+      root.add(box(THREE,w*.54,h*.24,d*.62,facade2,0,h*.82,-.12));
+      const tower=box(THREE,w*.18,h*.46,d*.28,dark,w*.29,h*.86,-.12);root.add(tower);
+      for(const y of[1.55,2.75,3.95,5.15])root.add(box(THREE,w*.67,.08,.11,glow,-w*.06,y,front+.03));
+      for(const x of[-w*.29,-w*.1,w*.1,w*.29])root.add(box(THREE,w*.13,.75,.07,glass,x,2.05,front+.04));
+      const mast=cylinder(THREE,.08,h*.38,steel,w*.29,h*1.18,-.12,14);root.add(mast);
+      for(const r of[.42,.72]){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.035,8,28),glow);ring.rotation.x=Math.PI/2;ring.position.set(w*.29,h*1.36,-.12);root.add(ring);}
+      const dish=new THREE.Mesh(new THREE.ConeGeometry(.48,.72,18,1,true),glass);dish.rotation.z=-Math.PI/2;dish.position.set(w*.29,h*1.34,-.12);root.add(dish);
+      const shield=box(THREE,w*.18,.1,.12,glow,0,h*.68,front+.09);root.add(shield);
+      doorway(1.7,2.25);entryPad();break;
     }
     case 'bank':{
       root.add(box(THREE,w*.88,h*.66,d*.88,facade,0,h*.33+.25,0));
@@ -274,7 +286,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   g.name=`campus-experience-${experience.id}`;g.position.set(experience.x,0,experience.z);
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
-  if(experience.type==='vale-portal'){
+  if(experience.type==='vale-portal'||experience.type==='rural-portal'||experience.type==='military-portal'||experience.type==='space-portal'){
     // v14.10.8.66: estação/portal monumental do Vale, visível de longe no Campus 3D.
     const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
     for(const x of[-3.35,3.35]){
@@ -288,8 +300,9 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const core=new THREE.Mesh(new THREE.CircleGeometry(2.08,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.13,side:THREE.DoubleSide,depthWrite:false}));core.position.y=2.55;g.add(core);g.userData.portalCore=core;
     for(let i=0;i<4;i++){const halo=new THREE.Mesh(new THREE.TorusGeometry(1.18+i*.3,.028,6,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.16+i*.055}));halo.position.y=2.55;g.add(halo);}
     if(spriteLabel){
-      const title=spriteLabel('VALE DO SILÍCIO AGV',experience.accent,5.8,{bg:'rgba(2,18,18,.9)'});title.position.set(0,6.25,.1);g.add(title);
-      const sub=spriteLabel('27 EMPRESAS • 8 DISTRITOS','#caffdf',4.5,{bg:'rgba(2,13,16,.82)'});sub.position.set(0,5.65,.1);g.add(sub);
+      const portalTitle=experience.type==='rural-portal'?'MUNDO RURAL AGV':experience.type==='military-portal'?'BASE DE OPERAÇÕES AGV':experience.type==='space-portal'?'CENTRO ESPACIAL AGV':'VALE DO SILÍCIO AGV',portalSub=experience.type==='rural-portal'?'FAZENDA • RIO • ANIMAIS':experience.type==='military-portal'?'LOGÍSTICA • ENGENHARIA • RESGATE':experience.type==='space-portal'?'LANÇAMENTO • TERRA • CIÊNCIA':'27 EMPRESAS • 8 DISTRITOS',portalText=experience.type==='rural-portal'?'#e7ffd8':experience.type==='military-portal'?'#eef5db':experience.type==='space-portal'?'#dff6ff':'#caffdf';
+      const title=spriteLabel(portalTitle,experience.accent,5.8,{bg:'rgba(2,18,18,.9)'});title.position.set(0,6.25,.1);g.add(title);
+      const sub=spriteLabel(portalSub,portalText,4.5,{bg:'rgba(2,13,16,.82)'});sub.position.set(0,5.65,.1);g.add(sub);
     }
   }else if(experience.type==='tool-building'){
     g.rotation.y=Number(experience.rotation||0);
@@ -353,7 +366,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.42,1),glow);beacon.position.set(1.1,17.0,0);g.add(beacon);g.userData.towerBeacon=beacon;
     if(spriteLabel){const height=spriteLabel('TORRE DE CONTROLE • 15 m',experience.accent,3.6,{bg:'rgba(3,12,18,.88)'});height.position.set(1.1,17.7,0);g.add(height);}
   }
-  if(spriteLabel&&experience.type!=='vale-portal'&&experience.type!=='tool-building'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
+  if(spriteLabel&&experience.type!=='vale-portal'&&experience.type!=='rural-portal'&&experience.type!=='military-portal'&&experience.type!=='space-portal'&&experience.type!=='tool-building'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
   g.userData.experience=experience;setShadow(g,quality!=='low');return g;
 }
 

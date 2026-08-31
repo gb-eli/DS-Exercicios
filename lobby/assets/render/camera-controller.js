@@ -2,9 +2,10 @@ const MODES=Object.freeze({
   explore:Object.freeze({distance:1,height:1.0,shoulder:.52,fov:58,minPitch:-.08,maxPitch:.88}),
   firstperson:Object.freeze({distance:0,height:0,shoulder:0,fov:72,minPitch:-1.18,maxPitch:1.18}),
   wide:Object.freeze({distance:1.38,height:1.12,shoulder:0,fov:64,minPitch:-.02,maxPitch:.94}),
-  campus:Object.freeze({distance:1.92,height:3.4,shoulder:0,fov:72,minPitch:.62,maxPitch:1.12})
+  campus:Object.freeze({distance:1.92,height:3.4,shoulder:0,fov:72,minPitch:.62,maxPitch:1.12}),
+  aerial:Object.freeze({distance:1.58,height:2.15,shoulder:0,fov:68,minPitch:.18,maxPitch:1.02})
 });
-const MODE_ORDER=Object.freeze(['explore','firstperson','wide','campus']);
+const MODE_ORDER=Object.freeze(['explore','firstperson','wide','campus','aerial']);
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 
 export function createCameraController({THREE,camera,canvas,getCollisionRoots=()=>[],initialYaw=Math.PI,initialPitch=.32,initialDistance=6.8,initialFov=null}={}){

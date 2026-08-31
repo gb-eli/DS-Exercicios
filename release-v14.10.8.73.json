@@ -1,0 +1,54 @@
+{
+  "version": "14.10.8.73",
+  "channel": "feature",
+  "title": "Mirantes e Binóculos — observação panorâmica, zoom e identificação de marcos",
+  "base": "14.10.8.72",
+  "changes": [
+    "Três pontos panorâmicos integrados ao Campus: Mirante AGV Oeste, Mirante Ciência Leste e Mirante Pesquisa Sudoeste",
+    "O Mirante AGV já existente é reaproveitado como observatório funcional, evitando duplicar a atração original",
+    "Binóculo/telescópio usa uma única câmera 3D reutilizável no renderer principal, sem criar renderizadores adicionais",
+    "Zoom progressivo de 1x a 6x ajusta o campo de visão sem substituir o mundo por imagem estática",
+    "Catálogo de marcos permite focar Praça Central, Plataforma Unificada, Central de Segurança, Cinema, laboratórios, Portal do Vale e monotrilho",
+    "Modo de observação bloqueia movimento e câmera comum até E, Esc ou botão Fechar, retornando o avatar ao ponto anterior",
+    "Clima, horário, NPCs, tráfego e demais sistemas externos continuam ativos enquanto o aluno observa o Campus",
+    "Mirantes são exibidos no minimapa e possuem interação contextual Observar",
+    "Painel responsivo de observação inclui panorama geral, lista de marcos, identificação do foco e controle de zoom"
+  ],
+  "maintenance_patches": [
+    "Central de Segurança F69 permanece compatível com o renderer compartilhado após inclusão do modo binóculo",
+    "Mobilidade Aérea F70 preservada",
+    "Trânsito inteligente F68 e passageiros multiplayer F67 preservados",
+    "Direção terrestre F66 e Cinema AGV F64 preservados",
+    "Testes legados F69/F70 foram tornados compatíveis com releases posteriores sem reduzir as garantias funcionais"
+  ],
+  "schema_note": "A F71 é totalmente local/runtime. Não cria tabela, migration, gravação acadêmica nem nova Edge Function.",
+  "date": "2026-08-31",
+  "phase": "world-f71-viewpoints-binoculars",
+  "baseVersion": "14.10.8.72",
+  "uiVersion": "0.22.8.25",
+  "runtimeCacheVersion": "14.10.8.73",
+  "lobbyCacheVersion": "14.10.8.73",
+  "worldArchitecturePhase": "71",
+  "worldArchitectureBuild": "14.10.8.73-stage42-viewpoints",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": true,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Novos mapas carregados sob demanda (rural, militar e demais ambientes) permanecem para a próxima etapa do roadmap.",
+    "Aeronaves continuam locais; multiplayer aéreo exigirá contrato de servidor com altitude em fase própria.",
+    "Migration 066 e Edge Function lobby-presence continuam necessárias somente se o multiplayer terrestre F67 ainda não tiver sido implantado.",
+    "Migration 065 do Cinema continua necessária caso a programação persistente do Cinema ainda não esteja em produção."
+  ],
+  "safety": {
+    "academic_data_writes": false,
+    "persistent_viewpoint_tracking": false,
+    "single_shared_renderer": true,
+    "movement_locked_during_viewing": true,
+    "private_student_data_added": false
+  }
+}

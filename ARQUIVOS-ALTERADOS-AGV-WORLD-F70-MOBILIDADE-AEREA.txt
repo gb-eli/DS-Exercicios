@@ -1,0 +1,30 @@
+AGV World F70 — Mobilidade Aérea — v14.10.8.72
+
+NOVOS
+- lobby/assets/world/aerial-mobility.js
+- core/tests/f70-aerial-mobility-v14.10.8.72.test.mjs
+- release-v14.10.8.72.json
+- release-agv-world-f70.json
+- RELEASE-MOBILIDADE-AEREA-v14.10.8.72.md
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F70-MOBILIDADE-AEREA.txt
+
+ALTERADOS
+- lobby/assets/lobby3d.js
+- lobby/assets/lobby.js
+- lobby/assets/render/camera-controller.js
+- lobby/assets/lobby.css
+- lobby/index.html
+- lobby/assets/config.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/assets/core/world-adapter.js
+- lobby/sw.js
+- repair-lobby.html
+- release-current.json
+- core/tests/f66-manual-driving-v14.10.8.68.test.mjs (asserção estrutural atualizada para o mesmo contrato de marcha)
+- core/tests/f69-security-cameras-v14.10.8.71.test.mjs (cache-bust do adapter aceita releases posteriores)
+
+BACKEND
+- Nenhuma migration nova.
+- Nenhuma Edge Function nova/alterada nesta fase.

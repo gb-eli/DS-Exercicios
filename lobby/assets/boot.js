@@ -1,4 +1,4 @@
-const VERSION='14.10.8.70';
+const VERSION='14.10.8.79';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');
@@ -20,7 +20,7 @@ const ASSET_SIGNATURES={
   'lobby.js':['createLobbyState','createWorldManager','CAMPUS_WORLD_ADAPTER','SCHOOL_EMAIL_DOMAIN'],
   'core/lobby-state.js':['createLobbyState','snapshotWorldState','LOBBY_STATE_CONTRACT'],
   'core/world-manager.js':['createWorldManager','world_runtime_contract_invalid','diagnostics'],
-  'core/world-adapter.js':['createWorldAdapter','CAMPUS_WORLD_ADAPTER','VALE_WORLD_ADAPTER'],
+  'core/world-adapter.js':['createWorldAdapter','CAMPUS_WORLD_ADAPTER','VALE_WORLD_ADAPTER','RURAL_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER'],
   'supabase.js':['SUPABASE_URL','NETWORK_TIMEOUT_MS'],
   'config.js':['SUPABASE_URL','SUPABASE_PUBLISHABLE_KEY','LOBBY_VERSION'],
   'lobby3d.js':['createLobby3D'],
@@ -35,6 +35,9 @@ const ASSET_SIGNATURES={
   'world/campus-live-systems.js':['CAMPUS_INTERIOR_LIVE_BLUEPRINTS','CAMPUS_GARAGE_FLEET','CAMPUS_STATION_LINKS','CAMPUS_VALE_CEREMONIAL_GATE'],
   'world/campus-mobility-systems.js':['CAMPUS_TRAFFIC_ROUTES','CAMPUS_DRIVABLE_VEHICLES','CAMPUS_TRAFFIC_SIGNALS','CAMPUS_SPEED_ZONES','resolveTrafficSignalState'],
   'world/cinema-media.js':['EMPTY_CINEMA_MEDIA','classifyCinemaSource','normalizeCinemaMedia','cinemaSourceLabel'],
+  'world/security-cameras.js':['CAMPUS_SECURITY_CAMERAS','CAMPUS_SECURITY_CAMERA_MAP','securityCameraZoomFov'],
+  'world/aerial-mobility.js':['CAMPUS_HELIPADS','CAMPUS_AERIAL_VEHICLES','aerialSpeedKmh'],
+  'world/campus-viewpoints.js':['CAMPUS_VIEWPOINTS','CAMPUS_VIEWPOINT_LANDMARKS','viewpointZoomFov'],
   'render/camera-controller.js':['createCameraController','explore','campus'],
   'render/performance-manager.js':['detectPerformanceProfile','createResizeController','createAdaptiveQualityController'],
   'characters/avatar-system.js':['createAvatarSystem','createAvatarAppearance','rigged-glb-v2'],
@@ -70,9 +73,9 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
+  for(const asset of ['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}-stage39-traffic`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage48-solar-system`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});

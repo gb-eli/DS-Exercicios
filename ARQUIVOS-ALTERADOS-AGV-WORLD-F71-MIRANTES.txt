@@ -1,0 +1,60 @@
+AGV WORLD F71 — MIRANTES E BINÓCULOS — v14.10.8.73
+Data: 31/08/2026
+Base: F70 v14.10.8.72
+
+NOVOS ARQUIVOS
+- lobby/assets/world/campus-viewpoints.js
+  Catálogo dos três mirantes, marcos observáveis e cálculo de FOV/zoom.
+- core/tests/f71-viewpoints-binoculars-v14.10.8.73.test.mjs
+  Regressão específica da F71.
+- release-v14.10.8.73.json
+  Manifesto da release.
+- release-agv-world-f71.json
+  Manifesto nomeado por fase.
+- RELEASE-MIRANTES-BINOCULOS-v14.10.8.73.md
+  Relatório técnico da fase.
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F71-MIRANTES.txt
+  Este inventário.
+
+ARQUIVOS DE RUNTIME/UI ALTERADOS
+- lobby/assets/lobby3d.js
+  Estruturas dos mirantes, câmera reutilizável, abertura/fechamento, zoom, foco em marcos e render integrado.
+- lobby/assets/lobby.js
+  Painel, eventos, interação contextual, minimapa e integração com troca 2D/3D/logout.
+- lobby/index.html
+  Painel responsivo de mirante/binóculo e cache-busting F71.
+- lobby/assets/lobby.css
+  Estilos do painel panorâmico e estados responsivos.
+- lobby/assets/config.js
+  Versão 14.10.8.73.
+- lobby/assets/core/world-adapter.js
+  Cache-bust do runtime 3D F71.
+- lobby/assets/boot.js
+  Preflight do novo módulo e build stage42-viewpoints.
+- lobby/assets/vendor-loader.js
+  Versão/cache do boot.
+- lobby/assets/sw-register.js
+  Identidade do Service Worker F71.
+- lobby/sw.js
+  Cache offline da F71 e inclusão de campus-viewpoints.js.
+- repair-lobby.html
+  Diagnóstico e probe da release 14.10.8.73.
+
+METADADOS ALTERADOS
+- release-current.json
+  Passa a apontar para F71 / 14.10.8.73.
+- PUBLIC-DEPLOY.json
+  Fase 71, build stage42-viewpoints e UI 0.22.8.25.
+- version.json
+  UI 0.22.8.25 e destaques F70/F71.
+
+TESTES HISTÓRICOS AJUSTADOS
+- core/tests/f69-security-cameras-v14.10.8.71.test.mjs
+  Torna as verificações de renderer/clima compatíveis com a composição de observadores posteriores, sem retirar a cobertura CCTV.
+- core/tests/f70-aerial-mobility-v14.10.8.72.test.mjs
+  Torna a verificação do world-adapter compatível com cache-bust de releases posteriores.
+
+BANCO / BACKEND
+- Nenhuma migration nova.
+- Nenhuma Edge Function nova.
+- Nenhuma gravação acadêmica adicionada.

@@ -1,0 +1,38 @@
+AGV World F69 — v14.10.8.71
+
+Principais arquivos criados:
+- lobby/assets/world/security-cameras.js
+- core/tests/f69-security-cameras-v14.10.8.71.test.mjs
+- RELEASE-CENTRAL-SEGURANCA-v14.10.8.71.md
+- release-v14.10.8.71.json
+- release-agv-world-f69.json
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F69-CENTRAL-SEGURANCA.txt
+
+Principais arquivos alterados:
+- lobby/assets/world/campus-destinations.js
+- lobby/assets/world/campus-interiors.js
+- lobby/assets/world/campus-live-systems.js
+- lobby/assets/world/campus-mobility-systems.js
+- lobby/assets/world/campus-environment.js
+- lobby/assets/lobby3d.js
+- lobby/assets/lobby.js
+- lobby/index.html
+- lobby/assets/lobby.css
+- lobby/assets/config.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/assets/core/world-adapter.js
+- lobby/sw.js
+- repair-lobby.html
+- version.json
+- PUBLIC-DEPLOY.json
+- release-current.json
+- core/tests/f68-smart-traffic-v14.10.8.70.test.mjs (release future-proof)
+
+Nenhuma migration nova.
+Nenhuma Edge Function nova ou alterada pela F69.
+
+Manutenção de metadados históricos:
+- release-agv-world-f64.json restaurado para o Cinema v14.10.8.66
+- release-agv-world-f65.json criado com os metadados de Mobilidade v14.10.8.67 que estavam indevidamente no arquivo F64

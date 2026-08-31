@@ -1,7 +1,7 @@
 'use strict';
 
-const VERSION='14.10.8.70';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage39-traffic`; 
+const VERSION='14.10.8.79';
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage48-solar-system`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -11,33 +11,36 @@ const CRITICAL_SHELL=[
   './',
   './index.html',
   './assets/diagnostics.js?v=14.10.8.66',
-  './assets/sw-register.js?v=14.10.8.70-stage39-traffic',
-  './assets/vendor-loader.js?v=14.10.8.70-stage39-traffic',
-  './assets/boot.js?v=14.10.8.70-stage39-traffic',
+  './assets/sw-register.js?v=14.10.8.79-stage48-solar-system',
+  './assets/vendor-loader.js?v=14.10.8.79-stage48-solar-system',
+  './assets/boot.js?v=14.10.8.79-stage48-solar-system',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.70-stage39-traffic',
-  './assets/config.js?v=14.10.8.70',
-  './assets/core/lobby-state.js?v=14.10.8.70-stage39-traffic',
-  './assets/core/world-manager.js?v=14.10.8.66-stage34-f63a',
-  './assets/core/world-adapter.js?v=14.10.8.70-stage39-traffic',
-  './assets/lobby3d.js?v=14.10.8.70-stage39-traffic',
-  './assets/lobby-lite.js?v=14.10.8.66-stage34-f63a',
+  './assets/lobby.js?v=14.10.8.79-stage48-solar-system',
+  './assets/config.js?v=14.10.8.79',
+  './assets/core/lobby-state.js?v=14.10.8.79-stage48-solar-system',
+  './assets/core/world-manager.js?v=14.10.8.79-stage48-solar-system',
+  './assets/core/world-adapter.js?v=14.10.8.79-stage48-solar-system',
+  './assets/lobby3d.js?v=14.10.8.79-stage48-solar-system',
+  './assets/lobby-lite.js?v=14.10.8.79-stage48-solar-system',
   './assets/vale-lite.js?v=14.10.8.66-stage32',
   './assets/vale3d.js?v=14.10.8.66-stage32',
   './assets/world/vale-silicio-data.js?v=14.10.8.66',
   './assets/world/vale-silicio-shared.js?v=14.10.8.66',
   './data/vale-silicio/runtime-v2.json?v=14.10.8.66',
   './assets/world/campus-manifest.js?v=14.10.8.66',
-  './assets/world/campus-environment.js?v=14.10.8.67-stage36',
-  './assets/world/campus-experiences.js?v=14.10.8.66-stage28',
-  './assets/world/campus-destinations.js?v=14.10.8.66',
+  './assets/world/campus-environment.js?v=14.10.8.76-stage45-space',
+  './assets/world/campus-experiences.js?v=14.10.8.76-stage45-space',
+  './assets/world/campus-destinations.js?v=14.10.8.71-stage40-security',
   './assets/world/campus-connections.js?v=14.10.8.66',
   './assets/world/campus-city-network.js?v=14.10.8.66',
-  './assets/world/campus-interiors.js?v=14.10.8.66-stage34',
-  './assets/world/campus-live-systems.js?v=14.10.8.66',
-  './assets/world/campus-mobility-systems.js?v=14.10.8.70-stage39-traffic',
+  './assets/world/campus-interiors.js?v=14.10.8.71-stage40-security',
+  './assets/world/campus-live-systems.js?v=14.10.8.71-stage40-security',
+  './assets/world/campus-mobility-systems.js?v=14.10.8.71-stage40-security',
   './assets/world/cinema-media.js?v=14.10.8.66-cinema',
-  './assets/render/camera-controller.js?v=14.10.8.66',
+  './assets/world/security-cameras.js?v=14.10.8.71-stage40-security',
+  './assets/world/aerial-mobility.js?v=14.10.8.72-stage41-aerial',
+  './assets/world/campus-viewpoints.js?v=14.10.8.73-stage42-viewpoints',
+  './assets/render/camera-controller.js?v=14.10.8.72-stage41-aerial',
   './assets/render/performance-manager.js?v=14.10.8.66',
   './assets/characters/avatar-system.js?v=14.10.8.66-stage34',
   './assets/game/portal-manager.js?v=14.10.8.66',
@@ -51,7 +54,7 @@ const CRITICAL_SHELL=[
   './assets/social/proximity-chat.js?v=14.10.8.66',
   './assets/rigged-avatar.js?v=14.10.8.66-stage34',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.70-stage39-traffic',
+  './assets/lobby.css?v=14.10.8.79-stage48-solar-system',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[

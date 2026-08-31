@@ -1,0 +1,56 @@
+{
+  "version": "14.10.8.71",
+  "channel": "feature",
+  "title": "Central de Segurança AGV — matriz CCTV, mosaico e zoom",
+  "base": "14.10.8.70",
+  "changes": [
+    "Nova Central de Segurança AGV no eixo norte do Campus, com identidade arquitetônica própria e interior lazy-loaded em dois pavimentos",
+    "O térreo possui Sala de Controle CCTV com console interativo; o piso superior reúne monitoramento visual de energia, supervisão de redes e sala de incidentes",
+    "O Campus recebe oito câmeras públicas externas em pontos estratégicos, sem visão de interiores ou áreas acadêmicas privadas",
+    "O console CCTV permite selecionar uma câmera individual ou mosaico 2x2 com quatro pontos simultâneos",
+    "Zoom óptico virtual de 1x a 4x altera o FOV da câmera sem criar renderizadores adicionais",
+    "A matriz reutiliza a mesma cena e o mesmo WebGL do Lobby para reduzir custo gráfico",
+    "Clima, ciclo dia/noite, NPCs, tráfego, monotrilho e presença multiplayer permanecem vivos durante a observação pelas câmeras",
+    "Painel CCTV responsivo informa explicitamente que não mostra interiores, provas, atividades ou dados acadêmicos"
+  ],
+  "maintenance_patches": [
+    "Trânsito inteligente F68 preservado",
+    "Passageiros multiplayer F67 preservados",
+    "Direção manual F66 preservada",
+    "Cinema AGV F64 preservado",
+    "Fundação F63A e interiores lazy-loaded preservados"
+  ],
+  "schema_note": "A F69 não cria tabela, migration ou Edge Function. As câmeras são visuais do runtime do Campus. Para caronas multiplayer continuam valendo os pré-requisitos da F67 caso ainda não estejam implantados.",
+  "date": "2026-08-31",
+  "phase": "world-f69-security-cameras",
+  "baseVersion": "14.10.8.70",
+  "uiVersion": "0.22.8.23",
+  "runtimeCacheVersion": "14.10.8.71",
+  "lobbyCacheVersion": "14.10.8.71",
+  "worldArchitecturePhase": "69",
+  "worldArchitectureBuild": "14.10.8.71-stage40-security",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": false,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Não há gravação de vídeo, reconhecimento facial ou histórico CCTV; a fase implementa somente visualização ao vivo do mundo virtual público.",
+    "Veículos aéreos, voo, mirantes/binóculos e mapas Lua/Marte permanecem no roadmap.",
+    "Migration 066 e Edge Function lobby-presence continuam necessárias somente se o multiplayer veicular F67 ainda não tiver sido implantado.",
+    "Migration 065 do Cinema continua necessária caso a programação persistente do Cinema ainda não esteja em produção."
+  ],
+  "privacy": {
+    "camera_scope": "public_exterior_virtual_world_only",
+    "interior_views": false,
+    "academic_data_views": false,
+    "video_recording": false,
+    "facial_recognition": false,
+    "student_names_in_public_bundle": false,
+    "diagnostic_labels_in_student_ui": false,
+    "public_deploy_excludes_private_roster_sources": true
+  }
+}

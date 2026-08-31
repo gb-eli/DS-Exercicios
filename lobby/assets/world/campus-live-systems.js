@@ -83,6 +83,26 @@ export const CAMPUS_INTERIOR_LIVE_BLUEPRINTS=Object.freeze({
       {id:'projection',label:'Cabine de Projeção',floor:1,nodes:[[0,-4.2],[-3.0,-2.4],[-4.8,-1.6]]},
       {id:'exit',label:'Saída',floor:0,nodes:[[0,0],[0,-5.45]]}
     ]
+  }),
+  'security-center':freezeBlueprint({
+    theme:'security-operations',
+    receptionist:{name:'Operador da Central AGV',role:'Segurança e infraestrutura',message:'Esta central acompanha somente as áreas públicas do Campus. Use o console CCTV para alternar entre as câmeras.'},
+    floors:[
+      {index:0,rooms:[
+        {id:'cctv',label:'Sala de Controle CCTV',kind:'security',x:0,z:1.0,w:10.5,d:4.8,description:'Matriz de câmeras públicas do Campus com visualização individual ou em mosaico.'},
+        {id:'dispatch',label:'Despacho Operacional',kind:'service',x:-5.2,z:-2.0,w:3.3,d:1.9,description:'Orientação de circulação e apoio operacional.'}
+      ]},
+      {index:1,rooms:[
+        {id:'energy',label:'Monitoramento de Energia',kind:'tech',x:-4.7,z:-1.8,w:4.2,d:2.2,description:'Painéis visuais de distribuição e estabilidade energética do Campus.'},
+        {id:'network',label:'Supervisão de Redes',kind:'security',x:4.7,z:-1.8,w:4.2,d:2.2,description:'Ambiente educacional de supervisão de conectividade e infraestrutura.'},
+        {id:'incident',label:'Sala de Incidentes',kind:'staff',x:0,z:2.2,w:5.0,d:2.0,description:'Espaço de coordenação para incidentes operacionais do mundo virtual.'}
+      ]}
+    ],
+    guides:[
+      {id:'cctv',label:'Console CCTV',floor:0,nodes:[[0,-4.2],[0,-1.2],[0,1.0]]},
+      {id:'energy',label:'Monitoramento de Energia',floor:1,nodes:[[0,-4.2],[-2.6,-2.6],[-4.7,-1.8]]},
+      {id:'exit',label:'Saída',floor:0,nodes:[[0,0],[0,-5.45]]}
+    ]
   })
 });
 

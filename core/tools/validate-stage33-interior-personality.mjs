@@ -24,9 +24,10 @@ must(d3.includes('ambientNodes')&&d3.includes('node.floor!==activeToolFloor')&&d
 must(d3.includes('const ensureToolInterior=id=>')&&d3.includes('toolInterior(profile)')&&d3.includes('releaseToolInterior')&&d3.includes('disposeObject(room.group)'),'interiores continuam lazy e descartáveis');
 must(lite.includes('interiorRoomStyle')&&lite.includes('style=profile.style||{}')&&lite.includes('roomStyle.icon'),'modo 2D usa a mesma identidade e ícones das salas');
 const stageAtLeast=(text,min)=>[...text.matchAll(/stage(\d+)/g)].some(m=>Number(m[1])>=min);
-must([d3,lite,lobby].every(t=>t.includes('campus-interiors.js?v=14.10.8.65-stage')&&stageAtLeast(t,33)),'consumidores usam cache-bust de fase >=33');
-must([vendor,boot,lobby,index].every(t=>stageAtLeast(t,33))&&index.includes('vendor-loader.js?v=14.10.8.65-stage'),'cadeia de boot publica fase >=33');
-must(/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/.test(sw)&&stageAtLeast(sw,33)&&sw.includes('campus-interiors.js?v=14.10.8.65-stage'),'Service Worker publica interiores em fase >=33');
+const moduleStageAtLeast=(text,module,min)=>[...text.matchAll(new RegExp(`${module.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\?v=14\\.10\\.8\\.\\d+-stage(\\d+)`,'g'))].some(m=>Number(m[1])>=min);
+must([d3,lite,lobby].every(t=>moduleStageAtLeast(t,'campus-interiors.js',33)),'consumidores usam cache-bust de fase >=33');
+must([vendor,boot,lobby,index].every(t=>stageAtLeast(t,33))&&moduleStageAtLeast(index,'vendor-loader.js',33),'cadeia de boot publica fase >=33');
+must(/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/.test(sw)&&stageAtLeast(sw,33)&&moduleStageAtLeast(sw,'campus-interiors.js',33),'Service Worker publica interiores em fase >=33');
 must(![interiors,d3,lite,lobby,boot,vendor,sw].some(t=>/service_role|sb_secret/i.test(t)),'sem segredo de backend no frontend');
 
 if(process.exitCode)process.exit(process.exitCode);

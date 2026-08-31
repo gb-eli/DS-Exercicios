@@ -1,0 +1,34 @@
+AGV WORLD F74 — Estação Espacial AGV
+Versão 14.10.8.76
+
+Arquivos novos/alterados: 27
+
+RELEASE-ESTACAO-ESPACIAL-v14.10.8.76.md
+core/database/069_lobby_space_world.sql
+core/edge-functions/lobby-presence/index.ts
+core/tests/f72-rural-streaming-v14.10.8.74.test.mjs
+core/tests/f73-military-streaming-v14.10.8.75.test.mjs
+core/tests/f74-space-station-v14.10.8.76.test.mjs
+lobby/assets/boot.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/lobby-lite.js
+lobby/assets/lobby.js
+lobby/assets/lobby3d.js
+lobby/assets/military-lite.js
+lobby/assets/military3d.js
+lobby/assets/space-lite.js
+lobby/assets/space3d.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/campus-environment.js
+lobby/assets/world/campus-experiences.js
+lobby/assets/world/space-world.js
+lobby/index.html
+lobby/sw.js
+release-agv-world-f74.json
+release-current.json
+release-v14.10.8.76.json
+repair-lobby.html
+
+Arquivos removidos: 0

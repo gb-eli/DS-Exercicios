@@ -1,0 +1,70 @@
+{
+  "version": "14.10.8.74",
+  "channel": "feature",
+  "title": "Mundo Rural AGV — mapas sob demanda, fazenda, rio, ponte e fauna",
+  "base": "14.10.8.73",
+  "changes": [
+    "Novo Mundo Rural AGV com runtime 2D e 3D próprios, limites e coordenadas independentes do Campus",
+    "Portal rodoviário no Campus e portal de retorno no Rural preservam a posição anterior do aluno no Campus",
+    "Runtimes rural-lite e rural3d são importados dinamicamente somente ao viajar para o mapa rural",
+    "Ao trocar de mapa o World Manager encerra o runtime anterior; no Rural 3D são descartados listeners, renderer, geometrias, materiais, texturas, clima e câmera",
+    "Ambiente rural inclui Fazenda Pedagógica, casa, celeiro, silo, estábulo, milharal, trigo, horta, pomar, pasto, estrada, Rio Veiga, ponte e mirante",
+    "Fauna inicial inclui vacas, cavalo, ovelhas e galinha com representação procedural e movimento leve",
+    "Minimapa e teleporte global reconhecem destinos rurais sem misturar coordenadas com Campus ou Vale",
+    "Presença, chat de proximidade e reunião assinada de usuários reconhecem a área rural-agv",
+    "Usuários presentes no Rural são filtrados dos runtimes 2D/3D do Campus para não aparecerem em coordenadas incorretas",
+    "Veículos multiplayer terrestres permanecem restritos ao Campus nesta fase"
+  ],
+  "maintenance_patches": [
+    "Contrato de teste F71 foi tornado compatível com releases posteriores mantendo as garantias dos mirantes",
+    "Validador legado de interiores foi ajustado para a exceção intencional de CCTV/binóculo ao vivo, preservando pausa de tráfego e NPCs em interiores comuns",
+    "Issue gather do backend normaliza a área conforme o mapa assinado para impedir combinação incoerente de scene/area"
+  ],
+  "schema_note": "A F72 exige migration 067 para ampliar lobby_presence.area com vale-silicio e rural-agv e exige republicar a Edge Function lobby-presence atualizada.",
+  "date": "2026-08-31",
+  "phase": "world-f72-rural-streaming",
+  "baseVersion": "14.10.8.73",
+  "uiVersion": "0.22.8.25",
+  "runtimeCacheVersion": "14.10.8.74",
+  "lobbyCacheVersion": "14.10.8.74",
+  "worldArchitecturePhase": "72",
+  "worldArchitectureBuild": "14.10.8.74-stage43-rural",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": true,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": true,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "O Mundo Rural ainda não possui veículos próprios, direção off-road nem montaria; ficam para evolução posterior.",
+    "Multiplayer de veículos continua limitado ao Campus; mundos externos usam presença/chat/reunir, não sessões de veículo.",
+    "Novos mapas Militar e Espacial/Lua/Marte permanecem no roadmap e reutilizarão a fundação de streaming da F72.",
+    "Migration 066 e Edge Function lobby-presence continuam necessárias se o multiplayer terrestre F67 ainda não estiver implantado.",
+    "Migration 065 do Cinema continua necessária caso a programação persistente do Cinema ainda não esteja em produção."
+  ],
+  "safety": {
+    "academic_data_writes": false,
+    "rural_runtime_lazy_loaded": true,
+    "rural_runtime_disposed_on_exit": true,
+    "external_scene_coordinate_isolation": true,
+    "ground_vehicle_network_disabled_outside_campus": true,
+    "private_student_data_added": false
+  },
+  "validation": {
+    "cumulativeRegression": "56/56 PASS",
+    "f72": "8/8 PASS",
+    "interiorRuntime": "18/18 PASS",
+    "tracksRails": "20/20 PASS",
+    "mobility": "PASS",
+    "masterplan": "PASS",
+    "worldTime": "16/16 PASS",
+    "worldWeather": "20/20 PASS",
+    "javascriptSyntax": "47 files PASS",
+    "edgeFunctionTypeScript": "PASS",
+    "htmlIds": "211/211 unique",
+    "httpSmoke": "7/7 HTTP 200",
+    "browserVisualE2E": "not_run"
+  }
+}

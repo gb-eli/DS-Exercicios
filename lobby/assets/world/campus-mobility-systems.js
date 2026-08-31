@@ -110,7 +110,8 @@ export const CAMPUS_INTERIOR_SIGNATURES=Object.freeze({
   fliperama:Object.freeze({kind:'arcade',icon:'✦',label:'Ilha Arcade'}),
   'game-info':Object.freeze({kind:'maker',icon:'⬡',label:'Bancada Maker'}),
   'practical-exam':Object.freeze({kind:'exam',icon:'▤',label:'Triagem de Provas'}),
-  cinema:Object.freeze({kind:'cinema',icon:'▶',label:'Sala de Exibição'})
+  cinema:Object.freeze({kind:'cinema',icon:'▶',label:'Sala de Exibição'}),
+  'security-center':Object.freeze({kind:'servers',icon:'◉',label:'Matriz CCTV'})
 });
 
 export const CAMPUS_ELEVATOR_SYSTEM=Object.freeze({

@@ -1,4 +1,4 @@
-import { snapshotWorldState } from './lobby-state.js?v=14.10.8.66-stage34-f63a';
+import { snapshotWorldState } from './lobby-state.js?v=14.10.8.79-stage48-solar-system';
 
 function abortError(){
   try{return new DOMException('world_runtime_start_aborted','AbortError')}catch(_){const error=new Error('world_runtime_start_aborted');error.name='AbortError';return error;}

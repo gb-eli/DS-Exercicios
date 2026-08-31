@@ -1,9 +1,9 @@
 {
   "name": "AGV Hub Educacional - pacote público integrado",
-  "release": "v14.10.8.70",
-  "worldArchitecturePhase": "68",
-  "worldArchitectureBuild": "14.10.8.70-stage39-traffic",
-  "uiVersion": "0.22.8.22",
+  "release": "v14.10.8.78",
+  "worldArchitecturePhase": "76",
+  "worldArchitectureBuild": "14.10.8.78-stage47-mars",
+  "uiVersion": "0.22.8.29",
   "date": "2026-08-31",
   "containsBackendMigrations": true,
   "containsEdgeFunctions": true,
@@ -29,5 +29,5 @@
     "docs/"
   ],
   "note": "O runtime público usa core/session/. Banco, Edge Functions, testes, ferramentas e documentação interna não devem ser expostos como superfícies navegáveis de produção. Gabaritos privados e regras docentes permanecem fora do catálogo público.",
-  "ui": "0.22.8.22"
+  "ui": "0.22.8.29"
 }

@@ -1,0 +1,31 @@
+AGV WORLD F72 — arquivos novos/alterados em relação ao backup F71
+Base: /mnt/data/agv_world_work_before_f72
+Release: 14.10.8.74-stage43-rural
+
+Only in /mnt/data/agv_world_work: ARQUIVOS-ALTERADOS-AGV-WORLD-F72-RURAL.txt
+Files /mnt/data/agv_world_work_before_f72/PUBLIC-DEPLOY.json and /mnt/data/agv_world_work/PUBLIC-DEPLOY.json differ
+Only in /mnt/data/agv_world_work: RELEASE-MUNDO-RURAL-v14.10.8.74.md
+Only in /mnt/data/agv_world_work/core/database: 067_lobby_rural_world.sql
+Files /mnt/data/agv_world_work_before_f72/core/edge-functions/lobby-presence/index.ts and /mnt/data/agv_world_work/core/edge-functions/lobby-presence/index.ts differ
+Files /mnt/data/agv_world_work_before_f72/core/tests/f71-viewpoints-binoculars-v14.10.8.73.test.mjs and /mnt/data/agv_world_work/core/tests/f71-viewpoints-binoculars-v14.10.8.73.test.mjs differ
+Only in /mnt/data/agv_world_work/core/tests: f72-rural-streaming-v14.10.8.74.test.mjs
+Files /mnt/data/agv_world_work_before_f72/core/tools/validate-campus-interior-runtime-stage15-v65.mjs and /mnt/data/agv_world_work/core/tools/validate-campus-interior-runtime-stage15-v65.mjs differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/boot.js and /mnt/data/agv_world_work/lobby/assets/boot.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/config.js and /mnt/data/agv_world_work/lobby/assets/config.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/core/world-adapter.js and /mnt/data/agv_world_work/lobby/assets/core/world-adapter.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/lobby-lite.js and /mnt/data/agv_world_work/lobby/assets/lobby-lite.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/lobby.js and /mnt/data/agv_world_work/lobby/assets/lobby.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/lobby3d.js and /mnt/data/agv_world_work/lobby/assets/lobby3d.js differ
+Only in /mnt/data/agv_world_work/lobby/assets: rural-lite.js
+Only in /mnt/data/agv_world_work/lobby/assets: rural3d.js
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/sw-register.js and /mnt/data/agv_world_work/lobby/assets/sw-register.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/vendor-loader.js and /mnt/data/agv_world_work/lobby/assets/vendor-loader.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/world/campus-environment.js and /mnt/data/agv_world_work/lobby/assets/world/campus-environment.js differ
+Files /mnt/data/agv_world_work_before_f72/lobby/assets/world/campus-experiences.js and /mnt/data/agv_world_work/lobby/assets/world/campus-experiences.js differ
+Only in /mnt/data/agv_world_work/lobby/assets/world: rural-world.js
+Files /mnt/data/agv_world_work_before_f72/lobby/index.html and /mnt/data/agv_world_work/lobby/index.html differ
+Files /mnt/data/agv_world_work_before_f72/lobby/sw.js and /mnt/data/agv_world_work/lobby/sw.js differ
+Only in /mnt/data/agv_world_work: release-agv-world-f72.json
+Files /mnt/data/agv_world_work_before_f72/release-current.json and /mnt/data/agv_world_work/release-current.json differ
+Only in /mnt/data/agv_world_work: release-v14.10.8.74.json
+Files /mnt/data/agv_world_work_before_f72/repair-lobby.html and /mnt/data/agv_world_work/repair-lobby.html differ

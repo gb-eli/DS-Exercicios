@@ -1,8 +1,15 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.22.8.22",
+  "version": "0.22.8.25",
   "date": "2026-08-31",
   "features": [
+    "v14.10.8.73: três mirantes do Campus ganham modo binóculo/telescópio com câmera 3D real, zoom progressivo de 1x a 6x e retorno seguro à exploração.",
+    "v14.10.8.73: painel panorâmico identifica e focaliza Praça Central, Plataforma Unificada, Central de Segurança, Cinema, laboratórios, Portal do Vale e monotrilho.",
+    "v14.10.8.73: observação reutiliza o renderer principal, mantém clima/NPCs/tráfego vivos e não cria gravação acadêmica, migration ou Edge Function.",
+    "v14.10.8.72: Mobilidade Aérea adiciona Drone AGV Explorer, Helicóptero AGV e três helipontos com altitude, pouso e câmera aérea.",
+    "v14.10.8.71: Central de Segurança AGV ganha prédio próprio no eixo norte, interior lazy-loaded, sala CCTV e piso de energia/redes.",
+    "v14.10.8.71: oito câmeras públicas externas permitem visão individual ou mosaico 2x2 no mesmo WebGL, com zoom virtual de 1x a 4x.",
+    "v14.10.8.71: CCTV mantém clima, horário, NPCs, tráfego e presença multiplayer vivos e não mostra interiores, provas, atividades ou dados acadêmicos.",
     "v14.10.8.70: trânsito inteligente no Campus 3D com semáforos funcionais, fases sincronizadas e tráfego automático que para no vermelho.",
     "v14.10.8.70: direção manual respeita zonas de 20, 25, 30 e 40 km/h, mostra limite no HUD e reduz automaticamente a velocidade.",
     "v14.10.8.70: colisão dinâmica com tráfego e veículos multiplayer usa último ponto seguro para reposicionar o veículo sem perder a sessão.",
