@@ -216,3 +216,53 @@ Concluída.
 - Migration 064 adiciona normalização/reconciliação automática do roster privado.
 - 10/10 testes focados PASS; suíte comparável permanece 359/368.
 - Migration 064 pendente de aplicação no Supabase correto de produção.
+
+## Etapa 18 — Responsividade e desempenho Lobby/Lab (31/08/2026)
+**Status: concluída.**
+
+- Lobby 3D passou a aplicar limite efetivo de FPS em dispositivos touch/conexão econômica: 30 FPS em perfil restrito e 45 FPS em touch mais forte, sem apagar a preferência persistida do usuário.
+- qualidade High/Ultra persistida não força mais boot pesado em celular restrito; mobile inicia em Eco/Médio conforme memória/CPU/rede.
+- Vale do Silício reutiliza o mesmo diagnóstico de performance do Campus e seleciona renderer/antialias/powerPreference conforme o dispositivo.
+- HUD de telefone foi reorganizado em faixas compactas; identidade e status não disputam mais mais de 100% da largura disponível.
+- status, ações rápidas e painéis mobile ganharam rolagem horizontal contida, `dvh` e tratamento para landscape baixo.
+- LABDS classifica celulares restritos como `economy`, reduz concorrência de carregamento e expõe orçamento comum de DPR/FPS.
+- 10 módulos Canvas do LABDS passaram a respeitar `PerformanceManager.canvasScale()`, evitando DPR 2 automático em aparelhos fracos.
+- perfil Economy remove composição, blur, animações e sombras decorativas caras sem remover ferramentas.
+- sessão fixa do LABDS respeita safe-area; conteúdo reserva espaço inferior para não ficar coberto; alvos touch críticos usam 44 px.
+- teste histórico `p1099-mobile-tablet` não depende mais de arquivos de evidência ausentes e não fabrica métricas; usa evidência quando disponível e contratos atuais quando não disponível.
+- `validate-stage18-responsive-performance.mjs`: 12/12 PASS.
+- `p1099-mobile-tablet-responsiveness-v14.10.8.10.test.mjs`: 9/9 PASS.
+- `p5-lobby-mobile-recovery-v11.5.2.test.mjs`: PASS após atualização do contrato para o perfil móvel atual.
+- validadores das Etapas 10–17 + Cidade/Interiores/Cidade Viva/Mobilidade/Login Único: PASS.
+- suíte geral passou a executar 376 subtestes e ficou em **368/376 PASS**, restando 8 falhas fora deste escopo.
+- sem migration, Edge Function ou alteração de banco nesta etapa.
+
+
+## Etapa 19 — Polimento visual final do Lobby (31/08/2026)
+**Status: concluída.**
+
+- Campus 3D passou a ocultar placas/rótulos externos por distância de leitura, reduzindo poluição visual sem remover orientação.
+- névoa do Campus acompanha o ciclo dia/noite e abre a distância visual durante o dia.
+- Vale 3D ganhou sky dome atmosférico, névoa e iluminação coerentes com o ciclo temporal compartilhado.
+- atualizações atmosféricas do Vale são espaçadas em 30 s e não adicionam trabalho pesado por frame.
+- distritos do Vale recebem acentos cromáticos discretos no piso.
+- placas de distrito/esporte/ambiente usam culling por proximidade e placas de empresa preservam o LOD próprio.
+- Vale 2D passou a usar a mesma paleta temporal do Lobby e reduz nomes simultâneos de distritos/27 empresas por proximidade/zoom.
+- `validate-stage19-visual-polish.mjs`: 12/12 PASS.
+- regressões das Etapas 10–19 e validadores oficiais: PASS.
+- suíte geral permanece **368/376 PASS**, com as mesmas 8 falhas da Etapa 18 fora deste escopo.
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 20 — Vale do Silício: recuperação de renderização (31/08/2026)
+**Status: concluída.**
+
+- corrigido mapa 2D excessivamente aberto após expansão para 840 × 840 m;
+- scroll de zoom, pinch e atalhos + / - / 0 implementados no Vale 2D;
+- zoom inicial e tamanho mínimo dos prédios aumentados para evitar visual de "pontos no escuro";
+- 3D ganhou clipping maior, névoa menos agressiva, LOD urbano mais amplo e silhuetas de prédio mais legíveis;
+- câmera inicial do Vale abre mais o terreno;
+- recuperação defensiva impede `worldRoot` de permanecer oculto fora de interiores;
+- validador específico: 12/12 PASS;
+- regressões Etapas 10–19 e validadores oficiais: PASS;
+- suíte geral permanece **368/376 PASS**, com as mesmas 8 falhas anteriores fora deste escopo;
+- sem migration, Edge Function ou alteração de banco.

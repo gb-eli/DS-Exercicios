@@ -1,0 +1,33 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const root=path.resolve(here,'../..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+let pass=0,fail=0;
+const check=(name,ok)=>{if(ok){pass++;console.log(`PASS — ${name}`)}else{fail++;console.error(`FAIL — ${name}`)}};
+const lobby=read('lobby/assets/lobby.js');
+const perf=read('lobby/assets/render/performance-manager.js');
+const vale=read('lobby/assets/vale3d.js');
+const css=read('lobby/assets/lobby.css');
+const labPerf=read('sistemas/01-lab-virtual/LABDS/lab/js/core/performance-manager.js');
+const labCss=read('sistemas/01-lab-virtual/LABDS/lab/css/v8-design.css');
+const labPerfCss=read('sistemas/01-lab-virtual/LABDS/lab/css/performance.css');
+const mobileTest=read('core/tests/p1099-mobile-tablet-responsiveness-v14.10.8.10.test.mjs');
+const moduleFiles=[
+  'modules/biomonitor-lab/index.js','modules/ai-lab/index.js','modules/tech-explorer-lab/index.js','modules/automation-lab/index.js','modules/game-engine-lab/index.js','modules/electronics-lab/index.js','modules/printing3d-lab/index.js','modules/display-media-lab/index.js','modules/thermal-panel-lab/index.js','modules/blocks-lab/index.js'
+].map(p=>read(`sistemas/01-lab-virtual/LABDS/lab/${p}`));
+check('Lobby limita FPS efetivo em touch/conexão econômica',/effective3DFpsCap/.test(lobby)&&/constrained\?30:45/.test(lobby)&&lobby.match(/effective3DFpsCap/g)?.length>=3);
+check('qualidade inicial não força High/Ultra em mobile',/profile\.mobile&&\['high','ultra'\]\.includes\(requested\)/.test(perf)&&/profile\.constrained\?'low':'medium'/.test(perf));
+check('Vale reutiliza diagnóstico de performance do Campus',/detectPerformanceProfile,chooseInitialQuality/.test(vale)&&/performanceProfile=detectPerformanceProfile\(\)/.test(vale)&&/powerPreference:performanceProfile\.mobile\?'low-power':'high-performance'/.test(vale));
+check('HUD de telefone empilha identidade/status sem estourar largura',/@media\(max-width:620px\)[\s\S]*\.hud-top\{display:grid;grid-template-columns:minmax\(0,1fr\)/.test(css)&&/\.identity-card,\.world-status\{width:100%;max-width:none!important;min-width:0\}/.test(css));
+check('HUD usa rolagem horizontal contida e viewport dinâmica',/\.world-status\{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto/.test(css)&&/88dvh/.test(css)&&/100dvh/.test(css));
+check('layout landscape compacto preserva controles touch',/@media\(max-height:560px\) and \(orientation:landscape\)/.test(css)&&/\.joystick\{width:96px;height:96px\}/.test(css));
+check('Lab classifica celular restrito como Economy',/mobile&&\(\(memory&&memory<=4\)\|\|\(cores&&cores<=4\)\)/.test(labPerf));
+check('Lab expõe orçamento de DPR/FPS e canvasScale compartilhado',/pixelRatioCap=profile==='economy'\?1/.test(labPerf)&&/targetFps=profile==='economy'\?30/.test(labPerf)&&/function canvasScale\(max=2\)/.test(labPerf));
+check('módulos Canvas pesados respeitam o orçamento compartilhado',moduleFiles.filter(t=>t.includes('PerformanceManager?.canvasScale')).length>=8);
+check('Lab mobile reserva safe-area e alvos touch de 44px',/@media\(max-width:760px\),\(pointer:coarse\)/.test(labCss)&&/min-height:44px/.test(labCss)&&/safe-area-inset-bottom/.test(labCss)&&/100dvh/.test(labCss));
+check('Economy remove composição/efeitos caros sem remover ferramentas',/data-performance="economy"/.test(labPerfCss)&&/backdrop-filter:none!important/.test(labPerfCss)&&/animation:none!important/.test(labPerfCss));
+check('auditoria mobile não fabrica evidência ausente',/fs\.existsSync\(metricsPath\)/.test(mobileTest)&&/if\(metrics&&baseline\)/.test(mobileTest)&&/currentRelease/.test(mobileTest));
+console.log(`\nEtapa 18: ${pass} PASS / ${fail} FAIL`);
+if(fail)process.exit(1);

@@ -5,7 +5,7 @@
   function deviceProfile(){
     const memory=Number(navigator.deviceMemory||0),cores=Number(navigator.hardwareConcurrency||0),connection=navigator.connection||{},saveData=Boolean(connection.saveData),effectiveType=String(connection.effectiveType||''),mobile=matchMedia('(pointer:coarse)').matches||innerWidth<720;
     let tier='balanced';
-    if(saveData||['slow-2g','2g'].includes(effectiveType)||(memory&&memory<=2)||(cores&&cores<=2))tier='economy';
+    if(saveData||['slow-2g','2g'].includes(effectiveType)||(memory&&memory<=2)||(cores&&cores<=2)||(mobile&&((memory&&memory<=4)||(cores&&cores<=4))))tier='economy';
     else if((memory>=8&&cores>=8)&&!mobile)tier='quality';
     return{memory,cores,saveData,effectiveType,mobile,tier};
   }
@@ -15,7 +15,8 @@
     else if(graphics==='medium')profile='balanced';
     else if(['high','ultra'].includes(graphics))profile='quality';
     else if(graphics==='auto'&&runtimeOverride)profile=runtimeOverride;
-    return{...device,graphics,profile,prefetch:profile==='quality',idleDelay:profile==='economy'?3500:profile==='balanced'?1700:650,maxConcurrent:profile==='economy'?1:profile==='balanced'?2:4,fps:lastFps};
+    const pixelRatioCap=profile==='economy'?1:profile==='balanced'?(device.mobile?1.25:1.5):2,targetFps=profile==='economy'?30:(device.mobile?45:60);
+    return{...device,graphics,profile,prefetch:profile==='quality',idleDelay:profile==='economy'?3500:profile==='balanced'?1700:650,maxConcurrent:profile==='economy'?1:profile==='balanced'?(device.mobile?1:2):4,pixelRatioCap,targetFps,fps:lastFps};
   }
   function apply(graphics){
     current=resolve(graphics||window.LABDS.Core?.getSnapshot?.()?.settings?.graphics||'auto');
@@ -33,7 +34,8 @@
     document.addEventListener('labds:toolopen',()=>schedule(()=>monitorFrames(2200),500));
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule(()=>monitorFrames(1800),700);});
   }
+  function canvasScale(max=2){const cap=Number((current||resolve()).pixelRatioCap||1),dpr=Number(window.devicePixelRatio||1);return Math.max(.75,Math.min(Number(max)||2,cap,dpr));}
   function resetAutoTuning(){runtimeOverride=null;lastFps=null;return apply();}
   function getSnapshot(){return{...(current||resolve()),runtimeOverride,resources:window.LABDS.ResourceLoader?.getState?.()||null};}
-  window.LABDS.PerformanceManager={deviceProfile,resolve,apply,applyFromCore:()=>apply(),startIdleWarmup,monitorFrames,resetAutoTuning,getSnapshot};
+  window.LABDS.PerformanceManager={deviceProfile,resolve,apply,applyFromCore:()=>apply(),startIdleWarmup,monitorFrames,canvasScale,resetAutoTuning,getSnapshot};
 })();

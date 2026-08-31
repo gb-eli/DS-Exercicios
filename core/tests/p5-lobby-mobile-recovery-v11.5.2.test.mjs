@@ -11,7 +11,7 @@ assert.match(lobby,/startLite\(/);
 assert.match(lobby,/freshCanvas\(\)/);
 assert.match(lobby,/retry3D/);
 assert.match(three,/three_import_timeout/);
-assert.match(perf,/saveData\|\|mobile\|\|hardware<=4\|\|cores<=4/);assert.match(perf,/if\(profile\.lowEnd\)return 'low'/);
+assert.match(perf,/const constrained=saveData\|\|hardware<=4\|\|cores<=4/);assert.match(perf,/if\(profile\.mobile\)return profile\.constrained\?'low':'medium'/);assert.match(perf,/profile\.mobile&&\['high','ultra'\]\.includes\(requested\)/);
 assert.match(three,/signal\?\.aborted/);
 assert.match(lite,/createLobbyLite/);
 assert.match(lite,/onPlayerState/);

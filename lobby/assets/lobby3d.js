@@ -38,7 +38,10 @@ function roundedCanvasTexture(text,{fg='#f4fbff',bg='rgba(4,12,18,.86)',accent='
   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
 }
 function spriteLabel(text,accent='#36d2ff',scale=5,{bg='rgba(4,12,18,.86)'}={}){
-  const material=new THREE.SpriteMaterial({map:roundedCanvasTexture(text,{accent,bg}),transparent:true,depthTest:true,depthWrite:false});const sprite=new THREE.Sprite(material),worldScale=scale*.46*LABEL_SCALE;sprite.scale.set(worldScale,worldScale*.31,1);sprite.renderOrder=4;return sprite;
+  const material=new THREE.SpriteMaterial({map:roundedCanvasTexture(text,{accent,bg}),transparent:true,depthTest:true,depthWrite:false});const sprite=new THREE.Sprite(material),worldScale=scale*.46*LABEL_SCALE;sprite.scale.set(worldScale,worldScale*.31,1);sprite.renderOrder=4;
+  // Etapa 19: nomes completos aparecem por proximidade para evitar poluição visual no Campus.
+  sprite.userData.labelCullDistance=scale>=5.4?58:scale>=3.6?42:28;
+  return sprite;
 }
 function emojiSprite(emoji){
   const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;const c=canvas.getContext('2d');c.font='84px Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(emoji,64,70);
@@ -319,11 +322,19 @@ export async function createLobby3D({canvas,zones,state,isStaff,className,onInte
     }
     return{nearPortal,nearStudent,nearSeat,nearWorldObject};
   }
+  let lastExteriorLabelCull=0;
+  const exteriorLabelPosition=new THREE.Vector3();
+  function updateExteriorLabelVisibility(nowMs){
+    if(nowMs-lastExteriorLabelCull<220||activeInterior||activeToolInterior)return;lastExteriorLabelCull=nowMs;
+    exteriorRoot.traverse?.(o=>{const limit=Number(o.userData?.labelCullDistance||0);if(!o.isSprite||!limit)return;o.getWorldPosition(exteriorLabelPosition);o.visible=Math.hypot(self.position.x-exteriorLabelPosition.x,self.position.z-exteriorLabelPosition.z)<=limit;});
+  }
   function updateAdaptive(nowMs){const measured=adaptiveController.tick(nowMs,{mode:cameraController.getMode(),cameraCollision:cameraController.isColliding()});if(Number.isFinite(measured))fps=measured;}
   function updateCampusClock(nowMs){
     const d=new Date(),world=resolveWorldTime(worldTimeMode,d),daylight=world.daylight,night=world.night,hour=world.hour;
     hemi.intensity=.72+daylight*1.15;moon.intensity=.48+night*1.7;warm.intensity=.22+world.dusk*.9+night*.18;centerLight.intensity=6+night*14;renderer.toneMappingExposure=.98+night*.2;
     const u=sky.userData.skyUniforms;if(u){u.top.value.lerpColors(new THREE.Color(0x030814),new THREE.Color(0x3a91c4),daylight);u.mid.value.lerpColors(new THREE.Color(0x10253b),new THREE.Color(0x86cbe3),daylight);u.bottom.value.lerpColors(new THREE.Color(0x07110f),new THREE.Color(0xc0ddc5),daylight);}
+    // Etapa 19: atmosfera acompanha o céu e abre a distância visual durante o dia.
+    if(scene.fog){scene.fog.color.lerpColors(new THREE.Color(0x07121b),new THREE.Color(0x7fa5b2),daylight);scene.fog.density=.0105-daylight*.0042;}
     const solar=((hour-6)/24)*Math.PI*2,moonA=solar+Math.PI;sunVisual.position.set(Math.cos(solar)*65,15+Math.max(0,Math.sin(solar))*48,-48+Math.sin(solar)*24);sunVisual.lookAt(0,8,0);sunVisual.material.opacity=.12+.88*daylight;sunVisual.visible=daylight>.04;moonVisual.position.set(Math.cos(moonA)*62,18+Math.max(0,Math.sin(moonA))*42,-52+Math.sin(moonA)*20);moonVisual.lookAt(0,8,0);moonVisual.material.opacity=.18+.8*night;moonVisual.visible=night>.08;
     const minute=Math.floor(hour*60);if(minute!==lastSignMinute||state._worldTimeModeSeen!==worldTimeMode){lastSignMinute=minute;state._worldTimeModeSeen=worldTimeMode;const label=`AGV • ${world.clock} • ${world.label}`;const old=liveSign.material.map;liveSign.material.map=roundedCanvasTexture(label,{accent:world.phase==='night'?'#b8caff':'#72e6ff'});liveSign.material.needsUpdate=true;old?.dispose?.();onWorldTime?.(world);}
   }
@@ -370,7 +381,7 @@ export async function createLobby3D({canvas,zones,state,isStaff,className,onInte
       self.position.y=playerY;
     }
     const insideRuntime=!!activeInterior||!!activeToolInterior;
-    avatarSystem.animate(self,{speed:moving*speed,jump:Math.max(0,playerY-groundY),time:motionTime,vertical,dt});syncOtherAvatars(motionTime,dt);updatePortalVisuals(motionTime);if(!insideRuntime){updateCampusClock(nowMs);updateActivityBoard();updateChallenge(nowMs,motionTime);}
+    avatarSystem.animate(self,{speed:moving*speed,jump:Math.max(0,playerY-groundY),time:motionTime,vertical,dt});syncOtherAvatars(motionTime,dt);updatePortalVisuals(motionTime);if(!insideRuntime){updateCampusClock(nowMs);updateExteriorLabelVisibility(nowMs);updateActivityBoard();updateChallenge(nowMs,motionTime);}
     if(!insideRuntime){
       for(const root of environment.experienceRoots||[]){if(root.userData?.water)root.userData.water.material.opacity=.23+.08*(.5+.5*Math.sin(motionTime*2.2));if(root.userData?.float)root.userData.float.rotation.y=motionTime*.35;if(root.userData?.swingSeats)root.userData.swingSeats.forEach((seat,i)=>{seat.position.z=Math.sin(motionTime*1.5+i*Math.PI)*.22;});if(root.userData?.seesaw)root.userData.seesaw.rotation.z=Math.sin(motionTime*1.1)*.12;}
       if(transit?.train){const trainPos=(trainRide||(activeRideId==='coaster'?experienceRide:null))||train.sampleVisual(nowMs);transit.train.position.set(trainPos.x,trainPos.y,trainPos.z);transit.train.rotation.y=trainPos.heading||0;for(const entry of transit.stations||[]){const active=trainPos.station===entry.station.id,pulse=.5+.5*Math.sin(motionTime*5);if(entry.indicator?.material)entry.indicator.material.emissiveIntensity=active?1.45+.75*pulse:.78;if(entry.edgeLight?.material)entry.edgeLight.material.emissiveIntensity=active?1.15+.45*pulse:.62;}}

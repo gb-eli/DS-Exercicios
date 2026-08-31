@@ -292,3 +292,54 @@ As nove falhas restantes são idênticas às da Etapa 15 e não pertencem a este
 - Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: PASS.
 - Suíte geral: 359/368 PASS; 9 falhas históricas fora do escopo permanecem.
 - Migration `064_p10932_lab_adaptation_reconciliation.sql` criada e não aplicada automaticamente porque o projeto Supabase referenciado pelo pacote não está conectado nesta sessão.
+
+## Validação adicional — Etapa 18
+
+- `core/tools/validate-stage18-responsive-performance.mjs`: **12/12 PASS**.
+- auditoria mobile/tablet P10.9.9: **9/9 PASS**.
+- recuperação mobile do Lobby P5.11.5.2: **PASS**.
+- sintaxe dos JS alterados de Lobby/Lab: **PASS**.
+- validador próprio do LABDS: **PASS**.
+- Etapas 10–17: **PASS**.
+- Cidade v62: **PASS**.
+- Interiores v63: **PASS**.
+- Cidade Viva v64: **PASS**.
+- Mobilidade v65: **PASS**.
+- Autenticação unificada v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **368/376 PASS**.
+
+A contagem total aumentou de 368 para 376 porque o antigo teste mobile P10.9.9 deixava de carregar antes dos seus nove subtestes quando a pasta histórica de evidências não existia. Na Etapa 18 esses subtestes passam a executar de fato. Restam oito falhas de outros blocos: saídas/supervisão histórica, roster público, Central de Apoio, GitHub/Professor e rotas legadas.
+
+
+## Validação adicional — Etapa 19
+
+- `core/tools/validate-stage19-visual-polish.mjs`: **12/12 PASS**.
+- culling de rótulos do Campus por proximidade: **PASS**.
+- névoa dinâmica do Campus por ciclo temporal: **PASS**.
+- sky dome + atmosfera dinâmica do Vale 3D: **PASS**.
+- culling de placas do Vale preservando LOD das empresas: **PASS**.
+- Vale 2D com paleta temporal compartilhada: **PASS**.
+- nomes de distritos e empresas por proximidade/zoom: **PASS**.
+- Etapas 10–18: **PASS**.
+- Cidade v62: **PASS**.
+- Interiores v63: **PASS**.
+- Cidade Viva v64: **PASS**.
+- Mobilidade v65: **PASS**.
+- Autenticação unificada v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **368/376 PASS**.
+
+As oito falhas restantes são as mesmas da Etapa 18: supervisão histórica, roster público, Central de Apoio, GitHub/Professor e rotas legadas. Nenhuma pertence ao polimento visual.
+
+## Validação adicional — Etapa 20
+
+- `core/tools/validate-vale-rendering-stage20-v65.mjs`: **12/12 PASS**.
+- Vale 2D: zoom inicial legível, scroll, pinch e atalhos de zoom: **PASS**.
+- Vale 2D: tamanho mínimo de edifícios para não reduzir a pontos: **PASS**.
+- Vale 3D: clipping, névoa, LOD e leitura de silhuetas: **PASS**.
+- recuperação de visibilidade do `worldRoot`: **PASS**.
+- entrada/câmera, física, urbanismo e polimento do Vale: **PASS**.
+- Masterplan, áreas abertas, interiores modularizados, atrações e responsividade: **PASS**.
+- Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **368/376 PASS**.
+
+As oito falhas restantes são idênticas às da Etapa 19 e permanecem fora do Vale do Silício.

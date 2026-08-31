@@ -2,3 +2,22 @@
 .tool-card,.showcase-card{content-visibility:auto;contain-intrinsic-size:280px}.screen:not(.active){content-visibility:hidden}
 html[data-performance="economy"] .app-backdrop::before,html[data-performance="economy"] body::after,html[data-performance="economy"] .dynamic-showcase::after{display:none!important}html[data-performance="economy"] .app-header,html[data-performance="economy"] .home-search-wrap,html[data-performance="economy"] .lab-header{backdrop-filter:none!important}html[data-performance="economy"] .tool-card-button,html[data-performance="economy"] .showcase-card{box-shadow:none!important}html[data-performance="economy"] .hero-kicker i{animation:none!important}html[data-performance="economy"] .showcase-progress i{animation-duration:12s!important}
 @media(max-width:720px){.tool-card,.showcase-card{contain-intrinsic-size:240px}}
+
+
+/* Etapa 18 — perfil Economy reduz custo de composição sem remover funcionalidade */
+html[data-performance="economy"] .dynamic-showcase::before,
+html[data-performance="economy"] .hero-orbit,
+html[data-performance="economy"] .hero-float{display:none!important}
+html[data-performance="economy"] .showcase-card,
+html[data-performance="economy"] .tool-card-button,
+html[data-performance="economy"] .quick-launch-grid button,
+html[data-performance="economy"] .memory-card{animation:none!important;transition:none!important;transform:none!important;box-shadow:none!important}
+html[data-performance="economy"] .app-header,
+html[data-performance="economy"] .session-header,
+html[data-performance="economy"] .lab-header,
+html[data-performance="economy"] .arcade-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(max-width:760px){
+  html[data-performance="economy"] .hero-stage-v8{display:none!important}
+  html[data-performance="economy"] .arcade-playfield{min-height:320px!important}
+  html[data-performance="economy"] .arcade-playfield canvas{height:320px!important}
+}

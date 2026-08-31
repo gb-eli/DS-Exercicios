@@ -147,7 +147,7 @@
 
   function drawScene(route=previewRoute(),runtime=state.visual){
     const canvas=$('#blocksVisualCanvas');if(!canvas)return;
-    const rect=canvas.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+    const rect=canvas.getBoundingClientRect(),dpr=(window.LABDS?.PerformanceManager?.canvasScale?.(2)??Math.min(2,devicePixelRatio||1));
     const width=Math.max(320,Math.floor(rect.width)),height=Math.max(300,Math.floor(rect.height));
     if(canvas.width!==Math.floor(width*dpr)||canvas.height!==Math.floor(height*dpr)){canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);}
     const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,width,height);

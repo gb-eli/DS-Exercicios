@@ -1,14 +1,20 @@
 export const QUALITY_ORDER=['low','medium','high','ultra'];
 
 export function detectPerformanceProfile({mobile=matchMedia('(pointer:coarse)').matches,hardware=Number(navigator.deviceMemory||4),cores=Number(navigator.hardwareConcurrency||4),saveData=!!navigator.connection?.saveData,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches}={}){
-  const lowEnd=saveData||mobile||hardware<=4||cores<=4;
+  const constrained=saveData||hardware<=4||cores<=4;
+  const lowEnd=constrained;
   const highEnd=!mobile&&!saveData&&hardware>=8&&cores>=8;
-  return {mobile,hardware,cores,saveData,reducedMotion,lowEnd,highEnd};
+  return {mobile,hardware,cores,saveData,reducedMotion,constrained,lowEnd,highEnd};
 }
 
 export function chooseInitialQuality(profile,requested=null){
-  if(profile.saveData)return 'low';
-  if(requested&&QUALITY_ORDER.includes(requested)){if(profile.mobile&&requested==='ultra')return 'high';return requested;}
+  if(profile.saveData||profile.hardware<=2||profile.cores<=2)return 'low';
+  if(requested&&QUALITY_ORDER.includes(requested)){
+    if(profile.mobile&&['high','ultra'].includes(requested))return profile.constrained?'low':'medium';
+    if(profile.constrained&&requested!=='low')return 'low';
+    return requested;
+  }
+  if(profile.mobile)return profile.constrained?'low':'medium';
   if(profile.lowEnd)return 'low';
   if(profile.highEnd)return 'high';
   return 'medium';

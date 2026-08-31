@@ -20,7 +20,7 @@ check('exterior suspenso dentro do prédio',src.includes('exteriorRoot.visible=!
 check('câmera usa apenas colisões do interior quando montado',src.includes('activeInterior||activeToolInterior?activeInteriorCollisionRoots:cameraCollisionRoots'));
 check('objetos de interação internos têm ciclo próprio',src.includes('__interiorScope')&&src.includes('removeScopedWorldObjects'));
 check('avatares remotos ficam no runtime externo',src.includes('exteriorRoot.add(avatar);const w=presenceToWorld'));
-check('atualizações externas param no interior',src.includes('const insideRuntime=!!activeInterior||!!activeToolInterior')&&src.includes('if(!insideRuntime){updateCampusClock(nowMs);updateActivityBoard();updateChallenge(nowMs,motionTime);}'));
+check('atualizações externas param no interior',src.includes('const insideRuntime=!!activeInterior||!!activeToolInterior')&&/if\(!insideRuntime\)\{updateCampusClock\(nowMs\);(?:updateExteriorLabelVisibility\(nowMs\);)?updateActivityBoard\(\);updateChallenge\(nowMs,motionTime\);\}/.test(src));
 check('tráfego externo é pausado no interior',src.includes('const exteriorActive=!activeInterior&&!activeToolInterior;'));
 check('entrada de ferramenta monta sob demanda',src.includes('const room=ensureToolInterior(id)'));
 check('entrada de laboratório monta sob demanda',src.includes('const r=ensureClassInterior(key)'));
