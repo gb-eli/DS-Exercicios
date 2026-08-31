@@ -1,0 +1,40 @@
+AGV WORLD — FASE 63A
+
+ARQUIVOS NOVOS
+- lobby/assets/core/lobby-state.js
+- lobby/assets/core/world-manager.js
+- lobby/assets/core/world-adapter.js
+- core/tests/f63a-world-foundation-v14.10.8.65.test.mjs
+- core/tools/validate-world-foundation-f63a.mjs
+- smoke-vale2d.html
+- smoke-vale3d.html
+- release-agv-world-f63a.json
+- CHANGELOG-AGV-WORLD-F63A.md
+- VALIDACAO-AGV-WORLD-F63A.md
+- RELATORIO-AGV-WORLD-F63A.md
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F63A.txt
+
+ARQUIVOS MODIFICADOS
+- 00-LEIA-PRIMEIRO.md
+- 02-STATUS-IMPLEMENTACAO.md
+- PUBLIC-DEPLOY.json
+- release-current.json
+- lobby/index.html
+- lobby/sw.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/assets/lobby.js
+- lobby/assets/lobby-lite.js
+- lobby/assets/lobby3d.js
+- smoke2d.html
+- smoke3d.html
+- core/tools/validate-space-identity-stage29-v65.mjs
+- core/tools/validate-stage28-tracks-rails-v65.mjs
+- core/tools/validate-stage30-ambient-environment.mjs
+- core/tools/validate-stage31-world-time.mjs
+- core/tools/validate-stage32-world-weather.mjs
+- core/tools/validate-stage33-interior-personality.mjs
+- core/tools/validate-stage34-contextual-avatar.mjs
+- core/tests/p10913-lobby-boot-cache-hotfix-v14.10.8.14.test.mjs
+- core/tests/p10914-lobby-mobile-auth-hardening-v14.10.8.15.test.mjs

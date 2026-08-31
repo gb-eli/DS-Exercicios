@@ -20,7 +20,7 @@ must(interiors.includes('style:CAMPUS_INTERIOR_STYLE_PROFILES[destination.id]'),
 must(d3.includes('CAMPUS_CLASSROOM_INTERIOR_THEMES')&&d3.includes('theme.motif'),'laboratórios acadêmicos 3D possuem assinatura por turma');
 must(d3.includes('function interiorRoomProp(')&&d3.includes("case 'exam'")&&d3.includes("case 'orbital'")&&d3.includes("case 'maker'"),'renderer 3D monta equipamentos internos especializados');
 must(d3.includes('const floorMap=(profile.floorMaps||[]).find')&&d3.includes('interiorRoomStyle(room.kind,profile.accent)'),'props 3D derivam do blueprint funcional existente');
-must(d3.includes('ambientNodes')&&d3.includes('node.floor!==activeToolFloor')&&d3.includes('!reducedMotion'),'animações internas limitadas ao piso ativo e acessibilidade');
+must(d3.includes('ambientNodes')&&d3.includes('node.floor!==activeToolFloor')&&d3.includes('!profile.reducedMotion'),'animações internas limitadas ao piso ativo e acessibilidade');
 must(d3.includes('const ensureToolInterior=id=>')&&d3.includes('toolInterior(profile)')&&d3.includes('releaseToolInterior')&&d3.includes('disposeObject(room.group)'),'interiores continuam lazy e descartáveis');
 must(lite.includes('interiorRoomStyle')&&lite.includes('style=profile.style||{}')&&lite.includes('roomStyle.icon'),'modo 2D usa a mesma identidade e ícones das salas');
 const stageAtLeast=(text,min)=>[...text.matchAll(/stage(\d+)/g)].some(m=>Number(m[1])>=min);

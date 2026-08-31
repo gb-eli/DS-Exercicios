@@ -20,7 +20,8 @@
     "Etapa 3: retorno seguro pós-troca de senha e contrato de Login Único",
     "Etapa 4: compatibilidade de navegação administrativa",
     "Etapa 5: logout/troca de conta do CTF alinhados à sessão unificada",
-    "Etapa 6: metadados, UI version e cache-bust público consolidados"
+    "Etapa 6: metadados, UI version e cache-bust público consolidados",
+    "AGV World F63A: fundação mínima do World Manager, estado global/mundo e adapters de Campus/Vale"
   ],
   "schema_note": "A release base v14.10.8.65 não alterava schema; o pacote corrigido inclui a migration server-side 063 da Etapa 2.",
   "date": "2026-08-30",
@@ -29,6 +30,8 @@
   "uiVersion": "0.22.8.19",
   "runtimeCacheVersion": "14.10.8.65",
   "lobbyCacheVersion": "14.10.8.65",
+  "worldArchitecturePhase": "63A",
+  "worldArchitectureBuild": "14.10.8.65-stage34-f63a",
   "requiresDatabaseChange": true,
   "requiresEdgeFunctionDeploy": false,
   "requiresPrivateSecret": false,

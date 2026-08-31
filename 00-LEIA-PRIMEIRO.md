@@ -2,6 +2,12 @@
 
 Este pacote é a versão cumulativa **v14.10.8.65 — Cidade Viva Avançada**, construída sobre a v14.10.8.64.
 
+## Atualização técnica AGV World F63A
+
+Este pacote inclui a **Fase 63A — Fundação** da reorganização do AGV World. A versão funcional permanece v14.10.8.65 e o build do Lobby passa a ser identificado como `14.10.8.65-stage34-f63a`. Foram adicionados o World Manager mínimo, a separação entre estado global e estado do mundo e adapters finos para Campus/Vale, sem criar World Registry, Spawn Manager, Scene Manager ou novos mapas.
+
+Consulte `CHANGELOG-AGV-WORLD-F63A.md`, `VALIDACAO-AGV-WORLD-F63A.md` e `RELATORIO-AGV-WORLD-F63A.md` antes de publicar.
+
 ## Estado da release
 
 - entrada oficial do Lobby em **2D**;

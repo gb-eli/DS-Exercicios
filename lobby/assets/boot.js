@@ -17,7 +17,10 @@ const showFatal=(error)=>{
   showRepairLink();
 };
 const ASSET_SIGNATURES={
-  'lobby.js':['createLobby3D','createLobbyLite','SCHOOL_EMAIL_DOMAIN'],
+  'lobby.js':['createLobbyState','createWorldManager','CAMPUS_WORLD_ADAPTER','SCHOOL_EMAIL_DOMAIN'],
+  'core/lobby-state.js':['createLobbyState','snapshotWorldState','LOBBY_STATE_CONTRACT'],
+  'core/world-manager.js':['createWorldManager','world_runtime_contract_invalid','diagnostics'],
+  'core/world-adapter.js':['createWorldAdapter','CAMPUS_WORLD_ADAPTER','VALE_WORLD_ADAPTER'],
   'supabase.js':['SUPABASE_URL','NETWORK_TIMEOUT_MS'],
   'config.js':['SUPABASE_URL','SUPABASE_PUBLISHABLE_KEY','LOBBY_VERSION'],
   'lobby3d.js':['createLobby3D'],
@@ -66,7 +69,7 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
+  for(const asset of ['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
   const url=new URL(`./lobby.js?v=${VERSION}-stage34`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});

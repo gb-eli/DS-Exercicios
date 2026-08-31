@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#06131b;color:#dff8ff}canvas{display:block;width:1000px;height:640px}#move-joystick,#move-stick,#jump-button,#run-button{display:none}#out{position:fixed;inset:8px auto auto 8px}</style></head><body><canvas id="game3d"></canvas><div id="move-joystick"><div id="move-stick"></div></div><button id="jump-button"></button><button id="run-button"></button><pre id="out">booting</pre><script type="module">
+import {createLobbyState} from './lobby/assets/core/lobby-state.js?v=14.10.8.65-stage34-f63a';
+import {createWorldManager} from './lobby/assets/core/world-manager.js?v=14.10.8.65-stage34-f63a';
+import {VALE_WORLD_ADAPTER} from './lobby/assets/core/world-adapter.js?v=14.10.8.65-stage34-f63a';
+import {VALE_SPAWN,valeWorldToPresence} from './lobby/assets/world/vale-silicio-shared.js?v=14.10.8.65';
+const spawn=valeWorldToPresence(VALE_SPAWN.x,VALE_SPAWN.z);
+const state=createLobbyState({session:{user:{id:'u1'},profile:{role:'teacher',full_name:'Teste'},others:[]},world:{worldId:'vale-silicio',scene:'vale',player:{x:spawn.x,y:spawn.y,area:'vale-silicio'}}});
+let first=false;window.errors=[];addEventListener('error',event=>errors.push('error:'+event.message));addEventListener('unhandledrejection',event=>errors.push('rejection:'+String(event.reason?.message||event.reason)));
+try{
+  const manager=createWorldManager({worldState:state.world});
+  const runtime=await manager.start({adapter:VALE_WORLD_ADAPTER,mode:'3d',context:{canvas:document.querySelector('#game3d'),state,onInteract:()=>{},onPlayerState:()=>{},onAreaChange:()=>{},onQualityChange:()=>{},onPerf:()=>{},onError:message=>errors.push('onError:'+message),onContextLost:()=>{},onFirstFrame:()=>{first=true;},onWorldTime:()=>{},initialQuality:'low'}});
+  window.runtime=runtime;window.worldManager=manager;
+  setTimeout(()=>{window.SMOKE_READY=true;document.querySelector('#out').textContent=first&&!errors.length?'PASS':!first?'NO_FIRST':'FAIL\n'+errors.join('\n');},2800);
+}catch(error){window.SMOKE_READY=true;document.querySelector('#out').textContent='THREW:'+String(error.stack||error)}
+</script></body></html>

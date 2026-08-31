@@ -1,0 +1,30 @@
+{
+  "phase": "63A",
+  "name": "AGV World — Fundação",
+  "baseVersion": "14.10.8.65",
+  "build": "14.10.8.65-stage34-f63a",
+  "date": "2026-08-31",
+  "status": "RELEASE_CANDIDATE",
+  "changes": [
+    "World Manager mínimo com ownership único do runtime",
+    "Separação entre estado global de sessão e estado específico do mundo",
+    "Adapters finos para Campus e Vale nos modos 2D e 3D",
+    "Correção do import CAMPUS_RIDES no Campus 2D",
+    "Correção de reducedMotion no interior do Campus 3D",
+    "Preflight e Service Worker atualizados para a fundação"
+  ],
+  "notIncluded": [
+    "World Registry",
+    "Spawn Manager",
+    "Scene Manager e unload avançado",
+    "Transition Manager genérico",
+    "Novos mundos ou mudanças gráficas"
+  ],
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "changesAuthentication": false,
+  "changesPedagogicalRules": false,
+  "baseReleasePendingPreserved": [
+    "Aplicar a migration 063_p10920_password_change_finalize.sql no Supabase de produção"
+  ]
+}

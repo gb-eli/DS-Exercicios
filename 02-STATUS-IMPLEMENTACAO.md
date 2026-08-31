@@ -1,5 +1,18 @@
 # Status de implementação — v14.10.8.65
 
+## AGV World — Fase 63A concluída
+
+- fundação mínima do World Manager integrada;
+- estado global de sessão separado do estado específico do mundo, com aliases compatíveis;
+- adapters finos conectam Campus/Vale aos runtimes 2D/3D existentes;
+- ownership do runtime centralizado, com proteção contra conclusão tardia após cancelamento;
+- erro crítico do Campus 2D (`CAMPUS_RIDES` sem import) corrigido;
+- erro do interior Campus 3D (`reducedMotion` fora do escopo) corrigido;
+- boot e Service Worker passam a validar/cachear os módulos da fundação;
+- quatro smokes reais no navegador aprovados: Campus 2D, Campus 3D/interior, Vale 2D e Vale 3D;
+- sem World Registry, Spawn Manager, Scene Manager, novos mapas, mudança de schema ou Edge Function;
+- próxima fase autorizável: 63B — World Registry + Spawn Manager.
+
 ## Estado
 
 **RELEASE CANDIDATE CONSOLIDADA — validações estáticas da Cidade Viva aprovadas; smoke visual real pós-deploy ainda obrigatório.**

@@ -11,6 +11,7 @@ const lobby2d=read('lobby/assets/lobby-lite.js');
 const vale3d=read('lobby/assets/vale3d.js');
 const vale2d=read('lobby/assets/vale-lite.js');
 const lobby=read('lobby/assets/lobby.js');
+const adapter=read('lobby/assets/core/world-adapter.js');
 const sw=read('lobby/sw.js');
 const index=read('lobby/index.html');
 
@@ -32,7 +33,7 @@ check('Vale possui nuvens, estrelas e tráfego aéreo escalável',vale3d.include
 check('iluminação urbana do Vale responde à noite sem PointLights em massa',vale3d.includes('avenueLampMaterials')&&vale3d.includes('night*1.12'));
 check('Vale 2D diferencia silhuetas da vegetação',vale2d.includes('variant=i%3')&&vale2d.includes('ctx.ellipse'));
 const phaseAtLeast30=text=>{const m=String(text).match(/stage(\d+)/);return !!m&&Number(m[1])>=30;};
-check('cache-bust de fase >=30 alcança a cadeia principal',phaseAtLeast30(index.match(/vendor-loader\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(lobby.match(/lobby3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(lobby.match(/vale3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0]));
+check('cache-bust de fase >=30 alcança a cadeia principal',phaseAtLeast30(index.match(/vendor-loader\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(adapter.match(/lobby3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(adapter.match(/vale3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0]));
 check('Service Worker usa cache de fase >=30',phaseAtLeast30(sw.match(/agv-lobby-runtime-\$\{VERSION\}-stage\d+/)?.[0]));
 check('Service Worker pré-carrega ambientação em fase >=30',phaseAtLeast30(sw.match(/ambient-landscape\.js\?v=14\.10\.8\.65-stage\d+/)?.[0]));
 

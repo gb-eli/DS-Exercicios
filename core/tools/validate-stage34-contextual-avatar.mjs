@@ -8,6 +8,7 @@ const lite=read('lobby/assets/lobby-lite.js');
 const avatar=read('lobby/assets/characters/avatar-system.js');
 const rigged=read('lobby/assets/rigged-avatar.js');
 const lobby=read('lobby/assets/lobby.js');
+const adapter=read('lobby/assets/core/world-adapter.js');
 const lobbyHtml=read('lobby/index.html');
 const lobbyCss=read('lobby/assets/lobby.css');
 const boot=read('lobby/assets/boot.js');
@@ -54,7 +55,7 @@ must(labHtml.includes('avatar-context.js?v=14.10.8.65-stage34')&&labHtml.include
 must(labBoot.includes('js/app.js?v=14.10.8.65-stage34')&&labSw.includes('stage34')&&labSw.includes('js/app.js?v=14.10.8.65-stage34'),'cache do Lab força app contextual novo');
 
 must(lobbyHtml.includes('lobby.css?v=14.10.8.65-stage34')&&lobbyHtml.includes('vendor-loader.js?v=14.10.8.65-stage34'),'HTML do Lobby publica stage34');
-must(vendor.includes('stage34')&&boot.includes('stage34')&&lobby.includes('lobby3d.js?v=14.10.8.65-stage34')&&lobby.includes('lobby-lite.js?v=14.10.8.65-stage34'),'cadeia JS do Lobby publica stage34');
+must(vendor.includes('stage34')&&boot.includes('stage34')&&adapter.includes('lobby3d.js?v=14.10.8.65-stage34')&&adapter.includes('lobby-lite.js?v=14.10.8.65-stage34'),'cadeia JS do Lobby publica stage34 por adapter');
 must(sw.includes('agv-lobby-runtime-${VERSION}-stage34')&&sw.includes('avatar-context.js?v=14.10.8.65-stage34')&&sw.includes('lobby.css?v=14.10.8.65-stage34'),'Service Worker publica shell contextual stage34');
 must(![context,interiors,d3,lite,avatar,rigged,lobby,exam,lab].some(t=>/service_role|sb_secret/i.test(t)),'sem segredo de backend nos arquivos da fase');
 

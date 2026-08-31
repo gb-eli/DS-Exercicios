@@ -1,16 +1,21 @@
-<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#06131b}canvas{display:block;width:1280px;height:720px}#move-joystick,#move-stick,#jump-button,#run-button{display:none}</style></head><body><canvas id="game3d"></canvas><div id="move-joystick"><div id="move-stick"></div></div><button id="jump-button"></button><button id="run-button"></button><script type="module">
-import {createLobbyLite} from './lobby/assets/lobby-lite.js?v=14.10.8.65';
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#06131b;color:#dff8ff}canvas{display:block;width:1280px;height:720px}#move-joystick,#move-stick,#jump-button,#run-button{display:none}#out{position:fixed;inset:8px auto auto 8px}</style></head><body><canvas id="game3d"></canvas><div id="move-joystick"><div id="move-stick"></div></div><button id="jump-button"></button><button id="run-button"></button><pre id="out">booting</pre><script type="module">
+import {createLobbyState} from './lobby/assets/core/lobby-state.js?v=14.10.8.65-stage34-f63a';
+import {createWorldManager} from './lobby/assets/core/world-manager.js?v=14.10.8.65-stage34-f63a';
+import {CAMPUS_WORLD_ADAPTER} from './lobby/assets/core/world-adapter.js?v=14.10.8.65-stage34-f63a';
 const zones=[
 {key:'1ds',code:'1DS-A-MANHA',label:'1DS',name:'1ª Série DS',accent:'#36d2ff',portal:{label:'Laboratório 1DS'}},
 {key:'2ds',code:'2DS-A-MANHA',label:'2DS',name:'2ª Série DS',accent:'#51e7a3',portal:{label:'Laboratório 2DS'}},
 {key:'3ds',code:'3DS-C-MANHA',label:'3DS',name:'3ª Série DS',accent:'#b58cff',portal:{label:'Laboratório 3DS'}},
 {key:'sub',code:'DS-SUB-NOITE',label:'SUB',name:'DS Subsequente',accent:'#ffae63',portal:{label:'Laboratório SUB'}}];
 const classes=zones.map((z,i)=>({id:'c'+i,code:z.code,name:z.name}));
-const state={profile:{role:'student',full_name:'Aluno Teste'},currentClass:classes[0],classes,player:{x:800,y:500},others:[
+const state=createLobbyState({session:{profile:{role:'student',full_name:'Aluno Teste'},currentClass:classes[0],classes,others:[
 {student_id:'1',class_id:'c0',display_name:'Ana',participant_role:'student',x:610,y:340},
 {student_id:'2',class_id:'c1',display_name:'Bruno',participant_role:'student',x:1020,y:340},
 {student_id:'3',class_id:'c2',display_name:'Carla',participant_role:'student',x:610,y:690},
-{student_id:'4',class_id:'c3',display_name:'Prof. DS',participant_role:'teacher',x:960,y:650}]};
-window.runtime=createLobbyLite({canvas:document.querySelector('#game3d'),zones,state,isStaff:()=>false,onInteract:()=>{},onPlayerState:()=>{},onQualityChange:()=>{},onAreaChange:()=>{},onChallengeEvent:()=>{}});
-window.SMOKE_READY=true;
+{student_id:'4',class_id:'c3',display_name:'Prof. DS',participant_role:'teacher',x:960,y:650}]},world:{player:{x:800,y:500,area:'central'}}});
+window.errors=[];addEventListener('error',event=>errors.push('error:'+event.message));addEventListener('unhandledrejection',event=>errors.push('rejection:'+String(event.reason?.message||event.reason)));
+const manager=createWorldManager({worldState:state.world});
+window.runtime=await manager.start({adapter:CAMPUS_WORLD_ADAPTER,mode:'lite',context:{canvas:document.querySelector('#game3d'),zones,state,isStaff:()=>false,onInteract:()=>{},onPlayerState:()=>{},onQualityChange:()=>{},onAreaChange:()=>{},onChallengeEvent:()=>{}}});
+window.worldManager=manager;
+setTimeout(()=>{window.SMOKE_READY=true;document.querySelector('#out').textContent=errors.length?'FAIL\n'+errors.join('\n'):'PASS';},1200);
 </script></body></html>

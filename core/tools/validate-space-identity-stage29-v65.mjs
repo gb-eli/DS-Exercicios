@@ -13,6 +13,7 @@ const lobby2d=read('lobby/assets/lobby-lite.js');
 const vale3d=read('lobby/assets/vale3d.js');
 const vale2d=read('lobby/assets/vale-lite.js');
 const lobby=read('lobby/assets/lobby.js');
+const adapter=read('lobby/assets/core/world-adapter.js');
 const sw=read('lobby/sw.js');
 const index=read('lobby/index.html');
 
@@ -33,7 +34,7 @@ check('Vale 2D usa símbolos, cores e slogan compartilhados',vale2d.includes('va
 check('Vale 2D limita detalhe por distância',vale2d.includes('distance<105')&&vale2d.includes('showDetail'));
 check('Fase 2.2 continua presente',env.includes('campus-mobility-track-layer')&&env.includes('monotrilho-train')&&lobby2d.includes('Montanha-russa panorâmica'));
 const stageAtLeast=(source,pattern,min=29)=>{const m=source.match(pattern);return !!m&&Number(m[1])>=min;};
-check('cache-bust da cadeia principal permanece em fase >=29',stageAtLeast(index,/vendor-loader\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(lobby,/lobby3d\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(lobby,/vale3d\.js\?v=14\.10\.8\.65-stage(\d+)/));
+check('cache-bust da cadeia principal permanece em fase >=29',stageAtLeast(index,/vendor-loader\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(adapter,/lobby3d\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(adapter,/vale3d\.js\?v=14\.10\.8\.65-stage(\d+)/));
 check('Service Worker mantém fase >=29 e identidades',stageAtLeast(sw,/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/)&&sw.includes('space-identities.js?v=14.10.8.65-stage29'));
 
 let failed=0;
