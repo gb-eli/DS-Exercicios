@@ -1,18 +1,18 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.65';
-import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_RIDES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.65-stage28';
-import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.65';
-import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './world/campus-connections.js?v=14.10.8.65';
-import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK, CAMPUS_CITY_LANDMARKS } from './world/campus-city-network.js?v=14.10.8.65';
-import { CAMPUS_INTERIOR_MAP, CAMPUS_INTERIOR_INTERACTIONS, interiorRoomStyle, contextualInteriorAnchor } from './world/campus-interiors.js?v=14.10.8.65-stage34';
-import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './world/campus-live-systems.js?v=14.10.8.65';
-import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_TRAFFIC_FLEET, CAMPUS_MOBILITY_TRACKS, CAMPUS_DRIVABLE_VEHICLES, CAMPUS_NPC_PATROLS, CAMPUS_DYNAMIC_SIGNS, CAMPUS_INTERIOR_SIGNATURES, resolveCampusCityEvent, resolveDynamicSign, sampleCampusRoute } from './world/campus-mobility-systems.js?v=14.10.8.65-stage28';
-import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.65';
-import { createRideManager } from './game/ride-manager.js?v=14.10.8.65-stage28';
-import { createTrainManager } from './game/train-manager.js?v=14.10.8.65-stage28';
-import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.65-stage31';
-import { resolveWorldWeather, drawWorldWeather2D } from './world/weather-system.js?v=14.10.8.65-stage32';
-import { campusSpaceIdentity } from './world/space-identities.js?v=14.10.8.65-stage29';
-import { CAMPUS_AMBIENT } from './world/ambient-landscape.js?v=14.10.8.65-stage30';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT, CAMPUS_DECOR, presenceToWorld, worldToPresence, areaAtWorld } from './world/campus-manifest.js?v=14.10.8.66';
+import { CAMPUS_EXPERIENCES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_RIDES, PARKOUR_PLATFORMS, LITE_PARKOUR_CHECKPOINTS, PARKOUR_START, nearestExperience } from './world/campus-experiences.js?v=14.10.8.66-stage28';
+import { CAMPUS_DESTINATION_MAP } from './world/campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './world/campus-connections.js?v=14.10.8.66';
+import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK, CAMPUS_CITY_LANDMARKS } from './world/campus-city-network.js?v=14.10.8.66';
+import { CAMPUS_INTERIOR_MAP, CAMPUS_INTERIOR_INTERACTIONS, interiorRoomStyle, contextualInteriorAnchor } from './world/campus-interiors.js?v=14.10.8.66-stage34';
+import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './world/campus-live-systems.js?v=14.10.8.66';
+import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_TRAFFIC_FLEET, CAMPUS_MOBILITY_TRACKS, CAMPUS_DRIVABLE_VEHICLES, CAMPUS_NPC_PATROLS, CAMPUS_DYNAMIC_SIGNS, CAMPUS_INTERIOR_SIGNATURES, resolveCampusCityEvent, resolveDynamicSign, sampleCampusRoute } from './world/campus-mobility-systems.js?v=14.10.8.66-stage28';
+import { createCheckpointChallenge } from './game/challenge-manager.js?v=14.10.8.66';
+import { createRideManager } from './game/ride-manager.js?v=14.10.8.66-stage28';
+import { createTrainManager } from './game/train-manager.js?v=14.10.8.66-stage28';
+import { resolveWorldTime, skyPalette } from './world/dynamic-world.js?v=14.10.8.66-stage31';
+import { resolveWorldWeather, drawWorldWeather2D } from './world/weather-system.js?v=14.10.8.66-stage32';
+import { campusSpaceIdentity } from './world/space-identities.js?v=14.10.8.66-stage29';
+import { CAMPUS_AMBIENT } from './world/ambient-landscape.js?v=14.10.8.66-stage30';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -77,7 +77,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   function drawLandscape(w,h,time){
     const s=metric(w,h);
     // Etapa 12: sem eixos duplicados; a malha oficial abaixo é a única fonte de ruas e passeios.
-    // v14.10.8.65: malha de conexões funcionais entre praça, distritos e portas dos prédios.
+    // v14.10.8.66: malha de conexões funcionais entre praça, distritos e portas dos prédios.
     for(const connection of CAMPUS_CONNECTIONS){
       const pts=connection.nodes.map(n=>[n.x,n.z]);pathLine(pts,w,h,Math.max(1.15,connection.width*.92),.92);
       ctx.save();ctx.strokeStyle=hexToRgba(connection.accent,.46);ctx.lineWidth=Math.max(1,.11*metric(w,h));ctx.beginPath();connection.nodes.forEach((n,i)=>{const q=project(n.x,n.z,w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.restore();
@@ -85,7 +85,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     for(const bridge of CAMPUS_SKYBRIDGES){const a=CAMPUS_DESTINATION_MAP[bridge.from],b=CAMPUS_DESTINATION_MAP[bridge.to];if(!a||!b)continue;const pa=project(a.x,a.z,w,h),pb=project(b.x,b.z,w,h);ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle=hexToRgba(bridge.accent,.5);ctx.lineWidth=Math.max(1.5,.14*metric(w,h));ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke();ctx.setLineDash([]);ctx.restore();}
     for(const gate of CAMPUS_DISTRICT_GATES){const q=project(gate.x,gate.z,w,h),ms=metric(w,h);ctx.save();ctx.translate(q.x,q.y);ctx.rotate(gate.rotation||0);rr(-2.35*ms,-.32*ms,4.7*ms,.64*ms,.16*ms,'rgba(5,18,24,.92)',hexToRgba(gate.accent,.58));text(gate.name,0,0,{size:Math.max(6,.36*ms),weight:900,color:gate.accent,align:'center'});ctx.restore();}
     for(const sign of CAMPUS_WAYFINDING){const q=project(sign.x,sign.z,w,h),ms=metric(w,h);rr(q.x-.95*ms,q.y-.48*ms,1.9*ms,.96*ms,.18*ms,'rgba(3,14,20,.86)',hexToRgba(sign.accent,.38));text('◆',q.x,q.y-.12*ms,{size:Math.max(6,.32*ms),weight:900,color:sign.accent,align:'center'});}
-    // v14.10.8.65: cidade educacional — vias hierarquizadas, praças, garagens, passarelas e eixo monumental do Vale.
+    // v14.10.8.66: cidade educacional — vias hierarquizadas, praças, garagens, passarelas e eixo monumental do Vale.
     const drawRectWorld=(x,z,ww,dd,fill,stroke=null)=>{const c=project(x,z,w,h),ms=metric(w,h);rr(c.x-ww*ms/2,c.y-dd*ms/2,ww*ms,dd*ms,Math.max(1,.12*ms),fill,stroke);};
     for(const road of CAMPUS_ROAD_HIERARCHY){const width=Math.max(1.1,road.width*.76);pathLine(road.nodes.map(n=>[n.x,n.z]),w,h,width,.94);ctx.save();ctx.strokeStyle=hexToRgba(road.accent,road.class==='arterial'?.34:.2);ctx.lineWidth=Math.max(1,.08*metric(w,h));ctx.beginPath();road.nodes.forEach((n,i)=>{const q=project(n.x,n.z,w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.restore();}
     for(const plaza of CAMPUS_THEME_PLAZAS){const identity=campusSpaceIdentity(plaza.id),accent=identity?.accent||plaza.accent,q=project(plaza.x,plaza.z,w,h),ms=metric(w,h),distance=Math.hypot(player.x-plaza.x,player.z-plaza.z),near=distance<16;ctx.fillStyle=hexToRgba(accent,.08);ctx.beginPath();ctx.arc(q.x,q.y,plaza.radius*ms,0,Math.PI*2);ctx.fill();ctx.strokeStyle=hexToRgba(accent,.38);ctx.lineWidth=Math.max(1,.09*ms);ctx.stroke();text(identity?.icon||plaza.icon,q.x,q.y,{size:Math.max(8,.52*ms),weight:900,color:accent,align:'center'});if(near&&ms>.55)text(identity?.tagline||plaza.detail,q.x,q.y+Math.max(10,.8*ms),{size:Math.max(5,.27*ms),weight:820,color:'#bad9e2',align:'center',alpha:.86,maxWidth:150});}
@@ -94,7 +94,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     for(const vehicle of CAMPUS_GARAGE_FLEET){const garage=CAMPUS_GARAGES.find(item=>item.id===vehicle.garageId);if(!garage)continue;const q=project(garage.x+vehicle.slot,garage.z,w,h),ms=metric(w,h);rr(q.x-.42*ms,q.y-.25*ms,.84*ms,.5*ms,.12*ms,hexToRgba(vehicle.accent,.78),'rgba(235,250,255,.28)');text(vehicle.kind==='bike'?'◉':vehicle.kind==='drone'?'✣':vehicle.kind==='bus'?'▰':'▰',q.x,q.y,{size:Math.max(5,.28*ms),weight:900,color:'#eafcff',align:'center'});}
     // Fase 2.2: pista técnica usa o corredor viário existente; apenas bordas/identidade são sobrepostas no 2D.
     for(const track of CAMPUS_MOBILITY_TRACKS){const route=CAMPUS_TRAFFIC_ROUTES.find(item=>item.id===track.routeId);if(!route)continue;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=hexToRgba(track.accent,.72);ctx.lineWidth=Math.max(1.5,.16*metric(w,h));ctx.setLineDash([Math.max(3,.45*metric(w,h)),Math.max(4,.6*metric(w,h))]);ctx.beginPath();route.nodes.forEach((n,i)=>{const q=project(n.x,n.z,w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.setLineDash([]);ctx.restore();}
-    // v14.10.8.65: tráfego vivo, NPCs em circulação, sinalização dinâmica e evento urbano local.
+    // v14.10.8.66: tráfego vivo, NPCs em circulação, sinalização dinâmica e evento urbano local.
     for(const vehicle of CAMPUS_TRAFFIC_FLEET){const pos=sampleCampusRoute(vehicle.routeId,vehicle.offset+time*vehicle.speed),q=project(pos.x,pos.z,w,h),ms=metric(w,h);ctx.save();ctx.translate(q.x,q.y);ctx.rotate(-pos.heading);rr(-.55*ms,-.28*ms,1.1*ms,.56*ms,.16*ms,hexToRgba(vehicle.accent,.88),'rgba(238,252,255,.34)');text(vehicle.kind==='bike'?'◉':vehicle.kind==='bus'?'▰':'◆',0,0,{size:Math.max(5,.28*ms),weight:950,color:'#f2fdff',align:'center'});ctx.restore();}
     for(const npc of CAMPUS_NPC_PATROLS){const pos=sampleCampusRoute(npc.routeId,npc.offset+time*npc.speed),q=project(pos.x,pos.z,w,h),ms=metric(w,h);ctx.fillStyle=hexToRgba(npc.accent,.88);ctx.beginPath();ctx.arc(q.x,q.y,Math.max(3,.32*ms),0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(236,252,255,.58)';ctx.lineWidth=1;ctx.stroke();}
     const cityEvent=resolveCampusCityEvent(new Date()),eventPlaza=CAMPUS_THEME_PLAZAS.find(item=>item.id===cityEvent.plazaId);if(eventPlaza){const q=project(eventPlaza.x,eventPlaza.z,w,h),ms=metric(w,h),pulse=.65+.35*Math.sin(time*2.2);ctx.save();ctx.globalAlpha=pulse;ctx.strokeStyle=hexToRgba(cityEvent.accent,.9);ctx.lineWidth=Math.max(1.5,.12*ms);ctx.beginPath();ctx.arc(q.x,q.y,eventPlaza.radius*ms*.58,0,Math.PI*2);ctx.stroke();ctx.restore();text(cityEvent.icon,q.x,q.y-eventPlaza.radius*ms*.72,{size:Math.max(7,.4*ms),weight:950,color:cityEvent.accent,align:'center'});}
@@ -122,7 +122,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     const p=project(exp.x,exp.z,w,h),s=metric(w,h),accent=exp.accent,pulse=.5+.5*Math.sin(time*2+exp.x*.13);
     ctx.save();ctx.translate(p.x,p.y);
     if(exp.type==='vale-portal'){
-      // v14.10.8.65: entrada monumental e legível já na primeira tela 2D.
+      // v14.10.8.66: entrada monumental e legível já na primeira tela 2D.
       const portalPulse=.55+.45*Math.sin(time*2.4);
       ctx.shadowColor=hexToRgba(accent,.58);ctx.shadowBlur=(12+portalPulse*12)*Math.max(.7,s*.2);
       rr(-3.85*s,-2.45*s,7.7*s,4.85*s,.65*s,'rgba(4,24,24,.88)',hexToRgba(accent,.55),Math.max(1,.12*s));
@@ -160,6 +160,8 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
         rr(-2.55*s,-1.2*s,5.1*s,2.4*s,.7*s,'rgba(27,28,22,.94)',hexToRgba(accent,.5));ctx.strokeStyle=hexToRgba(accent,.8);ctx.lineWidth=Math.max(1.5,.12*s);ctx.beginPath();ctx.arc(0,-.3*s,1.35*s,0,Math.PI*2);ctx.stroke();
       }else if(arch==='exam-center'){
         rr(-2.75*s,-1.65*s,5.5*s,3.3*s,.25*s,'rgba(25,29,31,.96)',hexToRgba(accent,.42));for(const x of[-1.75,-.6,.6,1.75])rr((x-.1)*s,-1.15*s,.2*s,2.3*s,.05*s,'rgba(117,128,129,.5)',null);
+      }else if(arch==='cinema'){
+        rr(-2.85*s,-1.7*s,5.7*s,3.4*s,.3*s,'rgba(31,13,25,.96)',hexToRgba(accent,.62));rr(-2.55*s,-1.52*s,5.1*s,.72*s,.16*s,'rgba(7,7,11,.94)',hexToRgba(accent,.72));for(const x of[-1.55,0,1.55])rr((x-.52)*s,-.55*s,1.04*s,1.45*s,.1*s,hexToRgba(accent,.1),hexToRgba(accent,.42));text('CINEMA',0,-1.16*s,{size:Math.max(6,.4*s),weight:950,color:'#fff3f8',align:'center'});
       }else{
         rr(-2.65*s,-1.5*s,5.3*s,3.0*s,.28*s,'rgba(10,29,37,.95)',hexToRgba(accent,.5));rr(-1.85*s,-1.05*s,3.7*s,.55*s,.1*s,hexToRgba(accent,.12),hexToRgba(accent,.36));
       }

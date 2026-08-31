@@ -1,14 +1,14 @@
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.65';
-import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.65';
-import { createCameraController } from './render/camera-controller.js?v=14.10.8.65';
-import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.65';
-import { detectPerformanceProfile,chooseInitialQuality } from './render/performance-manager.js?v=14.10.8.65';
-import { resolveWorldTime } from './world/dynamic-world.js?v=14.10.8.65-stage31';
-import { resolveWorldWeather, createWorldWeatherEffects } from './world/weather-system.js?v=14.10.8.65-stage32';
-import { valeDistrictIdentity } from './world/space-identities.js?v=14.10.8.65-stage29';
-import { VALE_AMBIENT, ambientBudget } from './world/ambient-landscape.js?v=14.10.8.65-stage30';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.66';
+import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.66';
+import { createCameraController } from './render/camera-controller.js?v=14.10.8.66';
+import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.66';
+import { detectPerformanceProfile,chooseInitialQuality } from './render/performance-manager.js?v=14.10.8.66';
+import { resolveWorldTime } from './world/dynamic-world.js?v=14.10.8.66-stage31';
+import { resolveWorldWeather, createWorldWeatherEffects } from './world/weather-system.js?v=14.10.8.66-stage32';
+import { valeDistrictIdentity } from './world/space-identities.js?v=14.10.8.66-stage29';
+import { VALE_AMBIENT, ambientBudget } from './world/ambient-landscape.js?v=14.10.8.66-stage30';
 
-const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.65';
+const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.66';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const categoryColor=category=>{const key=String(category||'').toLowerCase();if(key.includes('games')||key.includes('gamified'))return'#b58cff';if(key.includes('robot')||key.includes('maker'))return'#ffae63';if(key.includes('media'))return'#f472b6';if(key.includes('immersive'))return'#8b5cf6';if(key.includes('sport'))return'#34d399';if(key.includes('data')||key.includes('business')||key.includes('startup'))return'#51e7a3';if(key.includes('edtech')||key.includes('science')||key.includes('learning')||key.includes('language')||key.includes('civic'))return'#36d2ff';return'#7dd3fc';};
 const categoryArchitecture=category=>{const key=String(category||'').toLowerCase();if(key.includes('games')||key.includes('gamified'))return'arcade';if(key.includes('robot')||key.includes('maker'))return'maker';if(key.includes('immersive'))return'immersive';if(key.includes('media'))return'media';if(key.includes('sport'))return'sport';if(key.includes('data')||key.includes('business')||key.includes('startup')||key.includes('software'))return'tech-tower';if(key.includes('edtech')||key.includes('science')||key.includes('learning')||key.includes('language')||key.includes('civic'))return'academic';return'tech';};

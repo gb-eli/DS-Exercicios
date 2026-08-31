@@ -1,8 +1,19 @@
 {
   "name": "Exercícios Práticos DS",
-  "version": "0.22.8.19",
-  "date": "2026-08-30",
+  "version": "0.22.8.22",
+  "date": "2026-08-31",
   "features": [
+    "v14.10.8.70: trânsito inteligente no Campus 3D com semáforos funcionais, fases sincronizadas e tráfego automático que para no vermelho.",
+    "v14.10.8.70: direção manual respeita zonas de 20, 25, 30 e 40 km/h, mostra limite no HUD e reduz automaticamente a velocidade.",
+    "v14.10.8.70: colisão dinâmica com tráfego e veículos multiplayer usa último ponto seguro para reposicionar o veículo sem perder a sessão.",
+    "v14.10.8.69: veículos do Campus ganham passageiros multiplayer sincronizados por sessão validada no servidor e Realtime.",
+    "v14.10.8.69: carro aceita 1 carona, van 3 e Shuttle até 7; avatares aparecem sentados e o passageiro acompanha o motorista em tempo real.",
+    "v14.10.8.69: migration 066 cria estado efêmero de veículos com cliente somente leitura; Edge Function controla iniciar, atualizar, embarcar e sair.",
+    "v14.10.8.68: veículos do Campus ganham direção manual com acelerar, frear, ré, esterço, freio de mão e velocímetro.",
+    "v14.10.8.68: modo Carona preserva rota automática; modo Motorista usa colisão com prédios e limites do Campus.",
+    "v14.10.8.66: Cinema AGV ganha prédio próprio no Distrito Cultural, interior 3D lazy-loaded, tela principal e fileiras de assentos.",
+    "v14.10.8.66: Professor/Admin pode publicar programação persistente; vídeo direto projeta na tela 3D e YouTube/Vimeo abre no player do cinema.",
+    "v14.10.8.66: migration 065_lobby_cinema_media.sql aplica RLS de leitura para usuário ativo e escrita somente para equipe.",
     "v14.10.8.24: Modo Prova Prática passa a oferecer 8 áreas exclusivas para equipes de 2 a 6 integrantes.",
     "v14.10.8.24: prova usa 15 min de pré-lobby + 50 min de tempo ativo, com pausa entre aulas e retomada do saldo.",
     "v14.10.8.24: rascunhos são persistidos no Supabase sem XP e podem ser retomados em outro dispositivo.",
@@ -242,7 +253,7 @@
     "v14.10.8.19.1: contingência de recuperação de senha exige e-mail institucional + CGM; reset administrativo ocorre somente na Edge Function temporary-cgm-password-reset."
   ],
   "phase": "maintenance-etapa-6-release-metadata",
-  "release": "v14.10.8.65",
+  "release": "v14.10.8.70",
   "changes": [
     "v14.8.6: corrige referências que desapareciam porque o frontend não consultava exercise_reference_files",
     "v14.8.6: completa referências públicas locais de Front-End 16-28 e contingência sincronizada de 1DS 06-08 e SUB Front-End 06-07",

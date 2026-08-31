@@ -1,6 +1,6 @@
-import { CAMPUS_DESTINATIONS } from './campus-destinations.js?v=14.10.8.65';
-import { CAMPUS_GARAGES } from './campus-city-network.js?v=14.10.8.65';
-import { CAMPUS_INTERIOR_LIVE_BLUEPRINTS } from './campus-live-systems.js?v=14.10.8.65';
+import { CAMPUS_DESTINATIONS } from './campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_GARAGES } from './campus-city-network.js?v=14.10.8.66';
+import { CAMPUS_INTERIOR_LIVE_BLUEPRINTS } from './campus-live-systems.js?v=14.10.8.66';
 
 const P=(x,z)=>Object.freeze({x:Number(x),z:Number(z)});
 const byId=Object.freeze(Object.fromEntries(CAMPUS_DESTINATIONS.map(item=>[item.id,item])));
@@ -16,7 +16,8 @@ export const CAMPUS_INTERIOR_STYLE_PROFILES=Object.freeze({
   'desafio-ds':Object.freeze({family:'challenge-center',floor:'#292117',wall:'#403222',secondary:'#ffbd66',motif:'briefing',motion:'pulse'}),
   fliperama:Object.freeze({family:'arcade',floor:'#21162a',wall:'#37203f',secondary:'#ff7fd5',motif:'arcade',motion:'neon'}),
   'game-info':Object.freeze({family:'maker',floor:'#12251e',wall:'#1e3b31',secondary:'#61e7a6',motif:'maker',motion:'analysis'}),
-  'practical-exam':Object.freeze({family:'exam-center',floor:'#1b2228',wall:'#29333a',secondary:'#f0c36b',motif:'exam',motion:'quiet'})
+  'practical-exam':Object.freeze({family:'exam-center',floor:'#1b2228',wall:'#29333a',secondary:'#f0c36b',motif:'exam',motion:'quiet'}),
+  cinema:Object.freeze({family:'cinema',floor:'#160d16',wall:'#2b1724',secondary:'#ff5f8f',motif:'cinema',motion:'screen'})
 });
 
 export const CAMPUS_CLASSROOM_INTERIOR_THEMES=Object.freeze({
@@ -34,7 +35,8 @@ const ROOM_KIND_STYLE=Object.freeze({
   project:Object.freeze({icon:'▤',accent:'#72d9ff',prop:'table'}),exam:Object.freeze({icon:'✓',accent:'#f0c36b',prop:'exam'}),
   mission:Object.freeze({icon:'⌁',accent:'#ffbd66',prop:'briefing'}),auditorium:Object.freeze({icon:'▰',accent:'#86d9ff',prop:'seats'}),
   service:Object.freeze({icon:'i',accent:'#8bdcf0',prop:'lounge'}),staff:Object.freeze({icon:'◆',accent:'#a9c8d5',prop:'desk'}),
-  hub:Object.freeze({icon:'◎',accent:'#8bdcf0',prop:'hub'}),social:Object.freeze({icon:'☰',accent:'#ff9ad9',prop:'lounge'})
+  hub:Object.freeze({icon:'◎',accent:'#8bdcf0',prop:'hub'}),social:Object.freeze({icon:'☰',accent:'#ff9ad9',prop:'lounge'}),
+  cinema:Object.freeze({icon:'▶',accent:'#ff5f8f',prop:'cinema'})
 });
 export function interiorRoomStyle(kind,fallback='#36d2ff'){const base=ROOM_KIND_STYLE[String(kind||'').toLowerCase()];return base||Object.freeze({icon:'•',accent:fallback,prop:'table'});}
 
@@ -48,7 +50,8 @@ const INTERIOR_LAYOUTS=Object.freeze({
   'desafio-ds':{template:'challenge-center',origin:[12,0,72],floors:['Recepção e Briefing','Missões e Debriefing'],garageId:null,services:['Recepção de Missões','Briefing','Sala de Desafios','Debriefing']},
   fliperama:{template:'arcade',origin:[20,0,72],floors:['Recepção e Arcade','Arena Multiplayer'],garageId:'garage-west',services:['Recepção Gamer','Arcade','Arena Multiplayer','Ranking']},
   'game-info':{template:'innovation-center',origin:[28,0,72],floors:['Recepção e Maker','Projetos e Demonstrações'],garageId:'garage-east',services:['Recepção Inovação','Maker Space','Demonstrações','Projetos']},
-  'practical-exam':{template:'exam-center',origin:[36,0,72],floors:['Recepção e Triagem','Salas de Prova'],garageId:'garage-south',services:['Recepção de Provas','Triagem','Salas de Prova','Sala da Equipe']}
+  'practical-exam':{template:'exam-center',origin:[36,0,72],floors:['Recepção e Triagem','Salas de Prova'],garageId:'garage-south',services:['Recepção de Provas','Triagem','Salas de Prova','Sala da Equipe']},
+  cinema:{template:'cinema',origin:[44,0,72],floors:['Lobby e Sala Principal','Cabine de Projeção e Mezanino'],garageId:null,services:['Bilheteria e Recepção','Sala Principal','Cabine de Projeção','Mezanino']}
 });
 
 const makeProfile=(destination,layout)=>{
@@ -98,8 +101,9 @@ export const CAMPUS_INTERIOR_INTERACTIONS=Object.freeze(CAMPUS_INTERIOR_PROFILES
   const refs=[
     Object.freeze({id:`tool-int-${profile.id}-exit`,type:'tool-interior-exit',interiorId:profile.id,floor:0,name:`Saída • ${profile.name}`,x:profile.exit.x,z:profile.exit.z,radius:1.8}),
     Object.freeze({id:`tool-int-${profile.id}-reception`,type:'tool-reception',interiorId:profile.id,floor:0,name:`Recepção • ${profile.name}`,x:profile.reception.x,z:profile.reception.z,radius:1.85,services:profile.services}),
-    Object.freeze({id:`tool-int-${profile.id}-portal`,type:'tool-interior-portal',interiorId:profile.id,floor:0,name:`Portal • ${profile.name}`,x:profile.portal.x,z:profile.portal.z,radius:1.85,route:profile.route,staffRoute:profile.staffRoute}),
   ];
+  if(profile.id==='cinema')refs.push(Object.freeze({id:'tool-int-cinema-screen',type:'cinema-screen',interiorId:'cinema',floor:0,name:'Tela Principal • Cinema AGV',x:profile.origin[0],z:profile.origin[2]+4.15,radius:3.25}));
+  else refs.push(Object.freeze({id:`tool-int-${profile.id}-portal`,type:'tool-interior-portal',interiorId:profile.id,floor:0,name:`Portal • ${profile.name}`,x:profile.portal.x,z:profile.portal.z,radius:1.85,route:profile.route,staffRoute:profile.staffRoute}));
   for(const floor of profile.floors){
     refs.push(Object.freeze({id:`tool-int-${profile.id}-elevator-${floor.index}`,type:'tool-elevator',interiorId:profile.id,floor:floor.index,name:`Elevador • ${profile.name}`,x:profile.elevator.x,z:profile.elevator.z,radius:1.65}));
     refs.push(Object.freeze({id:`tool-int-${profile.id}-stairs-${floor.index}`,type:'tool-stairs',interiorId:profile.id,floor:floor.index,name:`Escada • ${profile.name}`,x:profile.stairs.x,z:profile.stairs.z,radius:1.65}));

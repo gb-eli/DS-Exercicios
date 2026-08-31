@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
 
-  const VERSION='14.10.8.65';
+  const VERSION='14.10.8.70';
   const SDK_VERSION='2.112.3';
   const SOURCES=[
     {src:'vendor/supabase/supabase.js',timeout:1600,kind:'local'},
@@ -40,7 +40,7 @@
     bootStarted=true;
     const script=document.createElement('script');
     script.type='module';
-    script.src=`assets/boot.js?v=${VERSION}-stage34-f63a`; 
+    script.src=`assets/boot.js?v=${VERSION}-stage39-traffic`; 
     const timer=setTimeout(()=>setError('boot_module_timeout'),BOOT_TIMEOUT_MS);
     script.onload=()=>clearTimeout(timer);
     script.onerror=()=>{clearTimeout(timer);setError('boot_module_load_failed');};

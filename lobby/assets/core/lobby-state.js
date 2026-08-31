@@ -2,7 +2,7 @@ const SESSION_FIELDS=Object.freeze([
   'user','profile','currentClass','classes','exercises','studentReleases','classReleases','progress','others','available','scheduled',
   'lastPresence','toastTimer','zoneTimer','stopped','lastTargetSignal','portalState','emoteRequested','bootingRuntime',
   'lastGatherToken','teleportDestinations','chatTarget','graphics','worldTimeControl','lastWorldTimeToken','worldTimeAdminControl',
-  'worldWeatherControl','lastWorldWeatherToken','worldWeatherAdminControl','avatarContext','avatarStyle'
+  'worldWeatherControl','lastWorldWeatherToken','worldWeatherAdminControl','cinemaMedia','vehicleSessions','vehiclePassengers','vehicleMembership','avatarContext','avatarStyle'
 ]);
 
 const WORLD_FIELDS=Object.freeze([
@@ -19,6 +19,7 @@ function createSessionDefaults(){
     graphics:{fov:65,fpsCap:60,worldTimeMode:'cycle',showPerf:false},
     worldTimeControl:null,lastWorldTimeToken:null,worldTimeAdminControl:null,
     worldWeatherControl:null,lastWorldWeatherToken:null,worldWeatherAdminControl:null,
+    cinemaMedia:null,vehicleSessions:[],vehiclePassengers:[],vehicleMembership:null,
     avatarContext:null,avatarStyle:{}
   };
 }

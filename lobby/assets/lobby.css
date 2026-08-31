@@ -102,7 +102,7 @@
 @media(max-height:520px) and (orientation:landscape){.waiting-strip{display:none}.world-status #mode-button{display:block!important}}
 @media(prefers-reduced-motion:reduce){.waiting-strip{transition:none}}
 
-/* v14.10.8.65 — Lobby Visual Advanced: HUD de jogo compacto e estados pedagógicos reais */
+/* v14.10.8.66 — Lobby Visual Advanced: HUD de jogo compacto e estados pedagógicos reais */
 :root{--campus-cyan:#59dcff;--campus-green:#65edac;--campus-gold:#ffd166;--campus-panel:rgba(4,16,23,.84)}
 .game-stage[data-runtime-mode="lite"] canvas{image-rendering:auto}.game-stage[data-activity-state="available"] .cinematic-frame{box-shadow:inset 0 0 0 1px rgba(81,231,163,.08),inset 0 0 90px rgba(31,142,91,.045)}
 .activity-button{border-color:rgba(81,231,163,.48)!important;background:linear-gradient(145deg,rgba(22,111,73,.94),rgba(10,64,48,.92))!important;color:#eafff3!important;box-shadow:0 0 0 1px rgba(81,231,163,.08),0 0 24px rgba(81,231,163,.12);white-space:nowrap}
@@ -121,7 +121,7 @@ button:focus-visible,.joystick:focus-visible{outline:2px solid #9cecff;outline-o
 @media(max-height:560px) and (orientation:landscape){.challenge-hud{top:58px;left:8px;width:220px;padding:8px}.challenge-actions{display:none}.challenge-copy small{display:none}.waiting-strip{display:none}}
 @media(prefers-reduced-motion:reduce){.challenge-progress i{transition:none}.activity-button{box-shadow:none}}
 
-/* v14.10.8.65 — Vale do Silício AGV */
+/* v14.10.8.66 — Vale do Silício AGV */
 .vale-drawer{max-width:min(430px,calc(100vw - 24px));}
 .vale-search-label{display:block;margin:10px 0 6px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#91b8c7;}
 .vale-search{width:100%;border:1px solid rgba(111,218,244,.18);border-radius:14px;background:rgba(3,14,20,.72);color:#eefaff;padding:11px 12px;outline:none;}
@@ -141,13 +141,13 @@ body[data-scene="vale"] .waiting-strip strong::after{content:" • Vale do Silí
 body[data-scene="vale"] .campus-drawer:not(.vale-drawer){display:none!important;}
 @media (max-width:720px){.vale-company-content{grid-template-columns:1fr}.vale-destination-list{max-height:45vh}.vale-company-card{max-height:88vh;overflow:auto}}
 
-/* v14.10.8.65 — minimapa contextual do Vale (3D) */
+/* v14.10.8.66 — minimapa contextual do Vale (3D) */
 .vale-minimap{position:absolute;inset:auto;left:auto;bottom:auto;right:18px;top:136px;width:160px;height:160px;display:block;border:1px solid rgba(114,230,255,.28);border-radius:18px;background:rgba(3,12,18,.88);box-shadow:0 16px 40px rgba(0,0,0,.28);backdrop-filter:blur(10px);z-index:18;pointer-events:none;touch-action:auto;outline:none}
 body[data-scene="vale"][data-lobby-mode="3d"] .vale-minimap:not(.hidden){display:block}
 @media(max-width:780px){.vale-minimap{width:104px;height:104px;right:10px;top:116px;border-radius:14px}}
 @media(max-height:560px) and (orientation:landscape){.vale-minimap{width:92px;height:92px;top:82px}}
 
-/* v14.10.8.65 — Portal monumental do Vale + acesso permanente no HUD */
+/* v14.10.8.66 — Portal monumental do Vale + acesso permanente no HUD */
 .vale-direct-button{border-color:rgba(81,231,163,.48)!important;background:linear-gradient(145deg,rgba(15,82,62,.94),rgba(8,42,42,.92))!important;color:#dfffee!important;box-shadow:0 0 0 1px rgba(81,231,163,.08),0 0 20px rgba(81,231,163,.09);font-weight:900!important;white-space:nowrap}
 .vale-direct-button:hover{border-color:rgba(143,242,189,.78)!important;box-shadow:0 0 26px rgba(81,231,163,.18)}
 body[data-scene="campus"] .vale-direct-button{animation:valeHudPulse 3.2s ease-in-out infinite}
@@ -160,7 +160,7 @@ body[data-scene="vale"] .vale-direct-button{border-color:rgba(114,230,255,.4)!im
 
 
 
-/* v14.10.8.65 — Teletransporte global e controle de reunião da turma */
+/* v14.10.8.66 — Teletransporte global e controle de reunião da turma */
 .teleport-button{border-color:rgba(89,220,255,.48)!important;background:linear-gradient(145deg,rgba(12,70,91,.96),rgba(7,37,51,.94))!important;color:#e5fbff!important;font-weight:900!important;white-space:nowrap;box-shadow:0 0 0 1px rgba(89,220,255,.08),0 0 20px rgba(54,210,255,.08)}
 .teleport-button:hover,.teleport-button:focus-visible{border-color:rgba(154,238,255,.78)!important;box-shadow:0 0 28px rgba(54,210,255,.18)}
 .teleport-card{width:min(820px,calc(100vw - 24px))}.teleport-feature{display:flex;gap:12px;align-items:center;margin:14px 0;padding:12px 14px;border:1px solid rgba(81,231,163,.25);border-radius:16px;background:linear-gradient(135deg,rgba(11,61,47,.38),rgba(5,25,31,.68))}.teleport-feature>span{font-size:1.6rem}.teleport-feature strong,.teleport-feature small{display:block}.teleport-feature small{margin-top:3px;color:#9dbbc6;font-size:.74rem}.teleport-tools{display:grid;grid-template-columns:1fr 210px;gap:10px;margin:12px 0}.teleport-tools label{display:grid;gap:6px;font-size:.7rem;font-weight:850;text-transform:uppercase;letter-spacing:.07em;color:#9bb9c5}.teleport-tools input,.teleport-tools select{width:100%;padding:10px 11px}.teleport-list{display:grid;gap:7px;max-height:min(48vh,470px);overflow:auto;padding:2px}.teleport-destination{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;padding:10px 11px;border:1px solid rgba(111,192,214,.15);border-radius:14px;background:rgba(5,18,25,.78);color:#ebfaff;cursor:pointer}.teleport-destination:hover,.teleport-destination:focus-visible{border-color:rgba(89,220,255,.46);background:rgba(8,31,40,.94)}.teleport-destination:disabled{opacity:.55}.teleport-destination .teleport-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(58,161,194,.13);font-size:1rem}.teleport-destination strong{display:block;font-size:.82rem}.teleport-destination small{display:block;color:#89a8b4;font-size:.67rem;margin-top:2px}.teleport-destination b{font-size:.68rem;color:#8ff2bd}.staff-teleport-panel{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0;padding:13px;border:1px solid rgba(255,209,102,.28);border-radius:16px;background:linear-gradient(135deg,rgba(64,48,10,.42),rgba(22,20,12,.58))}.staff-teleport-panel strong,.staff-teleport-panel small{display:block}.staff-teleport-panel small{margin-top:3px;color:#c8b989;font-size:.72rem}.staff-teleport-panel .primary{background:#ffd166;color:#241900;white-space:nowrap}.game-stage.teleport-travel::after{content:"";position:absolute;z-index:22;inset:0;pointer-events:none;background:radial-gradient(circle at center,rgba(143,242,189,.34),rgba(54,210,255,.16) 24%,transparent 62%);animation:teleportFlash .62s ease-out both}@keyframes teleportFlash{0%{opacity:0;transform:scale(.92)}28%{opacity:1}100%{opacity:0;transform:scale(1.08)}}
@@ -171,7 +171,7 @@ body[data-scene="vale"] .vale-direct-button{border-color:rgba(114,230,255,.4)!im
 .teleport-feature>div{flex:1;min-width:0}.teleport-feature .primary{padding:9px 12px;white-space:nowrap}
 @media(max-width:620px){.teleport-feature{display:grid;grid-template-columns:auto 1fr}.teleport-feature .primary{grid-column:1/3;width:100%}}
 
-/* v14.10.8.65 — Vertical & Dynamic World: relógio, monotrilho, chat e personalização */
+/* v14.10.8.66 — Vertical & Dynamic World: relógio, monotrilho, chat e personalização */
 .world-clock{border-color:rgba(255,209,102,.26);color:#fff0b0;background:rgba(44,34,10,.52);font-variant-numeric:tabular-nums;white-space:nowrap}
 .train-card{width:min(650px,calc(100vw - 24px))}.train-panoramic{width:100%;display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid rgba(181,140,255,.42);border-radius:15px;background:rgba(27,21,46,.82);color:#eef7ff;padding:12px;margin-top:14px;cursor:pointer}.train-panoramic:hover,.train-panoramic:focus-visible{border-color:rgba(181,140,255,.72);background:rgba(42,27,67,.84)}.train-panoramic>span{font-size:1.25rem}.train-panoramic strong,.train-panoramic small{display:block}.train-panoramic small{margin-top:3px;color:#bcaed1;font-size:.7rem}.train-panoramic b{font-size:.65rem;color:#d7c5ff}.train-station-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}.train-station{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid rgba(181,140,255,.22);border-radius:15px;background:linear-gradient(145deg,rgba(28,18,48,.62),rgba(7,19,28,.9));color:#eef7ff;padding:11px;cursor:pointer}.train-station:hover,.train-station:focus-visible{border-color:rgba(181,140,255,.58);background:rgba(42,27,67,.84)}.train-station>span{font-size:1.2rem}.train-station strong,.train-station small{display:block}.train-station small{margin-top:3px;color:#a89abf;font-size:.68rem}.train-station b{font-size:.65rem;color:#cdb8ff}
 .proximity-chat-card{width:min(560px,calc(100vw - 24px))}.chat-log{display:grid;gap:7px;min-height:150px;max-height:280px;overflow:auto;margin:14px 0;padding:10px;border:1px solid rgba(112,205,232,.14);border-radius:15px;background:rgba(3,12,18,.72)}.chat-line{display:grid;gap:2px;max-width:88%;padding:8px 10px;border-radius:12px;background:rgba(14,40,52,.82)}.chat-line.local{justify-self:end;background:rgba(15,82,62,.64)}.chat-line.system{max-width:100%;background:rgba(66,52,17,.34)}.chat-line strong{font-size:.68rem;color:#83def6}.chat-line span{font-size:.82rem;line-height:1.35}.chat-form{display:grid;grid-template-columns:1fr auto;gap:8px}.chat-form input{min-width:0}.chat-form button{min-width:90px}.staff-reactions{grid-template-columns:repeat(4,1fr)}
@@ -181,28 +181,28 @@ body[data-lobby-mode="3d"] .reticle{display:block}.reticle{pointer-events:none}
 @media(max-width:620px){.world-status .world-clock{display:none}.train-station-list{grid-template-columns:1fr}.chat-form{grid-template-columns:1fr}.chat-form button{width:100%}.color-grid{grid-template-columns:repeat(2,1fr)}.accessory-grid{grid-template-columns:repeat(2,1fr)}.world-settings-card{max-height:91vh}.settings-actions{display:grid;grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){.train-station,.chat-line{scroll-behavior:auto}}
 
-/* v14.10.8.65 — prioriza mobilidade no HUD: Teletransporte nunca deve sumir por falta de espaço. */
+/* v14.10.8.66 — prioriza mobilidade no HUD: Teletransporte nunca deve sumir por falta de espaço. */
 .world-status{flex-wrap:wrap;max-width:min(1120px,74vw);row-gap:6px}
 .world-status #teleport-button{order:3;display:inline-flex;align-items:center;justify-content:center}
 @media(max-width:1200px){.world-status #camera-button,.world-status #quality-button{display:none}.world-status{max-width:68vw}}
 @media(max-width:900px),(pointer:coarse){.world-status{max-width:60vw}.world-status #teleport-button{display:inline-flex!important}}
 
-/* v14.10.8.65 — OAuth visível também no login do Lobby */
+/* v14.10.8.66 — OAuth visível também no login do Lobby */
 .auth-divider{display:flex;align-items:center;gap:10px;margin:2px 0;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em}.auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:var(--line)}.auth-divider span{padding:0 2px}.google-auth-btn{min-height:46px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;padding:11px 15px;border:1px solid #dadce0;background:#fff;color:#1f1f1f;font-weight:850;cursor:pointer}.google-auth-btn:hover,.google-auth-btn:focus-visible{background:#f8f9fa;border-color:#c8cdd2}.google-auth-btn:disabled{opacity:.65;cursor:wait}.google-mark{width:20px;height:20px;display:inline-grid;place-items:center;font-weight:950;font-size:.95rem;background:conic-gradient(from 30deg,#4285f4 0 25%,#34a853 0 50%,#fbbc05 0 75%,#ea4335 0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.oauth-note{margin:-5px 0 0;color:var(--muted);font-size:.74rem;line-height:1.4;text-align:center}.login-link{justify-self:center;border:0;background:transparent;color:var(--cyan);font-weight:800;cursor:pointer;padding:4px 6px}.login-link:hover,.login-link:focus-visible{text-decoration:underline}
 
-/* v14.10.8.65 — conexões urbanas e diretório de prédios */
+/* v14.10.8.66 — conexões urbanas e diretório de prédios */
 .campus-directory{margin-top:14px;padding-top:12px;border-top:1px solid rgba(126,216,244,.12)}
 .campus-directory-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:6px}.campus-directory-head strong{font-size:.82rem}.campus-directory-copy{margin:0 0 9px;color:#8eacb9;font-size:.66rem;line-height:1.4}
 .campus-destination-list{display:grid;gap:7px}.campus-destination{display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;width:100%;padding:9px 10px;border:1px solid rgba(126,216,244,.12);border-radius:13px;background:rgba(4,14,20,.54);color:#eaf9ff;text-align:left}.campus-destination:hover{border-color:var(--destination-accent,rgba(81,231,163,.36));background:rgba(7,25,32,.78)}.campus-destination .icon{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:color-mix(in srgb,var(--destination-accent,#36d2ff) 13%,transparent);border:1px solid color-mix(in srgb,var(--destination-accent,#36d2ff) 35%,transparent);font-size:1rem}.campus-destination strong{display:block;font-size:.76rem}.campus-destination small{display:block;margin-top:2px;color:#89a7b3;font-size:.61rem;line-height:1.25}.campus-destination .travel{color:var(--destination-accent,#8ff2bd);font-size:.65rem;font-weight:900}.campus-destination[data-category="economy"]{background:rgba(8,25,20,.52)}.campus-destination[data-category="gamer"]{background:rgba(22,12,28,.48)}
 @supports not (color:color-mix(in srgb,#000 50%,#fff)){.campus-destination .icon{background:rgba(54,210,255,.09);border-color:rgba(54,210,255,.26)}}
 
-/* v14.10.8.65 — Cidade Viva / navegação interna */
+/* v14.10.8.66 — Cidade Viva / navegação interna */
 .interior-map-button{border-color:rgba(101,237,172,.42)!important;color:#dfffee!important;background:linear-gradient(145deg,rgba(12,66,48,.9),rgba(6,34,35,.92))!important;font-weight:900!important}
 .interior-map-card{width:min(720px,calc(100vw - 24px))}.interior-map-rooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:15px 0}.interior-room-card{padding:11px 12px;border:1px solid rgba(111,192,214,.18);border-radius:14px;background:rgba(6,20,27,.8)}.interior-room-card strong,.interior-room-card small{display:block}.interior-room-card small{margin-top:4px;color:#95b3bf;font-size:.72rem;line-height:1.4}.interior-guide-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin:14px 0 8px}.interior-guide-head strong{font-size:.83rem}.interior-guide-head small{color:#7f9ca8;font-size:.68rem}.interior-guide-list{display:grid;gap:7px}.interior-guide-button{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;width:100%;padding:10px 12px;border:1px solid rgba(101,237,172,.22);border-radius:12px;background:rgba(8,28,25,.72);color:#e9fff4;text-align:left;cursor:pointer}.interior-guide-button:hover,.interior-guide-button:focus-visible{border-color:rgba(101,237,172,.62);background:rgba(10,42,34,.92)}.interior-guide-button small{color:#91bbaa}.interior-guide-button b{color:#65edac}.game-stage.interior-guiding::after{content:"ROTA INTERNA ATIVA";position:absolute;z-index:25;top:88px;left:50%;transform:translateX(-50%);padding:7px 11px;border:1px solid rgba(101,237,172,.38);border-radius:999px;background:rgba(3,18,17,.86);color:#bffff0;font:850 .68rem/1 system-ui;letter-spacing:.08em;pointer-events:none}
 @media(max-width:620px){.interior-map-rooms{grid-template-columns:1fr}.interior-guide-head{display:block}.interior-guide-head small{display:block;margin-top:4px}.world-status #interior-map-button{font-size:.62rem;padding:7px 8px}}
 
 
-/* v14.10.8.65 — Cidade Viva Avançada / mobilidade */
+/* v14.10.8.66 — Cidade Viva Avançada / mobilidade */
 .vehicle-status{border-color:rgba(255,174,99,.42);color:#fff0d7;background:linear-gradient(145deg,rgba(77,42,16,.82),rgba(31,28,20,.9));font-weight:900;white-space:nowrap}
 body[data-lobby-mode="3d"] .vehicle-status{box-shadow:0 0 18px rgba(255,174,99,.08)}
 @media(max-width:760px){.vehicle-status{max-width:190px;overflow:hidden;text-overflow:ellipsis;font-size:.6rem}}
@@ -246,3 +246,38 @@ body[data-lobby-mode="3d"] .vehicle-status{box-shadow:0 0 18px rgba(255,174,99,.
 .avatar-context-status[data-context="exam-finished"]{border-color:rgba(124,242,175,.5);color:#baf8d4}
 .avatar-context-status[data-context="lab-active"]{border-color:rgba(81,231,163,.52);color:#b8f8dc}
 @media(max-width:620px){.avatar-context-status{max-width:126px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+
+/* v14.10.8.66 — Cinema AGV */
+.cinema-card{width:min(920px,calc(100vw - 24px));max-height:min(92dvh,860px);overflow:auto;background:linear-gradient(160deg,rgba(21,9,18,.98),rgba(5,14,20,.98));border-color:rgba(255,95,143,.26)}
+.cinema-heading,.cinema-staff-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.cinema-heading h2,.cinema-staff-head h3{margin:.18rem 0 0}.cinema-program-title{margin:7px 0 13px;color:#ffe8f0;font-weight:850;font-size:.96rem}
+.cinema-player-shell{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:16px;border:1px solid rgba(255,95,143,.28);background:#050406;box-shadow:inset 0 0 60px rgba(0,0,0,.72),0 18px 48px rgba(0,0,0,.32)}
+.cinema-player-host,.cinema-player-host iframe,.cinema-player-host video{width:100%;height:100%;display:block;border:0;background:#000}.cinema-player-host video{object-fit:contain}.cinema-player-empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:7px;padding:24px;text-align:center;color:#f5dce5;background:radial-gradient(circle at 50% 38%,rgba(255,95,143,.14),transparent 48%)}.cinema-player-empty span{font-size:2.5rem}.cinema-player-empty small{max-width:520px;color:#ac929d;line-height:1.45}
+.cinema-help{display:grid;grid-template-columns:auto 1fr;gap:10px;margin:11px 0 0;padding:10px 12px;border:1px solid rgba(255,95,143,.13);border-radius:12px;background:rgba(34,14,27,.38);font-size:.72rem;line-height:1.45}.cinema-help strong{color:#ff9fbc}.cinema-help span{color:#aebcc3}
+.cinema-staff-panel{margin-top:16px;padding:14px;border:1px solid rgba(255,95,143,.22);border-radius:15px;background:rgba(30,12,24,.62)}.cinema-staff-panel label{display:grid;gap:6px;margin-top:11px;color:#d9c6ce;font-size:.72rem;font-weight:800}.cinema-staff-panel input[type="text"],.cinema-staff-panel input:not([type]),.cinema-staff-panel textarea{width:100%;border:1px solid rgba(255,255,255,.13);border-radius:11px;background:rgba(3,9,13,.8);color:#f6fbff;padding:10px 11px;font:inherit;resize:vertical}.cinema-staff-panel input:focus,.cinema-staff-panel textarea:focus{outline:2px solid rgba(255,95,143,.35);outline-offset:1px;border-color:rgba(255,95,143,.55)}.cinema-staff-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.campus-destination[data-category="culture"]{background:rgba(34,13,28,.52)}.campus-destination[data-category="culture"] .travel{color:#ff9fbc}
+@media(max-width:620px){.cinema-card{max-height:94dvh}.cinema-heading,.cinema-staff-head{display:block}.cinema-heading .chip,.cinema-staff-head .chip{display:inline-flex;margin-top:7px}.cinema-help{grid-template-columns:1fr}.cinema-staff-actions{display:grid;grid-template-columns:1fr 1fr}.cinema-staff-actions button{width:100%}}
+
+/* v14.10.8.67 — minimapa do Campus + modal de veículos */
+.vehicle-card{width:min(660px,calc(100vw - 24px));background:linear-gradient(180deg,rgba(7,16,25,.98),rgba(5,11,17,.98));border-color:rgba(114,230,255,.22)}
+.vehicle-meta{margin:10px 0 0;padding:9px 11px;border:1px solid rgba(114,230,255,.14);border-radius:12px;background:rgba(6,19,28,.64);color:#d8f6ff;font-size:.78rem;font-weight:700}
+.vehicle-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.vehicle-modal-grid section{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(8,19,28,.52)}
+.vehicle-modal-grid h3{margin:0 0 10px;font-size:.84rem;color:#eefaff}
+.vehicle-choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.vehicle-choice-grid button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(11,25,36,.8);color:#dceef5;font:inherit;font-weight:800;cursor:pointer}
+.vehicle-choice-grid button.active{border-color:rgba(114,230,255,.56);background:rgba(17,48,66,.9);color:#f2fbff;box-shadow:0 0 0 1px rgba(114,230,255,.18) inset}
+.vehicle-help{display:grid;grid-template-columns:auto 1fr;gap:10px;margin:14px 0 0;padding:10px 12px;border-radius:12px;border:1px solid rgba(114,230,255,.14);background:rgba(6,18,28,.45);font-size:.72rem;line-height:1.45}
+.vehicle-help strong{color:#9ce9ff}.vehicle-help span{color:#a8bcc5}
+@media(max-width:620px){.vehicle-modal-grid{grid-template-columns:1fr}.vehicle-help{grid-template-columns:1fr}}
+
+/* v14.10.8.68 — direção manual e velocímetro */
+.vehicle-dashboard{position:absolute;right:18px;top:238px;z-index:7;display:flex;align-items:center;gap:12px;min-width:248px;padding:10px 12px;border:1px solid rgba(255,174,99,.28);background:linear-gradient(145deg,rgba(37,24,13,.88),rgba(8,17,23,.92));backdrop-filter:blur(14px)}
+.vehicle-dashboard.hidden{display:none}.vehicle-dashboard-speed{display:grid;justify-items:end;min-width:74px}.vehicle-dashboard-speed strong{font-size:2rem;line-height:.9;color:#fff1cf;font-variant-numeric:tabular-nums}.vehicle-dashboard-speed span{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:#cdb792}.vehicle-dashboard-info{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px;row-gap:2px}.vehicle-dashboard-info b{grid-row:1/3;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(255,174,99,.15);border:1px solid rgba(255,174,99,.28);color:#ffd59e}.vehicle-dashboard-info span{font-size:.72rem;font-weight:850;color:#f3f8fa}.vehicle-dashboard-info small{font-size:.58rem;line-height:1.3;color:#9fb0b7;max-width:190px}
+body[data-driving="manual"] #jump-button{font-size:.72rem;font-weight:900}body[data-driving="manual"] #run-button{opacity:.55}
+@media(max-width:760px){.vehicle-dashboard{right:8px;top:206px;min-width:0;max-width:196px;padding:8px 9px;gap:8px}.vehicle-dashboard-speed{min-width:52px}.vehicle-dashboard-speed strong{font-size:1.55rem}.vehicle-dashboard-info small{display:none}.vehicle-dashboard-info span{font-size:.64rem}.vehicle-dashboard-info b{width:28px;height:28px}.vale-minimap:not(.hidden)+.vehicle-dashboard{top:276px}}
+@media(max-height:560px) and (orientation:landscape){.vehicle-dashboard{top:118px;right:8px;max-width:180px}.vale-minimap:not(.hidden)+.vehicle-dashboard{top:218px}}
+
+/* v14.10.8.70 — trânsito inteligente */
+.vehicle-road-status{grid-column:1/-1;display:flex;align-items:center;gap:7px;margin-top:4px;font-size:.58rem;color:#aebfc6}.vehicle-road-status span{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}.vehicle-road-status strong{color:#edf7fa}.vehicle-road-status #vehicle-signal[data-signal="green"]{color:#70eca2}.vehicle-road-status #vehicle-signal[data-signal="amber"]{color:#ffd06a}.vehicle-road-status #vehicle-signal[data-signal="red"]{color:#ff7c86}
+@media(max-width:760px){.vehicle-road-status{font-size:.54rem;gap:4px}.vehicle-road-status span{padding:2px 5px}}

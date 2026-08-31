@@ -1,0 +1,24 @@
+AGV World F66 — v14.10.8.68
+
+Principais arquivos alterados:
+- lobby/index.html
+- lobby/assets/lobby.css
+- lobby/assets/lobby.js
+- lobby/assets/lobby3d.js
+- lobby/assets/config.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/assets/core/world-adapter.js
+- lobby/sw.js
+- repair-lobby.html
+- version.json
+- release-current.json
+- release-v14.10.8.68.json
+- release-agv-world-f66.json
+- RELEASE-DIRECAO-MANUAL-v14.10.8.68.md
+- core/tests/f66-manual-driving-v14.10.8.68.test.mjs
+- core/tests/f64-cinema-v14.10.8.66.test.mjs
+- core/tests/f63a-world-foundation-v14.10.8.65.test.mjs
+- core/tools/validate-campus-mobility-v65.mjs
+- core/tools/validate-stage28-tracks-rails-v65.mjs

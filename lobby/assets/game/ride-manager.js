@@ -1,4 +1,4 @@
-import { CAMPUS_RIDES } from '../world/campus-experiences.js?v=14.10.8.65-stage28';
+import { CAMPUS_RIDES } from '../world/campus-experiences.js?v=14.10.8.66-stage28';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const defaultClock=()=>performance.now();

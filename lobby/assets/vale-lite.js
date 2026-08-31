@@ -1,8 +1,8 @@
-import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.65';
-import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.65';
-import { resolveWorldTime,skyPalette } from './world/dynamic-world.js?v=14.10.8.65-stage31';
-import { resolveWorldWeather,drawWorldWeather2D } from './world/weather-system.js?v=14.10.8.65-stage32';
-import { valeDistrictIdentity } from './world/space-identities.js?v=14.10.8.65-stage29';
+import { loadValeRuntime } from './world/vale-silicio-data.js?v=14.10.8.66';
+import { VALE_BOUNDS,VALE_SPAWN,VALE_RETURN_PORTAL,VALE_NPCS,VALE_ENVIRONMENTS,VALE_SPORTS,VALE_VEHICLES,VALE_HANGAR,VALE_RACETRACK,VALE_FAST_TRAVEL_STATIC,valeWorldToPresence,valePresenceToWorld,nearestValeObject,clampVale } from './world/vale-silicio-shared.js?v=14.10.8.66';
+import { resolveWorldTime,skyPalette } from './world/dynamic-world.js?v=14.10.8.66-stage31';
+import { resolveWorldWeather,drawWorldWeather2D } from './world/weather-system.js?v=14.10.8.66-stage32';
+import { valeDistrictIdentity } from './world/space-identities.js?v=14.10.8.66-stage29';
 
 const lerp=(a,b,t)=>a+(b-a)*t;
 const rgba=(hex,a=.2)=>{const h=String(hex||'#36d2ff').replace('#','');const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16);return`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;};

@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.65-stage34">
-  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.65">
-<script src="../core/session/unified-auth-guard.js?v=14.10.8.65"></script><script src="../core/session/avatar-context.js?v=14.10.8.65-stage34"></script></head>
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.70-stage39-traffic">
+  <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.66">
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.66"></script><script src="../core/session/avatar-context.js?v=14.10.8.66-stage34"></script></head>
 <body>
   <section id="login" class="login-shell hidden" aria-hidden="true"><p>Redirecionando para o login único…</p></section>
 
@@ -49,7 +49,11 @@
 
       <aside class="desktop-controls glass" aria-label="Controles de teclado"><strong>Explorar</strong><span>WASD</span><span>Shift correr</span><span>Espaço pular</span><span>E interagir</span><span class="control-3d">Mouse 360°</span><span class="control-3d">C câmera</span><span>R ações</span></aside>
       <div id="perf-badge" class="perf-badge hidden" aria-live="polite">— FPS</div>
-      <canvas id="vale-minimap" class="vale-minimap hidden" width="160" height="160" aria-label="Minimapa do Vale do Silício AGV"></canvas>
+      <canvas id="vale-minimap" class="vale-minimap hidden" width="160" height="160" aria-label="Minimapa do Lobby AGV"></canvas>
+      <aside id="vehicle-dashboard" class="vehicle-dashboard glass hidden" aria-live="polite">
+        <div class="vehicle-dashboard-speed"><strong id="vehicle-speed">0</strong><span>km/h</span></div>
+        <div class="vehicle-dashboard-info"><b id="vehicle-gear">N</b><span id="vehicle-drive-mode">Motorista</span><small id="vehicle-controls-hint">W/S acelerar e frear • A/D virar • Espaço freio de mão • E sair</small><div class="vehicle-road-status"><span>Limite <strong id="vehicle-limit">40</strong></span><span id="vehicle-signal" data-signal="green">● Livre</span></div></div>
+      </aside>
       <div id="waiting-strip" class="waiting-strip glass" aria-live="polite"><span class="waiting-dot"></span><div><strong>Lobby de espera</strong><small id="waiting-strip-text">Explore o mapa 2D enquanto aguarda a atividade. O modo 3D é opcional.</small></div></div>
       <aside id="challenge-hud" class="challenge-hud glass hidden" aria-live="polite">
         <div class="challenge-copy"><span id="challenge-kicker">Desafio local</span><strong id="challenge-title">Circuito Parkour</strong><small id="challenge-detail">Checkpoint 0/5</small></div>
@@ -127,6 +131,30 @@
         </div>
       </div>
 
+      <div id="cinema-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="cinema-title">
+        <div class="modal-card cinema-card">
+          <button id="cinema-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <div class="cinema-heading">
+            <div><p class="eyebrow">Distrito Cultural • Cinema AGV</p><h2 id="cinema-title">🎬 Tela Principal</h2></div>
+            <span id="cinema-source-badge" class="chip">Sem programação</span>
+          </div>
+          <p id="cinema-program-title" class="cinema-program-title">Aguardando programação da equipe pedagógica.</p>
+          <div id="cinema-player-shell" class="cinema-player-shell">
+            <div id="cinema-player-empty" class="cinema-player-empty"><span>🎞️</span><strong>Nenhum vídeo em exibição</strong><small>Quando um professor publicar um conteúdo, ele aparecerá aqui e na tela 3D do cinema.</small></div>
+            <div id="cinema-player-host" class="cinema-player-host hidden"></div>
+          </div>
+          <div class="cinema-help"><strong>Como funciona</strong><span>Vídeos MP4/WebM por URL são projetados diretamente na tela 3D. Links/iframes do YouTube e Vimeo abrem no player do Cinema AGV. Para projeção 3D, o servidor do vídeo direto precisa permitir CORS.</span></div>
+          <section id="cinema-staff-panel" class="cinema-staff-panel hidden" aria-labelledby="cinema-staff-title">
+            <div class="cinema-staff-head"><div><span class="eyebrow">Professor / Administração</span><h3 id="cinema-staff-title">Programação da sessão</h3></div><span class="chip staff-chip">Equipe</span></div>
+            <label>Título da exibição<input id="cinema-media-title" maxlength="120" placeholder="Ex.: Aula — Introdução a Redes"></label>
+            <label>Link do vídeo ou iframe<textarea id="cinema-media-source" rows="3" placeholder="Cole uma URL MP4/WebM, link do YouTube/Vimeo ou o iframe de incorporação."></textarea></label>
+            <label class="check-row"><input id="cinema-media-loop" type="checkbox"> Repetir vídeo continuamente</label>
+            <div class="cinema-staff-actions"><button id="cinema-media-publish" class="primary" type="button">Publicar no cinema</button><button id="cinema-media-clear" type="button">Encerrar exibição</button></div>
+            <small class="campus-disclaimer">A programação fica salva no servidor. Alunos que entrarem depois recebem a exibição atual automaticamente.</small>
+          </section>
+        </div>
+      </div>
+
       <div id="train-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="train-title">
         <div class="modal-card train-card">
           <button id="train-close" class="modal-close" type="button" aria-label="Fechar">×</button>
@@ -135,6 +163,47 @@
           <p class="muted">O trem acelera entre os setores e faz uma parada em cada estação. Para o Vale, desembarque no Portal do Vale e continue pela passagem.</p>
           <button id="train-panoramic" class="train-panoramic hidden" type="button"><span>🎢</span><div><strong>Montanha-russa panorâmica</strong><small>Dar uma volta completa pelo circuito do Campus e retornar à estação.</small></div><b>INICIAR</b></button>
           <div id="train-station-list" class="train-station-list"></div>
+        </div>
+      </div>
+
+      <div id="vehicle-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="vehicle-title">
+        <div class="modal-card vehicle-card">
+          <button id="vehicle-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Mobilidade urbana</p>
+          <h2 id="vehicle-title">🚗 Veículo do Campus</h2>
+          <p id="vehicle-subtitle" class="muted">Escolha como deseja iniciar o passeio.</p>
+          <p id="vehicle-meta" class="vehicle-meta">Tipo: carro • Lugares: 2 • Velocidade alvo: 34 km/h</p>
+          <div class="vehicle-modal-grid">
+            <section>
+              <h3>Modo</h3>
+              <div class="vehicle-choice-grid">
+                <button data-vehicle-seat="driver" type="button">🛞 Motorista</button>
+                <button data-vehicle-seat="passenger" type="button">🪑 Carona</button>
+              </div>
+            </section>
+            <section>
+              <h3>Velocidade</h3>
+              <div class="vehicle-choice-grid">
+                <button data-vehicle-speed="tour" type="button">🐢 Passeio</button>
+                <button data-vehicle-speed="normal" type="button">🚗 Normal</button>
+                <button data-vehicle-speed="sport" type="button">⚡ Ágil</button>
+              </div>
+            </section>
+          </div>
+          <div class="vehicle-help"><strong>Como funciona</strong><span>No modo Motorista você controla aceleração, freio, ré e direção. Outros participantes podem embarcar nos lugares disponíveis enquanto você dirige. O modo Carona deste menu continua oferecendo um passeio automático individual.</span></div>
+          <div class="cinema-staff-actions"><button id="vehicle-start" class="primary" type="button">Iniciar passeio</button><button id="vehicle-close-secondary" type="button">Cancelar</button></div>
+        </div>
+      </div>
+
+      <div id="vehicle-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="vehicle-join-title">
+        <div class="modal-card vehicle-card vehicle-join-card">
+          <button id="vehicle-join-close" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <p class="eyebrow">Campus DS • Carona multiplayer</p>
+          <h2 id="vehicle-join-title">🚗 Veículo em movimento</h2>
+          <p id="vehicle-join-driver" class="muted">Motorista: participante</p>
+          <p id="vehicle-join-occupancy" class="vehicle-meta">1/2 lugares ocupados</p>
+          <div class="vehicle-help"><strong>Embarque sincronizado</strong><span>Ao embarcar, sua posição acompanha o veículo do motorista em tempo real. Pressione E a qualquer momento para descer. Se o motorista sair, todos os passageiros desembarcam automaticamente.</span></div>
+          <div class="cinema-staff-actions"><button id="vehicle-join-start" class="primary" type="button">Embarcar como carona</button><button id="vehicle-join-cancel" type="button">Cancelar</button></div>
         </div>
       </div>
 
@@ -211,9 +280,9 @@
   </main>
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
-  <script src="../core/session/fullscreen-portal.js?v=14.10.8.65"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.65"></script>
-  <script src="assets/sw-register.js?v=14.10.8.65-stage34-f63a" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.65-stage34-f63a" defer></script>
+  <script src="../core/session/fullscreen-portal.js?v=14.10.8.66"></script>
+  <script src="assets/diagnostics.js?v=14.10.8.66"></script>
+  <script src="assets/sw-register.js?v=14.10.8.70-stage39-traffic" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.70-stage39-traffic" defer></script>
 </body>
 </html>

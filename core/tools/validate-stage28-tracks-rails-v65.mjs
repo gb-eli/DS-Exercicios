@@ -36,10 +36,10 @@ check('2D diferencia viga do monotrilho e linha-guia',lite.includes("ctx.strokeS
 
 const lobby=read('lobby/assets/lobby.js'),adapter=read('lobby/assets/core/world-adapter.js'),boot=read('lobby/assets/boot.js'),vendor=read('lobby/assets/vendor-loader.js'),html=read('lobby/index.html'),sw=read('lobby/sw.js');
 const stageAtLeast=(source,pattern,min=28)=>{const m=source.match(pattern);return !!m&&Number(m[1])>=min;};
-check('adapter força runtime 2D/3D com cache-bust de fase >=28',stageAtLeast(adapter,/lobby3d\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(adapter,/lobby-lite\.js\?v=14\.10\.8\.65-stage(\d+)/));
+check('adapter força runtime 2D/3D com cache-bust de fase >=28',stageAtLeast(adapter,/lobby3d\.js\?v=14\.10\.8\.\d+(?:\.\d+)?-stage(\d+)/)&&stageAtLeast(adapter,/lobby-lite\.js\?v=14\.10\.8\.\d+(?:\.\d+)?-stage(\d+)/));
 check('boot força lobby.js com cache-bust de fase >=28',stageAtLeast(boot,/lobby\.js\?v=\$\{VERSION\}-stage(\d+)/));
-check('vendor-loader força boot novo com fase >=28',stageAtLeast(vendor,/assets\/boot\.js\?v=\$\{VERSION\}-stage(\d+)/)&&stageAtLeast(html,/vendor-loader\.js\?v=14\.10\.8\.65-stage(\d+)/));
-check('Service Worker mantém cache de fase >=28 e assets de trilhos',stageAtLeast(sw,/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/)&&stageAtLeast(sw,/campus-environment\.js\?v=14\.10\.8\.65-stage(\d+)/)&&sw.includes('game/train-manager.js?v=14.10.8.65-stage28'));
+check('vendor-loader força boot novo com fase >=28',stageAtLeast(vendor,/assets\/boot\.js\?v=\$\{VERSION\}-stage(\d+)/)&&stageAtLeast(html,/vendor-loader\.js\?v=14\.10\.8\.\d+(?:\.\d+)?-stage(\d+)/));
+check('Service Worker mantém cache de fase >=28 e assets de trilhos',stageAtLeast(sw,/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/)&&stageAtLeast(sw,/campus-environment\.js\?v=14\.10\.8\.\d+(?:\.\d+)?-stage(\d+)/)&&/game\/train-manager\.js\?v=14\.10\.8\.\d+(?:\.\d+)?-stage28/.test(sw));
 
 let failed=0;for(const c of checks){console.log(`${c.ok?'PASS':'FAIL'} ${c.name}`);if(!c.ok)failed++;}
 console.log(`\n${checks.length-failed}/${checks.length} PASS`);if(failed)process.exit(1);

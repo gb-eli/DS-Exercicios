@@ -6,6 +6,12 @@ const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"autho
 const J=(x:unknown,s=200,extra:Record<string,string>={})=>new Response(JSON.stringify(x),{status:s,headers:{...H,...extra,"content-type":"application/json","cache-control":"no-store"}});
 const AREAS=new Set(['central','1ds','2ds','3ds','sub','vale-silicio']),EMOTES=new Set(['wave','like','spark']);
 const STAFF=new Set(['teacher','admin','super_admin']);
+const VEHICLES=new Map([
+ ['drive-west-car',{id:'drive-west-car',name:'AGV E-Car',kind:'car',seats:2,x:-41.2,z:-9.5}],
+ ['drive-west-bike',{id:'drive-west-bike',name:'AGV E-Bike',kind:'bike',seats:1,x:-37.0,z:-9.5}],
+ ['drive-east-van',{id:'drive-east-van',name:'Maker Van',kind:'van',seats:4,x:37.0,z:9.5}],
+ ['drive-south-shuttle',{id:'drive-south-shuttle',name:'Shuttle Acadêmico',kind:'bus',seats:8,x:28.7,z:-30.0}]
+]);
 const uuidRx=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const enc=new TextEncoder();
 function b64url(bytes:Uint8Array){let raw='';for(const b of bytes)raw+=String.fromCharCode(b);return btoa(raw).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
@@ -23,11 +29,39 @@ async function verifyWorldWeather(token:string,secret:string){try{const parts=St
 function safeChatMessage(value:any){return String(value||'').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,180);}
 function boundedCoord(value:any,max:number){const n=Number(value);return Number.isFinite(n)?Math.max(0,Math.min(max,Math.round(n))):null;}
 function safeInterior(value:any){const text=String(value||'').trim();return text&&/^[a-zA-Z0-9:_-]{1,120}$/.test(text)?text:null;}
+function finiteBetween(value:any,min:number,max:number){const n=Number(value);return Number.isFinite(n)&&n>=min&&n<=max?n:null;}
+function presenceDistanceToWorld(row:any,x:number,z:number){const px=800+x*20,py=500+z*20;return Math.hypot(Number(row?.x)-px,Number(row?.y)-py)/20;}
+async function cleanupVehicleSessions(db:any){const cutoff=new Date(Date.now()-12000).toISOString();await db.from('lobby_vehicle_sessions').delete().lt('updated_at',cutoff);}
+async function activeLobbyPresence(db:any,userId:string){const cutoff=new Date(Date.now()-25000).toISOString();const {data,error}=await db.from('lobby_presence').select('student_id,x,y,area,updated_at').eq('student_id',userId).gt('updated_at',cutoff).maybeSingle();if(error)throw error;return data||null;}
 Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{headers:H});if(req.method!=='POST')return J({error:'method_not_allowed'},405);if(Number(req.headers.get('content-length')||0)>32768)return J({error:'payload_too_large'},413);try{
  const url=Deno.env.get('SUPABASE_URL')!,anon=Deno.env.get('SUPABASE_ANON_KEY')!,service=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,auth=req.headers.get('Authorization')||'';
  const uc=createClient(url,anon,{global:{headers:{Authorization:auth}}}),db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}}),{data:{user}}=await uc.auth.getUser();if(!user)return J({error:'unauthorized'},401);const live=await requireLiveAuthSession(db,auth,user.id);if(!live.ok)return J({error:live.error,detail:live.detail||null},live.status);
  const {data:p}=await db.from('profiles').select('role,active,must_change_password').eq('id',user.id).maybeSingle();if(!p?.active||p.must_change_password||!['student','teacher','admin','super_admin'].includes(String(p.role)))return J({error:'profile_not_ready'},403);
- await ensureAccess(db,user,req,'lobby-presence');const body=await req.json().catch(()=>({})),action=String(body?.action||'heartbeat');const rl=await consumeRate(db,`lobby-presence:${user.id}:${requestIp(req)||'noip'}`,40,60,120);if(rl.allowed===false){await logRisk(db,user,req,'rate_limit','high',{source:'lobby-presence',action,count:rl.count});return J({error:'rate_limited',retry_after:rl.retry_after||120},429,{'Retry-After':String(rl.retry_after||120)})}
+ await ensureAccess(db,user,req,'lobby-presence');const body=await req.json().catch(()=>({})),action=String(body?.action||'heartbeat');const realtimeVehicleAction=action==='vehicle_update';const rl=await consumeRate(db,`lobby-presence:${user.id}:${realtimeVehicleAction?'vehicle-update':requestIp(req)||'noip'}`,realtimeVehicleAction?240:40,60,realtimeVehicleAction?30:120);if(rl.allowed===false){await logRisk(db,user,req,'rate_limit','high',{source:'lobby-presence',action,count:rl.count});return J({error:'rate_limited',retry_after:rl.retry_after||120},429,{'Retry-After':String(rl.retry_after||120)})}
+ if(action.startsWith('vehicle_'))await cleanupVehicleSessions(db);
+ if(action==='vehicle_start'){
+   const vehicleId=String(body?.vehicle_id||''),vehicle=VEHICLES.get(vehicleId);if(!vehicle)return J({error:'invalid_vehicle'},400);if(vehicle.seats<1)return J({error:'vehicle_unavailable'},409);
+   const presence=await activeLobbyPresence(db,user.id);if(!presence||presence.area==='vale-silicio'||presenceDistanceToWorld(presence,vehicle.x,vehicle.z)>8.5)return J({error:'vehicle_not_nearby'},409);
+   const {data:occupied,error:occupiedError}=await db.from('lobby_vehicle_sessions').select('driver_id').eq('vehicle_id',vehicleId).neq('driver_id',user.id).maybeSingle();if(occupiedError)throw occupiedError;if(occupied)return J({error:'vehicle_busy'},409);
+   await db.from('lobby_vehicle_passengers').delete().eq('passenger_id',user.id);await db.from('lobby_vehicle_sessions').delete().eq('driver_id',user.id);
+   const x=finiteBetween(body?.x,-56,56)??vehicle.x,z=finiteBetween(body?.z,-38,38)??vehicle.z,heading=finiteBetween(body?.heading,-25.2,25.2)??0;
+   const row={driver_id:user.id,vehicle_id:vehicle.id,vehicle_name:vehicle.name,vehicle_kind:vehicle.kind,seat_capacity:vehicle.seats,x,z,heading,speed_kmh:0,updated_at:new Date().toISOString()};const {error}=await db.from('lobby_vehicle_sessions').insert(row);if(error){if(String(error.code||'')==='23505')return J({error:'vehicle_busy'},409);throw error}return J({ok:true,session:row});
+ }
+ if(action==='vehicle_update'){
+   const x=finiteBetween(body?.x,-56,56),z=finiteBetween(body?.z,-38,38),heading=finiteBetween(body?.heading,-25.2,25.2),speed=finiteBetween(body?.speed_kmh,-12,60);if(x===null||z===null||heading===null||speed===null)return J({error:'invalid_vehicle_state'},400);
+   const {data:session,error:sessionError}=await db.from('lobby_vehicle_sessions').select('driver_id,vehicle_id,x,z,updated_at').eq('driver_id',user.id).maybeSingle();if(sessionError)throw sessionError;if(!session)return J({error:'vehicle_session_missing'},409);
+   const elapsed=Math.max(.15,(Date.now()-Date.parse(session.updated_at||0))/1000),delta=Math.hypot(x-Number(session.x),z-Number(session.z)),maxDelta=Math.max(2.2,elapsed*18);if(delta>maxDelta){await logRisk(db,user,req,'lobby_vehicle_state_jump','warning',{source:'lobby-presence',vehicle_id:session.vehicle_id,delta,elapsed});return J({error:'vehicle_state_jump'},409);}
+   const {error}=await db.from('lobby_vehicle_sessions').update({x,z,heading,speed_kmh:speed,updated_at:new Date().toISOString()}).eq('driver_id',user.id);if(error)throw error;return J({ok:true});
+ }
+ if(action==='vehicle_join'){
+   const driverId=String(body?.driver_id||'');if(!uuidRx.test(driverId)||driverId===user.id)return J({error:'invalid_vehicle_driver'},400);const presence=await activeLobbyPresence(db,user.id);if(!presence||presence.area==='vale-silicio')return J({error:'participant_not_nearby'},409);
+   const cutoff=new Date(Date.now()-12000).toISOString();const {data:session,error:sessionError}=await db.from('lobby_vehicle_sessions').select('*').eq('driver_id',driverId).gt('updated_at',cutoff).maybeSingle();if(sessionError)throw sessionError;if(!session)return J({error:'vehicle_session_missing'},409);if(presenceDistanceToWorld(presence,Number(session.x),Number(session.z))>7.5)return J({error:'participant_not_nearby'},409);if(Number(session.seat_capacity)<=1)return J({error:'vehicle_no_passenger_seats'},409);
+   await db.from('lobby_vehicle_sessions').delete().eq('driver_id',user.id);await db.from('lobby_vehicle_passengers').delete().eq('passenger_id',user.id);const {data:taken,error:takenError}=await db.from('lobby_vehicle_passengers').select('seat_index').eq('driver_id',driverId).order('seat_index');if(takenError)throw takenError;const used=new Set((taken||[]).map((r:any)=>Number(r.seat_index)));let seat=1;while(used.has(seat)&&seat<Number(session.seat_capacity))seat++;if(seat>=Number(session.seat_capacity))return J({error:'vehicle_full'},409);
+   const row={passenger_id:user.id,driver_id:driverId,seat_index:seat,updated_at:new Date().toISOString()};const {error}=await db.from('lobby_vehicle_passengers').insert(row);if(error){if(String(error.code||'')==='23505')return J({error:'vehicle_full'},409);throw error}return J({ok:true,passenger:row,session});
+ }
+ if(action==='vehicle_leave'){
+   const {data:driverSession}=await db.from('lobby_vehicle_sessions').select('driver_id').eq('driver_id',user.id).maybeSingle();if(driverSession)await db.from('lobby_vehicle_sessions').delete().eq('driver_id',user.id);await db.from('lobby_vehicle_passengers').delete().eq('passenger_id',user.id);return J({ok:true,was_driver:!!driverSession});
+ }
  if(action==='issue_gather'){
    if(!STAFF.has(String(p.role)))return J({error:'staff_required'},403);
    const x=boundedCoord(body?.x,1600),y=boundedCoord(body?.y,1000),scene=String(body?.scene||'campus');if(x===null||y===null||!['campus','vale'].includes(scene))return J({error:'invalid_gather_target'},400);
@@ -62,7 +96,7 @@ Deno.serve(async req=>{if(req.method==='OPTIONS')return new Response('ok',{heade
  if(action==='verify_chat'){
    const payload=await verifyChat(String(body?.token||''),service);if(!payload||payload.target_id!==user.id)return J({error:'invalid_or_expired_chat'},403);return J({ok:true,chat:{sender_id:payload.sender_id,target_id:payload.target_id,scene:payload.scene,message:payload.message,expires_at:new Date(payload.exp).toISOString()}});
  }
- if(action==='leave'){await db.from('lobby_presence').delete().eq('student_id',user.id);return J({ok:true})}
+ if(action==='leave'){await db.from('lobby_vehicle_sessions').delete().eq('driver_id',user.id);await db.from('lobby_vehicle_passengers').delete().eq('passenger_id',user.id);await db.from('lobby_presence').delete().eq('student_id',user.id);return J({ok:true})}
  if(action!=='heartbeat')return J({error:'unknown_action'},400);
  if(p.role==='student'){const {data:b}=await db.from('lobby_blocks').select('blocked_until,reason').eq('student_id',user.id).gt('blocked_until',new Date().toISOString()).maybeSingle();if(b)return J({error:'lobby_access_blocked',blocked_until:b.blocked_until,reason:b.reason||null},423)}
  let x=Number(body?.x),y=Number(body?.y);const invalid=!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>1600||y<0||y>1000;if(invalid){await logRisk(db,user,req,'lobby_coordinate_tampering','warning',{source:'lobby-presence',x:body?.x,y:body?.y});x=Math.max(0,Math.min(1600,Number.isFinite(x)?x:800));y=Math.max(0,Math.min(1000,Number.isFinite(y)?y:500))}

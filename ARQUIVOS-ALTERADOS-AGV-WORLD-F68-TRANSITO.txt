@@ -1,0 +1,28 @@
+AGV World F68 — v14.10.8.70
+
+Principais arquivos alterados:
+- lobby/assets/world/campus-mobility-systems.js
+- lobby/assets/lobby3d.js
+- lobby/assets/lobby.js
+- lobby/index.html
+- lobby/assets/lobby.css
+- lobby/assets/config.js
+- lobby/assets/boot.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/sw-register.js
+- lobby/assets/core/world-adapter.js
+- lobby/sw.js
+- repair-lobby.html
+- version.json
+- PUBLIC-DEPLOY.json
+- release-current.json
+- release-v14.10.8.70.json
+- release-agv-world-f68.json
+- core/tests/f67-vehicle-multiplayer-v14.10.8.69.test.mjs
+- core/tests/f68-smart-traffic-v14.10.8.70.test.mjs
+- RELEASE-TRANSITO-INTELIGENTE-v14.10.8.70.md
+
+Nenhuma migration nova.
+Nenhuma alteração nova de Edge Function na F68.
+- core/tools/validate-stage31-world-time.mjs (verificador de cache future-proof)
+- core/tools/validate-stage32-world-weather.mjs (verificador de cache future-proof)

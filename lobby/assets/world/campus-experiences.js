@@ -1,6 +1,6 @@
-import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.65';
-import { CAMPUS_TOOL_EXPERIENCES } from './campus-destinations.js?v=14.10.8.65';
-import { CAMPUS_PEDESTRIAN_SURFACES } from './campus-city-network.js?v=14.10.8.65';
+import { CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.66';
+import { CAMPUS_TOOL_EXPERIENCES } from './campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_PEDESTRIAN_SURFACES } from './campus-city-network.js?v=14.10.8.66';
 
 export const CAMPUS_EXPERIENCES=Object.freeze([
   ...CAMPUS_TOOL_EXPERIENCES,

@@ -1,0 +1,53 @@
+{
+  "version": "14.10.8.69",
+  "channel": "feature",
+  "title": "Passageiros multiplayer — motorista e caronas sincronizados no mesmo veículo",
+  "base": "14.10.8.68",
+  "changes": [
+    "Motorista cria uma sessão de veículo validada pelo Edge Function antes de dirigir",
+    "Outros participantes podem embarcar em veículos em movimento quando houver assento livre",
+    "Carro aceita 1 carona, van 3 e Shuttle Acadêmico até 7 passageiros; a bike permanece individual",
+    "Posição, direção e velocidade do motorista são sincronizadas em Realtime com interpolação no 3D",
+    "Avatares de motorista e passageiros aparecem sentados no veículo para os demais usuários",
+    "Passageiro local acompanha o veículo em tempo real e pode descer pressionando E",
+    "Encerrar a viagem como motorista remove a sessão e desembarca todos os passageiros",
+    "Minimapa do Campus passa a marcar veículos multiplayer ativos",
+    "Realtime aplica eventos incrementais e usa reconciliação periódica para reduzir consultas ao banco",
+    "Migration 066 cria tabelas efêmeras de sessões/passagens com RLS somente leitura no cliente"
+  ],
+  "maintenance_patches": [
+    "Direção manual F66 preservada",
+    "Cinema AGV F64 preservado",
+    "Fundação F63A, interiores lazy, monotrilho e clima preservados",
+    "Edge Function lobby-presence ganha ações vehicle_start, vehicle_update, vehicle_join e vehicle_leave"
+  ],
+  "schema_note": "Aplicar 066_lobby_vehicle_multiplayer.sql e publicar a Edge Function lobby-presence atualizada antes de habilitar caronas multiplayer em produção.",
+  "date": "2026-08-31",
+  "phase": "world-f67-vehicle-multiplayer",
+  "baseVersion": "14.10.8.68",
+  "uiVersion": "0.22.8.22",
+  "runtimeCacheVersion": "14.10.8.69",
+  "lobbyCacheVersion": "14.10.8.69",
+  "worldArchitecturePhase": "67",
+  "worldArchitectureBuild": "14.10.8.69-stage38-multiplayer",
+  "requiresDatabaseChange": true,
+  "requiresEdgeFunctionDeploy": true,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": false,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Colisão entre veículos móveis, semáforos e regras de trânsito continuam para a próxima fase.",
+    "Veículos aéreos, central de câmeras, binóculos e mapas Lua/Marte permanecem no roadmap.",
+    "Migration 065 do Cinema continua necessária caso ainda não tenha sido aplicada em produção."
+  ],
+  "privacy": {
+    "student_names_in_public_bundle": false,
+    "diagnostic_labels_in_student_ui": false,
+    "private_roster_seed_separate": true,
+    "private_roster_schema": "private",
+    "public_deploy_excludes_private_roster_sources": true
+  }
+}

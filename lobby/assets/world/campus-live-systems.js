@@ -1,4 +1,4 @@
-// v14.10.8.65 — Fase 62C: Cidade Viva e Integração Sistêmica
+// v14.10.8.66 — Fase 62C: Cidade Viva e Integração Sistêmica
 // Dados de ambientação funcional. Nenhum estado acadêmico ou econômico é mutado aqui.
 
 const freezeRoom=room=>Object.freeze({...room});
@@ -64,6 +64,25 @@ export const CAMPUS_INTERIOR_LIVE_BLUEPRINTS=Object.freeze({
     theme:'exam-center',receptionist:{name:'Recepção de Provas',role:'Triagem e orientação',message:'Acesso às provas continua controlado pelo sistema. Aqui você encontra triagem, salas e orientação de circulação.'},
     floors:[{index:0,rooms:[{id:'triage',label:'Triagem',kind:'exam',x:0,z:.8,w:5.3,d:2.5,description:'Conferência inicial e orientação.'},{id:'waiting',label:'Espera',kind:'service',x:-5.2,z:2.4,w:3.3,d:1.9,description:'Área de espera antes da prova.'}]},{index:1,rooms:[{id:'rooms',label:'Salas de Prova',kind:'exam',x:-4.8,z:-1.8,w:4.1,d:2.2,description:'Ambientes de prova prática.'},{id:'staff',label:'Sala da Equipe',kind:'staff',x:4.8,z:-1.8,w:4.1,d:2.2,description:'Apoio da equipe responsável.'}]}],
     guides:[{id:'portal',label:'Abrir Centro de Provas',floor:0,nodes:[[0,-4.2],[0,-.7],[4.0,2.0],[5.5,3.75]]},{id:'triage',label:'Triagem',floor:0,nodes:[[0,-4.2],[0,.8]]},{id:'garage',label:'Garagem Mobilidade',floor:0,nodes:[[0,-4.2],[0,2.0],[0,4.9]]}]
+  }),
+  cinema:freezeBlueprint({
+    theme:'cinema',
+    receptionist:{name:'Anfitrião do Cinema AGV',role:'Recepção e programação',message:'Bem-vindo ao Cinema AGV. A equipe pedagógica pode publicar vídeos para a tela principal.'},
+    floors:[
+      {index:0,rooms:[
+        {id:'screening',label:'Sala Principal',kind:'cinema',x:0,z:1.0,w:11.2,d:5.8,description:'Sala de exibição com tela principal e assentos.'},
+        {id:'lobby',label:'Lobby e Bilheteria',kind:'service',x:-5.25,z:-2.1,w:3.4,d:1.9,description:'Entrada, espera e orientação antes da sessão.'}
+      ]},
+      {index:1,rooms:[
+        {id:'projection',label:'Cabine de Projeção',kind:'creator',x:-4.8,z:-1.6,w:4.2,d:2.3,description:'Controle técnico de projeção e programação.'},
+        {id:'mezzanine',label:'Mezanino',kind:'cinema',x:3.9,z:-.7,w:5.4,d:3.0,description:'Visão elevada da sala e apoio às exibições.'}
+      ]}
+    ],
+    guides:[
+      {id:'screen',label:'Tela Principal',floor:0,nodes:[[0,-4.2],[0,-1.4],[0,1.6],[0,3.55]]},
+      {id:'projection',label:'Cabine de Projeção',floor:1,nodes:[[0,-4.2],[-3.0,-2.4],[-4.8,-1.6]]},
+      {id:'exit',label:'Saída',floor:0,nodes:[[0,0],[0,-5.45]]}
+    ]
   })
 });
 

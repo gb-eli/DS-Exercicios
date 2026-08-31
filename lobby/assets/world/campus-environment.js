@@ -1,11 +1,11 @@
-import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.65';
-import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, CAMPUS_RIDES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_VERTICAL_SURFACES } from './campus-experiences.js?v=14.10.8.65-stage28';
-import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.65';
-import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './campus-connections.js?v=14.10.8.65';
-import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_PEDESTRIAN_SURFACES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK } from './campus-city-network.js?v=14.10.8.65';
-import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './campus-live-systems.js?v=14.10.8.65';
-import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_MOBILITY_TRACKS } from './campus-mobility-systems.js?v=14.10.8.65-stage28';
-import { campusSpaceIdentity } from './space-identities.js?v=14.10.8.65-stage29';
+import { WORLD_X, WORLD_Z, CAMPUS_ZONE_LAYOUT } from './campus-manifest.js?v=14.10.8.66';
+import { CAMPUS_EXPERIENCES, PARKOUR_PLATFORMS, CAMPUS_RIDES, CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE, CAMPUS_VERTICAL_SURFACES } from './campus-experiences.js?v=14.10.8.66-stage28';
+import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_CONNECTIONS, CAMPUS_DISTRICT_GATES, CAMPUS_SKYBRIDGES, CAMPUS_WAYFINDING } from './campus-connections.js?v=14.10.8.66';
+import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROSSWALKS, CAMPUS_PEDESTRIAN_BRIDGES, CAMPUS_PEDESTRIAN_SURFACES, CAMPUS_STATION_PROFILES, CAMPUS_VALE_MONUMENTAL_LINK } from './campus-city-network.js?v=14.10.8.66';
+import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './campus-live-systems.js?v=14.10.8.66';
+import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_MOBILITY_TRACKS } from './campus-mobility-systems.js?v=14.10.8.66-stage28';
+import { campusSpaceIdentity } from './space-identities.js?v=14.10.8.66-stage29';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
 
@@ -90,6 +90,15 @@ function createToolBuilding({THREE,quality,experience,spriteLabel}){
       root.add(box(THREE,w*.98,.34,d*.94,facade2,0,h*.75,0));
       for(const x of[-w*.34,-w*.17,w*.17,w*.34])root.add(cylinder(THREE,.12,h*.42,steel,x,h*.21+.35,front+.18,14));
       windowGrid(3.35,2,5,w*.72);doorway(1.65,2.25);entryPad();break;
+    }
+    case 'cinema':{
+      root.add(box(THREE,w*.94,h*.67,d*.92,facade,0,h*.335+.25,0));
+      root.add(box(THREE,w*.98,1.05,d*.34,dark,0,h*.71,d*.31));
+      root.add(box(THREE,w*.86,.16,.22,glow,0,h*.78,front+.08));
+      for(const x of[-w*.38,w*.38])root.add(box(THREE,.16,h*.58,.18,glow,x,h*.33,front+.06));
+      for(const x of[-w*.29,0,w*.29]){root.add(box(THREE,w*.18,1.55,.10,glass,x,1.42,front+.10));root.add(box(THREE,w*.19,.06,.13,glow,x,2.22,front+.12));}
+      const canopy=box(THREE,w*.72,.24,1.35,facade2,0,2.65,d*.46);root.add(canopy);for(const x of[-w*.28,0,w*.28])root.add(cylinder(THREE,.07,1.55,steel,x,1.78,d*.76,12));
+      doorway(1.9,2.35);entryPad();break;
     }
     case 'bank':{
       root.add(box(THREE,w*.88,h*.66,d*.88,facade,0,h*.33+.25,0));
@@ -266,7 +275,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
   if(experience.type==='vale-portal'){
-    // v14.10.8.65: estação/portal monumental do Vale, visível de longe no Campus 3D.
+    // v14.10.8.66: estação/portal monumental do Vale, visível de longe no Campus 3D.
     const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
     for(const x of[-3.35,3.35]){
       g.add(box(THREE,.72,4.9,.82,frame,x,2.55,0));
@@ -426,12 +435,12 @@ function createCampusCityLayer({THREE,quality,spriteLabel}){
   }
   // Frota urbana leve: veículos de ambientação nas garagens. Não altera economia nem inventário.
   for(const vehicle of CAMPUS_GARAGE_FLEET){
-    const garage=CAMPUS_GARAGES.find(item=>item.id===vehicle.garageId);if(!garage)continue;const accent=new THREE.Color(vehicle.accent).getHex(),body=mat(accent,{metalness:.48,roughness:.32}),glassVehicle=mat(0x173442,{emissive:accent,emissiveIntensity:.12,transparent:true,opacity:.62,glass:true}),rubber=mat(0x090d10,{roughness:.96});
+    const garage=CAMPUS_GARAGES.find(item=>item.id===vehicle.garageId);if(!garage)continue;const accent=new THREE.Color(vehicle.accent).getHex(),body=mat(accent,{metalness:.48,roughness:.32}),glassVehicle=mat(0x173442,{emissive:accent,emissiveIntensity:.12,transparent:true,opacity:.62,glass:true}),rubber=mat(0x090d10,{roughness:.96}),trimVehicle=mat(0x10171d,{metalness:.5,roughness:.36}),lampVehicle=mat(0xfef1c8,{emissive:0xf6dd9a,emissiveIntensity:.72}),tailVehicle=mat(0xff7568,{emissive:0xff7568,emissiveIntensity:.52});
     const g=new THREE.Group();g.position.set(garage.x+vehicle.slot,0,garage.z);
-    const long=vehicle.kind==='bus'||vehicle.kind==='van',small=vehicle.kind==='bike'||vehicle.kind==='drone';
+    const long=vehicle.kind==='bus'||vehicle.kind==='van';
     if(vehicle.kind==='drone'){g.add(box(THREE,1.0,.18,.7,body,0,.55,0));for(const [x,z] of[[-.62,-.48],[.62,-.48],[-.62,.48],[.62,.48]]){g.add(box(THREE,.72,.045,.08,body,x*.55,.56,z*.55));const rotor=new THREE.Mesh(new THREE.TorusGeometry(.24,.025,6,18),body);rotor.rotation.x=Math.PI/2;rotor.position.set(x,.66,z);g.add(rotor);}}
-    else if(vehicle.kind==='bike'){g.add(box(THREE,.18,.48,1.15,body,0,.52,0));for(const z of[-.58,.58]){const wheel=new THREE.Mesh(new THREE.TorusGeometry(.28,.07,8,20),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(0,.28,z);g.add(wheel);}}
-    else{const len=long?2.45:1.75,wid=long?1.05:.95;g.add(box(THREE,wid,.55,len,body,0,.48,0),box(THREE,wid*.8,.38,len*.52,glassVehicle,0,.88,-.08));for(const x of[-wid*.42,wid*.42])for(const z of[-len*.32,len*.32]){const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),rubber);wheel.rotation.z=Math.PI/2;wheel.position.set(x,.25,z);g.add(wheel);}}
+    else if(vehicle.kind==='bike'){for(const z of[-.58,.58]){const wheel=new THREE.Mesh(new THREE.TorusGeometry(.28,.07,8,20),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(0,.28,z);g.add(wheel);}g.add(box(THREE,.08,.54,.92,trimVehicle,0,.58,0),box(THREE,.58,.06,.08,trimVehicle,0,.72,0),box(THREE,.38,.05,.06,body,0,.95,-.5),box(THREE,.32,.05,.06,tailVehicle,0,.73,.54),box(THREE,.12,.32,.34,body,0,.56,-.02));}
+    else{const len=long?(vehicle.kind==='bus'?2.85:2.45):1.8,wid=long?1.1:.98,bodyH=vehicle.kind==='bus'?.64:.55,roofLen=vehicle.kind==='bus'?len*.76:(vehicle.kind==='van'?len*.58:len*.46),roofH=vehicle.kind==='bus'?.42:(vehicle.kind==='van'?.38:.34);g.add(box(THREE,wid,bodyH,len,body,0,.48,0),box(THREE,wid*.88,roofH,roofLen,glassVehicle,0,.96,vehicle.kind==='bus'?-0.02:-.06),box(THREE,wid*.72,.14,len*.22,body,0,.86,len*.27),box(THREE,wid*.72,.14,len*.18,body,0,.84,-len*.31),box(THREE,wid*.96,.08,len+.08,trimVehicle,0,.16,0));if(vehicle.kind==='bus'){for(const side of[-1,1])g.add(box(THREE,.05,.3,len*.62,glassVehicle,side*wid*.45,.98,-.02));g.add(box(THREE,wid*.18,.16,.12,lampVehicle,-wid*.22,.62,len*.51),box(THREE,wid*.18,.16,.12,lampVehicle,wid*.22,.62,len*.51),box(THREE,wid*.18,.14,.12,tailVehicle,-wid*.22,.62,-len*.51),box(THREE,wid*.18,.14,.12,tailVehicle,wid*.22,.62,-len*.51));}else{g.add(box(THREE,wid*.18,.18,.02,lampVehicle,-wid*.24,.68,len*.49),box(THREE,wid*.18,.18,.02,lampVehicle,wid*.24,.68,len*.49),box(THREE,wid*.16,.16,.02,tailVehicle,-wid*.24,.66,-len*.49),box(THREE,wid*.16,.16,.02,tailVehicle,wid*.24,.66,-len*.49));if(vehicle.kind==='van')g.add(box(THREE,wid*.76,.18,len*.18,glassVehicle,0,1.08,.12));}for(const x of[-wid*.42,wid*.42])for(const z of[-len*.32,len*.32]){const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),rubber);wheel.rotation.z=Math.PI/2;wheel.position.set(x,.25,z);g.add(wheel);const hub=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,.125,10),trimVehicle);hub.rotation.z=Math.PI/2;hub.position.set(x,.25,z);g.add(hub);}}
     root.add(g);
   }
   // Conectores cobertos entre estações e os distritos/prédios próximos.

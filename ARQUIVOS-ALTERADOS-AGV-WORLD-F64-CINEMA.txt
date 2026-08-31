@@ -1,0 +1,45 @@
+AGV World F64 — Cinema AGV v14.10.8.66
+
+ADICIONADOS:
++ RELEASE-CINEMA-v14.10.8.66.md
++ core/database/065_lobby_cinema_media.sql
++ core/tests/f64-cinema-v14.10.8.66.test.mjs
++ lobby/assets/world/cinema-media.js
++ release-agv-world-f64.json
+
+ALTERADOS:
+* PUBLIC-DEPLOY.json
+* lobby/assets/boot.js
+* lobby/assets/characters/avatar-system.js
+* lobby/assets/config.js
+* lobby/assets/core/lobby-state.js
+* lobby/assets/core/world-adapter.js
+* lobby/assets/core/world-manager.js
+* lobby/assets/diagnostics.js
+* lobby/assets/game/ride-manager.js
+* lobby/assets/game/train-manager.js
+* lobby/assets/lobby-lite.js
+* lobby/assets/lobby.css
+* lobby/assets/lobby.js
+* lobby/assets/lobby3d.js
+* lobby/assets/supabase.js
+* lobby/assets/sw-register.js
+* lobby/assets/vale-lite.js
+* lobby/assets/vale3d.js
+* lobby/assets/vendor-loader.js
+* lobby/assets/world/campus-connections.js
+* lobby/assets/world/campus-destinations.js
+* lobby/assets/world/campus-environment.js
+* lobby/assets/world/campus-experiences.js
+* lobby/assets/world/campus-interiors.js
+* lobby/assets/world/campus-live-systems.js
+* lobby/assets/world/campus-mobility-systems.js
+* lobby/assets/world/vale-silicio-data.js
+* lobby/assets/world/vale-silicio-shared.js
+* lobby/index.html
+* lobby/sw.js
+* release-current.json
+* repair-lobby.html
+* version.json
+
+REMOVIDOS:

@@ -1,4 +1,4 @@
-import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.65';
+import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.66';
 
 const P=(x,z)=>Object.freeze({x,z});
 const route=(id,name,accent,width,nodes,kind='walkway')=>Object.freeze({id,name,accent,width,kind,nodes:Object.freeze(nodes.map(([x,z])=>P(x,z)))});

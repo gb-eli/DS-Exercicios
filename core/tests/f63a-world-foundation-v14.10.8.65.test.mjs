@@ -90,5 +90,5 @@ test('F63A inclui a nova fundação no preflight e no shell do Service Worker',(
     assert.ok(boot.includes(asset),`boot sem ${asset}`);
     assert.ok(sw.includes(asset),`service worker sem ${asset}`);
   }
-  assert.match(sw,/agv-lobby-runtime-\$\{VERSION\}-stage34-f63a/);
+  assert.match(sw,/agv-lobby-runtime-\$\{VERSION\}-stage[\w-]+/);
 });

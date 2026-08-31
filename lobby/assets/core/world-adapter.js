@@ -1,7 +1,7 @@
-import { createLobby3D } from '../lobby3d.js?v=14.10.8.65-stage34';
-import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.65-stage34-f63a';
-import { createValeLite } from '../vale-lite.js?v=14.10.8.65-stage32';
-import { createVale3D } from '../vale3d.js?v=14.10.8.65-stage32';
+import { createLobby3D } from '../lobby3d.js?v=14.10.8.70-stage39-traffic';
+import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.66-stage34-f63a';
+import { createValeLite } from '../vale-lite.js?v=14.10.8.66-stage32';
+import { createVale3D } from '../vale3d.js?v=14.10.8.66-stage32';
 
 const MODES=Object.freeze(['lite','3d']);
 

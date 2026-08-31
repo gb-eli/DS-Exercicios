@@ -1,0 +1,43 @@
+{
+  "version": "14.10.8.68",
+  "channel": "feature",
+  "title": "Direção manual — acelerar, frear, ré, esterço e velocímetro",
+  "base": "14.10.8.67",
+  "changes": [
+    "Modo Motorista agora usa direção manual real no Campus 3D",
+    "W/S ou joystick vertical controlam aceleração, freio e marcha à ré",
+    "A/D ou joystick horizontal controlam o esterço",
+    "Espaço ou botão FREIO no celular aplica freio de mão",
+    "Painel de condução mostra velocidade em km/h, marcha e modo atual",
+    "Veículos respeitam limites do Campus e colisores de prédios",
+    "Modo Carona continua usando rota automática e velocidade escolhida",
+    "Cinema AGV, interiores lazy-loaded, monotrilho e minimapa foram preservados"
+  ],
+  "maintenance_patches": [
+    "Teste histórico F64 deixa de exigir versão exata e aceita releases posteriores",
+    "Teste da fundação F63A deixa de depender do nome exato do cache de uma release antiga",
+    "Novo teste F66 cobre motorista manual, carona automática, velocímetro e ausência de onclick inline"
+  ],
+  "schema_note": "A release v14.10.8.68 não exige nova migration nem deploy de Edge Function.",
+  "date": "2026-08-31",
+  "phase": "world-f66-manual-driving",
+  "baseVersion": "14.10.8.67",
+  "uiVersion": "0.22.8.21",
+  "runtimeCacheVersion": "14.10.8.68",
+  "lobbyCacheVersion": "14.10.8.68",
+  "worldArchitecturePhase": "66",
+  "worldArchitectureBuild": "14.10.8.68-stage37-drive",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": false,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Passageiros multiplayer sincronizados no mesmo veículo ainda não estão implementados.",
+    "Colisão entre veículos móveis e semáforos/trânsito inteligente ficam para uma fase posterior.",
+    "Veículos aéreos, central de câmeras e mapas Lua/Marte permanecem no roadmap."
+  ]
+}

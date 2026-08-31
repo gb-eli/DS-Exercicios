@@ -1,0 +1,32 @@
+AGV World F67 — v14.10.8.69 — Passageiros Multiplayer
+Base comparada: F66 v14.10.8.68
+Adicionados: 5
+Alterados: 15
+Removidos: 0
+
+[ADICIONADOS]
+RELEASE-MULTIPLAYER-VEICULOS-v14.10.8.69.md
+core/database/066_lobby_vehicle_multiplayer.sql
+core/tests/f67-vehicle-multiplayer-v14.10.8.69.test.mjs
+release-agv-world-f67.json
+release-v14.10.8.69.json
+
+[ALTERADOS]
+PUBLIC-DEPLOY.json
+core/edge-functions/lobby-presence/index.ts
+lobby/assets/boot.js
+lobby/assets/config.js
+lobby/assets/core/lobby-state.js
+lobby/assets/core/world-adapter.js
+lobby/assets/lobby.js
+lobby/assets/lobby3d.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/index.html
+lobby/sw.js
+release-current.json
+repair-lobby.html
+version.json
+
+[REMOVIDOS]
+

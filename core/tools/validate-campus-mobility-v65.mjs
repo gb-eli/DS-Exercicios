@@ -24,9 +24,9 @@ must(lobby.includes("obj.type==='campus-vehicle'")&&lobby.includes("obj.type==='
 must(html.includes('id="vehicle-status"'),'HUD possui estado de veículo ativo');
 must(css.includes('.vehicle-status'),'estado de mobilidade possui estilo responsivo');
 must(boot.includes('world/campus-mobility-systems.js'),'boot valida módulo de mobilidade');
-must(/campus-mobility-systems\.js\?v=14\.10\.8\.65/.test(sw),'Service Worker cacheia módulo v65');
+must(/campus-mobility-systems\.js\?v=14\.10\.8\./.test(sw),'Service Worker cacheia módulo de mobilidade');
 must(repair.includes('campus-mobility-systems.js'),'reparo verifica módulo de mobilidade');
-must(release.version==='14.10.8.65','release-current aponta para v14.10.8.65');
-must(![mobility,lite,d3,lobby,html,css,boot,sw].some(t=>/sb_secret|service_role/i.test(t)),'sem segredo Supabase no frontend v65');
+const patch=Number(String(release.version||'').split('.').at(-1));must(Number.isFinite(patch)&&patch>=65,'release-current mantém mobilidade v65 ou posterior');
+must(![mobility,lite,d3,lobby,html,css,boot,sw].some(t=>/sb_secret|service_role/i.test(t)),'sem segredo Supabase no frontend de mobilidade');
 if(process.exitCode)process.exit(process.exitCode);
-console.log('\nVALIDAÇÃO v14.10.8.65 — Cidade Viva Avançada: PASS');
+console.log('\nVALIDAÇÃO Cidade Viva / Mobilidade v65+: PASS');

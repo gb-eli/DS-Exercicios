@@ -24,21 +24,21 @@ button,a{border:1px solid #245266;border-radius:12px;background:#0c1a24;color:#e
 <main class="card">
 <header class="head">
 <h1>Reparar Campus DS</h1>
-<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.65 antes de abrir o Campus.</p>
+<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.70 antes de abrir o Campus.</p>
 </header>
 <section class="body">
 <div id="status" class="status"></div>
 <pre id="log" aria-live="polite">Preparando…</pre>
 <div class="actions">
 <button id="retry">Executar novamente</button>
-<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.65">Abrir Campus limpo</a>
+<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.70">Abrir Campus limpo</a>
 </div>
 </section>
 </main>
 <script>
 (()=>{
 'use strict';
-const RELEASE='14.10.8.65';
+const RELEASE='14.10.8.70';
 const logEl=document.getElementById('log'),statusEl=document.getElementById('status'),openEl=document.getElementById('open');
 const logs=[];
 const log=m=>{logs.push(`[${new Date().toLocaleTimeString()}] ${m}`);logEl.textContent=logs.join('\n')};
@@ -76,17 +76,18 @@ async function run(){
    const c=await clearLobby();
    log(`Service Workers removidos: ${c.sw}; caches removidos: ${c.cache}.`);
    const targets=[
-     ['lobby/index.html',['14.10.8.65']],
-     ['lobby/assets/boot.js',['14.10.8.65','world/dynamic-world.js']],
-     ['lobby/assets/lobby.js',['14.10.8.65']],
+     ['lobby/index.html',['14.10.8.70']],
+     ['lobby/assets/boot.js',['14.10.8.70','world/dynamic-world.js']],
+     ['lobby/assets/lobby.js',['14.10.8.70']],
      ['lobby/assets/world/campus-destinations.js',['CAMPUS_DESTINATIONS','CAMPUS_TOOL_BUILDING_COLLIDERS']],
      ['lobby/assets/world/campus-city-network.js',['CAMPUS_ROAD_HIERARCHY','CAMPUS_THEME_PLAZAS','CAMPUS_VALE_MONUMENTAL_LINK']],
      ['lobby/assets/world/campus-interiors.js',['CAMPUS_INTERIOR_PROFILES','CAMPUS_INTERIOR_MAP','CAMPUS_INTERIOR_INTERACTIONS']],
      ['lobby/assets/world/campus-live-systems.js',['CAMPUS_INTERIOR_LIVE_BLUEPRINTS','CAMPUS_GARAGE_FLEET','CAMPUS_STATION_LINKS','CAMPUS_VALE_CEREMONIAL_GATE']],
-     ['lobby/assets/world/campus-mobility-systems.js',['CAMPUS_TRAFFIC_ROUTES','CAMPUS_DRIVABLE_VEHICLES','CAMPUS_NPC_PATROLS','CAMPUS_DYNAMIC_SIGNS','CAMPUS_CITY_EVENTS']],
+     ['lobby/assets/world/campus-mobility-systems.js',['CAMPUS_TRAFFIC_ROUTES','CAMPUS_DRIVABLE_VEHICLES','CAMPUS_TRAFFIC_SIGNALS','CAMPUS_SPEED_ZONES','resolveTrafficSignalState']],
+     ['lobby/assets/world/cinema-media.js',['EMPTY_CINEMA_MEDIA','classifyCinemaSource','normalizeCinemaMedia','cinemaSourceLabel']],
      ['lobby/assets/world/campus-connections.js',['CAMPUS_CONNECTIONS','CAMPUS_SKYBRIDGES']],
      ['lobby/assets/world/dynamic-world.js',['resolveWorldTime','WORLD_TIME_MODES','skyPalette']],
-     ['lobby/sw.js',['14.10.8.65']]
+     ['lobby/sw.js',['14.10.8.70']]
    ];
    const rs=[];
    for(const [p,sigs] of targets){log(`Verificando ${p}…`);rs.push(await probe(p,sigs));}

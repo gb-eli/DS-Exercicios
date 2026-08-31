@@ -29,7 +29,7 @@ check('precipitação é ocultada em interiores 3D',campus3d.includes('weatherEf
 check('Campus e Vale 2D desenham clima compartilhado',campus2d.includes('drawWorldWeather2D')&&campus2d.includes('resolveWorldWeather(state.worldWeatherControl)')&&vale2d.includes('drawWorldWeather2D')&&vale2d.includes('resolveWorldWeather(state.worldWeatherControl)'));
 check('2D não desenha precipitação em interiores',campus2d.includes('if(!activeToolInterior)drawWorldWeather2D')&&vale2d.includes('else{drawWorld(w,h,time);drawPlayer(w,h);drawWorldWeather2D'));
 check('boot valida módulo de clima antes de iniciar',boot.includes("'world/weather-system.js':['WORLD_WEATHER_TYPES','resolveWorldWeather','createWorldWeatherEffects']")&&boot.includes("'world/weather-system.js','render/camera-controller.js'"));
-check('cache da fase 32 ou posterior protege runtimes e weather-system',/runtime-\$\{VERSION\}-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(sw)&&/vendor-loader\.js\?v=14\.10\.8\.65-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(html)&&/lobby3d\.js\?v=14\.10\.8\.65-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(adapter)&&/weather-system\.js\?v=14\.10\.8\.65-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(sw));
+check('cache da fase 32 ou posterior protege runtimes e weather-system',/runtime-\$\{VERSION\}-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(sw)&&/vendor-loader\.js\?v=14\.10\.8\.\d+-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(html)&&/lobby3d\.js\?v=14\.10\.8\.\d+-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(adapter)&&/weather-system\.js\?v=14\.10\.8\.\d+-stage(?:3[2-9]|[4-9]\d|\d{3,})/.test(sw));
 
 let failed=0;for(const item of checks){console.log(`${item.ok?'PASS':'FAIL'}  ${item.name}`);if(!item.ok)failed++;}
 console.log(`\n${checks.length-failed}/${checks.length} PASS`);if(failed)process.exit(1);

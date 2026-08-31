@@ -1,0 +1,49 @@
+{
+  "version": "14.10.8.67",
+  "channel": "feature",
+  "title": "Mobilidade do Campus — minimapa 3D e veículos com seleção de modo",
+  "base": "14.10.8.66",
+  "changes": [
+    "Minimapa do Campus DS no modo 3D, exibindo jogador, colegas, estações, destinos e veículos utilizáveis",
+    "Modal de veículos com seleção de modo motorista/carona e velocidade passeio/normal/ágil",
+    "HUD do veículo mostra nome, modo selecionado e velocidade durante o passeio guiado",
+    "Passeios de veículos agora respeitam perfis de velocidade por duração de rota",
+    "Modelos visuais dos veículos interativos melhorados com faróis, lanternas, cabines e acabamentos",
+    "Frota estacionada nas garagens recebeu mais detalhes visuais para reduzir aspecto excessivamente quadrado",
+    "Cache-bust e Service Worker atualizados para a etapa de mobilidade do Lobby"
+  ],
+  "maintenance_patches": [
+    "Cinema AGV da v14.10.8.66 preservado sem alterações de schema",
+    "Fundação F63A/F64 mantida",
+    "Sem mudanças em autenticação, RLS ou tabelas do Supabase"
+  ],
+  "schema_note": "A release v14.10.8.67 não exige nova migration. A migration 065 do Cinema continua necessária somente para a programação persistente do cinema.",
+  "date": "2026-08-31",
+  "phase": "world-f65-mobility-foundation",
+  "baseVersion": "14.10.8.66",
+  "uiVersion": "0.22.8.20",
+  "runtimeCacheVersion": "14.10.8.67",
+  "lobbyCacheVersion": "14.10.8.67",
+  "worldArchitecturePhase": "65",
+  "worldArchitectureBuild": "14.10.8.67-stage36-mobility",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": false,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Controle manual fino de veículos, aceleração/freio e embarque síncrono de múltiplos jogadores em etapas futuras.",
+    "Veículos aéreos, mapa da lua/marte, central de câmeras e clima avançado continuam pendentes para próximas fases.",
+    "Aplicar 065_lobby_cinema_media.sql em produção se a programação persistente do cinema ainda não foi ativada."
+  ],
+  "privacy": {
+    "student_names_in_public_bundle": false,
+    "diagnostic_labels_in_student_ui": false,
+    "private_roster_seed_separate": true,
+    "private_roster_schema": "private",
+    "public_deploy_excludes_private_roster_sources": true
+  }
+}
