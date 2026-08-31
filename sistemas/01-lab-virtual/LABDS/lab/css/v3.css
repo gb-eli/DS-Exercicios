@@ -103,3 +103,18 @@ html[data-theme="light"] .sim-log,html[data-theme="light"] .v3-bug-preview{color
 @media(min-width:1500px){.home-intro-v31,.goal-selector,.home-resume-strip,.home-search-wrap,.tools-section{max-width:1460px}.goal-card{min-height:250px}.language-grid{grid-template-columns:repeat(5,1fr)}}
 @media(min-width:1800px){body{font-size:18px}.app-header{min-height:76px}.goal-card,.tool-card-button{min-height:260px}.goal-card strong{font-size:1.4rem}}
 @media(prefers-reduced-motion:reduce){.goal-card,.tutorial-progress i{transition:none!important}.home-intro-visual,.hero-orbit{animation:none!important}}
+
+
+/* Etapa 17 — adaptações pedagógicas herdadas do AGV Core. */
+html.lab-pedagogical-adapted .home-intro-v31{grid-template-columns:minmax(0,1fr);max-width:980px;background:var(--v3-surface);box-shadow:none}
+html.lab-pedagogical-adapted .home-intro-visual{display:none!important}
+html.lab-reduced-visual-load #dynamicShowcase{display:none!important}
+html.lab-reduced-visual-load .hero-trust-row,html.lab-reduced-visual-load .quick-launch-v8{display:none!important}
+html.lab-reduced-visual-load .goal-grid{grid-template-columns:1fr}
+html.lab-reduced-visual-load .goal-card{min-height:0;background:var(--v3-surface);box-shadow:none}
+html.lab-large-controls button,html.lab-large-controls input,html.lab-large-controls select,html.lab-large-controls textarea{min-height:48px;font-size:1rem}
+html.lab-large-controls .icon-btn{min-width:48px}
+html.lab-motor-friendly button,html.lab-motor-friendly [role="button"]{min-height:50px;min-width:50px}
+html.lab-motor-friendly .goal-card:hover,html.lab-motor-friendly .goal-card:focus-visible{transform:none}
+html.lab-predictable-feedback *,html.lab-predictable-feedback *::before,html.lab-predictable-feedback *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+html.lab-micro-steps .lab-help-inline,html.lab-home-study .lab-help-inline{font-size:1.03rem;line-height:1.7}

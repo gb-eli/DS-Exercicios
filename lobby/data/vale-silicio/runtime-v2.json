@@ -30,17 +30,17 @@
       "z": 0
     },
     "world_bounds": {
-      "min_x": -320,
-      "max_x": 320,
-      "min_z": -320,
-      "max_z": 320
+      "min_x": -420,
+      "max_x": 420,
+      "min_z": -420,
+      "max_z": 420
     },
     "main_spawn": {
       "id": "spawn_praca_inovacao",
       "position": {
         "x": 0,
         "y": 0.2,
-        "z": -30
+        "z": -18
       },
       "rotation_y_deg": 0
     },
@@ -55,8 +55,8 @@
           "z": 0
         },
         "size": {
-          "width": 70,
-          "depth": 70
+          "width": 80,
+          "depth": 80
         }
       },
       {
@@ -64,9 +64,9 @@
         "name": "Hall da Inovação AGV",
         "type": "museum_hall",
         "position": {
-          "x": 0,
+          "x": 80,
           "y": 0,
-          "z": 70
+          "z": -120
         },
         "size": {
           "width": 48,
@@ -80,17 +80,18 @@
         "position": {
           "x": 0,
           "y": 0,
-          "z": -85
+          "z": -360
         },
         "target_scene": "lobby_main",
         "target_spawn": "lobby_spawn"
       }
     ],
     "roads": {
-      "generator": "radial_district_roads",
-      "main_road_width": 10,
-      "secondary_road_width": 7,
-      "sidewalk_width": 2.5,
+      "generator": "planned_orthogonal_grid_v3",
+      "main_road_width": 14,
+      "secondary_road_width": 8,
+      "local_road_width": 6,
+      "sidewalk_width": 3.2,
       "crosswalks": true,
       "street_lights": true,
       "road_markings": true
@@ -108,13 +109,21 @@
           "gitdash",
           "rede-agv",
           "trampo-certo"
-        ]
+        ],
+        "urban_block": {
+          "width": 190,
+          "depth": 190,
+          "gateway": {
+            "x": 0,
+            "z": -48
+          }
+        }
       },
       {
         "id": "distrito-educacao-e-conhecimento",
         "name": "Distrito Educação & Conhecimento",
         "center": {
-          "x": 160,
+          "x": 220,
           "y": 0,
           "z": 0
         },
@@ -128,13 +137,21 @@
           "projeto-torre-de-babel-site-educacional",
           "simulador-virtual-de-quimica-fisica-e-biologia",
           "sistema-competitivo-quizziz"
-        ]
+        ],
+        "urban_block": {
+          "width": 220,
+          "depth": 250,
+          "gateway": {
+            "x": 112,
+            "z": 0
+          }
+        }
       },
       {
         "id": "distrito-dados-e-sistemas",
         "name": "Distrito Dados & Sistemas",
         "center": {
-          "x": -160,
+          "x": -220,
           "y": 0,
           "z": 0
         },
@@ -143,7 +160,15 @@
           "planilha-de-automacao-com-recibo",
           "sistema-de-inventario-geral",
           "site-de-vendas-geral"
-        ]
+        ],
+        "urban_block": {
+          "width": 220,
+          "depth": 210,
+          "gateway": {
+            "x": -112,
+            "z": 0
+          }
+        }
       },
       {
         "id": "distrito-esportes-e-eventos",
@@ -151,7 +176,7 @@
         "center": {
           "x": 0,
           "y": 0,
-          "z": 160
+          "z": 225
         },
         "company_ids": [
           "gestao-interclasses-gestao-de-dados",
@@ -159,32 +184,56 @@
           "gestao-interclasses-transmissao-e-narracao",
           "site-sobre-futebol",
           "time-para-o-escolares"
-        ]
+        ],
+        "urban_block": {
+          "width": 290,
+          "depth": 180,
+          "gateway": {
+            "x": 0,
+            "z": 137
+          }
+        }
       },
       {
         "id": "distrito-games-e-esports",
         "name": "Distrito Games & eSports",
         "center": {
-          "x": 160,
+          "x": 245,
           "y": 0,
-          "z": 160
+          "z": 220
         },
         "company_ids": [
           "campeonato-de-jogos-eletronicos",
           "the-last-quest"
-        ]
+        ],
+        "urban_block": {
+          "width": 180,
+          "depth": 160,
+          "gateway": {
+            "x": 157,
+            "z": 147
+          }
+        }
       },
       {
         "id": "distrito-maker-e-robotica",
         "name": "Distrito Maker & Robótica",
         "center": {
-          "x": -160,
+          "x": -245,
           "y": 0,
-          "z": 160
+          "z": 230
         },
         "company_ids": [
           "clube-robotica"
-        ]
+        ],
+        "urban_block": {
+          "width": 180,
+          "depth": 170,
+          "gateway": {
+            "x": -157,
+            "z": 147
+          }
+        }
       },
       {
         "id": "distrito-midia-e-comunicacao",
@@ -192,26 +241,744 @@
         "center": {
           "x": 0,
           "y": 0,
-          "z": -160
+          "z": -230
         },
         "company_ids": [
           "clube-da-radio-agv",
           "radio-agv-site"
-        ]
+        ],
+        "urban_block": {
+          "width": 230,
+          "depth": 175,
+          "gateway": {
+            "x": 0,
+            "z": -142
+          }
+        }
       },
       {
         "id": "distrito-imersivo-e-virtual",
         "name": "Distrito Imersivo & Virtual",
         "center": {
-          "x": 160,
+          "x": 230,
           "y": 0,
-          "z": -160
+          "z": -230
         },
         "company_ids": [
           "museu-virtual-agv-mundo-virtual-agv"
-        ]
+        ],
+        "urban_block": {
+          "width": 190,
+          "depth": 175,
+          "gateway": {
+            "x": 142,
+            "z": -142
+          }
+        }
       }
-    ]
+    ],
+    "urban_plan": {
+      "version": "stage13-orthogonal-v1",
+      "design": "quadras ortogonais, avenidas largas, praça central respirável e distritos separados",
+      "plaza_radius": 40,
+      "roads": [
+        {
+          "id": "av-inovacao",
+          "name": "Avenida da Inovação",
+          "a": {
+            "x": 0,
+            "z": -370
+          },
+          "b": {
+            "x": 0,
+            "z": 285
+          },
+          "width": 14,
+          "kind": "avenue"
+        },
+        {
+          "id": "av-conhecimento",
+          "name": "Avenida do Conhecimento",
+          "a": {
+            "x": -350,
+            "z": 0
+          },
+          "b": {
+            "x": 350,
+            "z": 0
+          },
+          "width": 14,
+          "kind": "avenue"
+        },
+        {
+          "id": "rua-startup-1",
+          "name": "Rua das Startups",
+          "a": {
+            "x": -44,
+            "z": -44
+          },
+          "b": {
+            "x": 44,
+            "z": -44
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "rua-startup-2",
+          "name": "Rua das Startups",
+          "a": {
+            "x": 44,
+            "z": -44
+          },
+          "b": {
+            "x": 44,
+            "z": 44
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "rua-startup-3",
+          "name": "Rua das Startups",
+          "a": {
+            "x": 44,
+            "z": 44
+          },
+          "b": {
+            "x": -44,
+            "z": 44
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "rua-startup-4",
+          "name": "Rua das Startups",
+          "a": {
+            "x": -44,
+            "z": 44
+          },
+          "b": {
+            "x": -44,
+            "z": -44
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "dados-1",
+          "name": "Anel Dados & Sistemas",
+          "a": {
+            "x": -330,
+            "z": -105
+          },
+          "b": {
+            "x": -112,
+            "z": -105
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "dados-2",
+          "name": "Anel Dados & Sistemas",
+          "a": {
+            "x": -112,
+            "z": -105
+          },
+          "b": {
+            "x": -112,
+            "z": 105
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "dados-3",
+          "name": "Anel Dados & Sistemas",
+          "a": {
+            "x": -112,
+            "z": 105
+          },
+          "b": {
+            "x": -330,
+            "z": 105
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "dados-4",
+          "name": "Anel Dados & Sistemas",
+          "a": {
+            "x": -330,
+            "z": 105
+          },
+          "b": {
+            "x": -330,
+            "z": -105
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "educacao-1",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 112,
+            "z": -145
+          },
+          "b": {
+            "x": 330,
+            "z": -145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "educacao-2",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 330,
+            "z": -145
+          },
+          "b": {
+            "x": 330,
+            "z": 110
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "educacao-3",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 330,
+            "z": 110
+          },
+          "b": {
+            "x": 112,
+            "z": 110
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "educacao-4",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 112,
+            "z": 110
+          },
+          "b": {
+            "x": 112,
+            "z": -145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "educacao-5",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 185,
+            "z": -140
+          },
+          "b": {
+            "x": 185,
+            "z": 105
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "educacao-6",
+          "name": "Distrito Educação",
+          "a": {
+            "x": 255,
+            "z": -140
+          },
+          "b": {
+            "x": 255,
+            "z": 105
+          },
+          "width": 6,
+          "kind": "local"
+        },
+        {
+          "id": "esportes-1",
+          "name": "Distrito Esportes",
+          "a": {
+            "x": -145,
+            "z": 135
+          },
+          "b": {
+            "x": 145,
+            "z": 135
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "esportes-2",
+          "name": "Distrito Esportes",
+          "a": {
+            "x": 145,
+            "z": 135
+          },
+          "b": {
+            "x": 145,
+            "z": 305
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "esportes-3",
+          "name": "Distrito Esportes",
+          "a": {
+            "x": 145,
+            "z": 305
+          },
+          "b": {
+            "x": -145,
+            "z": 305
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "esportes-4",
+          "name": "Distrito Esportes",
+          "a": {
+            "x": -145,
+            "z": 305
+          },
+          "b": {
+            "x": -145,
+            "z": 135
+          },
+          "width": 8,
+          "kind": "secondary"
+        },
+        {
+          "id": "games-1",
+          "name": "Distrito Games",
+          "a": {
+            "x": 155,
+            "z": 145
+          },
+          "b": {
+            "x": 335,
+            "z": 145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "games-2",
+          "name": "Distrito Games",
+          "a": {
+            "x": 335,
+            "z": 145
+          },
+          "b": {
+            "x": 335,
+            "z": 295
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "games-3",
+          "name": "Distrito Games",
+          "a": {
+            "x": 335,
+            "z": 295
+          },
+          "b": {
+            "x": 155,
+            "z": 295
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "games-4",
+          "name": "Distrito Games",
+          "a": {
+            "x": 155,
+            "z": 295
+          },
+          "b": {
+            "x": 155,
+            "z": 145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "maker-1",
+          "name": "Distrito Maker",
+          "a": {
+            "x": -335,
+            "z": 145
+          },
+          "b": {
+            "x": -155,
+            "z": 145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "maker-2",
+          "name": "Distrito Maker",
+          "a": {
+            "x": -155,
+            "z": 145
+          },
+          "b": {
+            "x": -155,
+            "z": 315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "maker-3",
+          "name": "Distrito Maker",
+          "a": {
+            "x": -155,
+            "z": 315
+          },
+          "b": {
+            "x": -335,
+            "z": 315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "maker-4",
+          "name": "Distrito Maker",
+          "a": {
+            "x": -335,
+            "z": 315
+          },
+          "b": {
+            "x": -335,
+            "z": 145
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "midia-1",
+          "name": "Distrito Mídia",
+          "a": {
+            "x": -115,
+            "z": -315
+          },
+          "b": {
+            "x": 115,
+            "z": -315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "midia-2",
+          "name": "Distrito Mídia",
+          "a": {
+            "x": 115,
+            "z": -315
+          },
+          "b": {
+            "x": 115,
+            "z": -140
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "midia-3",
+          "name": "Distrito Mídia",
+          "a": {
+            "x": 115,
+            "z": -140
+          },
+          "b": {
+            "x": -115,
+            "z": -140
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "midia-4",
+          "name": "Distrito Mídia",
+          "a": {
+            "x": -115,
+            "z": -140
+          },
+          "b": {
+            "x": -115,
+            "z": -315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "imersivo-1",
+          "name": "Distrito Imersivo",
+          "a": {
+            "x": 140,
+            "z": -315
+          },
+          "b": {
+            "x": 325,
+            "z": -315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "imersivo-2",
+          "name": "Distrito Imersivo",
+          "a": {
+            "x": 325,
+            "z": -315
+          },
+          "b": {
+            "x": 325,
+            "z": -140
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "imersivo-3",
+          "name": "Distrito Imersivo",
+          "a": {
+            "x": 325,
+            "z": -140
+          },
+          "b": {
+            "x": 140,
+            "z": -140
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "imersivo-4",
+          "name": "Distrito Imersivo",
+          "a": {
+            "x": 140,
+            "z": -140
+          },
+          "b": {
+            "x": 140,
+            "z": -315
+          },
+          "width": 7,
+          "kind": "secondary"
+        },
+        {
+          "id": "mobilidade-oeste",
+          "name": "Via da Mobilidade",
+          "a": {
+            "x": -112,
+            "z": -300
+          },
+          "b": {
+            "x": -390,
+            "z": -300
+          },
+          "width": 9,
+          "kind": "secondary"
+        },
+        {
+          "id": "mobilidade-conector",
+          "name": "Conector de Mobilidade",
+          "a": {
+            "x": -112,
+            "z": -140
+          },
+          "b": {
+            "x": -112,
+            "z": -300
+          },
+          "width": 8,
+          "kind": "secondary"
+        }
+      ],
+      "crosswalks": [
+        {
+          "x": 0,
+          "z": -50,
+          "rotation_y_deg": 0,
+          "width": 11,
+          "length": 7
+        },
+        {
+          "x": 0,
+          "z": 50,
+          "rotation_y_deg": 0,
+          "width": 11,
+          "length": 7
+        },
+        {
+          "x": -50,
+          "z": 0,
+          "rotation_y_deg": 90,
+          "width": 11,
+          "length": 7
+        },
+        {
+          "x": 50,
+          "z": 0,
+          "rotation_y_deg": 90,
+          "width": 11,
+          "length": 7
+        },
+        {
+          "x": -112,
+          "z": 0,
+          "rotation_y_deg": 90,
+          "width": 12,
+          "length": 7
+        },
+        {
+          "x": 112,
+          "z": 0,
+          "rotation_y_deg": 90,
+          "width": 12,
+          "length": 7
+        },
+        {
+          "x": 0,
+          "z": 135,
+          "rotation_y_deg": 0,
+          "width": 12,
+          "length": 7
+        },
+        {
+          "x": 0,
+          "z": -140,
+          "rotation_y_deg": 0,
+          "width": 12,
+          "length": 7
+        }
+      ],
+      "greenery": [
+        {
+          "x": -34,
+          "z": -34
+        },
+        {
+          "x": 34,
+          "z": -34
+        },
+        {
+          "x": -34,
+          "z": 34
+        },
+        {
+          "x": 34,
+          "z": 34
+        },
+        {
+          "x": -105,
+          "z": -112
+        },
+        {
+          "x": 105,
+          "z": -112
+        },
+        {
+          "x": -105,
+          "z": 112
+        },
+        {
+          "x": 105,
+          "z": 112
+        },
+        {
+          "x": -340,
+          "z": -118
+        },
+        {
+          "x": -340,
+          "z": 118
+        },
+        {
+          "x": 340,
+          "z": -118
+        },
+        {
+          "x": 340,
+          "z": 118
+        },
+        {
+          "x": -168,
+          "z": 300
+        },
+        {
+          "x": 168,
+          "z": 300
+        },
+        {
+          "x": -168,
+          "z": -330
+        },
+        {
+          "x": 168,
+          "z": -330
+        },
+        {
+          "x": -300,
+          "z": 145
+        },
+        {
+          "x": 300,
+          "z": 135
+        },
+        {
+          "x": -300,
+          "z": -140
+        },
+        {
+          "x": 300,
+          "z": -135
+        }
+      ],
+      "benches": [
+        {
+          "x": -28,
+          "z": -28,
+          "rotation_y_deg": 45
+        },
+        {
+          "x": 28,
+          "z": -28,
+          "rotation_y_deg": 315
+        },
+        {
+          "x": -28,
+          "z": 28,
+          "rotation_y_deg": 135
+        },
+        {
+          "x": 28,
+          "z": 28,
+          "rotation_y_deg": 225
+        }
+      ],
+      "street_light_spacing": 70
+    }
   },
   "procedural_generation": {
     "seed": 20260829,
@@ -301,11 +1068,11 @@
       "lot": {
         "lot_id": "LOT-001",
         "world_position": {
-          "x": -160.0,
+          "x": -155,
           "y": 0,
-          "z": -48.0
+          "z": -58
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 42.0,
           "depth": 38.0
@@ -492,11 +1259,11 @@
       "lot": {
         "lot_id": "LOT-002",
         "world_position": {
-          "x": -102.0,
+          "x": -245,
           "y": 0,
-          "z": 0.0
+          "z": -58
         },
-        "rotation_y_deg": 270.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 38,
           "depth": 34
@@ -665,11 +1432,11 @@
       "lot": {
         "lot_id": "LOT-003",
         "world_position": {
-          "x": -160.0,
+          "x": -155,
           "y": 0,
-          "z": 48.0
+          "z": 58
         },
-        "rotation_y_deg": 180.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 39.2,
           "depth": 34
@@ -845,11 +1612,11 @@
       "lot": {
         "lot_id": "LOT-004",
         "world_position": {
-          "x": -218.0,
+          "x": -245,
           "y": 0,
-          "z": 0.0
+          "z": 58
         },
-        "rotation_y_deg": 90.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 39.2,
           "depth": 34
@@ -1020,11 +1787,11 @@
       "lot": {
         "lot_id": "LOT-005",
         "world_position": {
-          "x": 160.0,
+          "x": 150,
           "y": 0,
-          "z": -108.0
+          "z": -105
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 42.0,
           "depth": 36.0
@@ -1217,11 +1984,11 @@
       "lot": {
         "lot_id": "LOT-006",
         "world_position": {
-          "x": 235.85,
+          "x": 220,
           "y": 0,
-          "z": -90.39
+          "z": -105
         },
-        "rotation_y_deg": 320.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 39.2,
           "depth": 34
@@ -1399,11 +2166,11 @@
       "lot": {
         "lot_id": "LOT-007",
         "world_position": {
-          "x": 266.36,
+          "x": 290,
           "y": 0,
-          "z": -18.75
+          "z": -105
         },
-        "rotation_y_deg": 280.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 39.2,
           "depth": 34
@@ -1581,11 +2348,11 @@
       "lot": {
         "lot_id": "LOT-008",
         "world_position": {
-          "x": 262.19,
+          "x": 150,
           "y": 0,
-          "z": 59.0
+          "z": -35
         },
-        "rotation_y_deg": 240.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 47.6,
           "depth": 40.88
@@ -1793,11 +2560,11 @@
       "lot": {
         "lot_id": "LOT-009",
         "world_position": {
-          "x": 196.94,
+          "x": 220,
           "y": 0,
-          "z": 101.49
+          "z": -35
         },
-        "rotation_y_deg": 200.0,
+        "rotation_y_deg": 180,
         "size": {
           "width": 42.0,
           "depth": 36.0
@@ -1990,11 +2757,11 @@
       "lot": {
         "lot_id": "LOT-010",
         "world_position": {
-          "x": 119.64,
+          "x": 290,
           "y": 0,
-          "z": 110.88
+          "z": -35
         },
-        "rotation_y_deg": 160.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 41.0,
           "depth": 35.6
@@ -2175,11 +2942,11 @@
       "lot": {
         "lot_id": "LOT-011",
         "world_position": {
-          "x": 66.47,
+          "x": 150,
           "y": 0,
-          "z": 54.0
+          "z": 60
         },
-        "rotation_y_deg": 120.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 40.0,
           "depth": 36.0
@@ -2369,11 +3136,11 @@
       "lot": {
         "lot_id": "LOT-012",
         "world_position": {
-          "x": 43.79,
+          "x": 220,
           "y": 0,
-          "z": -20.49
+          "z": 60
         },
-        "rotation_y_deg": 80.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 44.6,
           "depth": 37.4
@@ -2556,11 +3323,11 @@
       "lot": {
         "lot_id": "LOT-013",
         "world_position": {
-          "x": 90.58,
+          "x": 290,
           "y": 0,
-          "z": -82.73
+          "z": 60
         },
-        "rotation_y_deg": 40.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 46.0,
           "depth": 40.0
@@ -2758,11 +3525,11 @@
       "lot": {
         "lot_id": "LOT-014",
         "world_position": {
-          "x": 0.0,
+          "x": -110,
           "y": 0,
-          "z": 100.0
+          "z": 175
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 54.0,
           "depth": 44.0
@@ -3012,11 +3779,11 @@
       "lot": {
         "lot_id": "LOT-015",
         "world_position": {
-          "x": 66.57,
+          "x": -38,
           "y": 0,
-          "z": 138.37
+          "z": 175
         },
-        "rotation_y_deg": 288.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 44.0,
           "depth": 38.0
@@ -3222,11 +3989,11 @@
       "lot": {
         "lot_id": "LOT-016",
         "world_position": {
-          "x": 35.27,
+          "x": 38,
           "y": 0,
-          "z": 208.54
+          "z": 175
         },
-        "rotation_y_deg": 216.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 54.0,
           "depth": 44.0
@@ -3458,11 +4225,11 @@
       "lot": {
         "lot_id": "LOT-017",
         "world_position": {
-          "x": -41.14,
+          "x": 110,
           "y": 0,
-          "z": 216.63
+          "z": 175
         },
-        "rotation_y_deg": 144.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 42.8,
           "depth": 35.6
@@ -3633,11 +4400,11 @@
       "lot": {
         "lot_id": "LOT-018",
         "world_position": {
-          "x": -57.06,
+          "x": 38,
           "y": 0,
-          "z": 141.46
+          "z": 250
         },
-        "rotation_y_deg": 72.0,
+        "rotation_y_deg": 180,
         "size": {
           "width": 44.0,
           "depth": 38.0
@@ -3837,11 +4604,11 @@
       "lot": {
         "lot_id": "LOT-019",
         "world_position": {
-          "x": 160.0,
+          "x": 205,
           "y": 0,
-          "z": 112.0
+          "z": 220
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 52.0,
           "depth": 46.0
@@ -4039,11 +4806,11 @@
       "lot": {
         "lot_id": "LOT-020",
         "world_position": {
-          "x": 160.0,
+          "x": 295,
           "y": 0,
-          "z": 218.0
+          "z": 220
         },
-        "rotation_y_deg": 180.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 44.0,
           "depth": 38.0
@@ -4239,11 +5006,11 @@
       "lot": {
         "lot_id": "LOT-021",
         "world_position": {
-          "x": 160,
+          "x": 235,
           "y": 0,
-          "z": -160
+          "z": -235
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 48.2,
           "depth": 48.2
@@ -4428,11 +5195,11 @@
       "lot": {
         "lot_id": "LOT-022",
         "world_position": {
-          "x": -160,
+          "x": -235,
           "y": 0,
-          "z": 160
+          "z": 235
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 59.0,
           "depth": 49.0
@@ -4666,11 +5433,11 @@
       "lot": {
         "lot_id": "LOT-023",
         "world_position": {
-          "x": 0.0,
+          "x": -58,
           "y": 0,
-          "z": -208.0
+          "z": -230
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 90,
         "size": {
           "width": 47.6,
           "depth": 40.88
@@ -4873,11 +5640,11 @@
       "lot": {
         "lot_id": "LOT-024",
         "world_position": {
-          "x": 0.0,
+          "x": 58,
           "y": 0,
-          "z": -102.0
+          "z": -230
         },
-        "rotation_y_deg": 180.0,
+        "rotation_y_deg": 270,
         "size": {
           "width": 41.0,
           "depth": 35.6
@@ -5054,11 +5821,11 @@
       "lot": {
         "lot_id": "LOT-025",
         "world_position": {
-          "x": 0.0,
+          "x": -70,
           "y": 0,
-          "z": -48.0
+          "z": -70
         },
-        "rotation_y_deg": 0.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 38.0,
           "depth": 34.0
@@ -5251,11 +6018,11 @@
       "lot": {
         "lot_id": "LOT-026",
         "world_position": {
-          "x": 50.23,
+          "x": 70,
           "y": 0,
-          "z": 29.0
+          "z": -70
         },
-        "rotation_y_deg": 240.0,
+        "rotation_y_deg": 0,
         "size": {
           "width": 38.0,
           "depth": 34.0
@@ -5450,11 +6217,11 @@
       "lot": {
         "lot_id": "LOT-027",
         "world_position": {
-          "x": -41.57,
+          "x": -70,
           "y": 0,
-          "z": 24.0
+          "z": 70
         },
-        "rotation_y_deg": 120.0,
+        "rotation_y_deg": 180,
         "size": {
           "width": 38.0,
           "depth": 34.0

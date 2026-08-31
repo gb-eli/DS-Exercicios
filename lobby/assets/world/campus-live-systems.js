@@ -77,15 +77,15 @@ export const CAMPUS_GARAGE_FLEET=Object.freeze([
 ]);
 
 export const CAMPUS_STATION_LINKS=Object.freeze([
-  Object.freeze({id:'station-link-central',stationId:'central',label:'Conexão Praça Central',from:Object.freeze({x:0,z:-7.2}),to:Object.freeze({x:0,z:-4.8}),accent:'#36d2ff'}),
-  Object.freeze({id:'station-link-vale',stationId:'vale',label:'Terminal Vale → Eixo Monumental',from:Object.freeze({x:0,z:-13}),to:Object.freeze({x:0,z:-17.2}),accent:'#51e7a3'}),
-  Object.freeze({id:'station-link-research',stationId:'1ds',label:'Estação Pesquisa → Distrito Oeste',from:Object.freeze({x:-18.6,z:-10}),to:Object.freeze({x:-27,z:-16.2}),accent:'#55d9ff'}),
-  Object.freeze({id:'station-link-science',stationId:'2ds',label:'Estação Ciência → Distrito Leste',from:Object.freeze({x:18.6,z:-10}),to:Object.freeze({x:27,z:-16.2}),accent:'#61e7a6'}),
-  Object.freeze({id:'station-link-cyber',stationId:'3ds',label:'Estação Cyber → Distrito Norte Oeste',from:Object.freeze({x:-18.6,z:10}),to:Object.freeze({x:-27,z:16.2}),accent:'#ff6b7a'}),
-  Object.freeze({id:'station-link-innovation',stationId:'sub',label:'Estação Inovação → Distrito Norte Leste',from:Object.freeze({x:18.6,z:10}),to:Object.freeze({x:27,z:16.2}),accent:'#ffd166'})
+  Object.freeze({id:'station-link-central',stationId:'central',label:'Conexão Praça Central',from:Object.freeze({x:0,z:-8.5}),to:Object.freeze({x:0,z:-6.0}),accent:'#36d2ff'}),
+  Object.freeze({id:'station-link-vale',stationId:'vale',label:'Terminal Vale → Eixo Monumental',from:Object.freeze({x:0,z:-25.5}),to:Object.freeze({x:0,z:-29.0}),accent:'#51e7a3'}),
+  Object.freeze({id:'station-link-research',stationId:'1ds',label:'Estação Pesquisa → 1DS',from:Object.freeze({x:-23,z:-12.5}),to:Object.freeze({x:-30,z:-13.0}),accent:'#55d9ff'}),
+  Object.freeze({id:'station-link-science',stationId:'2ds',label:'Estação Ciência → 2DS',from:Object.freeze({x:23,z:-12.5}),to:Object.freeze({x:30,z:-13.0}),accent:'#61e7a6'}),
+  Object.freeze({id:'station-link-cyber',stationId:'3ds',label:'Estação Cyber → 3DS',from:Object.freeze({x:-23,z:12.5}),to:Object.freeze({x:-30,z:13.0}),accent:'#ff6b7a'}),
+  Object.freeze({id:'station-link-innovation',stationId:'sub',label:'Estação Inovação → SUB',from:Object.freeze({x:23,z:12.5}),to:Object.freeze({x:30,z:13.0}),accent:'#ffd166'})
 ]);
 
 export const CAMPUS_VALE_CEREMONIAL_GATE=Object.freeze({
-  id:'vale-ceremonial-gate',name:'Portal Metropolitano AGV',x:0,z:-24.1,width:7.4,height:7.2,accent:'#51e7a3',
+  id:'vale-ceremonial-gate',name:'Portal Metropolitano AGV',x:0,z:-31.0,width:8.2,height:7.2,accent:'#51e7a3',
   message:'Você está deixando o núcleo acadêmico e entrando no corredor tecnológico do Vale do Silício AGV.'
 });

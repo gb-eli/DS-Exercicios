@@ -59,7 +59,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   }
   const cancelChallenge=()=>challenge.cancel();
   const restartChallenge=()=>challenge.restart();
-  const startExperience=id=>{challenge.cancel();return rides.start(id);};
+  const startExperience=id=>{challenge.cancel();const rideId=id==='tower'&&jump>8?'tower-down':id;return rides.start(rideId);};
 
   function drawBackground(w,h,time){
     currentWorld=resolveWorldTime(worldTimeMode);const palette=skyPalette(currentWorld),g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,palette.top);g.addColorStop(.58,currentWorld.phase==='night'?'#071820':'#305f70');g.addColorStop(1,palette.bottom);ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
@@ -71,9 +71,7 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
   function pathLine(points,w,h,width=5,alpha=.95){ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(36,62,72,.95)';ctx.lineWidth=width*metric(w,h);ctx.beginPath();points.forEach(([x,z],i)=>{const p=project(x,z,w,h);i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);});ctx.stroke();ctx.strokeStyle='rgba(111,191,216,.13)';ctx.lineWidth=Math.max(1,.3*metric(w,h));ctx.stroke();ctx.globalAlpha=alpha;ctx.restore();}
   function drawLandscape(w,h,time){
     const s=metric(w,h);
-    pathLine([[-38,0],[-14,0],[-9,0],[9,0],[14,0],[38,0]],w,h,4.4);
-    pathLine([[0,-24],[0,-14],[0,-9],[0,9],[0,14],[0,24]],w,h,4.4);
-    for(const [x,z] of[[-13,-12],[13,-12],[-13,12],[13,12]]) pathLine([[Math.sign(x)*6,Math.sign(z)*6],[x,z]],w,h,3.3,.85);
+    // Etapa 12: sem eixos duplicados; a malha oficial abaixo é a única fonte de ruas e passeios.
     // v14.10.8.65: malha de conexões funcionais entre praça, distritos e portas dos prédios.
     for(const connection of CAMPUS_CONNECTIONS){
       const pts=connection.nodes.map(n=>[n.x,n.z]);pathLine(pts,w,h,Math.max(1.15,connection.width*.92),.92);
@@ -98,16 +96,14 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
     for(const cross of CAMPUS_CROSSWALKS){const count=6;for(let i=0;i<count;i++){const off=(i-(count-1)/2)*.36;if(cross.axis==='x')drawRectWorld(cross.x+off,cross.z,.18,cross.d*.82,'rgba(232,246,248,.55)');else drawRectWorld(cross.x,cross.z+off,cross.w*.82,.18,'rgba(232,246,248,.55)');}}
     for(const bridge of CAMPUS_PEDESTRIAN_BRIDGES){const q=project(bridge.x,bridge.z,w,h),ms=metric(w,h);ctx.save();ctx.strokeStyle=hexToRgba(bridge.accent,.8);ctx.lineWidth=Math.max(3,bridge.width*.22*ms);ctx.beginPath();if(bridge.axis==='z'){ctx.moveTo(q.x,q.y-bridge.length*ms/2);ctx.lineTo(q.x,q.y+bridge.length*ms/2);}else{ctx.moveTo(q.x-bridge.length*ms/2,q.y);ctx.lineTo(q.x+bridge.length*ms/2,q.y);}ctx.stroke();ctx.restore();}
     const valeNodes=CAMPUS_VALE_MONUMENTAL_LINK.nodes.map(n=>[n.x,n.z]);pathLine(valeNodes,w,h,Math.max(4,CAMPUS_VALE_MONUMENTAL_LINK.width*.82),.98);for(const z of CAMPUS_VALE_MONUMENTAL_LINK.arches){const q=project(0,z,w,h),ms=metric(w,h);rr(q.x-3.0*ms,q.y-.24*ms,6.0*ms,.48*ms,.12*ms,'rgba(8,40,34,.92)',hexToRgba(CAMPUS_VALE_MONUMENTAL_LINK.accent,.72));}
-    // Ruas, calçadas, muros e pista de pouso — base legada preservada para regressão visual.
-    for(const [x,z,ww,dd] of[[0,-22,72,5.2],[0,22,72,5.2],[-37,0,5.2,42],[37,0,5.2,42]])drawRectWorld(x,z,ww,dd,'rgba(14,23,29,.92)','rgba(119,159,174,.12)');
-    drawRectWorld(0,22,54,4.3,'rgba(6,11,15,.96)','rgba(222,242,247,.22)');for(let x=-23;x<=23;x+=5.75)drawRectWorld(x,22,2.6,.15,'rgba(229,241,244,.7)');
+    // Etapa 12: base urbana legada removida para evitar duplicação de ruas e pista sobre a cidade atual.
     // Monotrilho e estações.
     ctx.save();ctx.strokeStyle='rgba(181,140,255,.48)';ctx.lineWidth=Math.max(2,.17*metric(w,h));ctx.beginPath();CAMPUS_TRAIN_ROUTE.forEach((node,i)=>{const q=project(node.x,node.z,w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.restore();
     for(const st of CAMPUS_TRAIN_STATIONS){const profile=CAMPUS_STATION_PROFILES[st.id]||{name:st.name,code:st.id.toUpperCase(),accent:st.accent};const q=project(st.x,st.z,w,h),ms=metric(w,h);rr(q.x-1.35*ms,q.y-.52*ms,2.7*ms,1.04*ms,.2*ms,'rgba(16,12,28,.9)',hexToRgba(profile.accent,.62));text(`${profile.code} • ${profile.name}`,q.x,q.y,{size:Math.max(5,.28*ms),weight:900,color:profile.accent,align:'center'});}
     const trainPos=train.sampleVisual(time*1000),tq=project(trainPos.x,trainPos.z,w,h),ms=metric(w,h);ctx.save();ctx.translate(tq.x,tq.y);ctx.rotate(-trainPos.heading);rr(-.9*ms,-.38*ms,1.8*ms,.76*ms,.28*ms,'#b58cff','rgba(235,222,255,.72)');rr(-.58*ms,-.22*ms,1.16*ms,.28*ms,.08*ms,'rgba(18,35,50,.92)');ctx.restore();
-    const p=project(0,0,w,h);ctx.save();ctx.shadowColor='rgba(54,210,255,.16)';ctx.shadowBlur=24;ctx.fillStyle='#10252d';ctx.beginPath();ctx.arc(p.x,p.y,10.2*s,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='rgba(95,205,236,.48)';ctx.lineWidth=Math.max(1,1.1);ctx.beginPath();ctx.arc(p.x,p.y,9.6*s,0,Math.PI*2);ctx.stroke();ctx.strokeStyle='rgba(95,205,236,.12)';ctx.beginPath();ctx.arc(p.x,p.y,7.7*s,0,Math.PI*2);ctx.stroke();ctx.restore();
-    for(const [x,z,wg,hg] of[[-27,0,8,4],[27,0,8,4],[0,-17,5,5],[0,17,5,5]]){const gp=project(x,z,w,h);rr(gp.x-wg*s/2,gp.y-hg*s/2,wg*s,hg*s,.7*s,'rgba(12,39,31,.72)','rgba(81,231,163,.13)');for(let i=0;i<4;i++){ctx.fillStyle=i%2?'rgba(66,164,112,.28)':'rgba(40,117,83,.34)';ctx.beginPath();ctx.arc(gp.x+(i-1.5)*wg*s*.19,gp.y+Math.sin(i*2.1)*hg*s*.18,Math.max(2,.28*s),0,Math.PI*2);ctx.fill();}}
-    for(const [x,z,label,accent] of[[0,-10.3,'🏙 VALE ↑   •   1DS ↖   2DS ↗','#51e7a3'],[0,11,'3DS  ↙   ↘  SUB','#b58cff'],[-15,0,'← TORRE','#ffae63'],[15,0,'TRILHO →','#b58cff']]){const sp=project(x,z,w,h);rr(sp.x-2.3*s,sp.y-.58*s,4.6*s,1.16*s,.32*s,'rgba(3,14,20,.82)',hexToRgba(accent,.28));text(label,sp.x,sp.y,{size:Math.max(7,.48*s),weight:850,color:accent,align:'center'});}
+    const p=project(0,0,w,h);ctx.save();ctx.shadowColor='rgba(54,210,255,.13)';ctx.shadowBlur=18;ctx.fillStyle='#10252d';ctx.beginPath();ctx.arc(p.x,p.y,10.9*s,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='rgba(95,205,236,.42)';ctx.lineWidth=Math.max(1,1.0);ctx.beginPath();ctx.arc(p.x,p.y,10.25*s,0,Math.PI*2);ctx.stroke();ctx.strokeStyle='rgba(95,205,236,.1)';ctx.beginPath();ctx.arc(p.x,p.y,7.4*s,0,Math.PI*2);ctx.stroke();ctx.restore();
+    // Wayfinding enxuto: quatro eixos, sem repetir placas sobre as atrações.
+    for(const [x,z,label,accent] of[[0,-10.8,'VALE / PROVAS ↓','#51e7a3'],[0,10.8,'EIXO ACADÊMICO ↑','#36d2ff'],[-11.0,0,'TECH OESTE ←','#ff7fd5'],[11.0,0,'INOVAÇÃO →','#61e7a6']]){const sp=project(x,z,w,h);rr(sp.x-2.05*s,sp.y-.5*s,4.1*s,1.0*s,.28*s,'rgba(3,14,20,.78)',hexToRgba(accent,.24));text(label,sp.x,sp.y,{size:Math.max(6,.42*s),weight:850,color:accent,align:'center'});}
     for(const [x,z] of treeSpots){const p=project(x,z,w,h),r=Math.max(3,.7*s);ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.ellipse(p.x+2,p.y+3,r*1.3,r*.55,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#173b31';ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(81,231,163,.3)';ctx.beginPath();ctx.arc(p.x-r*.25,p.y-r*.3,r*.48,0,Math.PI*2);ctx.fill();}
     for(const [x,z] of lampSpots){const p=project(x,z,w,h),pulse=.45+.25*Math.sin(time*2+x);ctx.fillStyle=`rgba(141,227,255,${pulse})`;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.8,.22*s),0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(150,214,230,.28)';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(4,.7*s),0,Math.PI*2);ctx.stroke();}
     for(const [x,z,rot] of benchSpots){const p=project(x,z,w,h);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(rot);rr(-1.3*s,-.28*s,2.6*s,.56*s,.18*s,'#24343c','rgba(142,194,211,.22)');ctx.restore();}
@@ -186,7 +182,9 @@ export function createLobbyLite({canvas,zones,state,isStaff,onInteract,onPlayerS
       ctx.strokeStyle=hexToRgba(accent,.68);ctx.lineWidth=Math.max(1.2,.09*s);ctx.strokeRect(-2.55*s,-1.8*s,5.1*s,3.6*s);
       text('15 m',2.05*s,-1.42*s,{size:Math.max(7,.4*s),weight:900,color:accent,align:'center'});for(let i=0;i<7;i++){ctx.strokeStyle=hexToRgba(accent,.28+.05*i);ctx.beginPath();ctx.arc(0,0,(.55+i*.27)*s,-.8,1.1);ctx.stroke();}
     }
-    ctx.globalAlpha=.95;rr(-2.8*s,2.3*s,5.6*s,.82*s,.35*s,'rgba(3,14,20,.8)',hexToRgba(accent,.32));text(exp.label,0,2.7*s,{size:Math.max(8,.62*s),weight:850,color:accent,align:'center'});
+    const labelDistance=Math.hypot(player.x-exp.x,player.z-exp.z),labelLimit=exp.type==='tool-building'?18:24,showLabel=exp.type==='vale-portal'||labelDistance<=labelLimit;
+    if(showLabel){ctx.globalAlpha=.92;rr(-2.55*s,2.3*s,5.1*s,.72*s,.32*s,'rgba(3,14,20,.72)',hexToRgba(accent,.26));text(exp.label,0,2.66*s,{size:Math.max(7,.54*s),weight:820,color:accent,align:'center'});}
+    else{ctx.globalAlpha=.74;ctx.fillStyle=hexToRgba(accent,.72);ctx.beginPath();ctx.arc(0,2.52*s,Math.max(2.5,.16*s),0,Math.PI*2);ctx.fill();}
     ctx.restore();
   }
   function drawChallenge(w,h,time){

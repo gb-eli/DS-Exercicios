@@ -419,14 +419,48 @@
     return clone({...state,levelInfo:levelInfo(),coverage:coverageStats(),economy:platformEconomy(),achievementsCatalog:ACHIEVEMENTS,storeItems:STORE_ITEMS,rarityOrder:RARITY_ORDER,coverageMilestoneCatalog:COVERAGE_MILESTONES});
   }
 
+  function applyPedagogicalAdaptation(){
+    const adaptation=window.LABDS.AGVCore?.getAdaptation?.()||null;
+    const root=document.documentElement;
+    const classes=['lab-pedagogical-adapted','lab-reduced-visual-load','lab-large-controls','lab-motor-friendly','lab-predictable-feedback','lab-micro-steps','lab-home-study'];
+    classes.forEach(name=>root.classList.remove(name));
+    delete root.dataset.pedagogicalProfile;
+    if(!adaptation||adaptation.mode!=='adapted')return null;
+    const f=adaptation.features||{},sup=adaptation.supervision||{};
+    root.classList.add('lab-pedagogical-adapted');
+    if(f.reducedVisualLoad)root.classList.add('lab-reduced-visual-load');
+    if(f.largerControls)root.classList.add('lab-large-controls');
+    if(f.motorFriendly)root.classList.add('lab-motor-friendly');
+    if(f.predictableFeedback)root.classList.add('lab-predictable-feedback');
+    if(f.microSteps||f.stepByStep)root.classList.add('lab-micro-steps');
+    if(String(sup.mode||'')==='home_study'||f.homeDetailedGuidance)root.classList.add('lab-home-study');
+    root.dataset.pedagogicalProfile=String(adaptation.profileKey||'guided');
+    return adaptation;
+  }
+
+  function activateCoreDegraded(error){
+    state.authority='agv-core';
+    state.settings.studyGateGames=false;
+    state.core={...state.core,mode:'agv-core-degraded',syncedAt:null,syncError:String(error?.message||error||'core_unavailable').slice(0,240),pendingCompletions:[]};
+    addHistory('core','Prática liberada com sincronização oficial temporariamente indisponível.',{error:state.core.syncError});
+    window.LABDS.AGVCore?.markCoreDegraded?.(state.core.syncError);
+    scheduleSave();
+    return getSnapshot();
+  }
+
   async function init(){
     if(initialized)return getSnapshot();
     if(initPromise)return initPromise;
     initPromise=(async()=>{
       const saved=await window.LABDS.Storage?.get?.(STORAGE_KEY,null);state=sanitize(saved);syncSession();applySettings();
       if(window.LABDS.AGVCore){
-        try{await window.LABDS.AGVCore.requireSession();applyCentralState(await window.LABDS.AGVCore.loadCoreState());}
+        try{await window.LABDS.AGVCore.requireSession();}
         catch(error){if(new URLSearchParams(location.search).get('demo')==='1'){state.authority='demo-local';addHistory('core',`Modo demonstração local: ${error.message||error}`);}else if(!navigator.onLine){state.authority='offline-practice';state.xp=0;state.techCredits=0;addHistory('core','Modo offline de prática: recompensas oficiais suspensas.');}else throw error;}
+        if(window.LABDS.AGVCore.getIdentity?.()){
+          applyPedagogicalAdaptation();
+          try{applyCentralState(await window.LABDS.AGVCore.loadCoreState());}
+          catch(error){activateCoreDegraded(error);}
+        }
       }
       document.addEventListener('labds:toolopen',event=>recordLabUse(event.detail?.tool));
       window.addEventListener('error',event=>{if(event.error?.message)addHistory('error',event.error.message,{source:event.filename,line:event.lineno});});
@@ -439,7 +473,7 @@
   window.LABDS.Core={
     init,on,off,emit,persist,getSnapshot,levelInfo,gainXP,addCredits,spendCredits,addTempPoints,unlockAchievement,
     complete,recordLabUse,setRecord,setProfile,syncSession,buyItem,equipItem,getItemUnlockState,rewardEstimate,
-    coverageStats,platformEconomy,consumeArcadeMinute,walletExport,settings,applySettings,reportBug,exportProgress,importProgress,applyCentralState,isCoreAuthority,
+    coverageStats,platformEconomy,consumeArcadeMinute,walletExport,settings,applySettings,applyPedagogicalAdaptation,reportBug,exportProgress,importProgress,applyCentralState,isCoreAuthority,
     ACHIEVEMENTS,STORE_ITEMS,COVERAGE_MILESTONES,TOOL_FIRST_COMPLETION_REWARDS,RARITY_ORDER
   };
 })();

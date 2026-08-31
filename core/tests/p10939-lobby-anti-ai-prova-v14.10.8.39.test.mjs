@@ -4,10 +4,10 @@ import fs from 'node:fs';
 const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
 
 test('Lobby isolates optional rigged avatar from the static module graph',()=>{
-  const three=read('lobby/assets/lobby3d.js'),boot=read('lobby/assets/boot.js');
-  assert.doesNotMatch(three,/^import\s+\{[^\n]*RiggedAvatar[^\n]*\}\s+from\s+'\.\/rigged-avatar/m);
-  assert.match(three,/import\('\.\/rigged-avatar\.js\?v=14\.10\.8\.39'\)/);
-  assert.match(three,/optional_module_failed/);
+  const avatarSystem=read('lobby/assets/characters/avatar-system.js'),boot=read('lobby/assets/boot.js');
+  assert.doesNotMatch(avatarSystem,/^import\s+\{[^\n]*RiggedAvatar[^\n]*\}/m);
+  assert.match(avatarSystem,/import\('\.\.\/rigged-avatar\.js\?v=14\.10\.8\.65'\)/);
+  assert.match(avatarSystem,/avatar_system_fallback|avatar_system_ready/);
   assert.match(boot,/boot_optional_asset_warning/);
   assert.match(boot,/'rigged-avatar\.js'/);
 });
@@ -36,8 +36,9 @@ test('student surface keeps pedagogy but drops fake infrastructure language',()=
   assert.match(js,/Escolha do líder da equipe/);
   assert.match(js,/Aguardando professor/);
   for(const fake of ['SA-EAST','SECURE SESSION','RECONNECTING SQUAD','MATCH FOUND','ping acadêmico']) assert.doesNotMatch(js,new RegExp(fake,'i'));
-  assert.match(html,/Organize sua equipe/);
-  assert.match(html,/Lobby com início docente/);
+  const surface=html+'\n'+js;
+  assert.match(surface,/Formação das equipes|Organize sua equipe/);
+  assert.match(surface,/Aguardando professor|início definido pelo professor/);
 });
 
 test('anti-AI styling removes universal glow/gradient from the primary Prova surfaces',()=>{

@@ -75,3 +75,144 @@ Concluída a reconciliação dos contratos históricos P5 do Lobby/Campus com a 
 - testes focados: 14/14 PASS;
 - suíte geral: 355/368 PASS; 13 falhas remanescentes fora deste escopo;
 - sem migration ou Edge Function nova.
+
+## Etapa 9 — UX anti-AI-slop
+
+- superfícies principais de Aluno, Professor e Admin voltaram ao padrão visual sóbrio do projeto;
+- gradientes decorativos removidos da Central do Aluno, experiências personalizadas, command center do Professor e gestão/hero do Admin;
+- hover dos atalhos administrativos deixou de deslocar cards;
+- cor continua sendo usada como sinal semântico em bordas, fundos planos, status e ações;
+- contrato anti-AI da Prova reconciliado com `avatar-system.js` modular e conteúdo pedagógico renderizado dinamicamente;
+- testes focados: 12/12 PASS;
+- suíte geral: 359/368 PASS; 9 falhas remanescentes fora deste escopo;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 10 — Vale do Silício: entrada 3D / câmera
+
+- corrigido o spawn inicial do Vale, antes muito próximo da fachada da empresa mais próxima;
+- spawn principal movido de `z=-30` para `z=-18`, mantendo 20 m de área livre até o prédio mais próximo na configuração atual;
+- entrada direta, fallback da Praça e teleporte passam a reutilizar `VALE_SPAWN`, eliminando coordenadas duplicadas;
+- câmera 3D nasce no lado aberto da praça, com `initialYaw: 0`, evitando começar colada/atrás da fachada ao norte;
+- colisão da câmera deixou de usar `worldRoot` inteiro (chão, vias, decoração) e agora considera apenas raízes de estruturas sólidas;
+- fallback de saída de interiores usa o spawn atual em vez da coordenada antiga;
+- validador específico `validate-vale-entry-v65.mjs`: 9/9 PASS;
+- cinco validadores oficiais permanecem PASS;
+- suíte geral permanece 359/368 PASS, com as mesmas 9 falhas preexistentes e nenhuma regressão nova;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 11 — Vale do Silício: física e circulação
+
+- colisão do jogador no Vale migrou de AABB para OBB, respeitando a rotação real dos prédios;
+- 16 dos 27 prédios ativos possuem rotação não axial e agora deixam de gerar cantos atravessáveis/barreiras invisíveis;
+- avatar passou a ter raio físico de 0,82 m;
+- movimento é subdividido para reduzir atravessamento de sólidos em corrida ou FPS baixo;
+- entradas declaradas como caminháveis recebem degraus físicos e altura de superfície;
+- veículos terrestres participam da colisão; drones/aeronaves altas não bloqueiam circulação no solo;
+- teleporte e saída de interiores procuram posição segura em vez de materializar dentro de geometria;
+- `validate-vale-physics-v65.mjs`: 12/12 PASS;
+- regressão da Etapa 10 `validate-vale-entry-v65.mjs`: 9/9 PASS;
+- validadores oficiais permanecem PASS;
+- suíte geral permanece 359/368 PASS, com as mesmas 9 falhas preexistentes e nenhuma regressão nova;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 12 — Masterplan estrutural do Lobby Geral
+
+- área útil do Campus ampliada de 80 × 50 m para 112 × 76 m (`WORLD_X=56`, `WORLD_Z=38`);
+- salas 1DS, 2DS, 3DS e SUB redistribuídas com mais afastamento do núcleo e centros 2D/3D sincronizados;
+- destinos externos reorganizados por distrito: acadêmico ao norte, pesquisa/cyber a oeste, ciência/inovação a leste, avaliação/entrada do Vale ao sul;
+- Vale do Silício ganhou eixo monumental mais largo e portal reposicionado fora da área de provas;
+- avenidas principais ampliadas para 6,4–7,0 m e calçadas contínuas maiores;
+- anel viário externo reposicionado e passarelas retiradas da praça central;
+- atrações recreativas foram distribuídas em quatro bolsões laterais, liberando o centro;
+- monotrilho, estações, tráfego, NPCs, garagens, sinalização e conectores foram reposicionados para o novo mapa;
+- superfícies verticais das salas agora derivam de `CAMPUS_ZONE_LAYOUT`, eliminando coordenadas duplicadas de escadas/telhados;
+- o 3D deixou de renderizar a segunda malha urbana legada (ruas/muros/pista sobrepostos);
+- o 2D deixou de desenhar a base legada duplicada e passou a depender da mesma malha oficial usada no 3D;
+- praça/cobertura central foram reduzidas para liberar leitura visual e circulação;
+- piso e iluminação 3D agora derivam das novas dimensões do masterplan;
+- `validate-lobby-masterplan-v65.mjs`: PASS em todos os critérios estruturais;
+- `validate-vale-entry-v65.mjs`: 9/9 PASS;
+- `validate-vale-physics-v65.mjs`: 12/12 PASS;
+- validadores Cidade/Interiores/Cidade Viva/Mobilidade/Login Único: PASS;
+- suíte comparável permanece 359/368 PASS, com as mesmas 9 falhas preexistentes e nenhuma regressão nova;
+- suíte ampliada permanece 383/393 PASS, idêntica à Etapa 11;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 13 — Vale do Silício: reorganização urbana e visual
+
+- Vale ampliado de 640 × 640 m para 840 × 840 m (`VALE_BOUNDS ±420`), aumentando o respiro entre distritos;
+- malha radial antiga substituída por `planned_orthogonal_grid_v3`, com quadras retangulares e circulação legível;
+- duas avenidas arteriais de 14 m, vias secundárias de 7–9 m, ruas locais de 6 m e calçadas de 3,2 m;
+- 38 segmentos viários planejados e 8 travessias principais;
+- os 27 prédios/empresas foram redistribuídos sem sobreposição de lotes e sem ruas atravessando construções;
+- 14 prédios preservam rotação ortogonal para fachadas voltadas às vias e regressão OBB da Etapa 11;
+- Praça das Startups reorganizada ao redor de uma praça central de 40 m, sem ocupar os dois eixos arteriais;
+- Educação, Dados, Esportes, Games, Maker, Mídia e Imersivo passaram a ter quadras, limites e gateways próprios;
+- Auditório, Refeitório, Sala de Pedra e Hall da Inovação foram reposicionados em bolsões de apoio ao centro;
+- complexo esportivo foi deslocado para a borda norte, deixando o Distrito Esportes livre para os prédios de projetos;
+- Hangar e Pista de Corrida foram consolidados no setor sudoeste de mobilidade;
+- Portal de Retorno passou para o portão sul (`z=-360`), reduzindo conflito visual com o spawn;
+- veículos tiveram rotas adequadas às novas avenidas e anéis distritais;
+- 20 pontos de paisagismo leve, bancos centrais e iluminação apenas nos eixos arteriais foram adicionados sem saturar a cena;
+- placas 3D passaram a respeitar profundidade (`depthTest`), reduzindo textos sobrepostos através dos prédios;
+- 2D e 3D passam a consumir o mesmo `world.urban_plan` para ruas, travessias e quadras;
+- modo 2D agora desenha prédios com a rotação real e usa colisão OBB equivalente ao 3D;
+- `validate-vale-urban-stage13-v65.mjs`: 21/21 PASS;
+- `validate-vale-entry-v65.mjs`: 9/9 PASS;
+- `validate-vale-physics-v65.mjs`: 12/12 PASS;
+- Masterplan/Cidade/Interiores/Cidade Viva/Mobilidade/Login Único: PASS;
+- suíte geral permanece 359/368 PASS, com exatamente as mesmas 9 falhas preexistentes e nenhuma regressão nova;
+- sem migration, Edge Function ou alteração de banco.
+
+
+## Etapa 14 — Lobby principal e áreas abertas (31/08/2026)
+**Status: concluída.**
+
+- Praça Central compactada e simplificada.
+- Parques Norte/Sul reorganizados.
+- Mirante e Estação Intermodal retirados do anel central.
+- Rótulos 3D respeitam profundidade e 2D usa rótulo por proximidade.
+- 18/18 verificações específicas PASS.
+- Regressões das Etapas 10–13 PASS.
+- Suíte geral permanece 359/368 PASS; 9 falhas antigas não pertencem ao Lobby externo.
+
+## Etapa 15 — Interiores modularizados e desempenho (31/08/2026)
+**Status: concluída.**
+
+- 4 laboratórios + 10 interiores de ferramentas deixaram de ser instanciados no boot do 3D;
+- runtime externo e runtime interno agora são grupos independentes;
+- interior solicitado é montado sob demanda na entrada e descartado na saída;
+- exterior é suspenso enquanto o aluno está dentro do prédio;
+- tráfego, NPCs, portais, atrações, monotrilho e animações externas deixam de atualizar no interior;
+- colisão da câmera é limitada ao ambiente ativo;
+- interações internas são montadas/desmontadas junto com o ambiente;
+- validador específico: 18/18 PASS;
+- regressões das Etapas 10–14 e validadores oficiais: PASS;
+- suíte geral permanece 359/368 PASS, com as mesmas 9 falhas antigas fora deste escopo;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 16 — Interações e atrações do Lobby (31/08/2026)
+**Status: concluída.**
+
+- escadas externas deixam de ser bloqueadas pelo colisor dos próprios prédios;
+- escorregador recebe degraus/plataforma físicos compartilhados com o runtime;
+- Mirante recebe decks físicos, permanência no topo e rota de descida;
+- Estação Intermodal recebe passeio panorâmico completo no circuito do Campus;
+- trem visual acompanha passageiro em viagens e passeio panorâmico;
+- estações passam a sinalizar chegada com animação de luz;
+- elevadores/escadas internas 2D e 3D preservados e validados;
+- validador específico: 22/22 PASS;
+- regressões das Etapas 10–15 e validadores oficiais: PASS;
+- suíte geral permanece 359/368 PASS, com as mesmas 9 falhas antigas fora deste escopo;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 17 — Laboratório e adaptações
+Concluída.
+
+- Acesso à prática não é mais derrubado por falha isolada de sincronização do Core.
+- Modo degradado preserva autoridade central e bloqueia recompensa local falsa.
+- Lab Virtual herda `learning_mode` e preferência pedagógica do aluno.
+- Fullscreen compartilhado respeita acomodações globais.
+- Migration 064 adiciona normalização/reconciliação automática do roster privado.
+- 10/10 testes focados PASS; suíte comparável permanece 359/368.
+- Migration 064 pendente de aplicação no Supabase correto de produção.
