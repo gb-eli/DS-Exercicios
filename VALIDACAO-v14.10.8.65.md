@@ -358,3 +358,153 @@ As oito falhas restantes são idênticas às da Etapa 19 e permanecem fora do Va
 - suíte `core/tests/*.test.mjs`: **368/376 PASS**.
 
 As oito falhas restantes são as mesmas da Etapa 20 e não pertencem ao Vale do Silício.
+
+## Validação adicional — Etapa 22
+
+- `p1096-github-teacher-review-panel-v14.10.8.7.test.mjs` + `p1097-github-application-simulator-v14.10.8.8.test.mjs`: **12/12 PASS**.
+- painel de auditoria GitHub privado e sem escrita remota: **PASS**.
+- simulador com REST restrito a `GET`: **PASS**.
+- overview docente isolado em `action: 'overview'`: **PASS**.
+- ausência de `update`, `insert`, `delete`, `PATCH`, `PUT` e `DELETE` no simulador: **PASS**.
+- bundle público verificado a partir de `PUBLIC-DEPLOY.json` sem JSON/CSV identificável de auditoria GitHub: **PASS**.
+- fixtures privadas permanecem em `core/tests/`, fora da publicação estática: **PASS**.
+- Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **371/376 PASS**.
+
+As cinco falhas restantes não pertencem ao GitHub/Professor: supervisão histórica, roster público, Central de Apoio e duas rotas legadas.
+
+## Validação adicional — Etapa 23
+
+- `p101-nonblocking-supervision-font-sync-v14.10.1.test.mjs` + `p106-session-resilience-v14.10.6.test.mjs`: **11/11 PASS**.
+- ramo `action==='event'` registra saídas sem `security_locked:true`: **PASS**.
+- resposta de evento mantém `locked:false`: **PASS**.
+- política adaptativa `ignore_focus_events` preservada para `home_study`/`relaxed`: **PASS**.
+- limiar `max_focus_violations:3` continua apenas como alerta: **PASS**.
+- UI continua informando que saídas não bloqueiam automaticamente: **PASS**.
+- Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **372/376 PASS**.
+
+As quatro falhas restantes não pertencem à supervisão: roster público, Central de Apoio e duas rotas legadas.
+
+
+## Etapa 24 — Roster público / privacidade
+- `p10919-pedagogical-adaptations-v14.10.8.19.test.mjs` + `p10922-personalized-experiences-v14.10.8.20.test.mjs`: 20/20 PASS.
+- `validate-stage24-public-roster-privacy.mjs`: 9/9 PASS.
+- validadores oficiais: PASS.
+- suíte completa: 373/376 PASS.
+- nenhuma alteração de banco nesta etapa.
+
+
+## Etapa 25 — Central de Apoio
+- Validador específico: 12/12 PASS.
+- Regressões staff/RLS/segurança: PASS.
+- Validadores oficiais: PASS.
+- Suíte completa: 374/376 PASS.
+- Falhas restantes: somente P7.1 rotas canônicas/históricas.
+
+## Etapa 26 — fechamento P7.1
+
+Validação das rotas canônicas e aliases históricos:
+- 10 plataformas canônicas presentes e com IDs únicos;
+- 13 aliases históricos presentes como stubs mínimos;
+- autenticação unificada preservada;
+- `location.search` e `location.hash` preservados;
+- alias histórico `FLIPDS/` restaurado;
+- nenhum login paralelo por senha ou segredo de backend nos stubs.
+
+Resultados:
+- `core/tools/validate-legacy-routes-stage26.mjs`: **12/12 PASS**;
+- `core/tests/p71-production-cleanup-v14.0.test.mjs`: **4/4 PASS**;
+- regressões Hub/Auth/Sessão/Pré-publicação: **34/34 PASS**;
+- validadores oficiais: **PASS**;
+- suíte completa: **376/376 PASS — 0 falhas**.
+
+## Etapa 27 — Fase 2.1 / Estrutura visual dos prédios
+- `core/tools/validate-building-personality-stage27-v65.mjs`: **28/28 PASS**;
+- 27 empresas ativas preservadas;
+- 8 famílias arquitetônicas leves por categoria;
+- collider continua derivado do footprint original;
+- entrada física e degraus preservados;
+- LOD preservado;
+- meshes estimados de janelas: 600 → 282 (~53% menor);
+- Etapa 20 (renderização do Vale): **12/12 PASS** após atualização do contrato de silhueta;
+- física, urbanismo, responsividade, Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: **PASS**;
+- suíte completa: **376/376 PASS — 0 falhas**.
+
+## Etapa 29 / Fase 2.3
+- `core/tools/validate-space-identity-stage29-v65.mjs`: 16/16 PASS.
+- Regressões de personalidade, pistas/trilhos, masterplan, áreas abertas, interações, Vale urbano/física/renderização e responsividade: PASS.
+- Cinco validadores oficiais: PASS.
+- `node --test core/tests/*.test.mjs`: 376/376 PASS.
+
+## Etapa 30 / Fase 2.4 — Ambientação estrutural
+- `core/tools/validate-stage30-ambient-environment.mjs`: **20/20 PASS**;
+- vegetação do Campus: instanciada e escalada por qualidade: **PASS**;
+- vegetação do Vale: 20 pontos oficiais preservados e instanciados: **PASS**;
+- nuvens/estrelas/tráfego aéreo ambiental com orçamento Eco→Ultra: **PASS**;
+- iluminação arterial sem PointLights em massa: **PASS**;
+- Fases 2.1–2.3: **PASS**;
+- masterplan, urbanismo, física, Vale 3D, mobile, interiores e atrações: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- `node --test core/tests/*.test.mjs`: **376/376 PASS — 0 falhas**.
+
+## Etapa 31 / Fase 3.1 — Ciclo temporal 24h = 24min
+- `core/tools/validate-stage31-world-time.mjs`: **16/16 PASS**;
+- ciclo completo de 24 minutos: **PASS**;
+- 60 segundos reais = 1 hora de jogo: **PASS**;
+- Campus 2D/3D + Vale 2D/3D usam o mesmo `worldTimeControl`: **PASS**;
+- modo antigo `auto` migra para `cycle`: **PASS**;
+- Vale 3D possui sol/lua sincronizados: **PASS**;
+- comando administrativo exige staff + token HMAC server-side: **PASS**;
+- cache `stage31` na cadeia principal/dynamic world: **PASS**;
+- Fases 2.1–2.4 e regressões de mapa: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- `node --test core/tests/*.test.mjs`: **376/376 PASS — 0 falhas**.
+
+Observação de deploy: o controle global de horário requer publicação da Edge Function `lobby-presence` atualizada. Nenhuma migration é necessária.
+
+## Etapa 32 / Fase 3.2 — Sistema de clima
+- `core/tools/validate-stage32-world-weather.mjs`: **20/20 PASS**;
+- Limpo usa zero partículas e é o fallback seguro: **PASS**;
+- Chuva, Neve e Tempestade em 2D/3D: **PASS**;
+- orçamento Low < Medium < High < Ultra: **PASS**;
+- `saveData` e `prefers-reduced-motion` reduzem custo: **PASS**;
+- relâmpagos exclusivos de Tempestade: **PASS**;
+- precipitação oculta em interiores: **PASS**;
+- comando administrativo exige staff + token HMAC: **PASS**;
+- Fases 2.1–3.1 e regressões de mapas: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- `node --test core/tests/*.test.mjs`: **376/376 PASS — 0 falhas**.
+
+Observação de deploy: o controle global de clima requer publicação da Edge Function `lobby-presence` atualizada. Nenhuma migration é necessária e nenhum deploy em produção foi realizado nesta etapa.
+
+## Etapa 33 / Fase 4.1 — Interiores e personalidade interna
+- `core/tools/validate-stage33-interior-personality.mjs`: **27/27 PASS**;
+- 10 famílias visuais internas: **PASS**;
+- 4 temas acadêmicos 1DS/2DS/3DS/SUB: **PASS**;
+- equipamentos por `room.kind`: **PASS**;
+- Centro de Provas, Lab Virtual, CTF, COSMOS, Maker e demais prédios com personalidade própria: **PASS**;
+- 2D e 3D compartilham estilo/ícones: **PASS**;
+- animações limitadas ao piso ativo e `prefers-reduced-motion`: **PASS**;
+- lazy mount/dispose da Etapa 15: **PASS**;
+- Etapas 27–32: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- `node --test core/tests/*.test.mjs`: **376/376 PASS — 0 falhas**.
+
+Nenhuma migration, Edge Function ou alteração de banco foi realizada na Etapa 33.
+
+## Etapa 34 / Fase 4.2 — Comportamento contextual do avatar
+- `core/tools/validate-stage34-contextual-avatar.mjs`: **37/37 PASS**;
+- estado contextual em `sessionStorage` + BroadcastChannel opcional: **PASS**;
+- Prova deriva `exam-running`/`exam-paused`/finalização do status real do servidor: **PASS**;
+- Lab deriva `lab-active` do evento real de ferramenta aberta e retorna para espera ao fechar: **PASS**;
+- avatar procedural e rigged possuem poses de prova/pausa/programação: **PASS**;
+- 2D e 3D usam o mesmo contexto, bloqueio e indicador: **PASS**;
+- saída manual protegida durante contexto travado e logout limpa estado: **PASS**;
+- interiores continuam lazy/dispose: **PASS**;
+- contratos históricos de cache da Etapa 33 e do avatar rigged atualizados para aceitar fases posteriores sem remover fallback procedural: **PASS**;
+- Etapas 15–33 e regressões de mapas/Lab/clima/tempo: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- `node --test core/tests/*.test.mjs`: **376/376 PASS — 0 falhas**.
+
+Nenhuma migration, Edge Function ou alteração de banco foi realizada na Etapa 34.

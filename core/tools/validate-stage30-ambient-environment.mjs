@@ -1,0 +1,40 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const root=path.resolve(here,'../..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const checks=[];const check=(name,ok)=>checks.push({name,ok:!!ok});
+const ambient=read('lobby/assets/world/ambient-landscape.js');
+const lobby3d=read('lobby/assets/lobby3d.js');
+const lobby2d=read('lobby/assets/lobby-lite.js');
+const vale3d=read('lobby/assets/vale3d.js');
+const vale2d=read('lobby/assets/vale-lite.js');
+const lobby=read('lobby/assets/lobby.js');
+const sw=read('lobby/sw.js');
+const index=read('lobby/index.html');
+
+check('ambientação compartilhada separa Campus e Vale',ambient.includes('CAMPUS_AMBIENT')&&ambient.includes('VALE_AMBIENT'));
+check('Campus declara árvores periféricas variadas',((ambient.match(/shape:'(?:broad|tall|compact)'/g)||[]).length)>=12);
+check('Campus declara dois drones ambientais grandes',ambient.includes('campus-survey-drone')&&ambient.includes('campus-cargo-drone'));
+check('Vale declara três corredores aéreos decorativos',ambient.includes('vale-drone-observador')&&ambient.includes('vale-drone-carga')&&ambient.includes('vale-air-shuttle'));
+check('orçamento Eco remove nuvens e aeronaves extras',/low:\{trees:4,planters:0,clouds:0,aerial:0/.test(ambient)&&/low:\{trees:8,clouds:0,aerial:0/.test(ambient));
+check('orçamento cresce de forma explícita por qualidade',ambient.includes("medium:{trees:8")&&ambient.includes("ultra:{trees:20"));
+check('ambientação não cria PointLight adicional',!ambient.includes('PointLight'));
+check('Campus usa InstancedMesh para vegetação e vasos',lobby3d.includes('new THREE.InstancedMesh')&&lobby3d.includes("campus-ambient-landscape-stage30")&&lobby3d.includes('createCampusAmbientLandscape'));
+check('Campus remove loop antigo de árvores individuais',!lobby3d.includes("for(const [x,z,s] of[[-36,-8"));
+check('Campus integra céu noturno, nuvens e tráfego aéreo ao orçamento',lobby3d.includes('starGeo.setDrawRange')&&lobby3d.includes('clouds.count=')&&lobby3d.includes('ambientLandscape?.updateTime?.(world)'));
+check('Campus 2D reutiliza posições e estilos da ambientação',lobby2d.includes('CAMPUS_AMBIENT.trees')&&lobby2d.includes("shape==='tall'")&&lobby2d.includes("shape==='compact'"));
+check('Vale converte vegetação para InstancedMesh',vale3d.includes('createValeVegetationInstances')&&vale3d.includes('vegetation.trunks.count=vegetation.crowns.count'));
+check('Vale não cria mais uma árvore Group por ponto',!vale3d.includes('greeneryPlan.forEach((def,i)=>worldRoot.add(tree(def,i)))'));
+check('drone existente do Vale ficou maior',vale3d.includes("box(4.2,.9,2.8")&&vale3d.includes('new THREE.TorusGeometry(1.05'));
+check('Vale possui nuvens, estrelas e tráfego aéreo escalável',vale3d.includes("vale-ambient-landscape-stage30")&&vale3d.includes('starGeo.setDrawRange')&&vale3d.includes('aircraft.forEach'));
+check('iluminação urbana do Vale responde à noite sem PointLights em massa',vale3d.includes('avenueLampMaterials')&&vale3d.includes('night*1.12'));
+check('Vale 2D diferencia silhuetas da vegetação',vale2d.includes('variant=i%3')&&vale2d.includes('ctx.ellipse'));
+const phaseAtLeast30=text=>{const m=String(text).match(/stage(\d+)/);return !!m&&Number(m[1])>=30;};
+check('cache-bust de fase >=30 alcança a cadeia principal',phaseAtLeast30(index.match(/vendor-loader\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(lobby.match(/lobby3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0])&&phaseAtLeast30(lobby.match(/vale3d\.js\?v=14\.10\.8\.65-stage\d+/)?.[0]));
+check('Service Worker usa cache de fase >=30',phaseAtLeast30(sw.match(/agv-lobby-runtime-\$\{VERSION\}-stage\d+/)?.[0]));
+check('Service Worker pré-carrega ambientação em fase >=30',phaseAtLeast30(sw.match(/ambient-landscape\.js\?v=14\.10\.8\.65-stage\d+/)?.[0]));
+
+let failed=0;for(const item of checks){console.log(`${item.ok?'PASS':'FAIL'}  ${item.name}`);if(!item.ok)failed++;}
+console.log(`\n${checks.length-failed}/${checks.length} PASS`);if(failed)process.exit(1);

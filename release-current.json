@@ -39,5 +39,12 @@
   "status": "RELEASE_CANDIDATE",
   "knownPending": [
     "Aplicar a migration 063_p10920_password_change_finalize.sql no Supabase de produção antes de considerar a Etapa 2 totalmente implantada."
-  ]
+  ],
+  "privacy": {
+    "student_names_in_public_bundle": false,
+    "diagnostic_labels_in_student_ui": false,
+    "private_roster_seed_separate": true,
+    "private_roster_schema": "private",
+    "public_deploy_excludes_private_roster_sources": true
+  }
 }

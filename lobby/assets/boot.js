@@ -37,6 +37,7 @@ const ASSET_SIGNATURES={
   'game/portal-manager.js':['createPortalSystem','PORTAL ABERTO','AGUARDANDO'],
   'game/train-manager.js':['createTrainManager','startTrip','sampleVisual'],
   'world/dynamic-world.js':['resolveWorldTime','WORLD_TIME_MODES','skyPalette'],
+  'world/weather-system.js':['WORLD_WEATHER_TYPES','resolveWorldWeather','createWorldWeatherEffects'],
   'social/proximity-chat.js':['createProximityChat','issue_chat','verify_chat'],
   'rigged-avatar.js':['loadRiggedAvatarAsset','createRiggedAvatar']
 };
@@ -65,9 +66,9 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/dynamic-world.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
+  for(const asset of ['lobby.js','supabase.js','config.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage34`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});

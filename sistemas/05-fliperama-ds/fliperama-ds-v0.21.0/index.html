@@ -1,1 +1,25 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Versão legada — redirecionando</title><script src="../../../core/session/unified-auth-guard.js?v=14.10.8.65"></script></head><body><main><h1>Esta versão foi incorporada à experiência oficial.</h1><p>Redirecionando…</p></main><script>if(window.AGVUnifiedAuth?.readSession?.())location.replace(new URL('sistemas/05-fliperama-ds/flipds/index.html',window.AGVUnifiedAuth.rootUrl).href);</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Versão consolidada — redirecionando</title>
+  <script src="../../../core/session/unified-auth-guard.js?v=14.10.8.65"></script>
+</head>
+<body>
+  <main>
+    <h1>Esta versão foi consolidada na experiência oficial.</h1>
+    <p>Seu link antigo continua compatível. Redirecionando…</p>
+  </main>
+  <script>
+    (()=>{
+      if(!window.AGVUnifiedAuth?.readSession?.()) return;
+      const target=new URL("../flipds/index.html",location.href);
+      target.search=location.search;
+      target.hash=location.hash;
+      location.replace(target.href);
+    })();
+  </script>
+</body>
+</html>

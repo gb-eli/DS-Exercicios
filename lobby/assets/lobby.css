@@ -237,3 +237,12 @@ body[data-lobby-mode="3d"] .vehicle-status{box-shadow:0 0 18px rgba(255,174,99,.
 .vale-minimap{max-width:160px;max-height:160px}
 @media(max-width:780px){.vale-minimap{max-width:104px;max-height:104px}}
 @media(max-height:560px) and (orientation:landscape){.vale-minimap{max-width:92px;max-height:92px}}
+.world-weather{border-color:rgba(123,189,225,.28);color:#dff5ff;background:rgba(21,43,56,.6);white-space:nowrap}.world-weather[data-weather="rain"]{border-color:rgba(104,169,205,.38);color:#d9efff;background:rgba(22,45,63,.72)}.world-weather[data-weather="snow"]{border-color:rgba(210,231,238,.42);color:#f4fbff;background:rgba(69,86,93,.58)}.world-weather[data-weather="storm"]{border-color:rgba(155,170,212,.48);color:#edf0ff;background:rgba(37,42,69,.72)}@media(max-width:760px){.world-weather{font-size:.6rem;padding:5px 7px}}@media(max-width:620px){.world-status .world-weather{display:none}}
+
+/* Etapa 34 — estado contextual do avatar */
+.avatar-context-status{border-color:rgba(143,220,255,.35);background:rgba(6,24,34,.88);color:#dff8ff}
+.avatar-context-status[data-context="exam-running"]{border-color:rgba(255,209,102,.56);color:#ffe5a5}
+.avatar-context-status[data-context="exam-paused"]{border-color:rgba(255,174,99,.58);color:#ffd4ad}
+.avatar-context-status[data-context="exam-finished"]{border-color:rgba(124,242,175,.5);color:#baf8d4}
+.avatar-context-status[data-context="lab-active"]{border-color:rgba(81,231,163,.52);color:#b8f8dc}
+@media(max-width:620px){.avatar-context-status{max-width:126px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}

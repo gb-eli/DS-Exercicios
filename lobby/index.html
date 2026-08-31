@@ -6,9 +6,9 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.65-stage21">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.65-stage34">
   <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.65">
-<script src="../core/session/unified-auth-guard.js?v=14.10.8.65"></script></head>
+<script src="../core/session/unified-auth-guard.js?v=14.10.8.65"></script><script src="../core/session/avatar-context.js?v=14.10.8.65-stage34"></script></head>
 <body>
   <section id="login" class="login-shell hidden" aria-hidden="true"><p>Redirecionando para o login único…</p></section>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="world-status glass">
           <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
-          <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="vehicle-status" class="chip vehicle-status hidden" aria-live="polite">🚗 Veículo • E sair</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
+          <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="avatar-context-status" class="chip avatar-context-status hidden" aria-live="polite">🎭 Livre</span><span id="vehicle-status" class="chip vehicle-status hidden" aria-live="polite">🚗 Veículo • E sair</span><span id="world-weather" class="chip world-weather" title="Clima do Lobby">☀️ Limpo</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
           <button id="activity-button" class="hud-button activity-button hidden" type="button">Atividade</button>
           <button id="teleport-button" class="hud-button teleport-button" type="button" title="Abrir teletransporte do Campus">⚡ Teletransporte</button>
           <button id="interior-map-button" class="hud-button interior-map-button hidden" type="button" title="Mapa interno e rotas do prédio">🗺 Interior</button>
@@ -156,7 +156,8 @@
           <p class="eyebrow">Lobby Vertical & Dynamic World</p>
           <h2 id="world-settings-title">⚙️ Mundo, câmera e personagem</h2>
           <div class="settings-grid">
-            <section class="settings-section"><h3>Atmosfera</h3><label>Modo do céu<select id="world-time-mode"><option value="auto">Automático / relógio local</option><option value="day">Dia</option><option value="night">Noite</option></select></label><label>Limite de FPS<select id="fps-cap"><option value="30">30 FPS</option><option value="45">45 FPS</option><option value="60">60 FPS</option></select></label><label class="check-row"><input id="show-perf" type="checkbox"> Mostrar indicador de FPS</label></section>
+            <section class="settings-section"><h3>Atmosfera</h3><label>Modo do céu<select id="world-time-mode"><option value="cycle">Ciclo AGV • 24h em 24min</option><option value="day">Dia fixo • visual local</option><option value="night">Noite fixa • visual local</option></select></label><label>Limite de FPS<select id="fps-cap"><option value="30">30 FPS</option><option value="45">45 FPS</option><option value="60">60 FPS</option></select></label><label class="check-row"><input id="show-perf" type="checkbox"> Mostrar indicador de FPS</label></section>
+            <section id="staff-world-time-control" class="settings-section hidden"><h3>Controle global do horário</h3><label>Modo da sessão<select id="staff-world-time-mode"><option value="cycle">Ciclo AGV • 24h em 24min</option><option value="fixed">Fixar horário</option></select></label><label id="staff-world-time-hour-row">Hora fixa<input id="staff-world-time-hour" type="time" step="60" value="12:00"></label><button id="staff-world-time-apply" class="primary" type="button">Aplicar aos usuários online</button><small class="muted">Controle temporário para os usuários online. Novos acessos voltam ao ciclo AGV até a equipe enviar outro comando.</small></section><section id="staff-world-weather-control" class="settings-section hidden"><h3>Controle global do clima</h3><label>Clima<select id="staff-world-weather-type"><option value="clear">☀️ Limpo</option><option value="rain">🌧️ Chuva</option><option value="snow">🌨️ Neve</option><option value="storm">⛈️ Tempestade</option></select></label><label>Intensidade<select id="staff-world-weather-intensity"><option value="light">Leve</option><option value="normal" selected>Normal</option><option value="strong">Forte</option></select></label><button id="staff-world-weather-apply" class="primary" type="button">Aplicar clima aos usuários online</button><small class="muted">O clima é temporário para a sessão online. Efeitos são reduzidos automaticamente em dispositivos Eco/Low.</small></section>
             <section class="settings-section"><h3>Câmera 3D</h3><label>FOV <output id="fov-value">65°</output><input id="fov-range" type="range" min="45" max="95" step="1" value="65"></label><div class="camera-mode-grid"><button data-camera-mode="explore" type="button">3ª pessoa</button><button data-camera-mode="firstperson" type="button">1ª pessoa</button><button data-camera-mode="wide" type="button">Ampla</button><button data-camera-mode="campus" type="button">Campus</button></div><small class="muted">FOV e primeira pessoa se aplicam ao modo 3D.</small></section>
             <section class="settings-section avatar-settings"><h3>Avatar V2</h3><div class="avatar-preset-grid"><button data-avatar-preset="casual" type="button">Casual</button><button data-avatar-preset="sport" type="button">Esportivo</button><button data-avatar-preset="institutional" type="button">Institucional</button><button data-avatar-preset="tech" type="button">Tecnológico</button></div><div class="color-grid"><label>Cor principal<input id="avatar-accent" type="color" value="#36d2ff"></label><label>Pele<input id="avatar-skin" type="color" value="#d99b72"></label><label>Cabelo<input id="avatar-hair" type="color" value="#171719"></label><label>Calça<input id="avatar-pants" type="color" value="#202731"></label><label>Tênis<input id="avatar-shoes" type="color" value="#e8ecef"></label></div><div class="accessory-grid"><label><input id="avatar-backpack" type="checkbox"> Mochila</label><label><input id="avatar-glasses" type="checkbox"> Óculos</label><label><input id="avatar-headset" type="checkbox"> Headset</label><label><input id="avatar-wrist" type="checkbox"> Relógio</label></div><label>Estilo do cabelo<select id="avatar-hair-style"><option value="soft">Suave</option><option value="short">Curto</option><option value="cap">Boné</option></select></label></section>
           </div>
@@ -213,6 +214,6 @@
   <script src="../core/session/fullscreen-portal.js?v=14.10.8.65"></script>
   <script src="assets/diagnostics.js?v=14.10.8.65"></script>
   <script src="assets/sw-register.js?v=14.10.8.65" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.65" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.65-stage34" defer></script>
 </body>
 </html>

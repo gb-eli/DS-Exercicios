@@ -13,6 +13,13 @@
   const api=(action,body={})=>auth.request(`/functions/v1/${cfg.functionName}`,{method:'POST',body:{action,...body}});
   const msg=(t='',err=false)=>{const e=$('login-message');if(e){e.textContent=t;e.classList.toggle('error',err)}};
   function setConnection(text,kind=''){const e=$('connection-pill');if(!e)return;e.textContent=text;e.className=`pill ${kind}`.trim();}
+  function syncAvatarExamContext(detail=st.detail){
+    const api=window.AGVAvatarContext;if(!api||!detail?.session)return;const status=String(detail.session.status||''),sessionId=String(detail.session.id||st.sessionId||'');
+    if(['waiting_room','locked'].includes(status))api.set({state:'waiting',interiorId:'practical-exam',platform:'prova',sessionId,activity:detail.session.title||'Prova prática',detail:'Aguardando início'});
+    else if(status==='running')api.set({state:'exam-running',interiorId:'practical-exam',platform:'prova',sessionId,activity:detail.session.title||'Prova prática',detail:'Fazendo prova'});
+    else if(status==='paused')api.set({state:'exam-paused',interiorId:'practical-exam',platform:'prova',sessionId,activity:detail.session.title||'Prova prática',detail:'Prova pausada'});
+    else if(['finished','grading','score_scheduled','published','cancelled'].includes(status))api.set({state:'exam-finished',interiorId:'practical-exam',platform:'prova',sessionId,activity:detail.session.title||'Prova prática',detail:'Prova finalizada'});
+  }
   function applyAccommodation(a=st.accommodation||st.detail?.accommodation||{}){
     const scale=Math.min(1.2,Math.max(1,Number(a.font_scale)||1));
     document.documentElement.style.fontSize=`${Math.round(16*scale)}px`;
@@ -210,7 +217,7 @@
   }
 
   function renderDetail(){
-    const d=st.detail,host=$('exam-content');if(!d)return renderSessions();const [label,kind]=statusInfo(d.session.status);
+    const d=st.detail,host=$('exam-content');if(!d)return renderSessions();syncAvatarExamContext(d);const [label,kind]=statusInfo(d.session.status);
     const myRoom=(d.clans||[]).find(c=>String(c.id)===String(d.me?.clan_id||''));document.documentElement.dataset.examTheme='corporate';
     host.innerHTML=`<section class="panel exam-hero multiplayer-hero"><div><p class="eyebrow">PROVA PRÁTICA EM EQUIPE • ${esc(d.session.subject_name)}</p><h1>${esc(d.session.title)}</h1><p>${esc(d.session.description||'')}</p><div class="session-meta"><span class="status-pill ${kind}">${esc(label)}</span><span class="status-pill">${Number(d.session.max_score||0).toLocaleString('pt-BR')} pontos</span><span class="status-pill">equipe de até ${Number(d.session.max_clan_size||6)}</span><span class="status-pill good">ENCERRAMENTO PELO PROFESSOR</span></div></div>${['running','paused'].includes(d.session.status)?`<div id="exam-timer" class="timer operation-clock"><span>Tempo de atividade</span><strong>${fmtTime(d.session.elapsed_seconds||0)}</strong><small>sem encerramento automático</small></div>`:''}</section>${d.session.home_continuation_enabled?'<div class="notice good home-operation-banner"><strong>🏠 CONTINUAÇÃO EM CASA LIBERADA</strong><br>Seu progresso está salvo no servidor. Continue com sua equipe; a avaliação só termina quando o professor encerrar.</div>':''}${gameHud(d)}<div class="control-bar"><button class="button ghost small" data-back-sessions type="button">← Sair da sala</button></div>${['waiting_room','locked'].includes(d.session.status)?waitingRoom(d):d.session.status==='running'?challengesView(d):d.session.status==='paused'?`<div class="notice warn"><strong>⏸ Bloqueio temporário ativado pelo professor.</strong><br>Os envios definitivos ficam bloqueados até a retomada.</div>${challengesView(d)}`:resultView(d)}`;
     st.accommodation=d.accommodation||st.accommodation||{};applyAccommodation(st.accommodation);const supervised=['waiting_room','locked','running','paused'].includes(d.session.status)&&!st.accommodation?.fullscreen_optional;document.body.classList.toggle('collective-match-active',['waiting_room','locked','running','paused'].includes(d.session.status));window.AGVFullscreen?.require(supervised);if(supervised)window.AGVFullscreen?.request?.({silent:true}).catch?.(()=>{});startTimers();

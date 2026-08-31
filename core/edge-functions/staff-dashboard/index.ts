@@ -60,15 +60,22 @@ Deno.serve(async r=>{if(r.method==='OPTIONS')return new Response('ok',{headers:H
  }
  const sid=String(b.student_id||''), eid=String(b.exercise_id||'');
  if(act==='support_overview'){
-  const [{data:classes},{data:memberships},{data:students}]=await Promise.all([
-   db.from('classes').select('id,code,name').eq('active',true),
-   db.from('class_memberships').select('class_id,user_id,is_primary,active').eq('active',true),
-   db.from('profiles').select('id,full_name,email,last_login_at').eq('role','student').eq('active',true)
-  ]);
+  const classQuery=db.from('classes').select('id,code,name').eq('active',true);
+  const membershipQuery=admin
+   ?db.from('class_memberships').select('class_id,user_id,is_primary,active').eq('active',true)
+   :assigned.length
+    ?db.from('class_memberships').select('class_id,user_id,is_primary,active').eq('active',true).in('class_id',assigned)
+    :null;
+  const [{data:classes},{data:memberships,error:me}]=await Promise.all([
+   classQuery,
+   membershipQuery||Promise.resolve({data:[],error:null})
+  ]);if(me)throw me;
   const allowedIds=new Set<string>();
-  if(admin){for(const student of students||[])allowedIds.add(String(student.id));}
-  else{const aa=new Set(assigned);for(const membership of memberships||[])if(aa.has(String(membership.class_id)))allowedIds.add(String(membership.user_id));}
+  if(!admin){for(const membership of memberships||[])allowedIds.add(String(membership.user_id));}
+  let students:any[]=[];
+  if(admin){const result=await db.from('profiles').select('id,full_name,email,last_login_at').eq('role','student').eq('active',true);if(result.error)throw result.error;students=result.data||[];for(const student of students)allowedIds.add(String(student.id));}
   const ids=[...allowedIds];if(!ids.length)return J({students:[],threads:[],messages:[],focus_checkins:[],scope:admin?'global':'assigned'});
+  if(!admin){const result=await db.from('profiles').select('id,full_name,email,last_login_at').eq('role','student').eq('active',true).in('id',ids);if(result.error)throw result.error;students=result.data||[];}
   const [{data:threads,error:te},{data:checkins,error:ce}]=await Promise.all([
    db.from('student_support_threads').select('*').in('student_id',ids).order('last_message_at',{ascending:false}).limit(1000),
    db.from('student_focus_checkins').select('id,student_id,assignment_id,exercise_id,response,context,occurred_at').in('student_id',ids).order('occurred_at',{ascending:false}).limit(1000)

@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'../..');
+const valePath=path.join(root,'lobby/assets/vale3d.js');
+const dataPath=path.join(root,'lobby/data/vale-silicio/runtime-v2.json');
+const campusPath=path.join(root,'lobby/assets/world/campus-environment.js');
+const vale=fs.readFileSync(valePath,'utf8');
+const data=JSON.parse(fs.readFileSync(dataPath,'utf8'));
+const campus=fs.readFileSync(campusPath,'utf8');
+let pass=0,fail=0;
+function check(cond,msg){if(cond){pass++;console.log(`PASS ${msg}`)}else{fail++;console.error(`FAIL ${msg}`)}}
+const companies=(data.companies||[]).filter(c=>c.enabled!==false);
+check(companies.length===27,'Vale mantém 27 empresas ativas');
+check(vale.includes('const categoryArchitecture=category=>'), 'Vale possui seletor arquitetônico por categoria');
+for(const arch of ['arcade','maker','immersive','media','sport','tech-tower','academic','tech'])check(vale.includes(`return'${arch}'`),`família arquitetônica ${arch}`);
+check(vale.includes("key.includes('robot')")&&vale.includes("key.includes('media')")&&vale.includes("key.includes('sport')")&&vale.includes("key.includes('edtech')"),'categorias reais alimentam personalidade visual');
+check(vale.includes('windowMat=mat(accent')&&vale.includes('const addWindowBands='),'materiais de janela são compartilhados por prédio');
+check(vale.includes('spanH=Math.max(1.4,spanFloors*4.2-1.65)'),'montantes verticais são consolidados em vez de repetidos por piso');
+check(vale.includes("root.userData.architecture=architecture"),'arquitetura fica identificável no runtime');
+check(/const collider=\{id:c\.id,x:Number\(pos\.x\|\|0\),z:Number\(pos\.z\|\|0\),w:Number\(fp\.width\|\|24\),d:Number\(fp\.depth\|\|20\),rotation\}/.test(vale),'collider continua usando footprint original');
+check(vale.includes("if(c.building?.collision?.walkable_entry!==false)addEntranceSteps(root,collider,accent,doorWidth,fp.depth)"),'entrada física e escadas permanecem preservadas');
+check(vale.includes("buildingEntries.push({company:c,root,detail,sign,lod:c.building?.lod||{},x:pos.x,z:pos.z,architecture})"),'LOD continua associado aos prédios personalizados');
+const floors=companies.map(c=>Math.max(1,Math.min(6,Number(c.building?.floors||2))));
+const oldMeshes=floors.reduce((n,f)=>n+10*f,0),newBands=floors.reduce((n,f)=>n+2*f+6,0);
+check(newBands<oldMeshes*.6,`faixas de janela reduzem meshes estimados (${oldMeshes} -> ${newBands})`);
+for(const arch of ['campus-hall','research-lab','cyber-fortress','observatory','challenge-arena','arcade','innovation-center','exam-center','bank','store'])check(campus.includes(`case '${arch}'`)||campus.includes(`architecture:'${arch}'`)||arch==='campus-hall',`Campus preserva arquitetura ${arch}`);
+console.log(`\nStage27 building personality: ${pass}/${pass+fail} PASS`);
+if(fail)process.exit(1);

@@ -24,13 +24,13 @@ check('modo 2D preserva alternância do mirante',lite.includes("const rideId=id=
 check('circuito panorâmico completo existe',!!exp.CAMPUS_RIDES.coaster&&exp.CAMPUS_RIDES.coaster.nodes.length>=16);
 check('circuito panorâmico parte e retorna à Estação Intermodal',exp.CAMPUS_RIDES.coaster.nodes[0].x===34&&exp.CAMPUS_RIDES.coaster.nodes[0].z===-6&&exp.CAMPUS_RIDES.coaster.nodes.at(-1).x===34&&exp.CAMPUS_RIDES.coaster.nodes.at(-1).z===-6);
 check('botão da montanha-russa existe e é contextual',html.includes('id="train-panoramic"')&&html.includes('Montanha-russa panorâmica')&&ui.includes('openTrainModal(showPanoramic=false)')&&ui.includes("if(obj.type==='coaster'){openTrainModal(true)"));
-check('trem visual acompanha viagem e passeio panorâmico',d3.includes("const trainPos=(trainRide||(activeRideId==='coaster'?experienceRide:null))||train.sampleVisual(nowMs)"));
+check('monotrilho e montanha-russa usam veículos visuais separados',d3.includes("const trainPos=trainRide||train.sampleVisual(nowMs)")&&d3.includes("activeCoaster=activeRideId==='coaster'&&experienceRide")&&env.includes("g.userData.coasterTrain=coasterTrain"));
 check('estações sinalizam chegada do trem',env.includes('stations.push({station:{...station,...profile,name:profile.name},platform,edgeLight,indicator})')&&d3.includes('trainPos.station===entry.station.id'));
 check('avatar não atravessa o trem durante a viagem',d3.includes("!train.isTraveling()&&activeRideId!=='coaster'"));
 
 let now=0;const events=[];const ride=createRideManager({clock:()=>now,onEvent:e=>events.push(e)});
 check('gerenciador inicia montanha-russa',ride.start('coaster')===true);
-now=19000;const coasterEnd=ride.tick(now);
+now=(exp.CAMPUS_RIDES.coaster.duration+0.5)*1000;const coasterEnd=ride.tick(now);
 check('montanha-russa completa e retorna à estação',coasterEnd?.done===true&&Math.hypot(coasterEnd.x-34,coasterEnd.z+6)<.01);
 now=0;const slide=createRideManager({clock:()=>now});slide.start('slide');now=2600;const slideMid=slide.tick(now);now=5400;const slideEnd=slide.tick(now);
 check('escorregador sobe e retorna ao nível do solo',slideMid?.y>2.5&&slideEnd?.done===true&&slideEnd.y<.2);

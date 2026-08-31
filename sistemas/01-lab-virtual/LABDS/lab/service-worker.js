@@ -1,11 +1,11 @@
 'use strict';
-const VERSION='labds-v4.21.0-hardware-system-benchmark-incident-phase-a55-agv-core-p1-v7';
+const VERSION='labds-v4.21.0-hardware-system-benchmark-incident-phase-a55-agv-core-p1-v7-stage34';
 const CORE=`${VERSION}-core`,RUNTIME=`${VERSION}-runtime`,EXTERNAL=`${VERSION}-external`;
 const CORE_FILES=[
   './','./index.html','./offline.html','./manifest.webmanifest','./assets/icon.svg','./assets/hero-tech-lab.svg','./css/boot.css',
   './js/core/bootstrap.js','./js/core/resource-loader.js','./js/core/performance-manager.js',
   './css/style.css','./css/session.css','./css/performance.css','./css/v3.css','./css/v32.css',
-  './js/config.js','./js/schemas.js','./js/storage.js','./js/session.js','./js/agv-core-bridge.js','./js/v3/core.js','./js/accessibility.js','./js/app.js'
+  './js/config.js','./js/schemas.js','./js/storage.js','./js/session.js','./js/agv-core-bridge.js','./js/v3/core.js','./js/accessibility.js','./js/app.js?v=14.10.8.65-stage34'
 ];
 async function addCore(){const cache=await caches.open(CORE);await Promise.all(CORE_FILES.map(async url=>{try{await cache.add(new Request(url,{cache:'reload'}));}catch(error){console.warn('[SW] núcleo não armazenado',url,error);}}));}
 self.addEventListener('install',event=>event.waitUntil(addCore()));

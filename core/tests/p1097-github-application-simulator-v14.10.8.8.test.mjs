@@ -62,9 +62,12 @@ test('painel do professor contém simulador e browser não possui comando de esc
   const html=read('professor/index.html'),js=read('professor/assets/legacy-github-apply-simulator.js');
   assert.match(html,/teacher-github-simulator-toggle/);
   assert.match(html,/github-sim-decisions-file/);
-  assert.match(html,/legacy-github-apply-simulator\.js\?v=14\.10\.8\.18/);
+  assert.match(html,/legacy-github-apply-simulator\.js\?v=14\.10\.8\.65-stage22/);
   assert.match(js,/production_write_applied:false/);
   assert.match(js,/staffFunction/);
+  assert.match(js,/READ_ONLY_ACTION='overview'/);
+  assert.match(js,/readApi\(path\)/);
+  assert.match(js,/method:'GET'/);
   assert.doesNotMatch(js,/review_legacy/);
   assert.doesNotMatch(js,/\.update\s*\(/);
   assert.doesNotMatch(js,/\.insert\s*\(/);

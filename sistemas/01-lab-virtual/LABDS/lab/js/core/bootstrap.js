@@ -2,7 +2,7 @@
 (function(){
   window.LABDS=window.LABDS||{};
   const CRITICAL_STYLES=['css/style.css','css/session.css','css/performance.css','css/v3.css','css/v32.css'];
-  const CRITICAL_SCRIPTS=['js/config.js','js/schemas.js','js/storage.js','js/session.js','js/agv-core-bridge.js','js/v3/core.js','js/accessibility.js','js/app.js'];
+  const CRITICAL_SCRIPTS=['js/config.js','js/schemas.js','js/storage.js','js/session.js','js/agv-core-bridge.js','js/v3/core.js','js/accessibility.js','js/app.js?v=14.10.8.65-stage34'];
   function style(href){return new Promise((resolve,reject)=>{if([...document.styleSheets].some(sheet=>sheet.href&&sheet.href.endsWith(href)))return resolve();const link=document.createElement('link');link.rel='stylesheet';link.href=href;link.onload=resolve;link.onerror=reject;document.head.appendChild(link);});}
   function script(src){return new Promise((resolve,reject)=>{const node=document.createElement('script');node.src=src;node.async=true;node.onload=resolve;node.onerror=()=>reject(new Error(`Falha ao carregar ${src}`));document.head.appendChild(node);});}
   async function boot(){

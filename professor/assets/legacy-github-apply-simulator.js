@@ -56,8 +56,15 @@
     return{decision,current:current||null,proposal:p,diff,blocked:reasons.length>0,no_op:noOp,reasons,warnings};
   }
   async function sha256(text){if(!crypto?.subtle)return null;const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-  async function api(path,{method='GET',body}={}){return auth.request(path,{method,body})}
-  async function invoke(name,body){return api(`/functions/v1/${encodeURIComponent(name)}`,{method:'POST',body})}
+  const READ_ONLY_ACTION='overview';
+  async function readApi(path){
+    if(!String(path||'').startsWith('/rest/v1/'))throw new Error('github_sim_read_path_not_allowed');
+    return auth.request(path,{method:'GET'});
+  }
+  async function readOverview(){
+    if(!cfg?.staffFunction)throw new Error('github_sim_staff_function_missing');
+    return auth.request(`/functions/v1/${encodeURIComponent(cfg.staffFunction)}`,{method:'POST',body:{action:READ_ONLY_ACTION}});
+  }
   function array(v){return Array.isArray(v)?v:[]}
   function overviewStudents(raw){
     const profiles=array(raw.students||raw.profiles||raw.student_profiles).filter(x=>!x.role||x.role==='student');
@@ -70,10 +77,10 @@
   async function loadCurrent(){
     if(!auth.read())throw new Error('Entre no Console Professor antes de simular.');
     const [raw,claims,exercises,subjectsResult]=await Promise.all([
-      invoke(cfg.staffFunction,{action:'overview'}),
-      api('/rest/v1/legacy_exercise_claims?select=id,student_id,exercise_id,repository_url,status,next_exercise_id,submitted_at,reviewed_at,teacher_feedback,updated_at&order=submitted_at.asc'),
-      api('/rest/v1/exercises?select=id,exercise_number,subject_id,title'),
-      api('/rest/v1/subjects?select=id,slug,name').catch(()=>[])
+      readOverview(),
+      readApi('/rest/v1/legacy_exercise_claims?select=id,student_id,exercise_id,repository_url,status,next_exercise_id,submitted_at,reviewed_at,teacher_feedback,updated_at&order=submitted_at.asc'),
+      readApi('/rest/v1/exercises?select=id,exercise_number,subject_id,title'),
+      readApi('/rest/v1/subjects?select=id,slug,name').catch(()=>[])
     ]);
     const students=overviewStudents(raw),progress=overviewProgress(raw),studentMap=new Map(students.map(s=>[String(s.id),s.full_name])),exerciseMap=new Map(array(exercises).map(e=>[String(e.id),e])),subjectMap=new Map(array(subjectsResult).map(s=>[String(s.id),s.slug]));
     const progressMap=new Map(progress.map(p=>[[p.student_id||p.user_id,p.exercise_id].map(String).join('|'),p]));

@@ -14,9 +14,14 @@ const release=JSON.parse(read('release-current.json'));
 const version=JSON.parse(read('atividades/version.json'));
 
 test('P10.1 saídas continuam registradas sem bloqueio automático no código-fonte',()=>{
-  assert.match(edgeSupervision,/const focusAlert=focus>=Number\(pol\.max_focus_violations\|\|3\)/);
-  assert.match(edgeSupervision,/return J\(\{ok:true,locked:false,focus_alert:focusAlert/);
-  assert.doesNotMatch(edgeSupervision,/Limite de \$\{pol\.max_focus_violations\|\|3\} saídas da atividade atingido/);
+  const eventBranch=edgeSupervision.match(/if\(action==='event'\)\{[\s\S]*?\}\n if\(action==='end_session'\)/)?.[0]||'';
+  assert.ok(eventBranch,'ramo event da supervisão precisa existir');
+  assert.match(eventBranch,/const ignoredFocus=Boolean\(pol\.ignore_focus_events&&FOCUS\.has\(type\)\)/);
+  assert.match(eventBranch,/if\(FOCUS\.has\(type\)&&!ignoredFocus\)focus\+\+/);
+  assert.match(eventBranch,/const focusAlert=!ignoredFocus&&focus>=Number\(pol\.max_focus_violations\|\|3\)/);
+  assert.match(eventBranch,/return J\(\{ok:true,locked:false,focus_alert:focusAlert/);
+  assert.doesNotMatch(eventBranch,/security_locked:true|status:'blocked'|locked:true/);
+  assert.doesNotMatch(edgeSupervision,/Limite de \${pol\.max_focus_violations\|\|3\} saídas da atividade atingido/);
   assert.doesNotMatch(uiSupervision,/Ao atingir .*atividade será bloqueada/);
   assert.match(uiSupervision,/não bloqueiam automaticamente a atividade/);
   assert.match(admin,/max_focus_violations:3/);

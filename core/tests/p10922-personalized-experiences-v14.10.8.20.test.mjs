@@ -84,8 +84,20 @@ test('bootstrap mantém hotfix de resiliência e integra a experiência personal
 
 test('pacote público mantém roster nominal separado do código versionado',()=>{
   const release=JSON.parse(read('release-current.json'));
-  const publicText=[read('atividades/assets/js/personalized-experience.js'),read('atividades/assets/js/admin-experiences.js'),read('core/database/051_p10922_personalized_learning_experiences.sql')].join('\n').toLowerCase();
+  const deploy=JSON.parse(read('PUBLIC-DEPLOY.json'));
+  const rosterMigration=read('core/database/049_p10919_pedagogical_adaptations.sql');
+  const publicRoots=deploy.publicFrontendPaths||[];
+  const forbiddenPublicRoots=['core/database/','core/tests/','core/tools/','docs/','deploy/'];
   assert.equal(release.privacy?.private_roster_seed_separate,true);
-  assert.doesNotMatch(publicText,/insert\s+into\s+private\.pedagogical_adaptation_roster/);
+  assert.equal(release.privacy?.student_names_in_public_bundle,false);
+  assert.equal(release.privacy?.public_deploy_excludes_private_roster_sources,true);
+  for(const privateRoot of forbiddenPublicRoots)assert.equal(publicRoots.includes(privateRoot),false,`${privateRoot} não pode ser publicFrontendPath`);
+  assert.ok((deploy.neverPublishAsStatic||[]).includes('core/database/'));
+  assert.ok((deploy.neverPublishAsStatic||[]).includes('core/tests/'));
+  assert.match(rosterMigration,/create table if not exists private\.pedagogical_adaptation_roster/);
+  assert.match(rosterMigration,/revoke all on table private\.pedagogical_adaptation_roster from public, anon, authenticated/);
+  assert.doesNotMatch(rosterMigration,/insert\s+into\s+private\.pedagogical_adaptation_roster/i);
+  const publicText=[read('atividades/assets/js/personalized-experience.js'),read('atividades/assets/js/admin-experiences.js')].join('\n').toLowerCase();
+  assert.doesNotMatch(publicText,/private\.pedagogical_adaptation_roster/);
   assert.doesNotMatch(publicText,/diagnosis|diagnóstico|clinical_reason|medical_reason|laudo_text/i);
 });

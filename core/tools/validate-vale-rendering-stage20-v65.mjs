@@ -17,7 +17,7 @@ const checks=[
   ['Vale 3D ampliou plano de clipping para cidade larga',()=>assert.match(three,/PerspectiveCamera\([^\n]+\.08,1400\)/)],
   ['Vale 3D usa névoa menos agressiva',()=>assert.match(three,/scene\.fog\.density=\.00092-day\*\.00030/)],
   ['Vale 3D mantém mais prédios visíveis no modo Eco',()=>assert.match(three,/quality==='low'\?265:quality==='medium'\?340:quality==='high'\?430:520/)],
-  ['Vale 3D melhora leitura de silhueta dos prédios',()=>{assert.match(three,/const roof=box\(fp\.width\*\.92/);assert.match(three,/emissiveIntensity:\.18/)}],
+  ['Vale 3D melhora leitura de silhueta dos prédios',()=>{assert.match(three,/roofMat=mat\(accent/);assert.match(three,/categoryArchitecture=category/);assert.match(three,/architecture==='tech-tower'/);assert.match(three,/architecture==='immersive'/)}],
   ['Vale 3D usa câmera inicial mais aberta ao terreno',()=>assert.match(three,/initialPitch:\.43,initialDistance:9\.2/)],
   ['Exterior do Vale possui recuperação defensiva de visibilidade',()=>assert.match(three,/if\(worldRoot\.visible===false\)worldRoot\.visible=true/)],
 ];

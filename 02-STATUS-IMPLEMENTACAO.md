@@ -279,3 +279,184 @@ Concluída.
 - regressões Etapas 10–20 e validadores oficiais: PASS;
 - suíte geral permanece **368/376 PASS**, com as mesmas 8 falhas antigas fora deste escopo;
 - sem migration, Edge Function ou alteração de banco.
+
+## Etapa 22 — GitHub / Console Professor (31/08/2026)
+**Status: concluída.**
+
+- contratos históricos do painel GitHub atualizados para a release atual;
+- simulador do Professor endurecido para consultas somente leitura;
+- helper HTTP genérico removido: REST usa apenas `GET` e o overview docente usa uma chamada específica com `action: 'overview'`;
+- rascunhos da auditoria continuam somente em `localStorage`; nenhum comando remoto de escrita foi introduzido;
+- privacidade do bundle passou a ser validada pelos caminhos de `PUBLIC-DEPLOY.json`, sem reintroduzir resumo legado removido;
+- relatórios/fixtures identificáveis permanecem fora dos caminhos publicáveis;
+- cache-bust do simulador atualizado para `14.10.8.65-stage22`;
+- testes focados: 12/12 PASS;
+- cinco validadores oficiais: PASS;
+- suíte geral: **371/376 PASS**, eliminando as 3 falhas GitHub/Professor da Etapa 21;
+- restam 5 falhas fora deste escopo: supervisão histórica, roster público, Central de Apoio e duas rotas legadas;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 23 — Supervisão histórica sem bloqueio automático (31/08/2026)
+**Status: concluída.**
+
+- auditado o fluxo `event` da Edge Function de supervisão;
+- `visibility_hidden` e `fullscreen_exit` permanecem registrados e contabilizados sem bloqueio automático;
+- perfis adaptados `home_study`/`relaxed` continuam podendo ignorar eventos de foco conforme política individual;
+- contrato histórico P10.1 atualizado para validar a implementação adaptativa atual em vez da expressão antiga literal;
+- teste agora reprova qualquer `security_locked:true`, `status:'blocked'` ou `locked:true` dentro do ramo de evento;
+- bloqueios manuais e outras regras de segurança permanecem intactos;
+- testes focados P10.1/P10.6: 11/11 PASS;
+- cinco validadores oficiais: PASS;
+- suíte geral: **372/376 PASS**, eliminando a falha de supervisão da Etapa 22;
+- restam 4 falhas fora deste escopo: roster público, Central de Apoio e duas rotas legadas;
+- sem migration, Edge Function ou alteração de banco.
+
+
+## Etapa 24 — Roster público e privacidade dos alunos (31/08/2026)
+**Status: concluída.**
+
+- confirmado que a falha antiga era metadado de release ausente, não vazamento nominal;
+- `release-current.json` voltou a declarar os invariantes de privacidade da release atual;
+- roster nominal permanece exclusivamente em `private.pedagogical_adaptation_roster`;
+- `anon` e `authenticated` continuam sem acesso ao roster privado;
+- `PUBLIC-DEPLOY.json` é agora parte do contrato de privacidade e impede publicação de banco/testes/docs internos;
+- novo validador varre os caminhos publicáveis e rejeita roster privado/campos clínicos;
+- testes focados: 20/20 PASS; validador de privacidade: 9/9 PASS;
+- cinco validadores oficiais: PASS;
+- suíte geral: **373/376 PASS**, eliminando a falha de roster da Etapa 23;
+- restam 3 falhas fora deste escopo: Central de Apoio e duas rotas legadas;
+- sem migration, Edge Function ou alteração de banco.
+
+
+## Etapa 25 — Central de Apoio
+- Central de Apoio validada e contrato histórico atualizado para v14.10.8.65.
+- `support_overview` minimiza dados para professores não-admin desde a consulta.
+- 374/376 testes PASS; restam apenas 2 rotas legadas P7.1.
+- Edge Function `staff-dashboard` precisa de deploy no Supabase correto para a otimização entrar em produção.
+
+## Etapa 26 — Rotas legadas P7.1 — CONCLUÍDA
+- Corrigida compatibilidade dos 13 aliases históricos.
+- Restaurado alias `FLIPDS/` ausente.
+- Query string e hash agora são preservados nos redirecionamentos legados.
+- Catálogo atual não foi rebaixado para satisfazer teste histórico.
+- Validador dedicado: 12/12 PASS.
+- P7.1: 4/4 PASS.
+- Suíte integral final: **376/376 PASS — 0 falhas**.
+- Nenhuma alteração de banco/backend nesta etapa.
+
+## Etapa 27 — Fase 2.1: personalidade dos prédios (31/08/2026)
+**Status: concluída.**
+
+- Vale mantém 27 empresas, posições, footprints e colliders;
+- 8 famílias arquitetônicas leves por categoria;
+- cores reconhecem as categorias reais do catálogo atual;
+- faixas de janelas e materiais compartilhados reduzem repetição e draw calls;
+- estimativa de meshes de janela: 600 → 282 (~53% de redução);
+- entradas, escadas, LOD, câmera e física preservados;
+- cache-bust `14.10.8.65-stage27` aplicado ao `vale3d.js`;
+- validador dedicado: 28/28 PASS;
+- suíte geral: **376/376 PASS — 0 falhas**;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 29 — Fase 2.3: identidade e personalidade dos espaços
+- Concluída.
+- 5 praças do Campus e 8 distritos do Vale usam identidade temática compartilhada entre 2D e 3D.
+- Microestruturas de baixo custo substituem decoração dispersa.
+- Rótulos secundários aparecem por proximidade.
+- Animações temáticas desativadas no Eco/reduced-motion.
+- Cache-bust `stage29` aplicado.
+- Validação específica: 16/16 PASS.
+- Suíte completa: 376/376 PASS.
+
+## Etapa 30 — Fase 2.4: ambientação estrutural (31/08/2026)
+**Status: concluída.**
+
+- vegetação do Campus e Vale migrada para InstancedMesh;
+- Campus passa a ter 12 árvores variadas, vasos instanciados, nuvens, estrelas e 2 drones ambientais por orçamento de qualidade;
+- Vale preserva os 20 pontos oficiais de paisagismo, agora em 2 grupos instanciados;
+- drone do Vale ampliado e 3 rotas aéreas decorativas adicionadas;
+- iluminação arterial do Vale responde à noite via emissivo, sem multiplicar PointLights;
+- 2D acompanha a diversidade de vegetação sem poluição adicional;
+- modo Eco remove nuvens/aeronaves extras e reduz vegetação;
+- cache-bust `stage30` aplicado à cadeia principal e Service Worker;
+- validador específico: 20/20 PASS;
+- validadores oficiais: PASS;
+- suíte geral: **376/376 PASS — 0 falhas**;
+- sem migration, Edge Function ou alteração de banco.
+
+## Etapa 31 — Fase 3.1: ciclo temporal 24h = 24min (31/08/2026)
+**Status: concluída no código.**
+
+- relógio do mundo deixa de depender da hora local do computador;
+- ciclo oficial: **24 horas do Lobby/Vale = 24 minutos reais**;
+- equivalência: **1 segundo real = 1 minuto no jogo**;
+- Campus 2D, Campus 3D, Vale 2D e Vale 3D usam a mesma origem temporal;
+- amanhecer, dia, entardecer e noite passam a ser derivados do mesmo relógio;
+- Vale 3D ganhou sol e lua visíveis sincronizados com a iluminação;
+- equipe pode enviar controle temporário de sessão: ciclo automático ou hora fixa;
+- comando global usa token HMAC emitido/validado pela Edge Function `lobby-presence`;
+- aluno não recebe permissão para emitir controle de horário;
+- nenhum schema/tabela/migration foi criado;
+- a alteração da Edge Function precisa de deploy no Supabase correto para o controle global funcionar em produção;
+- sem esse deploy, o ciclo acelerado local/sincronizado continua funcionando, mas o broadcast administrativo não;
+- validador específico: **16/16 PASS**;
+- cinco validadores oficiais: **PASS**;
+- suíte geral: **376/376 PASS — 0 falhas**;
+- cache-bust `stage31` aplicado à cadeia principal e ao `dynamic-world.js`.
+
+## Etapa 32 — Fase 3.2: sistema de clima (31/08/2026)
+**Status: concluída no código.**
+
+- clima compartilhado entre Campus/Vale e 2D/3D;
+- estados Limpo, Chuva, Neve e Tempestade;
+- intensidade Leve, Normal e Forte;
+- sistema 3D por `Points`/shader com orçamento Low→Ultra e redução em `saveData`/movimento reduzido;
+- interiores sem precipitação;
+- tempestade com relâmpagos determinísticos;
+- céu, fog, exposição, sol e lua respondem ao clima;
+- equipe possui controle global temporário assinado pela Edge Function `lobby-presence`;
+- nenhuma migration/tabela criada;
+- Edge Function precisa de deploy no Supabase correto para o comando global funcionar em produção;
+- fallback Limpo e efeitos locais funcionam no frontend mesmo sem esse deploy;
+- cache-bust `stage32` aplicado à cadeia principal, CSS e Service Worker;
+- validador específico: **20/20 PASS**;
+- cinco validadores oficiais: **PASS**;
+- suíte geral: **376/376 PASS — 0 falhas**.
+
+## Etapa 33 — Fase 4.1: interiores e personalidade interna (31/08/2026)
+**Status: concluída no código.**
+
+- 10 plataformas internas receberam famílias visuais próprias;
+- 1DS, 2DS, 3DS e SUB receberam assinaturas acadêmicas internas distintas;
+- salas funcionais agora derivam mobiliário/equipamentos do `kind` do blueprint (`lab`, `cyber`, `science`, `exam`, `creator`, `finance`, `gamer`, etc.);
+- Centro de Provas ganhou carteiras/telas e linguagem visual própria;
+- Lab Virtual ganhou bancadas técnicas e identidade de pesquisa;
+- CTF/SOC, COSMOS, Maker, Banco, Loja, Arcade e demais interiores deixaram de compartilhar a mesma aparência genérica;
+- modo 2D usa a mesma identidade, ícones e motivos do 3D;
+- animações internas discretas rodam apenas no piso ativo e respeitam `prefers-reduced-motion`;
+- arquitetura lazy da Etapa 15 preservada: interior só monta ao entrar e é descartado ao sair;
+- nenhuma migration, tabela, Edge Function ou alteração de banco nesta fase;
+- cache-bust `stage33` aplicado aos consumidores de interiores e cadeia de boot;
+- validador específico: **27/27 PASS**;
+- cinco validadores oficiais: **PASS**;
+- suíte geral: **376/376 PASS — 0 falhas**.
+
+## Etapa 34 — Fase 4.2: comportamento contextual do avatar (31/08/2026)
+**Status: concluída no código.**
+
+- criado estado contextual de sessão para o “gêmeo digital” do avatar, sem dados pessoais e sem banco;
+- estados oficiais: waiting, exam-running, exam-paused, exam-finished, lab-waiting e lab-active;
+- Prova publica o estado do avatar a partir do status real da sessão do servidor;
+- durante a prova o avatar usa carteira/âncora contextual, senta e executa animação de prova; pausa mantém pose de prova sem escrita; finalização libera o controle;
+- Lab publica estado de programação ao abrir ferramenta e retorna ao estado de espera ao fechar;
+- avatar procedural e avatar rigged possuem poses para prova, pausa e programação;
+- 2D e 3D aplicam o mesmo contexto e bloqueiam movimento enquanto o estado exige foco;
+- troca 2D ↔ 3D preserva o contexto via sessionStorage/BroadcastChannel;
+- logout limpa o contexto;
+- interiores continuam lazy e descartáveis;
+- cache-bust `stage34` aplicado ao Lobby, Prova, Lab e Service Workers correspondentes;
+- validador específico: **37/37 PASS**;
+- regressões acumuladas: **PASS**;
+- cinco validadores oficiais: **PASS**;
+- suíte geral: **376/376 PASS — 0 falhas**;
+- nenhuma migration, Edge Function ou alteração de banco nesta fase.

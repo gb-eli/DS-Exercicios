@@ -28,8 +28,15 @@ assert.match(student,/student_support_notifications/);
 assert.match(student,/não concede XP|não altera a economia|checkpoint de esforço/i);
 assert.match(app,/initializeStudentSupportHub/);
 assert.match(app,/destroyStudentSupportHub/);
-assert.match(html,/support-hub\.css\?v=14\.10\.8\.29/);
-assert.match(html,/app\.js\?v=14\.10\.8\.29/);
+assert.match(html,/support-hub\.css\?v=14\.10\.8\.65/);
+assert.match(html,/app\.js\?v=14\.10\.8\.65/);
+
+
+// Etapa 25: professor deve minimizar dados desde a consulta, não apenas filtrar a resposta.
+assert.match(edge,/class_memberships'\)\.select\('class_id,user_id,is_primary,active'\)\.eq\('active',true\)\.in\('class_id',assigned\)/);
+assert.match(edge,/profiles'\)\.select\('id,full_name,email,last_login_at'\)\.eq\('role','student'\)\.eq\('active',true\)\.in\('id',ids\)/);
+assert.match(edge,/student_support_threads'\)\.select\('\*'\)\.in\('student_id',ids\)/);
+assert.match(edge,/student_focus_checkins'\).*\.in\('student_id',ids\)/s);
 
 for(const action of ['support_overview','support_reply','support_set_status','support_send_notification'])assert.match(edge,new RegExp(`act==='${action}'`));
 assert.match(edge,/await scope\(String\(thread\.student_id\)\)/);

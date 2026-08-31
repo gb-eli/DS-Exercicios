@@ -1,0 +1,42 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const root=path.resolve(here,'../..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const checks=[];
+const check=(name,ok)=>checks.push({name,ok:!!ok});
+const identities=read('lobby/assets/world/space-identities.js');
+const env=read('lobby/assets/world/campus-environment.js');
+const lobby3d=read('lobby/assets/lobby3d.js');
+const lobby2d=read('lobby/assets/lobby-lite.js');
+const vale3d=read('lobby/assets/vale3d.js');
+const vale2d=read('lobby/assets/vale-lite.js');
+const lobby=read('lobby/assets/lobby.js');
+const sw=read('lobby/sw.js');
+const index=read('lobby/index.html');
+
+const campusIds=['plaza-academic','plaza-civic','plaza-gamer','plaza-innovation','plaza-mobility'];
+const valeIds=['praca-das-startups','distrito-educacao-e-conhecimento','distrito-dados-e-sistemas','distrito-esportes-e-eventos','distrito-games-e-esports','distrito-maker-e-robotica','distrito-midia-e-comunicacao','distrito-imersivo-e-virtual'];
+check('5 identidades do Campus declaradas',campusIds.every(id=>identities.includes(`'${id}'`)));
+check('8 identidades do Vale declaradas',valeIds.every(id=>identities.includes(`'${id}'`)));
+check('identidades possuem ícone, slogan, motivo e cor',/icon:/.test(identities)&&/tagline:/.test(identities)&&/motif:/.test(identities)&&/accent:/.test(identities));
+check('Campus 3D cria uma assinatura por praça',env.includes('createCampusSpaceSignature')&&env.includes('spaceIdentityAnimated'));
+check('assinaturas do Campus mantêm custo contido',env.includes("quality!=='low'")||lobby3d.includes("quality!=='low'"));
+check('animações do Campus respeitam Eco e movimento reduzido',lobby3d.includes("quality!=='low'&&!profile.reducedMotion")&&lobby3d.includes('spaceIdentityAnimated'));
+check('Campus 2D consome a mesma identidade',lobby2d.includes('campusSpaceIdentity(plaza.id)')&&lobby2d.includes('identity?.tagline'));
+check('rótulos secundários do Campus aparecem por proximidade',lobby2d.includes('distance<16')&&env.includes('labelCullDistance=22'));
+check('Vale 3D consome identidade compartilhada',vale3d.includes('valeDistrictIdentity(district.id)')&&vale3d.includes('districtIdentityAnimated'));
+check('Vale 3D cria microestrutura temática por distrito',vale3d.includes("case 'startup'")&&vale3d.includes("case 'maker'")&&vale3d.includes("case 'immersive'"));
+check('animações do Vale respeitam Eco e movimento reduzido',vale3d.includes("quality!=='low'&&!reducedMotion")&&vale3d.includes('districtIdentityAnimated'));
+check('Vale 2D usa símbolos, cores e slogan compartilhados',vale2d.includes('valeDistrictIdentity(d.id)')&&vale2d.includes('identity.tagline')&&vale2d.includes('identity.icon'));
+check('Vale 2D limita detalhe por distância',vale2d.includes('distance<105')&&vale2d.includes('showDetail'));
+check('Fase 2.2 continua presente',env.includes('campus-mobility-track-layer')&&env.includes('monotrilho-train')&&lobby2d.includes('Montanha-russa panorâmica'));
+const stageAtLeast=(source,pattern,min=29)=>{const m=source.match(pattern);return !!m&&Number(m[1])>=min;};
+check('cache-bust da cadeia principal permanece em fase >=29',stageAtLeast(index,/vendor-loader\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(lobby,/lobby3d\.js\?v=14\.10\.8\.65-stage(\d+)/)&&stageAtLeast(lobby,/vale3d\.js\?v=14\.10\.8\.65-stage(\d+)/));
+check('Service Worker mantém fase >=29 e identidades',stageAtLeast(sw,/agv-lobby-runtime-\$\{VERSION\}-stage(\d+)/)&&sw.includes('space-identities.js?v=14.10.8.65-stage29'));
+
+let failed=0;
+for(const item of checks){console.log(`${item.ok?'PASS':'FAIL'}  ${item.name}`);if(!item.ok)failed++;}
+console.log(`\n${checks.length-failed}/${checks.length} PASS`);
+if(failed)process.exit(1);

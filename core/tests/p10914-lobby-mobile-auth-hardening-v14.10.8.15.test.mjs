@@ -20,7 +20,7 @@ test('P10.9.14 cadeia executável do Lobby está sincronizada na release atual',
   const index=read('lobby/index.html'),vendor=read('lobby/assets/vendor-loader.js'),boot=read('lobby/assets/boot.js'),lobby=read('lobby/assets/lobby.js');
   assert.match(index,/vendor-loader\.js\?v=14\.10\.8\.65/);
   assert.match(vendor,/VERSION='14\.10\.8\.65(?:\.2)?'/);
-  assert.match(boot,/`\.\/lobby\.js\?v=\$\{VERSION\}`/);
+  assert.match(boot,/`\.\/lobby\.js\?v=\$\{VERSION\}(?:-stage\d+)?`/);
   for(const dep of ['supabase.js','config.js','lobby3d.js','lobby-lite.js'])assert.match(lobby,new RegExp(dep.replace('.','\\.')+'\\?v=14\\.10\\.8\\.65'));
 });
 

@@ -21,7 +21,7 @@ test('Supabase JS usa UMD pinado/contingência e não usa +esm nas superfícies 
 test('entrypoints auditados usam cache bust v14.10.8.3',()=>{
   assert.match(read('lobby/index.html'),/assets\/vendor-loader\.js\?v=14\.10\.8/);
   assert.match(read('lobby/assets/vendor-loader.js'),/assets\/boot\.js\?v=\$\{VERSION\}/);
-  assert.match(read('lobby/assets/boot.js'),/`\.\/lobby\.js\?v=\$\{VERSION\}`/);
+  assert.match(read('lobby/assets/boot.js'),/`\.\/lobby\.js\?v=\$\{VERSION\}(?:-stage\d+)?`/);
   assert.match(read('lobby/assets/lobby.js'),/supabase\.js\?v=14\.10\.8/);
   assert.match(read('atividades/index.html'),/assets\/js\/app\.js\?v=14\.10\.8/);
 });

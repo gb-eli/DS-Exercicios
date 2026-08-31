@@ -33,7 +33,7 @@ must(rs.every(r=>r.x-r.w/2>b.min_x+12&&r.x+r.w/2<b.max_x-12&&r.z-r.d/2>b.min_z+1
 must(shared.includes("VALE_BOUNDS=Object.freeze({minX:-420,maxX:420,minZ:-420,maxZ:420})"),'runtime compartilhado usa os novos limites urbanos');
 const hall=world.core_landmarks?.find?.(x=>x.id==='hall_inovacao_agv');must(shared.includes("x:0,z:-360")&&shared.includes("id:'hall-inovacao'")&&hall?.position?.x===80&&hall?.position?.z===-120,'portal sul e Hall da Inovação sincronizados no runtime compartilhado');
 must(d3.includes('roadPlan=urban.roads')&&d3.includes('crosswalkPlan=urban.crosswalks')&&d3.includes('districtPad('),'3D deriva ruas, travessias e quadras do urban_plan');
-must(d3.includes('sidewalkWidth')&&d3.includes('avenueLights(')&&d3.includes('greeneryPlan.forEach'),'3D renderiza calçadas, iluminação arterial e paisagismo leve');
+must(d3.includes('sidewalkWidth')&&d3.includes('avenueLights(')&&(d3.includes('greeneryPlan.forEach')||d3.includes('createValeVegetationInstances')),'3D renderiza calçadas, iluminação arterial e paisagismo leve');
 must(d3.includes("depthTest,depthWrite:false")&&!d3.includes('depthTest:false}));s.scale.set(scale'),'placas do mundo respeitam profundidade e reduzem sobreposição visual');
 must(lite.includes('roadPlan=urban.roads')&&lite.includes('drawDistrictBlock(')&&lite.includes('drawCrosswalk('),'2D usa a mesma malha urbana do 3D');
 must(lite.includes("ctx.rotate(-rot)")&&lite.includes('dx*cos-dz*sin'),'2D respeita rotação visual e colisão orientada dos prédios');

@@ -6,6 +6,38 @@ const P=(x,z)=>Object.freeze({x:Number(x),z:Number(z)});
 const byId=Object.freeze(Object.fromEntries(CAMPUS_DESTINATIONS.map(item=>[item.id,item])));
 const garageMap=Object.freeze(Object.fromEntries(CAMPUS_GARAGES.map(item=>[item.id,item])));
 
+export const CAMPUS_INTERIOR_STYLE_PROFILES=Object.freeze({
+  'unified-platform':Object.freeze({family:'academic-hub',floor:'#13252d',wall:'#20343d',secondary:'#8bdcf0',motif:'forum',motion:'pulse'}),
+  bank:Object.freeze({family:'civic-finance',floor:'#152821',wall:'#243a31',secondary:'#61e7a6',motif:'ledger',motion:'scan'}),
+  store:Object.freeze({family:'retail-gallery',floor:'#211a29',wall:'#34263c',secondary:'#ff9ad9',motif:'gallery',motion:'showcase'}),
+  'lab-virtual':Object.freeze({family:'research-lab',floor:'#10262a',wall:'#17383d',secondary:'#65e7d8',motif:'circuit',motion:'analysis'}),
+  'ctf-ds':Object.freeze({family:'cyber-ops',floor:'#21171b',wall:'#362229',secondary:'#ff6b7a',motif:'soc',motion:'scan'}),
+  cosmos:Object.freeze({family:'observatory',floor:'#181a2e',wall:'#282a45',secondary:'#9f9cff',motif:'orbit',motion:'orbit'}),
+  'desafio-ds':Object.freeze({family:'challenge-center',floor:'#292117',wall:'#403222',secondary:'#ffbd66',motif:'briefing',motion:'pulse'}),
+  fliperama:Object.freeze({family:'arcade',floor:'#21162a',wall:'#37203f',secondary:'#ff7fd5',motif:'arcade',motion:'neon'}),
+  'game-info':Object.freeze({family:'maker',floor:'#12251e',wall:'#1e3b31',secondary:'#61e7a6',motif:'maker',motion:'analysis'}),
+  'practical-exam':Object.freeze({family:'exam-center',floor:'#1b2228',wall:'#29333a',secondary:'#f0c36b',motif:'exam',motion:'quiet'})
+});
+
+export const CAMPUS_CLASSROOM_INTERIOR_THEMES=Object.freeze({
+  '1ds':Object.freeze({family:'fundamentos',floor:'#12242c',wall:'#20343d',secondary:'#5edcff',motif:'logic',detail:'Blocos de lógica'}),
+  '2ds':Object.freeze({family:'frontend',floor:'#1a202b',wall:'#2b3041',secondary:'#79e7b4',motif:'interface',detail:'Painéis de interface'}),
+  '3ds':Object.freeze({family:'systems',floor:'#172329',wall:'#29363d',secondary:'#ffb866',motif:'systems',detail:'Infraestrutura e sistemas'}),
+  sub:Object.freeze({family:'mobile',floor:'#211d2b',wall:'#342d43',secondary:'#b897ff',motif:'mobile',detail:'Dispositivos e prática'})
+});
+
+const ROOM_KIND_STYLE=Object.freeze({
+  lab:Object.freeze({icon:'⚙',accent:'#65e7d8',prop:'workbench'}),tech:Object.freeze({icon:'▦',accent:'#61d5ff',prop:'rack'}),
+  cyber:Object.freeze({icon:'⌁',accent:'#ff6b7a',prop:'console'}),science:Object.freeze({icon:'◉',accent:'#9f9cff',prop:'orbital'}),
+  gamer:Object.freeze({icon:'✦',accent:'#ff7fd5',prop:'arcade'}),finance:Object.freeze({icon:'◈',accent:'#61e7a6',prop:'counter'}),
+  retail:Object.freeze({icon:'◇',accent:'#ff9ad9',prop:'display'}),creator:Object.freeze({icon:'⬡',accent:'#61e7a6',prop:'maker'}),
+  project:Object.freeze({icon:'▤',accent:'#72d9ff',prop:'table'}),exam:Object.freeze({icon:'✓',accent:'#f0c36b',prop:'exam'}),
+  mission:Object.freeze({icon:'⌁',accent:'#ffbd66',prop:'briefing'}),auditorium:Object.freeze({icon:'▰',accent:'#86d9ff',prop:'seats'}),
+  service:Object.freeze({icon:'i',accent:'#8bdcf0',prop:'lounge'}),staff:Object.freeze({icon:'◆',accent:'#a9c8d5',prop:'desk'}),
+  hub:Object.freeze({icon:'◎',accent:'#8bdcf0',prop:'hub'}),social:Object.freeze({icon:'☰',accent:'#ff9ad9',prop:'lounge'})
+});
+export function interiorRoomStyle(kind,fallback='#36d2ff'){const base=ROOM_KIND_STYLE[String(kind||'').toLowerCase()];return base||Object.freeze({icon:'•',accent:fallback,prop:'table'});}
+
 const INTERIOR_LAYOUTS=Object.freeze({
   'unified-platform':{template:'institutional-hall',origin:[-36,0,72],floors:['Recepção e Hub','Coordenação e Projetos'],garageId:null,services:['Recepção AGV','Hub de Atividades','Sala de Projetos','Auditório Compacto']},
   bank:{template:'civic-bank',origin:[-28,0,72],floors:['Atendimento e Autoatendimento','Gestão Financeira'],garageId:null,services:['Recepção Financeira','Autoatendimento','Extrato','Gestão de Moedas']},
@@ -35,7 +67,7 @@ const makeProfile=(destination,layout)=>{
   return Object.freeze({
     id:destination.id,name:destination.name,label:destination.label,subtitle:destination.subtitle,accent:destination.accent,route:destination.route,staffRoute:destination.staffRoute||null,
     template:layout.template,origin:Object.freeze(layout.origin),width,depth,floors,services:Object.freeze(layout.services),entrance:destination.entrance,reception,portal,elevator,stairs,exit,garage,
-    liveTheme:live?.theme||layout.template,floorMaps,guidedRoutes,receptionist,
+    liveTheme:live?.theme||layout.template,style:CAMPUS_INTERIOR_STYLE_PROFILES[destination.id]||CAMPUS_INTERIOR_STYLE_PROFILES['unified-platform'],floorMaps,guidedRoutes,receptionist,
     bounds:Object.freeze({minX:ox-width/2+.45,maxX:ox+width/2-.45,minZ:oz-depth/2+.45,maxZ:oz+depth/2-.45}),
     floorLabel:index=>floors.find(f=>f.index===index)?.name||floors[0].name
   });
@@ -43,6 +75,24 @@ const makeProfile=(destination,layout)=>{
 
 export const CAMPUS_INTERIOR_PROFILES=Object.freeze(CAMPUS_DESTINATIONS.map(destination=>makeProfile(destination,INTERIOR_LAYOUTS[destination.id])));
 export const CAMPUS_INTERIOR_MAP=Object.freeze(Object.fromEntries(CAMPUS_INTERIOR_PROFILES.map(item=>[item.id,item])));
+
+export const CAMPUS_CONTEXTUAL_ANCHORS=Object.freeze({
+  'practical-exam':Object.freeze({
+    waiting:Object.freeze({floor:0,x:30.8,z:74.4,rot:Math.PI*.5,action:null,label:'Aguardando início'}),
+    'exam-running':Object.freeze({floor:1,x:31.2,z:70.2,rot:Math.PI,action:'exam',label:'Fazendo prova'}),
+    'exam-paused':Object.freeze({floor:1,x:31.2,z:70.2,rot:Math.PI,action:'exam-paused',label:'Prova pausada'}),
+    'exam-finished':Object.freeze({floor:1,x:33.0,z:73.1,rot:0,action:null,label:'Prova finalizada'})
+  }),
+  'lab-virtual':Object.freeze({
+    'lab-waiting':Object.freeze({floor:0,x:-12,z:72.8,rot:0,action:null,label:'Laboratório disponível'}),
+    'lab-active':Object.freeze({floor:0,x:-17.2,z:74.4,rot:Math.PI,action:'program',label:'Programando'}),
+    'platform-active':Object.freeze({floor:0,x:-12,z:72.8,rot:0,action:null,label:'No laboratório'})
+  })
+});
+export function contextualInteriorAnchor(interiorId,state){
+  const map=CAMPUS_CONTEXTUAL_ANCHORS[String(interiorId||'')];if(!map)return null;
+  return map[String(state||'')]||map.waiting||map['lab-waiting']||null;
+}
 
 export const CAMPUS_INTERIOR_INTERACTIONS=Object.freeze(CAMPUS_INTERIOR_PROFILES.flatMap(profile=>{
   const refs=[

@@ -93,7 +93,7 @@ function animateProcedural(avatar,{speed=0,jump=0,time=0,vertical=0}={}){
   u.head.rotation.y=Math.sin(time*1.1+u.phase)*.07*idle;u.head.rotation.x=Math.sin(time*.7+u.phase)*.025*idle;
   if(jump>.01){u.leftArm.rotation.x=-.65;u.rightArm.rotation.x=-.65;u.leftLeg.rotation.x=.28+vertical*.025;u.rightLeg.rotation.x=.14-vertical*.018;u.body.rotation.x=-.08;}
   const emoteActive=u.emoteKind&&u.emoteUntil>Date.now(),localAction=u.localAction||null;
-  if(localAction==='dance'){u.body.rotation.z+=Math.sin(time*4)*.16;u.leftArm.rotation.z=.8;u.rightArm.rotation.z=-.8;}else if(localAction==='cheer'){u.leftArm.rotation.x=-1.65;u.rightArm.rotation.x=-1.65;u.leftArm.rotation.z=.25;u.rightArm.rotation.z=-.25;}else if(localAction==='crouch'){u.body.position.y-=.42;u.leftLeg.rotation.x=-.7;u.rightLeg.rotation.x=-.7;}else if(localAction==='sit'){u.body.position.y-=.7;u.leftLeg.rotation.x=-1.1;u.rightLeg.rotation.x=-1.1;}
+  if(localAction==='dance'){u.body.rotation.z+=Math.sin(time*4)*.16;u.leftArm.rotation.z=.8;u.rightArm.rotation.z=-.8;}else if(localAction==='cheer'){u.leftArm.rotation.x=-1.65;u.rightArm.rotation.x=-1.65;u.leftArm.rotation.z=.25;u.rightArm.rotation.z=-.25;}else if(localAction==='crouch'){u.body.position.y-=.42;u.leftLeg.rotation.x=-.7;u.rightLeg.rotation.x=-.7;}else if(localAction==='sit'){u.body.position.y-=.7;u.leftLeg.rotation.x=-1.1;u.rightLeg.rotation.x=-1.1;}else if(localAction==='exam'||localAction==='exam-paused'){u.body.position.y-=.7;u.leftLeg.rotation.x=-1.08;u.rightLeg.rotation.x=-1.08;u.body.rotation.x=.1;u.leftArm.rotation.x=-.92;u.rightArm.rotation.x=-.92;u.leftArm.rotation.z=.16;u.rightArm.rotation.z=-.16;if(localAction==='exam'){const write=Math.sin(time*9)*.12;u.rightArm.rotation.x+=write;u.rightArm.rotation.z-=write*.45;u.head.rotation.x=.14+Math.sin(time*1.3)*.025;}}else if(localAction==='program'){u.body.position.y-=.66;u.leftLeg.rotation.x=-1.04;u.rightLeg.rotation.x=-1.04;u.body.rotation.x=.075;const type=Math.sin(time*12)*.13;u.leftArm.rotation.x=-1.02+type;u.rightArm.rotation.x=-1.02-type;u.leftArm.rotation.z=.12;u.rightArm.rotation.z=-.12;u.head.rotation.x=.08+Math.sin(time*.9)*.03;}
   if(emoteActive&&u.emoteKind==='wave'){u.rightArm.rotation.x=-1.5;u.rightArm.rotation.z=-.35+Math.sin(time*10)*.42;}if(emoteActive&&u.emoteKind==='like'){u.leftArm.rotation.x=-1.18;u.rightArm.rotation.x=-1.18;u.leftArm.rotation.z=.26;u.rightArm.rotation.z=-.26;}if(emoteActive&&u.emoteKind==='spark'){u.body.position.y+=.07+Math.abs(Math.sin(time*6))*.06;u.leftArm.rotation.z=.72;u.rightArm.rotation.z=-.72;}
 }
 
@@ -102,7 +102,7 @@ export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='mediu
   const mode=()=>rigAsset?'rigged-glb-v2':'procedural-v2';
   async function init(){
     if(!rigEligible)return mode();
-    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.65');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
+    try{rigApi=await import('../rigged-avatar.js?v=14.10.8.65-stage34');rigAsset=await rigApi.loadRiggedAvatarAsset(THREE,{timeout:3000});diagnostics?.record?.('avatar_system_ready',{mode:'rigged-glb-v2',clips:rigAsset.clips?.map(c=>c.name)||[]});}
     catch(error){rigAsset=null;rigApi=null;diagnostics?.record?.('avatar_system_fallback',{mode:'procedural-v2',message:String(error?.message||error).slice(0,180)});console.warn('Avatar rigado indisponível; Avatar V2 usando fallback procedural.',error);}
     return mode();
   }

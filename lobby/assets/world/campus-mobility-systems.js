@@ -14,6 +14,16 @@ export const CAMPUS_TRAFFIC_ROUTES=Object.freeze([
   freezeRoute({id:'vale-corridor',name:'Corredor Campus Vale',loop:true,accent:'#51e7a3',nodes:[[0,-11],[0,-17],[0,-23],[0,-30],[3.4,-30],[3.4,-23],[3.4,-17],[3.4,-11],[0,-11]]})
 ]);
 
+
+// Fase 2.2 — corredores de pista reutilizam a malha viária existente; não criam uma segunda rua sobre o Campus.
+export const CAMPUS_MOBILITY_TRACKS=Object.freeze([
+  Object.freeze({
+    id:'track-mobility-south',name:'Pista Técnica AGV',routeId:'mobility-south',kind:'mixed',
+    accent:'#ffae63',edgeAccent:'#ffe2b8',width:4.6,curbWidth:.18,startT:.48,
+    description:'Corredor de testes para carro e moto, compartilhando a Via de Avaliação e o Anel Sul.'
+  })
+]);
+
 export const CAMPUS_TRAFFIC_FLEET=Object.freeze([
   Object.freeze({id:'traffic-01',routeId:'central-loop',kind:'car',label:'E-Car Campus',accent:'#55d9ff',speed:.022,offset:.02}),
   Object.freeze({id:'traffic-02',routeId:'central-loop',kind:'van',label:'Van Acadêmica',accent:'#8f8cff',speed:.018,offset:.42}),
