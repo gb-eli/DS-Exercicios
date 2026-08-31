@@ -343,3 +343,18 @@ As oito falhas restantes são as mesmas da Etapa 18: supervisão histórica, ros
 - suíte `core/tests/*.test.mjs`: **368/376 PASS**.
 
 As oito falhas restantes são idênticas às da Etapa 19 e permanecem fora do Vale do Silício.
+
+## Validação adicional — Etapa 21
+
+- `core/tools/validate-vale-minimap-overlay-stage21-v65.mjs`: **11/11 PASS**.
+- canvas fullscreen restrito a `#game3d`: **PASS**.
+- ausência do seletor genérico `.game-stage canvas` no Lobby: **PASS**.
+- minimapa com caixa independente e limite máximo 160 × 160 px: **PASS**.
+- minimapa oculto fora de Vale + 3D: **PASS**.
+- WebGL e minimapa usam canvases distintos: **PASS**.
+- cache-bust do CSS sincronizado entre `index.html` e `sw.js`: **PASS**.
+- Etapas 10–20: **PASS**.
+- Cidade v62, Interiores v63, Cidade Viva v64, Mobilidade v65 e Login Único v59: **PASS**.
+- suíte `core/tests/*.test.mjs`: **368/376 PASS**.
+
+As oito falhas restantes são as mesmas da Etapa 20 e não pertencem ao Vale do Silício.

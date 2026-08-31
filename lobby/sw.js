@@ -44,7 +44,7 @@ const CRITICAL_SHELL=[
   './assets/social/proximity-chat.js?v=14.10.8.65',
   './assets/rigged-avatar.js?v=14.10.8.65',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.65',
+  './assets/lobby.css?v=14.10.8.65-stage21',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[

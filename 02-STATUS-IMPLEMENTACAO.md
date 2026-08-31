@@ -266,3 +266,16 @@ Concluída.
 - regressões Etapas 10–19 e validadores oficiais: PASS;
 - suíte geral permanece **368/376 PASS**, com as mesmas 8 falhas anteriores fora deste escopo;
 - sem migration, Edge Function ou alteração de banco.
+
+## Etapa 21 — Vale do Silício: minimapa sobrepondo o 3D (31/08/2026)
+**Status: concluída.**
+
+- diagnosticado pelas fotos que a camada fullscreen era o canvas `#vale-minimap`, não o mundo 3D;
+- seletor genérico `.game-stage canvas` removido do Lobby e substituído por `#game3d`;
+- minimapa ganhou posicionamento independente e limites máximos anti-fullscreen;
+- cursor do mapa principal não contamina mais canvases auxiliares;
+- CSS usa cache-bust `14.10.8.65-stage21` e o Service Worker pré-carrega a mesma URL;
+- validador específico: 11/11 PASS;
+- regressões Etapas 10–20 e validadores oficiais: PASS;
+- suíte geral permanece **368/376 PASS**, com as mesmas 8 falhas antigas fora deste escopo;
+- sem migration, Edge Function ou alteração de banco.
