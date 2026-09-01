@@ -1,0 +1,1161 @@
+{
+  "version": "0.8.0",
+  "title": "Coleção ampliada do Museu do Hardware AGV",
+  "item_count": 64,
+  "verified_current_generation_as_of": "2026-08-31",
+  "curation_note": "Nomes e fabricantes são identificação histórica/educacional. Modelos 3D secundários são silhuetas genéricas sem logotipos de terceiros.",
+  "items": [
+    {
+      "id": "museum_collection_eniac",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "ENIAC",
+      "maker": "Eckert–Mauchly / University of Pennsylvania",
+      "year": 1945,
+      "kind": "computer",
+      "display_archetype": "mainframe",
+      "significance": "Um dos primeiros computadores eletrônicos digitais de propósito geral; representa a escala física da computação inicial.",
+      "tags": [
+        "computer",
+        "mainframe",
+        "1945"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_univac-i",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "UNIVAC I",
+      "maker": "Remington Rand",
+      "year": 1951,
+      "kind": "computer",
+      "display_archetype": "mainframe",
+      "significance": "Marco da computação comercial, levando processamento eletrônico para organizações civis.",
+      "tags": [
+        "computer",
+        "mainframe",
+        "1951"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_ibm-1401",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "IBM 1401",
+      "maker": "IBM",
+      "year": 1959,
+      "kind": "computer",
+      "display_archetype": "mainframe",
+      "significance": "Sistema amplamente adotado em processamento de dados empresarial na era dos cartões e fitas.",
+      "tags": [
+        "computer",
+        "mainframe",
+        "1959"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_system-360",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "IBM System/360",
+      "maker": "IBM",
+      "year": 1964,
+      "kind": "computer",
+      "display_archetype": "mainframe",
+      "significance": "Popularizou uma família compatível de computadores e consolidou a ideia de arquitetura escalável.",
+      "tags": [
+        "computer",
+        "mainframe",
+        "1964"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pdp-8",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "PDP-8",
+      "maker": "Digital Equipment Corporation",
+      "year": 1965,
+      "kind": "computer",
+      "display_archetype": "minicomputer",
+      "significance": "Minicomputador de grande influência, menor e mais acessível que mainframes tradicionais.",
+      "tags": [
+        "computer",
+        "minicomputer",
+        "1965"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pdp-11",
+      "gallery_id": "museu_hardware_agv_galeria_origens",
+      "name": "PDP-11",
+      "maker": "Digital Equipment Corporation",
+      "year": 1970,
+      "kind": "computer",
+      "display_archetype": "minicomputer",
+      "significance": "Arquitetura marcante para laboratórios, universidades e desenvolvimento de sistemas.",
+      "tags": [
+        "computer",
+        "minicomputer",
+        "1970"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_altair-8800",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "Altair 8800",
+      "maker": "MITS",
+      "year": 1975,
+      "kind": "computer",
+      "display_archetype": "microcomputer",
+      "significance": "Símbolo do início da computação pessoal para entusiastas e clubes de informática.",
+      "tags": [
+        "computer",
+        "microcomputer",
+        "1975"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_apple-i",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "Apple I",
+      "maker": "Apple Computer",
+      "year": 1976,
+      "kind": "computer",
+      "display_archetype": "microcomputer",
+      "significance": "Placa de computador pessoal vendida montada, representando a transição do hobby para produtos pessoais.",
+      "tags": [
+        "computer",
+        "microcomputer",
+        "1976"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_apple-ii",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "Apple II",
+      "maker": "Apple Computer",
+      "year": 1977,
+      "kind": "computer",
+      "display_archetype": "home-computer",
+      "significance": "Um dos micros domésticos de maior influência comercial do fim dos anos 1970.",
+      "tags": [
+        "computer",
+        "home-computer",
+        "1977"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_trs-80",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "TRS-80 Model I",
+      "maker": "Tandy / Radio Shack",
+      "year": 1977,
+      "kind": "computer",
+      "display_archetype": "home-computer",
+      "significance": "Ajudou a levar microcomputadores a lojas de varejo e usuários domésticos.",
+      "tags": [
+        "computer",
+        "home-computer",
+        "1977"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_commodore-pet",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "Commodore PET 2001",
+      "maker": "Commodore",
+      "year": 1977,
+      "kind": "computer",
+      "display_archetype": "home-computer",
+      "significance": "Sistema integrado com monitor e teclado, importante na popularização dos micros pessoais.",
+      "tags": [
+        "computer",
+        "home-computer",
+        "1977"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_zx-spectrum",
+      "gallery_id": "museu_hardware_agv_galeria_home",
+      "name": "ZX Spectrum",
+      "maker": "Sinclair Research",
+      "year": 1982,
+      "kind": "computer",
+      "display_archetype": "home-computer",
+      "significance": "Micro doméstico acessível, associado a uma grande cultura de programação e jogos.",
+      "tags": [
+        "computer",
+        "home-computer",
+        "1982"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_magnavox-odyssey",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "Magnavox Odyssey",
+      "maker": "Magnavox",
+      "year": 1972,
+      "kind": "console",
+      "display_archetype": "early-console",
+      "significance": "Primeiro console doméstico comercial amplamente reconhecido, usando jogos simples conectados à TV.",
+      "tags": [
+        "console",
+        "early-console",
+        "1972"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_home-pong",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "Atari Home Pong",
+      "maker": "Atari",
+      "year": 1975,
+      "kind": "console",
+      "display_archetype": "early-console",
+      "significance": "Levou a experiência de Pong para a sala de casa e ajudou a popularizar consoles dedicados.",
+      "tags": [
+        "console",
+        "early-console",
+        "1975"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_channel-f",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "Fairchild Channel F",
+      "maker": "Fairchild",
+      "year": 1976,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Um dos primeiros consoles com cartuchos ROM intercambiáveis.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1976"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_atari-2600",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "Atari VCS / 2600",
+      "maker": "Atari",
+      "year": 1977,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Consolidou o modelo de console com cartuchos e tornou jogos domésticos um mercado de massa.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1977"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_intellivision",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "Intellivision",
+      "maker": "Mattel Electronics",
+      "year": 1979,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Destacou controles diferentes e forte disputa entre plataformas domésticas.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1979"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_colecovision",
+      "gallery_id": "museu_hardware_agv_galeria_console",
+      "name": "ColecoVision",
+      "maker": "Coleco",
+      "year": 1982,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Conhecido por aproximar em casa experiências inspiradas em arcades.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1982"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_famicom-nes",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "Famicom / Nintendo Entertainment System",
+      "maker": "Nintendo",
+      "year": 1983,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Referência da retomada do mercado doméstico e consolidação de franquias duradouras.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1983"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_sg-1000",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "SG-1000",
+      "maker": "Sega",
+      "year": 1983,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Primeiro console doméstico da Sega.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1983"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_amstrad-cpc",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "Amstrad CPC 464",
+      "maker": "Amstrad",
+      "year": 1984,
+      "kind": "computer",
+      "display_archetype": "home-computer",
+      "significance": "Micro de 8 bits usado para jogos, educação e programação.",
+      "tags": [
+        "computer",
+        "home-computer",
+        "1984"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_master-system",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "Master System",
+      "maker": "Sega",
+      "year": 1985,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Console de 8 bits com forte presença internacional, inclusive no Brasil.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1985"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_atari-7800",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "Atari 7800",
+      "maker": "Atari",
+      "year": 1986,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Sistema voltado à continuidade da linha doméstica Atari.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1986"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pc-engine",
+      "gallery_id": "museu_hardware_agv_galeria_8bit",
+      "name": "PC Engine / TurboGrafx-16",
+      "maker": "NEC / Hudson Soft",
+      "year": 1987,
+      "kind": "console",
+      "display_archetype": "cartridge-console",
+      "significance": "Hardware híbrido da transição 8/16 bits, conhecido pelo formato compacto.",
+      "tags": [
+        "console",
+        "cartridge-console",
+        "1987"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_mega-drive",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "Mega Drive / Genesis",
+      "maker": "Sega",
+      "year": 1988,
+      "kind": "console",
+      "display_archetype": "console-16bit",
+      "significance": "Ícone da geração 16-bit, associado a jogos rápidos e competição global.",
+      "tags": [
+        "console",
+        "console-16bit",
+        "1988"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_super-famicom",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "Super Famicom / Super NES",
+      "maker": "Nintendo",
+      "year": 1990,
+      "kind": "console",
+      "display_archetype": "console-16bit",
+      "significance": "Consolidou recursos avançados de gráficos e áudio na geração 16-bit.",
+      "tags": [
+        "console",
+        "console-16bit",
+        "1990"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_neo-geo-aes",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "Neo Geo AES",
+      "maker": "SNK",
+      "year": 1990,
+      "kind": "console",
+      "display_archetype": "console-16bit",
+      "significance": "Levou hardware muito próximo ao arcade para o ambiente doméstico.",
+      "tags": [
+        "console",
+        "console-16bit",
+        "1990"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_sega-saturn",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "Sega Saturn",
+      "maker": "Sega",
+      "year": 1994,
+      "kind": "console",
+      "display_archetype": "console-32bit",
+      "significance": "Sistema 32-bit importante na transição para gráficos poligonais.",
+      "tags": [
+        "console",
+        "console-32bit",
+        "1994"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_playstation",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "PlayStation",
+      "maker": "Sony Computer Entertainment",
+      "year": 1994,
+      "kind": "console",
+      "display_archetype": "disc-console",
+      "significance": "Popularizou mídia óptica e jogos 3D em escala mundial.",
+      "tags": [
+        "console",
+        "disc-console",
+        "1994"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_nintendo-64",
+      "gallery_id": "museu_hardware_agv_galeria_16_32",
+      "name": "Nintendo 64",
+      "maker": "Nintendo",
+      "year": 1996,
+      "kind": "console",
+      "display_archetype": "console-3d",
+      "significance": "Console baseado em cartucho com forte ênfase em mundos 3D e controle analógico.",
+      "tags": [
+        "console",
+        "console-3d",
+        "1996"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_computer-space",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Computer Space",
+      "maker": "Nutting Associates",
+      "year": 1971,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Um dos primeiros videogames arcade comerciais.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1971"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pong-arcade",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Pong Arcade",
+      "maker": "Atari",
+      "year": 1972,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Demonstrou o potencial comercial dos videogames em espaços públicos.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1972"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_space-invaders",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Space Invaders Cabinet",
+      "maker": "Taito",
+      "year": 1978,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Marco cultural dos arcades e da competição por pontuação.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1978"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pac-man",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Pac-Man Cabinet",
+      "maker": "Namco",
+      "year": 1980,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Ampliou o público dos arcades e gerou um ícone da cultura dos videogames.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1980"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_donkey-kong",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Donkey Kong Cabinet",
+      "maker": "Nintendo",
+      "year": 1981,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Importante para jogos de plataforma e personagens duradouros.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1981"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_neo-geo-mvs",
+      "gallery_id": "museu_hardware_agv_galeria_arcade",
+      "name": "Neo Geo MVS",
+      "maker": "SNK",
+      "year": 1990,
+      "kind": "arcade",
+      "display_archetype": "arcade-cabinet",
+      "significance": "Plataforma modular que permitia múltiplos jogos no mesmo gabinete.",
+      "tags": [
+        "arcade",
+        "arcade-cabinet",
+        "1990"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_game-watch",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "Game & Watch",
+      "maker": "Nintendo",
+      "year": 1980,
+      "kind": "handheld",
+      "display_archetype": "handheld",
+      "significance": "Linha portátil LCD que explorou mobilidade antes dos portáteis com cartuchos.",
+      "tags": [
+        "handheld",
+        "handheld",
+        "1980"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_game-boy",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "Game Boy",
+      "maker": "Nintendo",
+      "year": 1989,
+      "kind": "handheld",
+      "display_archetype": "handheld",
+      "significance": "Portátil de enorme impacto, combinando autonomia e cartuchos intercambiáveis.",
+      "tags": [
+        "handheld",
+        "handheld",
+        "1989"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_atari-lynx",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "Atari Lynx",
+      "maker": "Atari",
+      "year": 1989,
+      "kind": "handheld",
+      "display_archetype": "handheld",
+      "significance": "Portátil com tela colorida e recursos técnicos avançados para sua época.",
+      "tags": [
+        "handheld",
+        "handheld",
+        "1989"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_game-gear",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "Game Gear",
+      "maker": "Sega",
+      "year": 1990,
+      "kind": "handheld",
+      "display_archetype": "handheld",
+      "significance": "Portátil colorido ligado ao ecossistema Sega.",
+      "tags": [
+        "handheld",
+        "handheld",
+        "1990"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_nintendo-ds",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "Nintendo DS",
+      "maker": "Nintendo",
+      "year": 2004,
+      "kind": "handheld",
+      "display_archetype": "handheld-dual",
+      "significance": "Popularizou duas telas, toque e novas formas de interação portátil.",
+      "tags": [
+        "handheld",
+        "handheld-dual",
+        "2004"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_psp",
+      "gallery_id": "museu_hardware_agv_galeria_portateis",
+      "name": "PlayStation Portable",
+      "maker": "Sony Computer Entertainment",
+      "year": 2004,
+      "kind": "handheld",
+      "display_archetype": "handheld-wide",
+      "significance": "Portátil multimídia com tela widescreen e forte capacidade 3D para a época.",
+      "tags": [
+        "handheld",
+        "handheld-wide",
+        "2004"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_ibm-pc-5150",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "IBM Personal Computer 5150",
+      "maker": "IBM",
+      "year": 1981,
+      "kind": "computer",
+      "display_archetype": "retro-pc",
+      "significance": "Estabeleceu uma plataforma de PC que influenciou décadas de computadores compatíveis.",
+      "tags": [
+        "computer",
+        "retro-pc",
+        "1981"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_macintosh-128k",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "Macintosh 128K",
+      "maker": "Apple Computer",
+      "year": 1984,
+      "kind": "computer",
+      "display_archetype": "all-in-one",
+      "significance": "Popularizou interface gráfica e mouse em um computador pessoal de grande visibilidade.",
+      "tags": [
+        "computer",
+        "all-in-one",
+        "1984"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_amiga-1000",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "Amiga 1000",
+      "maker": "Commodore",
+      "year": 1985,
+      "kind": "computer",
+      "display_archetype": "retro-pc",
+      "significance": "Reconhecido por capacidades multimídia, gráficos e áudio avançados.",
+      "tags": [
+        "computer",
+        "retro-pc",
+        "1985"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_ps2-model30",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "IBM PS/2 Model 30",
+      "maker": "IBM",
+      "year": 1987,
+      "kind": "computer",
+      "display_archetype": "retro-pc",
+      "significance": "Representa a evolução corporativa do PC no fim dos anos 1980.",
+      "tags": [
+        "computer",
+        "retro-pc",
+        "1987"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_pentium-tower",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "PC Pentium multimídia",
+      "maker": "Ecossistema PC",
+      "year": 1995,
+      "kind": "computer",
+      "display_archetype": "retro-pc",
+      "significance": "Símbolo da expansão de CD-ROM, multimídia e internet doméstica.",
+      "tags": [
+        "computer",
+        "retro-pc",
+        "1995"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_imac-g3",
+      "gallery_id": "museu_hardware_agv_galeria_pc",
+      "name": "iMac G3",
+      "maker": "Apple",
+      "year": 1998,
+      "kind": "computer",
+      "display_archetype": "all-in-one",
+      "significance": "All-in-one de design marcante associado à popularização do USB.",
+      "tags": [
+        "computer",
+        "all-in-one",
+        "1998"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_sound-blaster-16",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "Sound Blaster 16",
+      "maker": "Creative Technology",
+      "year": 1992,
+      "kind": "component",
+      "display_archetype": "sound-card",
+      "significance": "Representa a importância das placas de som dedicadas para jogos no PC.",
+      "tags": [
+        "component",
+        "sound-card",
+        "1992"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_voodoo-graphics",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "3dfx Voodoo Graphics",
+      "maker": "3dfx",
+      "year": 1996,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "Aceleradora 3D que marcou a popularização de gráficos tridimensionais em PCs.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "1996"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_geforce-256",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "GeForce 256",
+      "maker": "NVIDIA",
+      "year": 1999,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "GPU histórica na evolução do processamento gráfico dedicado.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "1999"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_radeon-9700",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "Radeon 9700 Pro",
+      "maker": "ATI",
+      "year": 2002,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "Placa de alto desempenho marcante na evolução dos shaders programáveis.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "2002"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_geforce-8800",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "GeForce 8800 GTX",
+      "maker": "NVIDIA",
+      "year": 2006,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "Representa a transição para arquiteturas de shaders unificados.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "2006"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_ssd-sata",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "SSD SATA para jogos",
+      "maker": "Ecossistema PC",
+      "year": 2010,
+      "kind": "component",
+      "display_archetype": "storage",
+      "significance": "SSDs reduziram fortemente tempos de carregamento e mudaram a experiência do PC.",
+      "tags": [
+        "component",
+        "storage",
+        "2010"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_gtx-1080",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "GeForce GTX 1080",
+      "maker": "NVIDIA",
+      "year": 2016,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "Exemplo da maturidade das GPUs modernas e de altas taxas de quadros.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "2016"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_rtx-era",
+      "gallery_id": "museu_hardware_agv_galeria_pc_gamer",
+      "name": "GPU com ray tracing em tempo real",
+      "maker": "Ecossistema PC",
+      "year": 2018,
+      "kind": "component",
+      "display_archetype": "gpu-card",
+      "significance": "Representa a incorporação de aceleração dedicada para ray tracing.",
+      "tags": [
+        "component",
+        "gpu-card",
+        "2018"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_nintendo-switch",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Nintendo Switch",
+      "maker": "Nintendo",
+      "year": 2017,
+      "kind": "console",
+      "display_archetype": "hybrid-console",
+      "significance": "Popularizou em larga escala o conceito híbrido entre console de mesa e portátil.",
+      "tags": [
+        "console",
+        "hybrid-console",
+        "2017"
+      ],
+      "featured": true,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_xbox-series-x",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Xbox Series X",
+      "maker": "Microsoft",
+      "year": 2020,
+      "kind": "console",
+      "display_archetype": "current-console",
+      "significance": "Console da geração atual com foco em SSD, desempenho e retrocompatibilidade.",
+      "tags": [
+        "console",
+        "current-console",
+        "2020"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_xbox-series-s",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Xbox Series S",
+      "maker": "Microsoft",
+      "year": 2020,
+      "kind": "console",
+      "display_archetype": "current-console-compact",
+      "significance": "Alternativa totalmente digital e compacta da família Series.",
+      "tags": [
+        "console",
+        "current-console-compact",
+        "2020"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_playstation-5",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "PlayStation 5",
+      "maker": "Sony Interactive Entertainment",
+      "year": 2020,
+      "kind": "console",
+      "display_archetype": "current-console",
+      "significance": "Geração baseada em SSD de alta velocidade e recursos de imersão.",
+      "tags": [
+        "console",
+        "current-console",
+        "2020"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_steam-deck",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Steam Deck",
+      "maker": "Valve",
+      "year": 2022,
+      "kind": "handheld-pc",
+      "display_archetype": "handheld-pc",
+      "significance": "PC portátil voltado a jogos, aproximando biblioteca de PC e formato handheld.",
+      "tags": [
+        "handheld-pc",
+        "handheld-pc",
+        "2022"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_steam-deck-oled",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Steam Deck OLED",
+      "maker": "Valve",
+      "year": 2023,
+      "kind": "handheld-pc",
+      "display_archetype": "handheld-pc",
+      "significance": "Revisão do PC portátil com tela OLED e melhorias de eficiência.",
+      "tags": [
+        "handheld-pc",
+        "handheld-pc",
+        "2023"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_playstation-5-pro",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "PlayStation 5 Pro",
+      "maker": "Sony Interactive Entertainment",
+      "year": 2024,
+      "kind": "console",
+      "display_archetype": "current-console",
+      "significance": "Modelo de maior desempenho dentro da família PS5.",
+      "tags": [
+        "console",
+        "current-console",
+        "2024"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    },
+    {
+      "id": "museum_collection_nintendo-switch-2",
+      "gallery_id": "museu_hardware_agv_galeria_atual",
+      "name": "Nintendo Switch 2",
+      "maker": "Nintendo",
+      "year": 2025,
+      "kind": "console",
+      "display_archetype": "hybrid-console",
+      "significance": "Evolução atual da plataforma híbrida Nintendo, com tela 1080p, HDR/VRR e saída compatível com até 4K em cenários suportados.",
+      "tags": [
+        "console",
+        "hybrid-console",
+        "2025"
+      ],
+      "featured": false,
+      "model_policy": "procedural-secondary",
+      "logos_in_3d": false
+    }
+  ]
+}

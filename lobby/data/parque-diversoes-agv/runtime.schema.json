@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "map_version", "world_id", "scene", "modes", "spawn", "bounds"],
+  "properties": {
+    "schema_version": {"type": "integer", "minimum": 1},
+    "map_version": {"type": "string"},
+    "world_id": {"const": "parque-diversoes-agv"},
+    "scene": {"const": "parque"},
+    "modes": {"type": "array", "items": {"enum": ["lite", "3d"]}},
+    "spawn": {"type": "object", "required": ["x", "y", "z"]},
+    "bounds": {"type": "object", "required": ["minX", "maxX", "minZ", "maxZ"]},
+    "features": {"type": "object"}
+  }
+}

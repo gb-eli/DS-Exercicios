@@ -1,0 +1,72 @@
+{
+  "version": "14.10.8.80",
+  "channel": "feature",
+  "title": "Exploração do Sistema Solar — Júpiter, Saturno, Asteroides e Telescópio Espacial",
+  "base": "14.10.8.79",
+  "changes": [
+    "Nova Central de Exploração Profunda AGV incorporada à Estação Orbital, com console físico em 2D e 3D",
+    "Novo Telescópio Espacial AGV junto à Cúpula de Observação, acessível como ponto de exploração e fast travel",
+    "Quatro missões científicas: Sobrevoo de Júpiter, Anéis de Saturno, Campo de Asteroides e Telescópio Espacial",
+    "Júpiter e Saturno passam a ser corpos observáveis na Central Interplanetária sem serem tratados como destinos de pouso",
+    "Simulador 3D de missão é carregado dinamicamente somente ao iniciar uma exploração e libera renderer/geometrias/materiais ao sair",
+    "Campo de asteroides pilotável com impulso, direção, colisão protegida e objetivo de três varreduras científicas",
+    "Missões de Júpiter e Saturno permitem órbita/aproximação da sonda e varreduras científicas",
+    "Telescópio permite alternar Terra, Sol, Júpiter e Saturno com zoom e registro de observações",
+    "Controles touch foram adicionados para missões em dispositivos móveis",
+    "Nenhum dado acadêmico, recompensa, pontuação ou nova superfície de escrita no backend foi adicionada"
+  ],
+  "maintenance_patches": [
+    "Teste legado da F77 foi generalizado para aceitar cache-bust de releases posteriores sem perder as garantias de lazy loading",
+    "repair-lobby foi atualizado para verificar a release 14.10.8.80 e os novos módulos de exploração profunda",
+    "Cadeia de cache avançada para stage49-deep-space mantendo deep-space-runtime, Lua e Marte fora do shell crítico"
+  ],
+  "schema_note": "A F78 não cria migration nem nova área de presença e não exige republicação da Edge Function. Ela reutiliza a Estação Orbital e as áreas existentes. Se a produção ainda estiver anterior à F76, continuam necessários a migration 071 e o lobby-presence correspondente.",
+  "date": "2026-08-31",
+  "phase": "world-f78-deep-space-exploration",
+  "baseVersion": "14.10.8.79",
+  "uiVersion": "0.22.8.30",
+  "runtimeCacheVersion": "14.10.8.80",
+  "lobbyCacheVersion": "14.10.8.80",
+  "worldArchitecturePhase": "78",
+  "worldArchitectureBuild": "14.10.8.80-stage49-deep-space",
+  "requiresDatabaseChange": false,
+  "requiresEdgeFunctionDeploy": false,
+  "requiresPrivateSecret": false,
+  "productionWriteApproved": false,
+  "liveDeployApplied": false,
+  "backupConfirmed": true,
+  "publicBundleContainsPrivateRules": false,
+  "status": "RELEASE_CANDIDATE",
+  "knownPending": [
+    "Júpiter, Saturno, Terra, Sol, sondas e asteroides são representações procedurais/estilizadas, não uma simulação astronômica fotográfica.",
+    "O campo de asteroides é propositalmente mais denso do que o cinturão principal real para produzir uma experiência navegável.",
+    "As missões científicas são locais e não sincronizam a posição da sonda entre participantes.",
+    "As varreduras não concedem XP, nota, saldo ou progresso acadêmico nesta fase.",
+    "E2E visual automatizado em navegador não foi executado nesta fase.",
+    "Migration 071 e lobby-presence continuam necessários caso Marte/F76 ainda não estejam implantados em produção."
+  ],
+  "safety": {
+    "academic_data_writes": false,
+    "new_presence_area_added": false,
+    "new_backend_write_surface_added": false,
+    "deep_space_runtime_lazy_loaded": true,
+    "moon_and_mars_remain_lazy_loaded": true,
+    "private_student_data_added": false
+  },
+  "validation": {
+    "cumulativeRegression": "110/110 PASS",
+    "f78": "10/10 PASS",
+    "interiorRuntime": "18/18 PASS",
+    "tracksRails": "20/20 PASS",
+    "mobility": "PASS",
+    "masterplan": "PASS",
+    "worldTime": "16/16 PASS",
+    "worldWeather": "20/20 PASS",
+    "interiorPersonality": "PASS",
+    "worldFoundation": "6/6 PASS",
+    "javascriptSyntax": "61 lobby JS files + Service Worker PASS",
+    "htmlIds": "260/260 unique",
+    "httpSmoke": "8/8 HTTP 200",
+    "browserVisualE2E": "not_run"
+  }
+}

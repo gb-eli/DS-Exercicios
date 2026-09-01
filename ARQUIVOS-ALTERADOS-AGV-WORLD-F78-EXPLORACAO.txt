@@ -1,0 +1,26 @@
+AGV World F78 — arquivos criados
+- core/tests/f78-deep-space-exploration-v14.10.8.80.test.mjs
+- lobby/assets/world/deep-space-exploration.js
+- lobby/assets/deep-space-runtime.js
+- release-v14.10.8.80.json
+- release-agv-world-f78.json
+- RELEASE-EXPLORACAO-SISTEMA-SOLAR-v14.10.8.80.md
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F78-EXPLORACAO.txt
+
+Arquivos modificados
+- core/tests/f77-solar-system-v14.10.8.79.test.mjs
+- lobby/assets/boot.js
+- lobby/assets/config.js
+- lobby/assets/core/world-adapter.js
+- lobby/assets/lobby.css
+- lobby/assets/lobby.js
+- lobby/assets/space-lite.js
+- lobby/assets/space3d.js
+- lobby/assets/sw-register.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/world/solar-system.js
+- lobby/assets/world/space-world.js
+- lobby/index.html
+- lobby/sw.js
+- repair-lobby.html
+- release-current.json

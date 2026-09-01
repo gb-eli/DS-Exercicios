@@ -1,0 +1,41 @@
+F80 / v14.10.8.82 — Parque de Diversões conectado
+
+NOVOS / IMPORTADOS DO MAPA
+lobby/assets/parque-diversoes-agv-lite.js
+lobby/assets/parque-diversoes-agv3d.js
+lobby/assets/world/parque-diversoes-agv-shared.js
+lobby/assets/world/parque-diversoes-agv-ambient.js
+lobby/assets/world/parque-diversoes-agv-experiences.js
+lobby/assets/world/parque-diversoes-agv-multiplayer.js
+lobby/assets/world/parque-diversoes-agv-performance.js
+lobby/assets/world/parque-diversoes-agv-realtime.js
+lobby/data/parque-diversoes-agv/**
+lobby/assets/reference/parque-diversoes-concept.png
+core/database/072_lobby_amusement_park_world.sql
+core/tests/f80-parque-connected-v14.10.8.82.test.mjs
+
+INTEGRAÇÃO / CONEXÕES
+lobby/assets/core/world-adapter.js
+lobby/assets/world/campus-experiences.js
+lobby/assets/world/campus-environment.js
+lobby/assets/lobby.js
+lobby/index.html
+core/edge-functions/lobby-presence/index.ts
+repair-lobby.html
+
+VERSÃO / CACHE
+lobby/assets/config.js
+lobby/assets/boot.js
+lobby/assets/vendor-loader.js
+lobby/assets/sw-register.js
+lobby/sw.js
+release-v14.10.8.82.json
+release-current.json
+
+TESTES LEGADOS GENERALIZADOS PARA ACEITAR MAPAS/RELEASES POSTERIORES
+core/tests/f72-rural-streaming-v14.10.8.74.test.mjs
+core/tests/f73-military-streaming-v14.10.8.75.test.mjs
+core/tests/f74-space-station-v14.10.8.76.test.mjs
+core/tests/f75-moon-world-v14.10.8.77.test.mjs
+core/tests/f76-mars-world-v14.10.8.78.test.mjs
+core/tests/f78-deep-space-exploration-v14.10.8.80.test.mjs

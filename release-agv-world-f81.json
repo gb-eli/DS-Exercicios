@@ -1,0 +1,43 @@
+{
+  "version": "14.10.8.83",
+  "build": "14.10.8.83-stage52-new-worlds",
+  "phase": "world-f81-new-maps",
+  "date": "2026-09-01",
+  "basePackage": "AGV-WORLD-F80-PARQUE-CONNECTADO-v14.10.8.82.zip",
+  "integratedMaps": [
+    {
+      "id": "colegio-agv",
+      "package": "AGV-WORLD-MAPA-COLEGIO-AGV-v1.6.0-F7.zip",
+      "scene": "colegio",
+      "area": "colegio-agv",
+      "mode": "compat-host-lite-3d"
+    },
+    {
+      "id": "labirinto-armadilhas",
+      "package": "AGV-WORLD-MAPA-LABIRINTO-ARMADILHAS-v1.1.0.zip",
+      "scene": "labirinto",
+      "area": "labirinto-armadilhas",
+      "mode": "compat-host-lite-3d"
+    },
+    {
+      "id": "museu-hardware-agv",
+      "package": "AGV-WORLD-MAPA-MUSEU-HARDWARE-v0.8.0-F1-F9.zip",
+      "scene": "museu",
+      "area": "museu-hardware",
+      "mode": "native-lite-3d"
+    },
+    {
+      "id": "parque-diversoes-agv",
+      "source": "already-present-in-F80",
+      "scene": "parque",
+      "area": "parque-diversoes-agv"
+    }
+  ],
+  "databaseMigration": "core/database/073_lobby_new_worlds.sql",
+  "edgeFunction": "core/edge-functions/lobby-presence/index.ts",
+  "notes": [
+    "Colégio usa exclusivamente F7; fases F1-F6 não foram mescladas.",
+    "Parque F7 separado não foi sobreposto porque F80 já contém a versão conectada.",
+    "Museu mantém mídia/GLB sob demanda."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AGV World Museu do Hardware Runtime",
+  "type": "object",
+  "required": [
+    "map_id",
+    "scene_id",
+    "version",
+    "galleries"
+  ],
+  "properties": {
+    "map_id": {
+      "const": "museu-hardware-agv"
+    },
+    "scene_id": {
+      "const": "museu-hardware"
+    },
+    "version": {
+      "type": "string"
+    },
+    "galleries": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "order",
+          "name",
+          "years",
+          "device",
+          "demo",
+          "media"
+        ]
+      }
+    },
+    "media_policy": {
+      "type": "object"
+    },
+    "museum_interaction": {
+      "type": "object"
+    }
+  }
+}

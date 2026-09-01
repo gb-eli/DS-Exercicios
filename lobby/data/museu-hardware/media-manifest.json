@@ -1,0 +1,47 @@
+{
+  "version": "0.8.0",
+  "license": "AGV-generated demonstration loops",
+  "autoplay_muted": true,
+  "entries": {
+    "museu_hardware_agv_galeria_origens": {
+      "webm": "media/01-origens.webm",
+      "caption": "Terminal e processamento textual — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_home": {
+      "webm": "media/02-home.webm",
+      "caption": "Labirinto em microcomputador doméstico — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_console": {
+      "webm": "media/03-consoles.webm",
+      "caption": "Jogo de raquetes inspirado nos primeiros videogames — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_8bit": {
+      "webm": "media/04-8bit.webm",
+      "caption": "Plataforma 2D em estética 8-bit — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_16_32": {
+      "webm": "media/05-16-32.webm",
+      "caption": "Jogo de luta genérico — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_arcade": {
+      "webm": "media/06-arcade.webm",
+      "caption": "Ação arcade genérica — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_portateis": {
+      "webm": "media/07-portateis.webm",
+      "caption": "Plataforma portátil — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_pc": {
+      "webm": "media/08-pc.webm",
+      "caption": "Desktop e navegação gráfica — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_pc_gamer": {
+      "webm": "media/09-pc-gamer.webm",
+      "caption": "FPS genérico para PC gamer — demonstração autoral."
+    },
+    "museu_hardware_agv_galeria_atual": {
+      "webm": "media/10-atual.webm",
+      "caption": "Aventura 3D genérica da geração atual — demonstração autoral."
+    }
+  }
+}

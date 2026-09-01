@@ -1,0 +1,31 @@
+{
+  "version": "14.10.8.82",
+  "build": "14.10.8.82-stage51-parque-connected",
+  "phase": "world-f80-amusement-park-connected",
+  "title": "AGV World F80 — Parque de Diversões conectado",
+  "base": "F78 v14.10.8.80 + Parque de Diversões F7 v14.10.8.80-f7",
+  "changes": [
+    "Parque de Diversões integrado como oitavo ambiente navegável lazy 2D/3D",
+    "Portal físico Campus ↔ Parque com retorno ao Campus",
+    "Atalho destacado e filtro Parque no teletransporte global",
+    "Destinos do Parque disponíveis no teletransporte entre todos os mapas",
+    "Presença, chat de proximidade e reunir isolados em parque-diversoes-agv",
+    "Realtime Broadcast para competições recreativas do Parque",
+    "Migration 072 atualiza lobby_presence para o novo mapa",
+    "Edge Function lobby-presence atualizada para scene=parque",
+    "repair-lobby atualizado para validar a v14.10.8.82 e os runtimes do Parque"
+  ],
+  "deploy": {
+    "migration": "core/database/072_lobby_amusement_park_world.sql",
+    "edge_function": "core/edge-functions/lobby-presence/index.ts"
+  },
+  "lazy_assets": [
+    "lobby/assets/parque-diversoes-agv-lite.js",
+    "lobby/assets/parque-diversoes-agv3d.js"
+  ],
+  "notes": [
+    "Assets pesados do Parque não entram no CRITICAL_SHELL; são carregados somente no primeiro acesso.",
+    "A integração foi construída sobre a última árvore completa validada F78 v14.10.8.80. A F79 v14.10.8.81 permaneceu uma fase de qualidade não empacotada e não foi tratada como base desta release.",
+    "As competições do Parque usam Realtime Broadcast efêmero; esta fase não cria ranking persistente obrigatório."
+  ]
+}

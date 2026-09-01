@@ -1,0 +1,249 @@
+{
+  "map_id": "museu-hardware-agv",
+  "scene_id": "museu-hardware",
+  "version": "0.8.0",
+  "base_agv_world": "14.10.8.73",
+  "name": "Museu do Hardware AGV",
+  "theme": "História dos computadores, consoles, arcades e hardware de jogos",
+  "media_policy": {
+    "default": "local-webm-with-procedural-fallback",
+    "allow_local_video": true,
+    "autoplay_muted": true,
+    "lazy": true,
+    "preferred_formats": [
+      "webm",
+      "mp4"
+    ],
+    "manifest": "media-manifest.json",
+    "release_when_far": false,
+    "pause_when_far": true
+  },
+  "world": {
+    "indoor": true,
+    "bounds": {
+      "minX": -178,
+      "maxX": 178,
+      "minZ": -142,
+      "maxZ": 158
+    },
+    "spawn": {
+      "x": 0,
+      "y": 0.2,
+      "z": 132
+    },
+    "atrium": {
+      "x": 0,
+      "z": 4,
+      "radius": 28
+    }
+  },
+  "galleries": [
+    {
+      "id": "museu_hardware_agv_galeria_origens",
+      "order": "01",
+      "name": "Origens da Computação",
+      "years": "1940–1970",
+      "device": "mainframe",
+      "demo": "terminal",
+      "media": {
+        "webm": "media/01-origens.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_origens",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_home",
+      "order": "02",
+      "name": "Revolução Doméstica",
+      "years": "1970–1984",
+      "device": "home-computer",
+      "demo": "maze",
+      "media": {
+        "webm": "media/02-home.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_home",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_console",
+      "order": "03",
+      "name": "Primeiros Consoles",
+      "years": "1972–1984",
+      "device": "early-console",
+      "demo": "pong",
+      "media": {
+        "webm": "media/03-consoles.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_console",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_8bit",
+      "order": "04",
+      "name": "Era 8-bit",
+      "years": "1983–1992",
+      "device": "cartridge-console",
+      "demo": "platform",
+      "media": {
+        "webm": "media/04-8bit.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_8bit",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_16_32",
+      "order": "05",
+      "name": "16/32-bit e 3D",
+      "years": "1988–2001",
+      "device": "disc-console",
+      "demo": "fighter",
+      "media": {
+        "webm": "media/05-16-32.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_16_32",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_arcade",
+      "order": "06",
+      "name": "Arcades",
+      "years": "1970–2000",
+      "device": "arcade-cabinet",
+      "demo": "shooter",
+      "media": {
+        "webm": "media/06-arcade.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_arcade",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_portateis",
+      "order": "07",
+      "name": "Portáteis",
+      "years": "1989–Atual",
+      "device": "handheld",
+      "demo": "handheld",
+      "media": {
+        "webm": "media/07-portateis.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_portateis",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_pc",
+      "order": "08",
+      "name": "PC Pessoal",
+      "years": "1981–2009",
+      "device": "retro-pc",
+      "demo": "desktop",
+      "media": {
+        "webm": "media/08-pc.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_pc",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_pc_gamer",
+      "order": "09",
+      "name": "PC Gamer",
+      "years": "2010–Atual",
+      "device": "gaming-pc",
+      "demo": "fps",
+      "media": {
+        "webm": "media/09-pc-gamer.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_pc_gamer",
+        "fallback": "procedural"
+      }
+    },
+    {
+      "id": "museu_hardware_agv_galeria_atual",
+      "order": "10",
+      "name": "Geração Atual",
+      "years": "2020–Atual",
+      "device": "current-console",
+      "demo": "adventure",
+      "media": {
+        "webm": "media/10-atual.webm",
+        "fallback": "procedural"
+      },
+      "asset": {
+        "manifest_key": "museu_hardware_agv_galeria_atual",
+        "fallback": "procedural"
+      }
+    }
+  ],
+  "museum_interaction": {
+    "catalog": true,
+    "inspection_3d": true,
+    "guided_tour": true,
+    "local_passport": true,
+    "optional_quiz": true,
+    "minimap": true,
+    "accessible_text": true,
+    "captions": true,
+    "meeting_point": true,
+    "local_reactions": true,
+    "teacher_route_helper": true,
+    "reduced_motion": true,
+    "high_contrast_ui": true,
+    "large_text_ui": true
+  },
+  "asset_policy": {
+    "format": "glb",
+    "manifest": "assets-manifest.json",
+    "lazy": true,
+    "lods": [
+      "lod0",
+      "lod1",
+      "lod2"
+    ],
+    "inspection_prefers": "lod0",
+    "mobile_eco_prefers": "lod2",
+    "fallback": "procedural",
+    "third_party_logos": false
+  },
+  "integration": {
+    "scene": "museu",
+    "portal_type": "museum-portal",
+    "core_target_commit": "96aa71851eb7e655135a67d062b4f49a14518e8e",
+    "return_scene": "campus",
+    "supports_staff_gather": true,
+    "supports_teleport": true,
+    "service_worker_lazy_binary_cache": true
+  },
+  "collection_policy": {
+    "manifest": "collection-v1.json",
+    "items": 64,
+    "secondary_models": "procedural",
+    "searchable": true,
+    "load": "single-json",
+    "third_party_logos": false
+  }
+}

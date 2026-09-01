@@ -1,0 +1,12 @@
+{
+  "name": "Parque de Diversões AGV",
+  "map_id": "parque-diversoes-agv",
+  "scene_id": "parque",
+  "theme": "parque de diversões, desafios e minigames",
+  "description": "Mapa modular do AGV World com cinco atrações jogáveis em Lite e 3D, parque vivo, competição multiplayer e F7 de performance/mobile/acessibilidade.",
+  "visual_style": "3D estilizado, colorido, legível e otimizado para ambiente escolar",
+  "dimensions": "360 x 360 unidades lógicas",
+  "phase": "F7 - performance, mobile e acessibilidade",
+  "reference_image": "../../assets/reference/parque-diversoes-concept.png",
+  "version": "14.10.8.80-f7"
+}

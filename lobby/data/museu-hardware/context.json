@@ -1,0 +1,14 @@
+{
+  "map_id": "museu-hardware-agv",
+  "scene_id": "museu-hardware",
+  "purpose": "Mapa educacional/social plugável do AGV World para apresentar a evolução do hardware de computação e videogames.",
+  "rules": [
+    "Usar o Avatar System, câmera, presença e configurações globais do AGV World.",
+    "Não manter o mapa renderizando quando estiver inativo.",
+    "Mídia externa de gameplay deve ser local/licenciada e carregada sob demanda.",
+    "Lite e 3D representam as mesmas galerias e coordenadas lógicas.",
+    "Fichas técnicas e quizzes são informativos e não geram nota pedagógica.",
+    "Progresso do passaporte fica em localStorage e não altera o banco do Portal de Exercícios.",
+    "Vídeos WebM autorais são pausados fora da proximidade e usam fallback procedural."
+  ]
+}

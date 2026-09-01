@@ -1,0 +1,16 @@
+AGV WORLD F81 — v14.10.8.83-stage52-new-worlds
+
+NOVOS MAPAS:
+- Colégio AGV — Alberto Gomes Veiga (F7 oficial)
+- Labirinto com Armadilhas v1.1.0
+- Museu do Hardware AGV v0.8.0 F1-F9
+
+PRESERVADO:
+- Parque de Diversões conectado já presente na F80
+- Core / WorldManager / Avatar / câmera / autenticação / demais sistemas da F80
+
+BACKEND:
+- Aplicar core/database/073_lobby_new_worlds.sql
+- Republicar core/edge-functions/lobby-presence/index.ts
+
+DETALHES: docs/INTEGRACAO-MAPAS-F81.md

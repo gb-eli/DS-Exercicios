@@ -1,0 +1,274 @@
+{
+  "version": "0.5.0",
+  "format": "glTF 2.0 binary (.glb)",
+  "license": "Original generic educational models authored for AGV World; no third-party logos/textures.",
+  "coordinateSystem": "Y-up display convention",
+  "lodPolicy": {
+    "lod0": "inspection / near high-quality",
+    "lod1": "normal exhibition view",
+    "lod2": "distance / eco mobile",
+    "fallback": "procedural device model remains available if GLB load fails"
+  },
+  "assets": {
+    "museu_hardware_agv_galeria_origens": {
+      "device": "mainframe",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/mainframe-lod0.glb",
+          "bytes": 65620,
+          "triangles": 3640,
+          "vertices": 1990
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/mainframe-lod1.glb",
+          "bytes": 24608,
+          "triangles": 1480,
+          "vertices": 790
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/mainframe-lod2.glb",
+          "bytes": 1920,
+          "triangles": 24,
+          "vertices": 16
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_home": {
+      "device": "home-computer",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/home-computer-lod0.glb",
+          "bytes": 31896,
+          "triangles": 744,
+          "vertices": 482
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/home-computer-lod1.glb",
+          "bytes": 13148,
+          "triangles": 308,
+          "vertices": 194
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/home-computer-lod2.glb",
+          "bytes": 3156,
+          "triangles": 48,
+          "vertices": 32
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_console": {
+      "device": "early-console",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/early-console-lod0.glb",
+          "bytes": 11056,
+          "triangles": 396,
+          "vertices": 224
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/early-console-lod1.glb",
+          "bytes": 9316,
+          "triangles": 348,
+          "vertices": 196
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/early-console-lod2.glb",
+          "bytes": 1948,
+          "triangles": 24,
+          "vertices": 16
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_8bit": {
+      "device": "cartridge-console",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/cartridge-console-lod0.glb",
+          "bytes": 12160,
+          "triangles": 372,
+          "vertices": 214
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/cartridge-console-lod1.glb",
+          "bytes": 8240,
+          "triangles": 256,
+          "vertices": 148
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/cartridge-console-lod2.glb",
+          "bytes": 3084,
+          "triangles": 48,
+          "vertices": 32
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_16_32": {
+      "device": "disc-console",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/disc-console-lod0.glb",
+          "bytes": 21740,
+          "triangles": 864,
+          "vertices": 472
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/disc-console-lod1.glb",
+          "bytes": 14020,
+          "triangles": 536,
+          "vertices": 296
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/disc-console-lod2.glb",
+          "bytes": 3220,
+          "triangles": 76,
+          "vertices": 42
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_arcade": {
+      "device": "arcade-cabinet",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/arcade-cabinet-lod0.glb",
+          "bytes": 12408,
+          "triangles": 536,
+          "vertices": 296
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/arcade-cabinet-lod1.glb",
+          "bytes": 9896,
+          "triangles": 420,
+          "vertices": 230
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/arcade-cabinet-lod2.glb",
+          "bytes": 3724,
+          "triangles": 60,
+          "vertices": 40
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_portateis": {
+      "device": "handheld",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/handheld-lod0.glb",
+          "bytes": 12336,
+          "triangles": 644,
+          "vertices": 350
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/handheld-lod1.glb",
+          "bytes": 6576,
+          "triangles": 220,
+          "vertices": 124
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/handheld-lod2.glb",
+          "bytes": 2660,
+          "triangles": 36,
+          "vertices": 24
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_pc": {
+      "device": "retro-pc",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/retro-pc-lod0.glb",
+          "bytes": 33212,
+          "triangles": 752,
+          "vertices": 488
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/retro-pc-lod1.glb",
+          "bytes": 5884,
+          "triangles": 140,
+          "vertices": 82
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/retro-pc-lod2.glb",
+          "bytes": 3148,
+          "triangles": 48,
+          "vertices": 32
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_pc_gamer": {
+      "device": "gaming-pc",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/gaming-pc-lod0.glb",
+          "bytes": 31956,
+          "triangles": 1008,
+          "vertices": 600
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/gaming-pc-lod1.glb",
+          "bytes": 8368,
+          "triangles": 252,
+          "vertices": 144
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/gaming-pc-lod2.glb",
+          "bytes": 3892,
+          "triangles": 60,
+          "vertices": 40
+        }
+      }
+    },
+    "museu_hardware_agv_galeria_atual": {
+      "device": "current-console",
+      "displayScale": 0.92,
+      "rotationY": 0.0,
+      "yOffset": 0.0,
+      "lods": {
+        "lod0": {
+          "src": "./data/museu-hardware/assets/current-console-lod0.glb",
+          "bytes": 14696,
+          "triangles": 488,
+          "vertices": 282
+        },
+        "lod1": {
+          "src": "./data/museu-hardware/assets/current-console-lod1.glb",
+          "bytes": 8828,
+          "triangles": 324,
+          "vertices": 182
+        },
+        "lod2": {
+          "src": "./data/museu-hardware/assets/current-console-lod2.glb",
+          "bytes": 1988,
+          "triangles": 24,
+          "vertices": 16
+        }
+      }
+    }
+  }
+}
