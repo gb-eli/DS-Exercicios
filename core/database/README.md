@@ -46,3 +46,9 @@ O endpoint live `lab-virtual-core` conhece 50 ferramentas e 88 conclusões. Nest
 - **Não aplicado live nesta rodada**: exige inspeção do schema, advisors e teste com usuário de teste antes de produção.
 
 - `031_p77_live_session_guard.sql` — P7.7: valida `session_id` do JWT contra `auth.sessions` em endpoints críticos. Service-role only.
+
+## AGV World F82 — presença dos novos mundos
+- `073_lobby_new_worlds.sql`: baseline corrigido para instalações novas; remove os dois nomes históricos conhecidos da constraint antes de recriá-la.
+- `074_lobby_presence_worlds_hotfix.sql`: **aplicar em instalações que já executaram a 073 anteriormente**. É a migration versionada que garante que o reparo rode no Supabase sem depender de reaplicar uma migration antiga.
+- Após as migrations, republicar `core/edge-functions/lobby-presence` para habilitar o comando direcionado **Trazer aluno** e manter **Trazer todos**.
+

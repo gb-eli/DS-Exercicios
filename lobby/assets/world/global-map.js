@@ -1,10 +1,10 @@
-import { WORLD_REGISTRY } from './world-registry.js?v=14.10.8.83-o3';
+import { WORLD_REGISTRY } from './world-registry.js?v=14.10.8.92-f90-graphics';
 
 export const GLOBAL_MAP_SCHEMA=1;
 
 const CATEGORY_LABELS=Object.freeze({
   campus:'Campus',technology:'Tecnologia',rural:'Rural',operations:'Operações',space:'Espaço',
-  entertainment:'Entretenimento',education:'Educação',challenge:'Desafio',museum:'Museu'
+  entertainment:'Entretenimento',education:'Educação',challenge:'Desafio',museum:'Museu','campus-module':'Módulo do Campus'
 });
 
 const EVENT_KIND_RE=/(event|ride|race|challenge|sport|game|cinema|mission|training)/i;
@@ -41,16 +41,26 @@ export function buildWorldPopulation(presenceRows=[],current={}){
 
 function mapLayout(){
   const positions=new Map();
-  positions.set('campus-ds',Object.freeze({x:50,y:53}));
-  positions.set('space-agv',Object.freeze({x:50,y:20}));
-  positions.set('moon-agv',Object.freeze({x:27,y:6}));
-  positions.set('mars-agv',Object.freeze({x:73,y:6}));
-  const orbit=['vale-silicio','rural-agv','military-agv','parque-diversoes-agv','colegio-agv','labirinto-armadilhas','museu-hardware-agv'];
-  const points=[{x:18,y:32},{x:13,y:63},{x:28,y:86},{x:72,y:86},{x:87,y:63},{x:82,y:32},{x:50,y:93}];
-  orbit.forEach((id,index)=>positions.set(id,Object.freeze(points[index])));
-  for(const world of WORLD_REGISTRY.manifests){
-    if(!positions.has(world.id))positions.set(world.id,Object.freeze({x:50,y:50}));
-  }
+  // F86: o Campus é hub; as quatro Vilas são distritos próprios com espaço visual real,
+  // sem competir em escala com atrações internas do Campus.
+  positions.set('campus-ds',Object.freeze({x:50,y:52}));
+  positions.set('village-1ds',Object.freeze({x:33,y:42}));
+  positions.set('village-2ds',Object.freeze({x:67,y:42}));
+  positions.set('village-3ds',Object.freeze({x:33,y:63}));
+  positions.set('village-sub',Object.freeze({x:67,y:63}));
+  positions.set('campus-library',Object.freeze({x:38,y:55}));
+  positions.set('campus-labs',Object.freeze({x:50,y:70}));
+  positions.set('campus-neon',Object.freeze({x:62,y:55}));
+  positions.set('space-agv',Object.freeze({x:50,y:16}));
+  positions.set('moon-agv',Object.freeze({x:34,y:5}));
+  positions.set('mars-agv',Object.freeze({x:66,y:5}));
+  const outer={
+    'vale-silicio':{x:14,y:24},'rural-agv':{x:9,y:53},'military-agv':{x:20,y:84},
+    'museu-hardware-agv':{x:50,y:91},'parque-diversoes-agv':{x:80,y:84},
+    'colegio-agv':{x:91,y:53},'labirinto-armadilhas':{x:86,y:24}
+  };
+  for(const [id,pos] of Object.entries(outer))positions.set(id,Object.freeze(pos));
+  for(const world of WORLD_REGISTRY.manifests)if(!positions.has(world.id))positions.set(world.id,Object.freeze({x:50,y:50}));
   return positions;
 }
 export const GLOBAL_MAP_LAYOUT=mapLayout();

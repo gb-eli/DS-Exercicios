@@ -1,5 +1,5 @@
-import { WORLD_MANIFESTS } from './world-manifests.js?v=14.10.8.83-o3';
-import { WORLD_CONNECTIONS, connectionsFrom, connectionBetween, areWorldsConnected } from './world-connections.js?v=14.10.8.83-o3';
+import { WORLD_MANIFESTS } from './world-manifests.js?v=14.10.8.92-f90-graphics';
+import { WORLD_CONNECTIONS, connectionsFrom, connectionBetween, areWorldsConnected } from './world-connections.js?v=14.10.8.92-f90-graphics';
 
 function uniqueIndex(label,pairs){
   const map=new Map();

@@ -1,4 +1,4 @@
-import { CAMPUS_DESTINATIONS } from './campus-destinations.js?v=14.10.8.71-stage40-security';
+import { CAMPUS_DESTINATIONS } from './campus-destinations.js?v=14.10.8.92-f90-graphics';
 import { CAMPUS_GARAGES } from './campus-city-network.js?v=14.10.8.66';
 import { CAMPUS_INTERIOR_LIVE_BLUEPRINTS } from './campus-live-systems.js?v=14.10.8.71-stage40-security';
 

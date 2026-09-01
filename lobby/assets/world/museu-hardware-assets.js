@@ -14,4 +14,3 @@ export function createMuseumHardwareAssetManager({THREE,manifest,signal,onState=
   function diagnostics(){return{quality,registered:entries.size,loaded:[...entries.values()].reduce((n,e)=>n+e.models.size,0),pending:[...entries.values()].reduce((n,e)=>n+e.pending.size,0),active:[...entries.values()].filter(e=>e.active).map(e=>({id:e.gallery.id,lod:e.active})),errors:[...entries.values()].filter(e=>e.error).map(e=>({id:e.gallery.id,error:e.error}))};}
   function dispose(){disposed=true;for(const entry of entries.values()){for(const model of entry.models.values()){entry.host.remove(model);disposeObject(model);}entry.models.clear();entry.pending.clear();entry.fallback.visible=true;}entries.clear();}
   return{register,update,setQuality,diagnostics,dispose};}
-}

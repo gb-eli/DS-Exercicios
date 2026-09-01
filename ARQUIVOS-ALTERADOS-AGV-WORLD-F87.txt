@@ -1,0 +1,29 @@
+AGV WORLD F87 v14.10.8.89 — alterações em relação à F86 v14.10.8.88
+
+Novos: 8
++ ARQUIVOS-ALTERADOS-AGV-WORLD-F87.txt
++ core/tests/f87-airdrop-sector-streaming-v14.10.8.89.test.mjs
++ docs/releases/AGV-WORLD-F87-AIRDROP-SETORIAL-STREAMING-v14.10.8.89.md
++ docs/releases/DEPLOY-AGV-WORLD-F87-v14.10.8.89.md
++ lobby/assets/airdrop-transit3d.js
++ lobby/assets/world/airdrop-sectors.js
++ lobby/assets/world/world-runtime-prefetch.js
++ release-agv-world-f87.json
+
+Modificados: 12
+~ lobby/assets/boot.js
+~ lobby/assets/config.js
+~ lobby/assets/core/lobby-state.js
+~ lobby/assets/core/world-adapter.js
+~ lobby/assets/lobby.css
+~ lobby/assets/lobby.js
+~ lobby/assets/social/realtime-avatar-sync.js
+~ lobby/assets/sw-register.js
+~ lobby/assets/vendor-loader.js
+~ lobby/assets/world/airdrop-system.js
+~ lobby/index.html
+~ lobby/sw.js
+
+Removidos: 0
+
+Total de caminhos alterados: 20

@@ -1,4 +1,4 @@
-const VERSION='14.10.8.83';
+const VERSION='14.10.8.92';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');
@@ -20,14 +20,20 @@ const ASSET_SIGNATURES={
   'lobby.js':['createLobbyState','createWorldManager','CAMPUS_WORLD_ADAPTER','SCHOOL_EMAIL_DOMAIN'],
   'core/lobby-state.js':['createLobbyState','snapshotWorldState','LOBBY_STATE_CONTRACT'],
   'core/world-manager.js':['createWorldManager','world_runtime_contract_invalid','diagnostics'],
-  'core/world-adapter.js':['createWorldAdapter','CAMPUS_WORLD_ADAPTER','VALE_WORLD_ADAPTER','RURAL_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','PARQUE_WORLD_ADAPTER','COLEGIO_WORLD_ADAPTER','LABIRINTO_WORLD_ADAPTER','MUSEU_WORLD_ADAPTER'],
+  'core/world-adapter.js':['createWorldAdapter','AIRDROP_TRANSIT_ADAPTER','CAMPUS_WORLD_ADAPTER','VILLAGE_1DS_WORLD_ADAPTER','VILLAGE_SUB_WORLD_ADAPTER','CAMPUS_LIBRARY_WORLD_ADAPTER','CAMPUS_LABS_WORLD_ADAPTER','CAMPUS_NEON_WORLD_ADAPTER','VALE_WORLD_ADAPTER','RURAL_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','PARQUE_WORLD_ADAPTER','COLEGIO_WORLD_ADAPTER','LABIRINTO_WORLD_ADAPTER','MUSEU_WORLD_ADAPTER'],
   'supabase.js':['SUPABASE_URL','NETWORK_TIMEOUT_MS'],
   'config.js':['SUPABASE_URL','SUPABASE_PUBLISHABLE_KEY','LOBBY_VERSION'],
   'lobby3d.js':['createLobby3D'],
   'lobby-lite.js':['createLobbyLite'],
   'world/campus-manifest.js':['CAMPUS_ZONE_LAYOUT','presenceToWorld','worldToPresence'],
+  'world/village-world.js':['VILLAGE_CONFIGS','villageWorldToPresence','villagePresenceToWorld'],
+  'world/campus-module-world.js':['CAMPUS_MODULE_CONFIGS','campusModuleWorldToPresence','campusModulePresenceToWorld'],
+  'world/airdrop-sectors.js':['AIRDROP_SECTORS','AIRDROP_GROUND_WORLD_IDS','airdropStrategicSnapshot'],
+  'world/world-manifests.js':['VILLAGE_1DS_WORLD_MANIFEST','CAMPUS_LIBRARY_WORLD_MANIFEST','CAMPUS_NEON_WORLD_MANIFEST','WORLD_MANIFESTS'],
+  'village-lite.js':['createVillageLite'],
+  'campus-module-lite.js':['createCampusModuleLite'],
   'world/campus-environment.js':['createCampusEnvironment','createCampusLighting','campus-building'],
-  'world/campus-experiences.js':['CAMPUS_EXPERIENCES','PARKOUR_PLATFORMS','nearestExperience'],
+  'world/campus-experiences.js':['CAMPUS_EXPERIENCES','CAMPUS_TRAIN_STATIONS','nearestExperience'],
   'world/campus-destinations.js':['CAMPUS_DESTINATIONS','CAMPUS_TOOL_EXPERIENCES','CAMPUS_TOOL_BUILDING_COLLIDERS'],
   'world/campus-connections.js':['CAMPUS_CONNECTIONS','CAMPUS_DISTRICT_GATES','CAMPUS_SKYBRIDGES'],
   'world/campus-city-network.js':['CAMPUS_ROAD_HIERARCHY','CAMPUS_THEME_PLAZAS','CAMPUS_VALE_MONUMENTAL_LINK'],
@@ -73,9 +79,12 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  for(const asset of ['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby3d.js','lobby-lite.js','world/campus-manifest.js','world/campus-environment.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'])await probeAsset(asset);
+  const requiredAssets=['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby-lite.js','world/campus-manifest.js','world/village-world.js','world/campus-module-world.js','world/airdrop-sectors.js','world/world-manifests.js','village-lite.js','campus-module-lite.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'];
+  // F85: validação do boot em pequenos lotes paralelos. Mantém o gate de integridade sem bloquear o Lobby em 29 requests sequenciais.
+  const probeConcurrency=6;
+  for(let i=0;i<requiredAssets.length;i+=probeConcurrency)await Promise.all(requiredAssets.slice(i,i+probeConcurrency).map(probeAsset));
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}-stage52-new-worlds`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage61-f90-graphics`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});

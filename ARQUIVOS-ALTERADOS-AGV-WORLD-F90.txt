@@ -1,0 +1,61 @@
+AGV WORLD F90 — ARQUIVOS ALTERADOS EM RELAÇÃO À F89
+Release: v14.10.8.92
+
+Novos: 4
+Modificados: 43
+Removidos: 0
+Total de diferenças: 47
+
+=== NOVOS ===
+core/tests/f90-modular-graphics-v14.10.8.92.test.mjs
+docs/releases/AGV-WORLD-F90-QUALIDADE-GRAFICA-MODULAR-v14.10.8.92.md
+docs/releases/DEPLOY-AGV-WORLD-F90-v14.10.8.92.md
+lobby/assets/render/visual-quality-profile.js
+
+=== MODIFICADOS ===
+PUBLIC-DEPLOY.json
+lobby/assets/airdrop-transit3d.js
+lobby/assets/boot.js
+lobby/assets/campus-module-lite.js
+lobby/assets/campus-module3d.js
+lobby/assets/characters/avatar-system.js
+lobby/assets/colegio-agv-host.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/core/world-manager.js
+lobby/assets/game/ride-manager.js
+lobby/assets/game/train-manager.js
+lobby/assets/labirinto-armadilhas-host.js
+lobby/assets/lobby-lite.js
+lobby/assets/lobby.js
+lobby/assets/lobby3d.js
+lobby/assets/mars3d.js
+lobby/assets/military3d.js
+lobby/assets/moon3d.js
+lobby/assets/museu-hardware3d.js
+lobby/assets/parque-diversoes-agv3d.js
+lobby/assets/plugin-world-host.js
+lobby/assets/render/performance-manager.js
+lobby/assets/rural3d.js
+lobby/assets/space3d.js
+lobby/assets/sw-register.js
+lobby/assets/vale3d.js
+lobby/assets/vendor-loader.js
+lobby/assets/village3d.js
+lobby/assets/world/airdrop-sectors.js
+lobby/assets/world/campus-connections.js
+lobby/assets/world/campus-environment.js
+lobby/assets/world/campus-experiences.js
+lobby/assets/world/campus-interiors.js
+lobby/assets/world/campus-module-world.js
+lobby/assets/world/global-map.js
+lobby/assets/world/world-connections.js
+lobby/assets/world/world-manifests.js
+lobby/assets/world/world-navigation.js
+lobby/assets/world/world-registry.js
+lobby/assets/world/world-runtime-prefetch.js
+lobby/index.html
+lobby/sw.js
+
+=== REMOVIDOS ===
+(nenhum)

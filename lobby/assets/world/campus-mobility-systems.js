@@ -7,13 +7,22 @@ const freezeRoute=route=>Object.freeze({...route,nodes:Object.freeze(route.nodes
 const clamp01=v=>Math.max(0,Math.min(1,Number(v)||0));
 
 export const CAMPUS_TRAFFIC_ROUTES=Object.freeze([
-  freezeRoute({id:'central-loop',name:'Circuito Central',loop:true,accent:'#36d2ff',nodes:[[-22,-10],[-12,-20],[0,-24],[12,-20],[22,-10],[22,10],[12,20],[0,24],[-12,20],[-22,10],[-22,-10]]}),
+  freezeRoute({id:'central-loop',name:'Circuito Central',loop:true,accent:'#36d2ff',nodes:[[0,-24],[-44,-24],[-44,24],[0,24],[44,24],[44,-24],[0,-24]]}),
   freezeRoute({id:'west-loop',name:'Circuito Tech Oeste',loop:true,accent:'#ff7fd5',nodes:[[-16,-3],[-30,-3],[-43,-3],[-44,-16],[-44,16],[-43,3],[-30,3],[-16,3],[-16,-3]]}),
   freezeRoute({id:'east-loop',name:'Circuito Inovação',loop:true,accent:'#61e7a6',nodes:[[16,-3],[30,-3],[43,-3],[44,-16],[44,16],[43,3],[30,3],[16,3],[16,-3]]}),
-  freezeRoute({id:'mobility-south',name:'Linha Mobilidade',loop:true,accent:'#ffae63',nodes:[[-38,-24],[-20,-24],[0,-24],[20,-24],[38,-24],[31,-30],[10,-30],[-15.5,-30],[-30,-27],[-38,-24]]}),
+  freezeRoute({id:'mobility-south',name:'Linha Mobilidade',loop:true,accent:'#ffae63',nodes:[[-44,-24],[-20,-24],[0,-24],[20,-24],[44,-24],[32,-30],[10,-30],[-16,-30],[-32,-30],[-44,-24]]}),
   freezeRoute({id:'vale-corridor',name:'Corredor Campus Vale',loop:true,accent:'#51e7a3',nodes:[[0,-11],[0,-17],[0,-23],[0,-30],[3.4,-30],[3.4,-23],[3.4,-17],[3.4,-11],[0,-11]]})
 ]);
 
+
+
+export const CAMPUS_PEDESTRIAN_ROUTES=Object.freeze([
+  freezeRoute({id:'ped-central',name:'Passeio Praça Central',loop:true,accent:'#bfefff',nodes:[[-8,-8],[-8,8],[8,8],[8,-8],[-8,-8]]}),
+  freezeRoute({id:'ped-west',name:'Calçada Tech Oeste',loop:true,accent:'#ffc1ea',nodes:[[-12,-6],[-30,-6],[-40,-6],[-40,6],[-30,6],[-12,6],[-12,-6]]}),
+  freezeRoute({id:'ped-east',name:'Calçada Inovação',loop:true,accent:'#a9f5ce',nodes:[[12,-6],[30,-6],[40,-6],[40,6],[30,6],[12,6],[12,-6]]}),
+  freezeRoute({id:'ped-south',name:'Passeio Mobilidade',loop:true,accent:'#ffe0bd',nodes:[[-30,-27],[-12,-27],[0,-27],[12,-27],[30,-27],[30,-32],[0,-32],[-30,-32],[-30,-27]]}),
+  freezeRoute({id:'ped-vale',name:'Passeio Campus Vale',loop:true,accent:'#b7f5d8',nodes:[[-4.8,-12],[-4.8,-30],[4.8,-30],[4.8,-12],[-4.8,-12]]})
+]);
 
 // Fase 2.2 — corredores de pista reutilizam a malha viária existente; não criam uma segunda rua sobre o Campus.
 export const CAMPUS_MOBILITY_TRACKS=Object.freeze([
@@ -75,11 +84,11 @@ export const CAMPUS_DRIVABLE_VEHICLES=Object.freeze([
 ]);
 
 export const CAMPUS_NPC_PATROLS=Object.freeze([
-  Object.freeze({id:'npc-guide-central',name:'Guia do Campus',role:'Orientação urbana',accent:'#36d2ff',speed:.016,routeId:'central-loop',offset:.08,message:'Posso indicar prédios, estações e serviços do Campus.'}),
-  Object.freeze({id:'npc-monitor-west',name:'Monitor Tech Oeste',role:'Apoio de laboratório',accent:'#ff7fd5',speed:.021,routeId:'west-loop',offset:.36,message:'O distrito oeste conecta laboratório, CTF e Fliperama.'}),
-  Object.freeze({id:'npc-monitor-east',name:'Monitor Inovação',role:'Apoio maker',accent:'#61e7a6',speed:.02,routeId:'east-loop',offset:.62,message:'O distrito leste conecta COSMOS, desafios e projetos.'}),
-  Object.freeze({id:'npc-mobility',name:'Agente de Mobilidade',role:'Estações e garagens',accent:'#ffae63',speed:.014,routeId:'mobility-south',offset:.2,message:'Use estações, passarelas e garagens para circular pelo Campus.'}),
-  Object.freeze({id:'npc-vale-link',name:'Embaixador do Vale',role:'Conexão Campus ↔ Vale',accent:'#51e7a3',speed:.016,routeId:'vale-corridor',offset:.72,message:'O eixo monumental leva ao Vale do Silício AGV.'})
+  Object.freeze({id:'npc-guide-central',name:'Guia do Campus',role:'Orientação urbana',accent:'#36d2ff',speed:.016,routeId:'ped-central',offset:.08,message:'Posso indicar prédios, estações e serviços do Campus.'}),
+  Object.freeze({id:'npc-monitor-west',name:'Monitor Tech Oeste',role:'Apoio de laboratório',accent:'#ff7fd5',speed:.021,routeId:'ped-west',offset:.36,message:'O distrito oeste conecta laboratório, CTF e Fliperama.'}),
+  Object.freeze({id:'npc-monitor-east',name:'Monitor Inovação',role:'Apoio maker',accent:'#61e7a6',speed:.02,routeId:'ped-east',offset:.62,message:'O distrito leste conecta COSMOS, desafios e projetos.'}),
+  Object.freeze({id:'npc-mobility',name:'Agente de Mobilidade',role:'Estações e garagens',accent:'#ffae63',speed:.014,routeId:'ped-south',offset:.2,message:'Use estações, passarelas e garagens para circular pelo Campus.'}),
+  Object.freeze({id:'npc-vale-link',name:'Embaixador do Vale',role:'Conexão Campus ↔ Vale',accent:'#51e7a3',speed:.016,routeId:'ped-vale',offset:.72,message:'O eixo monumental leva ao Vale do Silício AGV.'})
 ]);
 
 export const CAMPUS_DYNAMIC_SIGNS=Object.freeze([
@@ -122,7 +131,7 @@ export const CAMPUS_ELEVATOR_SYSTEM=Object.freeze({
   cabin:Object.freeze({width:1.72,depth:1.38,height:2.55})
 });
 
-const routeMap=new Map(CAMPUS_TRAFFIC_ROUTES.map(route=>[route.id,route]));
+const routeMap=new Map([...CAMPUS_TRAFFIC_ROUTES,...CAMPUS_PEDESTRIAN_ROUTES].map(route=>[route.id,route]));
 
 export function sampleCampusRoute(routeOrId,t=0){
   const route=typeof routeOrId==='string'?routeMap.get(routeOrId):routeOrId;

@@ -1,4 +1,4 @@
-import { WORLD_MANIFESTS } from './world-manifests.js?v=14.10.8.83-o3';
+import { WORLD_MANIFESTS } from './world-manifests.js?v=14.10.8.92-f90-graphics';
 
 const ids=new Set(WORLD_MANIFESTS.map(world=>world.id));
 const edgeKey=(a,b)=>[a,b].sort().join('::');

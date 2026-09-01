@@ -1,0 +1,22 @@
+{
+  "version": "14.10.8.88",
+  "build": "14.10.8.88-stage57-f86-villages",
+  "phase": "world-f86-modular-villages",
+  "date": "2026-09-01",
+  "basePackage": "AGV-WORLD-F85-MAPA-REALTIME-QUALIDADE-v14.10.8.87.zip",
+  "worldCount": 15,
+  "connectionCount": 14,
+  "newWorlds": [
+    {"id":"village-1ds","scene":"village-1ds","area":"village-1ds"},
+    {"id":"village-2ds","scene":"village-2ds","area":"village-2ds"},
+    {"id":"village-3ds","scene":"village-3ds","area":"village-3ds"},
+    {"id":"village-sub","scene":"village-sub","area":"village-sub"}
+  ],
+  "databaseMigration": "core/database/078_lobby_modular_villages.sql",
+  "edgeFunction": "core/edge-functions/lobby-presence/index.ts",
+  "notes": [
+    "Campus keeps exterior class buildings as gateways, but normal entry unloads Campus and loads only the selected village runtime.",
+    "Village 3D runtime is lazy and is not included in the initial Service Worker critical shell.",
+    "Airdrop mid-descent sector handoff is prepared by independent village worlds but remains a later phase."
+  ]
+}

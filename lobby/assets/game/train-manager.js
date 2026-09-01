@@ -1,4 +1,4 @@
-import { CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE } from '../world/campus-experiences.js?v=14.10.8.66-stage28';
+import { CAMPUS_TRAIN_STATIONS, CAMPUS_TRAIN_ROUTE } from '../world/campus-experiences.js?v=14.10.8.92-f90-graphics';
 import { CAMPUS_STATION_PROFILES } from '../world/campus-city-network.js?v=14.10.8.66';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const smooth=t=>t*t*(3-2*t);
@@ -13,7 +13,7 @@ function distanceAtStation(station){let best=0,bestD=Infinity;METRICS.segments.f
 
 export function createTrainManager({clock=()=>performance.now(),onEvent,reducedMotion=false}={}){
   let visualStart=clock(),trip=null;
-  const visualSpeed=reducedMotion?0:9.2,visualDwell=1.35;
+  const visualSpeed=reducedMotion?0:9.2,visualDwell=5,tripDwell=5;
   const stationTimeline=STATIONS.map(station=>({...station,routeDistance:distanceAtStation(station)})).sort((a,b)=>a.routeDistance-b.routeDistance);
   function sampleVisual(now=clock()){
     if(reducedMotion){const station=stationTimeline[0];return{x:station.x,y:.7,z:station.z,heading:0,station:station.id,stopped:true};}
@@ -29,10 +29,10 @@ export function createTrainManager({clock=()=>performance.now(),onEvent,reducedM
   function startTrip(destinationId,from={x:0,z:0}){
     const dest=STATIONS.find(s=>s.id===destinationId);if(!dest)return false;
     const origin=STATIONS[closestStationIndex(from.x,from.z)],startD=distanceAtStation(origin),endRaw=distanceAtStation(dest);let delta=endRaw-startD;if(delta<=1)delta+=METRICS.total;
-    trip={origin,dest,startD,distance:delta,startedAt:clock(),duration:Math.max(2.6,delta/12.5)+1.1};onEvent?.({type:'train-start',origin,destination:dest,duration:trip.duration,message:`Monotrilho: ${origin.name} → ${dest.name}`});return true;
+    trip={origin,dest,startD,distance:delta,startedAt:clock(),duration:Math.max(2.6,delta/12.5)+tripDwell*2,dwell:tripDwell};onEvent?.({type:'train-start',origin,destination:dest,duration:trip.duration,message:`Monotrilho: ${origin.name} → ${dest.name}`});return true;
   }
   function tickTrip(now=clock()){
-    if(!trip)return null;const elapsed=(now-trip.startedAt)/1000,dwell=.55,travel=Math.max(.8,trip.duration-dwell*2),raw=clamp((elapsed-dwell)/travel,0,1),progress=smooth(raw),p=sampleDistance(trip.startD+trip.distance*progress),done=elapsed>=trip.duration;
+    if(!trip)return null;const elapsed=(now-trip.startedAt)/1000,dwell=trip.dwell||tripDwell,travel=Math.max(.8,trip.duration-dwell*2),raw=clamp((elapsed-dwell)/travel,0,1),progress=smooth(raw),p=sampleDistance(trip.startD+trip.distance*progress),done=elapsed>=trip.duration;
     if(done){const dest=trip.dest;trip=null;onEvent?.({type:'train-complete',destination:dest,message:`Chegada: ${dest.name}.`});return{x:dest.x,y:0,z:dest.z,heading:p.heading,done:true,station:dest.id};}
     return{...p,progress,done:false,station:raw<=0?trip.origin.id:raw>=1?trip.dest.id:null};
   }

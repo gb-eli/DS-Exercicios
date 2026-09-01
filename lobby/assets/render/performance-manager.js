@@ -8,12 +8,10 @@ export function detectPerformanceProfile({mobile=matchMedia('(pointer:coarse)').
 }
 
 export function chooseInitialQuality(profile,requested=null){
+  // F90: uma escolha explícita do usuário é respeitada. O modo Automático já
+  // resolve uma opção segura antes de chegar aqui e o adaptativo ainda pode agir.
+  if(requested&&QUALITY_ORDER.includes(requested))return requested;
   if(profile.saveData||profile.hardware<=2||profile.cores<=2)return 'low';
-  if(requested&&QUALITY_ORDER.includes(requested)){
-    if(profile.mobile&&['high','ultra'].includes(requested))return profile.constrained?'low':'medium';
-    if(profile.constrained&&requested!=='low')return 'low';
-    return requested;
-  }
   if(profile.mobile)return profile.constrained?'low':'medium';
   if(profile.lowEnd)return 'low';
   if(profile.highEnd)return 'high';

@@ -45,7 +45,7 @@ function capsule(THREE,r,l,material){return new THREE.Mesh(new THREE.CapsuleGeom
 function setShadow(root,enabled){root.traverse?.(o=>{if(o.isMesh){o.castShadow=enabled;o.receiveShadow=enabled;}});}
 function disposeObject(root){root?.traverse?.(o=>{o.geometry?.dispose?.();if(o.material){for(const m of(Array.isArray(o.material)?o.material:[o.material])){m.map?.dispose?.();m.dispose?.();}}});}
 
-function proceduralBody(THREE,{accent='#36d2ff',staff=false,seed='agv',appearance}){
+function proceduralBody(THREE,{accent='#36d2ff',staff=false,seed='agv',appearance,quality='medium'}){
   const root=new THREE.Group();root.name='avatar-procedural';const rnd=mulberry32(hashSeed(seed));
   const skin=makeMaterial(THREE,appearance.skin,{roughness:.72});const hairMat=makeMaterial(THREE,appearance.hair,{roughness:.83});
   const accentHex=new THREE.Color(accent).getHex();const cloth=makeMaterial(THREE,accentHex,{metalness:.08,roughness:.52,emissive:staff?accentHex:0x000000,emissiveIntensity:staff?.12:0});
@@ -56,6 +56,16 @@ function proceduralBody(THREE,{accent='#36d2ff',staff=false,seed='agv',appearanc
   const head=new THREE.Mesh(new THREE.SphereGeometry(.31,20,14),skin);head.scale.set(.92,1.08,.92);head.position.y=1.46;body.add(head);
   const hair=new THREE.Mesh(new THREE.SphereGeometry(.316,18,12,0,Math.PI*2,0,Math.PI*.55),hairMat);hair.position.set(0,1.54,-.005);body.add(hair);
   const eyesMat=new THREE.MeshBasicMaterial({color:0x19232b});for(const ex of[-.105,.105]){const eye=new THREE.Mesh(new THREE.SphereGeometry(.025,8,6),eyesMat);eye.position.set(ex,1.49,.292);body.add(eye);}
+  // F90: acabamento facial/costura existe em um único grupo e é desligado por perfil/LOD.
+  const detailRoot=new THREE.Group();detailRoot.name='avatar-detail-medium';detailRoot.userData.avatarQualityDetail=true;body.add(detailRoot);
+  const premiumRoot=new THREE.Group();premiumRoot.name='avatar-detail-premium';premiumRoot.userData.avatarQualityPremium=true;body.add(premiumRoot);
+  const browMat=makeMaterial(THREE,appearance.hair,{roughness:.88});for(const ex of[-.105,.105])detailRoot.add(box(THREE,.085,.018,.018,browMat,ex,1.555,.302));
+  detailRoot.add(box(THREE,.105,.018,.018,makeMaterial(THREE,0x8d4c4c,{roughness:.7}),0,1.39,.304));
+  const collar=makeMaterial(THREE,0xeaf4f6,{roughness:.6});detailRoot.add(box(THREE,.24,.055,.035,collar,0,1.02,.238));
+  const seam=makeMaterial(THREE,appearance.accent,{emissive:appearance.accent,emissiveIntensity:.16,roughness:.38});premiumRoot.add(box(THREE,.035,.47,.035,seam,0,.63,.245));
+  for(const ex of[-.31,.31])premiumRoot.add(box(THREE,.11,.035,.035,seam,ex,.79,.205));
+  const sole=makeMaterial(THREE,0x05080b,{roughness:.72});for(const x of[-.205,.205])premiumRoot.add(box(THREE,.25,.045,.42,sole,x,-.785,.115));
+  detailRoot.visible=quality!=='low';premiumRoot.visible=quality==='high'||quality==='ultra';
   if(appearance.glasses){const frame=makeMaterial(THREE,0x10151a,{metalness:.35,roughness:.25});const pg1=box(THREE,.14,.075,.022,frame,-.105,1.49,.315),pg2=box(THREE,.14,.075,.022,frame,.105,1.49,.315),pbridge=box(THREE,.07,.018,.022,frame,0,1.49,.315);pg1.userData.avatarAccessory=pg2.userData.avatarAccessory=pbridge.userData.avatarAccessory=true;body.add(pg1,pg2,pbridge);}
   if(staff){const visor=box(THREE,.39,.065,.035,dark,0,1.49,.307);visor.material.transparent=true;visor.material.opacity=.76;body.add(visor);}
   const armGeo=new THREE.CapsuleGeometry(.095,.53,4,8);armGeo.translate(0,-.34,0);const legGeo=new THREE.CapsuleGeometry(.115,.67,4,8);legGeo.translate(0,-.43,0);
@@ -68,7 +78,7 @@ function proceduralBody(THREE,{accent='#36d2ff',staff=false,seed='agv',appearanc
   if(appearance.hairStyle==='cap'){const cap=new THREE.Mesh(new THREE.CylinderGeometry(.28,.31,.09,18),hairMat);cap.position.set(0,1.72,0);cap.userData.avatarAccessory=true;body.add(cap);const brim=box(THREE,.34,.035,.14,hairMat,0,1.68,.28);brim.userData.avatarAccessory=true;body.add(brim);}
   if(appearance.headset){const band=new THREE.Mesh(new THREE.TorusGeometry(.31,.025,8,20,Math.PI),makeMaterial(THREE,0x1b2229,{metalness:.4,roughness:.3}));band.rotation.z=Math.PI;band.position.set(0,1.52,0);band.userData.avatarAccessory=true;body.add(band);}
   if(appearance.wrist){const watch=box(THREE,.14,.06,.14,makeMaterial(THREE,0x202a31,{metalness:.7,roughness:.2}),0,-.55,.02);watch.userData.avatarAccessory=true;rightArm.add(watch);}
-  root.userData={body,leftArm,rightArm,leftLeg,rightLeg,head,phase:rnd()*Math.PI*2,appearance};setShadow(root,true);return root;
+  root.userData={body,leftArm,rightArm,leftLeg,rightLeg,head,detailRoot,premiumRoot,phase:rnd()*Math.PI*2,appearance};setShadow(root,true);return root;
 }
 
 function addRigAccessories(THREE,model,appearance){
@@ -98,7 +108,7 @@ function animateProcedural(avatar,{speed=0,jump=0,time=0,vertical=0}={}){
 }
 
 export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='medium',mobile=false,hardware=4,diagnostics=globalThis.__agvLobbyDiag}={}){
-  let rigAsset=null,rigApi=null,currentQuality=quality,rigEligible=!mobile||hardware>=6;
+  let rigAsset=null,rigApi=null,currentQuality=quality,rigEligible=!mobile||hardware>=6;const avatars=new Set();
   const mode=()=>rigAsset?'rigged-glb-v2':'procedural-v2';
   async function init(){
     if(!rigEligible)return mode();
@@ -106,15 +116,34 @@ export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='mediu
     catch(error){rigAsset=null;rigApi=null;diagnostics?.record?.('avatar_system_fallback',{mode:'procedural-v2',message:String(error?.message||error).slice(0,180)});console.warn('Avatar rigado indisponível; Avatar V2 usando fallback procedural.',error);}
     return mode();
   }
+  function applyVisualQualityToAvatar(avatar,{distance=0,local=false}={}){
+    const u=avatar?.userData;if(!u)return;const model=u.proceduralModel||u.rigModel;const premium=currentQuality==='high'||currentQuality==='ultra',medium=currentQuality!=='low';
+    const detail=u.detailRoot||u.proceduralModel?.userData?.detailRoot,premiumRoot=u.premiumRoot||u.proceduralModel?.userData?.premiumRoot;
+    if(detail)detail.visible=medium&&(local||distance<18);if(premiumRoot)premiumRoot.visible=premium&&(local||distance<11);
+    model?.traverse?.(o=>{if(!o.isMesh)return;if(o.userData?.avatarAccessory)o.visible=(local||distance<18)&&(currentQuality!=='low'||local);o.castShadow=currentQuality!=='low'&&(local||distance<16);o.receiveShadow=currentQuality==='high'||currentQuality==='ultra';});
+    if(u.shadow){u.shadow.visible=local||distance<22;u.shadow.material.opacity=currentQuality==='low'?.14:currentQuality==='medium'?.18:.22;}
+  }
   function createAvatar({accent='#36d2ff',staff=false,label='Aluno',seed='agv',appearanceOverride=null}={}){
     const base=createAvatarAppearance({seed,accent,staff});const appearance=mergeAppearance(base,appearanceOverride);accent=appearance.accentCss||accent;appearance.accentCss=accent;appearance.accent=new THREE.Color(accent).getHex();
     const root=new THREE.Group();root.name=`AGVAvatarV2-${String(seed).slice(0,12)}`;
     if(rigAsset){const model=rigApi?.createRiggedAvatar?.(THREE,rigAsset,{accent,staff,seed,appearance});if(model){addRigAccessories(THREE,model,appearance);root.add(model);root.userData.rig=model.userData.rig;root.userData.rigModel=model;}}
-    if(!root.userData.rig){const body=proceduralBody(THREE,{accent,staff,seed,appearance});root.add(body);Object.assign(root.userData,body.userData);root.userData.proceduralModel=body;}
+    if(!root.userData.rig){const body=proceduralBody(THREE,{accent,staff,seed,appearance,quality:currentQuality});root.add(body);Object.assign(root.userData,body.userData);root.userData.proceduralModel=body;}
     const tag=spriteLabel(label,staff?'#ffd166':accent,staff?4.55:4.05);tag.position.set(0,3.05,0);root.add(tag);let badge=null;if(staff){badge=spriteLabel('EQUIPE','#ffd166',2.25,{bg:'rgba(40,26,2,.84)'});badge.position.set(0,2.68,0);root.add(badge);}
     const shadow=new THREE.Mesh(new THREE.CircleGeometry(.55,28),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.22,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.012;root.add(shadow);
-    Object.assign(root.userData,{tag,badge,shadow,emote:null,appearance,avatarMode:root.userData.rig?'rigged-glb-v2':'procedural-v2',localAction:null,lodLevel:0});shadow.castShadow=false;shadow.receiveShadow=false;tag.castShadow=false;if(badge)badge.castShadow=false;
-    return root;
+    Object.assign(root.userData,{tag,badge,shadow,emote:null,appearance,appearanceSignature:JSON.stringify(appearance),avatarSeed:seed,avatarStaff:staff,avatarLabel:label,avatarMode:root.userData.rig?'rigged-glb-v2':'procedural-v2',localAction:null,lodLevel:0,detailRoot:root.userData.detailRoot||root.userData.proceduralModel?.userData?.detailRoot||null,premiumRoot:root.userData.premiumRoot||root.userData.proceduralModel?.userData?.premiumRoot||null});shadow.castShadow=false;shadow.receiveShadow=false;tag.castShadow=false;if(badge)badge.castShadow=false;
+    avatars.add(root);applyVisualQualityToAvatar(root,{distance:0,local:true});return root;
+  }
+  function updateAppearance(avatar,appearanceOverride=null){
+    if(!avatar||!appearanceOverride||typeof appearanceOverride!=='object')return false;
+    const u=avatar.userData||{},base=createAvatarAppearance({seed:u.avatarSeed||avatar.name||'agv',accent:u.appearance?.accentCss||'#36d2ff',staff:!!u.avatarStaff}),appearance=mergeAppearance(base,appearanceOverride),signature=JSON.stringify(appearance);
+    if(signature===u.appearanceSignature)return false;
+    const localAction=u.localAction||null,emoteKind=u.emoteKind||null,emoteUntil=u.emoteUntil||0,lodLevel=u.lodLevel||0;
+    const replacement=createAvatar({accent:appearance.accentCss||u.appearance?.accentCss||'#36d2ff',staff:!!u.avatarStaff,label:u.avatarLabel||'Aluno',seed:u.avatarSeed||avatar.name||'agv',appearanceOverride:appearance});
+    const oldChildren=[...avatar.children];for(const child of oldChildren){avatar.remove(child);disposeObject(child);}
+    for(const child of [...replacement.children]){replacement.remove(child);avatar.add(child);}avatars.delete(replacement);
+    const next={...replacement.userData,localAction,lodLevel};avatar.userData=next;applyVisualQualityToAvatar(avatar,{distance:0,local:true});
+    if(emoteKind&&emoteUntil>Date.now())updateEmote(avatar,emoteKind,new Date(emoteUntil).toISOString());
+    return true;
   }
   function animate(avatar,{speed=0,jump=0,time=0,vertical=0,dt=.016}={}){
     const u=avatar?.userData;if(!u)return;
@@ -133,11 +162,9 @@ export function createAvatarSystem({THREE,spriteLabel,emojiSprite,quality='mediu
     const tier=local?0:distance>30?3:distance>18?2:distance>10?1:0;u.lodLevel=tier;
     const tagVisible=local||staff||distance<11.5;if(tag){tag.visible=tagVisible;if(tag.material)tag.material.opacity=distance>8.5&&!local&&!staff?clamp(1-(distance-8.5)/3,.16,1):1;}
     if(badge){badge.visible=staff&&distance<20;if(badge.material)badge.material.opacity=distance>15?clamp(1-(distance-15)/5,.25,1):1;}
-    avatar.visible=local||distance<40;
-    const model=u.rigModel||u.proceduralModel;if(model){model.traverse?.(o=>{if(o.userData?.avatarAccessory)o.visible=tier<2&&(currentQuality!=='low'||local);});}
-    if(u.shadow)u.shadow.visible=local||distance<22;
+    avatar.visible=local||distance<40;applyVisualQualityToAvatar(avatar,{distance,local});
   }
-  function setQuality(next){currentQuality=next||currentQuality;}
-  function disposeAvatar(avatar){if(!avatar)return;if(avatar.userData?.rigModel)rigApi?.disposeRiggedAvatar?.(avatar.userData.rigModel);disposeObject(avatar);}
-  return {init,createAvatar,animate,updateEmote,applyLOD,disposeAvatar,setQuality,getMode:mode,getRigAsset:()=>rigAsset};
+  function setQuality(next){currentQuality=['low','medium','high','ultra'].includes(next)?next:currentQuality;for(const avatar of avatars)applyVisualQualityToAvatar(avatar,{distance:avatar.userData?.lodLevel>=3?32:avatar.userData?.lodLevel===2?22:avatar.userData?.lodLevel===1?14:0,local:false});return currentQuality;}
+  function disposeAvatar(avatar){if(!avatar)return;avatars.delete(avatar);if(avatar.userData?.rigModel)rigApi?.disposeRiggedAvatar?.(avatar.userData.rigModel);disposeObject(avatar);}
+  return {init,createAvatar,updateAppearance,animate,updateEmote,applyLOD,disposeAvatar,setQuality,getMode:mode,getRigAsset:()=>rigAsset};
 }

@@ -1,4 +1,4 @@
-import { WORLD_REGISTRY } from './world-registry.js?v=14.10.8.83-o3';
+import { WORLD_REGISTRY } from './world-registry.js?v=14.10.8.92-f90-graphics';
 
 const numberOrNull=value=>Number.isFinite(Number(value))?Number(value):null;
 const freeze=value=>Object.freeze(value);

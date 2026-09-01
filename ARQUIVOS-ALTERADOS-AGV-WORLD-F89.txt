@@ -1,0 +1,42 @@
+AGV WORLD F89 — v14.10.8.91
+Base: F88 v14.10.8.90
+
+NOVOS
+- core/tests/f89-campus-performance-cleanup-v14.10.8.91.test.mjs
+- lobby/assets/render/campus-render-budget.js
+- docs/releases/AGV-WORLD-F89-CAMPUS-PERFORMANCE-v14.10.8.91.md
+- docs/releases/DEPLOY-AGV-WORLD-F89-v14.10.8.91.md
+- ARQUIVOS-ALTERADOS-AGV-WORLD-F89.txt
+
+PRINCIPAIS MODIFICADOS FUNCIONAIS
+- lobby/assets/world/campus-experiences.js
+- lobby/assets/world/campus-environment.js
+- lobby/assets/lobby3d.js
+- lobby/assets/lobby-lite.js
+- lobby/assets/lobby.js
+- lobby/assets/game/train-manager.js
+- lobby/assets/game/ride-manager.js
+- lobby/assets/boot.js
+- lobby/sw.js
+
+ATUALIZADOS PARA A CADEIA DE VERSÃO/CACHE 14.10.8.91
+- lobby/index.html
+- lobby/assets/config.js
+- lobby/assets/sw-register.js
+- lobby/assets/vendor-loader.js
+- lobby/assets/core/world-adapter.js
+- lobby/assets/core/world-manager.js
+- lobby/assets/campus-module-lite.js
+- lobby/assets/campus-module3d.js
+- lobby/assets/world/airdrop-sectors.js
+- lobby/assets/world/campus-connections.js
+- lobby/assets/world/campus-interiors.js
+- lobby/assets/world/campus-module-world.js
+- lobby/assets/world/global-map.js
+- lobby/assets/world/world-connections.js
+- lobby/assets/world/world-manifests.js
+- lobby/assets/world/world-navigation.js
+- lobby/assets/world/world-registry.js
+- lobby/assets/world/world-runtime-prefetch.js
+
+Nenhum arquivo foi removido fisicamente do pacote; a limpeza elimina código/objetos legados do runtime do Campus mantendo compatibilidade de distribuição.

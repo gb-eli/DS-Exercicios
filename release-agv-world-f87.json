@@ -1,0 +1,40 @@
+{
+  "version": "14.10.8.89",
+  "build": "14.10.8.89-stage58-f87-airdrop-sectors",
+  "phase": "world-f87-airdrop-sector-streaming",
+  "date": "2026-09-01",
+  "basePackage": "AGV-WORLD-F86-VILAS-MODULARES-v14.10.8.88.zip",
+  "worldCount": 15,
+  "connectionCount": 14,
+  "airdropGroundWorldCount": 12,
+  "airdropGroundWorlds": [
+    "campus-ds",
+    "village-1ds",
+    "village-2ds",
+    "village-3ds",
+    "village-sub",
+    "vale-silicio",
+    "rural-agv",
+    "military-agv",
+    "parque-diversoes-agv",
+    "colegio-agv",
+    "labirinto-armadilhas",
+    "museu-hardware-agv"
+  ],
+  "airdropExcludedWorlds": ["space-agv", "moon-agv", "mars-agv"],
+  "databaseMigration": null,
+  "requiresExistingMigrations": [
+    "074_lobby_presence_worlds_hotfix.sql",
+    "075_lobby_runtime_gameplay_settings.sql",
+    "076_lobby_spawned_vehicles.sql",
+    "077_lobby_airdrop_sessions.sql",
+    "078_lobby_modular_villages.sql"
+  ],
+  "notes": [
+    "The aircraft itself uses the lightweight transient airdrop runtime; Campus 3D is not loaded merely to show the flight.",
+    "At jump time the current aerial runtime is replaced by a sector-specific proxy and only the selected destination 3D module is prefetched below the configured altitude.",
+    "The full destination world is mounted only after landing.",
+    "Space Station, Moon and Mars remain outside atmospheric airdrop and use orbital navigation.",
+    "F87 introduces no database migration when upgrading from F86."
+  ]
+}

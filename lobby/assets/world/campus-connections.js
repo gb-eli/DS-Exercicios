@@ -1,4 +1,4 @@
-import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.66';
+import { CAMPUS_DESTINATION_MAP } from './campus-destinations.js?v=14.10.8.92-f90-graphics';
 
 const P=(x,z)=>Object.freeze({x,z});
 const route=(id,name,accent,width,nodes,kind='walkway')=>Object.freeze({id,name,accent,width,kind,nodes:Object.freeze(nodes.map(([x,z])=>P(x,z)))});
@@ -11,12 +11,11 @@ export const CAMPUS_CONNECTIONS=Object.freeze([
   route('east-promenade','Boulevard Tech Leste','#61e7a6',2.35,[[7,0],[14,0],[22,0],[32,0],[42,0],[47,0]]),
   route('bank-link','Conexão Banco AGV','#61e7a6',1.9,[[0,24],[-7.5,26.3],[-11.5,28],[CAMPUS_DESTINATION_MAP.bank.entrance.x,CAMPUS_DESTINATION_MAP.bank.entrance.z]]),
   route('store-link','Conexão Loja AGV','#f4b8ff',1.9,[[0,24],[7.5,26.3],[11.5,28],[CAMPUS_DESTINATION_MAP.store.entrance.x,CAMPUS_DESTINATION_MAP.store.entrance.z]]),
-  route('lab-link','Conexão Laboratório Virtual','#55d9ff',1.8,[[-14,-12],[-24,-17],[-34,-22],[CAMPUS_DESTINATION_MAP['lab-virtual'].entrance.x,CAMPUS_DESTINATION_MAP['lab-virtual'].entrance.z]]),
+  route('labs-gateway-link','Conexão Distrito de Laboratórios','#55d9ff',1.8,[[-14,-12],[-24,-17],[-34,-22],[-44,-26]]),
   route('cosmos-link','Conexão COSMOS','#8f8cff',1.8,[[14,-12],[24,-17],[34,-22],[CAMPUS_DESTINATION_MAP.cosmos.entrance.x,CAMPUS_DESTINATION_MAP.cosmos.entrance.z]]),
   route('ctf-link','Conexão CTF DS','#ff6b7a',1.8,[[-14,12],[-24,17],[-34,22],[CAMPUS_DESTINATION_MAP['ctf-ds'].entrance.x,CAMPUS_DESTINATION_MAP['ctf-ds'].entrance.z]]),
   route('desafio-link','Conexão Desafio DS','#ffd166',1.8,[[14,12],[24,17],[34,22],[CAMPUS_DESTINATION_MAP['desafio-ds'].entrance.x,CAMPUS_DESTINATION_MAP['desafio-ds'].entrance.z]]),
-  route('recreation-north','Passeio Parque Norte','#8fdcf3',1.65,[[-14,15],[0,15],[14,15]]),
-  route('recreation-south','Passeio Parque Sul','#d7d99a',1.65,[[-14,-15],[0,-15],[14,-15]]),
+  route('neon-gateway-link','Acesso Parque Neon & Lazer','#43d9ff',1.75,[[0,7],[0,11],[0,15]]),
   route('mirante-link','Acesso ao Mirante','#ffae63',1.55,[[-20,0],[-27,3],[-34,6]]),
   route('intermodal-link','Acesso Intermodal','#b58cff',1.55,[[20,0],[27,-3],[34,-6]])
 ]);
@@ -36,7 +35,7 @@ export const CAMPUS_SKYBRIDGES=Object.freeze([
 export const CAMPUS_WAYFINDING=Object.freeze([
   Object.freeze({id:'sign-central-north',x:0,z:12.2,title:'EIXO ACADÊMICO',detail:'Plataforma • Banco • Loja',accent:'#36d2ff'}),
   Object.freeze({id:'sign-central-south',x:0,z:-12.2,title:'AVALIAÇÃO / VALE',detail:'Centro de Provas • Vale AGV',accent:'#ffae63'}),
-  Object.freeze({id:'sign-central-west',x:-12.2,z:0,title:'TECH OESTE',detail:'Fliperama • CTF • Lab Virtual',accent:'#ff7fd5'}),
+  Object.freeze({id:'sign-central-west',x:-12.2,z:0,title:'TECH OESTE',detail:'Fliperama • CTF • Laboratórios',accent:'#ff7fd5'}),
   Object.freeze({id:'sign-central-east',x:12.2,z:0,title:'INOVAÇÃO LESTE',detail:'Desafio • COSMOS • Informática',accent:'#61e7a6'})
 ]);
 

@@ -5,7 +5,7 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
   "id": "campus-ds",
   "scene": "campus",
   "name": "Campus DS",
-  "version": "14.10.8.83",
+  "version": "14.10.8.92",
   "category": "campus",
   "enabled": true,
   "spawn": {
@@ -69,7 +69,14 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
       "z": -34.2,
       "targetWorldId": "parque-diversoes-agv",
       "radius": 5.2
-    }
+    },
+    {"id":"village-1ds-gateway","name":"Casa 1DS","label":"VILA 1DS","type":"village-gateway","x":-30,"z":-12.8,"targetWorldId":"village-1ds","radius":4.2},
+    {"id":"village-2ds-gateway","name":"Casa 2DS","label":"VILA 2DS","type":"village-gateway","x":30,"z":-12.8,"targetWorldId":"village-2ds","radius":4.2},
+    {"id":"village-3ds-gateway","name":"Casa 3DS","label":"VILA 3DS","type":"village-gateway","x":-30,"z":12.8,"targetWorldId":"village-3ds","radius":4.2},
+    {"id":"village-sub-gateway","name":"Casa SUB","label":"VILA SUB","type":"village-gateway","x":30,"z":12.8,"targetWorldId":"village-sub","radius":4.2},
+    {"id":"campus-library-gateway","name":"Biblioteca Central AGV","label":"BIBLIOTECA CENTRAL","type":"module-gateway","x":-34,"z":-6,"targetWorldId":"campus-library","radius":4.8},
+    {"id":"campus-labs-gateway","name":"Distrito de Laboratórios AGV","label":"LABORATÓRIOS","type":"module-gateway","x":-44,"z":-26,"targetWorldId":"campus-labs","radius":4.8},
+    {"id":"campus-neon-gateway","name":"Parque Neon & Lazer AGV","label":"NEON & LAZER","type":"module-gateway","x":0,"z":15,"targetWorldId":"campus-neon","radius":5.2}
   ],
   "connections": [
     "vale-silicio",
@@ -79,7 +86,14 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
     "parque-diversoes-agv",
     "colegio-agv",
     "labirinto-armadilhas",
-    "museu-hardware-agv"
+    "museu-hardware-agv",
+    "village-1ds",
+    "village-2ds",
+    "village-3ds",
+    "village-sub",
+    "campus-library",
+    "campus-labs",
+    "campus-neon"
   ],
   "destinations": [
     {
@@ -88,13 +102,6 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
       "label": "PLATAFORMA UNIFICADA",
       "x": 0,
       "z": 31
-    },
-    {
-      "id": "lab-virtual",
-      "name": "Laboratório Virtual DS",
-      "label": "LABORATÓRIO VIRTUAL",
-      "x": -44,
-      "z": -26
     },
     {
       "id": "ctf-ds",
@@ -172,11 +179,6 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
       "id": "unified-platform",
       "name": "Plataforma Unificada",
       "label": "PLATAFORMA UNIFICADA"
-    },
-    {
-      "id": "lab-virtual",
-      "name": "Laboratório Virtual DS",
-      "label": "LABORATÓRIO VIRTUAL"
     },
     {
       "id": "ctf-ds",
@@ -321,6 +323,45 @@ export const CAMPUS_WORLD_MANIFEST=createWorldManifest({
     "vehicles": true
   }
 });
+
+
+const VILLAGE_MANIFEST_DEFS=Object.freeze([
+  {key:'1ds',label:'1DS',name:'Vila da 1ª Série DS',accent:'#36d2ff',code:'1DS-A-MANHA'},
+  {key:'2ds',label:'2DS',name:'Vila da 2ª Série DS',accent:'#51e7a3',code:'2DS-A-MANHA'},
+  {key:'3ds',label:'3DS',name:'Vila da 3ª Série DS',accent:'#b58cff',code:'3DS-C-MANHA'},
+  {key:'sub',label:'SUB',name:'Vila DS Subsequente',accent:'#ffae63',code:'DS-SUB-NOITE'}
+]);
+function createVillageManifest(def){
+  return createWorldManifest({
+    id:`village-${def.key}`,scene:`village-${def.key}`,name:def.name,version:'14.10.8.88',category:'education',enabled:true,
+    spawn:{x:0,y:0,z:-24},bounds:{minX:-42,maxX:42,minZ:-32,maxZ:32},
+    portals:[{id:`${def.key}-return-campus`,name:'Estação • Campus DS',label:'VOLTAR AO CAMPUS DS',type:'village-return-portal',x:0,z:-28,targetWorldId:'campus-ds',radius:5.5}],
+    connections:['campus-ds'],
+    destinations:[
+      {id:'station',name:'Estação da Vila',kind:'station',x:0,z:-24},
+      {id:'plaza',name:`Praça ${def.label}`,kind:'plaza',x:0,z:0},
+      {id:'class-house',name:`Casa ${def.label}`,kind:'class-house',x:0,z:11},
+      {id:'lab',name:'Laboratório de Projetos',kind:'lab',x:-22,z:5},
+      {id:'library',name:'Biblioteca & Estudo',kind:'library',x:22,z:5},
+      {id:'garden',name:'Jardim de Convivência',kind:'garden',x:-20,z:-12},
+      {id:'maker',name:'Pavilhão Maker',kind:'maker',x:20,z:-12}
+    ],interiors:[],npcProfiles:[],vehicles:[],environment:{kind:'class-village',time:'global',weather:'global'},
+    identity:{icon:'🏘️',shortName:`Vila ${def.label}`,theme:`class-${def.key}`,accent:def.accent},aliases:[`vila-${def.key}`,`casa-${def.key}`],sceneAliases:[],presenceArea:`village-${def.key}`,presenceAreas:[`village-${def.key}`],
+    source:{shared:'world/village-world.js',runtimeLite:'village-lite.js',runtime3D:'village3d.js'},capabilities:{lite:true,threeD:true,interiors:false,npcs:false,vehicles:false}
+  });
+}
+export const [VILLAGE_1DS_WORLD_MANIFEST,VILLAGE_2DS_WORLD_MANIFEST,VILLAGE_3DS_WORLD_MANIFEST,VILLAGE_SUB_WORLD_MANIFEST]=VILLAGE_MANIFEST_DEFS.map(createVillageManifest);
+
+const CAMPUS_MODULE_MANIFEST_DEFS=Object.freeze([
+  {key:'library',name:'Biblioteca Central AGV',shortName:'Biblioteca',icon:'📚',accent:'#7ddcff',theme:'library',destinations:[['station','Estação da Biblioteca','station',0,-27],['atrium','Átrio do Conhecimento','atrium',0,-8],['main-library','Biblioteca Central','library-zone',0,10],['reading','Salão de Leitura','library-zone',-22,8],['media','Midiateca Digital','library-zone',22,8],['study','Salas de Estudo','library-zone',-22,-9],['archive','Acervo & Arquivo','library-zone',22,-9],['garden','Jardim de Leitura','garden',0,27]]},
+  {key:'labs',name:'Distrito de Laboratórios AGV',shortName:'Laboratórios',icon:'🧪',accent:'#55d9ff',theme:'labs',destinations:[['station','Estação dos Laboratórios','station',0,-28],['plaza','Praça de Pesquisa','plaza',0,-8],['lab-virtual','Laboratório Virtual DS','module-tool-link',-22,8],['simulation','Laboratório de Simulação','lab-zone',0,12],['robotics','Robótica & Automação','lab-zone',22,8],['network','Redes & Infraestrutura','lab-zone',-22,-9],['maker','Prototipagem Maker','lab-zone',22,-9],['research','Centro de Pesquisa','lab-zone',0,27]]},
+  {key:'neon',name:'Parque Neon & Lazer AGV',shortName:'Neon & Lazer',icon:'✨',accent:'#43d9ff',theme:'neon',destinations:[['station','Estação Neon','station',0,-29],['lounge','Praça Neon','plaza',0,-10],['pool','Piscina Neon','pool',21,8],['parkour','Circuito Parkour','parkour',-21,8],['playground','Parquinho DS','playground',-21,-10],['slide','Escorregador Turbo','slide',21,-10],['stage','Palco & Convivência','lounge',0,20],['garden','Jardim Luminoso','garden',0,30]]}
+]);
+function createCampusModuleManifest(def){
+  const destinations=def.destinations.map(([id,name,kind,x,z])=>({id,name,kind,x,z,...(id==='lab-virtual'?{route:'sistemas/01-lab-virtual/LABDS/index.html'}:{})}));
+  return createWorldManifest({id:`campus-${def.key}`,scene:`campus-${def.key}`,name:def.name,version:'14.10.8.92',category:'campus-module',enabled:true,spawn:{x:0,y:0,z:-28},bounds:{minX:-46,maxX:46,minZ:-36,maxZ:36},portals:[{id:`${def.key}-return-campus`,name:'Estação Central • Campus DS',label:'VOLTAR AO CAMPUS DS',type:'campus-module-return-portal',x:0,z:-32,targetWorldId:'campus-ds',radius:5.6}],connections:['campus-ds'],destinations,interiors:[],npcProfiles:[],vehicles:[],environment:{kind:`campus-${def.theme}`,time:'global',weather:'global'},identity:{icon:def.icon,shortName:def.shortName,theme:def.theme,accent:def.accent},aliases:[def.key,`campus-${def.key}`],sceneAliases:[],presenceArea:`campus-${def.key}`,presenceAreas:[`campus-${def.key}`],source:{shared:'world/campus-module-world.js',runtimeLite:'campus-module-lite.js',runtime3D:'campus-module3d.js'},capabilities:{lite:true,threeD:true,interiors:false,npcs:false,vehicles:false}});
+}
+export const [CAMPUS_LIBRARY_WORLD_MANIFEST,CAMPUS_LABS_WORLD_MANIFEST,CAMPUS_NEON_WORLD_MANIFEST]=CAMPUS_MODULE_MANIFEST_DEFS.map(createCampusModuleManifest);
 
 export const VALE_WORLD_MANIFEST=createWorldManifest({
   "id": "vale-silicio",
@@ -2162,4 +2203,4 @@ export const MUSEU_WORLD_MANIFEST=createWorldManifest({
   }
 });
 
-export const WORLD_MANIFESTS=Object.freeze([CAMPUS_WORLD_MANIFEST,VALE_WORLD_MANIFEST,RURAL_WORLD_MANIFEST,MILITARY_WORLD_MANIFEST,SPACE_WORLD_MANIFEST,MOON_WORLD_MANIFEST,MARS_WORLD_MANIFEST,PARQUE_WORLD_MANIFEST,COLEGIO_WORLD_MANIFEST,LABIRINTO_WORLD_MANIFEST,MUSEU_WORLD_MANIFEST]);
+export const WORLD_MANIFESTS=Object.freeze([CAMPUS_WORLD_MANIFEST,VILLAGE_1DS_WORLD_MANIFEST,VILLAGE_2DS_WORLD_MANIFEST,VILLAGE_3DS_WORLD_MANIFEST,VILLAGE_SUB_WORLD_MANIFEST,CAMPUS_LIBRARY_WORLD_MANIFEST,CAMPUS_LABS_WORLD_MANIFEST,CAMPUS_NEON_WORLD_MANIFEST,VALE_WORLD_MANIFEST,RURAL_WORLD_MANIFEST,MILITARY_WORLD_MANIFEST,SPACE_WORLD_MANIFEST,MOON_WORLD_MANIFEST,MARS_WORLD_MANIFEST,PARQUE_WORLD_MANIFEST,COLEGIO_WORLD_MANIFEST,LABIRINTO_WORLD_MANIFEST,MUSEU_WORLD_MANIFEST]);

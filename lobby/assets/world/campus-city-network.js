@@ -12,7 +12,9 @@ export const CAMPUS_ROAD_HIERARCHY=Object.freeze([
   freezeRoute({id:'collector-west',name:'Anel Oeste',class:'collector',width:4.6,sidewalk:.95,accent:'#ff7fd5',nodes:[[-44,-24],[-44,0],[-44,24]]}),
   freezeRoute({id:'collector-east',name:'Anel Leste',class:'collector',width:4.6,sidewalk:.95,accent:'#61e7a6',nodes:[[44,-24],[44,0],[44,24]]}),
   freezeRoute({id:'service-civic',name:'Via Cívica',class:'service',width:3.2,sidewalk:.75,accent:'#d5f5ff',nodes:[[-18,30],[0,30],[18,30]]}),
-  freezeRoute({id:'service-mobility',name:'Via de Avaliação',class:'service',width:3.2,sidewalk:.75,accent:'#ffcc8a',nodes:[[-21,-30],[0,-30],[21,-30]]})
+  freezeRoute({id:'service-mobility',name:'Via de Avaliação',class:'service',width:3.2,sidewalk:.75,accent:'#ffcc8a',nodes:[[-32,-30],[0,-30],[32,-30]]}),
+  freezeRoute({id:'service-mobility-west-link',name:'Acesso Mobilidade Oeste',class:'service',width:3.2,sidewalk:.75,accent:'#ffcc8a',nodes:[[-44,-24],[-32,-30]]}),
+  freezeRoute({id:'service-mobility-east-link',name:'Acesso Mobilidade Leste',class:'service',width:3.2,sidewalk:.75,accent:'#ffcc8a',nodes:[[44,-24],[32,-30]]})
 ]);
 
 export const CAMPUS_THEME_PLAZAS=Object.freeze([

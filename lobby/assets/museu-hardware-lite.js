@@ -4,6 +4,7 @@ import {
   MUSEU_HARDWARE_GALLERIES,MUSEU_HARDWARE_NPCS,MUSEU_HARDWARE_DESTINATIONS,
   museuHardwareWorldToPresence,museuHardwarePresenceToWorld,nearestMuseuHardwareObject,clampMuseuHardware,galleryByObjectId
 } from './world/museu-hardware-shared.js?v=0.8.0';
+import { playerMoveSpeed } from './world/gameplay-settings.js?v=14.10.8.87-f85-gameplay';
 import { drawMuseumDemo2D } from './world/museu-hardware-exhibits.js?v=0.8.0';
 import { museumCatalogItem,loadMuseumProgress,saveMuseumProgress,resetMuseumProgress,museumQuizAnswer,museumProgressSnapshot,MUSEU_HARDWARE_GUIDED_ORDER,loadMuseumSettings,saveMuseumSettings,museumSettingsSnapshot } from './world/museu-hardware-catalog.js?v=0.8.0';
 import { createMuseuHardwareUI } from './museu-hardware-ui.js?v=0.8.0';
@@ -94,7 +95,7 @@ export async function createMuseuHardwareLite({canvas,state,onInteract,onPlayerS
 
   function frame(now){
     if(stopped||signal?.aborted)return;raf=requestAnimationFrame(frame);if(document.hidden){last=now;lastGate=0;return;}const minFrame=1000/Math.max(15,fpsCap||60);if(lastGate&&now-lastGate<minFrame-1)return;lastGate=now;const size=resize()||{w:canvas.clientWidth||1,h:canvas.clientHeight||1};const dt=Math.min(.05,(now-last)/1000||.016);last=now;frames++;if(now-sampleStart>=1000){fps=Math.round(frames*1000/(now-sampleStart));frames=0;sampleStart=now;onPerf?.({fps,quality:'lite',profile:{scene:'museu-hardware',reducedMotion}});}
-    let ix=((keys.has('KeyD')||keys.has('ArrowRight'))?1:0)-((keys.has('KeyA')||keys.has('ArrowLeft'))?1:0)+joy.x,iz=((keys.has('KeyS')||keys.has('ArrowDown'))?1:0)-((keys.has('KeyW')||keys.has('ArrowUp'))?1:0)+joy.y,l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l;}const speed=running?27:15;if(l>.02){move(ix*speed*dt,iz*speed*dt);player.dir=Math.atan2(ix,iz);}
+    let ix=((keys.has('KeyD')||keys.has('ArrowRight'))?1:0)-((keys.has('KeyA')||keys.has('ArrowLeft'))?1:0)+joy.x,iz=((keys.has('KeyS')||keys.has('ArrowDown'))?1:0)-((keys.has('KeyW')||keys.has('ArrowUp'))?1:0)+joy.y,l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l;}const speed=playerMoveSpeed(state,{running});if(l>.02){move(ix*speed*dt,iz*speed*dt);player.dir=Math.atan2(ix,iz);}
     activeCaption=computeActiveCaption();
     drawShell(size.w,size.h);const t=now/1000;for(const g of MUSEU_HARDWARE_GALLERIES)drawGallery(g,size.w,size.h,t);drawPortal(size.w,size.h,t);drawNPCs(size.w,size.h,t);drawOthers(size.w,size.h);drawPlayer(size.w,size.h);drawChat(size.w,size.h);drawCaption(size.w,size.h);
     const area=activeArea();if(area!==lastArea){lastArea=area;onAreaChange?.(area);}const nearWorldObject=localInspect(),nearStudent=nearestStudent(),pp=museuHardwareWorldToPresence(player.x,player.z);onPlayerState?.({x:pp.x,y:pp.y,area:'museu-hardware',nearPortal:null,nearStudent,nearSeat:null,nearWorldObject,seated:false,moving:l,running,onGround:true});

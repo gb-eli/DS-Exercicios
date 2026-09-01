@@ -1,4 +1,4 @@
-import { CAMPUS_RIDES } from '../world/campus-experiences.js?v=14.10.8.66-stage28';
+import { CAMPUS_RIDES } from '../world/campus-experiences.js?v=14.10.8.92-f90-graphics';
 
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const defaultClock=()=>performance.now();
@@ -17,7 +17,7 @@ function sampleRide(def,progress){
 export function createRideManager({definitions=CAMPUS_RIDES,onEvent,clock=defaultClock,reducedMotion=false}={}){
   let current=null,startedAt=0,lastTick=0;
   const emit=(type,extra={})=>{const event={type,experience:current?.id||null,...extra};onEvent?.(event);return event;};
-  function start(id){const def=definitions[id];if(!def)return false;current=def;startedAt=clock();lastTick=0;emit('experience-start',{title:id==='coaster'?'Montanha-russa Panorâmica':id==='slide'?'Escorregador Turbo':id==='tower'?'Torre Mirante':id==='tower-down'?'Descida do Mirante':id==='playground'?'Parquinho DS':'Piscina Neon',message:id==='coaster'?'Circuito panorâmico completo iniciado no trilho do Campus.':id==='slide'?'Subindo e preparando uma descida curta e segura.':id==='tower'?'Subida ao mirante iniciada. Você poderá permanecer no deck superior.':id==='tower-down'?'Descida segura do mirante iniciada.':id==='playground'?'Balanço ativado por alguns segundos.':'Pausa no deck da Piscina Neon.',camera:def.camera});return true;}
+  function start(id){const def=definitions[id];if(!def)return false;current=def;startedAt=clock();lastTick=0;emit('experience-start',{title:id==='tower'?'Torre Mirante':id==='tower-down'?'Descida do Mirante':'Experiência do Campus',message:id==='tower'?'Subida ao mirante iniciada. Você poderá permanecer no deck superior.':id==='tower-down'?'Descida segura do mirante iniciada.':'Experiência iniciada.',camera:def.camera});return true;}
   function cancel({silent=false}={}){if(!current)return false;const id=current.id;current=null;startedAt=0;if(!silent)onEvent?.({type:'experience-cancel',experience:id,message:'Atração encerrada. Você voltou à exploração.'});return true;}
   function tick(now=clock()){
     if(!current)return null;const duration=reducedMotion?Math.min(1.2,current.duration):current.duration,progress=clamp((now-startedAt)/(duration*1000),0,1),sample=sampleRide(current,progress);

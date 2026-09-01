@@ -1,5 +1,5 @@
-import { snapshotWorldState } from './lobby-state.js?v=14.10.8.79-stage48-solar-system';
-import { resolveWorldTransition } from '../world/world-navigation.js?v=14.10.8.83-o5';
+import { snapshotWorldState } from './lobby-state.js?v=14.10.8.85-f83-gameplay-performance';
+import { resolveWorldTransition } from '../world/world-navigation.js?v=14.10.8.92-f90-graphics';
 
 function abortError(){
   try{return new DOMException('world_runtime_start_aborted','AbortError')}catch(_){const error=new Error('world_runtime_start_aborted');error.name='AbortError';return error;}
