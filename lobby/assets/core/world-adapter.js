@@ -1,5 +1,5 @@
-import { createLobby3D } from '../lobby3d.js?v=14.10.8.79-stage48-solar-system';
-import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.79-stage48-solar-system';
+import { createLobby3D } from '../lobby3d.js?v=14.10.8.82-stage51-parque-connected';
+import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.82-stage51-parque-connected';
 import { createValeLite } from '../vale-lite.js?v=14.10.8.66-stage32';
 import { createVale3D } from '../vale3d.js?v=14.10.8.66-stage32';
 
@@ -27,34 +27,67 @@ export const VALE_WORLD_ADAPTER=createWorldAdapter({
   id:'vale-silicio',scene:'vale',label:'Vale do Silício AGV',createLite:createValeLite,create3D:createVale3D
 });
 
-const createRuralLiteLazy=async context=>(await import('../rural-lite.js?v=14.10.8.79-stage48-solar-system')).createRuralLite(context);
-const createRural3DLazy=async context=>(await import('../rural3d.js?v=14.10.8.79-stage48-solar-system')).createRural3D(context);
+const createRuralLiteLazy=async context=>(await import('../rural-lite.js?v=14.10.8.82-stage51-parque-connected')).createRuralLite(context);
+const createRural3DLazy=async context=>(await import('../rural3d.js?v=14.10.8.82-stage51-parque-connected')).createRural3D(context);
 export const RURAL_WORLD_ADAPTER=createWorldAdapter({
   id:'rural-agv',scene:'rural',label:'Mundo Rural AGV',createLite:createRuralLiteLazy,create3D:createRural3DLazy
 });
 
-const createMilitaryLiteLazy=async context=>(await import('../military-lite.js?v=14.10.8.79-stage48-solar-system')).createMilitaryLite(context);
-const createMilitary3DLazy=async context=>(await import('../military3d.js?v=14.10.8.79-stage48-solar-system')).createMilitary3D(context);
+const createMilitaryLiteLazy=async context=>(await import('../military-lite.js?v=14.10.8.82-stage51-parque-connected')).createMilitaryLite(context);
+const createMilitary3DLazy=async context=>(await import('../military3d.js?v=14.10.8.82-stage51-parque-connected')).createMilitary3D(context);
 export const MILITARY_WORLD_ADAPTER=createWorldAdapter({
   id:'military-agv',scene:'military',label:'Base de Operações AGV',createLite:createMilitaryLiteLazy,create3D:createMilitary3DLazy
 });
 
-const createSpaceLiteLazy=async context=>(await import('../space-lite.js?v=14.10.8.79-stage48-solar-system')).createSpaceLite(context);
-const createSpace3DLazy=async context=>(await import('../space3d.js?v=14.10.8.79-stage48-solar-system')).createSpace3D(context);
+const createSpaceLiteLazy=async context=>(await import('../space-lite.js?v=14.10.8.82-stage51-parque-connected')).createSpaceLite(context);
+const createSpace3DLazy=async context=>(await import('../space3d.js?v=14.10.8.82-stage51-parque-connected')).createSpace3D(context);
 export const SPACE_WORLD_ADAPTER=createWorldAdapter({
   id:'space-agv',scene:'space',label:'Estação Orbital AGV',createLite:createSpaceLiteLazy,create3D:createSpace3DLazy
 });
 
 
-const createMoonLiteLazy=async context=>(await import('../moon-lite.js?v=14.10.8.79-stage48-solar-system')).createMoonLite(context);
-const createMoon3DLazy=async context=>(await import('../moon3d.js?v=14.10.8.79-stage48-solar-system')).createMoon3D(context);
+const createMoonLiteLazy=async context=>(await import('../moon-lite.js?v=14.10.8.82-stage51-parque-connected')).createMoonLite(context);
+const createMoon3DLazy=async context=>(await import('../moon3d.js?v=14.10.8.82-stage51-parque-connected')).createMoon3D(context);
 export const MOON_WORLD_ADAPTER=createWorldAdapter({
   id:'moon-agv',scene:'moon',label:'Lua AGV',createLite:createMoonLiteLazy,create3D:createMoon3DLazy
 });
 
 
-const createMarsLiteLazy=async context=>(await import('../mars-lite.js?v=14.10.8.79-stage48-solar-system')).createMarsLite(context);
-const createMars3DLazy=async context=>(await import('../mars3d.js?v=14.10.8.79-stage48-solar-system')).createMars3D(context);
+const createMarsLiteLazy=async context=>(await import('../mars-lite.js?v=14.10.8.82-stage51-parque-connected')).createMarsLite(context);
+const createMars3DLazy=async context=>(await import('../mars3d.js?v=14.10.8.82-stage51-parque-connected')).createMars3D(context);
 export const MARS_WORLD_ADAPTER=createWorldAdapter({
   id:'mars-agv',scene:'mars',label:'Marte AGV',createLite:createMarsLiteLazy,create3D:createMars3DLazy
 });
+
+
+const createParqueLiteLazy=async context=>(await import('../parque-diversoes-agv-lite.js?v=14.10.8.82-stage51-parque-connected')).createParqueDiversoesLite(context);
+const createParque3DLazy=async context=>(await import('../parque-diversoes-agv3d.js?v=14.10.8.82-stage51-parque-connected')).createParqueDiversoes3D(context);
+export const PARQUE_WORLD_ADAPTER=createWorldAdapter({
+  id:'parque-diversoes-agv',scene:'parque',label:'Parque de Diversões AGV',createLite:createParqueLiteLazy,create3D:createParque3DLazy
+});
+
+
+const createColegioLiteLazy=async context=>(await import('../colegio-agv-host.js?v=14.10.8.83-stage52-new-worlds')).createColegioAgvHostedLite(context);
+const createColegio3DLazy=async context=>(await import('../colegio-agv-host.js?v=14.10.8.83-stage52-new-worlds')).createColegioAgvHosted3D(context);
+export const COLEGIO_WORLD_ADAPTER=createWorldAdapter({
+  id:'colegio-agv',scene:'colegio',label:'Colégio AGV — Alberto Gomes Veiga',createLite:createColegioLiteLazy,create3D:createColegio3DLazy
+});
+
+const createLabirintoLiteLazy=async context=>(await import('../labirinto-armadilhas-host.js?v=14.10.8.83-stage52-new-worlds')).createLabirintoArmadilhasHostedLite(context);
+const createLabirinto3DLazy=async context=>(await import('../labirinto-armadilhas-host.js?v=14.10.8.83-stage52-new-worlds')).createLabirintoArmadilhasHosted3D(context);
+export const LABIRINTO_WORLD_ADAPTER=createWorldAdapter({
+  id:'labirinto-armadilhas',scene:'labirinto',label:'Labirinto com Armadilhas',createLite:createLabirintoLiteLazy,create3D:createLabirinto3DLazy
+});
+
+const createMuseuLiteLazy=async context=>(await import('../museu-hardware-lite.js?v=0.8.0')).createMuseuHardwareLite(context);
+const createMuseu3DLazy=async context=>(await import('../museu-hardware3d.js?v=0.8.0')).createMuseuHardware3D(context);
+export const MUSEU_WORLD_ADAPTER=createWorldAdapter({
+  id:'museu-hardware-agv',scene:'museu',label:'Museu do Hardware AGV',createLite:createMuseuLiteLazy,create3D:createMuseu3DLazy
+});
+
+export const WORLD_ADAPTERS=Object.freeze([
+  CAMPUS_WORLD_ADAPTER,VALE_WORLD_ADAPTER,RURAL_WORLD_ADAPTER,MILITARY_WORLD_ADAPTER,SPACE_WORLD_ADAPTER,MOON_WORLD_ADAPTER,MARS_WORLD_ADAPTER,PARQUE_WORLD_ADAPTER,COLEGIO_WORLD_ADAPTER,LABIRINTO_WORLD_ADAPTER,MUSEU_WORLD_ADAPTER
+]);
+const WORLD_ADAPTER_INDEX=new Map(WORLD_ADAPTERS.flatMap(adapter=>[[adapter.id,adapter],[adapter.scene,adapter]]));
+export function getWorldAdapter(ref){return WORLD_ADAPTER_INDEX.get(String(ref||''))||null;}
+

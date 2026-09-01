@@ -1,76 +1,31 @@
 {
-  "version": "14.10.8.79",
-  "channel": "feature",
-  "title": "Sistema Solar AGV — Central Interplanetária, mapa orbital e viagens visuais para Lua e Marte",
-  "base": "14.10.8.78",
+  "version": "14.10.8.82",
+  "build": "14.10.8.82-stage51-parque-connected",
+  "phase": "world-f80-amusement-park-connected",
+  "title": "AGV World F80 — Parque de Diversões conectado",
+  "base": "F78 v14.10.8.80 + Parque de Diversões F7 v14.10.8.80-f7",
   "changes": [
-    "Nova Central Interplanetária AGV incorporada à Estação Orbital existente, sem criar um novo mundo ou renderer",
-    "Mapa visual do Sistema Solar com Sol, planetas, Lua, órbitas comprimidas e cinturão de asteroides",
-    "Lua e Marte passam a usar o mesmo painel de planejamento de viagem, mantendo seus mundos independentes e lazy-loaded",
-    "Seleção visual de destino informa distância de referência, resumo e fatos antes do embarque",
-    "Animação de viagem em fases de desacoplamento, cruzeiro e aproximação com progresso e opção de pular somente a animação",
-    "Controles do runtime orbital ficam bloqueados durante a transição e são liberados de forma segura no término ou cancelamento visual",
-    "Escala e duração da experiência são explicitamente declaradas como comprimidas e didáticas, sem simular tempo astronômico real",
-    "Holograma 3D reutiliza o renderer orbital e o mapa 2D recebe visual equivalente",
-    "Runtimes de Lua e Marte permanecem fora do shell crítico e continuam sendo importados somente ao viajar",
-    "Fluxo de retorno Lua/Marte para a posição orbital anterior foi preservado"
+    "Parque de Diversões integrado como oitavo ambiente navegável lazy 2D/3D",
+    "Portal físico Campus ↔ Parque com retorno ao Campus",
+    "Atalho destacado e filtro Parque no teletransporte global",
+    "Destinos do Parque disponíveis no teletransporte entre todos os mapas",
+    "Presença, chat de proximidade e reunir isolados em parque-diversoes-agv",
+    "Realtime Broadcast para competições recreativas do Parque",
+    "Migration 072 atualiza lobby_presence para o novo mapa",
+    "Edge Function lobby-presence atualizada para scene=parque",
+    "repair-lobby atualizado para validar a v14.10.8.82 e os runtimes do Parque"
   ],
-  "maintenance_patches": [
-    "Testes legados F72/F73 passaram a aceitar Marte no conjunto atual de áreas externas sem perder a validação histórica",
-    "Teste F74 passou a aceitar o identificador versionado do runtime orbital de fases posteriores",
-    "Testes F76 de imports e cache-bust foram generalizados para releases posteriores mantendo as garantias de lazy loading",
-    "repair-lobby foi atualizado para verificar a release 14.10.8.79, a Central Interplanetária e o módulo solar-system",
-    "Cadeia de cache avançada para stage48-solar-system sem adicionar moon-lite, moon3d, mars-lite ou mars3d ao shell crítico"
-  ],
-  "schema_note": "A F77 não cria migration nem nova área de presença e não exige republicação da Edge Function. Ela reutiliza space-agv, moon-agv e mars-agv. Se o ambiente de produção ainda estiver anterior à F76, permanecem necessários a migration 071 e o deploy correspondente de lobby-presence.",
-  "date": "2026-08-31",
-  "phase": "world-f77-solar-system-travel",
-  "baseVersion": "14.10.8.78",
-  "uiVersion": "0.22.8.29",
-  "runtimeCacheVersion": "14.10.8.79",
-  "lobbyCacheVersion": "14.10.8.79",
-  "worldArchitecturePhase": "77",
-  "worldArchitectureBuild": "14.10.8.79-stage48-solar-system",
-  "requiresDatabaseChange": false,
-  "requiresEdgeFunctionDeploy": false,
-  "requiresPrivateSecret": false,
-  "productionWriteApproved": false,
-  "liveDeployApplied": false,
-  "backupConfirmed": true,
-  "publicBundleContainsPrivateRules": false,
-  "status": "RELEASE_CANDIDATE",
-  "knownPending": [
-    "O Sistema Solar usa escala visual comprimida para navegação didática e não representa distâncias físicas em escala real.",
-    "A animação de viagem dura poucos segundos e não representa o tempo astronômico real de uma missão.",
-    "Nesta fase os destinos interplanetários selecionáveis são Lua e Marte; os demais planetas aparecem para contexto e orientação.",
-    "Terra, planetas, Sol, órbitas e asteroides continuam procedurais/estilizados, não uma simulação astronômica fotográfica.",
-    "E2E visual automatizado em navegador não foi executado nesta fase.",
-    "Migration 066 continua necessária caso o multiplayer terrestre F67 ainda não esteja implantado.",
-    "Migration 065 do Cinema continua necessária caso a programação persistente do Cinema ainda não esteja implantada."
-  ],
-  "safety": {
-    "academic_data_writes": false,
-    "new_presence_area_added": false,
-    "new_backend_write_surface_added": false,
-    "moon_and_mars_remain_lazy_loaded": true,
-    "ground_vehicle_network_disabled_outside_campus": true,
-    "private_student_data_added": false
+  "deploy": {
+    "migration": "core/database/072_lobby_amusement_park_world.sql",
+    "edge_function": "core/edge-functions/lobby-presence/index.ts"
   },
-  "validation": {
-    "cumulativeRegression": "100/100 PASS",
-    "f77": "9/9 PASS",
-    "interiorRuntime": "18/18 PASS",
-    "tracksRails": "20/20 PASS",
-    "mobility": "PASS",
-    "masterplan": "PASS",
-    "worldTime": "16/16 PASS",
-    "worldWeather": "20/20 PASS",
-    "interiorPersonality": "PASS",
-    "worldFoundation": "6/6 PASS",
-    "javascriptSyntax": "59 lobby JS files + Service Worker PASS",
-    "edgeFunctionTypeScript": "tsc PASS with local Deno/JSR ambient stubs",
-    "htmlIds": "234/234 unique",
-    "httpSmoke": "8/8 HTTP 200",
-    "browserVisualE2E": "not_run"
-  }
+  "lazy_assets": [
+    "lobby/assets/parque-diversoes-agv-lite.js",
+    "lobby/assets/parque-diversoes-agv3d.js"
+  ],
+  "notes": [
+    "Assets pesados do Parque não entram no CRITICAL_SHELL; são carregados somente no primeiro acesso.",
+    "A integração foi construída sobre a última árvore completa validada F78 v14.10.8.80. A F79 v14.10.8.81 permaneceu uma fase de qualidade não empacotada e não foi tratada como base desta release.",
+    "As competições do Parque usam Realtime Broadcast efêmero; esta fase não cria ranking persistente obrigatório."
+  ]
 }

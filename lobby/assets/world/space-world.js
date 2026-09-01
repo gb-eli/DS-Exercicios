@@ -1,4 +1,5 @@
-import { INTERPLANETARY_CONSOLE } from './solar-system.js?v=14.10.8.79-stage48-solar-system';
+import { INTERPLANETARY_CONSOLE } from './solar-system.js?v=14.10.8.80-stage49-deep-space';
+import { DEEP_SPACE_CONSOLE,SPACE_TELESCOPE } from './deep-space-exploration.js?v=14.10.8.80-stage49-deep-space';
 export const SPACE_BOUNDS=Object.freeze({minX:-150,maxX:150,minZ:-110,maxZ:110});
 export const SPACE_SPAWN=Object.freeze({x:0,z:84});
 export const SPACE_RETURN_PORTAL=Object.freeze({id:'space-return',type:'space-return-portal',name:'Transporte de Retorno ao Campus',x:0,z:99,radius:7,accent:'#8fdcff',description:'Módulo de transporte para retornar com segurança ao Centro Espacial AGV no Campus.'});
@@ -14,6 +15,8 @@ export const SPACE_FAST_TRAVEL=Object.freeze([
   Object.freeze({id:'cupola',name:'Cúpula de Observação da Terra',x:0,z:-66,kind:'viewpoint'}),
   Object.freeze({id:'solar',name:'Painéis Solares',x:82,z:2,kind:'energy'}),
   Object.freeze({id:'interplanetary',name:'Central Interplanetária AGV',x:INTERPLANETARY_CONSOLE.x,z:INTERPLANETARY_CONSOLE.z,kind:'navigation'}),
+  Object.freeze({id:'deep-space',name:'Exploração Profunda AGV',x:DEEP_SPACE_CONSOLE.x,z:DEEP_SPACE_CONSOLE.z,kind:'science'}),
+  Object.freeze({id:'space-telescope',name:'Telescópio Espacial AGV',x:SPACE_TELESCOPE.x,z:SPACE_TELESCOPE.z,kind:'viewpoint'}),
   Object.freeze({id:'moon-transfer',name:'Transporte para a Lua',x:28,z:83,kind:'moon'}),
   Object.freeze({id:'mars-transfer',name:'Transporte para Marte',x:-28,z:83,kind:'mars'}),
   Object.freeze({id:'return',name:'Retorno ao Campus',x:0,z:99,kind:'portal'})
@@ -42,7 +45,7 @@ export const SPACE_SOLAR_ARRAYS=Object.freeze([
 ]);
 
 export const SPACE_OBJECTS=Object.freeze([
-  SPACE_RETURN_PORTAL,SPACE_MOON_PORTAL,SPACE_MARS_PORTAL,INTERPLANETARY_CONSOLE,
+  SPACE_RETURN_PORTAL,SPACE_MOON_PORTAL,SPACE_MARS_PORTAL,INTERPLANETARY_CONSOLE,DEEP_SPACE_CONSOLE,SPACE_TELESCOPE,
   ...SPACE_MODULES.map(item=>Object.freeze({...item,radius:Math.max(item.w,item.d)*.58})),
   ...SPACE_SOLAR_ARRAYS.map(item=>Object.freeze({...item,radius:9})),
   Object.freeze({id:'earth-observation',type:'space-earth-view',name:'Terra',x:0,z:-82,radius:8,description:'Ponto de observação do planeta Terra a partir da Estação Orbital AGV.'}),

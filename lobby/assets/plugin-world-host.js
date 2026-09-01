@@ -1,6 +1,7 @@
 import { createCameraController } from './render/camera-controller.js?v=14.10.8.82';
 import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.82';
 import { detectPerformanceProfile, chooseInitialQuality } from './render/performance-manager.js?v=14.10.8.82';
+import { captureRenderTelemetry } from './render/observability.js?v=14.10.8.83-o2';
 
 const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.66';
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -27,6 +28,13 @@ function normalizeInteriorEvent(event={}){
   return{inside:Boolean(event.inside??event.active),key:event.key||event.interiorId||null,label:event.label||event.name||event.interiorId||event.key||'',floor:Number.isFinite(event.floor)?event.floor:0};
 }
 function makeHostState(baseState,player){const host=Object.create(baseState||null);host.player=player;return host;}
+
+function pluginCollectionCount(plugin,...methods){
+  for(const method of methods){
+    try{const value=plugin?.[method]?.();if(Array.isArray(value))return value.length;if(value&&typeof value==='object'&&Number.isFinite(value.size))return value.size;}catch(_){}
+  }
+  return null;
+}
 
 function inputBindings({onInteract,onMove,onRun,onJump}){
   const keys=new Set(),joy={x:0,y:0};let running=false,stopped=false,activePointer=null;
@@ -108,6 +116,7 @@ export async function createPluginWorldLiteHost(context={},config={}){
     ...plugin,
     id:config.worldId,scene:config.scene,mode:'lite',
     getFPS:()=>plugin?.getFPS?.()||fps,getQuality:()=>plugin?.getQuality?.()||'lite',getAvatarMode:()=>plugin?.getAvatarMode?.()||'third-person',
+    getObservabilitySnapshot:()=>captureRenderTelemetry({fps:plugin?.getFPS?.()||fps,quality:'lite',npcCount:pluginCollectionCount(plugin,'getNpcSnapshots','getNPCs','getNpcs'),vehicleCount:pluginCollectionCount(plugin,'getVehicleSnapshots','getVehicles'),worldId:config.worldId,interior:plugin?.getActiveInterior?.()||null,source:'plugin-lite'}),
     setRun:v=>{input.setRun(v);plugin?.setRun?.(v);return!!v;},
     teleportTo(target){const destination=typeof target==='string'?plugin?.getDestinations?.()?.find?.(d=>d.id===target):target;if(!destination)return false;Object.assign(player,clonePosition(destination,player));plugin?.teleportTo?.(destination);return true;},
     interact(target,payload={}){if(plugin?.interact)return plugin.interact(target,payload);if(plugin?.interactFocused)return plugin.interactFocused(payload);return{ok:false,reason:'unsupported'};},
@@ -151,7 +160,7 @@ export async function createPluginWorld3DHost(context={},config={}){
   function setQuality(next){if(!['low','medium','high','ultra'].includes(next))return quality;quality=next;avatarSystem.setQuality?.(quality);sizeDirty=true;context.onQualityChange?.(quality);return quality;}
   context.onQualityChange?.(quality);raf=requestAnimationFrame(frame);
   return{
-    ...plugin,id:config.worldId,scene:config.scene,mode:'3d',setQuality,getQuality:()=>quality,getFPS:()=>fps,getAvatarMode:()=>avatarSystem.getMode?.()||cameraController.getMode?.()||'third-person',toggleCamera:()=>cameraController.toggleMode(),setCameraMode:m=>cameraController.setMode(m),getCameraMode:()=>cameraController.getMode(),setFov:v=>cameraController.setFov(v),getFov:()=>cameraController.getFov(),setFPSCap:v=>(fpsCap=clamp(Number(v)||60,15,60)),getFPSCap:()=>fpsCap,setRun:v=>{input.setRun(v);plugin?.setRun?.(v);return!!v;},jump:()=>{if(onGround){vertical=7.4;onGround=false;}},
+    ...plugin,id:config.worldId,scene:config.scene,mode:'3d',setQuality,getQuality:()=>quality,getFPS:()=>fps,getAvatarMode:()=>avatarSystem.getMode?.()||cameraController.getMode?.()||'third-person',getObservabilitySnapshot:()=>captureRenderTelemetry({renderer,scene,fps,quality,npcCount:pluginCollectionCount(plugin,'getNpcSnapshots','getNPCs','getNpcs'),vehicleCount:pluginCollectionCount(plugin,'getVehicleSnapshots','getVehicles'),worldId:config.worldId,interior:plugin?.getActiveInterior?.()||null,source:'plugin3d'}),toggleCamera:()=>cameraController.toggleMode(),setCameraMode:m=>cameraController.setMode(m),getCameraMode:()=>cameraController.getMode(),setFov:v=>cameraController.setFov(v),getFov:()=>cameraController.getFov(),setFPSCap:v=>(fpsCap=clamp(Number(v)||60,15,60)),getFPSCap:()=>fpsCap,setRun:v=>{input.setRun(v);plugin?.setRun?.(v);return!!v;},jump:()=>{if(onGround){vertical=7.4;onGround=false;}},
     teleportTo(target){const destination=typeof target==='string'?plugin?.getDestinations?.()?.find?.(d=>d.id===target):target;if(!destination)return false;Object.assign(player,clonePosition(destination,player));self.position.set(player.x,Number(player.y)||0,player.z);vertical=playerY=0;onGround=true;plugin?.teleportTo?.(destination);return true;},
     interact(target,payload={}){if(plugin?.interact)return plugin.interact(target,payload);if(plugin?.interactFocused)return plugin.interactFocused(payload);return{ok:false,reason:'unsupported'};},
     showChatMessage(senderId,message){const target=senderId===context.state?.user?.id?self:others.get(senderId)?.avatar;if(!target)return false;const bubble=labelSprite(String(message||'').slice(0,64),'#72e6ff',7);bubble.position.set(0,3.8,0);target.add(bubble);setTimeout(()=>{target.remove(bubble);bubble.material?.map?.dispose?.();bubble.material?.dispose?.();},5200);return true;},

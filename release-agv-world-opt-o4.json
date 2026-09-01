@@ -1,0 +1,18 @@
+{
+  "package": "AGV-WORLD-OPT-O4",
+  "version": "14.10.8.83-O4",
+  "base": "AGV-WORLD-OPT-O3-v14.10.8.83-CONTRATO-MAPAS",
+  "phase": "O4",
+  "purpose": "Mapa 2D Global por metadata/manifests, sem carregar mundos 3D adicionais",
+  "supersedes": "AGV-WORLD-OPT-O3",
+  "worldCount": 11,
+  "connectionCount": 10,
+  "chatProtected": true,
+  "presenceChanged": false,
+  "databaseChanged": false,
+  "edgeFunctionChanged": false,
+  "serviceWorkerChanged": false,
+  "worldManagerChanged": false,
+  "runtime3dChanged": false,
+  "nextPhase": "O5"
+}

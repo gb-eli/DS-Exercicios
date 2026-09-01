@@ -57,9 +57,9 @@ test('F75 runtime lunar 3D possui baixa gravidade, Terra no horizonte e rover ut
 test('F75 presença, chat e reunir isolam moon-agv e veículos terrestres seguem Campus-only',()=>{
   const edge=read('core/edge-functions/lobby-presence/index.ts'),migration=read('core/database/070_lobby_moon_world.sql');
   assert.match(edge,/['"]moon-agv['"]/);
-  assert.match(edge,/\['campus','vale','rural','military','space','moon'(?:,'mars')?\]/);
+  assert.match(edge,/\['campus','vale','rural','military','space','moon'(?:,'mars')?(?:,'parque')?\]/);
   assert.match(edge,/scene==='moon'\?'moon-agv'/);
-  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv','moon-agv'(?:,'mars-agv')?\]\.includes\(presence\.area\)/);
+  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv','moon-agv'(?:,'mars-agv')?(?:,'parque-diversoes-agv')?\]\.includes\(presence\.area\)/);
   assert.match(migration,/lobby_presence_area_chk/);
   assert.match(migration,/moon-agv/);
 });

@@ -1,7 +1,7 @@
 'use strict';
 
-const VERSION='14.10.8.79';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage48-solar-system`; 
+const VERSION='14.10.8.83';
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage52-new-worlds`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -11,17 +11,25 @@ const CRITICAL_SHELL=[
   './',
   './index.html',
   './assets/diagnostics.js?v=14.10.8.66',
-  './assets/sw-register.js?v=14.10.8.79-stage48-solar-system',
-  './assets/vendor-loader.js?v=14.10.8.79-stage48-solar-system',
-  './assets/boot.js?v=14.10.8.79-stage48-solar-system',
+  './assets/sw-register.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/vendor-loader.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/boot.js?v=14.10.8.83-stage52-new-worlds',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.79-stage48-solar-system',
-  './assets/config.js?v=14.10.8.79',
-  './assets/core/lobby-state.js?v=14.10.8.79-stage48-solar-system',
-  './assets/core/world-manager.js?v=14.10.8.79-stage48-solar-system',
-  './assets/core/world-adapter.js?v=14.10.8.79-stage48-solar-system',
-  './assets/lobby3d.js?v=14.10.8.79-stage48-solar-system',
-  './assets/lobby-lite.js?v=14.10.8.79-stage48-solar-system',
+  './assets/lobby.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/config.js?v=14.10.8.83',
+  './assets/core/lobby-state.js?v=14.10.8.82-stage51-parque-connected',
+  './assets/core/world-manager.js?v=14.10.8.82-stage51-parque-connected',
+  './assets/core/world-adapter.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/plugin-world-host.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/colegio-agv-host.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/labirinto-armadilhas-host.js?v=14.10.8.83-stage52-new-worlds',
+  './assets/museu-hardware-lite.js?v=0.8.0',
+  './assets/museu-hardware3d.js?v=0.8.0',
+  './assets/world/colegio-agv-shared.js?v=1.6.0-f7',
+  './assets/world/labirinto-armadilhas-shared.js?v=1.1.0',
+  './assets/world/museu-hardware-shared.js?v=0.8.0',
+  './assets/lobby3d.js?v=14.10.8.82-stage51-parque-connected',
+  './assets/lobby-lite.js?v=14.10.8.82-stage51-parque-connected',
   './assets/vale-lite.js?v=14.10.8.66-stage32',
   './assets/vale3d.js?v=14.10.8.66-stage32',
   './assets/world/vale-silicio-data.js?v=14.10.8.66',
@@ -54,7 +62,7 @@ const CRITICAL_SHELL=[
   './assets/social/proximity-chat.js?v=14.10.8.66',
   './assets/rigged-avatar.js?v=14.10.8.66-stage34',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.79-stage48-solar-system',
+  './assets/lobby.css?v=14.10.8.82-stage51-parque-connected',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[

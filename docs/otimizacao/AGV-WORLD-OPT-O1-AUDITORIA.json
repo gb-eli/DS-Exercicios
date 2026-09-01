@@ -1,0 +1,99 @@
+{
+  "phase": "O1",
+  "date": "2026-09-01",
+  "base_version": "14.10.8.83",
+  "base_sha256": "5b4e59037d2f65d06b497213f33615ecbe845be23100d5aa982cc1831fc4dd2a",
+  "functional_changes": false,
+  "inventory": {
+    "worlds": 11,
+    "webgl_renderer_factories": 11,
+    "lobby_files": 179,
+    "lobby_bytes": 6515731,
+    "static_graph_modules": 49,
+    "static_graph_bytes": 785584,
+    "boot_probe_assets": 29,
+    "boot_probe_bytes": 607278,
+    "service_worker_critical_shell": 56,
+    "service_worker_optional_shell": 7
+  },
+  "tests": {
+    "node_check": {
+      "pass": 118,
+      "fail": 0
+    },
+    "selected_world_suite": {
+      "pass": 72,
+      "fail": 5,
+      "fail_reason": "legacy regex expects older area lists"
+    },
+    "colegio_f7_validate": "pass",
+    "colegio_f7_smoke": "pass",
+    "labirinto": "pass",
+    "museu": {
+      "pass": 26,
+      "fail": 0
+    }
+  },
+  "findings": [
+    {
+      "id": "O1-BLK-001",
+      "severity": "critical",
+      "title": "Migration 073 drops wrong lobby_presence area constraint name"
+    },
+    {
+      "id": "O1-HIGH-002",
+      "severity": "high",
+      "title": "29 sequential no-store boot probes before lobby import"
+    },
+    {
+      "id": "O1-HIGH-003",
+      "severity": "high",
+      "title": "11 WebGLRenderer factories; no global renderer reuse"
+    },
+    {
+      "id": "O1-HIGH-004",
+      "severity": "high",
+      "title": "No standardized WorldManifest/WorldRegistry/WorldConnections"
+    },
+    {
+      "id": "O1-HIGH-005",
+      "severity": "high",
+      "title": "Service worker critical shell precaches world runtime modules"
+    },
+    {
+      "id": "O1-MED-006",
+      "severity": "medium",
+      "title": "Campus and Vale runtimes remain in static import graph"
+    },
+    {
+      "id": "O1-MED-007",
+      "severity": "medium",
+      "title": "Diagnostics lack render/memory/RAF/listener/NPC/vehicle metrics"
+    },
+    {
+      "id": "O1-MED-008",
+      "severity": "medium",
+      "title": "Diagnostics release marker remains 14.10.8.66"
+    },
+    {
+      "id": "O1-MED-009",
+      "severity": "medium",
+      "title": "Five historical world tests are brittle after area expansion"
+    },
+    {
+      "id": "O1-MED-010",
+      "severity": "medium",
+      "title": "Persisted presence lacks explicit worldId/scene/interior identity"
+    },
+    {
+      "id": "O1-MED-011",
+      "severity": "medium",
+      "title": "Map-local NPC/vehicle/weather/audio logic remains duplicated"
+    },
+    {
+      "id": "O1-LOW-012",
+      "severity": "low-medium",
+      "title": "Adaptive quality hysteresis differs from target"
+    }
+  ]
+}

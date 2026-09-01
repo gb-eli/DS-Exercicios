@@ -13,6 +13,7 @@ import { loadMuseumCollection,galleryCollection,collectionItem,searchMuseumColle
 import { createCameraController } from './render/camera-controller.js?v=14.10.8.73';
 import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.73';
 import { detectPerformanceProfile,chooseInitialQuality } from './render/performance-manager.js?v=14.10.8.73';
+import { captureRenderTelemetry } from './render/observability.js?v=14.10.8.83-o2';
 import { resolveWorldTime } from './world/dynamic-world.js?v=14.10.8.73';
 
 const THREE_URL='../vendor/three/three.module.min.js?v=14.10.8.73';
@@ -164,6 +165,7 @@ export async function createMuseuHardware3D({canvas,state,onInteract,onPlayerSta
     supportsInspection:()=>true,startInspection,stopInspection,rotateInspection,getInspection:()=>inspectionState?{galleryId:inspectionState.galleryId,angle:inspectionState.angle}:null,getAssetDiagnostics:()=>assetManager.diagnostics(),getMuseumSettings:()=>museumSettingsSnapshot(museumSettings),updateMuseumSettings(next={}){museumSettings=saveMuseumSettings({...museumSettings,...next});reducedMotion=!!museumSettings.reducedMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;return museumSettingsSnapshot(museumSettings);},getActiveCaption:()=>activeCaption,getMeetingPoint:()=>({...MUSEU_HARDWARE_MEETING_POINT}),goToMeetingPoint(){return this.teleportTo(MUSEU_HARDWARE_MEETING_POINT);},triggerReaction(kind){return this.setLocalEmote(kind);},
     resetMuseumProgress(){const fresh=resetMuseumProgress();visitLog.clear();for(const id of fresh.visited)visitLog.add(id);progress={...fresh,visited:visitLog};return museumProgressSnapshot(progress);},
     enterBuilding:()=>false,exitBuilding:()=>false,
+    getObservabilitySnapshot:()=>captureRenderTelemetry({renderer,scene,fps,quality,npcCount:npcEntries.filter(entry=>entry.avatar?.visible!==false).length,vehicleCount:0,worldId:'museu-hardware',interior:null,source:'museu3d'}),
     stop(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('resize',requestSize);window.visualViewport?.removeEventListener?.('resize',requestSize);ro?.disconnect?.();canvas.removeEventListener('webglcontextlost',contextLost,false);jumpButton?.removeEventListener('pointerdown',jumpTap);runButton?.removeEventListener('pointerdown',runDown);runButton?.removeEventListener('pointerup',runUp);runButton?.removeEventListener('pointercancel',runUp);cleanJoy?.();museumUI?.destroy?.();museumUI=null;mediaController.dispose();assetManager.dispose();for(const entry of galleryEntries){entry.videoTexture?.dispose?.();entry.texture?.dispose?.();}for(const[id,e]of others){scene.remove(e.avatar);avatarSystem.disposeAvatar(e.avatar);}others.clear();chatSprites.clear();cameraController.dispose();renderer.dispose();disposeRoot(scene);}
   };
   museumUI=createMuseuHardwareUI({runtime:api});

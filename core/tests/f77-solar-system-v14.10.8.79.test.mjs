@@ -88,9 +88,9 @@ test('F77 não cria nova área de presença nem migration; reutiliza space moon 
 test('F77 release/cache avançam para 14.10.8.79 stage48 sem colocar mundos pesados no shell crítico',()=>{
   const config=read('lobby/assets/config.js'),boot=read('lobby/assets/boot.js'),sw=read('lobby/sw.js'),adapter=read('lobby/assets/core/world-adapter.js'),index=read('lobby/index.html');
   for(const text of [config,boot,sw,adapter,index])assert.ok(patch(text)>=79);
-  assert.match(index,/14\.10\.8\.79-stage48-solar-system/);
-  assert.match(sw,/agv-lobby-runtime-\$\{VERSION\}-stage48-solar-system/);
-  assert.match(adapter,/mars3d\.js\?v=14\.10\.8\.79-stage48-solar-system/);
+  assert.match(index,/14\.10\.8\.(?:79|[89]\d|\d{3,})-stage(?:4[89]|[5-9]\d|\d{3,})-[a-z0-9-]+/);
+  assert.match(sw,/agv-lobby-runtime-\$\{VERSION\}-stage(?:4[89]|[5-9]\d|\d{3,})-[a-z0-9-]+/);
+  assert.match(adapter,/mars3d\.js\?v=14\.10\.8\.(?:79|[89]\d|\d{3,})-stage(?:4[89]|[5-9]\d|\d{3,})-[a-z0-9-]+/);
   const critical=sw.slice(sw.indexOf('const CRITICAL_SHELL'),sw.indexOf('const OPTIONAL_SHELL'));
   assert.doesNotMatch(critical,/space-lite\.js|space3d\.js|moon-lite\.js|moon3d\.js|mars-lite\.js|mars3d\.js/);
 });

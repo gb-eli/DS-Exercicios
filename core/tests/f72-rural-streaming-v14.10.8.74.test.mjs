@@ -75,7 +75,7 @@ test('F72 backend aceita presença/chat/reunir rural e mantém veículos terrest
   assert.match(edge,/['"]rural-agv['"]/);
   assert.match(edge,/scene==='rural'/);
   assert.match(edge,/const gatherArea=scene==='vale'\?'vale-silicio':scene==='rural'\?'rural-agv'/);
-  assert.match(edge,/\['vale-silicio','rural-agv'(?:,'military-agv')?(?:,'space-agv')?(?:,'moon-agv')?(?:,'mars-agv')?\]\.includes\(presence\.area\)/);
+  assert.match(edge,/\['vale-silicio','rural-agv'(?:,'military-agv')?(?:,'space-agv')?(?:,'moon-agv')?(?:,'mars-agv')?(?:,'parque-diversoes-agv')?\]\.includes\(presence\.area\)/);
   assert.match(migration,/lobby_presence_area_chk/);
   assert.match(migration,/vale-silicio/);
   assert.match(migration,/rural-agv/);

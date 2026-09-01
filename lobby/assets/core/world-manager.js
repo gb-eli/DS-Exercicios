@@ -1,4 +1,5 @@
 import { snapshotWorldState } from './lobby-state.js?v=14.10.8.79-stage48-solar-system';
+import { resolveWorldTransition } from '../world/world-navigation.js?v=14.10.8.83-o5';
 
 function abortError(){
   try{return new DOMException('world_runtime_start_aborted','AbortError')}catch(_){const error=new Error('world_runtime_start_aborted');error.name='AbortError';return error;}
@@ -11,7 +12,7 @@ function assertRuntime(runtime){
 
 export function createWorldManager({worldState,onLifecycleEvent=()=>{}}={}){
   if(!worldState||typeof worldState!=='object')throw new TypeError('world_state_required');
-  let activeRuntime=null,activeAdapter=null,sequence=0,lastError=null;
+  let activeRuntime=null,activeAdapter=null,sequence=0,lastError=null,lastTransition=null;
 
   const emit=(type,detail={})=>{
     try{onLifecycleEvent({type,...detail,snapshot:snapshotWorldState(worldState)})}catch(_){}
@@ -48,11 +49,15 @@ export function createWorldManager({worldState,onLifecycleEvent=()=>{}}={}){
     return !!runtime;
   }
 
+  function planTransition(options={}){
+    const plan=resolveWorldTransition(options);lastTransition=plan;emit('transition-planned',{from:plan.source.id,to:plan.target.id,portalId:plan.portal?.id||null,reason:plan.reason});return plan;
+  }
+
   return Object.freeze({
-    start,stop,
+    start,stop,planTransition,
     getRuntime:()=>activeRuntime,
     getAdapter:()=>activeAdapter,
     isActive:()=>!!activeRuntime,
-    diagnostics:()=>({active:!!activeRuntime,adapterId:activeAdapter?.id||null,error:lastError?String(lastError?.message||lastError):null,...snapshotWorldState(worldState)})
+    diagnostics:()=>({active:!!activeRuntime,adapterId:activeAdapter?.id||null,error:lastError?String(lastError?.message||lastError):null,lastTransition:lastTransition?{from:lastTransition.source.id,to:lastTransition.target.id,portalId:lastTransition.portal?.id||null,reason:lastTransition.reason}:null,...snapshotWorldState(worldState)})
   });
 }

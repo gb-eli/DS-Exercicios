@@ -59,9 +59,9 @@ test('F76 runtime marciano 3D possui gravidade própria, poeira, Terra/Sol e rov
 test('F76 presença, chat e reunir isolam mars-agv e veículos terrestres seguem Campus-only',()=>{
   const edge=read('core/edge-functions/lobby-presence/index.ts'),migration=read('core/database/071_lobby_mars_world.sql');
   assert.match(edge,/['"]mars-agv['"]/);
-  assert.match(edge,/\['campus','vale','rural','military','space','moon','mars'\]/);
+  assert.match(edge,/\['campus','vale','rural','military','space','moon','mars'(?:,'parque')?\]/);
   assert.match(edge,/scene==='mars'\?'mars-agv'/);
-  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv','moon-agv','mars-agv'\]\.includes\(presence\.area\)/);
+  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv','moon-agv','mars-agv'(?:,'parque-diversoes-agv')?\]\.includes\(presence\.area\)/);
   assert.match(migration,/lobby_presence_area_chk/);
   assert.match(migration,/mars-agv/);
 });

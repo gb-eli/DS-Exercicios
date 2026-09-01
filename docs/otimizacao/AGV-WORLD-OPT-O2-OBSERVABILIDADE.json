@@ -1,0 +1,72 @@
+{
+  "phase": "O2",
+  "name": "OBSERVABILIDADE",
+  "baseVersion": "14.10.8.83",
+  "diagnosticsRelease": "14.10.8.83-O2",
+  "architectureChanged": false,
+  "chatChanged": false,
+  "databaseChanged": false,
+  "edgeFunctionChanged": false,
+  "serviceWorkerChanged": false,
+  "sampleIntervalMs": 5000,
+  "metrics": [
+    "fps",
+    "frameTimeMs",
+    "quality",
+    "dpr",
+    "drawCalls",
+    "triangles",
+    "geometries",
+    "textures",
+    "npcCount",
+    "vehicleCount",
+    "currentWorld",
+    "currentInterior",
+    "activeRAF",
+    "relevantListeners",
+    "geometryMemoryMb",
+    "textureMemoryMb",
+    "estimatedGpuMemoryMb",
+    "jsHeap"
+  ],
+  "coverage": {
+    "3dRuntimePoints": 11,
+    "liteRuntimeFamilies": 10,
+    "protectedChatBlockSha256": "c3ca7b6981c8525e993e123b2bddcdd3208b6f35bc7d0b0fe6de9b1f0c8ea4c7"
+  },
+  "tests": {
+    "o2": {
+      "passed": 7,
+      "failed": 0
+    },
+    "javascriptSyntax": {
+      "passed": 131,
+      "failed": 0
+    },
+    "localImportGraph": {
+      "edges": 318,
+      "missing": 0
+    },
+    "historicalWorldSuite": {
+      "passed": 72,
+      "failed": 5,
+      "knownLegacyFalseNegatives": 5
+    },
+    "colegioF7": "PASS",
+    "colegioSmokeLite3d": "PASS",
+    "labirinto": "PASS",
+    "museu": {
+      "passed": 26,
+      "failed": 0
+    },
+    "legacyDiagnosticsP10916": {
+      "passed": 5,
+      "failed": 2,
+      "reason": "2 expectativas legadas fixam diagnostics.js v14.10.8.66/cache anterior; contrato O2 coberto por 7/7"
+    }
+  },
+  "knownBlockersUnchanged": [
+    "O1-BLK-001 migration 073 constraint name mismatch"
+  ],
+  "rollback": "AGV-WORLD-OPT-O1-v14.10.8.83-AUDITORIA.zip"
+}

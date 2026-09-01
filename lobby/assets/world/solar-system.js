@@ -13,8 +13,8 @@ export const SOLAR_SYSTEM_BODIES=Object.freeze([
   Object.freeze({id:'earth',name:'Terra',kind:'planet',icon:'🌍',accent:'#58b8ff',orbit:.34,radius:1,displayRadius:4,periodDays:365.25,reachable:false}),
   Object.freeze({id:'moon',name:'Lua',kind:'moon',icon:'🌕',accent:'#e3e8ed',orbit:.39,radius:.27,displayRadius:2.1,periodDays:27.3,reachable:true,destination:'moon'}),
   Object.freeze({id:'mars',name:'Marte',kind:'planet',icon:'🔴',accent:'#ff8756',orbit:.47,radius:.53,displayRadius:3,periodDays:687,reachable:true,destination:'mars'}),
-  Object.freeze({id:'jupiter',name:'Júpiter',kind:'planet',icon:'●',accent:'#d7b18d',orbit:.66,radius:11.2,displayRadius:7,periodDays:4332.6,reachable:false}),
-  Object.freeze({id:'saturn',name:'Saturno',kind:'planet',icon:'🪐',accent:'#e9cf91',orbit:.77,radius:9.45,displayRadius:6.2,periodDays:10759,reachable:false}),
+  Object.freeze({id:'jupiter',name:'Júpiter',kind:'planet',icon:'🟠',accent:'#d7b18d',orbit:.66,radius:11.2,displayRadius:7,periodDays:4332.6,reachable:false,observable:true,observationMission:'jupiter'}),
+  Object.freeze({id:'saturn',name:'Saturno',kind:'planet',icon:'🪐',accent:'#e9cf91',orbit:.77,radius:9.45,displayRadius:6.2,periodDays:10759,reachable:false,observable:true,observationMission:'saturn'}),
   Object.freeze({id:'uranus',name:'Urano',kind:'planet',icon:'●',accent:'#91e8e8',orbit:.87,radius:4.01,displayRadius:4.7,periodDays:30687,reachable:false}),
   Object.freeze({id:'neptune',name:'Netuno',kind:'planet',icon:'●',accent:'#648dff',orbit:.97,radius:3.88,displayRadius:4.5,periodDays:60190,reachable:false})
 ]);

@@ -1,0 +1,38 @@
+{
+  "package": "AGV-WORLD-OPT-O3",
+  "version": "14.10.8.83-O3",
+  "base": "AGV-WORLD-OPT-O2-v14.10.8.83-OBSERVABILIDADE",
+  "phase": "O3",
+  "scope": "WorldManifest, WorldRegistry, WorldConnections",
+  "stats": {
+    "worlds": 11,
+    "connections": 10,
+    "destinations": 117,
+    "portals": 17,
+    "interiors": 26,
+    "npcProfiles": 28,
+    "vehicles": 19,
+    "manifestBytes": 42807
+  },
+  "tests": {
+    "o3": "7/7",
+    "o2Regression": "7/7",
+    "syntax": "135/135",
+    "localImports": "363/363",
+    "historicalWorlds": "72/77 (same 5 legacy regex failures F72-F76)",
+    "colegio": "PASS",
+    "labirinto": "PASS",
+    "museu": "26/26 PASS"
+  },
+  "protected": {
+    "chatChanged": false,
+    "presenceChanged": false,
+    "worldManagerChanged": false,
+    "worldAdapterChanged": false,
+    "databaseChanged": false,
+    "edgeFunctionChanged": false,
+    "serviceWorkerChanged": false
+  },
+  "knownBlockers": ["O1-BLK-001"],
+  "nextPhase": "O4"
+}

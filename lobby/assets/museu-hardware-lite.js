@@ -9,6 +9,7 @@ import { museumCatalogItem,loadMuseumProgress,saveMuseumProgress,resetMuseumProg
 import { createMuseuHardwareUI } from './museu-hardware-ui.js?v=0.8.0';
 import { loadMuseumMediaManifest,createMuseumMediaController } from './world/museu-hardware-media.js?v=0.8.0';
 import { loadMuseumCollection,galleryCollection,collectionItem,searchMuseumCollection } from './world/museu-hardware-collection.js?v=0.8.0';
+import { captureRenderTelemetry } from './render/observability.js?v=14.10.8.83-o2';
 
 const rgba=(hex,a=.2)=>{const h=String(hex||'#72e6ff').replace('#','');const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16);return`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;};
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -102,7 +103,7 @@ export async function createMuseuHardwareLite({canvas,state,onInteract,onPlayerS
   raf=requestAnimationFrame(frame);onQualityChange?.('lite');
 
   const api={
-    getQuality:()=>quality,getFPS:()=>fps,getAvatarMode:()=>state?.avatarStyle?.preset||'casual',toggleCamera:()=>null,setCameraMode:()=>false,getCameraMode:()=> 'top',setFov:()=>false,getFov:()=>65,
+    getQuality:()=>quality,getFPS:()=>fps,getObservabilitySnapshot:()=>captureRenderTelemetry({fps,quality:'lite',npcCount:MUSEU_HARDWARE_NPCS.length,vehicleCount:0,worldId:'museu-hardware',interior:null,source:'museu-lite'}),getAvatarMode:()=>state?.avatarStyle?.preset||'casual',toggleCamera:()=>null,setCameraMode:()=>false,getCameraMode:()=> 'top',setFov:()=>false,getFov:()=>65,
     setFPSCap:v=>{fpsCap=clamp(Number(v)||60,15,60);return fpsCap;},getFPSCap:()=>fpsCap,setWorldTimeMode:m=>{worldTimeMode=['cycle','auto','day','night'].includes(m)?(m==='auto'?'cycle':m):'cycle';onWorldTime?.({mode:worldTimeMode,phase:'indoor',clock:'MUSEU'});return worldTimeMode;},getWorldTimeMode:()=>worldTimeMode,
     setRun:v=>{running=!!v;},jump:()=>false,showChatMessage(senderId,message){chatBubbles.set(senderId,{message:String(message||'').slice(0,84),until:performance.now()+6500});return true;},
     setLocalAction:()=>{},setLocalEmote(kind){chatBubbles.set(state?.user?.id||'local',{message:String(kind||'🎮').slice(0,8),until:performance.now()+3500});return true;},teleportTo(target){if(!target)return false;player.x=clampMuseuHardware(Number(target.x)||0,MUSEU_HARDWARE_BOUNDS.minX+3,MUSEU_HARDWARE_BOUNDS.maxX-3);player.z=clampMuseuHardware(Number(target.z)||0,MUSEU_HARDWARE_BOUNDS.minZ+3,MUSEU_HARDWARE_BOUNDS.maxZ-3);return true;},

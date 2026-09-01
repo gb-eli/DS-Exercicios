@@ -1,0 +1,7 @@
+{
+  "version": "14.10.8.83",
+  "optimizationPhase": "O1",
+  "base": "F81",
+  "functionalChanges": false,
+  "auditReport": "docs/otimizacao/AGV-WORLD-OPT-O1-AUDITORIA.md"
+}

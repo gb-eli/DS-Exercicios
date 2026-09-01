@@ -1,0 +1,33 @@
+{
+  "package": "AGV-WORLD-OPT-O5",
+  "version": "14.10.8.83-O5",
+  "base": "AGV-WORLD-OPT-O4-v14.10.8.83-MAPA-2D-GLOBAL",
+  "phase": "O5",
+  "purpose": "Padronizar portais, destinos e planejamento de transições pelo WorldManager/WorldRegistry sem implementar ainda o lazy loading O6",
+  "supersedes": "AGV-WORLD-OPT-O4",
+  "worldCount": 11,
+  "connectionCount": 10,
+  "physicalPortalCount": 17,
+  "adapterCount": 11,
+  "tests": {
+    "o2ToO5": "28/28 PASS",
+    "o5": "7/7 PASS",
+    "historicalF72F80": "66/71 (same 5 legacy Presence regex failures F72-F76)",
+    "colegio": "PASS + Lite/3D smoke PASS",
+    "labirinto": "PASS",
+    "museu": "26/26 PASS",
+    "syntax": "134/134",
+    "localImports": "374/374"
+  },
+  "chatProtected": true,
+  "presenceChanged": false,
+  "databaseChanged": false,
+  "edgeFunctionChanged": false,
+  "serviceWorkerChanged": false,
+  "worldManagerChanged": true,
+  "worldAdapterChanged": true,
+  "runtime3dChanged": false,
+  "knownBlockers": ["O1-BLK-001"],
+  "nextPhase": "O6",
+  "o6Note": "Prompt asks Campus<->Arena first, but Arena Esportiva AGV is not present in the current 11-world Registry; locate official package before inventing/integrating it."
+}

@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com; connect-src 'self' https://iresvqwyaqotghjssncg.supabase.co wss://iresvqwyaqotghjssncg.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'">
   <title>AGV — Campus DS</title>
-  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.79-stage48-solar-system">
+  <link rel="stylesheet" href="assets/lobby.css?v=14.10.8.83-stage51-parque-connected-o4-global-map">
   <link rel="stylesheet" href="../core/session/fullscreen-portal.css?v=14.10.8.66">
 <script src="../core/session/unified-auth-guard.js?v=14.10.8.66"></script><script src="../core/session/avatar-context.js?v=14.10.8.66-stage34"></script></head>
 <body>
@@ -37,6 +37,16 @@
           <button id="interplanetary-travel-skip" type="button">Pular animação</button>
         </div>
       </div>
+      <div id="deep-space-exploration" class="deep-space-exploration hidden" role="dialog" aria-modal="true" aria-labelledby="deep-space-run-title">
+        <canvas id="deep-space-canvas" aria-label="Simulador de exploração do espaço profundo"></canvas>
+        <div class="deep-space-hud glass">
+          <div><p class="eyebrow">Estação Orbital AGV • Missão científica</p><h2 id="deep-space-run-title">Exploração profunda</h2><p id="deep-space-run-status" class="muted">Preparando instrumentos…</p></div>
+          <div class="deep-space-telemetry"><span><small>Alvo</small><strong id="deep-space-telemetry-target">—</strong></span><span><small>Velocidade</small><strong id="deep-space-telemetry-speed">0</strong></span><span><small>Zoom</small><strong id="deep-space-telemetry-zoom">1×</strong></span><span><small>Varreduras</small><strong id="deep-space-telemetry-scan">0/3</strong></span></div>
+          <div class="deep-space-controls"><button id="deep-space-prev" type="button">◀ Alvo</button><button id="deep-space-scan" class="primary" type="button">⌁ Varredura</button><button id="deep-space-next" type="button">Alvo ▶</button><button id="deep-space-exit" type="button">Sair da missão</button></div>
+          <div class="deep-space-flight-pad" aria-label="Controles touch da missão"><button data-deep-space-key="left" type="button">◀</button><button data-deep-space-key="forward" type="button">▲</button><button data-deep-space-key="backward" type="button">▼</button><button data-deep-space-key="right" type="button">▶</button></div>
+          <small id="deep-space-help">W/S aproximar • A/D orbitar • Espaço varredura</small>
+        </div>
+      </div>
       <div id="zone-banner" class="zone-banner hidden" aria-live="polite"><span>Você entrou em</span><strong id="zone-banner-title">Praça Central</strong></div>
       <div id="reticle" class="reticle" aria-hidden="true"><span></span></div>
 
@@ -49,6 +59,7 @@
           <span class="location-copy"><small>Você está em</small><strong id="area-label">Praça Central</strong></span><span id="online-count" class="chip">1 online</span>
           <span id="mode-advice" class="chip mode-advice">2D recomendado</span><span id="avatar-context-status" class="chip avatar-context-status hidden" aria-live="polite">🎭 Livre</span><span id="vehicle-status" class="chip vehicle-status hidden" aria-live="polite">🚗 Veículo • E sair</span><span id="world-weather" class="chip world-weather" title="Clima do Lobby">☀️ Limpo</span><span id="world-clock" class="chip world-clock" title="Relógio do Campus">☀️ 12:00</span>
           <button id="activity-button" class="hud-button activity-button hidden" type="button">Atividade</button>
+          <button id="global-map-button" class="hud-button global-map-button" type="button" title="Abrir mapa lógico de todos os mundos">🗺 Mapa</button>
           <button id="teleport-button" class="hud-button teleport-button" type="button" title="Abrir teletransporte do Campus">⚡ Teletransporte</button>
           <button id="interior-map-button" class="hud-button interior-map-button hidden" type="button" title="Mapa interno e rotas do prédio">🗺 Interior</button>
           <button id="vale-direct-button" class="hud-button vale-direct-button" type="button" title="Ir para o Vale do Silício AGV">🏙 Vale do Silício</button>
@@ -139,20 +150,50 @@
           <button id="teleport-close" class="modal-close" type="button" aria-label="Fechar">×</button>
           <p class="eyebrow">Campus DS • Mobilidade instantânea</p>
           <h2 id="teleport-title">⚡ Teletransporte</h2>
-          <p class="muted">Escolha um destino entre Campus, Vale, Rural, Base, Órbita, Lua ou Marte. O modo 2D/3D atual é preservado.</p>
+          <p class="muted">Escolha um destino entre Campus, Vale, Rural, Base, Órbita, Lua, Marte, Parque, Colégio AGV, Labirinto ou Museu. O modo 2D/3D atual é preservado.</p>
           <div class="teleport-feature"><span>🏙</span><div><strong>Vale do Silício AGV</strong><small>Empresas dos alunos, distritos, esportes, hangar e ambientes.</small></div><button id="teleport-vale-now" class="primary" type="button">Ir para o Vale</button></div>
           <div class="teleport-feature"><span>🌾</span><div><strong>Mundo Rural AGV</strong><small>Fazenda, campos, animais, rio, ponte e pomar • carregado sob demanda.</small></div><button id="teleport-rural-now" class="primary" type="button">Ir para o Rural</button></div>
           <div class="teleport-feature"><span>🛠️</span><div><strong>Base de Operações AGV</strong><small>Logística, engenharia, resgate, hangares, pista e treinamento • carregada sob demanda.</small></div><button id="teleport-military-now" class="primary" type="button">Ir para a Base</button></div>
           <div class="teleport-feature"><span>🚀</span><div><strong>Estação Orbital AGV</strong><small>Centro espacial, doca, módulos científicos, cúpula, Terra e Sol • carregada sob demanda.</small></div><button id="teleport-space-now" class="primary" type="button">Ir para a Órbita</button></div>
           <div class="teleport-feature"><span>🌕</span><div><strong>Lua AGV</strong><small>Base lunar, crateras, rover, baixa gravidade e Terra no horizonte • carregada sob demanda.</small></div><button id="teleport-moon-now" class="primary" type="button">Ir para a Lua</button></div>
           <div class="teleport-feature"><span>🔴</span><div><strong>Marte AGV</strong><small>Base científica, cânions, crateras, rover, gravidade marciana e tempestades de poeira • carregado sob demanda.</small></div><button id="teleport-mars-now" class="primary" type="button">Ir para Marte</button></div>
-          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, Rural, Base, Órbita, Lua, Marte, 2DS, laboratórios…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Todos os mapas</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option><option value="rural">Mundo Rural AGV</option><option value="military">Base de Operações AGV</option><option value="space">Estação Orbital AGV</option><option value="moon">Lua AGV</option><option value="mars">Marte AGV</option></select></label></div>
+          <div class="teleport-feature"><span>🎢</span><div><strong>Parque de Diversões AGV</strong><small>Montanha-russa, corrida, parkour, mega escorregador e desafios recreativos • carregado sob demanda.</small></div><button id="teleport-parque-now" class="primary" type="button">Ir para o Parque</button></div>
+          <div class="teleport-feature"><span>🏫</span><div><strong>Colégio AGV — Alberto Gomes Veiga</strong><small>Mapa F7 consolidado com ambientes, interiores, quadra, biblioteca, laboratórios e áreas pedagógicas.</small></div><button id="teleport-colegio-now" class="primary" type="button">Ir para o Colégio</button></div>
+          <div class="teleport-feature"><span>🧩</span><div><strong>Labirinto com Armadilhas</strong><small>Desafio jogável com 5 vidas, checkpoints, armadilhas, pontuação, XP e retorno ao Lobby.</small></div><button id="teleport-labirinto-now" class="primary" type="button">Ir para o Labirinto</button></div>
+          <div class="teleport-feature"><span>🏛</span><div><strong>Museu do Hardware AGV</strong><small>10 galerias, equipamentos históricos, consoles, PCs, vídeos e exposições 3D.</small></div><button id="teleport-museu-now" class="primary" type="button">Ir para o Museu</button></div>
+          <div class="teleport-tools"><label>Pesquisar<input id="teleport-search" type="search" placeholder="Praça, Vale, Rural, Base, Órbita, Lua, Marte, Parque, Colégio, Labirinto, Museu, 2DS…" autocomplete="off"></label><label>Região<select id="teleport-scene-filter"><option value="all">Todos os mapas</option><option value="campus">Campus DS</option><option value="vale">Vale do Silício AGV</option><option value="rural">Mundo Rural AGV</option><option value="military">Base de Operações AGV</option><option value="space">Estação Orbital AGV</option><option value="moon">Lua AGV</option><option value="mars">Marte AGV</option><option value="parque">Parque de Diversões AGV</option><option value="colegio">Colégio AGV</option><option value="labirinto">Labirinto com Armadilhas</option><option value="museu">Museu do Hardware AGV</option></select></label></div>
           <div id="staff-teleport-panel" class="staff-teleport-panel hidden"><div><strong>📍 Controle da turma</strong><small>Leva todos os alunos online para o ponto em que você está agora. O comando é validado pelo servidor.</small></div><button id="staff-bring-all" class="primary" type="button">Trazer todos até mim</button></div>
           <div id="teleport-list" class="teleport-list"><p class="muted">Carregando destinos…</p></div>
           <small class="campus-disclaimer">Teletransporte não altera atividade, nota, progresso ou matrícula. É apenas mobilidade dentro do Lobby.</small>
         </div>
       </div>
 
+      <div id="global-map-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="global-map-title">
+        <div class="modal-card global-map-card">
+          <button id="global-map-close" class="modal-close" type="button" aria-label="Fechar mapa global">×</button>
+          <div class="global-map-heading">
+            <div><p class="eyebrow">AGV World • Visão lógica 2D</p><h2 id="global-map-title">🗺 Mapa Global</h2><p class="muted">Todos os mundos são exibidos por metadata. Abrir este mapa não carrega nenhum ambiente 3D.</p></div>
+            <div class="global-map-summary" aria-live="polite"><span><strong id="global-map-world-count">0</strong><small>mundos</small></span><span><strong id="global-map-online-count">0</strong><small>online</small></span><span><strong id="global-map-connection-count">0</strong><small>conexões</small></span></div>
+          </div>
+          <div class="global-map-layout">
+            <section class="global-map-network" aria-label="Rede lógica dos mundos AGV">
+              <svg id="global-map-links" class="global-map-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <div id="global-map-nodes" class="global-map-nodes"></div>
+              <div class="global-map-legend"><span><i class="available"></i>Disponível</span><span><i class="maintenance"></i>Manutenção</span><span><i class="current"></i>Você está aqui</span></div>
+            </section>
+            <aside class="global-map-detail" aria-live="polite">
+              <div class="global-map-detail-head"><span id="global-map-detail-icon">◈</span><div><small id="global-map-detail-category">Mundo</small><strong id="global-map-detail-name">Selecione um mundo</strong><em id="global-map-detail-status">Disponível</em></div></div>
+              <div id="global-map-detail-stats" class="global-map-detail-stats"></div>
+              <section><h3>Conexões</h3><div id="global-map-detail-connections" class="global-map-chip-list"></div></section>
+              <section><h3>Portais</h3><div id="global-map-detail-portals" class="global-map-info-list"></div></section>
+              <section><h3>POIs</h3><div id="global-map-detail-pois" class="global-map-info-list"></div></section>
+              <section><h3>Eventos / experiências</h3><div id="global-map-detail-events" class="global-map-info-list"></div></section>
+              <div class="global-map-actions"><button id="global-map-teleport" class="primary" type="button">Abrir teletransporte</button></div>
+            </aside>
+          </div>
+          <small class="campus-disclaimer">O status usa o manifesto do mundo; população é calculada da presença já recebida pelo Lobby. A O4 não altera Presença, Chat, portais nem runtimes 3D.</small>
+        </div>
+      </div>
 
 
       <div id="solar-system-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="solar-system-title">
@@ -174,10 +215,29 @@
               </article>
               <p id="solar-selected-summary" class="solar-selected-summary">Escolha um destino para ver o plano de transferência.</p>
               <ul id="solar-selected-facts" class="solar-selected-facts"></ul>
-              <div class="solar-actions"><button id="solar-travel-start" class="primary" type="button">🚀 Iniciar viagem</button><button id="solar-travel-cancel" type="button">Continuar na estação</button></div>
+              <div class="solar-actions solar-actions-expanded"><button id="solar-travel-start" class="primary" type="button">🚀 Iniciar viagem</button><button id="solar-exploration-open" type="button">🔭 Missões científicas</button><button id="solar-travel-cancel" type="button">Continuar na estação</button></div>
               <small class="campus-disclaimer">A animação comprime uma viagem espacial real para poucos segundos. O Lobby não simula tempos astronômicos reais.</small>
             </section>
           </div>
+        </div>
+      </div>
+
+      <div id="deep-space-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="deep-space-title">
+        <div class="modal-card deep-space-card">
+          <button id="deep-space-close" class="modal-close" type="button" aria-label="Fechar Exploração Profunda">×</button>
+          <p class="eyebrow">Estação Orbital AGV • Ciência e sondas</p>
+          <h2 id="deep-space-title">🔭 Exploração do Sistema Solar</h2>
+          <p class="muted">Escolha uma missão de observação. Júpiter e Saturno são sobrevoos científicos; não há pouso nesses planetas.</p>
+          <div id="deep-space-mission-list" class="deep-space-mission-list"></div>
+          <article class="deep-space-selected">
+            <span id="deep-space-selected-icon">🟠</span>
+            <div><strong id="deep-space-selected-name">Sobrevoo de Júpiter</strong><small id="deep-space-selected-kind">Missão de observação</small></div>
+          </article>
+          <p id="deep-space-selected-summary" class="deep-space-selected-summary"></p>
+          <p id="deep-space-selected-objective" class="deep-space-objective"></p>
+          <ul id="deep-space-selected-facts" class="solar-selected-facts"></ul>
+          <div class="deep-space-actions"><button id="deep-space-start" class="primary" type="button">🚀 Iniciar missão</button><button id="deep-space-cancel" type="button">Continuar na estação</button></div>
+          <small class="campus-disclaimer">As missões usam escala, velocidade e densidade visual comprimidas para fins educacionais. O campo de asteroides é intencionalmente mais denso do que o real.</small>
         </div>
       </div>
 
@@ -344,8 +404,8 @@
 
   <section id="kicked" class="login-shell hidden"><article class="login-card kicked-card"><p class="eyebrow">Lobby temporariamente indisponível</p><h1>Você foi removido do Lobby</h1><p id="kicked-reason" class="muted"></p><p id="kicked-until" class="message"></p><button id="kicked-check" class="primary" type="button">Verificar novamente</button><p class="muted small">Sua conta, matrícula e atividades continuam ativas. A remoção vale somente para o Lobby.</p></article></section>
   <script src="../core/session/fullscreen-portal.js?v=14.10.8.66"></script>
-  <script src="assets/diagnostics.js?v=14.10.8.66"></script>
-  <script src="assets/sw-register.js?v=14.10.8.79-stage48-solar-system" defer></script>
-  <script src="assets/vendor-loader.js?v=14.10.8.79-stage48-solar-system" defer></script>
+  <script src="assets/diagnostics.js?v=14.10.8.83-o2"></script>
+  <script src="assets/sw-register.js?v=14.10.8.83-stage52-new-worlds" defer></script>
+  <script src="assets/vendor-loader.js?v=14.10.8.83-stage52-new-worlds" defer></script>
 </body>
 </html>

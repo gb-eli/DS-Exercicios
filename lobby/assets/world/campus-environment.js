@@ -286,7 +286,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
   g.name=`campus-experience-${experience.id}`;g.position.set(experience.x,0,experience.z);
   const pad=new THREE.Mesh(new THREE.CylinderGeometry(3.35,3.5,.22,48),dark);pad.position.y=.11;g.add(pad);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(3.05,.055,8,64),glow);ring.rotation.x=Math.PI/2;ring.position.y=.25;g.add(ring);
-  if(experience.type==='vale-portal'||experience.type==='rural-portal'||experience.type==='military-portal'||experience.type==='space-portal'){
+  if(experience.type==='vale-portal'||experience.type==='rural-portal'||experience.type==='military-portal'||experience.type==='space-portal'||experience.type==='parque-portal'){
     // v14.10.8.66: estação/portal monumental do Vale, visível de longe no Campus 3D.
     const podium=box(THREE,8.6,.36,5.8,dark,0,.18,0);g.add(podium);
     for(const x of[-3.35,3.35]){
@@ -300,7 +300,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const core=new THREE.Mesh(new THREE.CircleGeometry(2.08,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.13,side:THREE.DoubleSide,depthWrite:false}));core.position.y=2.55;g.add(core);g.userData.portalCore=core;
     for(let i=0;i<4;i++){const halo=new THREE.Mesh(new THREE.TorusGeometry(1.18+i*.3,.028,6,48),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.16+i*.055}));halo.position.y=2.55;g.add(halo);}
     if(spriteLabel){
-      const portalTitle=experience.type==='rural-portal'?'MUNDO RURAL AGV':experience.type==='military-portal'?'BASE DE OPERAÇÕES AGV':experience.type==='space-portal'?'CENTRO ESPACIAL AGV':'VALE DO SILÍCIO AGV',portalSub=experience.type==='rural-portal'?'FAZENDA • RIO • ANIMAIS':experience.type==='military-portal'?'LOGÍSTICA • ENGENHARIA • RESGATE':experience.type==='space-portal'?'LANÇAMENTO • TERRA • CIÊNCIA':'27 EMPRESAS • 8 DISTRITOS',portalText=experience.type==='rural-portal'?'#e7ffd8':experience.type==='military-portal'?'#eef5db':experience.type==='space-portal'?'#dff6ff':'#caffdf';
+      const portalTitle=experience.type==='rural-portal'?'MUNDO RURAL AGV':experience.type==='military-portal'?'BASE DE OPERAÇÕES AGV':experience.type==='space-portal'?'CENTRO ESPACIAL AGV':experience.type==='parque-portal'?'PARQUE DE DIVERSÕES AGV':'VALE DO SILÍCIO AGV',portalSub=experience.type==='rural-portal'?'FAZENDA • RIO • ANIMAIS':experience.type==='military-portal'?'LOGÍSTICA • ENGENHARIA • RESGATE':experience.type==='space-portal'?'LANÇAMENTO • TERRA • CIÊNCIA':experience.type==='parque-portal'?'COASTER • CORRIDA • PARKOUR • SLIDE':'27 EMPRESAS • 8 DISTRITOS',portalText=experience.type==='rural-portal'?'#e7ffd8':experience.type==='military-portal'?'#eef5db':experience.type==='space-portal'?'#dff6ff':experience.type==='parque-portal'?'#fff0df':'#caffdf';
       const title=spriteLabel(portalTitle,experience.accent,5.8,{bg:'rgba(2,18,18,.9)'});title.position.set(0,6.25,.1);g.add(title);
       const sub=spriteLabel(portalSub,portalText,4.5,{bg:'rgba(2,13,16,.82)'});sub.position.set(0,5.65,.1);g.add(sub);
     }
@@ -366,7 +366,7 @@ function createExperienceZone({THREE,quality,experience,spriteLabel}){
     const beacon=new THREE.Mesh(new THREE.IcosahedronGeometry(.42,1),glow);beacon.position.set(1.1,17.0,0);g.add(beacon);g.userData.towerBeacon=beacon;
     if(spriteLabel){const height=spriteLabel('TORRE DE CONTROLE • 15 m',experience.accent,3.6,{bg:'rgba(3,12,18,.88)'});height.position.set(1.1,17.7,0);g.add(height);}
   }
-  if(spriteLabel&&experience.type!=='vale-portal'&&experience.type!=='rural-portal'&&experience.type!=='military-portal'&&experience.type!=='space-portal'&&experience.type!=='tool-building'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
+  if(spriteLabel&&experience.type!=='vale-portal'&&experience.type!=='rural-portal'&&experience.type!=='military-portal'&&experience.type!=='space-portal'&&experience.type!=='parque-portal'&&experience.type!=='tool-building'){const label=spriteLabel(experience.label,experience.accent,3.8,{bg:'rgba(3,12,18,.82)'});label.position.set(0,3.95,0);g.add(label);}
   g.userData.experience=experience;setShadow(g,quality!=='low');return g;
 }
 

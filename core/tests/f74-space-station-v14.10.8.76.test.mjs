@@ -77,9 +77,9 @@ test('F74 minimapa, teleporte e interface reconhecem a Órbita como cena indepen
 test('F74 backend aceita presença/chat/reunir orbital e mantém veículos terrestres Campus-only',()=>{
   const edge=read('core/edge-functions/lobby-presence/index.ts'),migration=read('core/database/069_lobby_space_world.sql');
   assert.match(edge,/['"]space-agv['"]/);
-  assert.match(edge,/\['campus','vale','rural','military','space'(?:,'moon')?(?:,'mars')?\]/);
+  assert.match(edge,/\['campus','vale','rural','military','space'(?:,'moon')?(?:,'mars')?(?:,'parque')?\]/);
   assert.match(edge,/scene==='space'\?'space-agv'/);
-  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv'(?:,'moon-agv')?(?:,'mars-agv')?\]\.includes\(presence\.area\)/);
+  assert.match(edge,/\['vale-silicio','rural-agv','military-agv','space-agv'(?:,'moon-agv')?(?:,'mars-agv')?(?:,'parque-diversoes-agv')?\]\.includes\(presence\.area\)/);
   assert.match(migration,/lobby_presence_area_chk/);
   assert.match(migration,/space-agv/);
 });

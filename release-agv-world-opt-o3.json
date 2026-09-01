@@ -1,0 +1,15 @@
+{
+  "package": "AGV-WORLD-OPT-O3",
+  "version": "14.10.8.83-O3",
+  "base": "AGV-WORLD-OPT-O2-v14.10.8.83-OBSERVABILIDADE",
+  "phase": "O3",
+  "purpose": "Contrato lógico de mapas: WorldManifest, WorldRegistry e WorldConnections",
+  "supersedes": "AGV-WORLD-OPT-O2",
+  "chatProtected": true,
+  "presenceChanged": false,
+  "databaseChanged": false,
+  "edgeFunctionChanged": false,
+  "serviceWorkerChanged": false,
+  "runtimeChanged": false,
+  "nextPhase": "O4"
+}

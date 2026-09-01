@@ -24,21 +24,21 @@ button,a{border:1px solid #245266;border-radius:12px;background:#0c1a24;color:#e
 <main class="card">
 <header class="head">
 <h1>Reparar Campus DS</h1>
-<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.79 antes de abrir o Campus.</p>
+<p class="sub">Remove somente caches/Service Worker do Lobby e verifica os arquivos obrigatórios da release 14.10.8.82 antes de abrir o Campus.</p>
 </header>
 <section class="body">
 <div id="status" class="status"></div>
 <pre id="log" aria-live="polite">Preparando…</pre>
 <div class="actions">
 <button id="retry">Executar novamente</button>
-<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.79">Abrir Campus limpo</a>
+<a id="open" class="primary hidden" href="lobby/?diag=1&v=14.10.8.82">Abrir Campus limpo</a>
 </div>
 </section>
 </main>
 <script>
 (()=>{
 'use strict';
-const RELEASE='14.10.8.79';
+const RELEASE='14.10.8.82';
 const logEl=document.getElementById('log'),statusEl=document.getElementById('status'),openEl=document.getElementById('open');
 const logs=[];
 const log=m=>{logs.push(`[${new Date().toLocaleTimeString()}] ${m}`);logEl.textContent=logs.join('\n')};
@@ -76,10 +76,10 @@ async function run(){
    const c=await clearLobby();
    log(`Service Workers removidos: ${c.sw}; caches removidos: ${c.cache}.`);
    const targets=[
-     ['lobby/index.html',['14.10.8.79','solar-system-modal','interplanetary-travel']],
-     ['lobby/assets/boot.js',['14.10.8.79','world/dynamic-world.js']],
-     ['lobby/assets/lobby.js',['14.10.8.79','RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','INTERPLANETARY_CONSOLE','playInterplanetaryTravel','moon-agv','mars-agv']],
-     ['lobby/assets/core/world-adapter.js',['RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','moon-lite.js?v=14.10.8.79-stage47-mars','moon3d.js?v=14.10.8.79-stage47-mars','mars-lite.js?v=14.10.8.79-stage47-mars','mars3d.js?v=14.10.8.79-stage47-mars']],
+     ['lobby/index.html',['14.10.8.82','solar-system-modal','deep-space-modal','deep-space-exploration','interplanetary-travel']],
+     ['lobby/assets/boot.js',['14.10.8.82','world/dynamic-world.js']],
+     ['lobby/assets/lobby.js',['14.10.8.82','RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','PARQUE_WORLD_ADAPTER','INTERPLANETARY_CONSOLE','DEEP_SPACE_MISSIONS','startDeepSpaceMission','deep-space-runtime.js','moon-agv','mars-agv']],
+     ['lobby/assets/core/world-adapter.js',['RURAL_WORLD_ADAPTER','MILITARY_WORLD_ADAPTER','SPACE_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','PARQUE_WORLD_ADAPTER','space3d.js?v=14.10.8.82-stage51-parque-connected','moon3d.js?v=14.10.8.82-stage51-parque-connected','mars3d.js?v=14.10.8.82-stage51-parque-connected','parque-diversoes-agv3d.js?v=14.10.8.82-stage51-parque-connected']],
      ['lobby/assets/world/rural-world.js',['RURAL_BOUNDS','RURAL_FAST_TRAVEL','RURAL_ANIMALS','rural-agv']],
      ['lobby/assets/rural-lite.js',['createRuralLite','rural-agv','RURAL_FAST_TRAVEL']],
      ['lobby/assets/rural3d.js',['createRural3D','rural-world-streamed-f72','renderer.dispose']],
@@ -87,6 +87,11 @@ async function run(){
      ['lobby/assets/space-lite.js',['createSpaceLite','space-agv','SPACE_FAST_TRAVEL','INTERPLANETARY_CONSOLE','setInputLocked']],
      ['lobby/assets/space3d.js',['createSpace3D','space-world-streamed-f77','renderer.dispose','Earth','INTERPLANETARY_CONSOLE','setInputLocked']],
      ['lobby/assets/world/solar-system.js',['SOLAR_SYSTEM_BODIES','SOLAR_DESTINATIONS','ASTEROID_BELT','SOLAR_TRAVEL_PHASES']],
+     ['lobby/assets/world/deep-space-exploration.js',['DEEP_SPACE_CONSOLE','SPACE_TELESCOPE','DEEP_SPACE_MISSIONS','TELESCOPE_TARGETS']],
+     ['lobby/assets/deep-space-runtime.js',['createDeepSpaceRuntime','setVirtualControl','addAsteroids','addJupiter','addSaturn']],
+     ['lobby/assets/parque-diversoes-agv-lite.js',['createParqueDiversoesLite','parque-diversoes-agv']],
+     ['lobby/assets/parque-diversoes-agv3d.js',['createParqueDiversoes3D','parque-diversoes-agv']],
+     ['lobby/assets/world/parque-diversoes-agv-shared.js',['PARQUE_WORLD_ID','PARQUE_RETURN_PORTAL','PARQUE_FAST_TRAVEL']],
      ['lobby/assets/world/moon-world.js',['MOON_GRAVITY','MOON_ROVER','MOON_FAST_TRAVEL']],
      ['lobby/assets/moon-lite.js',['createMoonLite','moon-agv','MOON_FAST_TRAVEL']],
      ['lobby/assets/moon3d.js',['createMoon3D','moon-world-streamed-f75','renderer.dispose','MOON_GRAVITY']],
@@ -104,7 +109,7 @@ async function run(){
      ['lobby/assets/world/campus-viewpoints.js',['CAMPUS_VIEWPOINTS','CAMPUS_VIEWPOINT_LANDMARKS','viewpointZoomFov']],
      ['lobby/assets/world/campus-connections.js',['CAMPUS_CONNECTIONS','CAMPUS_SKYBRIDGES']],
      ['lobby/assets/world/dynamic-world.js',['resolveWorldTime','WORLD_TIME_MODES','skyPalette']],
-     ['lobby/sw.js',['14.10.8.79','stage48-solar-system']]
+     ['lobby/sw.js',['14.10.8.82','stage51-parque-connected']]
    ];
    const rs=[];
    for(const [p,sigs] of targets){log(`Verificando ${p}…`);rs.push(await probe(p,sigs));}

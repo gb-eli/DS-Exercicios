@@ -1,10 +1,10 @@
 {
   "name": "AGV Hub Educacional - pacote público integrado",
-  "release": "v14.10.8.78",
-  "worldArchitecturePhase": "76",
-  "worldArchitectureBuild": "14.10.8.78-stage47-mars",
+  "release": "v14.10.8.83",
+  "worldArchitecturePhase": "81",
+  "worldArchitectureBuild": "14.10.8.83-stage52-new-worlds",
   "uiVersion": "0.22.8.29",
-  "date": "2026-08-31",
+  "date": "2026-09-01",
   "containsBackendMigrations": true,
   "containsEdgeFunctions": true,
   "publicFrontendPaths": [
