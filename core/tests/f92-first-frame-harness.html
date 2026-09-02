@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F92 first-frame harness</title>
+  <style>html,body{margin:0;background:#02040a;color:#dff;font:14px system-ui}canvas{display:block;width:960px;height:540px}#move-joystick,#move-stick{display:none}</style>
+</head>
+<body>
+  <div id="move-joystick"><div id="move-stick"></div></div>
+  <main id="stage"></main>
+  <script type="module">
+    const targets=[
+      ['military','../../lobby/assets/military3d.js','createMilitary3D'],
+      ['space','../../lobby/assets/space3d.js','createSpace3D'],
+      ['moon','../../lobby/assets/moon3d.js','createMoon3D'],
+      ['mars','../../lobby/assets/mars3d.js','createMars3D']
+    ];
+    const state={graphics:{fov:65,fpsCap:60,worldTimeMode:'day'},player:{area:'harness',x:50,y:50},user:{id:'f92-harness'},profile:{role:'student',full_name:'Harness F92'},avatarStyle:{accentCss:'#72e6ff'},others:[],worldTimeControl:{mode:'day'},worldWeatherControl:{kind:'clear'}};
+    const results=[];
+    async function run([id,url,factoryName]){
+      const canvas=document.createElement('canvas');canvas.width=960;canvas.height=540;document.getElementById('stage').replaceChildren(canvas);
+      const module=await import(`${url}?harness=${Date.now()}-${id}`),factory=module[factoryName];
+      let runtime=null,error=null;
+      const firstFrame=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error(`${id}_first_frame_timeout`)),12000);factory({canvas,state,initialQuality:'ultra',onFirstFrame:()=>{clearTimeout(timeout);resolve();},onError:message=>{error=String(message||'runtime_error');}}).then(value=>{runtime=value;}).catch(reject);});
+      await firstFrame;if(!runtime)await new Promise(resolve=>setTimeout(resolve,0));
+      if(error)throw new Error(`${id}:${error}`);
+      runtime.setQuality('low');await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      const quality=runtime.getQuality(),snapshot=runtime.getObservabilitySnapshot?.()||null;runtime.stop();
+      if(quality!=='low')throw new Error(`${id}_quality_switch_failed`);
+      results.push({id,firstFrame:true,quality,snapshot});
+    }
+    try{for(const target of targets)await run(target);window.__F92_HARNESS__={done:true,ok:true,results};}
+    catch(error){window.__F92_HARNESS__={done:true,ok:false,error:String(error?.stack||error),results};}
+  </script>
+</body>
+</html>

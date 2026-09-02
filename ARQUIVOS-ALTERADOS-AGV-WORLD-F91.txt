@@ -1,0 +1,28 @@
+AGV WORLD F91 v14.10.8.93 — ALTERAÇÕES EM RELAÇÃO À F90
+
+Novos: 4
+Modificados: 13
+Removidos: 0
+
+[NOVOS]
+core/tests/f91-external-world-graphics-v14.10.8.93.test.mjs
+docs/releases/AGV-WORLD-F91-QUALIDADE-EXTERNA-v14.10.8.93.md
+docs/releases/DEPLOY-AGV-WORLD-F91-v14.10.8.93.md
+lobby/assets/render/external-world-quality.js
+
+[MODIFICADOS]
+PUBLIC-DEPLOY.json
+lobby/assets/airdrop-transit3d.js
+lobby/assets/boot.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/lobby.js
+lobby/assets/rural3d.js
+lobby/assets/sw-register.js
+lobby/assets/vale3d.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/world-runtime-prefetch.js
+lobby/index.html
+lobby/sw.js
+
+[REMOVIDOS]

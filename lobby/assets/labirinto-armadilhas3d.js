@@ -3,6 +3,7 @@ import { MAZE_WALLS, TRAPS, PRESSURE_PLATES, isTrapActive } from './world/labiri
 import { createLabyrinthChallenge } from './world/labirinto-armadilhas-experiences.js';
 import { createGlobalPlayerBridge } from './world/labirinto-armadilhas-player-bridge.js';
 import { createLabyrinthUI } from './world/labirinto-armadilhas-ui.js';
+import { specialWorldQualityProfile,specialCount } from './render/special-world-quality.js?v=14.10.8.95-f93-special-graphics';
 
 function forwardRuntimeApi(context, runtime) {
   for (const name of ['getQuality','getFPS','getAvatarMode','toggleCamera','setCameraMode','setFov','getFov','setFPSCap','getFPSCap','setWorldTimeMode','getWorldTimeMode','setRun','jump','teleportTo','enterBuilding','exitBuilding','showChatMessage']) {
@@ -20,7 +21,7 @@ export function createLabirintoArmadilhas3D(context = {}) {
 
   const challenge=createLabyrinthChallenge(context);
   const playerBridge=createGlobalPlayerBridge(context);
-  const objects=[], disposables=[]; let stopped=false,raf=0,last=performance.now(),lastResult='',lastCheckpoint='';
+  const objects=[], disposables=[];let quality=['low','medium','high','ultra'].includes(context.getQuality?.())?context.getQuality():'medium',visual=specialWorldQualityProfile(quality,context.getPerformanceProfile?.()||{},MAP_ID);let stopped=false,raf=0,last=performance.now(),lastResult='',lastCheckpoint='';
   const requestLobby=(reason)=>context.onChallengeEvent?.({type:'world-return-request',mapId:MAP_ID,reason,targetWorldId:MAP_RETURN_PORTAL.targetWorldId,targetSpawn:MAP_RETURN_PORTAL.targetSpawn,timestamp:Date.now()});
   const ui=createLabyrinthUI(context,{
     onGiveUp(){challenge.giveUp();ui.showReturning();},
@@ -36,8 +37,11 @@ export function createLabirintoArmadilhas3D(context = {}) {
   const floorMat=own(new THREE.MeshStandardMaterial({color:0x17202a,roughness:.95,metalness:.02}));
   const floor=add(new THREE.Mesh(floorGeo,floorMat));floor.receiveShadow=true;floor.userData.mapId=MAP_ID;
 
-  const wallMat=own(new THREE.MeshStandardMaterial({color:0x4a5664,roughness:.86}));
-  for(const wall of MAZE_WALLS){const g=own(new THREE.BoxGeometry(wall.w,4.4,wall.d));const m=add(new THREE.Mesh(g,wallMat));m.position.set(wall.x,2.2,wall.z);m.castShadow=true;m.receiveShadow=true;m.userData={mapId:MAP_ID,wall};}
+  const wallMat=own(new THREE.MeshStandardMaterial({color:0x4a5664,roughness:.86})),wallGeo=own(new THREE.BoxGeometry(1,1,1)),wallMesh=add(new THREE.InstancedMesh(wallGeo,wallMat,MAZE_WALLS.length)),wallDummy=new THREE.Object3D();
+  wallMesh.name='labirinto-walls-instanced-f93';wallMesh.userData={mapId:MAP_ID,walls:MAZE_WALLS};wallMesh.castShadow=true;wallMesh.receiveShadow=true;
+  MAZE_WALLS.forEach((wall,index)=>{wallDummy.position.set(wall.x,2.2,wall.z);wallDummy.scale.set(wall.w,4.4,wall.d);wallDummy.updateMatrix();wallMesh.setMatrixAt(index,wallDummy.matrix);});wallMesh.instanceMatrix.needsUpdate=true;
+  const wallCapMat=own(new THREE.MeshStandardMaterial({color:0x72879b,emissive:0x10283b,emissiveIntensity:.28,roughness:.46})),wallCaps=add(new THREE.InstancedMesh(wallGeo,wallCapMat,MAZE_WALLS.length));wallCaps.name='labirinto-wall-caps-instanced-f93';
+  MAZE_WALLS.forEach((wall,index)=>{wallDummy.position.set(wall.x,4.43,wall.z);wallDummy.scale.set(wall.w+.08,.08,wall.d+.08);wallDummy.updateMatrix();wallCaps.setMatrixAt(index,wallDummy.matrix);});wallCaps.instanceMatrix.needsUpdate=true;
 
   const trapMeshes=[];
   for(const trap of TRAPS){
@@ -50,8 +54,8 @@ export function createLabirintoArmadilhas3D(context = {}) {
     const m=add(new THREE.Mesh(g,mat));m.position.set(trap.x,.16,trap.z);m.userData={mapId:MAP_ID,trap};trapMeshes.push(m);
   }
 
-  const plateMat=own(new THREE.MeshStandardMaterial({color:0x208fe0,emissive:0x082c55,roughness:.35}));
-  for(const plate of PRESSURE_PLATES){const g=own(new THREE.BoxGeometry(2.8,.15,2.8));const m=add(new THREE.Mesh(g,plateMat));m.position.set(plate.x,.08,plate.z);m.userData={mapId:MAP_ID,plate};}
+  const plateMat=own(new THREE.MeshStandardMaterial({color:0x208fe0,emissive:0x082c55,roughness:.35})),plateGeo=own(new THREE.BoxGeometry(2.8,.15,2.8)),plateMesh=add(new THREE.InstancedMesh(plateGeo,plateMat,PRESSURE_PLATES.length));plateMesh.name='labirinto-pressure-plates-instanced-f93';plateMesh.userData={mapId:MAP_ID,plates:PRESSURE_PLATES};
+  PRESSURE_PLATES.forEach((plate,index)=>{wallDummy.position.set(plate.x,.08,plate.z);wallDummy.scale.set(1,1,1);wallDummy.updateMatrix();plateMesh.setMatrixAt(index,wallDummy.matrix);});plateMesh.instanceMatrix.needsUpdate=true;
 
   const cpMeshes=[];
   for(const cp of CHECKPOINTS){const g=own(new THREE.TorusGeometry(1.5,.22,10,24));const mat=own(new THREE.MeshStandardMaterial({color:new THREE.Color(cp.color),emissive:new THREE.Color(cp.color).multiplyScalar(.18)}));const m=add(new THREE.Mesh(g,mat));m.position.set(cp.x,1.8,cp.z);m.rotation.x=Math.PI/2;m.userData={mapId:MAP_ID,checkpoint:cp};cpMeshes.push(m);}
@@ -59,6 +63,8 @@ export function createLabirintoArmadilhas3D(context = {}) {
 
   context.registerWorldColliders?.({mapId:MAP_ID,scene:SCENE_ID,walls:MAZE_WALLS,bounds:MAP_BOUNDS});
   const abortHandler=()=>stop();context.signal?.addEventListener?.('abort',abortHandler,{once:true});
+
+  function applyLabyrinthQuality(next=quality){if(['low','medium','high','ultra'].includes(next))quality=next;visual=specialWorldQualityProfile(quality,context.getPerformanceProfile?.()||{},MAP_ID);wallCaps.count=specialCount(MAZE_WALLS.length,visual.decor,0);wallCaps.visible=visual.materialTier>=1;wallCapMat.emissiveIntensity=.28*visual.emissiveBoost;dir.castShadow=visual.shadows;ambient.intensity=.82+visual.lightBudget*.42;return quality;}
 
   function loop(t){
     if(stopped)return;const dt=Math.min(.05,(t-last)/1000||0);last=t;
@@ -69,7 +75,7 @@ export function createLabirintoArmadilhas3D(context = {}) {
   }
 
   function stop(){if(stopped)return;stopped=true;cancelAnimationFrame(raf);context.signal?.removeEventListener?.('abort',abortHandler);context.unregisterWorldColliders?.(MAP_ID);for(const o of objects)scene.remove(o);for(const d of new Set(disposables)){try{d.dispose?.();}catch{}}ui.destroy();}
-  challenge.resetAttempt();raf=requestAnimationFrame(loop);
+  challenge.resetAttempt();applyLabyrinthQuality();raf=requestAnimationFrame(loop);
 
-  return forwardRuntimeApi(context,{id:MAP_ID,scene:SCENE_ID,label:MAP_LABEL,version:MAP_VERSION,mode:'3d',stop,getDestinations:()=>DESTINATIONS,getChallengeState:challenge.snapshot,giveUp(){challenge.giveUp();ui.showReturning();},getReturnPortal:()=>MAP_RETURN_PORTAL});
+  return forwardRuntimeApi(context,{id:MAP_ID,scene:SCENE_ID,label:MAP_LABEL,version:MAP_VERSION,mode:'3d',stop,setQuality:applyLabyrinthQuality,getQuality:()=>quality,getDestinations:()=>DESTINATIONS,getChallengeState:challenge.snapshot,giveUp(){challenge.giveUp();ui.showReturning();},getReturnPortal:()=>MAP_RETURN_PORTAL});
 }

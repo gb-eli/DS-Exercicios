@@ -12,6 +12,12 @@ import {
   SAFETY_POINTS,
   NIGHT_FIXTURES
 } from './colegio-agv-data.js';
+import { specialWorldQualityProfile,specialCount } from '../render/special-world-quality.js?v=14.10.8.95-f93-special-graphics';
+
+function createBoxInstances(THREE,parent,material,defs,name){
+  const geometry=new THREE.BoxGeometry(1,1,1),mesh=new THREE.InstancedMesh(geometry,material,defs.length),dummy=new THREE.Object3D();mesh.name=name;mesh.userData.maxCount=defs.length;
+  defs.forEach((def,index)=>{dummy.position.set(def.x||0,def.y??(def.height||1)/2,def.z||0);dummy.rotation.set(def.rx||0,def.ry||0,def.rz||0);dummy.scale.set(def.width||1,def.height||1,def.depth||1);dummy.updateMatrix();mesh.setMatrixAt(index,dummy.matrix);});mesh.instanceMatrix.needsUpdate=true;mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;
+}
 
 function addBox(THREE, parent, material, { width, depth, height = 0.12, x = 0, y = height / 2, z = 0, name = '' }) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
@@ -212,20 +218,22 @@ function createPatternedWalkway(THREE, parent, materials, feature) {
   const rows = 16;
   const tw = feature.width / cols;
   const td = feature.depth / rows;
+  const light=[],dark=[];
+  addBox(THREE,parent,materials.walkDark,{width:feature.width,depth:feature.depth,height:.045,x:feature.x,y:.025,z:feature.z,name:`${feature.id}_base`});
   for (let r = 0; r < rows; r += 1) {
     for (let c = 0; c < cols; c += 1) {
-      const mat = ((r + c + Math.floor(r / 2)) % 2 === 0) ? materials.walkLight : materials.walkDark;
-      addBox(THREE, parent, mat, {
+      const target=((r+c+Math.floor(r/2))%2===0)?light:dark;
+      target.push({
         width: tw,
         depth: td,
         height: 0.055,
         x: feature.x - feature.width / 2 + tw / 2 + c * tw,
         y: 0.04,
-        z: feature.z - feature.depth / 2 + td / 2 + r * td,
-        name: `${feature.id}_tile_${r}_${c}`
+        z: feature.z - feature.depth / 2 + td / 2 + r * td
       });
     }
   }
+  return [createBoxInstances(THREE,parent,materials.walkLight,light,`${feature.id}-light-instanced-f93`),createBoxInstances(THREE,parent,materials.walkDark,dark,`${feature.id}-dark-instanced-f93`)];
 }
 
 export function mountColegioAgvEnvironment3D({ THREE, parent, bounds }) {
@@ -257,6 +265,7 @@ export function mountColegioAgvEnvironment3D({ THREE, parent, bounds }) {
     emissive: new THREE.MeshStandardMaterial({ color: 0xfff4ca, emissive: 0x665b21, emissiveIntensity: 0.18, roughness: 0.5 })
   };
 
+  const qualityMeshes=[];
   const worldWidth = bounds.maxX - bounds.minX;
   const worldDepth = bounds.maxZ - bounds.minZ;
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(worldWidth, worldDepth), materials.ground);
@@ -270,7 +279,7 @@ export function mountColegioAgvEnvironment3D({ THREE, parent, bounds }) {
 
   for (const feature of OUTDOOR_FEATURES) {
     if (feature.kind === 'patterned-walkway') {
-      createPatternedWalkway(THREE, group, materials, feature);
+      qualityMeshes.push(...createPatternedWalkway(THREE, group, materials, feature));
       continue;
     }
     const material = feature.kind === 'sports-court' ? materials.court : feature.kind === 'green-area' ? materials.ground : materials.patio;
@@ -300,29 +309,17 @@ export function mountColegioAgvEnvironment3D({ THREE, parent, bounds }) {
   for (const item of SAFETY_POINTS) createSafetyPoint(THREE, group, materials, item);
   const night = createNightFixtures(THREE, group, materials);
 
-  for (const item of VEGETATION) {
-    if (item.kind === 'tree') createTree(THREE, group, materials, item);
-    else createShrub(THREE, group, materials, item);
-  }
+  const treeDefs=VEGETATION.filter(item=>item.kind==='tree'),shrubDefs=VEGETATION.filter(item=>item.kind!=='tree'),treeDummy=new THREE.Object3D(),trunkGeo=new THREE.CylinderGeometry(.18,.24,2.6,8),crownGeo=new THREE.SphereGeometry(1.25,10,8),trunks=new THREE.InstancedMesh(trunkGeo,materials.trunk,treeDefs.length),crowns=new THREE.InstancedMesh(crownGeo,materials.leaf,treeDefs.length),shrubGeo=new THREE.SphereGeometry(.7,9,7),shrubs=new THREE.InstancedMesh(shrubGeo,materials.leaf,shrubDefs.length);trunks.name='colegio-trees-trunks-instanced-f93';crowns.name='colegio-trees-crowns-instanced-f93';shrubs.name='colegio-shrubs-instanced-f93';
+  treeDefs.forEach((item,index)=>{const scale=item.scale||1;treeDummy.position.set(item.x,1.3*scale,item.z);treeDummy.scale.set(scale,scale,scale);treeDummy.updateMatrix();trunks.setMatrixAt(index,treeDummy.matrix);treeDummy.position.y=3.05*scale;treeDummy.updateMatrix();crowns.setMatrixAt(index,treeDummy.matrix);});shrubDefs.forEach((item,index)=>{const scale=item.scale||1;treeDummy.position.set(item.x,.55,item.z);treeDummy.scale.set(scale,scale*.75,scale);treeDummy.updateMatrix();shrubs.setMatrixAt(index,treeDummy.matrix);});trunks.instanceMatrix.needsUpdate=crowns.instanceMatrix.needsUpdate=shrubs.instanceMatrix.needsUpdate=true;group.add(trunks,crowns,shrubs);
 
-  for (const fence of FENCES) {
-    addBox(THREE, group, materials.dark, { width: fence.width, depth: fence.depth, height: fence.height, x: fence.x, y: fence.height / 2, z: fence.z, name: fence.id });
-  }
-  for (const gate of GATES) {
-    const gateGroup = new THREE.Group();
-    gateGroup.name = gate.id;
-    gateGroup.position.set(gate.x, 0, gate.z);
-    for (let i = 0; i < 9; i += 1) {
-      addBox(THREE, gateGroup, materials.dark, { width: 0.08, depth: 0.1, height: gate.height, x: -gate.width / 2 + i * (gate.width / 8), y: gate.height / 2, name: `${gate.id}_bar_${i}` });
-    }
-    addBox(THREE, gateGroup, materials.dark, { width: gate.width, depth: 0.1, height: 0.09, y: 0.2, name: `${gate.id}_rail_bottom` });
-    addBox(THREE, gateGroup, materials.dark, { width: gate.width, depth: 0.1, height: 0.09, y: gate.height - 0.2, name: `${gate.id}_rail_top` });
-    group.add(gateGroup);
-  }
+  const fences=createBoxInstances(THREE,group,materials.dark,FENCES.map(fence=>({width:fence.width,depth:fence.depth,height:fence.height,x:fence.x,y:fence.height/2,z:fence.z})),'colegio-fences-instanced-f93'),gateDefs=[];
+  for(const gate of GATES){for(let i=0;i<9;i+=1)gateDefs.push({width:.08,depth:.1,height:gate.height,x:gate.x-gate.width/2+i*(gate.width/8),y:gate.height/2,z:gate.z});gateDefs.push({width:gate.width,depth:.1,height:.09,x:gate.x,y:.2,z:gate.z},{width:gate.width,depth:.1,height:.09,x:gate.x,y:gate.height-.2,z:gate.z});}
+  const gates=createBoxInstances(THREE,group,materials.dark,gateDefs,'colegio-gates-instanced-f93');
 
-  for (const line of COURT_MARKINGS) {
-    addBox(THREE, group, materials.courtLine, { width: line.width, depth: line.depth, height: 0.025, x: line.x, y: 0.13, z: line.z, name: line.id });
-  }
+  const courtMarkings=createBoxInstances(THREE,group,materials.courtLine,COURT_MARKINGS.map(line=>({width:line.width,depth:line.depth,height:.025,x:line.x,y:.13,z:line.z})),'colegio-court-markings-instanced-f93');qualityMeshes.push(courtMarkings);
+
+  let quality='high',qualityVisual=specialWorldQualityProfile(quality,{},'colegio-agv');
+  function setQuality(next='high',profile={}){quality=['low','medium','high','ultra'].includes(next)?next:quality;qualityVisual=specialWorldQualityProfile(quality,profile,'colegio-agv');const treeCount=specialCount(treeDefs.length,qualityVisual.decor,Math.min(3,treeDefs.length)),shrubCount=specialCount(shrubDefs.length,qualityVisual.decor,Math.min(2,shrubDefs.length));trunks.count=crowns.count=treeCount;shrubs.count=shrubCount;qualityMeshes.forEach(mesh=>{mesh.count=specialCount(mesh.userData.maxCount,qualityVisual.decor,quality==='low'?0:Math.min(4,mesh.userData.maxCount));mesh.visible=qualityVisual.materialTier>=1;});night.group.visible=qualityVisual.lightBudget>.08;night.actualLights.forEach((light,index)=>light.visible=index<specialCount(night.actualLights.length,qualityVisual.lightBudget,0));fences.castShadow=gates.castShadow=qualityVisual.shadows;return quality;}
 
   function setWorldTimeMode(mode = 'cycle') {
     const isNight = mode === 'night';
@@ -346,8 +343,8 @@ export function mountColegioAgvEnvironment3D({ THREE, parent, bounds }) {
     return { weather: kind, wet, visibilityReduced: group.userData.visibilityReduced };
   }
 
-  parent.add(group);
-  return { group, materials, setWorldTimeMode, setWeatherState, night };
+  setQuality(quality);parent.add(group);
+  return { group, materials, setWorldTimeMode, setWeatherState, setQuality, getQuality:()=>quality, getQualityProfile:()=>qualityVisual, night };
 }
 
 export function disposeColegioAgvEnvironment3D(handle) {

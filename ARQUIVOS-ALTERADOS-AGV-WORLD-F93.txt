@@ -1,0 +1,39 @@
+AGV WORLD F93 v14.10.8.95 — ALTERAÇÕES EM RELAÇÃO À F92
+
+Novos: 6
+Modificados: 21
+Removidos: 0
+
+[NOVOS]
+ARQUIVOS-ALTERADOS-AGV-WORLD-F93.txt
+core/tests/f93-first-frame-harness.html
+core/tests/f93-special-world-graphics-v14.10.8.95.test.mjs
+docs/releases/AGV-WORLD-F93-QUALIDADE-AMBIENTES-ESPECIAIS-v14.10.8.95.md
+docs/releases/DEPLOY-AGV-WORLD-F93-v14.10.8.95.md
+lobby/assets/render/special-world-quality.js
+
+[MODIFICADOS]
+PUBLIC-DEPLOY.json
+lobby/assets/airdrop-transit3d.js
+lobby/assets/boot.js
+lobby/assets/colegio-agv-host.js
+lobby/assets/colegio-agv3d.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/labirinto-armadilhas-host.js
+lobby/assets/labirinto-armadilhas3d.js
+lobby/assets/lobby.js
+lobby/assets/museu-hardware-adapter.js
+lobby/assets/museu-hardware3d.js
+lobby/assets/parque-diversoes-agv3d.js
+lobby/assets/plugin-world-host.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/colegio-agv-environment.js
+lobby/assets/world/colegio-agv-performance.js
+lobby/assets/world/world-runtime-prefetch.js
+lobby/index.html
+lobby/sw.js
+
+[REMOVIDOS]
+Nenhum.

@@ -1,6 +1,6 @@
 import { createWorldAdapter } from './core/world-adapter.js?v=14.10.8.73';
 import { createMuseuHardwareLite } from './museu-hardware-lite.js?v=0.8.0';
-import { createMuseuHardware3D } from './museu-hardware3d.js?v=0.8.0';
+import { createMuseuHardware3D } from './museu-hardware3d.js?v=14.10.8.95-f93-special-graphics';
 
 export const MUSEU_HARDWARE_WORLD_ADAPTER=createWorldAdapter({
   id:'museu-hardware-agv',

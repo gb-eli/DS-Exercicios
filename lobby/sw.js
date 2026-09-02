@@ -1,7 +1,7 @@
 'use strict';
 
-const VERSION='14.10.8.92';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage61-f90-graphics`; 
+const VERSION='14.10.8.96';
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage65-f94-auto-calibration`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -11,18 +11,19 @@ const CRITICAL_SHELL=[
   './',
   './index.html',
   './assets/diagnostics.js?v=14.10.8.66',
-  './assets/sw-register.js?v=14.10.8.92-stage61-f90-graphics',
-  './assets/vendor-loader.js?v=14.10.8.92-stage61-f90-graphics',
-  './assets/boot.js?v=14.10.8.92-stage61-f90-graphics',
+  './assets/sw-register.js?v=14.10.8.96-stage65-f94-auto-calibration',
+  './assets/vendor-loader.js?v=14.10.8.96-stage65-f94-auto-calibration',
+  './assets/boot.js?v=14.10.8.96-stage65-f94-auto-calibration',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.92-stage61-f90-graphics',
-  './assets/config.js?v=14.10.8.92',
+  './assets/lobby.js?v=14.10.8.96-stage65-f94-auto-calibration',
+  './assets/config.js?v=14.10.8.96',
   './assets/core/lobby-state.js?v=14.10.8.92-f90-graphics',
   './assets/core/world-manager.js?v=14.10.8.92-f90-graphics',
-  './assets/core/world-adapter.js?v=14.10.8.92-f90-graphics',
-  './assets/plugin-world-host.js?v=14.10.8.92-f90-graphics',
-  './assets/colegio-agv-host.js?v=14.10.8.92-f90-graphics',
-  './assets/labirinto-armadilhas-host.js?v=14.10.8.92-f90-graphics',
+  './assets/core/world-adapter.js?v=14.10.8.96-f94-auto-calibration',
+  './assets/plugin-world-host.js?v=14.10.8.96-f94-auto-calibration',
+  './assets/colegio-agv-host.js?v=14.10.8.96-f94-auto-calibration',
+  './assets/labirinto-armadilhas-host.js?v=14.10.8.96-f94-auto-calibration',
+  './assets/render/graphics-calibrator.js?v=14.10.8.96-f94-auto-calibration',
   './assets/museu-hardware-lite.js?v=0.8.0',
   './assets/world/colegio-agv-shared.js?v=1.6.0-f7',
   './assets/world/labirinto-armadilhas-shared.js?v=1.1.0',
@@ -73,7 +74,7 @@ const CRITICAL_SHELL=[
   './assets/social/proximity-chat.js?v=14.10.8.66',
   './assets/rigged-avatar.js?v=14.10.8.66-stage34',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.92-stage61-f90-graphics',
+  './assets/lobby.css?v=14.10.8.96-stage65-f94-auto-calibration',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[

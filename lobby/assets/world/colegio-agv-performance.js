@@ -4,7 +4,8 @@ const PROFILES = Object.freeze({
   lite: Object.freeze({ id: 'lite', npcHz: 6, interactionHz: 6, maxNpcFallback: 4, shadows: false, decorationDensity: 0.55 }),
   low: Object.freeze({ id: 'low', npcHz: 8, interactionHz: 8, maxNpcFallback: 5, shadows: false, decorationDensity: 0.7 }),
   medium: Object.freeze({ id: 'medium', npcHz: 12, interactionHz: 10, maxNpcFallback: 7, shadows: false, decorationDensity: 0.9 }),
-  high: Object.freeze({ id: 'high', npcHz: 20, interactionHz: 15, maxNpcFallback: 7, shadows: true, decorationDensity: 1 })
+  high: Object.freeze({ id: 'high', npcHz: 20, interactionHz: 15, maxNpcFallback: 7, shadows: true, decorationDensity: 1 }),
+  ultra: Object.freeze({ id: 'ultra', npcHz: 24, interactionHz: 18, maxNpcFallback: 8, shadows: true, decorationDensity: 1 })
 });
 
 function normalizeQuality(value, mode) {
@@ -12,11 +13,12 @@ function normalizeQuality(value, mode) {
   const q = String(value || 'high').toLowerCase();
   if (q.includes('low') || q.includes('mobile') || q.includes('econom')) return 'low';
   if (q.includes('medium') || q.includes('balanced')) return 'medium';
+  if (q.includes('ultra')) return 'ultra';
   return 'high';
 }
 
 export function createColegioAgvPerformanceController(context = {}, mode = '3d') {
-  const globalQuality = normalizeQuality(context.getQuality?.() ?? context?.state?.quality, mode);
+  let globalQuality = normalizeQuality(context.getQuality?.() ?? context?.state?.quality, mode);
   let profileId = globalQuality;
   let lowFpsWindows = 0;
   let healthyFpsWindows = 0;
@@ -31,7 +33,7 @@ export function createColegioAgvPerformanceController(context = {}, mode = '3d')
     else if (fps > 42) { healthyFpsWindows += 1; lowFpsWindows = 0; }
     else { lowFpsWindows = Math.max(0, lowFpsWindows - 1); healthyFpsWindows = Math.max(0, healthyFpsWindows - 1); }
 
-    const order = ['low', 'medium', 'high'];
+    const order = ['low', 'medium', 'high', 'ultra'];
     const ceiling = order.indexOf(globalQuality);
     let index = Math.min(order.indexOf(profileId), ceiling);
     if (lowFpsWindows >= 3 && index > 0) { index -= 1; lowFpsWindows = 0; }
@@ -43,6 +45,8 @@ export function createColegioAgvPerformanceController(context = {}, mode = '3d')
     }
     return profileId;
   }
+
+  function setQuality(value){globalQuality=normalizeQuality(value,mode);profileId=globalQuality;lowFpsWindows=0;healthyFpsWindows=0;return profileId;}
 
   function shouldUpdateNpc(delta = 0) {
     npcAccumulator += Math.max(0, Number(delta) || 0);
@@ -82,6 +86,7 @@ export function createColegioAgvPerformanceController(context = {}, mode = '3d')
     getProfile: () => ({ ...getProfile() }),
     getProfileId: () => profileId,
     recordFPS,
+    setQuality,
     shouldUpdateNpc,
     shouldScanInteractions,
     apply3D,

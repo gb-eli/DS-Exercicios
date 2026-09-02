@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F93 specialized worlds harness</title>
+  <style>html,body{margin:0;overflow:hidden;background:#020712;color:#dff;font:13px system-ui}canvas{display:block;width:100vw;height:100vh}#move-joystick,#move-stick,#jump-button,#run-button{display:none}#status{position:fixed;left:10px;top:10px;z-index:30;padding:7px 10px;border:1px solid #4ad3ff66;border-radius:9px;background:#031019cc}</style>
+</head>
+<body>
+  <div id="move-joystick"><div id="move-stick"></div></div><button id="jump-button"></button><button id="run-button"></button>
+  <div id="status">F93 • inicializando</div><canvas id="stage" width="960" height="540"></canvas>
+  <script type="module">
+    const TARGETS={
+      parque:['../../lobby/assets/parque-diversoes-agv3d.js','createParqueDiversoes3D','parque-diversoes-agv'],
+      museu:['../../lobby/assets/museu-hardware3d.js','createMuseuHardware3D','museu-hardware'],
+      colegio:['../../lobby/assets/colegio-agv-host.js','createColegioAgvHosted3D','colegio-agv'],
+      labirinto:['../../lobby/assets/labirinto-armadilhas-host.js','createLabirintoArmadilhasHosted3D','labirinto-armadilhas']
+    };
+    const params=new URLSearchParams(location.search),id=TARGETS[params.get('world')]?params.get('world'):'parque',target=TARGETS[id],requested=['low','medium','high','ultra'].includes(params.get('quality'))?params.get('quality'):'ultra',canvas=document.getElementById('stage'),status=document.getElementById('status');
+    const state={graphics:{fov:65,fpsCap:60,worldTimeMode:'day',adaptiveQuality:false},player:{area:target[2],worldId:target[2],x:50,y:50,z:0},user:{id:'f93-harness'},profile:{role:'student',full_name:'Harness F93',display_name:'Harness'},avatarStyle:{accentCss:'#72e6ff'},others:[],worldTimeControl:{mode:'day'},worldWeatherControl:{kind:'clear'},audio:{enabled:false}};
+    const waitFrames=(count=3)=>new Promise(resolve=>{const next=()=>count--<=0?resolve():requestAnimationFrame(next);next();});
+    try{
+      const module=await import(`${target[0]}?harness=${Date.now()}-${id}`),factory=module[target[1]];let runtime=null,error='';
+      const firstFrame=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error(`${id}_first_frame_timeout`)),18000);Promise.resolve(factory({canvas,state,initialQuality:'ultra',onFirstFrame:()=>{clearTimeout(timeout);resolve();},onError:message=>{error=String(message||'runtime_error');},onInteract(){},onPlayerState(){},onAreaChange(){},onQualityChange(){}})).then(value=>{runtime=value;}).catch(reject);});
+      await firstFrame;while(!runtime)await waitFrames(1);if(error)throw new Error(error);runtime.setQuality(requested);await waitFrames(5);const snapshot=runtime.getObservabilitySnapshot?.()||null,quality=runtime.getQuality?.();if(quality!==requested)throw new Error(`${id}_quality_${quality}_expected_${requested}`);status.textContent=`F93 • ${id} • ${requested} • PASS`;window.__F93_HARNESS__={done:true,ok:true,id,quality,snapshot};
+    }catch(cause){status.textContent=`F93 • ${id} • FAIL`;window.__F93_HARNESS__={done:true,ok:false,id,error:String(cause?.stack||cause)};}
+  </script>
+</body>
+</html>

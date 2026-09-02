@@ -1,8 +1,8 @@
 import { createLabirintoArmadilhasLite } from './labirinto-armadilhas-lite.js?v=1.1.0';
-import { createLabirintoArmadilhas3D } from './labirinto-armadilhas3d.js?v=1.1.0';
+import { createLabirintoArmadilhas3D } from './labirinto-armadilhas3d.js?v=14.10.8.95-f93-special-graphics';
 import { MAP_ID, MAP_LABEL, MAP_BOUNDS, MAP_SPAWN, MAP_RETURN_PORTAL } from './world/labirinto-armadilhas-shared.js?v=1.1.0';
 import { MAZE_WALLS } from './world/labirinto-armadilhas-data.js?v=1.1.0';
-import { createPluginWorldLiteHost, createPluginWorld3DHost, mapWorldToPresence, mapPresenceToWorld, nearestPortal } from './plugin-world-host.js?v=14.10.8.92-f90-graphics';
+import { createPluginWorldLiteHost, createPluginWorld3DHost, mapWorldToPresence, mapPresenceToWorld, nearestPortal } from './plugin-world-host.js?v=14.10.8.96-f94-auto-calibration';
 
 function blocked(x,z,r=.62){
   if(x<MAP_BOUNDS.minX+r||x>MAP_BOUNDS.maxX-r||z<MAP_BOUNDS.minZ+r||z>MAP_BOUNDS.maxZ-r)return true;

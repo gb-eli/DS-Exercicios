@@ -1,0 +1,33 @@
+AGV WORLD F92 v14.10.8.94 — ALTERAÇÕES EM RELAÇÃO À F91
+
+Novos: 6
+Modificados: 15
+Removidos: 0
+
+[NOVOS]
+ARQUIVOS-ALTERADOS-AGV-WORLD-F92.txt
+core/tests/f92-first-frame-harness.html
+core/tests/f92-mission-world-graphics-v14.10.8.94.test.mjs
+docs/releases/AGV-WORLD-F92-QUALIDADE-MISSOES-v14.10.8.94.md
+docs/releases/DEPLOY-AGV-WORLD-F92-v14.10.8.94.md
+lobby/assets/render/mission-world-quality.js
+
+[MODIFICADOS]
+PUBLIC-DEPLOY.json
+lobby/assets/airdrop-transit3d.js
+lobby/assets/boot.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/lobby.js
+lobby/assets/mars3d.js
+lobby/assets/military3d.js
+lobby/assets/moon3d.js
+lobby/assets/space3d.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/world-runtime-prefetch.js
+lobby/index.html
+lobby/sw.js
+
+[REMOVIDOS]
+Nenhum.

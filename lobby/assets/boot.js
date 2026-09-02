@@ -1,4 +1,4 @@
-const VERSION='14.10.8.92';
+const VERSION='14.10.8.96';
 const repairUrl=()=>new URL('../repair-lobby.html',location.href).href;
 const showRepairLink=()=>{
   const message=document.getElementById('login-message');
@@ -46,6 +46,7 @@ const ASSET_SIGNATURES={
   'world/campus-viewpoints.js':['CAMPUS_VIEWPOINTS','CAMPUS_VIEWPOINT_LANDMARKS','viewpointZoomFov'],
   'render/camera-controller.js':['createCameraController','explore','campus'],
   'render/performance-manager.js':['detectPerformanceProfile','createResizeController','createAdaptiveQualityController'],
+  'render/graphics-calibrator.js':['createGraphicsCalibrator','summarizeCalibrationWindow','manual-lock'],
   'characters/avatar-system.js':['createAvatarSystem','createAvatarAppearance','rigged-glb-v2'],
   'game/portal-manager.js':['createPortalSystem','PORTAL ABERTO','AGUARDANDO'],
   'game/train-manager.js':['createTrainManager','startTrip','sampleVisual'],
@@ -79,12 +80,12 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  const requiredAssets=['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby-lite.js','world/campus-manifest.js','world/village-world.js','world/campus-module-world.js','world/airdrop-sectors.js','world/world-manifests.js','village-lite.js','campus-module-lite.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'];
+  const requiredAssets=['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/world-adapter.js','lobby-lite.js','world/campus-manifest.js','world/village-world.js','world/campus-module-world.js','world/airdrop-sectors.js','world/world-manifests.js','village-lite.js','campus-module-lite.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','render/graphics-calibrator.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'];
   // F85: validação do boot em pequenos lotes paralelos. Mantém o gate de integridade sem bloquear o Lobby em 29 requests sequenciais.
   const probeConcurrency=6;
   for(let i=0;i<requiredAssets.length;i+=probeConcurrency)await Promise.all(requiredAssets.slice(i,i+probeConcurrency).map(probeAsset));
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}-stage61-f90-graphics`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage65-f94-auto-calibration`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});

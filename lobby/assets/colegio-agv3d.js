@@ -9,7 +9,7 @@ import {
   isInsideBounds
 } from './world/colegio-agv-shared.js';
 import { ROOM_ZONES, EXPANSION_2026_FEATURES, ACCESSIBLE_ROUTES } from './world/colegio-agv-data.js';
-import { mountColegioAgvEnvironment3D } from './world/colegio-agv-environment.js';
+import { mountColegioAgvEnvironment3D } from './world/colegio-agv-environment.js?v=14.10.8.95-f93-special-graphics';
 import { mountColegioAgvInterior3D, disposeInterior3D, getInteriorDefinition, listInteriors } from './world/colegio-agv-interiors.js';
 import { SCHOOL_DIRECTORY, resolveInteractionContent } from './world/colegio-agv-experiences.js';
 import { getColegioAgvMinimapData } from './world/colegio-agv-minimap.js';
@@ -17,7 +17,7 @@ import { createColegioAgvActivityController, F5_OUTDOOR_INTERACTABLES } from './
 import { mountColegioAgvPopulation3D } from './world/colegio-agv-population.js';
 import { mountColegioAgvDoors3D } from './world/colegio-agv-doors.js';
 import { createColegioAgvInteractionResolver } from './world/colegio-agv-interactions.js';
-import { createColegioAgvPerformanceController } from './world/colegio-agv-performance.js';
+import { createColegioAgvPerformanceController } from './world/colegio-agv-performance.js?v=14.10.8.95-f93-special-graphics';
 import { createColegioAgvSyncBridge } from './world/colegio-agv-sync.js';
 import { createColegioAgvLearningController } from './world/colegio-agv-learning.js';
 import { createColegioAgvF6Controller } from './world/colegio-agv-f6.js';
@@ -76,6 +76,7 @@ export function createColegioAgv3D(context = {}) {
   const exteriorGroup = exterior?.group;
 
   const performanceController = createColegioAgvPerformanceController(context, '3d');
+  exterior?.setQuality?.(performanceController.getProfileId(),context.getPerformanceProfile?.()||{});
   const sync = createColegioAgvSyncBridge(context);
   let doors = null;
   const activity = createColegioAgvActivityController({
@@ -200,7 +201,7 @@ export function createColegioAgv3D(context = {}) {
       npcDeltaAccumulator = 0;
       const player = context?.state?.player || context?.player || null;
       const profile = performanceController.getProfileId?.() || 'high';
-      const maxNpcDistance = ({ lite: 22, low: 30, medium: 48, high: 72 })[profile] || 72;
+      const maxNpcDistance = ({ lite: 22, low: 30, medium: 48, high: 72, ultra: 96 })[profile] || 72;
       population?.update?.(lastNpcSnapshots, npcStep, { player, maxDistance: maxNpcDistance });
     }
     if (performanceController.shouldScanInteractions(delta)) interactionResolver?.scan();
@@ -215,6 +216,7 @@ export function createColegioAgv3D(context = {}) {
     if (fpsSampleAccumulator >= 1) {
       const sampledFps = context.getFPS?.();
       if (Number.isFinite(sampledFps) && sampledFps > 0) performanceController.recordFPS(sampledFps);
+      exterior?.setQuality?.(performanceController.getProfileId(),context.getPerformanceProfile?.()||{});
       performanceController.apply3D(root);
       fpsSampleAccumulator %= 1;
     }
@@ -333,7 +335,8 @@ export function createColegioAgv3D(context = {}) {
     mode: '3d',
     root,
     stop,
-    getQuality: () => context.getQuality?.() ?? 'high',
+    getQuality: () => context.getQuality?.() ?? performanceController.getProfileId(),
+    setQuality(value){const next=performanceController.setQuality(value);exterior?.setQuality?.(next,context.getPerformanceProfile?.()||{});performanceController.apply3D(root);context.onQualityChange?.(next);return next;},
     getFPS: () => context.getFPS?.() ?? 0,
     getAvatarMode: () => context.getAvatarMode?.() ?? context?.state?.avatarMode ?? 'third-person',
     toggleCamera: delegate(context, 'toggleCamera'),

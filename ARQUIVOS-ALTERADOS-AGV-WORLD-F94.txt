@@ -1,0 +1,35 @@
+AGV WORLD F94 v14.10.8.96 — ALTERAÇÕES EM RELAÇÃO À F93
+
+Novos: 6
+Modificados: 17
+Removidos: 0
+
+[NOVOS]
+ARQUIVOS-ALTERADOS-AGV-WORLD-F94.txt
+core/tests/f94-calibration-harness.html
+core/tests/f94-global-graphics-calibration-v14.10.8.96.test.mjs
+docs/releases/AGV-WORLD-F94-CALIBRACAO-GRAFICA-AUTOMATICA-v14.10.8.96.md
+docs/releases/DEPLOY-AGV-WORLD-F94-v14.10.8.96.md
+lobby/assets/render/graphics-calibrator.js
+
+[MODIFICADOS]
+PUBLIC-DEPLOY.json
+lobby/assets/airdrop-transit3d.js
+lobby/assets/boot.js
+lobby/assets/colegio-agv-host.js
+lobby/assets/config.js
+lobby/assets/core/world-adapter.js
+lobby/assets/labirinto-armadilhas-host.js
+lobby/assets/lobby.css
+lobby/assets/lobby.js
+lobby/assets/lobby3d.js
+lobby/assets/parque-diversoes-agv3d.js
+lobby/assets/plugin-world-host.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/world/world-runtime-prefetch.js
+lobby/index.html
+lobby/sw.js
+
+[REMOVIDOS]
+Nenhum.
