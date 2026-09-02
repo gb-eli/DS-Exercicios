@@ -704,6 +704,7 @@ function syncWorldSettingsForm(){
   for(const action of Object.keys(DEFAULT_CONTROLS))populateControlSelect(`control-${action}`,action);
   $('avatar-accent').value=hexColor(a.accentCss,'#36d2ff');for(const [id,key,fallback] of[['avatar-skin','skin','#d99b72'],['avatar-hair','hair','#171719'],['avatar-pants','pants','#202731'],['avatar-shoes','shoes','#e8ecef']]){const value=a[key];$(id).value=typeof value==='number'?`#${value.toString(16).padStart(6,'0').slice(-6)}`:hexColor(value,fallback);}for(const key of['backpack','glasses','headset','wrist'])$(`avatar-${key}`).checked=!!a[key];$('avatar-hair-style').value=a.hairStyle||'soft';
 }
+function openWorldSettings(){syncWorldSettingsForm();openModal('world-settings-modal');}
 async function applyWorldSettings(){
   const oldAvatar=JSON.stringify(state.avatarStyle),controls={};for(const action of Object.keys(DEFAULT_CONTROLS))controls[action]=$(`control-${action}`)?.value||DEFAULT_CONTROLS[action];
   const gameplay=normalizeGameplaySettings({fov:Number($('fov-range').value)||65,mouseSensitivity:Number($('mouse-sensitivity-range').value)||1,qualityPreference:$('quality-preference').value,controls:normalizeControlBindings(controls)});

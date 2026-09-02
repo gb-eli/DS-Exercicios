@@ -2,7 +2,7 @@
   "name": "AGV Hub Educacional - pacote público integrado",
   "release": "v14.10.8.96",
   "worldArchitecturePhase": "94",
-  "worldArchitectureBuild": "14.10.8.96-stage65-f94-auto-calibration",
+  "worldArchitectureBuild": "14.10.8.96-stage65-f94-auto-calibration-hf1",
   "uiVersion": "0.22.8.29",
   "date": "2026-09-02",
   "containsBackendMigrations": true,
@@ -29,5 +29,7 @@
     "docs/"
   ],
   "note": "O runtime público usa core/session/. Banco, Edge Functions, testes, ferramentas e documentação interna não devem ser expostos como superfícies navegáveis de produção. Gabaritos privados e regras docentes permanecem fora do catálogo público.",
-  "ui": "0.22.8.29"
+  "ui": "0.22.8.29",
+  "hotfix": "F94.1-HF1-open-world-settings-boot",
+  "hotfixDate": "2026-09-02"
 }

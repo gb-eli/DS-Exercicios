@@ -1,0 +1,23 @@
+AGV WORLD F94.1 HF1 — HOTFIX DE BOOT DO LOBBY
+
+Release base: 14.10.8.96
+Hotfix: F94.1-HF1-open-world-settings-boot
+
+[CORRIGIDOS / MODIFICADOS]
+PUBLIC-DEPLOY.json
+lobby/assets/lobby.js
+lobby/assets/boot.js
+lobby/assets/vendor-loader.js
+lobby/assets/sw-register.js
+lobby/index.html
+lobby/sw.js
+
+[NOVOS]
+ARQUIVOS-ALTERADOS-AGV-WORLD-F94.1-HF1.txt
+core/tests/f94-1-hotfix-world-settings-boot-v14.10.8.96-hf1.test.mjs
+docs/releases/AGV-WORLD-F94.1-HOTFIX-BOOT-v14.10.8.96-HF1.md
+docs/releases/DEPLOY-AGV-WORLD-F94.1-HF1.md
+
+Backend: inalterado.
+Migration: nenhuma.
+Edge Function: nenhuma.

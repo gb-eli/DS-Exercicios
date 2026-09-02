@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const VERSION='14.10.8.96-stage65-f94-auto-calibration';
+  const VERSION='14.10.8.96-stage65-f94-auto-calibration-hf1';
   const result={supported:false,registered:false,controlled:false,error:null};
 
   globalThis.__agvLobbySwReady=(async()=>{

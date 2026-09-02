@@ -40,7 +40,7 @@
     bootStarted=true;
     const script=document.createElement('script');
     script.type='module';
-    script.src=`assets/boot.js?v=${VERSION}-stage65-f94-auto-calibration`; 
+    script.src=`assets/boot.js?v=${VERSION}-stage65-f94-auto-calibration-hf1`; 
     const timer=setTimeout(()=>setError('boot_module_timeout'),BOOT_TIMEOUT_MS);
     script.onload=()=>clearTimeout(timer);
     script.onerror=()=>{clearTimeout(timer);setError('boot_module_load_failed');};
