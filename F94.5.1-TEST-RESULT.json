@@ -1,0 +1,68 @@
+{
+  "suite": "F94.5.1 boot audit safe",
+  "pass": 12,
+  "total": 12,
+  "failed": [],
+  "checks": [
+    {
+      "name": "audit_not_boot_required",
+      "pass": true,
+      "detail": "world-runtime-audit fora de requiredAssets"
+    },
+    {
+      "name": "audit_not_sw_critical",
+      "pass": true,
+      "detail": "auditoria fora do CRITICAL_SHELL"
+    },
+    {
+      "name": "audit_is_sw_optional",
+      "pass": true,
+      "detail": "auditoria no OPTIONAL_SHELL"
+    },
+    {
+      "name": "manager_has_no_static_audit_import",
+      "pass": true,
+      "detail": "world-manager tolera auditoria ausente"
+    },
+    {
+      "name": "adapter_has_no_static_audit_import",
+      "pass": true,
+      "detail": "world-adapter tolera auditoria ausente"
+    },
+    {
+      "name": "lobby_lazy_loads_audit",
+      "pass": true,
+      "detail": "import lazy com fallback"
+    },
+    {
+      "name": "login_error_target_exists",
+      "pass": true,
+      "detail": "falhas de boot ficam visíveis"
+    },
+    {
+      "name": "cache_bust_stage67",
+      "pass": true,
+      "detail": "cadeia nova de cache"
+    },
+    {
+      "name": "auth_and_runtime_errors_are_separated",
+      "pass": true,
+      "detail": "falha de runtime não vira loop de login"
+    },
+    {
+      "name": "manager_starts_without_audit",
+      "pass": true,
+      "detail": "observabilidade ausente não impede runtime"
+    },
+    {
+      "name": "manager_stops_without_audit",
+      "pass": true,
+      "detail": "stop tolerante à ausência"
+    },
+    {
+      "name": "audit_optional_module_imports",
+      "pass": true,
+      "detail": "módulo opcional inicializa defensivamente"
+    }
+  ]
+}

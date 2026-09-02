@@ -1,0 +1,11 @@
+{
+  "lobby/assets/core/runtime-v2/player-locomotion.js": "24b29b05f7fc38d94ddbaeb3562cf255837e67bf0c46908cfab4428a7c2bf3ed",
+  "lobby/assets/core/world-adapter.js": "7e72292364e2d8c9457ea407b9338f794b3c48a59f3d86f4253fe9dd3e68f407",
+  "lobby/assets/lobby.js": "2ec1d96d8bd629c40edccbac6a8dc9185c2c91ec2c766fa99b3f3d595ac49636",
+  "lobby/assets/lobby-lite.js": "aa23208eead0bc5a1284c229f9275c062787a9d482c4e22e3889613504d3ed07",
+  "lobby/assets/lobby3d.js": "395efcadc1e077526a884edc8ab387826134a4ccc5ec8922895bfb6474e7f8f7",
+  "lobby/assets/plugin-world-host.js": "78bdc44e58077fba5e5243817b316b849fa8336f2d8b471c3ff032606050e477",
+  "lobby/sw.js": "5b672b08e29047e9a0e962ed340e5b7bfca8762de11edfbbe7208c245fd029bd",
+  "lobby/index.html": "14b7854ce610ebdd25a1b95173922870a3b7955f6b1ed2af8d0778922484c088",
+  "core/tests/f947-locomotion-live-unification-v14.10.8.96.test.mjs": "53a79d49d8440c0c0abb9ef89fce5ad9ffd8345cb67bff3add0c95366a4df718"
+}

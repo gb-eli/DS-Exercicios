@@ -1,0 +1,58 @@
+{
+  "suite": "F94.8 Camera V2",
+  "passed": 10,
+  "failed": 0,
+  "total": 10,
+  "checks": [
+    {
+      "name": "f948_camera_harness",
+      "pass": true,
+      "detail": "F94.8 Camera V2: PASS"
+    },
+    {
+      "name": "lobby_js_syntax",
+      "pass": true,
+      "detail": "150 arquivos; falhas=0"
+    },
+    {
+      "name": "local_imports",
+      "pass": true,
+      "detail": "420 imports; ausentes=0"
+    },
+    {
+      "name": "service_worker_critical",
+      "pass": true,
+      "detail": "72/72 presentes"
+    },
+    {
+      "name": "cache_bust_stage70",
+      "pass": true,
+      "detail": "cadeia consistente"
+    },
+    {
+      "name": "camera_v2_runtime_coverage",
+      "pass": true,
+      "detail": "13/13 runtimes cobertos"
+    },
+    {
+      "name": "mirante_360_50x",
+      "pass": true,
+      "detail": "360 drag + zoom 50x + retículo"
+    },
+    {
+      "name": "vehicle_camera_foundation",
+      "pass": true,
+      "detail": "Campus terrestre/aéreo + rovers Lua/Marte"
+    },
+    {
+      "name": "invert_y_persistence_path",
+      "pass": true,
+      "detail": "UI → normalize → localStorage/state → runtime"
+    },
+    {
+      "name": "f947_behavior_preserved",
+      "pass": true,
+      "detail": "comportamento F94.7 preservado; asserts de cache antigo não são critério F94.8"
+    }
+  ]
+}

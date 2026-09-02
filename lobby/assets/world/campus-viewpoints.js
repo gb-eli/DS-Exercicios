@@ -23,26 +23,26 @@ const makeViewpoint=item=>Object.freeze({
   camera:freezePoint(item.camera),
   defaultTarget:freezePoint(item.defaultTarget||{x:0,y:3,z:0}),
   baseFov:Number(item.baseFov)||58,
-  maxZoom:Number(item.maxZoom)||6,
+  maxZoom:Number(item.maxZoom)||50,
   focusIds:Object.freeze([...(item.focusIds||CAMPUS_VIEWPOINT_LANDMARKS.map(x=>x.id))])
 });
 
 export const CAMPUS_VIEWPOINTS=Object.freeze([
   makeViewpoint({
     id:'viewpoint-west',name:'Mirante AGV',label:'MIRANTE OESTE',icon:'🔭',district:'Tech Oeste',accent:'#ffae63',
-    entry:{x:-37.3,y:0,z:6.6},camera:{x:-33.5,y:14.7,z:6},defaultTarget:{x:0,y:3.4,z:2},baseFov:60,maxZoom:6,
+    entry:{x:-37.3,y:0,z:6.6},camera:{x:-33.5,y:14.7,z:6},defaultTarget:{x:0,y:3.4,z:2},baseFov:60,maxZoom:50,
     focusIds:['plaza','lab-1ds','lab-3ds','security-center','unified-platform','monorail','vale-gate'],
     description:'Deck panorâmico principal do Campus, conectado à Torre de Controle AGV.'
   }),
   makeViewpoint({
     id:'viewpoint-east',name:'Mirante Ciência',label:'MIRANTE CIÊNCIA',icon:'🔭',district:'Distrito Ciência',accent:'#8f8cff',
-    entry:{x:51,y:0,z:12.5},camera:{x:51,y:13.4,z:12.5},defaultTarget:{x:4,y:3.4,z:4},baseFov:58,maxZoom:6,
+    entry:{x:51,y:0,z:12.5},camera:{x:51,y:13.4,z:12.5},defaultTarget:{x:4,y:3.4,z:4},baseFov:58,maxZoom:50,
     focusIds:['plaza','lab-2ds','lab-sub','cinema','unified-platform','monorail','vale-gate'],
     description:'Ponto elevado no limite leste, voltado para Ciência, Inovação e Centro Cívico.'
   }),
   makeViewpoint({
     id:'viewpoint-southwest',name:'Mirante Pesquisa',label:'MIRANTE PESQUISA',icon:'🔭',district:'Distrito Pesquisa',accent:'#55d9ff',
-    entry:{x:-51,y:0,z:-12.5},camera:{x:-51,y:12.8,z:-12.5},defaultTarget:{x:-3,y:3.1,z:-2},baseFov:58,maxZoom:6,
+    entry:{x:-51,y:0,z:-12.5},camera:{x:-51,y:12.8,z:-12.5},defaultTarget:{x:-3,y:3.1,z:-2},baseFov:58,maxZoom:50,
     focusIds:['plaza','lab-1ds','lab-2ds','security-center','monorail','vale-gate','unified-platform'],
     description:'Ponto elevado do corredor de Pesquisa, com visão do eixo sul e do Portal do Vale.'
   })
@@ -53,9 +53,12 @@ export const CAMPUS_VIEWPOINT_DEFAULT='viewpoint-west';
 
 export function viewpointZoomFov(viewpoint,zoom=1){
   const base=Math.max(38,Math.min(78,Number(viewpoint?.baseFov)||58));
-  const max=Math.max(2,Math.min(8,Number(viewpoint?.maxZoom)||6));
+  const max=Math.max(2,Math.min(50,Number(viewpoint?.maxZoom)||50));
   const z=Math.max(1,Math.min(max,Number(zoom)||1));
-  return Math.max(10,Math.min(78,base/Math.pow(z,.78)));
+  // Zoom óptico equivalente: reduz o FOV de acordo com a ampliação, preservando 1× = FOV base.
+  const rad=base*Math.PI/180;
+  const optical=2*Math.atan(Math.tan(rad/2)/z)*180/Math.PI;
+  return Math.max(1.05,Math.min(78,optical));
 }
 
 export function viewpointLandmarks(viewpoint){

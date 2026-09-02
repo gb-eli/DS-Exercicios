@@ -1,0 +1,24 @@
+{
+  "release": "F94.7",
+  "base": "F94.6 / v14.10.8.96",
+  "cache": "stage69-f947-locomotion-live",
+  "newSuite": {"passed": 13, "failed": 0, "total": 13},
+  "javascriptSyntax": {"checked": 153, "errors": 0},
+  "localImports": {"checked": 420, "missing": 0},
+  "serviceWorkerCriticalShell": {"checked": 72, "missing": 0},
+  "worldCoverage": {"persistentWorlds": 18, "airdropTransitSeparated": true},
+  "simulation": {
+    "fixedStepHz": 60,
+    "frameRatesCompared": [30, 60, 120],
+    "acceleration": "PASS",
+    "deceleration": "PASS",
+    "interiorSpeed": "PASS",
+    "moonProfile": "PASS"
+  },
+  "backendChanged": false,
+  "browserVisualValidation": false,
+  "notes": [
+    "Historical version-locked tests can fail when they assert cache URLs from F91/F92/F94/F94.6; F94.7 intentionally advances those query strings.",
+    "Vehicle/ride/airdrop movement remains isolated from terrestrial locomotion by design."
+  ]
+}

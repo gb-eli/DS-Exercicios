@@ -16,7 +16,7 @@ function createSessionDefaults(){
     user:null,profile:null,currentClass:null,classes:[],exercises:[],studentReleases:[],classReleases:[],progress:[],others:[],available:[],scheduled:[],
     lastPresence:0,toastTimer:null,zoneTimer:null,stopped:false,lastTargetSignal:'',portalState:null,emoteRequested:null,bootingRuntime:false,
     lastGatherToken:null,teleportDestinations:[],chatTarget:null,
-    graphics:{fov:65,fpsCap:60,worldTimeMode:'cycle',showPerf:false,mouseSensitivity:1,qualityPreference:'auto',controls:{forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',run:'ShiftLeft',jump:'Space',interact:'KeyE',camera:'KeyC'}},
+    graphics:{fov:65,fpsCap:60,worldTimeMode:'cycle',showPerf:false,mouseSensitivity:1,invertY:false,qualityPreference:'auto',controls:{forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',run:'ShiftLeft',jump:'Space',interact:'KeyE',camera:'KeyC'}},
     worldTimeControl:null,lastWorldTimeToken:null,worldTimeAdminControl:null,
     worldWeatherControl:null,lastWorldWeatherToken:null,worldWeatherAdminControl:null,worldMovementControl:null,lastWorldMovementToken:null,worldMovementAdminControl:null,spawnedVehicles:[],lastVehicleSpawnToken:null,airdropSession:null,lastAirdropToken:null,airdropState:{mode:'ground',altitude:0,detailLevel:'full',targetWorldId:null,localX:null,localZ:null},airdropTargetWorldId:'campus-ds',
     cinemaMedia:null,vehicleSessions:[],vehiclePassengers:[],vehicleMembership:null,

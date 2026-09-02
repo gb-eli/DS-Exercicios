@@ -1,0 +1,251 @@
+{
+  "base": "F94.7 — Locomoção Real Unificada",
+  "target": "F94.8 — Camera V2",
+  "release": "14.10.8.96",
+  "cache": "stage70-f948-camera-v2",
+  "payload_files_including_manifest": 49,
+  "content_files": [
+    {
+      "path": "F94.8-PATCH-LEIA-ME.md",
+      "sha256": "bac806e9bcdf46ce359a74a599e797d79982afdbe75760beb36166e393df758c",
+      "status": "added"
+    },
+    {
+      "path": "core/tests/f948-camera-v2-v14.10.8.96.test.mjs",
+      "sha256": "6ea4b3385e3810ff08eabfc4fc5b81972f416889d02e306d32c912f49faa82d0",
+      "status": "added"
+    },
+    {
+      "path": "docs/implementacao/CONTEXTO-CONTINUIDADE-F94.8.md",
+      "sha256": "53e80b589ee0fc2545cd848b96352cd6294510f83a00805b1b0ebf9d8403e279",
+      "status": "added"
+    },
+    {
+      "path": "docs/implementacao/F94.8-VALIDACAO.json",
+      "sha256": "9f0288ebc40e00fe10f31c8aa1d6b7d0204d659a9ab362a317d4fe84292a0a09",
+      "status": "added"
+    },
+    {
+      "path": "docs/implementacao/GUIA-IMPLANTACAO-F94.8.md",
+      "sha256": "1f45ec7c8c20f7f9c7246c06aebad4429399e6f55aaaea7926cb54652860b198",
+      "status": "added"
+    },
+    {
+      "path": "docs/implementacao/RELATORIO-F94.8-CAMERA-V2.md",
+      "sha256": "bbffd7ac70c14c8dc6aa5b8dc25cacb467f3e02de8b80a6b1e527a86738d8257",
+      "status": "added"
+    },
+    {
+      "path": "lobby/assets/airdrop-transit3d.js",
+      "sha256": "be1fc82ac76f81df329089788a1172fa553e91337d44f58cf26b26e20c750ad4",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/boot.js",
+      "sha256": "0cd277ce8022562446ac70abaea8fca0f07f1ebfcb1cc1bbf38c4deced062ed3",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/campus-module-lite.js",
+      "sha256": "cc520c6e87f80c82eefed7d2b88f5524d25e18bac4f8408a1c1e358f80abff11",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/campus-module3d.js",
+      "sha256": "efb8e01ddfd24309f01d20924b1f7d0963b8e4e0171bd4a7506a0f9e627afa19",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/colegio-agv-host.js",
+      "sha256": "ae452a5e00ed3c8edd8f06a2b06d3237dba38fde8bdf3ef4bbcdaf2b10705b10",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/core/lobby-state.js",
+      "sha256": "75c907459294f7d4aeed12e23e4d14930915b7c4d76532d4c7caba5bf5fe606c",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/core/world-adapter.js",
+      "sha256": "a0eac842fba7c1233403e89baf8c96fb9de01aa34322df0cf43b116bef70af7f",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/core/world-manager.js",
+      "sha256": "a1bf6a922d6c7c1a936a1275a233829f8acfedf33ecbb709d234aefe838c6939",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/labirinto-armadilhas-adapter.js",
+      "sha256": "3be3d220224caeb83e5e1c09ecc564ca67dbc0d866c82af9656a01223ec02ae4",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/labirinto-armadilhas-host.js",
+      "sha256": "e6b1eb105cd83eae7d591ad490f2b11f7467b0d67394f88da0422b19f9630e59",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/lobby-lite.js",
+      "sha256": "1e2a8c2d23a7344403f10cff82f6dbfb3b663d89f5ecd15afc55d5a71dec3889",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/lobby.css",
+      "sha256": "a53ceacee6188cfb8630e1e7e28d7cb87c4f83d3889dc2466cd92cdd556a6048",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/lobby.js",
+      "sha256": "cb681b13e456e7fc289a0170034d945b9413580298bf693cd93fc5fcd37e8e92",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/lobby3d.js",
+      "sha256": "89a366369755fdd87b679d6130952c285f3d7cae5622fe97a5d20e20f7a5d28e",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/mars-lite.js",
+      "sha256": "3b2210927f74aa60aaf929f2bc529b8ee57068720089c9d17e397a0315421853",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/mars3d.js",
+      "sha256": "9d9eb021996a3be0a36dbbccfb057d3784adad33f50505cc6c539fb22758469c",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/military-lite.js",
+      "sha256": "5ae5274d7905e241e60ca25c4a3a43058b709ceee314196a6689f444dcf016c1",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/military3d.js",
+      "sha256": "3bb6809eaf02d33edeea97d95a5181a4831e893ba9fb3b688482e706133b2f2e",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/moon-lite.js",
+      "sha256": "522e54ae2e7c376429c5c9d75bc8a9cc2f001cb8c8ddd66b740533eb34a8a7e8",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/moon3d.js",
+      "sha256": "a70e45e74e7319c38a8e724ee2cec7575ca7bc17d0edd8596e8745b40ed70486",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/museu-hardware-adapter.js",
+      "sha256": "5039850d748737224575f515d4ca119d8dd23f1e09ec5cf24471431daf188b7c",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/museu-hardware-lite.js",
+      "sha256": "b4584fbbbcdad8ca0f80d07e74ba684fbabf87b3c4182ef9ec0aaea6fa07352e",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/museu-hardware3d.js",
+      "sha256": "3e755c23dada9d34e5bc6a8f0cfb9744de6feb065debafdfc0e6cb63b5267719",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/parque-diversoes-agv-lite.js",
+      "sha256": "bb36999bda6f9f7d242d81be87ea681fd85bb9ddf02ced289d1b078da3b3d6d9",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/parque-diversoes-agv3d.js",
+      "sha256": "a51a17f52f24233f6b48f4308e6ccdb729524bbd135a3c8ee0cd1526237d8ceb",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/plugin-world-host.js",
+      "sha256": "2c19786091ba56c1ab18072215803236d80f063563fc492c0c91441459afea56",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/render/camera-controller.js",
+      "sha256": "c1f9aeef63dc7359c21b500e82b421ca3b9a7bbfe5c1353973cec1071883b0ea",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/rural-lite.js",
+      "sha256": "abcd28611bd5311d945adef728e1a8b7965a19b334035694ed4dede666e6b1ac",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/rural3d.js",
+      "sha256": "85a7eba7ec31b803c7633ea2d4400d204912aa8718fa58f9e73d88d670aeb002",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/space-lite.js",
+      "sha256": "9845c4df2624b09711f9b05606c7bdbde61bedd300b2e139a90a331ece43c54d",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/space3d.js",
+      "sha256": "1370962f2d37449b2fecc50efe9f77c11a1e062fe9fdacdc9381ec127784123a",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/sw-register.js",
+      "sha256": "bb3a4e4688afc923995022f29bf7e7a5caa779d60094e57cf14db4cb53f3d014",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/vale-lite.js",
+      "sha256": "efa050f977681e0d93076a0852b2c212e60ea458ccff2652d028175ddfad1996",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/vale3d.js",
+      "sha256": "5530077303c0e4824cd22467e011b734388e1dacdfb7f8262bfd3068b5d17dc0",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/vendor-loader.js",
+      "sha256": "4a61e47b4387799a7152294a19e2477fbefc7a774e2f6f128f1d0956969266e0",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/village-lite.js",
+      "sha256": "51eb36dc7fc6e0de475227a7f5e64750c7095d9e25171e017e589d1fef5bb24d",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/village3d.js",
+      "sha256": "3d1912f632ce218f327da9261dce6cd8606b671af0a091f523c98d0d64c18207",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/world/campus-viewpoints.js",
+      "sha256": "64d4e42a0a60ee45731ac07ad93fccee3592f807da5ae63c236df9a313c2d8bc",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/world/gameplay-settings.js",
+      "sha256": "a058ad0d5b85b94de465f3fff6a2e6dd86edb73c7a3650097c0416dc73f2a6ad",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/assets/world/world-runtime-prefetch.js",
+      "sha256": "60b683cd39de743fc4660d09a5c69e8690989e9233499e12bc8cec78726bab5b",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/index.html",
+      "sha256": "9772a445222dbd90f360d199a85e1d73ca7a5083358d93a937bf21ebf580b0fe",
+      "status": "modified"
+    },
+    {
+      "path": "lobby/sw.js",
+      "sha256": "241d17bb399d27381a7cc4dfada23b662f369892ac44b162f191cc5ad606db3c",
+      "status": "modified"
+    }
+  ],
+  "removed": [],
+  "note": "O manifesto não calcula hash de si mesmo para evitar autorreferência."
+}

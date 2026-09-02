@@ -1,0 +1,11 @@
+{
+  "release": "F94.6",
+  "base": "F94.5.1-v14.10.8.96",
+  "runtimeContractTests": {"passed": 8, "failed": 0},
+  "lobbyJavaScriptSyntax": {"files": 149, "errors": 0},
+  "localImports": {"checked": 409, "missing": 0},
+  "serviceWorkerCriticalShell": {"assets": 72, "missing": 0},
+  "selectedHistoricalSuite": {"passed": 32, "failed": 4, "baselineFailed": 4, "newRegressionsDetected": 0},
+  "browserVisualRun": false,
+  "backendChanged": false
+}

@@ -91,7 +91,7 @@ const T: Record<string, { subject_slug: string; subject_name: string; descriptio
   analysis_methods_1ds: {
     subject_slug: "analise-e-metodo-para-sistemas",
     subject_name: "Análise e Método para Sistemas",
-    description: "Prova prática em software house. Cada integrante escolhe uma área diferente; a equipe pode usar até 6 das 8 áreas. O progresso fica salvo no servidor para continuar na próxima aula.",
+    description: "Prova prática em software house. Cada integrante escolhe uma área diferente; a equipe pode usar até 7 das 8 áreas. O progresso fica salvo no servidor para continuar na próxima aula.",
     challenges: [
       Q("kickoff", 1, "Briefing da software house", "A empresa Atlas Software recebeu um pedido para criar um sistema de chamados internos. Hoje as solicitações chegam por mensagens, não há prioridade clara e ninguém sabe o estado de cada chamado. Qual conjunto de ações é mais adequado antes da implementação?", "quiz_multi", "clan", null, .10, 50, G(
         "Leiam o cenário juntos e marquem todas as decisões coerentes para o início do projeto.",
@@ -302,7 +302,7 @@ const T: Record<string, { subject_slug: string; subject_name: string; descriptio
   innovation_2ds: {
     subject_slug: "inovacao-tecnologica-e-empreendedorismo",
     subject_name: "Inovação Tecnológica e Empreendedorismo",
-    description: "Prova prática em startup de tecnologia. Cada integrante escolhe uma área diferente; a equipe pode usar até 6 das 8 áreas. O progresso fica salvo no servidor para continuar na próxima aula.",
+    description: "Prova prática em startup de tecnologia. Cada integrante escolhe uma área diferente; a equipe pode usar até 7 das 8 áreas. O progresso fica salvo no servidor para continuar na próxima aula.",
     challenges: [
       Q("kickoff", 1, "Briefing da startup", "A startup InovaTrack quer criar uma plataforma para pequenas empresas registrarem equipamentos, ocorrências e inspeções. O produto precisa ser simples, seguro e testável antes de crescer. Quais decisões fazem sentido no início?", "quiz_multi", "clan", null, .10, 50, G(
         "Conversem e marquem todas as decisões coerentes para transformar a ideia em uma solução validável.",
@@ -925,7 +925,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
     return { student_id:p.id,name:p.full_name||"Aluno",clan_id:m?.clan_id||null,clan_name:c?.name||null,role_id:m?.role_id||null,role_key:r?.role_key||null,role_name:r?.name||null,is_leader:!!c?.leader_id&&String(c.leader_id)===String(p.id) };
   });
   const roomCards=clansRaw.map((c:any)=>({
-    id:c.id,name:c.name,display_order:c.display_order,theme_key:c.theme_key||"cyber",accent_color:c.accent_color||"#22d3ee",mascot_key:c.mascot_key||"robot",emblem_data_url:c.emblem_data_url||null,company_name:c.company_name||"",company_cnpj:c.company_cnpj||"",company_city:c.company_city||"",company_phone:c.company_phone||"",leader_id:c.leader_id||null,
+    id:c.id,name:c.name,display_order:c.display_order,theme_key:c.theme_key||"cyber",accent_color:c.accent_color||"#22d3ee",mascot_key:c.mascot_key||"robot",emblem_data_url:c.emblem_data_url||null,company_name:c.company_name||"",company_cnpj:c.company_cnpj||"",company_city:c.company_city||"",company_phone:c.company_phone||"",leader_id:c.leader_id||null,join_locked:c.join_locked===true,individual_allowed:c.individual_allowed===true,identity_locked:c.identity_locked===true,
     count:members.filter((m:any)=>String(m.clan_id)===String(c.id)).length,
     members:members.filter((m:any)=>String(m.clan_id)===String(c.id)).map((m:any)=>({student_id:m.student_id,name:m.student?.full_name||"Aluno",role_id:m.role_id||null,role_name:roleMap.get(String(m.role_id||""))?.name||null,role_selected_at:m.role_selected_at||null,ready:!!m.role_id&&!!m.role_selected_at,is_leader:String(c.leader_id||"")===String(m.student_id)})),
   }));
@@ -960,6 +960,7 @@ async function bundle(db: any, s: any, studentId: string | null = null, isStaff 
       group_weight: s.group_weight,
       individual_weight: s.individual_weight,
       max_clan_size: s.max_clan_size,
+      min_clan_size: Number(s.min_clan_size || 3),
       started_at: s.started_at,
       paused_at: s.paused_at,
       finished_at: s.finished_at,
@@ -1058,7 +1059,14 @@ Deno.serve(async (req) => {
       return J(data || { ok:true });
     }
 
-    if (act === "select_role") return J({ error:"role_assignment_by_leader" },403);
+    if (act === "select_role") {
+      if (p.role !== "student") return J({ error: "student_only" }, 403);
+      const sid = id(b.session_id), roleId = id(b.role_id);
+      if (!sid || !roleId) return J({ error: "missing_or_invalid_parameters" }, 400);
+      const { data, error } = await a.rpc("practical_exam_select_role", { p_session_id: sid, p_role_id: roleId });
+      if (error) return J({ error: error.message }, 409);
+      return J(data || { ok: true, role_id: roleId });
+    }
 
     if (act === "leave_clan") {
       if (p.role !== "student") return J({ error: "student_only" }, 403);
@@ -1094,6 +1102,7 @@ Deno.serve(async (req) => {
       const sid=id(b.session_id);
       let ctx;
       try{ctx=await assertWaitingLeader(db,sid,user.id);}catch(e){return J({error:String((e as Error).message)},403);}
+      if(ctx.clan.identity_locked===true)return J({error:"team_identity_locked_by_teacher"},409);
       const theme=String(b.theme_key||ctx.clan.theme_key||"cyber");
       if(!ROOM_THEMES.has(theme))return J({error:"invalid_theme"},400);
       const mascot=String(b.mascot_key||ctx.clan.mascot_key||"robot");
@@ -1122,22 +1131,7 @@ Deno.serve(async (req) => {
     }
 
     if (act === "leader_assign_role") {
-      if (p.role !== "student") return J({ error:"student_only" },403);
-      const sid=id(b.session_id), student=id(b.student_id), roleId=id(b.role_id);
-      let ctx;
-      try{ctx=await assertWaitingLeader(db,sid,user.id);}catch(e){return J({error:String((e as Error).message)},403);}
-      const [{data:target},{data:roleRow}]=await Promise.all([
-        db.from("practical_exam_members").select("student_id,clan_id").eq("session_id",sid).eq("student_id",student).eq("clan_id",ctx.clan.id).neq("status","removed").maybeSingle(),
-        db.from("practical_exam_roles").select("id").eq("session_id",sid).eq("id",roleId).eq("active",true).maybeSingle(),
-      ]);
-      if(!target)return J({error:"member_not_in_room"},404);
-      if(!roleRow)return J({error:"role_not_found"},404);
-      const {data:taken}=await db.from("practical_exam_members").select("student_id").eq("session_id",sid).eq("clan_id",ctx.clan.id).eq("role_id",roleId).neq("student_id",student).neq("status","removed").maybeSingle();
-      if(taken)return J({error:"role_taken"},409);
-      const z=await db.from("practical_exam_members").update({role_id:roleId,role_selected_at:null,status:"waiting",updated_at:now()}).eq("session_id",sid).eq("student_id",student).select().single();
-      if(z.error)throw z.error;
-      await db.from("practical_exam_events").insert({session_id:sid,student_id:student,clan_id:ctx.clan.id,actor_id:user.id,event_type:"leader_role_assigned",metadata:{role_id:roleId}});
-      return J({ok:true,member:z.data});
+      return J({ error:"role_self_selection_required" },403);
     }
 
     if (act === "accept_role") {
@@ -1397,7 +1391,8 @@ Deno.serve(async (req) => {
         max_score: max,
         group_weight: gw,
         individual_weight: 1 - gw,
-        max_clan_size: clamp(Number(b.max_clan_size || 6), 2, 6),
+        max_clan_size: clamp(Number(b.max_clan_size || 7), 3, 7),
+        min_clan_size: 3,
         created_by: user.id,
       }).select().single();
       if (error) throw error;
@@ -1416,7 +1411,7 @@ Deno.serve(async (req) => {
       if (!s) return J({ error: "not_found" }, 404);
       scope(c, s.class_id);
       if (!["draft", "waiting_room", "locked"].includes(s.status) || s.started_at) return J({ error: "settings_locked_after_start" }, 409);
-      const maxClan = clamp(Number(b.max_clan_size ?? s.max_clan_size), 2, 6);
+      const maxClan = clamp(Number(b.max_clan_size ?? s.max_clan_size), 3, 7);
       const { data: counts } = await db.from("practical_exam_members").select("clan_id").eq("session_id", sid).neq("status", "removed");
       const byClan = new Map<string, number>();
       for (const m of counts || []) if (m.clan_id) byClan.set(String(m.clan_id), (byClan.get(String(m.clan_id)) || 0) + 1);
@@ -1424,6 +1419,7 @@ Deno.serve(async (req) => {
       const gw = clamp(Number(b.group_weight ?? s.group_weight), 0, 1);
       const z = await db.from("practical_exam_sessions").update({
         max_clan_size: maxClan,
+        min_clan_size: 3,
         lobby_duration_minutes: clamp(Number(b.lobby_duration_minutes ?? s.lobby_duration_minutes), 5, 60),
         duration_minutes: clamp(Number(b.duration_minutes ?? s.duration_minutes), 10, 180),
         group_weight: gw,
@@ -1452,7 +1448,22 @@ Deno.serve(async (req) => {
         const pendingReady = assigned.filter((m:any)=>m.role_id&&!m.role_selected_at);
         if (pendingReady.length) return J({ error:"ready_check_pending", pending:pendingReady.length },409);
         const occupied=[...new Set(assigned.map((m:any)=>String(m.clan_id)))];
-        const {data:roomRows}=await db.from("practical_exam_clans").select("id,leader_id").eq("session_id",sid).in("id",occupied);
+        const {data:roomRows}=await db.from("practical_exam_clans").select("id,name,leader_id,individual_allowed").eq("session_id",sid).in("id",occupied);
+        const countByClan=new Map<string,number>();
+        for(const m of assigned)countByClan.set(String(m.clan_id),(countByClan.get(String(m.clan_id))||0)+1);
+        const minClan=Math.max(3,Number(s.min_clan_size||3));
+        const undersized=(roomRows||[]).filter((r:any)=>{
+          const count=countByClan.get(String(r.id))||0;
+          return !(r.individual_allowed===true&&count===1) && count<minClan;
+        }).map((r:any)=>({clan_id:r.id,name:r.name,count:countByClan.get(String(r.id))||0,minimum:minClan}));
+        if(undersized.length)return J({error:"teams_below_minimum_size",teams:undersized},409);
+        for(const r of roomRows||[]){
+          const count=countByClan.get(String(r.id))||0;
+          if(r.individual_allowed===true&&count===1&&!r.leader_id){
+            const only=assigned.find((m:any)=>String(m.clan_id)===String(r.id));
+            if(only){await db.from("practical_exam_clans").update({leader_id:only.student_id,leader_elected_at:now(),updated_at:now()}).eq("id",r.id).eq("session_id",sid);r.leader_id=only.student_id;}
+          }
+        }
         const missingLeaders=(roomRows||[]).filter((r:any)=>!r.leader_id);
         if(missingLeaders.length)return J({error:"leaders_pending",pending:missingLeaders.length},409);
         x.status = "running"; x.started_at = s.started_at || now(); x.paused_at = null;
@@ -1477,6 +1488,33 @@ Deno.serve(async (req) => {
       if (z.error) throw z.error;
       await db.from("practical_exam_events").insert({ session_id: sid, actor_id: user.id, event_type: `session_${cmd}`, metadata: {} });
       return J({ ok: true, session: z.data });
+    }
+
+    if (act === "staff_update_clan_policy") {
+      const sid=id(b.session_id),clanId=id(b.clan_id);
+      const {data:s}=await db.from("practical_exam_sessions").select("class_id,status,started_at").eq("id",sid).maybeSingle();
+      if(!s)return J({error:"not_found"},404);scope(c,s.class_id);
+      if(s.started_at||["running","paused","finished","grading","score_scheduled","published","cancelled"].includes(String(s.status)))return J({error:"team_policy_locked_after_start"},409);
+      const patch:any={updated_at:now()};
+      if(typeof b.join_locked==="boolean")patch.join_locked=b.join_locked;
+      if(typeof b.individual_allowed==="boolean")patch.individual_allowed=b.individual_allowed;
+      if(typeof b.identity_locked==="boolean")patch.identity_locked=b.identity_locked;
+      const z=await db.from("practical_exam_clans").update(patch).eq("session_id",sid).eq("id",clanId).select().single();
+      if(z.error)throw z.error;
+      await db.from("practical_exam_events").insert({session_id:sid,clan_id:clanId,actor_id:user.id,event_type:"staff_clan_policy_updated",metadata:{join_locked:z.data.join_locked===true,individual_allowed:z.data.individual_allowed===true,identity_locked:z.data.identity_locked===true}});
+      return J({ok:true,clan:z.data});
+    }
+
+    if (act === "staff_rename_clan") {
+      const sid=id(b.session_id),clanId=id(b.clan_id),name=String(b.name||"").trim().slice(0,42);
+      if(name.length<2)return J({error:"room_name_too_short"},400);
+      const {data:s}=await db.from("practical_exam_sessions").select("class_id,status").eq("id",sid).maybeSingle();
+      if(!s)return J({error:"not_found"},404);scope(c,s.class_id);
+      if(["finished","grading","score_scheduled","published","cancelled"].includes(String(s.status)))return J({error:"team_name_locked"},409);
+      const z=await db.from("practical_exam_clans").update({name,updated_at:now()}).eq("session_id",sid).eq("id",clanId).select().single();
+      if(z.error)throw z.error;
+      await db.from("practical_exam_events").insert({session_id:sid,clan_id:clanId,actor_id:user.id,event_type:"staff_clan_renamed",metadata:{name}});
+      return J({ok:true,clan:z.data});
     }
 
     if (act === "staff_set_leader") {

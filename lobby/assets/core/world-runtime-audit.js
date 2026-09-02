@@ -212,8 +212,10 @@ function ensureUi(){
 }
 function renderUi(){if(!ui||ui.panel.classList.contains('hidden'))return;const rows=matrix().map(row=>`<tr><td><strong>${safe(row.label)}</strong><br><small>${safe(row.id)}</small></td><td>${statusBadge(row.lite)}</td><td>${statusBadge(row['3d'])}</td></tr>`).join('');ui.body.innerHTML=`<p>${state.worlds.size} mundos registrados. Use normalmente o Lobby e visite os mapas em 2D/3D; a matriz é preenchida automaticamente.</p><table class="agv-audit-table"><thead><tr><th>Mundo</th><th>2D</th><th>3D</th></tr></thead><tbody>${rows}</tbody></table>`;}
 
-install();
+try{install()}catch(error){try{globalThis.__agvLobbyDiag?.record?.('world_audit_install_warning',{message:String(error?.message||error).slice(0,180)})}catch(_){}}
 
 export const WORLD_RUNTIME_AUDIT=Object.freeze({
   schema:AUDIT_SCHEMA,release:RELEASE,registerWorlds,begin,mark,markFor,markImport,markRuntime,markRenderer,markFirstFrame,markInput,markMovement,markInteraction,fail,finish,stopCurrent,getAttempt,snapshot,matrix,exportText,reset,open:()=>{ensureUi();ui.panel.classList.remove('hidden');renderUi();}
 });
+
+try{globalThis.__agvWorldRuntimeAudit=WORLD_RUNTIME_AUDIT}catch(_){}

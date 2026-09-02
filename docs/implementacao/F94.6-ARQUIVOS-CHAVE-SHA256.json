@@ -1,0 +1,9 @@
+{
+  "lobby/assets/core/runtime-v2/world-runtime-contract.js": "876da97d2896e7eb0c62e4a69a28a50f26e572d1aabf9be2ff1763810cbc2605",
+  "lobby/assets/core/runtime-v2/world-context.js": "a508e6f4c408eb5f8b6de42a0e61b74bc0c6a49dee25d7425ff38c569381f988",
+  "lobby/assets/core/runtime-v2/runtime-lifecycle.js": "94e80cfe9b96ed305a91b8a3a6ea065f8ea78ab197f9061f2a35b91477179bfc",
+  "lobby/assets/core/runtime-v2/player-locomotion.js": "60943ad0655211ae87f47768526e482c05d0c211fafd0ce499f3e1bd21872a78",
+  "lobby/assets/core/world-manager.js": "c00a5bf2987af572f62f816b030501707a502fe10a3ca122ab37f1c05cf75412",
+  "lobby/assets/world/gameplay-settings.js": "6e5cbc53c7d0e3b8028ce8d2d1e363aef57c1f36406ec85ddeebc63fa0afda26",
+  "lobby/sw.js": "319f2fd971b728e8c6eee94c69ecb8176a94a23c1e461c64bfc2d6aac9c9a14e"
+}

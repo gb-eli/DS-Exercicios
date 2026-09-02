@@ -1,0 +1,25 @@
+{
+  "suite": "F94.5 world audit selftest",
+  "ok": true,
+  "worldCount": 18,
+  "passWorld": {
+    "status": "pass",
+    "stage": "unload",
+    "error": null,
+    "durationMs": 1.04,
+    "attemptId": "w1:3d:1788361903196:d99bi",
+    "input": "pass",
+    "interaction": "pass",
+    "movementObserved": true
+  },
+  "failedWorld": {
+    "status": "fail",
+    "stage": "import",
+    "error": "synthetic_fail",
+    "durationMs": 0.17,
+    "attemptId": "w2:lite:1788361903197:6paph",
+    "input": "pending",
+    "interaction": "pending",
+    "movementObserved": false
+  }
+}

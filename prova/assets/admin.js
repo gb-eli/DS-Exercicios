@@ -49,11 +49,11 @@
     if(!st.createClass)st.createClass=String(classes[0]?.id||'');
     const rows=(d.sessions||[]).map(s=>{
       const [label,kind]=statusInfo(s.status);
-      return `<tr><td><strong>${esc(s.title)}</strong><br><small class="muted">${esc(s.subject_name)}</small></td><td>${esc(className(s.class_id))}</td><td><span class="status-pill ${kind}">${esc(label)}</span></td><td>${Number(s.lobby_duration_minutes||15)} min lobby<br><small class="muted">operação manual</small></td><td>${Number(s.max_clan_size||6)}</td><td>${fmtScore(s.max_score)}</td><td>${fmtDate(s.created_at)}</td><td><button class="button ghost small" data-open="${s.id}" type="button">Gerenciar</button></td></tr>`;
+      return `<tr><td><strong>${esc(s.title)}</strong><br><small class="muted">${esc(s.subject_name)}</small></td><td>${esc(className(s.class_id))}</td><td><span class="status-pill ${kind}">${esc(label)}</span></td><td>${Number(s.lobby_duration_minutes||15)} min lobby<br><small class="muted">operação manual</small></td><td>${Number(s.max_clan_size||7)}</td><td>${fmtScore(s.max_score)}</td><td>${fmtDate(s.created_at)}</td><td><button class="button ghost small" data-open="${s.id}" type="button">Gerenciar</button></td></tr>`;
     }).join('');
     host.innerHTML=`
       <section class="panel section-panel">
-        <div class="section-head"><div><p class="eyebrow">Nova avaliação</p><h2>Criar modo prova prática</h2><p>Modelo recomendado: pré-lobby + operação aberta. A prova pode continuar em casa e entre aulas; somente o professor encerra definitivamente. XP e notas são calculados no backend.</p></div></div>
+        <div class="section-head"><div><p class="eyebrow">Nova avaliação</p><h2>Criar modo prova prática</h2><p>Modelo recomendado: pré-lobby + operação aberta. Equipes normais têm 3 a 7 integrantes; exceções individuais são autorizadas por equipe pelo professor. Cada aluno escolhe um cargo exclusivo. A prova pode continuar em casa e entre aulas; somente o professor encerra definitivamente. XP e notas são calculados no backend.</p></div></div>
         <form id="create-session-form" class="create-grid">
           <label class="form-field">Turma<select id="create-class" required>${classes.map(c=>`<option value="${c.id}" ${String(c.id)===String(st.createClass)?'selected':''}>${esc(c.name)}</option>`).join('')}</select></label>
           <label class="form-field">Modelo<select id="create-template" required>${templates.map(t=>`<option value="${esc(t.key)}">${esc(t.subject_name)}</option>`).join('')}</select></label>
@@ -62,7 +62,7 @@
           <label class="form-field">Referência de tempo (min)<input id="create-duration" type="number" min="10" max="180" value="50"><small>Informativo. Não encerra a prova.</small></label>
           <label class="form-field">Valor máximo<input id="create-score" type="number" min="0.5" max="100" step="0.1" value="5"></label>
           <label class="form-field">Quantidade de empresas<input id="create-clans" type="number" min="2" max="12" value="6"></label>
-          <label class="form-field">Máximo por empresa<input id="create-clan-size" type="number" min="2" max="6" value="6"></label>
+          <label class="form-field">Máximo por empresa<input id="create-clan-size" type="number" min="2" max="7" value="7"></label>
           <label class="form-field">Peso do grupo (%)<input id="create-group-weight" type="number" min="0" max="100" value="50"></label>
           <label class="form-field span3">Descrição<input id="create-description" maxlength="1200" placeholder="Opcional: contexto da avaliação"></label>
           <div class="span3 control-bar"><button class="button primary" type="submit">Criar avaliação em rascunho</button><span id="create-message" class="message"></span></div>
@@ -97,6 +97,11 @@
     </div>`;
   }
 
+  function clanPolicyButtons(c){
+    const lock=c.join_locked===true,individual=c.individual_allowed===true,identity=c.identity_locked===true;
+    return `<div class="clan-policy-bar"><button class="button ${lock?'warn':'ghost'} small" data-clan-policy="join_locked" data-clan-id="${c.id}" data-value="${lock?'false':'true'}" type="button">${lock?'Reabrir entradas':'Fechar entradas'}</button><button class="button ${individual?'warn':'ghost'} small" data-clan-policy="individual_allowed" data-clan-id="${c.id}" data-value="${individual?'false':'true'}" type="button">${individual?'Individual autorizado':'Autorizar individual'}</button><button class="button ${identity?'warn':'ghost'} small" data-clan-policy="identity_locked" data-clan-id="${c.id}" data-value="${identity?'false':'true'}" type="button">${identity?'Liberar identidade':'Bloquear identidade'}</button><button class="button ghost small" data-rename-clan="${c.id}" type="button">Renomear equipe</button></div>`;
+  }
+
   function renderClans(d){
     return `<div class="clan-admin-grid">${d.clans.map(c=>{
       const members=d.members.filter(m=>String(m.clan_id)===String(c.id)),metric=d.metrics?.clans?.[String(c.id)]||{};
@@ -105,6 +110,8 @@
         <div class="clan-admin-head"><div class="admin-guild-identity">${guildMark(c)}<div><h3>${esc(c.company_name||c.name)}</h3><small>${esc(c.company_name?c.name:'Nome da empresa ainda não definido')} · ${members.length}/${d.session.max_clan_size} integrantes · ${readyCount} prontos · ${Number(metric.online_count||0)} online</small></div></div><div class="team-score"><strong>${Number(metric.progress_percent||0)}%</strong><small>progresso</small></div></div>
         <progress class="progress" max="100" value="${Number(metric.progress_percent||0)}"></progress>
         ${phasePills(metric)}
+        <div class="clan-policy-summary"><span class="status-pill ${c.join_locked?'warn':'good'}">${c.join_locked?'Entradas fechadas':'Entradas abertas'}</span>${c.individual_allowed?'<span class="status-pill warn">Exceção individual</span>':''}${c.identity_locked?'<span class="status-pill warn">Identidade bloqueada</span>':''}</div>
+        ${clanPolicyButtons(c)}
         <div class="team-member-list">${members.length?members.map(m=>{const mm=d.metrics?.members?.[String(m.student_id)]||{},ready=!!m.role_id&&!!m.role_selected_at;return `<div class="admin-member"><div class="member-identity"><strong><span class="online-dot ${mm.online?'on':''}"></span>${esc(m.student?.full_name||'Aluno')}</strong><small>${esc(roleName(m.role_id))}</small></div><div class="member-progress"><span>${Number(mm.progress_percent||0)}%</span><small>${Number(mm.completed_count||0)}/${Number(mm.total_count||0)} atividades · ${Number(mm.xp_earned||0)} XP</small></div><span class="status-pill ${ready?'good':'warn'}">${ready?'Pronto':'Pendente'}</span>${m.is_leader?'<span class="leader-badge">Líder</span>':`<button class="member-action" data-set-leader="${m.student_id}" data-clan-id="${c.id}" type="button">Tornar líder</button>`}</div>`}).join(''):'<div class="empty-team">Nenhum integrante nesta equipe.</div>'}</div>
       </article>`;
     }).join('')}</div>`;
@@ -153,7 +160,7 @@
 
   function renderSettings(s){
     if(s.started_at||!['draft','waiting_room','locked'].includes(s.status))return '';
-    return `<details class="panel section-panel settings-disclosure"><summary><span><strong>Configuração da sessão</strong><small>Pré-lobby, tamanho das equipes e peso da avaliação</small></span><span>Editar</span></summary><div class="create-grid settings-grid settings-body"><label class="form-field">Pré-lobby (min)<input id="settings-lobby" type="number" min="5" max="60" value="${Number(s.lobby_duration_minutes||15)}"></label><label class="form-field">Tempo de referência (min)<input id="settings-duration" type="number" min="10" max="180" value="${Number(s.duration_minutes||50)}"><small>Informativo; não encerra a prova.</small></label><label class="form-field">Máximo por equipe<input id="settings-clan-size" type="number" min="2" max="6" value="${Number(s.max_clan_size||6)}"></label><label class="form-field">Peso da equipe (%)<input id="settings-group-weight" type="number" min="0" max="100" value="${Math.round(Number(s.group_weight||.5)*100)}"></label><div class="control-bar span2"><button id="save-session-settings" class="button primary" type="button">Salvar alterações</button><span class="muted">O professor controla o encerramento.</span></div></div></details>`;
+    return `<details class="panel section-panel settings-disclosure"><summary><span><strong>Configuração da sessão</strong><small>Pré-lobby, equipes de 3–7 integrantes e peso da avaliação</small></span><span>Editar</span></summary><div class="create-grid settings-grid settings-body"><label class="form-field">Pré-lobby (min)<input id="settings-lobby" type="number" min="5" max="60" value="${Number(s.lobby_duration_minutes||15)}"></label><label class="form-field">Tempo de referência (min)<input id="settings-duration" type="number" min="10" max="180" value="${Number(s.duration_minutes||50)}"><small>Informativo; não encerra a prova.</small></label><label class="form-field">Máximo por equipe<input id="settings-clan-size" type="number" min="3" max="7" value="${Number(s.max_clan_size||7)}"></label><label class="form-field">Peso da equipe (%)<input id="settings-group-weight" type="number" min="0" max="100" value="${Math.round(Number(s.group_weight||.5)*100)}"></label><div class="control-bar span2"><button id="save-session-settings" class="button primary" type="button">Salvar alterações</button><span class="muted">O professor controla o encerramento.</span></div></div></details>`;
   }
 
   function renderDetail(){
@@ -162,14 +169,14 @@
     const rosterMap=new Map(members.map(m=>[String(m.student_id),m]));
     const timer=s.status==='waiting_room'?(Number(s.lobby_remaining_seconds||0)>0?`<div class="timer"><span>Organização das equipes</span><strong>${fmtTime(s.lobby_remaining_seconds)}</strong><small>tempo de referência</small></div>`:`<div class="timer waiting-teacher"><span>Organização das equipes</span><strong>Aguardando professor</strong><small>o início é manual</small></div>`):['running','paused'].includes(s.status)?`<div class="timer operation-clock"><span>Tempo de atividade</span><strong>${fmtTime(s.elapsed_seconds||0)}</strong><small>${s.home_continuation_enabled?'continuação em casa ativa':'encerramento manual'}</small></div>`:'';
     $('admin-content').innerHTML=`
-      <section class="panel exam-hero"><div><p class="eyebrow">${esc(className(s.class_id))} • ${esc(s.subject_name)}</p><h1>${esc(s.title)}</h1><p>${esc(s.description||'')}</p><div class="session-facts"><span class="status-pill ${kind}">${esc(label)}</span><span><b>${Number(s.max_clan_size||6)}</b> máx. por equipe</span><span><b>${fmtScore(s.max_score)}</b> pontos</span><span><b>${Math.round(Number(s.group_weight||.5)*100)}%</b> equipe / <b>${Math.round(Number(s.individual_weight||.5)*100)}%</b> individual</span>${s.home_continuation_enabled?'<span class="continuation-flag">Continuação em casa ativa</span>':''}</div></div><div>${timer}<div class="control-bar hero-controls">${controls(s)}</div></div></section>
+      <section class="panel exam-hero"><div><p class="eyebrow">${esc(className(s.class_id))} • ${esc(s.subject_name)}</p><h1>${esc(s.title)}</h1><p>${esc(s.description||'')}</p><div class="session-facts"><span class="status-pill ${kind}">${esc(label)}</span><span><b>${Number(s.max_clan_size||7)}</b> máx. por equipe</span><span><b>${fmtScore(s.max_score)}</b> pontos</span><span><b>${Math.round(Number(s.group_weight||.5)*100)}%</b> equipe / <b>${Math.round(Number(s.individual_weight||.5)*100)}%</b> individual</span>${s.home_continuation_enabled?'<span class="continuation-flag">Continuação em casa ativa</span>':''}</div></div><div>${timer}<div class="control-bar hero-controls">${controls(s)}</div></div></section>
       ${renderSettings(s)}
       ${renderRemovalRequests(d)}
       ${['finished','grading','score_scheduled'].includes(s.status)?`<section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Publicação</p><h2>Nota programada</h2><p>Pontuação de acompanhamento e nota acadêmica são separadas. A nota só chega ao aluno após publicação.</p></div></div><div class="create-grid"><label class="form-field">Data e hora<input id="publish-at" type="datetime-local" value="${fmtLocal(s.score_publish_at)}"></label><div class="control-bar"><button class="button warn" id="schedule-scores" type="button">Programar publicação</button></div></div></section>`:''}
       <section class="kpis operational-kpis"><div class="kpi"><span>Participantes</span><strong>${members.length}</strong></div><div class="kpi"><span>Online agora</span><strong>${online}</strong></div><div class="kpi"><span>Funções confirmadas</span><strong>${ready}/${members.length}</strong></div><div class="kpi"><span>Entregas</span><strong>${d.submissions.filter(x=>x.status!=='draft').length}</strong><small>${d.submissions.filter(x=>x.status==='draft').length} rascunhos</small></div><div class="kpi"><span>Progresso médio</span><strong>${Math.round(avg)}%</strong></div></section>
       ${renderRankings(d)}
       <section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Empresas</p><h2>Progresso detalhado por equipe</h2><p>Mostra fases, XP, status online e progresso de cada integrante.</p></div></div>${renderClans(d)}</section>
-      <div class="layout2"><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Gestão manual</p><h2>Alunos, equipes e áreas</h2><p>Antes do início, o professor pode organizar equipes e áreas. Durante a avaliação, pode redefinir liderança em caso de ausência ou falha de acesso.</p></div></div><div class="roster-list">${d.roster.map(p=>memberEditor(p,rosterMap.get(String(p.id)))).join('')}</div></section><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Fases</p><h2>Atividades, nota e XP</h2><p>XP máximo e peso acadêmico só podem ser alterados antes do início da prova.</p></div></div>${renderChallenges(d)}</section></div>
+      <div class="layout2"><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Gestão manual</p><h2>Alunos, equipes e áreas</h2><p>Antes do início, o professor pode organizar equipes, fazer override de cargo, fechar entradas, autorizar exceção individual e bloquear a identidade da empresa. Durante a avaliação, pode redefinir liderança em caso de ausência ou falha de acesso.</p></div></div><div class="roster-list">${d.roster.map(p=>memberEditor(p,rosterMap.get(String(p.id)))).join('')}</div></section><section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Fases</p><h2>Atividades, nota e XP</h2><p>XP máximo e peso acadêmico só podem ser alterados antes do início da prova.</p></div></div>${renderChallenges(d)}</section></div>
       <section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Correção</p><h2>Respostas das atividades</h2><p>40% do XP do desafio é concedido por entrega válida e até 60% pela qualidade. Quizzes recebem qualidade automática; respostas abertas são recalculadas após correção.</p></div></div>${renderSubmissions(d)}</section>
       ${renderTeamChat(d)}
       <section class="panel section-panel"><div class="section-head"><div><p class="eyebrow">Auditoria</p><h2>Histórico da sessão</h2></div></div>${renderEvents(d)}</section>`;
@@ -180,7 +187,26 @@
     else{$('admin-title').textContent='Sessões de avaliação';$('admin-subtitle').textContent=`${st.data?.staff?.full_name||st.profile?.full_name||'Equipe'} • ${st.data?.staff?.role||st.profile?.role||''}`;$('back-sessions').classList.add('hidden');renderSessions();}
   }
   async function load(){setConnection('Sincronizando');st.data=await api('staff_overview',st.sessionId?{session_id:st.sessionId}:{});setConnection('Online','good');render();}
-  async function run(fn){if(st.busy)return;st.busy=true;setConnection('Salvando','warn');try{await fn();await load();}catch(e){console.error(e);setConnection('Erro','danger');alert(String(e?.data?.error||e?.message||'Falha').replaceAll('_',' '));}finally{st.busy=false;}}
+  function friendlyAdminError(e){
+    const code=String(e?.data?.error||e?.message||'').trim(),data=e?.data||{};
+    if(code==='teams_below_minimum_size'){
+      const teams=Array.isArray(data.teams)?data.teams.map(x=>`${x.name||'Equipe'} (${Number(x.count||0)}/${Number(x.minimum||3)})`).join(', '):'';
+      return `Há equipes abaixo do mínimo de 3 integrantes${teams?`: ${teams}`:'.'} Complete as equipes ou use “Autorizar individual” apenas na equipe da exceção pedagógica.`;
+    }
+    const map={
+      no_teams_ready:'Nenhuma equipe possui alunos. Organize a turma antes de iniciar.',
+      areas_pending:'Ainda há aluno(s) sem cargo escolhido. Cada integrante precisa selecionar um cargo livre.',
+      ready_check_pending:'Ainda há cargo(s) sem confirmação. Aguarde a escolha/confirmacão dos alunos antes de iniciar.',
+      leaders_pending:'Ainda há equipe(s) sem líder definido. Conclua a votação ou defina um líder manualmente.',
+      team_policy_locked_after_start:'As regras de entrada/individualidade da equipe só podem ser alteradas antes do início.',
+      team_composition_locked_after_start:'A composição das equipes fica bloqueada depois do início da avaliação.',
+      clan_full:'A equipe já atingiu o limite de integrantes.',
+      role_taken:'Esse cargo já está ocupado nessa equipe.',
+      room_name_too_short:'Informe um nome de equipe com pelo menos 2 caracteres.',
+    };
+    return map[code]||code.replaceAll('_',' ')||'Falha ao concluir a ação.';
+  }
+  async function run(fn){if(st.busy)return;st.busy=true;setConnection('Salvando','warn');try{await fn();await load();}catch(e){console.error(e);setConnection('Erro','danger');alert(friendlyAdminError(e));}finally{st.busy=false;}}
 
   $('admin-content').addEventListener('submit',e=>{
     if(e.target.id!=='create-session-form')return;e.preventDefault();
@@ -190,11 +216,13 @@
   });
   $('admin-content').addEventListener('change',e=>{if(e.target.id==='create-class')st.createClass=e.target.value;});
   $('admin-content').addEventListener('click',e=>{
-    const t=e.target.closest('[data-open],[data-command],[data-save-member],[data-remove-member],[data-set-leader],[data-removal-request],[data-save-challenge],[data-save-grade],[data-reset-submission],#schedule-scores,#save-session-settings');if(!t)return;
+    const t=e.target.closest('[data-open],[data-command],[data-save-member],[data-remove-member],[data-set-leader],[data-removal-request],[data-save-challenge],[data-save-grade],[data-reset-submission],[data-clan-policy],[data-rename-clan],#schedule-scores,#save-session-settings');if(!t)return;
     if(t.dataset.open){st.sessionId=String(t.dataset.open);return load();}
     if(t.dataset.command){const command=t.dataset.command,extra={};if(command==='finish'&&!confirm('ENCERRAR DEFINITIVAMENTE a avaliação? Depois disso os alunos não poderão continuar enviando missões.'))return;if(command==='home_continuation'&&!confirm('Encerrar o encontro de hoje e manter a operação ABERTA para os alunos continuarem em casa?'))return;if(command==='cancel'&&!confirm('Cancelar esta sessão?'))return;if(command==='publish_scores'&&!confirm('Publicar as notas agora para todos os alunos?'))return;return run(()=>api('session_control',{session_id:st.sessionId,command,...extra}));}
     if(t.id==='save-session-settings'){return run(()=>api('update_session_settings',{session_id:st.sessionId,lobby_duration_minutes:Number($('settings-lobby').value),duration_minutes:Number($('settings-duration').value),max_clan_size:Number($('settings-clan-size').value),group_weight:Number($('settings-group-weight').value)/100}));}
     if(t.id==='schedule-scores'){const publish_at=$('publish-at')?.value;if(!publish_at)return alert('Informe data e hora.');return run(()=>api('session_control',{session_id:st.sessionId,command:'schedule_scores',publish_at:new Date(publish_at).toISOString()}));}
+    if(t.dataset.clanPolicy){const key=t.dataset.clanPolicy,value=t.dataset.value==='true',label=key==='join_locked'?(value?'fechar novas entradas nesta equipe':'reabrir novas entradas nesta equipe'):key==='individual_allowed'?(value?'autorizar esta equipe a iniciar com 1 aluno':'remover a exceção individual desta equipe'):(value?'bloquear alterações da identidade da empresa':'liberar alterações da identidade da empresa');if(!confirm(`Confirmar: ${label}?`))return;return run(()=>api('staff_update_clan_policy',{session_id:st.sessionId,clan_id:t.dataset.clanId,[key]:value}));}
+    if(t.dataset.renameClan){const current=st.data?.detail?.clans?.find(c=>String(c.id)===String(t.dataset.renameClan))?.name||'Equipe',name=prompt('Novo nome oficial da equipe:',current);if(name===null)return;return run(()=>api('staff_rename_clan',{session_id:st.sessionId,clan_id:t.dataset.renameClan,name}));}
     if(t.dataset.setLeader){if(!confirm(`Definir ${studentName(t.dataset.setLeader)} como líder${st.data?.detail?.session?.status==='running'?' interino':''} desta equipe?`))return;return run(()=>api('staff_set_leader',{session_id:st.sessionId,clan_id:t.dataset.clanId,student_id:t.dataset.setLeader}));}
     if(t.dataset.removalRequest){const decision=t.dataset.removalDecision;if(!confirm(decision==='approve'?'Aprovar a troca? O aluno sairá da equipe e voltará ao lobby.':'Negar esta solicitação?'))return;return run(()=>api('resolve_member_removal',{session_id:st.sessionId,request_id:t.dataset.removalRequest,decision}));}
     if(t.dataset.saveMember){const row=t.closest('[data-roster-student]'),student_id=t.dataset.saveMember,clan_id=row.querySelector('[data-member-clan]').value||null,role_id=row.querySelector('[data-member-role]').value||null;return run(()=>api('move_member',{session_id:st.sessionId,student_id,clan_id,role_id}));}

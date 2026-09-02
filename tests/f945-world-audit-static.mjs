@@ -14,20 +14,20 @@ const sw=read('lobby/sw.js');
 const diag=read('lobby/assets/diagnostics.js');
 check('audit module export',/export const WORLD_RUNTIME_AUDIT/.test(audit));
 check('audit stages complete',['adapter','import','assets','runtime','renderer','firstFrame','input','interaction','unload'].every(stage=>audit.includes(stage)));
-check('manager audit begin/fail/stop',manager.includes('WORLD_RUNTIME_AUDIT.begin')&&manager.includes('WORLD_RUNTIME_AUDIT.fail')&&manager.includes('WORLD_RUNTIME_AUDIT.stopCurrent'));
+check('manager audit bridge begin/fail/stop',manager.includes('worldAudit')&&manager.includes('audit?.begin?.')&&manager.includes('audit?.fail?.')&&manager.includes('stopCurrent?.'));
 const list=adapter.match(/export const WORLD_ADAPTERS=Object\.freeze\(\[([\s\S]*?)\]\);/)?.[1]||'';
 const adapterCount=(list.match(/WORLD_ADAPTER/g)||[]).length;
 check('18 persistent world adapters',adapterCount===18,`found=${adapterCount}`);
 check('airdrop excluded from persistent matrix',adapter.includes("auditEnabled:false"));
 check('lazy import instrumentation',adapter.includes('markImport')&&adapter.includes('lazyFactory'));
-check('lobby registers manifests',lobby.includes('WORLD_RUNTIME_AUDIT.registerWorlds(WORLD_REGISTRY.manifests)'));
-check('3d first-frame instrumentation',lobby.includes("markFirstFrame(worldId,'3d'"));
+check('lobby registers manifests lazily',lobby.includes('api.registerWorlds?.(WORLD_REGISTRY.manifests)')&&lobby.includes('ensureWorldRuntimeAudit'));
+check('3d first-frame instrumentation',lobby.includes("markFirstFrame?.(worldId,'3d'"));
 check('2d first-frame instrumentation',lobby.includes("'lite',{source:'runtime_callback'}"));
-check('interaction instrumentation',lobby.includes('WORLD_RUNTIME_AUDIT.markInteraction(action)'));
-check('movement instrumentation',lobby.includes('WORLD_RUNTIME_AUDIT.markMovement'));
-check('boot probes audit module',boot.includes("'core/world-runtime-audit.js'")&&boot.includes("requiredAssets=['lobby.js'"));
-check('service worker caches audit module',sw.includes("./assets/core/world-runtime-audit.js?v=14.10.8.96-f945-world-audit"));
-check('diagnostics schema 3',diag.includes('diagnosticSchema:3')&&diag.includes("14.10.8.96-F94.5"));
+check('interaction instrumentation',lobby.includes('markInteraction?.(action)'));
+check('movement instrumentation',lobby.includes('markMovement?.'));
+check('audit is not boot-critical',!(/requiredAssets=\[[^\]]*world-runtime-audit/s.test(boot)));
+check('service worker caches audit module as optional',sw.split('const OPTIONAL_SHELL=')[1]?.includes('world-runtime-audit.js')&&!sw.split('const OPTIONAL_SHELL=')[0].includes('world-runtime-audit.js'));
+check('diagnostics schema 3',diag.includes('diagnosticSchema:3')&&diag.includes("14.10.8.96-F94.5.1"));
 // Resolve all relative static/dynamic JS imports under lobby.
 let importCount=0,missing=[];
 for(const file of walk(path.join(root,'lobby')).filter(f=>f.endsWith('.js'))){
@@ -36,5 +36,5 @@ for(const file of walk(path.join(root,'lobby')).filter(f=>f.endsWith('.js'))){
   while((m=re.exec(text))){const spec=m[1];if(!spec.startsWith('.'))continue;importCount++;const target=path.resolve(path.dirname(file),spec.split('?')[0]);if(!fs.existsSync(target))missing.push(`${path.relative(root,file)} -> ${spec}`);}
 }
 check('local imports resolve',missing.length===0,`imports=${importCount}; missing=${missing.slice(0,5).join(', ')}`);
-console.log(JSON.stringify({suite:'F94.5 world audit static',passed:checks.filter(c=>c.ok).length,total:checks.length,checks},null,2));
+console.log(JSON.stringify({suite:'F94.5.1 world audit static',passed:checks.filter(c=>c.ok).length,total:checks.length,checks},null,2));
 function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(ent=>{const p=path.join(dir,ent.name);return ent.isDirectory()?walk(p):[p];});}

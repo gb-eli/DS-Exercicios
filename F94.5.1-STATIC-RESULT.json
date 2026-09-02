@@ -1,0 +1,82 @@
+{
+  "suite": "F94.5.1 world audit static",
+  "passed": 15,
+  "total": 15,
+  "checks": [
+    {
+      "name": "audit module export",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "audit stages complete",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "manager audit bridge begin/fail/stop",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "18 persistent world adapters",
+      "ok": true,
+      "detail": "found=18"
+    },
+    {
+      "name": "airdrop excluded from persistent matrix",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "lazy import instrumentation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "lobby registers manifests lazily",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "3d first-frame instrumentation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "2d first-frame instrumentation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "interaction instrumentation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "movement instrumentation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "audit is not boot-critical",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "service worker caches audit module as optional",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "diagnostics schema 3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "local imports resolve",
+      "ok": true,
+      "detail": "imports=408; missing="
+    }
+  ]
+}

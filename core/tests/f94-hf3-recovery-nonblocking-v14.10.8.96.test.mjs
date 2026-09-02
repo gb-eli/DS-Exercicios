@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const lobby=fs.readFileSync(new URL('../../lobby/assets/lobby.js',import.meta.url),'utf8');
+const sw=fs.readFileSync(new URL('../../lobby/sw.js',import.meta.url),'utf8');
+const reg=fs.readFileSync(new URL('../../lobby/assets/sw-register.js',import.meta.url),'utf8');
+test('F94.3 limits telemetry so it cannot block recovery',()=>{assert.match(lobby,/security_telemetry_timeout/);assert.match(lobby,/1800/);});
+test('F94.3 finishes lite UI before telemetry',()=>{const i=lobby.indexOf("finishLoading();setModeTransition(false);globalThis.__agvLobbyDiag?.record?.('runtime_lite_ready'");assert.ok(i>0);const j=lobby.indexOf("securityTelemetry('client.lobby_lite_mode'",i);assert.ok(j>i);});
+test('F94.3 protects recovery with an independent watchdog',()=>{assert.match(lobby,/runtime_lite_recovery_timeout/);assert.match(lobby,/runtime_3d_recovered_to_lite/);});
+test('F94.3 cache-busts SW chain',()=>{assert.match(sw,/f94-auto-calibration-hf3/);assert.match(reg,/f94-auto-calibration-hf3/);});
