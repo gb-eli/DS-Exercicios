@@ -1,7 +1,7 @@
 'use strict';
 
 const VERSION='14.10.8.96';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage65-f94-auto-calibration-hf1`; 
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage65-f94-auto-calibration-hf2`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -11,11 +11,11 @@ const CRITICAL_SHELL=[
   './',
   './index.html',
   './assets/diagnostics.js?v=14.10.8.66',
-  './assets/sw-register.js?v=14.10.8.96-stage65-f94-auto-calibration-hf1',
-  './assets/vendor-loader.js?v=14.10.8.96-stage65-f94-auto-calibration-hf1',
-  './assets/boot.js?v=14.10.8.96-stage65-f94-auto-calibration-hf1',
+  './assets/sw-register.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
+  './assets/vendor-loader.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
+  './assets/boot.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.96-stage65-f94-auto-calibration-hf1',
+  './assets/lobby.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
   './assets/config.js?v=14.10.8.96',
   './assets/core/lobby-state.js?v=14.10.8.92-f90-graphics',
   './assets/core/world-manager.js?v=14.10.8.92-f90-graphics',

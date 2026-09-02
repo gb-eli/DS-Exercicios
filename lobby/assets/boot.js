@@ -85,7 +85,7 @@ async function start(){
   const probeConcurrency=6;
   for(let i=0;i<requiredAssets.length;i+=probeConcurrency)await Promise.all(requiredAssets.slice(i,i+probeConcurrency).map(probeAsset));
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}-stage65-f94-auto-calibration-hf1`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage65-f94-auto-calibration-hf2`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});
