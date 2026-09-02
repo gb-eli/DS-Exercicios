@@ -1,4 +1,5 @@
-import { visualQualityProfile, rendererPixelRatio } from './visual-quality-profile.js?v=14.10.8.92-f90-graphics';
+import { visualQualityProfile, rendererPixelRatio } from './visual-quality-profile.js?v=14.10.8.96-f9411-graphics-streaming';
+import { qualityFeatures } from './quality-feature-matrix.js?v=14.10.8.96-f9411-graphics-streaming';
 
 const WORLD_FACTORS=Object.freeze({
   'vale-silicio':Object.freeze({detail:1.15,vegetation:1.0,lights:1.0}),
@@ -7,7 +8,7 @@ const WORLD_FACTORS=Object.freeze({
 });
 
 export function externalWorldQualityProfile(quality='medium',device={},worldId='default'){
-  const base=visualQualityProfile(quality,device),factor=WORLD_FACTORS[worldId]||WORLD_FACTORS.default;
+  const base=visualQualityProfile(quality,device),features=qualityFeatures(quality,device),factor=WORLD_FACTORS[worldId]||WORLD_FACTORS.default;
   const tier=base.quality;
   const objectDistance={low:150,medium:220,high:310,ultra:420}[tier];
   const detailDistance={low:42,medium:72,high:112,ultra:165}[tier];
@@ -19,7 +20,8 @@ export function externalWorldQualityProfile(quality='medium',device={},worldId='
     vegetationBudget:Math.max(.18,Math.min(1,base.vegetation*factor.vegetation)),
     lightBudget:Math.max(0,Math.min(1,base.localLights*factor.lights)),
     roadDecorations:tier==='low'?0:tier==='medium'?.45:tier==='high'?.78:1,
-    terrainDetail:tier==='low'?.35:tier==='medium'?.62:tier==='high'?.84:1
+    terrainDetail:tier==='low'?.35:tier==='medium'?.62:tier==='high'?.84:1,
+    materialTier:features.materialTier,physicalMaterials:features.physicalMaterials,propBudget:features.props,particleBudget:features.particles,animatedDetail:features.animatedDetail,textureMaxSize:features.textureMaxSize,lodBias:features.lodBias,memoryBudgetMB:features.memoryBudgetMB
   };
 }
 

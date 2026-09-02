@@ -1,6 +1,6 @@
 const cache=new Map();
 const LOADERS=Object.freeze({
-  'campus-ds':()=>import('../lobby3d.js?v=14.10.8.96-f948-camera-v2'),
+  'campus-ds':()=>import('../lobby3d.js?v=14.10.8.96-f9411-graphics-streaming'),
   'village-1ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
   'village-2ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
   'village-3ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
@@ -8,8 +8,8 @@ const LOADERS=Object.freeze({
   'campus-library':()=>import('../campus-module3d.js?v=14.10.8.96-f948-camera-v2'),
   'campus-labs':()=>import('../campus-module3d.js?v=14.10.8.96-f948-camera-v2'),
   'campus-neon':()=>import('../campus-module3d.js?v=14.10.8.96-f948-camera-v2'),
-  'vale-silicio':()=>import('../vale3d.js?v=14.10.8.96-f948-camera-v2'),
-  'rural-agv':()=>import('../rural3d.js?v=14.10.8.96-f948-camera-v2'),
+  'vale-silicio':()=>import('../vale3d.js?v=14.10.8.96-f9411-graphics-streaming'),
+  'rural-agv':()=>import('../rural3d.js?v=14.10.8.96-f9411-graphics-streaming'),
   'military-agv':()=>import('../military3d.js?v=14.10.8.96-f948-camera-v2'),
   'space-agv':()=>import('../space3d.js?v=14.10.8.96-f948-camera-v2'),
   'moon-agv':()=>import('../moon3d.js?v=14.10.8.96-f948-camera-v2'),

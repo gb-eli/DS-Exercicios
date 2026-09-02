@@ -370,3 +370,18 @@ body[data-driving="manual"] #jump-button{font-size:.72rem;font-weight:900}body[d
 
 /* F94.8 — Camera V2 / Mirante 360 */
 .settings-check{display:flex!important;align-items:center;gap:.55rem}.settings-check input{width:auto!important;flex:0 0 auto}.viewpoint-reticle{position:fixed;left:50%;top:50%;width:42px;height:42px;transform:translate(-50%,-50%);pointer-events:none;z-index:58;opacity:.92;filter:drop-shadow(0 0 4px rgba(0,0,0,.75))}.viewpoint-reticle::before,.viewpoint-reticle::after{content:"";position:absolute;background:rgba(222,248,255,.94)}.viewpoint-reticle::before{left:50%;top:2px;bottom:2px;width:1px}.viewpoint-reticle::after{top:50%;left:2px;right:2px;height:1px}.viewpoint-reticle span{position:absolute;inset:8px;border:1px solid rgba(114,230,255,.9);border-radius:50%}.viewpoint-reticle i{position:absolute;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 7px #72e6ff}.viewpoint-panel.hidden .viewpoint-reticle{display:none}
+
+/* F94.9 — Interaction V2 */
+.interaction[data-interaction-level]{position:absolute;overflow:hidden;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.interaction[data-interaction-level]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:rgba(114,230,255,.5);opacity:.75}
+.interaction[data-interaction-level="1"]::before{background:rgba(170,190,204,.58)}
+.interaction[data-interaction-level="2"]::before{background:rgba(114,230,255,.72)}
+.interaction[data-interaction-level="3"]::before{background:rgba(81,231,163,.8)}
+.interaction[data-interaction-level="4"]::before{background:rgba(255,209,102,.84)}
+.interaction[data-interaction-level="5"]::before{background:rgba(201,182,255,.88)}
+.interaction.executing{border-color:rgba(114,230,255,.55);box-shadow:0 18px 52px rgba(0,0,0,.34),0 0 0 1px rgba(114,230,255,.14);transform:translateX(-50%) translateY(-2px)}
+.interaction.executing .primary{cursor:progress;opacity:.76}
+.interaction.interaction-success{border-color:rgba(81,231,163,.58);box-shadow:0 0 0 1px rgba(81,231,163,.18),0 18px 52px rgba(0,0,0,.3)}
+.interaction.interaction-error{border-color:rgba(255,111,126,.66);box-shadow:0 0 0 1px rgba(255,111,126,.18),0 18px 52px rgba(0,0,0,.3)}
+.game-stage.interaction-feedback #game3d{filter:saturate(1.025)}
+@media (prefers-reduced-motion:no-preference){.interaction.interaction-success::before{animation:agvInteractionPulse .36s ease-out}@keyframes agvInteractionPulse{0%{width:3px;opacity:.9}55%{width:12px;opacity:.55}100%{width:3px;opacity:.75}}}

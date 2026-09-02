@@ -42,7 +42,7 @@ export function createWorldAdapter({id,scene,label,createLite,create3D,auditId=n
 export const CAMPUS_WORLD_ADAPTER=createWorldAdapter({
   id:'campus-ds',scene:'campus',label:'Campus DS',
   createLite:staticFactory('campus-ds','lite',createLobbyLite,'lobby-lite.js'),
-  create3D:lazyFactory('campus-ds','3d','../lobby3d.js?v=14.10.8.96-f948-camera-v2','createLobby3D')
+  create3D:lazyFactory('campus-ds','3d','../lobby3d.js?v=14.10.8.96-f9411-graphics-streaming','createLobby3D')
 });
 
 function createVillageAdapter(key,label){
@@ -73,13 +73,13 @@ export const CAMPUS_NEON_WORLD_ADAPTER=createCampusModuleAdapter('neon','Parque 
 export const VALE_WORLD_ADAPTER=createWorldAdapter({
   id:'vale-silicio',scene:'vale',label:'Vale do Silício AGV',
   createLite:staticFactory('vale-silicio','lite',createValeLite,'vale-lite.js'),
-  create3D:lazyFactory('vale-silicio','3d','../vale3d.js?v=14.10.8.96-f948-camera-v2','createVale3D')
+  create3D:lazyFactory('vale-silicio','3d','../vale3d.js?v=14.10.8.96-f9411-graphics-streaming','createVale3D')
 });
 
 function standardAdapter({id,scene,label,liteModule,liteExport,threeModule,threeExport}){
   return createWorldAdapter({id,scene,label,createLite:lazyFactory(id,'lite',liteModule,liteExport),create3D:lazyFactory(id,'3d',threeModule,threeExport)});
 }
-export const RURAL_WORLD_ADAPTER=standardAdapter({id:'rural-agv',scene:'rural',label:'Mundo Rural AGV',liteModule:'../rural-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createRuralLite',threeModule:'../rural3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createRural3D'});
+export const RURAL_WORLD_ADAPTER=standardAdapter({id:'rural-agv',scene:'rural',label:'Mundo Rural AGV',liteModule:'../rural-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createRuralLite',threeModule:'../rural3d.js?v=14.10.8.96-f9411-graphics-streaming',threeExport:'createRural3D'});
 export const MILITARY_WORLD_ADAPTER=standardAdapter({id:'military-agv',scene:'military',label:'Base de Operações AGV',liteModule:'../military-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createMilitaryLite',threeModule:'../military3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createMilitary3D'});
 export const SPACE_WORLD_ADAPTER=standardAdapter({id:'space-agv',scene:'space',label:'Estação Orbital AGV',liteModule:'../space-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createSpaceLite',threeModule:'../space3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createSpace3D'});
 export const MOON_WORLD_ADAPTER=standardAdapter({id:'moon-agv',scene:'moon',label:'Lua AGV',liteModule:'../moon-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createMoonLite',threeModule:'../moon3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createMoon3D'});

@@ -1,0 +1,13 @@
+{
+  "release": "F94.9 Interaction V2",
+  "version": "14.10.8.96",
+  "cache": "stage71-f949-interaction-v2",
+  "interaction_tests": {"passed": 8, "failed": 0},
+  "camera_plus_interaction_selected_suite": {"passed": 9, "failed": 0},
+  "lobby_js_syntax": {"files": 155, "errors": 0},
+  "local_imports": {"references": 422, "missing": 0},
+  "service_worker_critical_assets": {"total": 74, "missing": 0},
+  "historical_f947_note": "3 assertions de F94.7 falham por exigir marcadores/cache exatos de F94.7; a lógica funcional de locomoção nesses mesmos testes permanece PASS.",
+  "browser_visual_validation": false,
+  "backend_changed": false
+}

@@ -1,0 +1,141 @@
+{
+  "phase": "F94.11",
+  "version": "v14.10.8.96",
+  "title": "Qualidade Grafica Real + Asset Streaming V2",
+  "base": "F94.10",
+  "cache": "stage74-f9411-graphics-streaming",
+  "scope": {
+    "active_worlds": [
+      "campus-ds",
+      "vale-silicio",
+      "rural-agv"
+    ],
+    "backend_changed": false,
+    "database_changed": false,
+    "edge_functions_changed": false
+  },
+  "tests": {
+    "f9411": {
+      "pass": 10,
+      "fail": 0,
+      "total": 10
+    },
+    "selected_f947_f948_f949_f9491_f9411": {
+      "pass": 22,
+      "fail": 4,
+      "total": 26,
+      "note": "4 falhas sao asserts historicos de cache/version marker antigo; comportamento atual relevante passou"
+    },
+    "legacy_f9410": {
+      "pass": 7,
+      "fail": 1,
+      "total": 8,
+      "note": "1 falha exige literalmente o cache/lazy marker F94.10, substituido intencionalmente"
+    }
+  },
+  "static": {
+    "lobby_js_files": 162,
+    "syntax_errors": 0,
+    "local_import_references": 444,
+    "missing_local_imports": 0,
+    "service_worker_local_references": 104,
+    "missing_service_worker_references": 0,
+    "bak_files": 0
+  },
+  "assets": {
+    "glb_count": 9,
+    "format": "GLB 2.0",
+    "parsed_locally": true,
+    "meshopt_applied": false,
+    "ktx2_applied": false,
+    "texture_free_first_pass": true,
+    "items": [
+      {
+        "file": "campus-smart-kiosk-lod0.glb",
+        "bytes": 11252,
+        "meshes": 7,
+        "triangles": 392
+      },
+      {
+        "file": "campus-smart-kiosk-lod1.glb",
+        "bytes": 4064,
+        "meshes": 5,
+        "triangles": 60
+      },
+      {
+        "file": "campus-smart-kiosk-lod2.glb",
+        "bytes": 2684,
+        "meshes": 3,
+        "triangles": 36
+      },
+      {
+        "file": "vale-innovation-pylon-lod0.glb",
+        "bytes": 12468,
+        "meshes": 7,
+        "triangles": 444
+      },
+      {
+        "file": "vale-innovation-pylon-lod1.glb",
+        "bytes": 3424,
+        "meshes": 3,
+        "triangles": 64
+      },
+      {
+        "file": "vale-innovation-pylon-lod2.glb",
+        "bytes": 2736,
+        "meshes": 2,
+        "triangles": 52
+      },
+      {
+        "file": "rural-wind-turbine-lod0.glb",
+        "bytes": 7312,
+        "meshes": 6,
+        "triangles": 176
+      },
+      {
+        "file": "rural-wind-turbine-lod1.glb",
+        "bytes": 5568,
+        "meshes": 4,
+        "triangles": 136
+      },
+      {
+        "file": "rural-wind-turbine-lod2.glb",
+        "bytes": 3844,
+        "meshes": 2,
+        "triangles": 112
+      }
+    ]
+  },
+  "quality_matrix": {
+    "low": {
+      "textureMaxSize": 512,
+      "memoryBudgetMB": 96,
+      "lodBias": 1.55,
+      "materialTier": 0
+    },
+    "medium": {
+      "textureMaxSize": 1024,
+      "memoryBudgetMB": 160,
+      "lodBias": 1.15,
+      "materialTier": 1
+    },
+    "high": {
+      "textureMaxSize": 2048,
+      "memoryBudgetMB": 256,
+      "lodBias": 0.82,
+      "materialTier": 2
+    },
+    "ultra": {
+      "textureMaxSize": 4096,
+      "memoryBudgetMB": 384,
+      "lodBias": 0.62,
+      "materialTier": 3
+    }
+  },
+  "visual_browser_validation": false,
+  "caveats": [
+    "Nao ha medicao real de FPS/VRAM nesta sessao",
+    "Meshopt e KTX2 ainda nao foram aplicados aos GLBs desta primeira passagem",
+    "A integracao completa de Asset Streaming V2 nesta fase e Campus, Vale e Rural"
+  ]
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 const VERSION='14.10.8.96';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage70-f948-camera-v2`; 
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage74-f9411-graphics-streaming`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -11,19 +11,21 @@ const CRITICAL_SHELL=[
   './',
   './index.html',
   './assets/diagnostics.js?v=14.10.8.96-f948-camera-v2',
-  './assets/sw-register.js?v=14.10.8.96-stage70-f948-camera-v2',
-  './assets/vendor-loader.js?v=14.10.8.96-stage70-f948-camera-v2',
-  './assets/boot.js?v=14.10.8.96-stage70-f948-camera-v2',
+  './assets/sw-register.js?v=14.10.8.96-stage74-f9411-graphics-streaming',
+  './assets/vendor-loader.js?v=14.10.8.96-stage74-f9411-graphics-streaming',
+  './assets/boot.js?v=14.10.8.96-stage74-f9411-graphics-streaming',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.96-stage70-f948-camera-v2',
+  './assets/lobby.js?v=14.10.8.96-stage74-f9411-graphics-streaming',
   './assets/config.js?v=14.10.8.96',
   './assets/core/lobby-state.js?v=14.10.8.96-f948-camera-v2',
   './assets/core/world-manager.js?v=14.10.8.96-f948-camera-v2',
   './assets/core/runtime-v2/world-runtime-contract.js?v=14.10.8.96-f948-camera-v2',
   './assets/core/runtime-v2/world-context.js?v=14.10.8.96-f948-camera-v2',
+  './assets/core/interaction-v2/interaction-contract.js?v=14.10.8.96-f949-interaction-v2',
+  './assets/core/interaction-v2/interaction-manager.js?v=14.10.8.96-f949-interaction-v2',
   './assets/core/runtime-v2/player-locomotion.js?v=14.10.8.96-f948-camera-v2',
   './assets/core/runtime-v2/runtime-lifecycle.js?v=14.10.8.96-f948-camera-v2',
-  './assets/core/world-adapter.js?v=14.10.8.96-f948-camera-v2',
+  './assets/core/world-adapter.js?v=14.10.8.96-f9411-graphics-streaming',
   './assets/plugin-world-host.js?v=14.10.8.96-f948-camera-v2',
   './assets/colegio-agv-host.js?v=14.10.8.96-f948-camera-v2',
   './assets/labirinto-armadilhas-host.js?v=14.10.8.96-f948-camera-v2',
@@ -48,7 +50,7 @@ const CRITICAL_SHELL=[
   './data/vale-silicio/runtime-v2.json?v=14.10.8.66',
   './assets/world/campus-manifest.js?v=14.10.8.66',
   './assets/world/gameplay-settings.js?v=14.10.8.96-f948-camera-v2',
-  './assets/world/campus-modular-layout.js?v=14.10.8.92-f90-graphics',
+  './assets/world/campus-modular-layout.js?v=14.10.8.96-f9411-graphics-streaming',
   './assets/social/realtime-avatar-sync.js?v=14.10.8.92-f90-graphics',
   './assets/social/remote-avatar-state.js?v=14.10.8.87-f85-map-realtime',
   './assets/world/airdrop-system.js?v=14.10.8.92-f90-graphics',
@@ -78,7 +80,7 @@ const CRITICAL_SHELL=[
   './assets/social/proximity-chat.js?v=14.10.8.66',
   './assets/rigged-avatar.js?v=14.10.8.66-stage34',
   './assets/models/agv-avatar-rig-v1.glb',
-  './assets/lobby.css?v=14.10.8.96-stage70-f948-camera-v2',
+  './assets/lobby.css?v=14.10.8.96-stage74-f9411-graphics-streaming',
   './vendor/supabase/supabase.js'
 ];
 const OPTIONAL_SHELL=[
@@ -90,7 +92,29 @@ const OPTIONAL_SHELL=[
   '../core/session/fullscreen-portal.js?v=14.10.8.66',
   '../core/session/fullscreen-portal.css?v=14.10.8.66',
   './data/vale-silicio/runtime-v2.schema.json?v=14.10.8.66',
-  './data/vale-silicio/context.json?v=14.10.8.66'
+  './data/vale-silicio/context.json?v=14.10.8.66',
+  './assets/core/streaming-v2/spatial-streaming-manager.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/visual-quality-profile.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/quality-feature-matrix.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/external-world-quality.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/asset-streaming-v2/visual-asset-budget.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/asset-streaming-v2/simple-glb-loader.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/render/asset-streaming-v2/world-detail-asset-streamer.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/world/world-detail-assets.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/world/world-environment-profiles.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/world/campus-environment.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/lobby3d.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/vale3d.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/rural3d.js?v=14.10.8.96-f9411-graphics-streaming',
+  './assets/models/environment/f9411/campus-smart-kiosk-lod0.glb',
+  './assets/models/environment/f9411/campus-smart-kiosk-lod1.glb',
+  './assets/models/environment/f9411/campus-smart-kiosk-lod2.glb',
+  './assets/models/environment/f9411/vale-innovation-pylon-lod0.glb',
+  './assets/models/environment/f9411/vale-innovation-pylon-lod1.glb',
+  './assets/models/environment/f9411/vale-innovation-pylon-lod2.glb',
+  './assets/models/environment/f9411/rural-wind-turbine-lod0.glb',
+  './assets/models/environment/f9411/rural-wind-turbine-lod1.glb',
+  './assets/models/environment/f9411/rural-wind-turbine-lod2.glb'
 ];
 
 self.addEventListener('install',event=>{

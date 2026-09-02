@@ -6,23 +6,19 @@ import { CAMPUS_ROAD_HIERARCHY, CAMPUS_THEME_PLAZAS, CAMPUS_GARAGES, CAMPUS_CROS
 import { CAMPUS_GARAGE_FLEET, CAMPUS_STATION_LINKS, CAMPUS_VALE_CEREMONIAL_GATE } from './campus-live-systems.js?v=14.10.8.71-stage40-security';
 import { CAMPUS_TRAFFIC_ROUTES, CAMPUS_MOBILITY_TRACKS } from './campus-mobility-systems.js?v=14.10.8.71-stage40-security';
 import { campusSpaceIdentity } from './space-identities.js?v=14.10.8.66-stage29';
-import { visualQualityProfile,visualTierAtLeast } from '../render/visual-quality-profile.js?v=14.10.8.92-f90-graphics';
+import { visualQualityProfile,visualTierAtLeast } from '../render/visual-quality-profile.js?v=14.10.8.96-f9411-graphics-streaming';
+import { createQualityAwareMaterial,applyRootVisualQuality,qualityFeatures } from '../render/quality-feature-matrix.js?v=14.10.8.96-f9411-graphics-streaming';
+import { createVisualAssetBudget } from '../render/asset-streaming-v2/visual-asset-budget.js?v=14.10.8.96-f9411-graphics-streaming';
+import { createWorldDetailAssetStreamer } from '../render/asset-streaming-v2/world-detail-asset-streamer.js?v=14.10.8.96-f9411-graphics-streaming';
+import { worldDetailAssetSlots } from './world-detail-assets.js?v=14.10.8.96-f9411-graphics-streaming';
+import { CAMPUS_HUB, CAMPUS_MODULAR_DISTRICTS } from './campus-modular-layout.js?v=14.10.8.96-f9411-graphics-streaming';
+import { worldEnvironmentProfile } from './world-environment-profiles.js?v=14.10.8.96-f9411-graphics-streaming';
+import { createSpatialStreamingManager } from '../core/streaming-v2/spatial-streaming-manager.js?v=14.10.8.96-f9411-graphics-streaming';
 
 const HIGH_QUALITY=new Set(['high','ultra']);
-const QUALITY_RANK=Object.freeze({low:0,medium:1,high:2,ultra:3});
-function applyQualityVisibility(root,quality){const rank=QUALITY_RANK[quality]??1;root?.traverse?.(o=>{const min=o.userData?.minVisualQuality;if(min)o.visible=rank>=(QUALITY_RANK[min]??0);});}
-
-function materialFactory(THREE,quality){
-  const visual=visualQualityProfile(quality);const physical=visual.glass&&typeof THREE.MeshPhysicalMaterial==='function';
+function materialFactory(THREE,quality,device={}){
   return function mat(color,{emissive=0x000000,emissiveIntensity=0,metalness=.08,roughness=.55,transparent=false,opacity=1,side=THREE.FrontSide,glass=false,clearcoat=0,clearcoatRoughness=.2}={}){
-    if(glass&&physical){
-      return new THREE.MeshPhysicalMaterial({
-        color,emissive,emissiveIntensity,metalness:Math.max(.05,metalness),roughness:Math.min(.3,roughness),
-        transparent:true,opacity:Math.min(.82,opacity),transmission:quality==='ultra'?.48:.28,thickness:quality==='ultra'?.24:.16,
-        ior:1.45,clearcoat:.55,clearcoatRoughness:.16,side,depthWrite:false
-      });
-    }
-    return new THREE.MeshStandardMaterial({color,emissive,emissiveIntensity,metalness,roughness,transparent,opacity,side});
+    return createQualityAwareMaterial(THREE,quality,color,{emissive,emissiveIntensity,metalness,roughness,transparent,opacity,side,glass,clearcoat,clearcoatRoughness,device});
   };
 }
 
@@ -264,6 +260,18 @@ function createCentralHub({THREE,quality,spriteLabel}){
   let statusBoard=null;
   if(spriteLabel){const label=spriteLabel('AGV • CAMPUS DS','#5fe3ff',5.5,{bg:'rgba(2,13,20,.76)'});label.position.set(0,6.45,0);root.add(label);statusBoard=spriteLabel('AGUARDANDO ATIVIDADE','#ffd166',3.5,{bg:'rgba(3,13,18,.88)'});statusBoard.position.set(0,2.85,-3.45);root.add(statusBoard);}
   root.userData={pool,crown,orb,rings,core,statusBoard};setShadow(root,true);pool.castShadow=false;core.castShadow=false;return root;
+}
+
+function createCampusQualityDetailLayer({THREE,quality,device={}}){
+  const mat=materialFactory(THREE,quality,device),root=new THREE.Group();root.name='campus-quality-detail-layer-f9411';
+  const medium=new THREE.Group();medium.name='campus-quality-medium-props';medium.userData.minVisualQuality='medium';
+  const high=new THREE.Group();high.name='campus-quality-high-lighting';high.userData.minVisualQuality='high';
+  const ultra=new THREE.Group();ultra.name='campus-quality-ultra-holographics';ultra.userData.minVisualQuality='ultra';
+  const stone=mat(0x24343c,{roughness:.82}),green=mat(0x3f8d68,{roughness:.88}),metal=mat(0x314b57,{metalness:.64,roughness:.28}),cyan=mat(0x72e6ff,{emissive:0x36d2ff,emissiveIntensity:1.2,metalness:.18,roughness:.18}),glass=mat(0x194f62,{emissive:0x36d2ff,emissiveIntensity:.18,metalness:.26,roughness:.14,transparent:true,opacity:.56,glass:true});
+  for(const a of Array.from({length:8},(_,i)=>i*Math.PI/4)){const x=Math.cos(a)*7.4,z=Math.sin(a)*7.4;medium.add(cylinder(THREE,.55,.34,stone,x,.17,z,16));const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(.48,1),green);crown.position.set(x,.75,z);medium.add(crown);}
+  for(const a of Array.from({length:8},(_,i)=>i*Math.PI/4+Math.PI/8)){const x=Math.cos(a)*10.5,z=Math.sin(a)*10.5;high.add(cylinder(THREE,.055,2.5,metal,x,1.25,z,8));const lamp=box(THREE,.34,.12,.22,cyan,x,2.53,z);high.add(lamp);}
+  const animated=[];for(const a of [0,Math.PI/2,Math.PI,Math.PI*1.5]){const x=Math.cos(a)*5.4,z=Math.sin(a)*5.4,ring=new THREE.Mesh(new THREE.TorusGeometry(.72,.035,8,32),cyan);ring.position.set(x,2.35,z);ring.rotation.x=Math.PI/2;ultra.add(ring);animated.push(ring);const pane=box(THREE,1.25,1.7,.035,glass,x,1.45,z);pane.rotation.y=-a;ultra.add(pane);}
+  root.add(medium,high,ultra);root.userData.qualityAnimated=animated;applyRootVisualQuality(THREE,root,quality,device);return root;
 }
 
 function createPlazaCanopy({THREE,quality}){
@@ -532,7 +540,7 @@ function createTransitNetwork({THREE,quality,spriteLabel}){
   function releaseActive(){if(!activeRoot)return false;root.remove(activeRoot);disposeTree(activeRoot);activeRoot=null;train=null;return true;}
   return{root,stations,ensureActive,releaseActive,get train(){return train;},get active(){return!!activeRoot;}};
 }
-function disposeTree(root){root?.traverse?.(o=>{o.geometry?.dispose?.();if(o.material){for(const m of(Array.isArray(o.material)?o.material:[o.material]))m?.dispose?.();}});}
+function disposeTree(root){root?.traverse?.(o=>{o.geometry?.dispose?.();if(o.material){for(const m of(Array.isArray(o.material)?o.material:[o.material])){m?.map?.dispose?.();m?.normalMap?.dispose?.();m?.roughnessMap?.dispose?.();m?.metalnessMap?.dispose?.();m?.emissiveMap?.dispose?.();m?.dispose?.();}}});}
 export function createCampusLighting({THREE,scene,quality,shadows,shadowSize}){
   const hemi=new THREE.HemisphereLight(0xc8e8ff,0x10231b,1.42);scene.add(hemi);
   const key=new THREE.DirectionalLight(0xdceeff,1.9);key.position.set(-30,42,24);key.castShadow=!!shadows;key.shadow.mapSize.set(shadowSize,shadowSize);key.shadow.camera.left=-(WORLD_X+4);key.shadow.camera.right=WORLD_X+4;key.shadow.camera.top=WORLD_Z+6;key.shadow.camera.bottom=-(WORLD_Z+6);key.shadow.camera.near=.5;key.shadow.camera.far=120;scene.add(key);
@@ -541,30 +549,66 @@ export function createCampusLighting({THREE,scene,quality,shadows,shadowSize}){
   return {hemi,key,warm,center};
 }
 
-export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel}){
+export function createCampusEnvironment({THREE,scene,zones,quality,spriteLabel,device={},onStreamingEvent=()=>{}}){
+  // F94.10: shell global leve + distritos externos carregados/descarregados por proximidade.
+  // Os chunks são reconstruíveis; ao descarregar, geometria/material são realmente liberados.
+  const envProfile=worldEnvironmentProfile('campus-ds'),streamCfg=envProfile.streaming||{},assetBudget=createVisualAssetBudget({worldId:'campus-ds',quality,device}),detailStreamer=createWorldDetailAssetStreamer({THREE,scene,worldId:'campus-ds',quality,device,slots:worldDetailAssetSlots('campus-ds')});
   const floor=createPlazaFloor({THREE,quality});scene.add(floor);
   const urban=createUrbanLayer({THREE,quality,spriteLabel});scene.add(urban);
   const city=createCampusCityLayer({THREE,quality,spriteLabel});scene.add(city);
   const mobilityTrack=createMobilityTrackLayer({THREE,quality,spriteLabel});scene.add(mobilityTrack);
   const connections=createCampusConnectionLayer({THREE,quality,spriteLabel});scene.add(connections);
-  const centralFountain=createCentralHub({THREE,quality,spriteLabel});scene.add(centralFountain);
+  const centralFountain=createCentralHub({THREE,quality,spriteLabel}),qualityDetails=createCampusQualityDetailLayer({THREE,quality,device});scene.add(centralFountain,qualityDetails);
   const canopy=createPlazaCanopy({THREE,quality});scene.add(canopy);
-  const cameraCollisionRoots=[urban,city,connections],buildingRoots=[],experienceRoots=[],experienceRefs=[],qualityExtras=[];
-  let variant=0;
-  for(const zone of zones){
-    const layout=CAMPUS_ZONE_LAYOUT[zone.key];if(!layout)continue;const accent=new THREE.Color(zone.accent).getHex();
-    const building=createBuilding({THREE,quality,accent,position:layout.building,rotation:layout.buildingRotation||0,title:zone.label,subtitle:zone.name,variant:variant++,spriteLabel});
-    scene.add(building);cameraCollisionRoots.push(building);buildingRoots.push(building);
-    const front=new THREE.Vector3(0,3.15,4.7).applyAxisAngle(new THREE.Vector3(0,1,0),layout.buildingRotation||0).add(new THREE.Vector3(layout.building[0],0,layout.building[2]));
-    const light=new THREE.PointLight(accent,quality==='ultra'?7:4.5,10,2);light.position.copy(front);light.userData.minVisualQuality='high';scene.add(light);qualityExtras.push(light);
+  const transit=createTransitNetwork({THREE,quality,spriteLabel});scene.add(transit.root);
+
+  const cameraCollisionRoots=[urban,city,connections,transit.root],buildingRoots=[],experienceRoots=[];
+  const experienceRefs=CAMPUS_EXPERIENCES.map(experience=>{const point=experience.type==='tool-building'&&experience.entrance?experience.entrance:experience;return{...experience,x:point.x,z:point.z,radius:experience.radius||3};});
+  const staticQualityRoots=[floor,urban,city,mobilityTrack,connections,centralFountain,qualityDetails,canopy,transit.root];
+  const dynamicQualityRoots=[];let currentQuality=quality;const zoneVariants=new Map(zones.map((z,i)=>[z.key,i]));
+  const remove=(array,item)=>{const i=array.indexOf(item);if(i>=0)array.splice(i,1);};
+
+  const sectors=[
+    {id:CAMPUS_HUB.id,label:CAMPUS_HUB.name,x:CAMPUS_HUB.x,z:CAMPUS_HUB.z,radius:Math.max(CAMPUS_HUB.w,CAMPUS_HUB.d)*.55,policy:'always',zone:null},
+    ...CAMPUS_MODULAR_DISTRICTS.map(d=>({id:d.id,label:d.name,x:d.x,z:d.z,radius:Math.max(d.w,d.d)*.55,policy:d.loadPolicy==='always'?'always':'on-demand',zone:d.zone||null,module:d.module||null}))
+  ];
+  const sectorById=new Map(sectors.map(s=>[s.id,s]));
+  const nearestSector=(x,z)=>sectors.reduce((best,item)=>{const d=Math.hypot(Number(x||0)-item.x,Number(z||0)-item.z);return !best||d<best.d?{item,d}:best;},null)?.item||sectors[0];
+  const experienceSector=new Map(CAMPUS_EXPERIENCES.map(e=>[e.id,nearestSector(e.entrance?.x??e.x,e.entrance?.z??e.z).id]));
+  const zoneSector=new Map(zones.map(z=>[z.key,(sectors.find(s=>s.zone===z.key)||nearestSector(CAMPUS_ZONE_LAYOUT[z.key]?.building?.[0],CAMPUS_ZONE_LAYOUT[z.key]?.building?.[2])).id]));
+
+  const streaming=createSpatialStreamingManager({
+    loadRadius:Number(streamCfg.loadRadius)||30,unloadRadius:Number(streamCfg.unloadRadius)||46,maxLoaded:Number(streamCfg.maxLoaded)||5,
+    onEvent:event=>{try{onStreamingEvent(event)}catch(_){}}
+  });
+
+  function buildSector(sector){
+    const root=new THREE.Group();root.name=`campus-stream-chunk-${sector.id}`;const localBuildings=[],localExperiences=[],localCollisions=[];
+    for(const zone of zones){
+      if(zoneSector.get(zone.key)!==sector.id)continue;const layout=CAMPUS_ZONE_LAYOUT[zone.key];if(!layout)continue;const accent=new THREE.Color(zone.accent).getHex();
+      const building=createBuilding({THREE,quality:currentQuality,accent,position:layout.building,rotation:layout.buildingRotation||0,title:zone.label,subtitle:zone.name,variant:zoneVariants.get(zone.key)||0,spriteLabel});
+      root.add(building);localBuildings.push(building);localCollisions.push(building);buildingRoots.push(building);cameraCollisionRoots.push(building);
+      const front=new THREE.Vector3(0,3.15,4.7).applyAxisAngle(new THREE.Vector3(0,1,0),layout.buildingRotation||0).add(new THREE.Vector3(layout.building[0],0,layout.building[2]));
+      const light=new THREE.PointLight(accent,currentQuality==='ultra'?7:4.5,10,2);light.position.copy(front);light.userData.minVisualQuality='high';root.add(light);
+    }
+    for(const experience of CAMPUS_EXPERIENCES){
+      if(experienceSector.get(experience.id)!==sector.id)continue;const expRoot=createExperienceZone({THREE,quality:currentQuality,experience,spriteLabel});root.add(expRoot);localExperiences.push(expRoot);experienceRoots.push(expRoot);
+    }
+    applyRootVisualQuality(THREE,root,currentQuality,device);scene.add(root);dynamicQualityRoots.push(root);assetBudget.reserve({id:`campus-sector:${sector.id}`,bytes:Math.round((1.1+localBuildings.length*1.45+localExperiences.length*.7)*1048576),kind:'procedural-sector',lod:qualityFeatures(currentQuality,device).materialTier>=2?'lod0':'lod1'});
+    return {root,localBuildings,localExperiences,localCollisions,sectorId:sector.id};
   }
-  const transit=createTransitNetwork({THREE,quality,spriteLabel});scene.add(transit.root);cameraCollisionRoots.push(transit.root);
-  for(const experience of CAMPUS_EXPERIENCES){
-    const root=createExperienceZone({THREE,quality,experience,spriteLabel});scene.add(root);experienceRoots.push(root);
-    const interactionPoint=experience.type==='tool-building'&&experience.entrance?experience.entrance:experience;
-    experienceRefs.push({...experience,x:interactionPoint.x,z:interactionPoint.z,radius:experience.radius||3});
+  function releaseSector(resource){
+    if(!resource?.root)return;scene.remove(resource.root);assetBudget.release(`campus-sector:${resource.sectorId}`);for(const item of resource.localBuildings||[]){remove(buildingRoots,item);remove(cameraCollisionRoots,item);}for(const item of resource.localExperiences||[])remove(experienceRoots,item);remove(dynamicQualityRoots,resource.root);disposeTree(resource.root);
   }
-  const qualityRoots=[floor,urban,city,mobilityTrack,connections,centralFountain,canopy,...buildingRoots,...experienceRoots,transit.root,...qualityExtras];
-  const setQuality=next=>{for(const root of qualityRoots)applyQualityVisibility(root,next);return next;};setQuality(quality);
-  return {floor,urban,city,mobilityTrack,connections,transit,centralFountain,beacon:centralFountain,canopy,cameraCollisionRoots,buildingRoots,experienceRoots,experienceRefs,setQuality};
+  for(const sector of sectors){
+    streaming.register({id:sector.id,label:sector.label,x:sector.x,z:sector.z,radius:sector.radius,policy:sector.policy,
+      load:()=>buildSector(sector),unload:resource=>releaseSector(resource)});
+  }
+  const streamingChunkIds=Object.freeze(sectors.map(s=>s.id));streaming.preload([CAMPUS_HUB.id]);
+
+  const setQuality=next=>{currentQuality=next;assetBudget.setQuality(next);detailStreamer.setQuality(next);for(const root of [...staticQualityRoots,...dynamicQualityRoots])applyRootVisualQuality(THREE,root,next,device);return next;};setQuality(quality);
+  const updateVisualDetails=(time,dt)=>{const features=qualityFeatures(currentQuality,device);if(features.animatedDetail<=.2)return;for(const [i,item] of (qualityDetails.userData.qualityAnimated||[]).entries()){item.rotation.z+=dt*(i%2?.18:-.16)*features.animatedDetail;item.position.y=2.35+Math.sin(time*1.35+i)*.07*features.animatedDetail;}};
+  const updateStreaming=(position,{forceFull=false}={})=>{detailStreamer.update({player:position,force:forceFull}).catch?.(()=>{});return streaming.update(position,{forceIds:forceFull?streamingChunkIds:[],pinIds:forceFull?streamingChunkIds:[]});};
+  const dispose=async()=>{detailStreamer.dispose();await streaming.dispose();transit.releaseActive?.();};
+  return {floor,urban,city,mobilityTrack,connections,transit,centralFountain,beacon:centralFountain,canopy,qualityDetails,cameraCollisionRoots,buildingRoots,experienceRoots,experienceRefs,setQuality,updateVisualDetails,updateStreaming,streamingDiagnostics:()=>({...streaming.diagnostics(),visualAssets:assetBudget.diagnostics(),detailAssets:detailStreamer.diagnostics()}),streamingChunkIds,dispose};
 }

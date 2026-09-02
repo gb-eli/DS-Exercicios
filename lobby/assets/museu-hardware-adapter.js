@@ -1,4 +1,4 @@
-import { createWorldAdapter } from './core/world-adapter.js?v=14.10.8.96-f948-camera-v2';
+import { createWorldAdapter } from './core/world-adapter.js?v=14.10.8.96-f9411-graphics-streaming';
 import { createMuseuHardwareLite } from './museu-hardware-lite.js?v=14.10.8.96-f948-camera-v2';
 import { createMuseuHardware3D } from './museu-hardware3d.js?v=14.10.8.96-f948-camera-v2';
 

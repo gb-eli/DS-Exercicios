@@ -22,6 +22,8 @@ const ASSET_SIGNATURES={
   'core/world-manager.js':['createWorldManager','world_runtime_contract_invalid','worldAudit'],
   'core/runtime-v2/world-runtime-contract.js':['WORLD_RUNTIME_CONTRACT_VERSION','normalizeWorldRuntime','assertWorldRuntimeV2'],
   'core/runtime-v2/world-context.js':['WORLD_CONTEXT_VERSION','createWorldContext'],
+  'core/interaction-v2/interaction-contract.js':['INTERACTION_CONTRACT_VERSION','describeInteraction','INTERACTION_LEVELS'],
+  'core/interaction-v2/interaction-manager.js':['createInteractionManager','interaction_debounced'],
   'core/runtime-v2/player-locomotion.js':['LOCOMOTION_CONTRACT_VERSION','createPlayerLocomotion','locomotionProfileForWorld'],
   'world/gameplay-settings.js':['PLAYER_MOVEMENT','playerMoveSpeed','playerJumpImpulse','playerGravity'],
   'core/world-adapter.js':['createWorldAdapter','AIRDROP_TRANSIT_ADAPTER','CAMPUS_WORLD_ADAPTER','VILLAGE_1DS_WORLD_ADAPTER','VILLAGE_SUB_WORLD_ADAPTER','CAMPUS_LIBRARY_WORLD_ADAPTER','CAMPUS_LABS_WORLD_ADAPTER','CAMPUS_NEON_WORLD_ADAPTER','VALE_WORLD_ADAPTER','RURAL_WORLD_ADAPTER','MOON_WORLD_ADAPTER','MARS_WORLD_ADAPTER','PARQUE_WORLD_ADAPTER','COLEGIO_WORLD_ADAPTER','LABIRINTO_WORLD_ADAPTER','MUSEU_WORLD_ADAPTER'],
@@ -84,12 +86,12 @@ async function probeAsset(name){
 }
 async function start(){
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'boot_module_loading'});
-  const requiredAssets=['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/runtime-v2/world-runtime-contract.js','core/runtime-v2/world-context.js','core/runtime-v2/player-locomotion.js','world/gameplay-settings.js','core/world-adapter.js','lobby-lite.js','world/campus-manifest.js','world/village-world.js','world/campus-module-world.js','world/airdrop-sectors.js','world/world-manifests.js','village-lite.js','campus-module-lite.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','render/graphics-calibrator.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'];
+  const requiredAssets=['lobby.js','supabase.js','config.js','core/lobby-state.js','core/world-manager.js','core/runtime-v2/world-runtime-contract.js','core/runtime-v2/world-context.js','core/interaction-v2/interaction-contract.js','core/interaction-v2/interaction-manager.js','core/runtime-v2/player-locomotion.js','world/gameplay-settings.js','core/world-adapter.js','lobby-lite.js','world/campus-manifest.js','world/village-world.js','world/campus-module-world.js','world/airdrop-sectors.js','world/world-manifests.js','village-lite.js','campus-module-lite.js','world/campus-experiences.js','world/campus-destinations.js','world/campus-connections.js','world/campus-city-network.js','world/campus-interiors.js','world/campus-live-systems.js','world/campus-mobility-systems.js','world/cinema-media.js','world/security-cameras.js','world/aerial-mobility.js','world/campus-viewpoints.js','world/dynamic-world.js','world/weather-system.js','render/camera-controller.js','render/performance-manager.js','render/graphics-calibrator.js','characters/avatar-system.js','game/portal-manager.js','game/train-manager.js','social/proximity-chat.js'];
   // F85: validação do boot em pequenos lotes paralelos. Mantém o gate de integridade sem bloquear o Lobby em 29 requests sequenciais.
   const probeConcurrency=6;
   for(let i=0;i<requiredAssets.length;i+=probeConcurrency)await Promise.all(requiredAssets.slice(i,i+probeConcurrency).map(probeAsset));
   try{await probeAsset('rigged-avatar.js')}catch(error){globalThis.__agvLobbyDiag?.record?.('boot_optional_asset_warning',{asset:'rigged-avatar.js',message:String(error?.message||error)});}
-  const url=new URL(`./lobby.js?v=${VERSION}-stage70-f948-camera-v2`,import.meta.url);
+  const url=new URL(`./lobby.js?v=${VERSION}-stage74-f9411-graphics-streaming`,import.meta.url);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_import',url:url.href});
   await import(url.href);
   globalThis.__agvLobbyDiag?.record?.('stage',{stage:'lobby_module_loaded'});

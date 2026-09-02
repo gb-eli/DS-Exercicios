@@ -1,0 +1,37 @@
+{
+  "release": "F94.10",
+  "version": "v14.10.8.96",
+  "title": "Carregamento Modular + Interiores + Identidade Ambiental",
+  "baseline": "F94.9.1-HOTFIX-CAMPUS-3D",
+  "cache_stage": "stage73-f9410-modular-streaming",
+  "validation": {
+    "f9410_tests": {"passed": 8, "failed": 0},
+    "selected_current_suite": {"passed": 23, "failed": 0},
+    "lobby_javascript": {"files_checked": 157, "syntax_errors": 0},
+    "local_imports": {"checked": 428, "missing": 0},
+    "service_worker_local_references": {"checked": 83, "missing": 0},
+    "backend_changes": {"database": 0, "edge_functions": 0},
+    "visual_browser_validation": false
+  },
+  "implemented": {
+    "spatial_streaming_manager_v2_foundation": true,
+    "campus_external_chunks_active": true,
+    "hub_policy_always_loaded": true,
+    "district_load_unload_by_distance": true,
+    "resource_disposal_geometry_materials_textures": true,
+    "dynamic_camera_collision_roots": true,
+    "mirante_force_full_streaming": true,
+    "campus_interiors_lazy_mount": true,
+    "campus_interiors_release_on_exit": true,
+    "interior_local_lighting_by_quality": true,
+    "world_environment_profiles": 11,
+    "asset_contract_glb_meshopt_ktx2_lod_ready": true
+  },
+  "scope_notes": [
+    "O streaming espacial real desta fase foi integrado ativamente ao Campus 3D.",
+    "Vale, Rural, Militar, Espaço, Lua, Marte, Parque, Colégio, Labirinto e Museu receberam perfis ambientais para migração futura, mas ainda não usam todos o novo manager em runtime nesta fase.",
+    "A F94.10 não adiciona um novo pacote grande de modelos GLB/PBR; prepara o contrato e a infraestrutura para a próxima fase de qualidade gráfica real.",
+    "Não houve alteração em banco de dados, Supabase ou Edge Functions.",
+    "Não houve validação visual WebGL real nesta sessão; não há alegação de ganho percentual de FPS ou qualidade visual." 
+  ]
+}

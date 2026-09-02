@@ -1,0 +1,24 @@
+{
+  "phase": "F94.9.1",
+  "title": "Hotfix Campus 3D",
+  "rootCause": "ReferenceError causado por API de Airdrop exposta sem declarações no retorno de createLobby3D",
+  "missingRuntimeSymbols": [
+    "startAirdropSession",
+    "jumpFromAirdrop",
+    "deployAirdropParachute",
+    "cancelAirdropSession",
+    "getAirdropState"
+  ],
+  "tests": {
+    "f949_and_f9491": "14/14 PASS",
+    "campus_runtime_construction_smoke": "PASS",
+    "airdrop_state_machine": "PASS",
+    "synthetic_first_frame_loop": "PASS",
+    "lobby_js_syntax": "155/155 PASS",
+    "local_imports": "424/424 present",
+    "service_worker_local_refs": "79/79 present"
+  },
+  "cache": "stage72-f9491-campus3d-hotfix",
+  "backendChanged": false,
+  "visualWebGLValidation": false
+}

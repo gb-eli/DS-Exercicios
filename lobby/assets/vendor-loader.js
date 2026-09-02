@@ -40,7 +40,7 @@
     bootStarted=true;
     const script=document.createElement('script');
     script.type='module';
-    script.src=`assets/boot.js?v=${VERSION}-stage70-f948-camera-v2`; 
+    script.src=`assets/boot.js?v=${VERSION}-stage74-f9411-graphics-streaming`; 
     const timer=setTimeout(()=>setError('boot_module_timeout'),BOOT_TIMEOUT_MS);
     script.onload=()=>clearTimeout(timer);
     script.onerror=()=>{clearTimeout(timer);setError('boot_module_load_failed');};

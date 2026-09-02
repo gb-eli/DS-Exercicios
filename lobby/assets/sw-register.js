@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const VERSION='14.10.8.96-stage70-f948-camera-v2';
+  const VERSION='14.10.8.96-stage74-f9411-graphics-streaming';
   const result={supported:false,registered:false,controlled:false,error:null};
 
   globalThis.__agvLobbySwReady=(async()=>{
