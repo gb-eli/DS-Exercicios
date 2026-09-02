@@ -1,15 +1,15 @@
 (()=>{
   'use strict';
 
-  const RELEASE='14.10.8.83-O2';
-  const MAX_EVENTS=40;
+  const RELEASE='14.10.8.96-F94.5';
+  const MAX_EVENTS=120;
   const startedAt=Date.now();
   const params=new URLSearchParams(location.search);
   const requested=params.get('diag')==='1';
   const events=[];
   const state={
     release:RELEASE,
-    diagnosticSchema:2,
+    diagnosticSchema:3,
     startedAt:new Date(startedAt).toISOString(),
     stage:'document_loading',
     sdk:{version:'2.112.3',source:null,attempts:[],serviceWorkerCache:null},

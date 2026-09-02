@@ -1,7 +1,7 @@
 'use strict';
 
 const VERSION='14.10.8.96';
-const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage65-f94-auto-calibration-hf2`; 
+const CACHE_NAME=`agv-lobby-runtime-${VERSION}-stage66-f945-world-audit`; 
 const CACHE_PREFIX='agv-lobby-runtime-';
 const SDK_URLS=new Set([
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js',
@@ -10,16 +10,17 @@ const SDK_URLS=new Set([
 const CRITICAL_SHELL=[
   './',
   './index.html',
-  './assets/diagnostics.js?v=14.10.8.66',
-  './assets/sw-register.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
-  './assets/vendor-loader.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
-  './assets/boot.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
+  './assets/diagnostics.js?v=14.10.8.96-f945-world-audit',
+  './assets/sw-register.js?v=14.10.8.96-stage66-f945-world-audit',
+  './assets/vendor-loader.js?v=14.10.8.96-stage66-f945-world-audit',
+  './assets/boot.js?v=14.10.8.96-stage66-f945-world-audit',
   './assets/supabase.js?v=14.10.8.66',
-  './assets/lobby.js?v=14.10.8.96-stage65-f94-auto-calibration-hf2',
+  './assets/lobby.js?v=14.10.8.96-stage66-f945-world-audit',
   './assets/config.js?v=14.10.8.96',
   './assets/core/lobby-state.js?v=14.10.8.92-f90-graphics',
-  './assets/core/world-manager.js?v=14.10.8.92-f90-graphics',
-  './assets/core/world-adapter.js?v=14.10.8.96-f94-auto-calibration',
+  './assets/core/world-manager.js?v=14.10.8.96-f945-world-audit',
+  './assets/core/world-adapter.js?v=14.10.8.96-f945-world-audit',
+  './assets/core/world-runtime-audit.js?v=14.10.8.96-f945-world-audit',
   './assets/plugin-world-host.js?v=14.10.8.96-f94-auto-calibration',
   './assets/colegio-agv-host.js?v=14.10.8.96-f94-auto-calibration',
   './assets/labirinto-armadilhas-host.js?v=14.10.8.96-f94-auto-calibration',

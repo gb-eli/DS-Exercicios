@@ -1,5 +1,6 @@
 import { snapshotWorldState } from './lobby-state.js?v=14.10.8.85-f83-gameplay-performance';
 import { resolveWorldTransition } from '../world/world-navigation.js?v=14.10.8.92-f90-graphics';
+import { WORLD_RUNTIME_AUDIT } from './world-runtime-audit.js?v=14.10.8.96-f945-world-audit';
 
 function abortError(){
   try{return new DOMException('world_runtime_start_aborted','AbortError')}catch(_){const error=new Error('world_runtime_start_aborted');error.name='AbortError';return error;}
@@ -28,15 +29,19 @@ export function createWorldManager({worldState,onLifecycleEvent=()=>{}}={}){
   async function start({adapter,mode,context={},signal=null}={}){
     if(!adapter?.supports?.(mode)||typeof adapter.createRuntime!=='function')throw new TypeError('world_adapter_contract_invalid');
     const ticket=++sequence;lastError=null;setIdentity(adapter,mode,'starting');emit('starting',{worldId:adapter.id,mode,ticket});
+    const auditId=adapter.auditEnabled===false?null:WORLD_RUNTIME_AUDIT.begin({worldId:adapter.auditId||adapter.id,scene:adapter.scene,label:adapter.label,mode,quality:context?.initialQuality||null,source:'world-manager'});
+    if(auditId)WORLD_RUNTIME_AUDIT.mark(auditId,'adapter',{ticket,adapterId:adapter.id,scene:adapter.scene},'pass');
     let candidate=null;
     try{
       candidate=assertRuntime(await adapter.createRuntime(mode,{...context,signal:signal||context.signal||null}));
       if(ticket!==sequence||signal?.aborted)throw abortError();
       activeRuntime=candidate;setIdentity(adapter,mode,'ready');emit('ready',{worldId:adapter.id,mode,ticket});
+      if(auditId)WORLD_RUNTIME_AUDIT.mark(auditId,'runtime',{ticket,contractStop:true},'pass');
       return activeRuntime;
     }catch(error){
       if(candidate&&candidate!==activeRuntime){try{candidate.stop?.()}catch(_){}}
       if(ticket===sequence){lastError=error;worldState.runtimeStatus='error';worldState.runtimeRevision=Number(worldState.runtimeRevision||0)+1;emit('error',{worldId:adapter.id,mode,ticket,message:String(error?.message||error)});}
+      if(auditId)WORLD_RUNTIME_AUDIT.fail(auditId,error,{ticket,phase:'world_manager_start'});
       throw error;
     }
   }
@@ -45,7 +50,7 @@ export function createWorldManager({worldState,onLifecycleEvent=()=>{}}={}){
     const ticket=++sequence,runtime=activeRuntime,adapter=activeAdapter,mode=worldState.runtimeMode;
     activeRuntime=null;activeAdapter=null;lastError=null;worldState.runtimeStatus=runtime?'stopping':'idle';worldState.runtimeRevision=Number(worldState.runtimeRevision||0)+1;
     if(runtime)emit('stopping',{worldId:adapter?.id||worldState.worldId,mode,ticket,reason});
-    try{runtime?.stop?.()}finally{worldState.runtimeStatus='idle';worldState.runtimeRevision=Number(worldState.runtimeRevision||0)+1;emit('idle',{worldId:worldState.worldId,mode,ticket,reason});}
+    try{runtime?.stop?.()}finally{if(adapter?.auditEnabled!==false)WORLD_RUNTIME_AUDIT.stopCurrent(reason);worldState.runtimeStatus='idle';worldState.runtimeRevision=Number(worldState.runtimeRevision||0)+1;emit('idle',{worldId:worldState.worldId,mode,ticket,reason});}
     return !!runtime;
   }
 

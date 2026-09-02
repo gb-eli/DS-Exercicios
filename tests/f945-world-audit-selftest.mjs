@@ -1,0 +1,18 @@
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+const root=process.argv[2]||path.resolve(import.meta.dirname,'..');
+globalThis.location={search:'',origin:'https://example.test'};
+const store=new Map();globalThis.localStorage={getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)};
+globalThis.addEventListener=()=>{};globalThis.document={};globalThis.HTMLCanvasElement=undefined;
+const tmp=await fs.mkdtemp(path.join(os.tmpdir(),'agv-f945-'));
+const mod=path.join(tmp,'world-runtime-audit.mjs');await fs.copyFile(path.join(root,'lobby/assets/core/world-runtime-audit.js'),mod);
+const {WORLD_RUNTIME_AUDIT:audit}=await import(`file://${mod}?t=${Date.now()}`);
+audit.registerWorlds(Array.from({length:18},(_,i)=>({id:`w${i+1}`,scene:`s${i+1}`,name:`World ${i+1}`,enabled:true,capabilities:{lite:true,threeD:true}})));
+if(audit.matrix().length!==18)throw new Error('matrix_world_count');
+const id=audit.begin({worldId:'w1',scene:'s1',label:'World 1',mode:'3d',quality:'medium'});
+audit.mark(id,'adapter',{ok:true},'pass');audit.markImport('w1','3d','running',{module:'x.js'});audit.markImport('w1','3d','pass',{module:'x.js'});audit.markRuntime('w1','3d','running',{});audit.markRuntime('w1','3d','pass',{});audit.markRenderer({context:'webgl2'});audit.markFirstFrame('w1','3d',{source:'test'});audit.markInput({type:'keydown'});audit.markInteraction({type:'npc-dialogue',id:'npc1'});audit.markMovement({moving:true});
+const active=audit.snapshot().active;for(const stage of ['adapter','import','assets','runtime','renderer','firstFrame','input','interaction'])if(active.stages[stage].status!=='pass')throw new Error(`stage_not_pass:${stage}`);
+audit.finish(id,{status:'pass',reason:'test_done'});if(audit.matrix().find(r=>r.id==='w1')['3d'].status!=='pass')throw new Error('matrix_status_not_pass');
+const id2=audit.begin({worldId:'w2',scene:'s2',label:'World 2',mode:'lite'});audit.mark(id2,'adapter',{},'pass');audit.markImport('w2','lite','running',{module:'bad.js'});audit.markImport('w2','lite','fail',{module:'bad.js'});audit.fail(id2,new Error('synthetic_fail'),{phase:'import'});if(audit.matrix().find(r=>r.id==='w2').lite.stage!=='import')throw new Error('failure_stage_not_import');
+console.log(JSON.stringify({suite:'F94.5 world audit selftest',ok:true,worldCount:audit.matrix().length,passWorld:audit.matrix().find(r=>r.id==='w1')['3d'],failedWorld:audit.matrix().find(r=>r.id==='w2').lite},null,2));

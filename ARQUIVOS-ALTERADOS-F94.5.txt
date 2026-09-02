@@ -1,0 +1,17 @@
+lobby/index.html
+lobby/sw.js
+lobby/assets/diagnostics.js
+lobby/assets/sw-register.js
+lobby/assets/vendor-loader.js
+lobby/assets/boot.js
+lobby/assets/lobby.js
+lobby/assets/core/world-manager.js
+lobby/assets/core/world-adapter.js
+lobby/assets/core/world-runtime-audit.js
+lobby/assets/labirinto-armadilhas-adapter.js
+lobby/assets/museu-hardware-adapter.js
+tests/f945-world-audit-static.mjs
+tests/f945-world-audit-selftest.mjs
+RELATORIO-F94.5-INSTRUMENTACAO-MAPAS.md
+GUIA-AUDITORIA-REAL-MAPAS-F94.5.md
+CONTEXTO-CONTINUIDADE-F94.5.md
