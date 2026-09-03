@@ -1,0 +1,41 @@
+{
+  "release": "F94.13",
+  "version": "14.10.8.96",
+  "title": "Rapier Pilot + three-mesh-bvh",
+  "base": "F94.12",
+  "cache": "stage76-f9413-rapier-bvh-pilot",
+  "physics": {
+    "rapier_version": "0.20.0",
+    "three_mesh_bvh_version": "0.9.14",
+    "activation": "lazy_after_first_frame",
+    "auto_policy": "desktop high/ultra, >=8GB deviceMemory hint and >=6 logical cores",
+    "force_query": "?physics=rapier",
+    "rollback_query": "?physics=kinematic",
+    "fallback": "F94.12 kinematic adapter",
+    "campus_ground_vehicle_rapier_pilot": true,
+    "campus_player_static_bvh_query": true,
+    "aerial_rapier": false,
+    "global_rapier": false
+  },
+  "tests": {
+    "f9413": {"passed": 10, "failed": 0, "total": 10},
+    "selected_current_and_historical": {"passed": 51, "failed": 6, "total": 57, "note": "6 falhas são asserts históricos de cache/versionamento F94.9/F94.9.1/F94.10/F94.11/F94.12 substituídos pela F94.13."}
+  },
+  "static_validation": {
+    "lobby_assets_js": 167,
+    "syntax_errors": 0,
+    "local_import_references": 467,
+    "missing_local_imports": 0,
+    "service_worker_local_references": 119,
+    "missing_service_worker_references": 0
+  },
+  "backend_changes": {"core_database": 0, "core_edge_functions": 0},
+  "real_external_module_runtime_test": false,
+  "browser_webgl_visual_test": false,
+  "limitations": [
+    "Dependências físicas externas ainda não estão vendorizadas no ZIP.",
+    "Ambiente de build sem DNS externo impediu execução do WASM real nesta sessão.",
+    "Rapier permanece piloto somente para veículo terrestre do Campus.",
+    "Não houve teste visual WebGL real."
+  ]
+}

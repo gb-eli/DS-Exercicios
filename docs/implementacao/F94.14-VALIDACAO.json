@@ -1,0 +1,47 @@
+{
+  "release": "14.10.8.96-F94.14",
+  "base": "F94.13",
+  "cache": "stage77-f9414-network-manager",
+  "network": {
+    "protocol": 3,
+    "transport_contract": 1,
+    "manager": 2,
+    "modes": ["performance", "contingency", "solo"],
+    "preferred_order": ["colyseus", "supabase", "solo"],
+    "colyseus_active_by_default": false,
+    "supabase_identity_persistence_preserved": true,
+    "network_boot_critical": false
+  },
+  "tests": {
+    "f9414": {"tests": 12, "pass": 12, "fail": 0},
+    "selected_historical": {"tests": 56, "pass": 49, "fail": 7, "note": "Falhas apenas em asserts literais de cache/versionamento de fases anteriores."},
+    "combined_selected": {"tests": 68, "pass": 61, "fail": 7}
+  },
+  "static": {
+    "javascript_files": 175,
+    "javascript_syntax_errors": 0,
+    "local_import_references": 476,
+    "missing_local_imports": 0,
+    "service_worker_local_references": 126,
+    "missing_service_worker_references": 0,
+    "boot_required_assets": 45,
+    "missing_boot_required_assets": 0,
+    "network_modules_in_boot_required_assets": false,
+    "backup_files": 0
+  },
+  "backend": {
+    "database_files": 93,
+    "database_changed": false,
+    "edge_function_files": 63,
+    "edge_functions_changed": false,
+    "production_backend_deployed_or_verified": false
+  },
+  "runtime_validation": {
+    "real_colyseus_server_tested": false,
+    "real_multi_machine_websocket_tested": false,
+    "real_browser_e2e_tested": false,
+    "synthetic_failover_failback_tested": true,
+    "synthetic_colyseus_client_transport_tested": true,
+    "synthetic_supabase_transport_tested": true
+  }
+}

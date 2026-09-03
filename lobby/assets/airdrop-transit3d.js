@@ -1,6 +1,6 @@
 import { getAirdropSector,airdropLandingPoint } from './world/airdrop-sectors.js?v=14.10.8.89-f87-airdrop-sectors';
 import { airdropDetailLevel,airdropDescentRate,shouldAutoDeploy,sampleAirdropPlane,AIRDROP_CONFIG } from './world/airdrop-system.js?v=14.10.8.89-f87-airdrop-sectors';
-import { prefetchWorld3D,prefetchedWorld3D } from './world/world-runtime-prefetch.js?v=14.10.8.96-f948-camera-v2';
+import { prefetchWorld3D,prefetchedWorld3D } from './world/world-runtime-prefetch.js?v=14.10.8.96-f9412-vehicle-core';
 import { createCameraController } from './render/camera-controller.js?v=14.10.8.96-f948-camera-v2';
 import { createAvatarSystem } from './characters/avatar-system.js?v=14.10.8.92-f90-graphics';
 import { remoteAppearance,remoteHeading,applyRemoteAvatarState } from './social/remote-avatar-state.js?v=14.10.8.89-f87-airdrop-sectors';

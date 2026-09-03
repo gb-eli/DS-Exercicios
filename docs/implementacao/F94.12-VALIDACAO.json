@@ -1,0 +1,53 @@
+{
+  "release": "F94.12",
+  "version": "14.10.8.96",
+  "title": "Vehicle Core V2 + preparacao Rapier",
+  "base": "F94.11",
+  "cache": "stage75-f9412-vehicle-core",
+  "vehicle_core": {
+    "version": 2,
+    "active_physics_adapter": "kinematic",
+    "rapier_adapter": "prepared_optional_fallback",
+    "rapier_production_active": false,
+    "network_protocol_version": 2,
+    "coverage": [
+      "campus-2d-ground",
+      "campus-2d-aerial",
+      "campus-3d-ground",
+      "campus-3d-aerial",
+      "moon-rover-2d",
+      "moon-rover-3d",
+      "mars-rover-2d",
+      "mars-rover-3d"
+    ]
+  },
+  "tests": {
+    "f9412": {"passed": 14, "failed": 0, "total": 14},
+    "selected_historical": {"passed": 71, "failed": 18, "total": 89, "note": "Falhas historicas ligadas a cache/version strings e implementacoes inline substituidas pelo Vehicle Core V2; nao declarar suite historica 100% PASS."},
+    "f948_camera": {"passed": 1, "failed": 0, "total": 1},
+    "f949_interaction": {"passed": 7, "failed": 1, "total": 8, "failure": "cache marker historico"},
+    "f9491_campus_hotfix": {"passed": 4, "failed": 2, "total": 6, "failures": ["cache-bust historico", "shell marker historico"]},
+    "f9410_streaming": {"passed": 7, "failed": 1, "total": 8, "failure": "cache marker historico"},
+    "f9411_graphics": {"passed": 9, "failed": 1, "total": 10, "failure": "cache marker historico"}
+  },
+  "static_validation": {
+    "lobby_assets_js": 163,
+    "syntax_errors": 0,
+    "local_import_references": 463,
+    "missing_local_imports": 0,
+    "service_worker_local_references": 115,
+    "missing_service_worker_references": 0,
+    "bak_files": 0
+  },
+  "backend_changes": {
+    "core_database": 0,
+    "core_edge_functions": 0
+  },
+  "browser_webgl_visual_test": false,
+  "limitations": [
+    "Vale e Base Militar ainda nao possuem toda frota migrada/dirigivel.",
+    "Rides do Parque continuam fora do Vehicle Core comum.",
+    "Rapier ainda nao e a fisica ativa de producao.",
+    "Nao houve validacao visual WebGL real nesta sessao."
+  ]
+}

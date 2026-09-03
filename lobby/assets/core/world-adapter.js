@@ -1,4 +1,4 @@
-import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.96-f948-camera-v2';
+import { createLobbyLite } from '../lobby-lite.js?v=14.10.8.96-f9412-vehicle-core';
 import { createValeLite } from '../vale-lite.js?v=14.10.8.96-f948-camera-v2';
 
 const MODES=Object.freeze(['lite','3d']);
@@ -42,7 +42,7 @@ export function createWorldAdapter({id,scene,label,createLite,create3D,auditId=n
 export const CAMPUS_WORLD_ADAPTER=createWorldAdapter({
   id:'campus-ds',scene:'campus',label:'Campus DS',
   createLite:staticFactory('campus-ds','lite',createLobbyLite,'lobby-lite.js'),
-  create3D:lazyFactory('campus-ds','3d','../lobby3d.js?v=14.10.8.96-f9411-graphics-streaming','createLobby3D')
+  create3D:lazyFactory('campus-ds','3d','../lobby3d.js?v=14.10.8.96-f9413-rapier-bvh-pilot','createLobby3D')
 });
 
 function createVillageAdapter(key,label){
@@ -82,8 +82,8 @@ function standardAdapter({id,scene,label,liteModule,liteExport,threeModule,three
 export const RURAL_WORLD_ADAPTER=standardAdapter({id:'rural-agv',scene:'rural',label:'Mundo Rural AGV',liteModule:'../rural-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createRuralLite',threeModule:'../rural3d.js?v=14.10.8.96-f9411-graphics-streaming',threeExport:'createRural3D'});
 export const MILITARY_WORLD_ADAPTER=standardAdapter({id:'military-agv',scene:'military',label:'Base de Operações AGV',liteModule:'../military-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createMilitaryLite',threeModule:'../military3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createMilitary3D'});
 export const SPACE_WORLD_ADAPTER=standardAdapter({id:'space-agv',scene:'space',label:'Estação Orbital AGV',liteModule:'../space-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createSpaceLite',threeModule:'../space3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createSpace3D'});
-export const MOON_WORLD_ADAPTER=standardAdapter({id:'moon-agv',scene:'moon',label:'Lua AGV',liteModule:'../moon-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createMoonLite',threeModule:'../moon3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createMoon3D'});
-export const MARS_WORLD_ADAPTER=standardAdapter({id:'mars-agv',scene:'mars',label:'Marte AGV',liteModule:'../mars-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createMarsLite',threeModule:'../mars3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createMars3D'});
+export const MOON_WORLD_ADAPTER=standardAdapter({id:'moon-agv',scene:'moon',label:'Lua AGV',liteModule:'../moon-lite.js?v=14.10.8.96-f9412-vehicle-core',liteExport:'createMoonLite',threeModule:'../moon3d.js?v=14.10.8.96-f9412-vehicle-core',threeExport:'createMoon3D'});
+export const MARS_WORLD_ADAPTER=standardAdapter({id:'mars-agv',scene:'mars',label:'Marte AGV',liteModule:'../mars-lite.js?v=14.10.8.96-f9412-vehicle-core',liteExport:'createMarsLite',threeModule:'../mars3d.js?v=14.10.8.96-f9412-vehicle-core',threeExport:'createMars3D'});
 export const PARQUE_WORLD_ADAPTER=standardAdapter({id:'parque-diversoes-agv',scene:'parque',label:'Parque de Diversões AGV',liteModule:'../parque-diversoes-agv-lite.js?v=14.10.8.96-f948-camera-v2',liteExport:'createParqueDiversoesLite',threeModule:'../parque-diversoes-agv3d.js?v=14.10.8.96-f948-camera-v2',threeExport:'createParqueDiversoes3D'});
 export const COLEGIO_WORLD_ADAPTER=standardAdapter({id:'colegio-agv',scene:'colegio',label:'Colégio AGV — Alberto Gomes Veiga',liteModule:'../colegio-agv-host.js?v=14.10.8.96-f948-camera-v2',liteExport:'createColegioAgvHostedLite',threeModule:'../colegio-agv-host.js?v=14.10.8.96-f948-camera-v2',threeExport:'createColegioAgvHosted3D'});
 export const LABIRINTO_WORLD_ADAPTER=standardAdapter({id:'labirinto-armadilhas',scene:'labirinto',label:'Labirinto com Armadilhas',liteModule:'../labirinto-armadilhas-host.js?v=14.10.8.96-f948-camera-v2',liteExport:'createLabirintoArmadilhasHostedLite',threeModule:'../labirinto-armadilhas-host.js?v=14.10.8.96-f948-camera-v2',threeExport:'createLabirintoArmadilhasHosted3D'});

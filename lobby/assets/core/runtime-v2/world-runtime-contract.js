@@ -1,5 +1,5 @@
 export const WORLD_RUNTIME_CONTRACT_VERSION=2;
-export const WORLD_RUNTIME_LIFECYCLE=Object.freeze(['init','load','start','pause','resume','update','interact','enterInterior','exitInterior','setQuality','stop','dispose']);
+export const WORLD_RUNTIME_LIFECYCLE=Object.freeze(['init','load','start','pause','resume','update','interact','enterInterior','exitInterior','enterVehicle','exitVehicle','getVehicleState','setQuality','stop','dispose']);
 
 const noopTrue=()=>true,noopFalse=()=>false;
 function call(target,name,...args){const fn=target?.[name];return typeof fn==='function'?fn.apply(target,args):undefined;}
@@ -8,7 +8,7 @@ export function runtimeCapabilities(runtime={}){
   return Object.freeze({
     quality:typeof runtime.setQuality==='function',camera:typeof runtime.setCameraMode==='function'||typeof runtime.toggleCamera==='function',
     interaction:typeof runtime.interact==='function'||typeof runtime.useInteraction==='function',interior:typeof runtime.enterBuilding==='function'||typeof runtime.enterInterior==='function',
-    vehicle:typeof runtime.enterVehicle==='function'||typeof runtime.startDriving==='function'||typeof runtime.getVehicleState==='function',
+    vehicle:typeof runtime.enterVehicle==='function'||typeof runtime.useCampusVehicle==='function'||typeof runtime.toggleRover==='function'||typeof runtime.startDriving==='function'||typeof runtime.getVehicleState==='function'||typeof runtime.getVehicleCoreState==='function'||typeof runtime.getCampusVehicle==='function',
     teleport:typeof runtime.teleportTo==='function',observability:typeof runtime.getObservabilitySnapshot==='function'
   });
 }
@@ -30,6 +30,9 @@ export function normalizeWorldRuntime(runtime,{worldId='unknown',scene='unknown'
     interact:(...args)=>call(runtime,'interact',...args)??call(runtime,'useInteraction',...args)??false,
     enterInterior:(...args)=>call(runtime,'enterInterior',...args)??call(runtime,'enterBuilding',...args)??false,
     exitInterior:(...args)=>call(runtime,'exitInterior',...args)??call(runtime,'exitBuilding',...args)??false,
+    enterVehicle:(...args)=>call(runtime,'enterVehicle',...args)??call(runtime,'useCampusVehicle',...args)??false,
+    exitVehicle:(...args)=>call(runtime,'exitVehicle',...args)??call(runtime,'cancelCampusVehicle',...args)??false,
+    getVehicleState:(...args)=>call(runtime,'getVehicleState',...args)??call(runtime,'getVehicleCoreState',...args)??call(runtime,'getCampusVehicle',...args)??null,
     setQuality:(...args)=>typeof runtime.setQuality==='function'?runtime.setQuality(...args):false,
     stop:(...args)=>{if(stopped)return false;stopped=true;phase='stopped';const result=call(runtime,'stop',...args);return result??true;},
     dispose:(...args)=>{if(disposed)return false;disposed=true;if(!stopped){stopped=true;call(runtime,'stop','dispose');}phase='disposed';const result=call(runtime,'dispose',...args);return result??true;},

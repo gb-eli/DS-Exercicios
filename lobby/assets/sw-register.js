@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const VERSION='14.10.8.96-stage74-f9411-graphics-streaming';
+  const VERSION='14.10.8.96-stage77-f9414-network-manager';
   const result={supported:false,registered:false,controlled:false,error:null};
 
   globalThis.__agvLobbySwReady=(async()=>{

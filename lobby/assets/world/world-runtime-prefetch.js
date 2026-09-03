@@ -1,6 +1,6 @@
 const cache=new Map();
 const LOADERS=Object.freeze({
-  'campus-ds':()=>import('../lobby3d.js?v=14.10.8.96-f9411-graphics-streaming'),
+  'campus-ds':()=>import('../lobby3d.js?v=14.10.8.96-f9413-rapier-bvh-pilot'),
   'village-1ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
   'village-2ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
   'village-3ds':()=>import('../village3d.js?v=14.10.8.96-f948-camera-v2'),
@@ -12,8 +12,8 @@ const LOADERS=Object.freeze({
   'rural-agv':()=>import('../rural3d.js?v=14.10.8.96-f9411-graphics-streaming'),
   'military-agv':()=>import('../military3d.js?v=14.10.8.96-f948-camera-v2'),
   'space-agv':()=>import('../space3d.js?v=14.10.8.96-f948-camera-v2'),
-  'moon-agv':()=>import('../moon3d.js?v=14.10.8.96-f948-camera-v2'),
-  'mars-agv':()=>import('../mars3d.js?v=14.10.8.96-f948-camera-v2'),
+  'moon-agv':()=>import('../moon3d.js?v=14.10.8.96-f9412-vehicle-core'),
+  'mars-agv':()=>import('../mars3d.js?v=14.10.8.96-f9412-vehicle-core'),
   'parque-diversoes-agv':()=>import('../parque-diversoes-agv3d.js?v=14.10.8.96-f948-camera-v2'),
   'colegio-agv':()=>import('../colegio-agv-host.js?v=14.10.8.96-f948-camera-v2'),
   'labirinto-armadilhas':()=>import('../labirinto-armadilhas-host.js?v=14.10.8.96-f948-camera-v2'),

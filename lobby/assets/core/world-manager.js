@@ -1,6 +1,6 @@
 import { snapshotWorldState } from './lobby-state.js?v=14.10.8.96-f948-camera-v2';
 import { resolveWorldTransition } from '../world/world-navigation.js?v=14.10.8.92-f90-graphics';
-import { normalizeWorldRuntime,assertWorldRuntimeV2 } from './runtime-v2/world-runtime-contract.js?v=14.10.8.96-f948-camera-v2';
+import { normalizeWorldRuntime,assertWorldRuntimeV2 } from './runtime-v2/world-runtime-contract.js?v=14.10.8.96-f9412-vehicle-core';
 import { createWorldContext } from './runtime-v2/world-context.js?v=14.10.8.96-f948-camera-v2';
 
 const worldAudit=()=>globalThis.__agvWorldRuntimeAudit||null;

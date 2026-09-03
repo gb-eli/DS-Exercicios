@@ -2,7 +2,7 @@ const SESSION_FIELDS=Object.freeze([
   'user','profile','currentClass','classes','exercises','studentReleases','classReleases','progress','others','available','scheduled',
   'lastPresence','toastTimer','zoneTimer','stopped','lastTargetSignal','portalState','emoteRequested','bootingRuntime',
   'lastGatherToken','teleportDestinations','chatTarget','graphics','worldTimeControl','lastWorldTimeToken','worldTimeAdminControl',
-  'worldWeatherControl','lastWorldWeatherToken','worldWeatherAdminControl','worldMovementControl','lastWorldMovementToken','worldMovementAdminControl','spawnedVehicles','lastVehicleSpawnToken','airdropSession','lastAirdropToken','airdropState','airdropTargetWorldId','cinemaMedia','vehicleSessions','vehiclePassengers','vehicleMembership','avatarContext','avatarStyle'
+  'worldWeatherControl','lastWorldWeatherToken','worldWeatherAdminControl','worldMovementControl','lastWorldMovementToken','worldMovementAdminControl','networkMode','networkTransport','networkRevision','spawnedVehicles','lastVehicleSpawnToken','airdropSession','lastAirdropToken','airdropState','airdropTargetWorldId','cinemaMedia','vehicleSessions','vehiclePassengers','vehicleMembership','avatarContext','avatarStyle'
 ]);
 
 const WORLD_FIELDS=Object.freeze([
@@ -18,7 +18,7 @@ function createSessionDefaults(){
     lastGatherToken:null,teleportDestinations:[],chatTarget:null,
     graphics:{fov:65,fpsCap:60,worldTimeMode:'cycle',showPerf:false,mouseSensitivity:1,invertY:false,qualityPreference:'auto',controls:{forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',run:'ShiftLeft',jump:'Space',interact:'KeyE',camera:'KeyC'}},
     worldTimeControl:null,lastWorldTimeToken:null,worldTimeAdminControl:null,
-    worldWeatherControl:null,lastWorldWeatherToken:null,worldWeatherAdminControl:null,worldMovementControl:null,lastWorldMovementToken:null,worldMovementAdminControl:null,spawnedVehicles:[],lastVehicleSpawnToken:null,airdropSession:null,lastAirdropToken:null,airdropState:{mode:'ground',altitude:0,detailLevel:'full',targetWorldId:null,localX:null,localZ:null},airdropTargetWorldId:'campus-ds',
+    worldWeatherControl:null,lastWorldWeatherToken:null,worldWeatherAdminControl:null,worldMovementControl:null,lastWorldMovementToken:null,worldMovementAdminControl:null,networkMode:'solo',networkTransport:null,networkRevision:0,spawnedVehicles:[],lastVehicleSpawnToken:null,airdropSession:null,lastAirdropToken:null,airdropState:{mode:'ground',altitude:0,detailLevel:'full',targetWorldId:null,localX:null,localZ:null},airdropTargetWorldId:'campus-ds',
     cinemaMedia:null,vehicleSessions:[],vehiclePassengers:[],vehicleMembership:null,
     avatarContext:null,avatarStyle:{}
   };
